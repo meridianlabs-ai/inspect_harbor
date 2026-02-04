@@ -1,0 +1,75 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "inspect_harbor"
+version = "0.1.0"
+description = "Inspect AI interface to Harbor tasks"
+authors = [{ name = "Meridian Labs" }]
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT License" }
+dependencies = ["click", "inspect-ai", "harbor"]
+
+[project.urls]
+"Source Code" = "https://github.com/meridianlabs-ai/inspect_harbor"
+"Issue Tracker" = "https://github.com/meridianlabs-ai/inspect_harbor/issues"
+Documentation = "https://meridianlabs-ai.github.io/inspect_harbor/"
+
+[project.optional-dependencies]
+doc = []
+
+[dependency-groups]
+dev = [
+    "pyright",
+    "pytest",
+    "pytest-asyncio>=1.3.0",
+    "ruff",
+    "types-PyYAML",
+]
+
+[tool.hatch.build]
+only-packages = true
+exclude = ["docs/", "tests/"]
+
+[tool.uv]
+managed = true
+add-bounds = "lower"
+default-groups = ["dev"]
+
+[tool.pyright]
+include = ["src", "tests"]
+reportUnknownParameterType = true
+
+[tool.ruff]
+extend-exclude = ["docs"]
+src = ["."]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # flake8
+    "D",      # pydocstyle
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "SIM101", # duplicate isinstance
+]
+ignore = [
+    "E203", # whitespace before ':'
+    "E501", # line too long
+    "D105", # missing docstring in magic method
+    "D107", # missing docstring in __init__
+    "D212", # multi-line docstring summary should start at the first line
+    "D415", # first line should end with a period, question mark, or exclamation point
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
