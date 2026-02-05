@@ -66,7 +66,7 @@ def harbor_scorer(
             container_test_path = "/tests/test.sh"
 
         result = await sandbox().exec(
-            ["bash", container_test_path],
+            ["bash", "-l", container_test_path],
             timeout=int(verifier_timeout_sec),
         )
 

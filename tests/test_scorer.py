@@ -352,7 +352,7 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
             # Verify cleanup was called AFTER scoring
             # Should have: [test script execution, rm /tests, rm /logs/verifier]
             assert len(exec_calls) >= 3
-            assert exec_calls[0] == ["bash", "/tests/test.sh"]  # Test execution
+            assert exec_calls[0] == ["bash", "-l", "/tests/test.sh"]  # Test execution
             assert exec_calls[-2] == ["rm", "-rf", "/tests"]  # Cleanup /tests
             assert exec_calls[-1] == [
                 "rm",
