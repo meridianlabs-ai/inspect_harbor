@@ -6,10 +6,7 @@ from unittest.mock import AsyncMock, Mock, patch
 import pytest
 from inspect_ai.model import ModelName
 from inspect_ai.solver import TaskState
-from inspect_harbor.harbor._sandbox_utils import (
-    cleanup_sandbox_directories,
-    copy_directory_to_sandbox,
-)
+from inspect_harbor.harbor._sandbox_utils import copy_directory_to_sandbox
 from inspect_harbor.harbor._solver import oracle
 
 
@@ -39,14 +36,20 @@ async def test_oracle_executes_solution_script():
     mock_sandbox.write_file = AsyncMock()
 
     with (
-        patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox),
-        patch("inspect_harbor._solver.sandbox", return_value=mock_sandbox),
-        patch("inspect_harbor._solver.copy_directory_to_sandbox", new_callable=AsyncMock) as mock_copy,
+        patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ),
+        patch("inspect_harbor.harbor._solver.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor.harbor._solver.copy_directory_to_sandbox",
+            new_callable=AsyncMock,
+        ) as mock_copy,
+        patch("pathlib.Path.exists", return_value=True),
     ):
         solver_fn = oracle()
         result_state = await solver_fn(state, Mock())
 
-        mock_copy.assert_called_once_with("/fake/solution", "/solution")
+        mock_copy.assert_called_once_with(Path("/fake/solution"), "/solution")
 
         # Should have: [solution script execution, rm /solution]
         assert len(exec_calls) == 2
@@ -79,9 +82,15 @@ async def test_oracle_with_environment_variables():
     mock_sandbox.exec = AsyncMock(return_value=Mock(returncode=0, stdout="", stderr=""))
 
     with (
-        patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox),
-        patch("inspect_harbor._solver.sandbox", return_value=mock_sandbox),
-        patch("inspect_harbor._solver.copy_directory_to_sandbox", new_callable=AsyncMock),
+        patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ),
+        patch("inspect_harbor.harbor._solver.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor.harbor._solver.copy_directory_to_sandbox",
+            new_callable=AsyncMock,
+        ),
+        patch("pathlib.Path.exists", return_value=True),
     ):
         solver_fn = oracle()
         await solver_fn(state, Mock())
@@ -114,9 +123,15 @@ async def test_oracle_with_nonzero_exit_code():
     )
 
     with (
-        patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox),
-        patch("inspect_harbor._solver.sandbox", return_value=mock_sandbox),
-        patch("inspect_harbor._solver.copy_directory_to_sandbox", new_callable=AsyncMock),
+        patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ),
+        patch("inspect_harbor.harbor._solver.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor.harbor._solver.copy_directory_to_sandbox",
+            new_callable=AsyncMock,
+        ),
+        patch("pathlib.Path.exists", return_value=True),
     ):
         solver_fn = oracle()
         result_state = await solver_fn(state, Mock())
@@ -150,9 +165,15 @@ async def test_oracle_with_relative_solve_path():
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
 
     with (
-        patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox),
-        patch("inspect_harbor._solver.sandbox", return_value=mock_sandbox),
-        patch("inspect_harbor._solver.copy_directory_to_sandbox", new_callable=AsyncMock),
+        patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ),
+        patch("inspect_harbor.harbor._solver.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor.harbor._solver.copy_directory_to_sandbox",
+            new_callable=AsyncMock,
+        ),
+        patch("pathlib.Path.exists", return_value=True),
     ):
         solver_fn = oracle()
         await solver_fn(state, Mock())
@@ -178,7 +199,9 @@ async def test_copy_directory_to_sandbox():
         mock_sandbox = Mock()
         mock_sandbox.write_file = AsyncMock()
 
-        with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+        with patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ):
             await copy_directory_to_sandbox(str(tmp_path), "/test")
 
             assert mock_sandbox.write_file.call_count == 2
@@ -212,7 +235,9 @@ async def test_copy_directory_with_binary_files_to_sandbox():
         mock_sandbox = Mock()
         mock_sandbox.write_file = AsyncMock()
 
-        with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+        with patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ):
             await copy_directory_to_sandbox(str(tmp_path), "/solution")
 
             assert mock_sandbox.write_file.call_count == 2
@@ -227,3 +252,100 @@ async def test_copy_directory_with_binary_files_to_sandbox():
             assert "/solution/data.bin" in paths_and_contents
             assert paths_and_contents["/solution/data.bin"] == binary_data
             assert isinstance(paths_and_contents["/solution/data.bin"], bytes)
+
+
+@pytest.mark.asyncio
+async def test_oracle_missing_solution_dir_metadata():
+    """Test oracle raises error when solution_dir metadata is missing."""
+    from inspect_harbor.harbor._solver import CopySolutionDirError, oracle
+
+    state = TaskState(
+        model=ModelName("mockprovider/test-model"),
+        sample_id="test-sample",
+        epoch=0,
+        input="test input",
+        messages=[],
+        metadata={},  # Missing solution_dir
+    )
+
+    solver_fn = oracle()
+
+    with pytest.raises(
+        CopySolutionDirError, match="solution_dir not found in metadata"
+    ):
+        await solver_fn(state, Mock())
+
+
+@pytest.mark.asyncio
+async def test_oracle_missing_solve_path_metadata():
+    """Test oracle raises error when solve_path metadata is missing."""
+    from inspect_harbor.harbor._solver import CopySolutionDirError, oracle
+
+    state = TaskState(
+        model=ModelName("mockprovider/test-model"),
+        sample_id="test-sample",
+        epoch=0,
+        input="test input",
+        messages=[],
+        metadata={"solution_dir": "/fake/solution"},  # Missing solve_path
+    )
+
+    solver_fn = oracle()
+
+    with pytest.raises(CopySolutionDirError, match="solve_path not found in metadata"):
+        await solver_fn(state, Mock())
+
+
+@pytest.mark.asyncio
+async def test_oracle_solution_directory_not_found():
+    """Test oracle raises error when solution directory doesn't exist."""
+    from inspect_harbor.harbor._solver import CopySolutionDirError, oracle
+
+    state = TaskState(
+        model=ModelName("mockprovider/test-model"),
+        sample_id="test-sample",
+        epoch=0,
+        input="test input",
+        messages=[],
+        metadata={
+            "solution_dir": "/nonexistent/solution",
+            "solve_path": "/nonexistent/solution/solve.sh",
+        },
+    )
+
+    solver_fn = oracle()
+
+    with pytest.raises(CopySolutionDirError, match="Solution directory not found"):
+        await solver_fn(state, Mock())
+
+
+@pytest.mark.asyncio
+async def test_oracle_solve_path_not_relative_to_solution_dir():
+    """Test oracle raises error when solve_path is not relative to solution_dir."""
+    from inspect_harbor.harbor._solver import CopySolutionDirError, oracle
+
+    state = TaskState(
+        model=ModelName("mockprovider/test-model"),
+        sample_id="test-sample",
+        epoch=0,
+        input="test input",
+        messages=[],
+        metadata={
+            "solution_dir": "/fake/solution",
+            "solve_path": "/completely/different/path/solve.sh",  # Not relative
+        },
+    )
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+
+    with (
+        patch("inspect_harbor.harbor._solver.sandbox", return_value=mock_sandbox),
+        patch("pathlib.Path.exists", return_value=True),
+        pytest.raises(
+            CopySolutionDirError,
+            match="Solve path .* is not relative to solution directory",
+        ),
+    ):
+        solver_fn = oracle()
+        await solver_fn(state, Mock())

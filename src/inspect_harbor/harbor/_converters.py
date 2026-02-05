@@ -35,7 +35,7 @@ def harbor_to_compose_config(harbor_task: HarborTask) -> ComposeConfig:
 
     # Use existing docker-compose.yaml if present
     if compose_yaml_path.exists():
-        with open(compose_yaml_path) as f:
+        with open(compose_yaml_path, encoding="utf-8") as f:
             compose_dict = yaml.safe_load(f)
 
         compose_config = ComposeConfig(**compose_dict)
@@ -71,15 +71,25 @@ def harbor_to_compose_config(harbor_task: HarborTask) -> ComposeConfig:
         return ComposeConfig(services={"default": service})
 
 
-def harbor_task_to_sample(harbor_task: HarborTask) -> Sample:
-    """Convert a Harbor task to an Inspect AI Sample."""
+def harbor_task_to_sample(
+    harbor_task: HarborTask, sandbox_env_name: str = "docker"
+) -> Sample:
+    """Convert a Harbor task to an Inspect AI Sample.
+
+    Args:
+        harbor_task: The Harbor task to convert.
+        sandbox_env_name: Sandbox environment name (default: "docker").
+
+    Returns:
+        Sample: Inspect AI sample with sandbox configuration.
+    """
     compose_config = harbor_to_compose_config(harbor_task)
     verifier_timeout_sec = harbor_task.config.verifier.timeout_sec
 
     return Sample(
         input=harbor_task.instruction,
         id=harbor_task.name,
-        sandbox=SandboxEnvironmentSpec("docker", compose_config),
+        sandbox=SandboxEnvironmentSpec(sandbox_env_name, compose_config),
         # Store Harbor task metadata for scorer to access later
         # (tests_dir will be used by scorer to copy tests at scoring time)
         metadata={

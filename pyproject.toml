@@ -21,7 +21,7 @@ Documentation = "https://meridianlabs-ai.github.io/inspect_harbor/"
 evals = "inspect_harbor._registry"
 
 [dependency-groups]
-dev = ["pyright", "pytest", "pytest-asyncio>=1.3.0", "ruff", "types-PyYAML"]
+dev = ["pre-commit", "pyright", "pytest", "pytest-asyncio>=1.3.0", "pytest-cov", "ruff", "types-PyYAML"]
 
 [tool.hatch.build]
 only-packages = true
@@ -35,6 +35,7 @@ default-groups = ["dev"]
 [tool.mypy]
 ignore_missing_imports = false
 warn_unused_ignores = true
+check_untyped_defs = true
 
 [[tool.mypy.overrides]]
 module = "harbor.*"
@@ -75,3 +76,9 @@ pythonpath = ["src"]
 testpaths = ["tests"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
+# Filter deprecation warnings from third-party dependencies
+filterwarnings = [
+    "ignore::pyparsing.PyparsingDeprecationWarning",  # pyiceberg's use of pyparsing (harbor → supabase → storage3 → pyiceberg)
+    "ignore::pydantic.PydanticDeprecatedSince212",    # pyiceberg's use of pydantic (harbor → supabase → storage3 → pyiceberg)
+    "ignore::DeprecationWarning:harbor.models.task.config",  # harbor's deprecated field checks (storage vs storage_mb)
+]

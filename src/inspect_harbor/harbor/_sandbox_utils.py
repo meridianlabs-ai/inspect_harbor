@@ -1,13 +1,14 @@
 """Shared utilities for sandbox operations."""
 
+import logging
 from pathlib import Path
 
 from inspect_ai.util import sandbox
 
+logger = logging.getLogger(__name__)
 
-async def copy_directory_to_sandbox(
-    local_dir: str | Path, container_path: str
-) -> None:
+
+async def copy_directory_to_sandbox(local_dir: str | Path, container_path: str) -> None:
     """Recursively copy a local directory to the sandbox.
 
     All files are read as bytes to preserve binary content integrity.
@@ -33,8 +34,8 @@ async def copy_directory_to_sandbox(
 async def cleanup_sandbox_directories(*paths: str) -> None:
     """Clean up directories from the sandbox.
 
-    Removes the specified directories from the sandbox. Errors are silently
-    ignored to ensure cleanup continues even if some paths don't exist.
+    Removes the specified directories from the sandbox. Errors are logged but
+    not raised to ensure cleanup continues even if some operations fail.
 
     Args:
         *paths: Variable number of container paths to remove (e.g., "/tests", "/solution").
@@ -42,5 +43,5 @@ async def cleanup_sandbox_directories(*paths: str) -> None:
     for path in paths:
         try:
             await sandbox().exec(["rm", "-rf", path])
-        except Exception:
-            pass
+        except (RuntimeError, OSError, TimeoutError) as e:
+            logger.warning(f"Failed to cleanup sandbox directory {path}: {e}")

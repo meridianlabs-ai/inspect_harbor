@@ -3,6 +3,8 @@
 from pathlib import Path
 from unittest.mock import Mock, mock_open, patch
 
+import pytest
+import yaml
 from inspect_ai.dataset import Sample
 from inspect_ai.util import ComposeBuild, ComposeConfig, SandboxEnvironmentSpec
 from inspect_ai.util._sandbox.compose import ComposeDeviceReservation
@@ -411,3 +413,35 @@ def test_harbor_to_compose_config_with_gpus_no_types():
         assert device.capabilities == ["gpu"]
         # options should be None when no gpu_types specified
         assert device.options is None
+
+
+def test_harbor_to_compose_config_with_malformed_yaml(tmp_path: Path):
+    """Test harbor_to_compose_config with malformed YAML file."""
+    # Create task with malformed docker-compose.yaml
+    env_dir = tmp_path / "environment"
+    env_dir.mkdir()
+
+    # Create malformed YAML (unclosed quote)
+    compose_yaml = env_dir / "docker-compose.yaml"
+    compose_yaml.write_text(
+        """
+services:
+  default:
+    image: "test:latest
+    cpus: 1
+    """
+    )
+
+    mock_task = Mock()
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = env_dir
+    mock_task.config = Mock()
+    mock_task.config.environment = Mock()
+    mock_task.config.environment.cpus = 1.0
+    mock_task.config.environment.memory_mb = 2048
+    mock_task.config.environment.gpus = 0
+    mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.docker_image = None
+
+    with pytest.raises(yaml.YAMLError):
+        harbor_to_compose_config(mock_task)

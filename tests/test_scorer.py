@@ -12,6 +12,7 @@ from inspect_harbor.harbor._sandbox_utils import (
     copy_directory_to_sandbox,
 )
 from inspect_harbor.harbor._scorer import (
+    CopyTestsDirError,
     RewardFileEmptyError,
     RewardFileNotFoundError,
     VerifierOutputParseError,
@@ -26,7 +27,7 @@ async def test_parse_reward_txt_valid():
     mock_sandbox = Mock()
     mock_sandbox.read_file = AsyncMock(return_value="0.85")
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
         reward_value, reward_dict = await _parse_reward_file(exit_code=0)
 
         assert reward_value == 0.85
@@ -40,7 +41,7 @@ async def test_parse_reward_txt_empty():
     mock_sandbox = Mock()
     mock_sandbox.read_file = AsyncMock(return_value="   ")
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(RewardFileEmptyError, match="Reward file is empty"):
             await _parse_reward_file(exit_code=0)
 
@@ -51,7 +52,7 @@ async def test_parse_reward_txt_invalid():
     mock_sandbox = Mock()
     mock_sandbox.read_file = AsyncMock(return_value="not a number")
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(
             VerifierOutputParseError, match="Failed to parse reward.txt as float"
         ):
@@ -69,7 +70,7 @@ async def test_parse_reward_json_with_reward_key():
         ]
     )
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
         reward_value, reward_dict = await _parse_reward_file(exit_code=0)
 
         assert reward_value == 1.0
@@ -87,11 +88,37 @@ async def test_parse_reward_json_with_other_keys():
         ]
     )
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
         reward_value, reward_dict = await _parse_reward_file(exit_code=0)
 
         assert reward_value == 0.75
         assert reward_dict == {"score": 0.75}
+
+
+@pytest.mark.asyncio
+async def test_parse_reward_json_with_mixed_types():
+    """Test parsing reward.json with mixed value types (float, str, int, bool)."""
+    mock_sandbox = Mock()
+    mixed_reward = {
+        "reward": 0.8,
+        "status": "passed",
+        "attempts": 3,
+        "success": True,
+        "details": {"accuracy": 0.9},
+    }
+    mock_sandbox.read_file = AsyncMock(
+        side_effect=[
+            FileNotFoundError(),  # reward.txt not found
+            json.dumps(mixed_reward),  # reward.json found with mixed types
+        ]
+    )
+
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+        reward_value, reward_dict = await _parse_reward_file(exit_code=0)
+
+        assert reward_value == 0.8
+        assert reward_dict is not None
+        assert reward_dict == mixed_reward
 
 
 @pytest.mark.asyncio
@@ -105,7 +132,7 @@ async def test_parse_reward_json_empty():
         ]
     )
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(RewardFileEmptyError, match="Reward file is empty"):
             await _parse_reward_file(exit_code=0)
 
@@ -121,7 +148,7 @@ async def test_parse_reward_json_invalid():
         ]
     )
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(
             VerifierOutputParseError, match="Failed to parse reward.json"
         ):
@@ -139,7 +166,7 @@ async def test_parse_reward_neither_file_exists():
         ]
     )
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(
             RewardFileNotFoundError, match="No reward file found.*exit code was 1"
         ):
@@ -157,7 +184,9 @@ async def test_copy_directory_to_sandbox(tmp_path: Path):
     mock_sandbox = Mock()
     mock_sandbox.write_file = AsyncMock()
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch(
+        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+    ):
         await copy_directory_to_sandbox(test_dir, "/tests")
 
         assert mock_sandbox.write_file.call_count == 2
@@ -186,7 +215,9 @@ async def test_copy_nested_directory_to_sandbox(tmp_path: Path):
     mock_sandbox = Mock()
     mock_sandbox.write_file = AsyncMock()
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch(
+        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+    ):
         await copy_directory_to_sandbox(test_dir, "/tests")
 
         assert mock_sandbox.write_file.call_count == 2
@@ -222,7 +253,9 @@ async def test_copy_binary_files_to_sandbox(tmp_path: Path):
     mock_sandbox = Mock()
     mock_sandbox.write_file = AsyncMock()
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch(
+        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+    ):
         await copy_directory_to_sandbox(test_dir, "/tests")
 
         # Should copy all 3 files
@@ -253,7 +286,9 @@ async def test_cleanup_sandbox_directories():
     mock_exec_result.success = True
     mock_sandbox.exec = AsyncMock(return_value=mock_exec_result)
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch(
+        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+    ):
         await cleanup_sandbox_directories("/tests", "/logs/verifier")
 
         # Should call rm -rf for both directories
@@ -272,9 +307,11 @@ async def test_cleanup_sandbox_directories_handles_errors():
     """Test cleanup handles errors gracefully without raising exceptions."""
     mock_sandbox = Mock()
     # Simulate exec failures
-    mock_sandbox.exec = AsyncMock(side_effect=Exception("Directory not found"))
+    mock_sandbox.exec = AsyncMock(side_effect=RuntimeError("Sandbox exec failed"))
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch(
+        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+    ):
         # Should not raise exception
         await cleanup_sandbox_directories("/tests", "/logs/verifier")
 
@@ -290,10 +327,12 @@ async def test_cleanup_sandbox_directories_partial_failure():
     mock_exec_success = Mock()
     mock_exec_success.success = True
     mock_sandbox.exec = AsyncMock(
-        side_effect=[Exception("First removal failed"), mock_exec_success]
+        side_effect=[OSError("Permission denied"), mock_exec_success]
     )
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch(
+        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+    ):
         # Should not raise exception
         await cleanup_sandbox_directories("/tests", "/logs/verifier")
 
@@ -340,9 +379,9 @@ async def test_harbor_scorer_stores_reward_dict_in_metadata(tmp_path: Path):
         ]
     )
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
         with patch(
-            "inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
         ):
             scorer = harbor_scorer()
             result = await scorer(mock_state, mock_target)
@@ -353,6 +392,71 @@ async def test_harbor_scorer_stores_reward_dict_in_metadata(tmp_path: Path):
             assert result.answer == "PASS"
             assert result.metadata is not None
             assert result.metadata["reward_dict"] == reward_json
+
+
+@pytest.mark.asyncio
+async def test_scorer_missing_tests_dir_metadata():
+    """Test scorer raises error when tests_dir metadata is missing."""
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {}  # Missing tests_dir
+    mock_target = Mock(spec=Target)
+
+    scorer = harbor_scorer()
+
+    with pytest.raises(CopyTestsDirError, match="tests_dir not found in metadata"):
+        await scorer(mock_state, mock_target)
+
+
+@pytest.mark.asyncio
+async def test_scorer_missing_test_path_metadata():
+    """Test scorer raises error when test_path metadata is missing."""
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {"tests_dir": "/some/path"}  # Missing test_path
+    mock_target = Mock(spec=Target)
+
+    scorer = harbor_scorer()
+
+    with pytest.raises(CopyTestsDirError, match="test_path not found in metadata"):
+        await scorer(mock_state, mock_target)
+
+
+@pytest.mark.asyncio
+async def test_scorer_tests_directory_not_found():
+    """Test scorer raises error when tests directory doesn't exist."""
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": "/nonexistent/tests",
+        "test_path": "/nonexistent/tests/test.sh",
+    }
+    mock_target = Mock(spec=Target)
+
+    scorer = harbor_scorer()
+
+    with pytest.raises(CopyTestsDirError, match="Tests directory not found"):
+        await scorer(mock_state, mock_target)
+
+
+@pytest.mark.asyncio
+async def test_scorer_test_path_not_relative_to_tests_dir(tmp_path: Path):
+    """Test scorer raises error when test_path is not relative to tests_dir."""
+    # Create a real tests directory
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": "/completely/different/path/test.sh",  # Not relative
+    }
+    mock_target = Mock(spec=Target)
+
+    scorer = harbor_scorer()
+
+    with pytest.raises(
+        CopyTestsDirError,
+        match="Test path .* is not relative to tests directory",
+    ):
+        await scorer(mock_state, mock_target)
 
 
 @pytest.mark.asyncio
@@ -396,9 +500,9 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
     # Mock reward file reading
     mock_sandbox.read_file = AsyncMock(return_value="1.0")
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
         with patch(
-            "inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
         ):
             scorer = harbor_scorer()
             result = await scorer(mock_state, mock_target)

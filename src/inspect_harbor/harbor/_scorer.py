@@ -7,6 +7,7 @@ from typing import Any
 from inspect_ai.scorer import Score, Scorer, Target, accuracy, scorer, stderr
 from inspect_ai.solver import TaskState
 from inspect_ai.util import sandbox
+
 from inspect_harbor.harbor._sandbox_utils import (
     cleanup_sandbox_directories,
     copy_directory_to_sandbox,
@@ -47,8 +48,16 @@ def harbor_scorer(
     """
 
     async def score(state: TaskState, target: Target) -> Score:  # noqa: ARG001
-        tests_dir = Path(state.metadata.get("tests_dir", ""))
-        test_path = Path(state.metadata.get("test_path", ""))
+        tests_dir = state.metadata.get("tests_dir")
+        test_path = state.metadata.get("test_path")
+
+        if not tests_dir:
+            raise CopyTestsDirError("tests_dir not found in metadata")
+        if not test_path:
+            raise CopyTestsDirError("test_path not found in metadata")
+
+        tests_dir = Path(tests_dir)
+        test_path = Path(test_path)
         verifier_timeout_sec = state.metadata.get(
             "verifier_timeout_sec", default_verifier_timeout_sec
         )
@@ -64,9 +73,10 @@ def harbor_scorer(
         try:
             relative_test_path = test_path.relative_to(tests_dir)
             container_test_path = f"/tests/{relative_test_path}".replace("\\", "/")
-        except ValueError:
-            # Fallback if relative path resolution fails
-            container_test_path = "/tests/test.sh"
+        except ValueError as e:
+            raise CopyTestsDirError(
+                f"Test path {test_path} is not relative to tests directory {tests_dir}"
+            ) from e
 
         result = await sandbox().exec(
             ["bash", "-l", container_test_path],

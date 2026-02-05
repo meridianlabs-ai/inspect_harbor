@@ -1,6 +1,7 @@
 """Tests for Harbor task."""
 
 from pathlib import Path
+from typing import Any
 from unittest.mock import Mock, patch
 
 import pytest
@@ -11,8 +12,8 @@ from inspect_harbor.harbor._task import _get_max_timeout_sec, load_harbor_tasks
 def test_load_local_single_task():
     """Test loading a single local task."""
     with (
-        patch("inspect_harbor._task._load_local_path") as mock_load_local,
-        patch("inspect_harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor.harbor._task._load_local_path") as mock_load_local,
+        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
     ):
         # Setup mocks - _load_local_path returns list of Path objects
         task_path = Path("/local/path/to/task")
@@ -42,8 +43,8 @@ def test_load_local_single_task():
 def test_load_git_task():
     """Test loading a task from git repository."""
     with (
-        patch("inspect_harbor._task._load_git_task") as mock_load_git,
-        patch("inspect_harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor.harbor._task._load_git_task") as mock_load_git,
+        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
     ):
         # Setup mocks - _load_git_task returns list of Path objects
         task_path = Path("/cache/downloaded/task")
@@ -76,8 +77,8 @@ def test_load_git_task():
 def test_load_local_dataset():
     """Test loading multiple tasks from a local dataset directory."""
     with (
-        patch("inspect_harbor._task._load_local_path") as mock_load_local,
-        patch("inspect_harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor.harbor._task._load_local_path") as mock_load_local,
+        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
     ):
         # Setup mocks - _load_local_path returns list of Path objects
         task_path_1 = Path("/dataset/task1")
@@ -109,8 +110,8 @@ def test_load_local_dataset():
 def test_load_from_registry():
     """Test loading tasks from a registry dataset."""
     with (
-        patch("inspect_harbor._task._load_from_registry") as mock_load_registry,
-        patch("inspect_harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor.harbor._task._load_from_registry") as mock_load_registry,
+        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
     ):
         # Setup mocks - _load_from_registry returns list of Path objects
         task_path = Path("/cache/registry/task")
@@ -141,8 +142,8 @@ def test_load_from_registry():
 def test_load_git_task_with_overwrite_cache():
     """Test loading a git task with overwrite_cache=True."""
     with (
-        patch("inspect_harbor._task._load_git_task") as mock_load_git,
-        patch("inspect_harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor.harbor._task._load_git_task") as mock_load_git,
+        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
     ):
         # Setup mocks
         task_path = Path("/cache/downloaded/task")
@@ -173,8 +174,8 @@ def test_load_git_task_with_overwrite_cache():
 def test_load_registry_with_overwrite_cache():
     """Test loading a registry dataset with overwrite_cache=True."""
     with (
-        patch("inspect_harbor._task._load_from_registry") as mock_load_registry,
-        patch("inspect_harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor.harbor._task._load_from_registry") as mock_load_registry,
+        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
     ):
         # Setup mocks
         task_path = Path("/cache/registry/task")
@@ -227,7 +228,9 @@ def test_load_registry_with_overwrite_cache():
         ),
     ],
 )
-def test_load_harbor_tasks_validation_errors(kwargs, expected_match):
+def test_load_harbor_tasks_validation_errors(
+    kwargs: dict[str, Any], expected_match: str
+) -> None:
     """Test validation errors for invalid parameter combinations."""
     with pytest.raises(ValueError, match=expected_match):
         load_harbor_tasks(**kwargs)
@@ -258,11 +261,16 @@ def test_load_harbor_tasks_validation_errors(kwargs, expected_match):
         ),
     ],
 )
-def test_load_harbor_tasks_parameter_passing(kwargs, expected_call_args):
+def test_load_harbor_tasks_parameter_passing(
+    kwargs: dict[str, Any],
+    expected_call_args: tuple[
+        Path, list[str] | None, list[str] | None, int | None, bool
+    ],
+) -> None:
     """Test that parameters are correctly passed to internal functions."""
     with (
-        patch("inspect_harbor._task._load_local_path") as mock_load_local,
-        patch("inspect_harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor.harbor._task._load_local_path") as mock_load_local,
+        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
     ):
         task_path = Path("/mock/path")
         mock_load_local.return_value = [task_path]
@@ -284,7 +292,9 @@ def test_load_harbor_tasks_parameter_passing(kwargs, expected_call_args):
         ([], None),  # Empty list returns None
     ],
 )
-def test_get_max_timeout_sec(timeout_values, expected):
+def test_get_max_timeout_sec(
+    timeout_values: list[int | float], expected: int | None
+) -> None:
     """Test _get_max_timeout_sec with various inputs."""
     tasks = []
     for val in timeout_values:
@@ -298,3 +308,48 @@ def test_get_max_timeout_sec(timeout_values, expected):
     assert result == expected
     if expected is not None:
         assert isinstance(result, int)
+
+
+def test_harbor_task_integration():
+    """Integration test: Load a real Harbor task and verify Task object."""
+    from inspect_harbor.harbor._task import harbor
+
+    # Load the test Harbor task fixture
+    task_path = Path(__file__).parent / "fixtures" / "simple_task"
+    assert task_path.exists(), f"Test fixture not found at {task_path}"
+
+    # Call harbor() to load the task
+    task = harbor(path=task_path)
+
+    # Verify Task object properties
+    assert task is not None
+    assert hasattr(task, "dataset")
+    assert hasattr(task, "solver")
+    assert hasattr(task, "scorer")
+
+    # Verify dataset has samples
+    assert len(task.dataset) == 1
+
+    # Verify sample structure
+    sample = task.dataset[0]
+    assert sample.id == "simple_task"
+    assert sample.input is not None
+    assert "Simple Addition Task" in sample.input or "2 + 2" in sample.input
+
+    # Verify metadata
+    assert sample.metadata is not None
+    assert sample.metadata["task_name"] == "simple_task"
+    assert "test_path" in sample.metadata
+
+
+def test_harbor_task_kwargs_passthrough():
+    """Test that kwargs are passed through to Task constructor."""
+    from inspect_harbor.harbor._task import harbor
+
+    task_path = Path(__file__).parent / "fixtures" / "simple_task"
+
+    # Call harbor() with additional kwargs
+    task = harbor(path=task_path, message_limit=50)
+
+    # Verify kwargs were passed through to Task
+    assert task.message_limit == 50

@@ -1,6 +1,7 @@
 """Inspect AI Task interface to Harbor tasks"""
 
 from pathlib import Path
+from typing import Any
 
 from harbor.dataset.client import DatasetClient
 from harbor.models.job.config import LocalDatasetConfig, RegistryDatasetConfig
@@ -14,6 +15,7 @@ from inspect_ai.agent import react
 from inspect_ai.model import CompactionEdit
 from inspect_ai.solver import Solver
 from inspect_ai.tool import bash, memory, python, update_plan
+
 from inspect_harbor.harbor._converters import harbor_task_to_sample
 from inspect_harbor.harbor._scorer import harbor_scorer
 
@@ -31,7 +33,9 @@ def harbor(
     n_tasks: int | None = None,
     disable_verification: bool = False,
     overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
     solver: Solver | None = None,
+    **kwargs: Any,
 ) -> Task:
     """Harbor task loader for Inspect AI.
 
@@ -48,7 +52,9 @@ def harbor(
         n_tasks: Maximum number of tasks to include (applied after task_names/exclude_task_names filtering).
         disable_verification: Disable task verification.
         overwrite_cache: Force re-download and overwrite cached tasks (default: False).
+        sandbox_env_name: Sandbox environment name (default: "docker").
         solver: Optional custom solver. If None, uses react() with bash/python tools.
+        **kwargs: Additional keyword arguments passed through to Task() (e.g., message_limit, epochs, fail_on_error).
 
     Returns:
         Task: Configured Inspect AI task
@@ -67,7 +73,10 @@ def harbor(
         overwrite_cache=overwrite_cache,
     )
 
-    samples = [harbor_task_to_sample(ht) for ht in harbor_task_objects]
+    samples = [
+        harbor_task_to_sample(ht, sandbox_env_name=sandbox_env_name)
+        for ht in harbor_task_objects
+    ]
     max_timeout = _get_max_timeout_sec(harbor_task_objects)
 
     return Task(
@@ -79,6 +88,7 @@ def harbor(
         ),
         scorer=harbor_scorer(),
         time_limit=max_timeout,
+        **kwargs,
     )
 
 
@@ -134,7 +144,9 @@ def load_harbor_tasks(
 
     if path is not None:
         if task_git_url:
-            task_paths = _load_git_task(path, task_git_url, task_git_commit_id, overwrite_cache)
+            task_paths = _load_git_task(
+                path, task_git_url, task_git_commit_id, overwrite_cache
+            )
         else:
             task_paths = _load_local_path(
                 path,
