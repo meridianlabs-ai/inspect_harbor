@@ -1,16 +1,8 @@
 # Inspect Harbor
 
-Inspect AI adapter for Harbor tasks. This package provides an interface to run [Harbor](https://github.com/meridianlabs-ai/harbor) evaluation tasks using [Inspect AI](https://inspect.ai-safety-institute.org.uk/).
+This package provides an interface to run [Harbor](https://github.com/meridianlabs-ai/harbor) tasks using [Inspect AI](https://inspect.ai-safety-institute.org.uk/).
 
 ## Installation
-
-Using pip:
-
-```bash
-git clone https://github.com/meridianlabs-ai/inspect_harbor.git
-cd inspect_harbor
-pip install -e .
-```
 
 Using uv:
 
@@ -18,6 +10,14 @@ Using uv:
 git clone https://github.com/meridianlabs-ai/inspect_harbor.git
 cd inspect_harbor
 uv sync
+```
+
+Using pip:
+
+```bash
+git clone https://github.com/meridianlabs-ai/inspect_harbor.git
+cd inspect_harbor
+pip install -e .
 ```
 
 ## Usage
@@ -33,16 +33,7 @@ inspect eval inspect_harbor/harbor \
   --solver inspect_harbor/oracle
 ```
 
-To force re-download of cached tasks:
-
-```bash
-inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="aime@1.0" \
-  -T overwrite_cache=true \
-  --solver inspect_harbor/oracle
-```
-
-### Running Tasks with AI Models
+### Running Tasks with Models
 
 Use the default react solver to evaluate model performance:
 
@@ -85,17 +76,9 @@ inspect eval inspect_harbor/harbor \
 #### From Local Path
 
 ```bash
-# Run a single local task
+# Run a single local task or dataset
 inspect eval inspect_harbor/harbor \
-  -T path="/path/to/task/directory" \
-  --model openai/gpt-4o-mini
-```
-
-```bash
-# Run tasks from a local dataset directory
-inspect eval inspect_harbor/harbor \
-  -T path="/path/to/dataset/directory" \
-  -T n_tasks=5 \
+  -T path="/path/to/task_or_dataset/directory" \
   --model openai/gpt-4o-mini
 ```
 
@@ -107,32 +90,6 @@ inspect eval inspect_harbor/harbor \
   -T path="aime_i-9" \
   -T task_git_url="https://github.com/example/tasks.git" \
   -T task_git_commit_id="abc123" \
-  --model openai/gpt-4o-mini
-```
-
-### Filtering Tasks
-
-```bash
-# Run specific tasks by name (supports glob patterns)
-inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="aime@1.0" \
-  -T dataset_task_names='["aime_*", "task-42"]' \
-  --model openai/gpt-4o-mini
-```
-
-```bash
-# Exclude specific tasks (supports glob patterns)
-inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="aime@1.0" \
-  -T dataset_exclude_task_names='["*_test", "debug_*"]' \
-  --model openai/gpt-4o-mini
-```
-
-```bash
-# Limit number of tasks
-inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="aime@1.0" \
-  -T n_tasks=10 \
   --model openai/gpt-4o-mini
 ```
 
@@ -151,33 +108,34 @@ inspect eval inspect_harbor/harbor \
 | `n_tasks` | Maximum number of tasks to run |
 | `disable_verification` | Skip task verification checks |
 | `overwrite_cache` | Force re-download and overwrite cached tasks (default: `false`). Works for both git tasks and registry datasets. |
+| `sandbox_env_name` | Sandbox environment name (default: `"docker"`) |
 | `solver` | Custom solver (defaults to react with bash/python tools) |
+| `**kwargs` | Additional keyword arguments passed to `Task()` (e.g., `message_limit`, `epochs`, `fail_on_error`) |
 
 ## Development
 
 Install development dependencies:
 
-Using pip:
-
 ```bash
-pip install -e ".[dev]"
+make install  # Installs dependencies and sets up pre-commit hooks
 ```
 
-Using uv:
+Or manually using uv:
 
 ```bash
-uv sync  # Dev dependencies are included by default
+uv sync
 ```
 
 Run tests and checks:
 
 ```bash
-# Run tests
-pytest
+make check    # Run linting (ruff check + format) and type checking (pyright)
+make test     # Run tests
+make cov      # Run tests with coverage report
+```
 
-# Run type checking
-pyright
+Clean up build artifacts:
 
-# Run linting
-ruff check
+```bash
+make clean    # Remove cache and build artifacts
 ```
