@@ -5,12 +5,16 @@ from pathlib import Path
 from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
+from inspect_ai.scorer import Target
+from inspect_ai.solver import TaskState
 from inspect_harbor._sandbox_utils import copy_directory_to_sandbox
 from inspect_harbor._scorer import (
     RewardFileEmptyError,
     RewardFileNotFoundError,
     VerifierOutputParseError,
+    _cleanup_scoring_files,
     _parse_reward_file,
+    harbor_scorer,
 )
 
 
@@ -20,7 +24,7 @@ async def test_parse_reward_txt_valid():
     mock_sandbox = Mock()
     mock_sandbox.read_file = AsyncMock(return_value="0.85")
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
         result = await _parse_reward_file(exit_code=0)
 
         assert result == 0.85
@@ -33,7 +37,7 @@ async def test_parse_reward_txt_empty():
     mock_sandbox = Mock()
     mock_sandbox.read_file = AsyncMock(return_value="   ")
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(RewardFileEmptyError, match="Reward file is empty"):
             await _parse_reward_file(exit_code=0)
 
@@ -44,7 +48,7 @@ async def test_parse_reward_txt_invalid():
     mock_sandbox = Mock()
     mock_sandbox.read_file = AsyncMock(return_value="not a number")
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(
             VerifierOutputParseError, match="Failed to parse reward.txt as float"
         ):
@@ -62,7 +66,7 @@ async def test_parse_reward_json_with_reward_key():
         ]
     )
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
         result = await _parse_reward_file(exit_code=0)
 
         assert result == 1.0
@@ -79,7 +83,7 @@ async def test_parse_reward_json_with_other_keys():
         ]
     )
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
         result = await _parse_reward_file(exit_code=0)
 
         assert result == 0.75
@@ -96,7 +100,7 @@ async def test_parse_reward_json_empty():
         ]
     )
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(RewardFileEmptyError, match="Reward file is empty"):
             await _parse_reward_file(exit_code=0)
 
@@ -112,7 +116,7 @@ async def test_parse_reward_json_invalid():
         ]
     )
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(
             VerifierOutputParseError, match="Failed to parse reward.json"
         ):
@@ -130,7 +134,7 @@ async def test_parse_reward_neither_file_exists():
         ]
     )
 
-    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(
             RewardFileNotFoundError, match="No reward file found.*exit code was 1"
         ):
@@ -234,3 +238,124 @@ async def test_copy_binary_files_to_sandbox(tmp_path: Path):
         assert "/tests/module.pyc" in calls_dict
         assert calls_dict["/tests/module.pyc"] == pyc_content
         assert isinstance(calls_dict["/tests/module.pyc"], bytes)
+
+
+@pytest.mark.asyncio
+async def test_cleanup_scoring_files():
+    """Test cleanup removes /tests and /logs/verifier directories."""
+    mock_sandbox = Mock()
+    mock_exec_result = Mock()
+    mock_exec_result.success = True
+    mock_sandbox.exec = AsyncMock(return_value=mock_exec_result)
+
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+        await _cleanup_scoring_files()
+
+        # Should call rm -rf for both directories
+        assert mock_sandbox.exec.call_count == 2
+        calls = mock_sandbox.exec.call_args_list
+
+        # Check /tests directory removal
+        assert calls[0][0][0] == ["rm", "-rf", "/tests"]
+
+        # Check /logs/verifier directory removal
+        assert calls[1][0][0] == ["rm", "-rf", "/logs/verifier"]
+
+
+@pytest.mark.asyncio
+async def test_cleanup_scoring_files_handles_errors():
+    """Test cleanup handles errors gracefully without raising exceptions."""
+    mock_sandbox = Mock()
+    # Simulate exec failures
+    mock_sandbox.exec = AsyncMock(side_effect=Exception("Directory not found"))
+
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+        # Should not raise exception
+        await _cleanup_scoring_files()
+
+        # Should still attempt both cleanups despite errors
+        assert mock_sandbox.exec.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_cleanup_scoring_files_partial_failure():
+    """Test cleanup continues even if first removal fails."""
+    mock_sandbox = Mock()
+    # First call fails, second succeeds
+    mock_exec_success = Mock()
+    mock_exec_success.success = True
+    mock_sandbox.exec = AsyncMock(
+        side_effect=[Exception("First removal failed"), mock_exec_success]
+    )
+
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+        # Should not raise exception
+        await _cleanup_scoring_files()
+
+        # Should attempt both cleanups
+        assert mock_sandbox.exec.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
+    """Test that harbor_scorer calls cleanup after scoring completes."""
+    # Create temporary test directory
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    # Setup mock state
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+    }
+
+    mock_target = Mock(spec=Target)
+
+    # Setup mock sandbox
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+
+    # Mock exec for test script execution
+    mock_exec_result = Mock()
+    mock_exec_result.returncode = 0
+    mock_exec_result.stdout = "test output"
+    mock_exec_result.stderr = ""
+
+    # Track exec calls: first for test script, then for cleanup (2 rm calls)
+    exec_calls: list[list[str]] = []
+
+    async def track_exec(cmd: list[str], **_kwargs: object) -> Mock:
+        exec_calls.append(cmd)
+        return mock_exec_result
+
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+
+    # Mock reward file reading
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+        with patch(
+            "inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ):
+            scorer = harbor_scorer()
+            result = await scorer(mock_state, mock_target)
+
+            # Verify scoring completed successfully
+            assert result is not None
+            assert result.value == 1.0
+            assert result.answer == "PASS"
+
+            # Verify cleanup was called AFTER scoring
+            # Should have: [test script execution, rm /tests, rm /logs/verifier]
+            assert len(exec_calls) >= 3
+            assert exec_calls[0] == ["bash", "/tests/test.sh"]  # Test execution
+            assert exec_calls[-2] == ["rm", "-rf", "/tests"]  # Cleanup /tests
+            assert exec_calls[-1] == [
+                "rm",
+                "-rf",
+                "/logs/verifier",
+            ]  # Cleanup /logs/verifier

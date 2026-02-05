@@ -33,13 +33,14 @@ def harbor_scorer(
     """Scorer for Harbor tasks.
 
     Copies test files to the sandbox at scoring time (after agent submission),
-    runs the test script, and reads the reward file to determine the score.
+    runs the test script, reads the reward file to determine the score, and
+    cleans up scoring files to ensure a clean state for subsequent attempts.
 
     Args:
         default_verifier_timeout_sec: Default timeout if not in metadata. Defaults to 600s.
 
     Returns:
-        Scorer that copies tests, runs them, and returns the score.
+        Scorer that copies tests, runs them, returns the score, and cleans up.
     """
 
     async def score(state: TaskState, target: Target) -> Score:  # noqa: ARG001
@@ -72,13 +73,33 @@ def harbor_scorer(
         reward_value = await _parse_reward_file(result.returncode)
         passed = reward_value > 0
 
-        return Score(
+        score_result = Score(
             value=reward_value,
             answer="PASS" if passed else "FAIL",
             explanation=f"Test exit code: {result.returncode}\n\nstdout:\n{result.stdout}\n\nstderr:\n{result.stderr}",
         )
 
+        await _cleanup_scoring_files()
+
+        return score_result
+
     return score
+
+
+async def _cleanup_scoring_files() -> None:
+    """Clean up scoring-related files from previous attempts.
+
+    Removes the /tests directory and /logs/verifier directories.
+    """
+    try:
+        await sandbox().exec(["rm", "-rf", "/tests"])
+    except Exception:
+        pass
+
+    try:
+        await sandbox().exec(["rm", "-rf", "/logs/verifier"])
+    except Exception:
+        pass
 
 
 async def _parse_reward_file(exit_code: int) -> float:
