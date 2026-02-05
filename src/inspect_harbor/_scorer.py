@@ -2,6 +2,7 @@
 
 import json
 from pathlib import Path
+from typing import Any
 
 from inspect_ai.scorer import Score, Scorer, Target, accuracy, scorer, stderr
 from inspect_ai.solver import TaskState
@@ -70,13 +71,14 @@ def harbor_scorer(
             timeout=int(verifier_timeout_sec),
         )
 
-        reward_value = await _parse_reward_file(result.returncode)
+        reward_value, reward_dict = await _parse_reward_file(result.returncode)
         passed = reward_value > 0
 
         score_result = Score(
             value=reward_value,
             answer="PASS" if passed else "FAIL",
             explanation=f"Test exit code: {result.returncode}\n\nstdout:\n{result.stdout}\n\nstderr:\n{result.stderr}",
+            metadata={"reward_dict": reward_dict} if reward_dict else None,
         )
 
         await _cleanup_scoring_files()
@@ -102,14 +104,14 @@ async def _cleanup_scoring_files() -> None:
         pass
 
 
-async def _parse_reward_file(exit_code: int) -> float:
+async def _parse_reward_file(exit_code: int) -> tuple[float, dict[str, Any] | None]:
     """Parse reward from either reward.txt or reward.json.
 
     Args:
         exit_code: Test script exit code.
 
     Returns:
-        Reward value as float.
+        Tuple of (reward value as float, reward dict if from JSON else None).
 
     Raises:
         RewardFileEmptyError: When reward file exists but is empty.
@@ -125,7 +127,7 @@ async def _parse_reward_file(exit_code: int) -> float:
             raise RewardFileEmptyError(f"Reward file is empty: {reward_text_path}")
 
         try:
-            return float(reward_content.strip())
+            return float(reward_content.strip()), None
         except (ValueError, TypeError) as e:
             raise VerifierOutputParseError(
                 f"Failed to parse reward.txt as float: {reward_content[:100]}"
@@ -142,10 +144,10 @@ async def _parse_reward_file(exit_code: int) -> float:
                 # If dict has "reward" key, use it; otherwise use first value
                 if isinstance(reward_dict, dict):
                     if "reward" in reward_dict:
-                        return float(reward_dict["reward"])
+                        return float(reward_dict["reward"]), reward_dict
                     # Use first value from dict
                     elif reward_dict:
-                        return float(next(iter(reward_dict.values())))
+                        return float(next(iter(reward_dict.values()))), reward_dict
                 raise VerifierOutputParseError(
                     f"Reward JSON is not a valid dict or is empty: {reward_json_content[:100]}"
                 )

@@ -25,9 +25,10 @@ async def test_parse_reward_txt_valid():
     mock_sandbox.read_file = AsyncMock(return_value="0.85")
 
     with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
-        result = await _parse_reward_file(exit_code=0)
+        reward_value, reward_dict = await _parse_reward_file(exit_code=0)
 
-        assert result == 0.85
+        assert reward_value == 0.85
+        assert reward_dict is None
         mock_sandbox.read_file.assert_called_once_with("/logs/verifier/reward.txt")
 
 
@@ -67,9 +68,10 @@ async def test_parse_reward_json_with_reward_key():
     )
 
     with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
-        result = await _parse_reward_file(exit_code=0)
+        reward_value, reward_dict = await _parse_reward_file(exit_code=0)
 
-        assert result == 1.0
+        assert reward_value == 1.0
+        assert reward_dict == {"reward": 1.0, "other": 0.5}
 
 
 @pytest.mark.asyncio
@@ -84,9 +86,10 @@ async def test_parse_reward_json_with_other_keys():
     )
 
     with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
-        result = await _parse_reward_file(exit_code=0)
+        reward_value, reward_dict = await _parse_reward_file(exit_code=0)
 
-        assert result == 0.75
+        assert reward_value == 0.75
+        assert reward_dict == {"score": 0.75}
 
 
 @pytest.mark.asyncio
@@ -297,6 +300,60 @@ async def test_cleanup_scoring_files_partial_failure():
 
 
 @pytest.mark.asyncio
+async def test_harbor_scorer_stores_reward_dict_in_metadata(tmp_path: Path):
+    """Test that harbor_scorer stores reward_dict in Score.metadata when using JSON."""
+    # Create temporary test directory
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    # Setup mock state
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+    }
+
+    mock_target = Mock(spec=Target)
+
+    # Setup mock sandbox
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+
+    # Mock exec for test script execution
+    mock_exec_result = Mock()
+    mock_exec_result.returncode = 0
+    mock_exec_result.stdout = "test output"
+    mock_exec_result.stderr = ""
+    mock_sandbox.exec = AsyncMock(return_value=mock_exec_result)
+
+    # Mock reward file reading - return JSON with multiple keys
+    reward_json = {"reward": 0.8, "accuracy": 0.9, "completion": 0.7}
+    mock_sandbox.read_file = AsyncMock(
+        side_effect=[
+            FileNotFoundError(),  # reward.txt not found
+            json.dumps(reward_json),  # reward.json found
+        ]
+    )
+
+    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+        with patch(
+            "inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ):
+            scorer = harbor_scorer()
+            result = await scorer(mock_state, mock_target)
+
+            # Verify scoring completed successfully
+            assert result is not None
+            assert result.value == 0.8
+            assert result.answer == "PASS"
+            assert result.metadata is not None
+            assert result.metadata["reward_dict"] == reward_json
+
+
+@pytest.mark.asyncio
 async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
     """Test that harbor_scorer calls cleanup after scoring completes."""
     # Create temporary test directory
@@ -348,6 +405,7 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
             assert result is not None
             assert result.value == 1.0
             assert result.answer == "PASS"
+            assert result.metadata is None  # reward.txt returns None for reward_dict
 
             # Verify cleanup was called AFTER scoring
             # Should have: [test script execution, rm /tests, rm /logs/verifier]
