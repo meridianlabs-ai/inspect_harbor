@@ -68,6 +68,7 @@ def test_load_git_task():
             Path("task-name"),
             "https://github.com/org/repo",
             "abc123",
+            False,  # overwrite_cache default
         )
         mock_harbor_task.assert_called_once_with(task_dir=task_path)
 
@@ -132,8 +133,75 @@ def test_load_from_registry():
             None,  # dataset_task_names
             None,  # dataset_exclude_task_names
             5,  # n_tasks
+            False,  # overwrite_cache default
         )
         mock_harbor_task.assert_called_once_with(task_dir=task_path)
+
+
+def test_load_git_task_with_overwrite_cache():
+    """Test loading a git task with overwrite_cache=True."""
+    with (
+        patch("inspect_harbor._task._load_git_task") as mock_load_git,
+        patch("inspect_harbor._task.HarborTask") as mock_harbor_task,
+    ):
+        # Setup mocks
+        task_path = Path("/cache/downloaded/task")
+        mock_load_git.return_value = [task_path]
+
+        mock_task = Mock(spec=HarborTask)
+        mock_task.name = "git-task"
+        mock_harbor_task.return_value = mock_task
+
+        # Execute with overwrite_cache=True
+        result = load_harbor_tasks(
+            path="task-name",
+            task_git_url="https://github.com/org/repo",
+            task_git_commit_id="abc123",
+            overwrite_cache=True,
+        )
+
+        # Assert overwrite_cache is passed correctly
+        assert len(result) == 1
+        mock_load_git.assert_called_once_with(
+            Path("task-name"),
+            "https://github.com/org/repo",
+            "abc123",
+            True,  # overwrite_cache=True
+        )
+
+
+def test_load_registry_with_overwrite_cache():
+    """Test loading a registry dataset with overwrite_cache=True."""
+    with (
+        patch("inspect_harbor._task._load_from_registry") as mock_load_registry,
+        patch("inspect_harbor._task.HarborTask") as mock_harbor_task,
+    ):
+        # Setup mocks
+        task_path = Path("/cache/registry/task")
+        mock_load_registry.return_value = [task_path]
+
+        mock_task = Mock(spec=HarborTask)
+        mock_task.name = "registry-task"
+        mock_harbor_task.return_value = mock_task
+
+        # Execute with overwrite_cache=True
+        result = load_harbor_tasks(
+            dataset_name_version="test-dataset@1.0",
+            n_tasks=5,
+            overwrite_cache=True,
+        )
+
+        # Assert overwrite_cache is passed correctly
+        assert len(result) == 1
+        mock_load_registry.assert_called_once_with(
+            "test-dataset@1.0",
+            None,  # registry_url
+            None,  # registry_path
+            None,  # dataset_task_names
+            None,  # dataset_exclude_task_names
+            5,  # n_tasks
+            True,  # overwrite_cache=True
+        )
 
 
 @pytest.mark.parametrize(

@@ -30,6 +30,7 @@ def harbor_task(
     dataset_exclude_task_names: list[str] | None = None,
     n_tasks: int | None = None,
     disable_verification: bool = False,
+    overwrite_cache: bool = False,
     solver: Solver | None = None,
 ) -> Task:
     """Harbor task loader for Inspect AI.
@@ -46,6 +47,7 @@ def harbor_task(
         dataset_exclude_task_names: Task names to exclude from dataset (supports glob patterns, multiple values).
         n_tasks: Maximum number of tasks to include (applied after task_names/exclude_task_names filtering).
         disable_verification: Disable task verification.
+        overwrite_cache: Force re-download and overwrite cached tasks (default: False).
         solver: Optional custom solver. If None, uses react() with bash/python tools.
 
     Returns:
@@ -62,6 +64,7 @@ def harbor_task(
         dataset_exclude_task_names=dataset_exclude_task_names,
         n_tasks=n_tasks,
         disable_verification=disable_verification,
+        overwrite_cache=overwrite_cache,
     )
 
     samples = [harbor_task_to_sample(ht) for ht in harbor_task_objects]
@@ -89,6 +92,7 @@ def load_harbor_tasks(
     dataset_exclude_task_names: list[str] | None = None,
     n_tasks: int | None = None,
     disable_verification: bool = False,
+    overwrite_cache: bool = False,
 ) -> list[HarborTask]:
     """Load Harbor tasks from various sources.
 
@@ -104,6 +108,7 @@ def load_harbor_tasks(
         dataset_exclude_task_names: Task names to exclude from dataset (supports glob patterns, multiple values).
         n_tasks: Maximum number of tasks to include (applied after task_names/exclude_task_names filtering).
         disable_verification: Disable task verification.
+        overwrite_cache: Force re-download and overwrite cached tasks.
 
     Returns:
         list[HarborTask]: List of loaded Harbor task objects.
@@ -128,7 +133,7 @@ def load_harbor_tasks(
 
     if path is not None:
         if task_git_url:
-            task_paths = _load_git_task(path, task_git_url, task_git_commit_id)
+            task_paths = _load_git_task(path, task_git_url, task_git_commit_id, overwrite_cache)
         else:
             task_paths = _load_local_path(
                 path,
@@ -156,6 +161,7 @@ def load_harbor_tasks(
             dataset_task_names,
             dataset_exclude_task_names,
             n_tasks,
+            overwrite_cache,
         )
         return [HarborTask(task_dir=task_path) for task_path in task_paths]
 
@@ -171,6 +177,7 @@ def _load_git_task(
     path: Path,
     task_git_url: str,
     task_git_commit_id: str | None,
+    overwrite_cache: bool,
 ) -> list[Path]:
     """Load a task from a git repository."""
     task_config = TaskConfig(
@@ -178,7 +185,7 @@ def _load_git_task(
     )
     task_client = TaskClient()
     return task_client.download_tasks(
-        task_ids=[task_config.get_task_id()], overwrite=False
+        task_ids=[task_config.get_task_id()], overwrite=overwrite_cache
     )
 
 
@@ -215,6 +222,7 @@ def _load_from_registry(
     dataset_task_names: list[str] | None,
     dataset_exclude_task_names: list[str] | None,
     n_tasks: int | None,
+    overwrite_cache: bool,
 ) -> list[Path]:
     """Load tasks from a registry dataset."""
     if "@" in dataset_name_version:
@@ -236,6 +244,7 @@ def _load_from_registry(
         task_names=dataset_task_names,
         exclude_task_names=dataset_exclude_task_names,
         n_tasks=n_tasks,
+        overwrite=overwrite_cache,
     )
     dataset_client = DatasetClient()
     downloaded_tasks = dataset_client.download_dataset_from_config(dataset_config)

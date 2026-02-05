@@ -33,6 +33,15 @@ inspect eval src/inspect_harbor/_task.py@harbor_task \
   --solver inspect_harbor/oracle
 ```
 
+To force re-download of cached tasks:
+
+```bash
+inspect eval src/inspect_harbor/_task.py@harbor_task \
+  -T dataset_name_version="aime@1.0" \
+  -T overwrite_cache=true \
+  --solver inspect_harbor/oracle
+```
+
 ### Running Tasks with AI Models
 
 Use the default react solver to evaluate model performance:
@@ -141,6 +150,7 @@ inspect eval src/inspect_harbor/_task.py@harbor_task \
 | `dataset_exclude_task_names` | List of task names to exclude (supports glob patterns) |
 | `n_tasks` | Maximum number of tasks to run |
 | `disable_verification` | Skip task verification checks |
+| `overwrite_cache` | Force re-download and overwrite cached tasks (default: `false`). Works for both git tasks and registry datasets. |
 | `solver` | Custom solver (defaults to react with bash/python tools) |
 
 ## Development
