@@ -9,6 +9,12 @@ from inspect_ai.util import (
     ComposeService,
     SandboxEnvironmentSpec,
 )
+from inspect_ai.util._sandbox.compose import (
+    ComposeDeploy,
+    ComposeDeviceReservation,
+    ComposeResourceConfig,
+    ComposeResourceReservations,
+)
 
 
 def harbor_to_compose_config(harbor_task: HarborTask) -> ComposeConfig:
@@ -17,6 +23,15 @@ def harbor_to_compose_config(harbor_task: HarborTask) -> ComposeConfig:
     compose_yaml_path = env_dir / "docker-compose.yaml"
     dockerfile_path = env_dir / "Dockerfile"
     env_config = harbor_task.config.environment
+
+    # Extract resource configuration from Harbor config
+    cpus = float(env_config.cpus) if env_config.cpus is not None else 1.0
+    memory_mb = env_config.memory_mb if env_config.memory_mb is not None else 2048
+    gpus = env_config.gpus if env_config.gpus is not None else 0
+    gpu_types = env_config.gpu_types
+    # Note: storage_mb is not currently supported by Inspect AI's ComposeService
+
+    gpu_deploy = _create_gpu_deploy_config(gpus, gpu_types)
 
     # Use existing docker-compose.yaml if present
     if compose_yaml_path.exists():
@@ -27,38 +42,33 @@ def harbor_to_compose_config(harbor_task: HarborTask) -> ComposeConfig:
 
         # Apply resource limits from Harbor config to services
         if compose_config.services:
-            cpus = float(env_config.cpus) if env_config.cpus is not None else 1.0
-            memory_mb = env_config.memory_mb if env_config.memory_mb is not None else 2048
-            # Note: storage_mb is not currently supported by Inspect AI's ComposeService
-
             for service in compose_config.services.values():
                 service.cpus = cpus
                 service.mem_limit = f"{memory_mb}m"
+                if gpu_deploy:
+                    service.deploy = gpu_deploy
 
         return compose_config
+    else:
+        # Build programmatically from Dockerfile or docker_image
+        service = ComposeService(
+            # Use prebuilt image if specified, otherwise will build from Dockerfile
+            image=env_config.docker_image if env_config.docker_image else None,
+            # Use Dockerfile if it exists and no prebuilt image specified
+            build=(
+                ComposeBuild(context=str(env_dir))
+                if dockerfile_path.exists() and not env_config.docker_image
+                else None
+            ),
+            cpus=cpus,
+            mem_limit=f"{memory_mb}m",
+            command="tail -f /dev/null",
+            init=True,
+            network_mode="bridge" if env_config.allow_internet else "none",
+            deploy=gpu_deploy,
+        )
 
-    # Build programmatically from Dockerfile or docker_image
-    cpus = float(env_config.cpus) if env_config.cpus is not None else 1.0
-    memory_mb = env_config.memory_mb if env_config.memory_mb is not None else 2048
-    # Note: storage_mb is not currently supported by Inspect AI's ComposeService
-
-    service = ComposeService(
-        # Use prebuilt image if specified, otherwise will build from Dockerfile
-        image=env_config.docker_image if env_config.docker_image else None,
-        # Use Dockerfile if it exists and no prebuilt image specified
-        build=(
-            ComposeBuild(context=str(env_dir))
-            if dockerfile_path.exists() and not env_config.docker_image
-            else None
-        ),
-        cpus=cpus,
-        mem_limit=f"{memory_mb}m",
-        command="tail -f /dev/null",
-        init=True,
-        network_mode="bridge" if env_config.allow_internet else "none",
-    )
-
-    return ComposeConfig(services={"default": service})
+        return ComposeConfig(services={"default": service})
 
 
 def harbor_task_to_sample(harbor_task: HarborTask) -> Sample:
@@ -82,4 +92,38 @@ def harbor_task_to_sample(harbor_task: HarborTask) -> Sample:
             "verifier_timeout_sec": verifier_timeout_sec,
             "harbor_config": harbor_task.config.model_dump(),
         },
+    )
+
+
+def _create_gpu_deploy_config(
+    gpus: int, gpu_types: list[str] | None
+) -> ComposeDeploy | None:
+    """Create GPU deployment configuration for ComposeService.
+
+    Args:
+        gpus: Number of GPUs to reserve (0 means no GPUs).
+        gpu_types: List of acceptable GPU types (e.g., ['H100', 'A100']).
+                   Stored in device options for informational purposes.
+
+    Returns:
+        ComposeDeploy configuration with GPU reservations, or None if gpus=0.
+    """
+    if gpus <= 0:
+        return None
+
+    device_options = {}
+    if gpu_types:
+        # Store GPU types in options for potential use by sandbox providers
+        device_options["gpu_types"] = ",".join(gpu_types)
+
+    device_reservation = ComposeDeviceReservation(
+        count=gpus,
+        capabilities=["gpu"],
+        options=device_options if device_options else None,
+    )
+
+    return ComposeDeploy(
+        resources=ComposeResourceConfig(
+            reservations=ComposeResourceReservations(devices=[device_reservation])
+        )
     )
