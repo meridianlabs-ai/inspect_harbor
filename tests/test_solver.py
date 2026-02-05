@@ -6,13 +6,13 @@ from unittest.mock import AsyncMock, Mock, patch
 import pytest
 from inspect_ai.model import ModelName
 from inspect_ai.solver import TaskState
-from inspect_harbor._sandbox_utils import copy_directory_to_sandbox
+from inspect_harbor._sandbox_utils import cleanup_sandbox_directories, copy_directory_to_sandbox
 from inspect_harbor._solver import oracle
 
 
 @pytest.mark.asyncio
 async def test_oracle_executes_solution_script():
-    """Test that oracle solver executes the solve.sh script."""
+    """Test that oracle solver executes the solve.sh script and cleans up."""
     state = TaskState(
         model=ModelName("mockprovider/test-model"),
         sample_id="test-sample",
@@ -26,7 +26,13 @@ async def test_oracle_executes_solution_script():
     )
 
     mock_sandbox = Mock()
-    mock_sandbox.exec = AsyncMock(return_value=Mock(returncode=0, stdout="", stderr=""))
+    exec_calls: list[list[str]] = []
+
+    async def track_exec(cmd: list[str], **_kwargs: object) -> Mock:
+        exec_calls.append(cmd)
+        return Mock(returncode=0, stdout="", stderr="")
+
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
     mock_sandbox.write_file = AsyncMock()
 
     with (
@@ -39,9 +45,10 @@ async def test_oracle_executes_solution_script():
 
         mock_copy.assert_called_once_with("/fake/solution", "/solution")
 
-        mock_sandbox.exec.assert_called_once()
-        call_args = mock_sandbox.exec.call_args
-        assert call_args[0][0] == ["bash", "/solution/solve.sh"]
+        # Should have: [solution script execution, rm /solution]
+        assert len(exec_calls) == 2
+        assert exec_calls[0] == ["bash", "-l", "/solution/solve.sh"]
+        assert exec_calls[1] == ["rm", "-rf", "/solution"]
 
         assert result_state == state
 
@@ -76,8 +83,11 @@ async def test_oracle_with_environment_variables():
         solver_fn = oracle()
         await solver_fn(state, Mock())
 
-        call_args = mock_sandbox.exec.call_args
-        assert call_args[1]["env"] == {"API_KEY": "test123", "DEBUG": "true"}
+        # Check the first call (solution script execution, not cleanup)
+        calls = mock_sandbox.exec.call_args_list
+        assert len(calls) == 2  # Solution execution + cleanup
+        first_call_args = calls[0]
+        assert first_call_args[1]["env"] == {"API_KEY": "test123", "DEBUG": "true"}
 
 
 @pytest.mark.asyncio
@@ -128,7 +138,13 @@ async def test_oracle_with_relative_solve_path():
     )
 
     mock_sandbox = Mock()
-    mock_sandbox.exec = AsyncMock(return_value=Mock(returncode=0, stdout="", stderr=""))
+    exec_calls: list[list[str]] = []
+
+    async def track_exec(cmd: list[str], **_kwargs: object) -> Mock:
+        exec_calls.append(cmd)
+        return Mock(returncode=0, stdout="", stderr="")
+
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
 
     with (
         patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox),
@@ -138,8 +154,10 @@ async def test_oracle_with_relative_solve_path():
         solver_fn = oracle()
         await solver_fn(state, Mock())
 
-        call_args = mock_sandbox.exec.call_args
-        assert call_args[0][0] == ["bash", "/solution/scripts/solve.sh"]
+        # First call should be to execute the solution script
+        assert exec_calls[0] == ["bash", "-l", "/solution/scripts/solve.sh"]
+        # Second call should be cleanup
+        assert exec_calls[1] == ["rm", "-rf", "/solution"]
 
 
 @pytest.mark.asyncio

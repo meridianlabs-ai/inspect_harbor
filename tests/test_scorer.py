@@ -7,12 +7,14 @@ from unittest.mock import AsyncMock, Mock, patch
 import pytest
 from inspect_ai.scorer import Target
 from inspect_ai.solver import TaskState
-from inspect_harbor._sandbox_utils import copy_directory_to_sandbox
+from inspect_harbor._sandbox_utils import (
+    cleanup_sandbox_directories,
+    copy_directory_to_sandbox,
+)
 from inspect_harbor._scorer import (
     RewardFileEmptyError,
     RewardFileNotFoundError,
     VerifierOutputParseError,
-    _cleanup_scoring_files,
     _parse_reward_file,
     harbor_scorer,
 )
@@ -244,15 +246,15 @@ async def test_copy_binary_files_to_sandbox(tmp_path: Path):
 
 
 @pytest.mark.asyncio
-async def test_cleanup_scoring_files():
-    """Test cleanup removes /tests and /logs/verifier directories."""
+async def test_cleanup_sandbox_directories():
+    """Test cleanup removes specified directories."""
     mock_sandbox = Mock()
     mock_exec_result = Mock()
     mock_exec_result.success = True
     mock_sandbox.exec = AsyncMock(return_value=mock_exec_result)
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
-        await _cleanup_scoring_files()
+    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+        await cleanup_sandbox_directories("/tests", "/logs/verifier")
 
         # Should call rm -rf for both directories
         assert mock_sandbox.exec.call_count == 2
@@ -266,22 +268,22 @@ async def test_cleanup_scoring_files():
 
 
 @pytest.mark.asyncio
-async def test_cleanup_scoring_files_handles_errors():
+async def test_cleanup_sandbox_directories_handles_errors():
     """Test cleanup handles errors gracefully without raising exceptions."""
     mock_sandbox = Mock()
     # Simulate exec failures
     mock_sandbox.exec = AsyncMock(side_effect=Exception("Directory not found"))
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
         # Should not raise exception
-        await _cleanup_scoring_files()
+        await cleanup_sandbox_directories("/tests", "/logs/verifier")
 
         # Should still attempt both cleanups despite errors
         assert mock_sandbox.exec.call_count == 2
 
 
 @pytest.mark.asyncio
-async def test_cleanup_scoring_files_partial_failure():
+async def test_cleanup_sandbox_directories_partial_failure():
     """Test cleanup continues even if first removal fails."""
     mock_sandbox = Mock()
     # First call fails, second succeeds
@@ -291,9 +293,9 @@ async def test_cleanup_scoring_files_partial_failure():
         side_effect=[Exception("First removal failed"), mock_exec_success]
     )
 
-    with patch("inspect_harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
         # Should not raise exception
-        await _cleanup_scoring_files()
+        await cleanup_sandbox_directories("/tests", "/logs/verifier")
 
         # Should attempt both cleanups
         assert mock_sandbox.exec.call_count == 2

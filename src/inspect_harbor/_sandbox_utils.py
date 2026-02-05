@@ -28,3 +28,19 @@ async def copy_directory_to_sandbox(
             content = file_path.read_bytes()
 
             await sandbox().write_file(target_path, content)
+
+
+async def cleanup_sandbox_directories(*paths: str) -> None:
+    """Clean up directories from the sandbox.
+
+    Removes the specified directories from the sandbox. Errors are silently
+    ignored to ensure cleanup continues even if some paths don't exist.
+
+    Args:
+        *paths: Variable number of container paths to remove (e.g., "/tests", "/solution").
+    """
+    for path in paths:
+        try:
+            await sandbox().exec(["rm", "-rf", path])
+        except Exception:
+            pass

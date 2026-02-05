@@ -8,7 +8,10 @@ from inspect_ai.scorer import Score, Scorer, Target, accuracy, scorer, stderr
 from inspect_ai.solver import TaskState
 from inspect_ai.util import sandbox
 
-from inspect_harbor._sandbox_utils import copy_directory_to_sandbox
+from inspect_harbor._sandbox_utils import (
+    cleanup_sandbox_directories,
+    copy_directory_to_sandbox,
+)
 
 
 class CopyTestsDirError(Exception):
@@ -81,27 +84,11 @@ def harbor_scorer(
             metadata={"reward_dict": reward_dict} if reward_dict else None,
         )
 
-        await _cleanup_scoring_files()
+        await cleanup_sandbox_directories("/tests", "/logs/verifier")
 
         return score_result
 
     return score
-
-
-async def _cleanup_scoring_files() -> None:
-    """Clean up scoring-related files from previous attempts.
-
-    Removes the /tests directory and /logs/verifier directories.
-    """
-    try:
-        await sandbox().exec(["rm", "-rf", "/tests"])
-    except Exception:
-        pass
-
-    try:
-        await sandbox().exec(["rm", "-rf", "/logs/verifier"])
-    except Exception:
-        pass
 
 
 async def _parse_reward_file(exit_code: int) -> tuple[float, dict[str, Any] | None]:

@@ -5,7 +5,10 @@ from pathlib import Path
 from inspect_ai.solver import Generate, Solver, TaskState, solver
 from inspect_ai.util import sandbox
 
-from inspect_harbor._sandbox_utils import copy_directory_to_sandbox
+from inspect_harbor._sandbox_utils import (
+    cleanup_sandbox_directories,
+    copy_directory_to_sandbox,
+)
 
 
 @solver
@@ -27,9 +30,11 @@ def oracle() -> Solver:
         container_solve_path = f"/solution/{relative_solve}".replace("\\", "/")
 
         await sandbox().exec(
-            ["bash", container_solve_path],
+            ["bash", "-l", container_solve_path],
             env=solution_env if solution_env else None,
         )
+
+        await cleanup_sandbox_directories("/solution")
 
         return state
 
