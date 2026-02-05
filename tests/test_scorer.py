@@ -154,9 +154,13 @@ async def test_copy_directory_to_sandbox(tmp_path: Path):
         assert mock_sandbox.write_file.call_count == 2
 
         calls = mock_sandbox.write_file.call_args_list
-        copied_paths = {call[0][0] for call in calls}
-        assert "/tests/test.sh" in copied_paths
-        assert "/tests/test.py" in copied_paths
+        calls_dict = {call[0][0]: call[0][1] for call in calls}
+
+        # All files copied as bytes
+        assert "/tests/test.sh" in calls_dict
+        assert isinstance(calls_dict["/tests/test.sh"], bytes)
+        assert "/tests/test.py" in calls_dict
+        assert isinstance(calls_dict["/tests/test.py"], bytes)
 
 
 @pytest.mark.asyncio
@@ -179,6 +183,54 @@ async def test_copy_nested_directory_to_sandbox(tmp_path: Path):
         assert mock_sandbox.write_file.call_count == 2
 
         calls = mock_sandbox.write_file.call_args_list
-        copied_paths = {call[0][0] for call in calls}
-        assert "/tests/test.sh" in copied_paths
-        assert "/tests/utils/helper.py" in copied_paths
+        calls_dict = {call[0][0]: call[0][1] for call in calls}
+
+        # All files copied as bytes
+        assert "/tests/test.sh" in calls_dict
+        assert isinstance(calls_dict["/tests/test.sh"], bytes)
+        assert "/tests/utils/helper.py" in calls_dict
+        assert isinstance(calls_dict["/tests/utils/helper.py"], bytes)
+
+
+@pytest.mark.asyncio
+async def test_copy_binary_files_to_sandbox(tmp_path: Path):
+    """Test copying text and binary files to sandbox."""
+    test_dir = tmp_path / "tests"
+    test_dir.mkdir()
+
+    # Create a text file
+    text_content = b"This is a text file"
+    (test_dir / "readme.txt").write_bytes(text_content)
+
+    # Create a binary file (simulated PNG header)
+    binary_content = b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00"
+    (test_dir / "image.png").write_bytes(binary_content)
+
+    # Create another binary file (simulated compiled Python)
+    pyc_content = b"\x42\x0d\x0d\x0a\x00\x00\x00\x00"
+    (test_dir / "module.pyc").write_bytes(pyc_content)
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+
+    with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+        await copy_directory_to_sandbox(test_dir, "/tests")
+
+        # Should copy all 3 files
+        assert mock_sandbox.write_file.call_count == 3
+
+        calls = mock_sandbox.write_file.call_args_list
+        calls_dict = {call[0][0]: call[0][1] for call in calls}
+
+        # Verify all files copied as bytes
+        assert "/tests/readme.txt" in calls_dict
+        assert calls_dict["/tests/readme.txt"] == text_content
+        assert isinstance(calls_dict["/tests/readme.txt"], bytes)
+
+        assert "/tests/image.png" in calls_dict
+        assert calls_dict["/tests/image.png"] == binary_content
+        assert isinstance(calls_dict["/tests/image.png"], bytes)
+
+        assert "/tests/module.pyc" in calls_dict
+        assert calls_dict["/tests/module.pyc"] == pyc_content
+        assert isinstance(calls_dict["/tests/module.pyc"], bytes)

@@ -10,12 +10,12 @@ async def copy_directory_to_sandbox(
 ) -> None:
     """Recursively copy a local directory to the sandbox.
 
+    All files are read as bytes to preserve binary content integrity.
+    The sandbox write_file method handles both text and binary content.
+
     Args:
         local_dir: Local directory path to copy from (string or Path).
         container_path: Container path to copy to (e.g., "/tests", "/solution").
-
-    Raises:
-        Exception: If copying fails.
     """
     local_dir_path = Path(local_dir)
 
@@ -24,5 +24,7 @@ async def copy_directory_to_sandbox(
             rel_path = file_path.relative_to(local_dir_path)
             target_path = f"{container_path}/{rel_path}".replace("\\", "/")
 
-            content = file_path.read_text()
+            # Always read as bytes to handle both text and binary files correctly
+            content = file_path.read_bytes()
+
             await sandbox().write_file(target_path, content)

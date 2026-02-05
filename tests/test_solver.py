@@ -163,7 +163,46 @@ async def test_copy_directory_to_sandbox():
             assert mock_sandbox.write_file.call_count == 2
             calls = [call[0] for call in mock_sandbox.write_file.call_args_list]
             paths_and_contents = {call[0]: call[1] for call in calls}
+
+            # All files copied as bytes
             assert "/test/file1.txt" in paths_and_contents
-            assert paths_and_contents["/test/file1.txt"] == "content1"
+            assert paths_and_contents["/test/file1.txt"] == b"content1"
+            assert isinstance(paths_and_contents["/test/file1.txt"], bytes)
+
             assert "/test/subdir/file2.txt" in paths_and_contents
-            assert paths_and_contents["/test/subdir/file2.txt"] == "content2"
+            assert paths_and_contents["/test/subdir/file2.txt"] == b"content2"
+            assert isinstance(paths_and_contents["/test/subdir/file2.txt"], bytes)
+
+
+@pytest.mark.asyncio
+async def test_copy_directory_with_binary_files_to_sandbox():
+    """Test copying directory with text and binary files to sandbox."""
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+
+        # Create text and binary files
+        script_content = b"#!/bin/bash\necho test"
+        (tmp_path / "script.sh").write_bytes(script_content)
+        binary_data = b"\x00\x01\x02\x03\xff\xfe\xfd"
+        (tmp_path / "data.bin").write_bytes(binary_data)
+
+        mock_sandbox = Mock()
+        mock_sandbox.write_file = AsyncMock()
+
+        with patch("inspect_harbor._sandbox_utils.sandbox", return_value=mock_sandbox):
+            await copy_directory_to_sandbox(str(tmp_path), "/solution")
+
+            assert mock_sandbox.write_file.call_count == 2
+            calls = [call[0] for call in mock_sandbox.write_file.call_args_list]
+            paths_and_contents = {call[0]: call[1] for call in calls}
+
+            # All files copied as bytes
+            assert "/solution/script.sh" in paths_and_contents
+            assert paths_and_contents["/solution/script.sh"] == script_content
+            assert isinstance(paths_and_contents["/solution/script.sh"], bytes)
+
+            assert "/solution/data.bin" in paths_and_contents
+            assert paths_and_contents["/solution/data.bin"] == binary_data
+            assert isinstance(paths_and_contents["/solution/data.bin"], bytes)
