@@ -7,11 +7,11 @@ from unittest.mock import AsyncMock, Mock, patch
 import pytest
 from inspect_ai.scorer import Target
 from inspect_ai.solver import TaskState
-from inspect_harbor._sandbox_utils import (
+from inspect_harbor.harbor._sandbox_utils import (
     cleanup_sandbox_directories,
     copy_directory_to_sandbox,
 )
-from inspect_harbor._scorer import (
+from inspect_harbor.harbor._scorer import (
     RewardFileEmptyError,
     RewardFileNotFoundError,
     VerifierOutputParseError,

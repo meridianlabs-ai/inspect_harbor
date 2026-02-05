@@ -7,8 +7,7 @@ from typing import Any
 from inspect_ai.scorer import Score, Scorer, Target, accuracy, scorer, stderr
 from inspect_ai.solver import TaskState
 from inspect_ai.util import sandbox
-
-from inspect_harbor._sandbox_utils import (
+from inspect_harbor.harbor._sandbox_utils import (
     cleanup_sandbox_directories,
     copy_directory_to_sandbox,
 )

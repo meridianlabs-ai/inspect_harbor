@@ -27,7 +27,7 @@ uv sync
 The oracle solver executes the provided solution script:
 
 ```bash
-inspect eval src/inspect_harbor/_task.py@harbor_task \
+inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   -T dataset_task_names="aime60" \
   --solver inspect_harbor/oracle
@@ -36,7 +36,7 @@ inspect eval src/inspect_harbor/_task.py@harbor_task \
 To force re-download of cached tasks:
 
 ```bash
-inspect eval src/inspect_harbor/_task.py@harbor_task \
+inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   -T overwrite_cache=true \
   --solver inspect_harbor/oracle
@@ -47,7 +47,7 @@ inspect eval src/inspect_harbor/_task.py@harbor_task \
 Use the default react solver to evaluate model performance:
 
 ```bash
-inspect eval src/inspect_harbor/_task.py@harbor_task \
+inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   -T dataset_task_names="aime60" \
   --model openai/gpt-4o-mini
@@ -61,14 +61,14 @@ By default, tasks are loaded from the [Harbor registry](https://github.com/laude
 
 ```bash
 # Load from default Harbor registry
-inspect eval src/inspect_harbor/_task.py@harbor_task \
+inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   --model openai/gpt-4o-mini
 ```
 
 ```bash
 # Load from custom registry URL
-inspect eval src/inspect_harbor/_task.py@harbor_task \
+inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   -T registry_url="https://github.com/custom/registry.json" \
   --model openai/gpt-4o-mini
@@ -76,7 +76,7 @@ inspect eval src/inspect_harbor/_task.py@harbor_task \
 
 ```bash
 # Load from local registry
-inspect eval src/inspect_harbor/_task.py@harbor_task \
+inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   -T registry_path="/path/to/local/registry.json" \
   --model openai/gpt-4o-mini
@@ -86,14 +86,14 @@ inspect eval src/inspect_harbor/_task.py@harbor_task \
 
 ```bash
 # Run a single local task
-inspect eval src/inspect_harbor/_task.py@harbor_task \
+inspect eval inspect_harbor/harbor \
   -T path="/path/to/task/directory" \
   --model openai/gpt-4o-mini
 ```
 
 ```bash
 # Run tasks from a local dataset directory
-inspect eval src/inspect_harbor/_task.py@harbor_task \
+inspect eval inspect_harbor/harbor \
   -T path="/path/to/dataset/directory" \
   -T n_tasks=5 \
   --model openai/gpt-4o-mini
@@ -103,7 +103,7 @@ inspect eval src/inspect_harbor/_task.py@harbor_task \
 
 ```bash
 # Download and run a task from a git repository
-inspect eval src/inspect_harbor/_task.py@harbor_task \
+inspect eval inspect_harbor/harbor \
   -T path="aime_i-9" \
   -T task_git_url="https://github.com/example/tasks.git" \
   -T task_git_commit_id="abc123" \
@@ -114,7 +114,7 @@ inspect eval src/inspect_harbor/_task.py@harbor_task \
 
 ```bash
 # Run specific tasks by name (supports glob patterns)
-inspect eval src/inspect_harbor/_task.py@harbor_task \
+inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   -T dataset_task_names='["aime_*", "task-42"]' \
   --model openai/gpt-4o-mini
@@ -122,7 +122,7 @@ inspect eval src/inspect_harbor/_task.py@harbor_task \
 
 ```bash
 # Exclude specific tasks (supports glob patterns)
-inspect eval src/inspect_harbor/_task.py@harbor_task \
+inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   -T dataset_exclude_task_names='["*_test", "debug_*"]' \
   --model openai/gpt-4o-mini
@@ -130,7 +130,7 @@ inspect eval src/inspect_harbor/_task.py@harbor_task \
 
 ```bash
 # Limit number of tasks
-inspect eval src/inspect_harbor/_task.py@harbor_task \
+inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   -T n_tasks=10 \
   --model openai/gpt-4o-mini

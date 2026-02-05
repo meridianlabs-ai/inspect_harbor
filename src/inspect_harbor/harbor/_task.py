@@ -11,11 +11,11 @@ from harbor.models.trial.config import TaskConfig
 from harbor.tasks.client import TaskClient
 from inspect_ai import Task, task
 from inspect_ai.agent import react
+from inspect_ai.model import CompactionEdit
 from inspect_ai.solver import Solver
-from inspect_ai.tool import bash, python
-
-from inspect_harbor._converters import harbor_task_to_sample
-from inspect_harbor._scorer import harbor_scorer
+from inspect_ai.tool import bash, memory, python, update_plan
+from inspect_harbor.harbor._converters import harbor_task_to_sample
+from inspect_harbor.harbor._scorer import harbor_scorer
 
 
 @task
@@ -74,7 +74,8 @@ def harbor(
         dataset=samples,
         solver=solver
         or react(
-            tools=[bash(), python()],
+            tools=[bash(timeout=300), python(timeout=300), memory(), update_plan()],
+            compaction=CompactionEdit(),
         ),
         scorer=harbor_scorer(),
         time_limit=max_timeout,

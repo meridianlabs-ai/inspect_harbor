@@ -6,8 +6,11 @@ from unittest.mock import AsyncMock, Mock, patch
 import pytest
 from inspect_ai.model import ModelName
 from inspect_ai.solver import TaskState
-from inspect_harbor._sandbox_utils import cleanup_sandbox_directories, copy_directory_to_sandbox
-from inspect_harbor._solver import oracle
+from inspect_harbor.harbor._sandbox_utils import (
+    cleanup_sandbox_directories,
+    copy_directory_to_sandbox,
+)
+from inspect_harbor.harbor._solver import oracle
 
 
 @pytest.mark.asyncio

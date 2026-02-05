@@ -5,7 +5,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 from harbor.models.task.task import Task as HarborTask
-from inspect_harbor._task import _get_max_timeout_sec, load_harbor_tasks
+from inspect_harbor.harbor._task import _get_max_timeout_sec, load_harbor_tasks
 
 
 def test_load_local_single_task():

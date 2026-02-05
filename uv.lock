@@ -1276,9 +1276,9 @@ name = "inspect-harbor"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "click" },
     { name = "harbor" },
     { name = "inspect-ai" },
+    { name = "pyyaml" },
 ]
 
 [package.dev-dependencies]
@@ -1292,11 +1292,10 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "click" },
-    { name = "harbor" },
-    { name = "inspect-ai" },
+    { name = "harbor", specifier = ">=0.1.43" },
+    { name = "inspect-ai", specifier = ">=0.3.170" },
+    { name = "pyyaml" },
 ]
-provides-extras = ["doc"]
 
 [package.metadata.requires-dev]
 dev = [

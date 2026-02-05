@@ -6,7 +6,10 @@ from unittest.mock import Mock, mock_open, patch
 from inspect_ai.dataset import Sample
 from inspect_ai.util import ComposeBuild, ComposeConfig, SandboxEnvironmentSpec
 from inspect_ai.util._sandbox.compose import ComposeDeviceReservation
-from inspect_harbor._converters import harbor_task_to_sample, harbor_to_compose_config
+from inspect_harbor.harbor._converters import (
+    harbor_task_to_sample,
+    harbor_to_compose_config,
+)
 
 
 def test_harbor_to_compose_config_with_existing_compose_yaml():
