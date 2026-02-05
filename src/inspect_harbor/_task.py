@@ -19,7 +19,7 @@ from inspect_harbor._scorer import harbor_scorer
 
 
 @task
-def harbor_task(
+def harbor(
     path: str | Path | None = None,
     task_git_url: str | None = None,
     task_git_commit_id: str | None = None,
