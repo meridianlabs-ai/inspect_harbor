@@ -1,0 +1,16 @@
+[task]
+name = "simple_task"
+description = "A simple test task for integration testing"
+version = "1.0.0"
+
+[environment]
+docker_image = "python:3.11-slim"
+cpus = 1.0
+memory_mb = 1024
+allow_internet = false
+
+[verifier]
+timeout_sec = 60
+
+[agent]
+timeout_sec = 120
