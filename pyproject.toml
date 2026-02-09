@@ -10,7 +10,11 @@ authors = [{ name = "Meridian Labs" }]
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT License" }
-dependencies = ["inspect-ai>=0.3.170", "harbor>=0.1.43", "pyyaml"]
+dependencies = [
+    "inspect-ai>=0.3.170",
+    "harbor>=0.1.43",
+    "pyyaml",
+]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",

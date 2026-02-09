@@ -50,7 +50,7 @@ def harbor(
         dataset_task_names: Task names to include from dataset (supports glob patterns, multiple values).
         dataset_exclude_task_names: Task names to exclude from dataset (supports glob patterns, multiple values).
         n_tasks: Maximum number of tasks to include (applied after task_names/exclude_task_names filtering).
-        disable_verification: Disable task verification.
+        disable_verification: Disable task verification. Verfication checks whether task files exist.
         overwrite_cache: Force re-download and overwrite cached tasks (default: False).
         sandbox_env_name: Sandbox environment name (default: "docker").
         solver: Optional custom solver. If None, uses react() with bash/python tools.
@@ -85,6 +85,7 @@ def harbor(
         or react(
             tools=[bash(timeout=300), python(timeout=300), memory(), update_plan()],
             compaction=CompactionEdit(),
+            submit=False,  # Agent is expected to write a file with its answer
         ),
         scorer=harbor_scorer(),
         time_limit=max_timeout,
@@ -118,7 +119,7 @@ def load_harbor_tasks(
         dataset_task_names: Task names to include from dataset (supports glob patterns, multiple values).
         dataset_exclude_task_names: Task names to exclude from dataset (supports glob patterns, multiple values).
         n_tasks: Maximum number of tasks to include (applied after task_names/exclude_task_names filtering).
-        disable_verification: Disable task verification.
+        disable_verification: Disable task verification. Verfication checks whether task files exist.
         overwrite_cache: Force re-download and overwrite cached tasks.
 
     Returns:

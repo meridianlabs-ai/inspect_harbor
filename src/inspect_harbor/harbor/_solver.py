@@ -6,8 +6,9 @@ from inspect_ai.solver import Generate, Solver, TaskState, solver
 from inspect_ai.util import sandbox
 
 from inspect_harbor.harbor._sandbox_utils import (
-    cleanup_sandbox_directories,
+    cleanup_sandbox_env_vars,
     copy_directory_to_sandbox,
+    resolve_env_vars,
 )
 
 
@@ -31,8 +32,8 @@ def oracle() -> Solver:
         solution_dir = Path(solution_dir)
         solve_path = Path(solve_path)
 
-        harbor_config = state.metadata.get("harbor_config", {})
-        solution_env = harbor_config.get("solution", {}).get("env", {})
+        solution_env_raw = state.metadata.get("solution_env", {})
+        solution_env = resolve_env_vars(solution_env_raw) if solution_env_raw else None
 
         if not solution_dir.exists():
             raise CopySolutionDirError(f"Solution directory not found: {solution_dir}")
@@ -54,10 +55,14 @@ def oracle() -> Solver:
 
         await sandbox().exec(
             ["bash", "-l", container_solve_path],
-            env=solution_env if solution_env else None,
+            env=solution_env,
         )
 
-        await cleanup_sandbox_directories("/solution")
+        # We don't cleanup /solution directory: some tasks require the scorer to access
+        # files written by the oracle to this directory (e.g., harbor-datasets/ds1000).
+        # Reference: https://github.com/laude-institute/harbor-datasets/blob/2f82ff5/datasets/ds1000/0/solution/solve.sh
+        if solution_env:
+            await cleanup_sandbox_env_vars(list(solution_env.keys()))
 
         return state
 

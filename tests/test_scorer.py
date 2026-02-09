@@ -2,6 +2,7 @@
 
 import json
 from pathlib import Path
+from typing import Any
 from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
@@ -9,7 +10,9 @@ from inspect_ai.scorer import Target
 from inspect_ai.solver import TaskState
 from inspect_harbor.harbor._sandbox_utils import (
     cleanup_sandbox_directories,
+    cleanup_sandbox_env_vars,
     copy_directory_to_sandbox,
+    resolve_env_vars,
 )
 from inspect_harbor.harbor._scorer import (
     CopyTestsDirError,
@@ -514,12 +517,420 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
             assert result.metadata is None  # reward.txt returns None for reward_dict
 
             # Verify cleanup was called AFTER scoring
-            # Should have: [test script execution, rm /tests, rm /logs/verifier]
-            assert len(exec_calls) >= 3
-            assert exec_calls[0] == ["bash", "-l", "/tests/test.sh"]  # Test execution
-            assert exec_calls[-2] == ["rm", "-rf", "/tests"]  # Cleanup /tests
-            assert exec_calls[-1] == [
+            # Should have: [mkdir /logs/agent, mkdir /logs/verifier, bash test.sh, rm /tests, rm /logs/verifier]
+            assert len(exec_calls) == 5
+            assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]  # Setup logs
+            assert exec_calls[1] == ["mkdir", "-p", "/logs/verifier"]  # Setup logs
+            assert exec_calls[2] == ["bash", "-l", "/tests/test.sh"]  # Test execution
+            assert exec_calls[3] == ["rm", "-rf", "/tests"]  # Cleanup /tests
+            assert exec_calls[4] == [
                 "rm",
                 "-rf",
                 "/logs/verifier",
             ]  # Cleanup /logs/verifier
+
+
+def test_resolve_env_vars_with_template(monkeypatch: pytest.MonkeyPatch):
+    """Test resolving environment variables with ${VAR} template syntax."""
+    monkeypatch.setenv("TEST_API_KEY", "sk-test-123")
+    monkeypatch.setenv("TEST_MODEL", "gpt-4")
+
+    env_dict = {
+        "OPENAI_API_KEY": "${TEST_API_KEY}",
+        "MODEL_NAME": "${TEST_MODEL}",
+    }
+
+    resolved = resolve_env_vars(env_dict)
+
+    assert resolved["OPENAI_API_KEY"] == "sk-test-123"
+    assert resolved["MODEL_NAME"] == "gpt-4"
+
+
+def test_resolve_env_vars_with_literal():
+    """Test resolving environment variables with literal (non-template) values."""
+    env_dict = {
+        "OPENAI_API_KEY": "sk-literal-key",
+        "MODEL_NAME": "gpt-4o",
+        "TIMEOUT": "300",
+    }
+
+    resolved = resolve_env_vars(env_dict)
+
+    assert resolved["OPENAI_API_KEY"] == "sk-literal-key"
+    assert resolved["MODEL_NAME"] == "gpt-4o"
+    assert resolved["TIMEOUT"] == "300"
+
+
+def test_resolve_env_vars_mixed(monkeypatch: pytest.MonkeyPatch):
+    """Test resolving mix of template and literal values."""
+    monkeypatch.setenv("TEST_KEY", "secret-value")
+
+    env_dict = {
+        "API_KEY": "${TEST_KEY}",
+        "MODEL": "gpt-4o",
+        "TIMEOUT": "600",
+    }
+
+    resolved = resolve_env_vars(env_dict)
+
+    assert resolved["API_KEY"] == "secret-value"
+    assert resolved["MODEL"] == "gpt-4o"
+    assert resolved["TIMEOUT"] == "600"
+
+
+def test_resolve_env_vars_missing_variable():
+    """Test that missing environment variable raises ValueError."""
+    env_dict = {"API_KEY": "${NONEXISTENT_VAR}"}
+
+    with pytest.raises(
+        ValueError, match="Environment variable 'NONEXISTENT_VAR' not found"
+    ):
+        resolve_env_vars(env_dict)
+
+
+def test_resolve_env_vars_empty_dict():
+    """Test resolving empty dictionary returns empty dictionary."""
+    resolved = resolve_env_vars({})
+    assert resolved == {}
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_passes_verifier_env_to_exec(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+):
+    """Test that harbor_scorer passes resolved verifier_env to sandbox().exec()."""
+    # Set up test environment variable
+    monkeypatch.setenv("TEST_SCORER_API_KEY", "sk-test-scorer-123")
+
+    # Create temporary test directory
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    # Setup mock state with verifier_env
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+        "verifier_env": {
+            "OPENAI_API_KEY": "${TEST_SCORER_API_KEY}",
+            "MODEL_NAME": "gpt-4o",
+        },
+    }
+
+    mock_target = Mock(spec=Target)
+
+    # Setup mock sandbox
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+
+    # Track exec calls to verify env was passed
+    exec_calls: list[dict[str, Any]] = []
+
+    async def track_exec(cmd: list[str], **kwargs: object) -> Mock:
+        exec_calls.append({"cmd": cmd, "kwargs": kwargs})
+        mock_result = Mock()
+        mock_result.returncode = 0
+        mock_result.stdout = "test output"
+        mock_result.stderr = ""
+        return mock_result
+
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+        with patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox",
+            return_value=mock_sandbox,
+        ):
+            scorer = harbor_scorer()
+            result = await scorer(mock_state, mock_target)
+
+            # Verify scoring completed successfully
+            assert result is not None
+            assert result.value == 1.0
+
+            # Find the test execution call (should be the one with bash -l)
+            test_exec_call = next(
+                call for call in exec_calls if call["cmd"][0] == "bash"
+            )
+
+            # Verify env was passed with resolved values
+            assert "env" in test_exec_call["kwargs"]
+            passed_env = test_exec_call["kwargs"]["env"]
+            assert passed_env["OPENAI_API_KEY"] == "sk-test-scorer-123"
+            assert passed_env["MODEL_NAME"] == "gpt-4o"
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_no_verifier_env(tmp_path: Path):
+    """Test that harbor_scorer works when verifier_env is not in metadata."""
+    # Create temporary test directory
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    # Setup mock state WITHOUT verifier_env
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+    }
+
+    mock_target = Mock(spec=Target)
+
+    # Setup mock sandbox
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+
+    # Track exec calls
+    exec_calls: list[dict[str, Any]] = []
+
+    async def track_exec(cmd: list[str], **kwargs: object) -> Mock:
+        exec_calls.append({"cmd": cmd, "kwargs": kwargs})
+        mock_result = Mock()
+        mock_result.returncode = 0
+        mock_result.stdout = "test output"
+        mock_result.stderr = ""
+        return mock_result
+
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+        with patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ):
+            scorer = harbor_scorer()
+            result = await scorer(mock_state, mock_target)
+
+            # Verify scoring completed successfully
+            assert result is not None
+            assert result.value == 1.0
+
+            # Find the test execution call
+            test_exec_call = next(
+                call for call in exec_calls if call["cmd"][0] == "bash"
+            )
+
+            # Verify env was passed as None (not in metadata)
+            assert "env" in test_exec_call["kwargs"]
+            assert test_exec_call["kwargs"]["env"] is None
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_empty_verifier_env(tmp_path: Path):
+    """Test that harbor_scorer handles empty verifier_env dict."""
+    # Create temporary test directory
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    # Setup mock state with empty verifier_env
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+        "verifier_env": {},
+    }
+
+    mock_target = Mock(spec=Target)
+
+    # Setup mock sandbox
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+
+    # Track exec calls
+    exec_calls: list[dict[str, Any]] = []
+
+    async def track_exec(cmd: list[str], **kwargs: object) -> Mock:
+        exec_calls.append({"cmd": cmd, "kwargs": kwargs})
+        mock_result = Mock()
+        mock_result.returncode = 0
+        mock_result.stdout = "test output"
+        mock_result.stderr = ""
+        return mock_result
+
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+        with patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ):
+            scorer = harbor_scorer()
+            result = await scorer(mock_state, mock_target)
+
+            # Verify scoring completed successfully
+            assert result is not None
+            assert result.value == 1.0
+
+            # Find the test execution call
+            test_exec_call = next(
+                call for call in exec_calls if call["cmd"][0] == "bash"
+            )
+
+            # Verify env was passed as None (empty dict)
+            assert "env" in test_exec_call["kwargs"]
+            assert test_exec_call["kwargs"]["env"] is None
+
+
+@pytest.mark.asyncio
+async def test_cleanup_sandbox_env_vars():
+    """Test cleanup_sandbox_env_vars unsets specified environment variables."""
+    mock_sandbox = Mock()
+    mock_exec_result = Mock()
+    mock_exec_result.success = True
+    mock_sandbox.exec = AsyncMock(return_value=mock_exec_result)
+
+    with patch(
+        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+    ):
+        await cleanup_sandbox_env_vars(["API_KEY", "SECRET_TOKEN", "MODEL_NAME"])
+
+        # Should call unset for each environment variable
+        assert mock_sandbox.exec.call_count == 3
+        calls = mock_sandbox.exec.call_args_list
+
+        # Check each unset call
+        assert calls[0][0][0] == ["unset", "API_KEY"]
+        assert calls[1][0][0] == ["unset", "SECRET_TOKEN"]
+        assert calls[2][0][0] == ["unset", "MODEL_NAME"]
+
+
+@pytest.mark.asyncio
+async def test_cleanup_sandbox_env_vars_handles_errors():
+    """Test cleanup_sandbox_env_vars handles errors gracefully without raising exceptions."""
+    mock_sandbox = Mock()
+    # Simulate exec failures
+    mock_sandbox.exec = AsyncMock(side_effect=RuntimeError("Sandbox exec failed"))
+
+    with patch(
+        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+    ):
+        # Should not raise exception
+        await cleanup_sandbox_env_vars(["VAR1", "VAR2"])
+
+        # Should still attempt both cleanups despite errors
+        assert mock_sandbox.exec.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_cleanup_sandbox_env_vars_partial_failure():
+    """Test cleanup_sandbox_env_vars continues even if first unset fails."""
+    mock_sandbox = Mock()
+    # First call fails, second succeeds
+    mock_exec_success = Mock()
+    mock_exec_success.success = True
+    mock_sandbox.exec = AsyncMock(
+        side_effect=[OSError("Variable not found"), mock_exec_success]
+    )
+
+    with patch(
+        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+    ):
+        # Should not raise exception
+        await cleanup_sandbox_env_vars(["VAR1", "VAR2"])
+
+        # Should attempt both cleanups
+        assert mock_sandbox.exec.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_cleanup_sandbox_env_vars_empty_list():
+    """Test cleanup_sandbox_env_vars handles empty list gracefully."""
+    mock_sandbox = Mock()
+    mock_sandbox.exec = AsyncMock()
+
+    with patch(
+        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+    ):
+        await cleanup_sandbox_env_vars([])
+
+        # Should not call exec for empty list
+        assert mock_sandbox.exec.call_count == 0
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+):
+    """Test that harbor_scorer cleans up environment variables after scoring."""
+    # Set up test environment variable
+    monkeypatch.setenv("TEST_CLEANUP_KEY", "sk-test-cleanup-456")
+
+    # Create temporary test directory
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    # Setup mock state with verifier_env
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+        "verifier_env": {
+            "OPENAI_API_KEY": "${TEST_CLEANUP_KEY}",
+            "MODEL_NAME": "gpt-4o",
+        },
+    }
+
+    mock_target = Mock(spec=Target)
+
+    # Setup mock sandbox
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+
+    # Track exec calls to verify env cleanup was called
+    exec_calls: list[list[str]] = []
+
+    async def track_exec(cmd: list[str], **_kwargs: object) -> Mock:
+        exec_calls.append(cmd)
+        mock_result = Mock()
+        mock_result.returncode = 0
+        mock_result.stdout = "test output"
+        mock_result.stderr = ""
+        return mock_result
+
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+        with patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox",
+            return_value=mock_sandbox,
+        ):
+            scorer = harbor_scorer()
+            result = await scorer(mock_state, mock_target)
+
+            # Verify scoring completed successfully
+            assert result is not None
+            assert result.value == 1.0
+
+            # Verify cleanup was called AFTER scoring
+            # Expected calls:
+            # 1. mkdir /logs/agent
+            # 2. mkdir /logs/verifier
+            # 3. bash test.sh
+            # 4. rm /tests
+            # 5. rm /logs/verifier
+            # 6. unset OPENAI_API_KEY
+            # 7. unset MODEL_NAME
+            assert len(exec_calls) == 7
+            assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
+            assert exec_calls[1] == ["mkdir", "-p", "/logs/verifier"]
+            assert exec_calls[2] == ["bash", "-l", "/tests/test.sh"]
+            assert exec_calls[3] == ["rm", "-rf", "/tests"]
+            assert exec_calls[4] == ["rm", "-rf", "/logs/verifier"]
+            # Check cleanup was called for all env vars
+            env_cleanup_calls = exec_calls[5:]
+            assert ["unset", "OPENAI_API_KEY"] in env_cleanup_calls
+            assert ["unset", "MODEL_NAME"] in env_cleanup_calls
