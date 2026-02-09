@@ -84,7 +84,6 @@ def harbor_task_to_sample(
         Sample: Inspect AI sample with sandbox configuration.
     """
     compose_config = harbor_to_compose_config(harbor_task)
-    verifier_timeout_sec = harbor_task.config.verifier.timeout_sec
 
     return Sample(
         input=harbor_task.instruction,
@@ -99,7 +98,9 @@ def harbor_task_to_sample(
             "tests_dir": str(harbor_task.paths.tests_dir),
             "solution_dir": str(harbor_task.paths.solution_dir),
             "solve_path": str(harbor_task.paths.solve_path),
-            "verifier_timeout_sec": verifier_timeout_sec,
+            "verifier_timeout_sec": harbor_task.config.verifier.timeout_sec,
+            "verifier_env": harbor_task.config.verifier.env or {},
+            "solution_env": harbor_task.config.solution.env or {},
             "harbor_config": harbor_task.config.model_dump(),
         },
     )

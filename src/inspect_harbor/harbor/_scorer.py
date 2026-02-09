@@ -10,7 +10,9 @@ from inspect_ai.util import sandbox
 
 from inspect_harbor.harbor._sandbox_utils import (
     cleanup_sandbox_directories,
+    cleanup_sandbox_env_vars,
     copy_directory_to_sandbox,
+    resolve_env_vars,
 )
 
 
@@ -78,9 +80,17 @@ def harbor_scorer(
                 f"Test path {test_path} is not relative to tests directory {tests_dir}"
             ) from e
 
+        # Create Harbor's standard log directories
+        await sandbox().exec(["mkdir", "-p", "/logs/agent"])
+        await sandbox().exec(["mkdir", "-p", "/logs/verifier"])
+
+        verifier_env_raw = state.metadata.get("verifier_env", {})
+        verifier_env = resolve_env_vars(verifier_env_raw) if verifier_env_raw else None
+
         result = await sandbox().exec(
             ["bash", "-l", container_test_path],
             timeout=int(verifier_timeout_sec),
+            env=verifier_env,
         )
 
         reward_value, reward_dict = await _parse_reward_file(result.returncode)
@@ -94,6 +104,8 @@ def harbor_scorer(
         )
 
         await cleanup_sandbox_directories("/tests", "/logs/verifier")
+        if verifier_env:
+            await cleanup_sandbox_env_vars(list(verifier_env.keys()))
 
         return score_result
 

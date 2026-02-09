@@ -445,3 +445,91 @@ services:
 
     with pytest.raises(yaml.YAMLError):
         harbor_to_compose_config(mock_task)
+
+
+def test_harbor_task_to_sample_with_verifier_env():
+    """Test that verifier_env is properly extracted and added to sample metadata."""
+    # Setup mock Harbor task
+    mock_task = Mock()
+    mock_task.name = "test-task"
+    mock_task.instruction = "Complete this task"
+    mock_task.task_dir = Path("/tasks/test-task")
+
+    mock_paths = Mock()
+    mock_paths.environment_dir = Path("/tasks/test-task/environment")
+    mock_paths.test_path = Path("/tasks/test-task/tests/test.sh")
+    mock_paths.tests_dir = Path("/tasks/test-task/tests")
+    mock_paths.solution_dir = Path("/tasks/test-task/solution")
+    mock_paths.solve_path = Path("/tasks/test-task/solution/solve.sh")
+    mock_task.paths = mock_paths
+
+    mock_env_config = Mock()
+    mock_env_config.cpus = 1.0
+    mock_env_config.memory_mb = 2048
+    mock_env_config.docker_image = "python:3.11"
+    mock_env_config.allow_internet = True
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_task.config.environment = mock_env_config
+
+    # Mock verifier config with env vars
+    mock_verifier_config = Mock()
+    mock_verifier_config.timeout_sec = 600
+    mock_verifier_config.env = {
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "MODEL_NAME": "gpt-4o",
+    }
+    mock_task.config.verifier = mock_verifier_config
+    mock_task.config.model_dump = Mock(return_value={"test": "config"})
+
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_task_to_sample(mock_task)
+
+        assert isinstance(result, Sample)
+        assert result.metadata is not None
+        assert "verifier_env" in result.metadata
+        assert result.metadata["verifier_env"] == {
+            "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+            "MODEL_NAME": "gpt-4o",
+        }
+
+
+def test_harbor_task_to_sample_without_verifier_env():
+    """Test that verifier_env defaults to empty dict when not specified."""
+    # Setup mock Harbor task
+    mock_task = Mock()
+    mock_task.name = "test-task"
+    mock_task.instruction = "Complete this task"
+    mock_task.task_dir = Path("/tasks/test-task")
+
+    mock_paths = Mock()
+    mock_paths.environment_dir = Path("/tasks/test-task/environment")
+    mock_paths.test_path = Path("/tasks/test-task/tests/test.sh")
+    mock_paths.tests_dir = Path("/tasks/test-task/tests")
+    mock_paths.solution_dir = Path("/tasks/test-task/solution")
+    mock_paths.solve_path = Path("/tasks/test-task/solution/solve.sh")
+    mock_task.paths = mock_paths
+
+    mock_env_config = Mock()
+    mock_env_config.cpus = 1.0
+    mock_env_config.memory_mb = 2048
+    mock_env_config.docker_image = "python:3.11"
+    mock_env_config.allow_internet = True
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_task.config.environment = mock_env_config
+
+    # Mock verifier config WITHOUT env vars (None or not set)
+    mock_verifier_config = Mock()
+    mock_verifier_config.timeout_sec = 600
+    mock_verifier_config.env = None
+    mock_task.config.verifier = mock_verifier_config
+    mock_task.config.model_dump = Mock(return_value={"test": "config"})
+
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_task_to_sample(mock_task)
+
+        assert isinstance(result, Sample)
+        assert result.metadata is not None
+        assert "verifier_env" in result.metadata
+        assert result.metadata["verifier_env"] == {}

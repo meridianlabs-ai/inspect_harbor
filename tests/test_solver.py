@@ -6,13 +6,16 @@ from unittest.mock import AsyncMock, Mock, patch
 import pytest
 from inspect_ai.model import ModelName
 from inspect_ai.solver import TaskState
-from inspect_harbor.harbor._sandbox_utils import copy_directory_to_sandbox
+from inspect_harbor.harbor._sandbox_utils import (
+    cleanup_sandbox_env_vars,
+    copy_directory_to_sandbox,
+)
 from inspect_harbor.harbor._solver import oracle
 
 
 @pytest.mark.asyncio
 async def test_oracle_executes_solution_script():
-    """Test that oracle solver executes the solve.sh script and cleans up."""
+    """Test that oracle solver executes the solve.sh script."""
     state = TaskState(
         model=ModelName("mockprovider/test-model"),
         sample_id="test-sample",
@@ -51,10 +54,8 @@ async def test_oracle_executes_solution_script():
 
         mock_copy.assert_called_once_with(Path("/fake/solution"), "/solution")
 
-        # Should have: [solution script execution, rm /solution]
-        assert len(exec_calls) == 2
+        assert len(exec_calls) == 1
         assert exec_calls[0] == ["bash", "-l", "/solution/solve.sh"]
-        assert exec_calls[1] == ["rm", "-rf", "/solution"]
 
         assert result_state == state
 
@@ -71,9 +72,60 @@ async def test_oracle_with_environment_variables():
         metadata={
             "solution_dir": "/fake/solution",
             "solve_path": "/fake/solution/solve.sh",
-            "harbor_config": {
-                "agent": {"timeout_sec": 300},
-                "solution": {"env": {"API_KEY": "test123", "DEBUG": "true"}},
+            "solution_env": {"API_KEY": "test123", "DEBUG": "true"},
+        },
+    )
+
+    mock_sandbox = Mock()
+    mock_sandbox.exec = AsyncMock(return_value=Mock(returncode=0, stdout="", stderr=""))
+
+    with (
+        patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ),
+        patch("inspect_harbor.harbor._solver.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor.harbor._solver.copy_directory_to_sandbox",
+            new_callable=AsyncMock,
+        ),
+        patch("pathlib.Path.exists", return_value=True),
+    ):
+        solver_fn = oracle()
+        await solver_fn(state, Mock())
+
+        # Check the calls (solution script execution + env cleanup)
+        calls = mock_sandbox.exec.call_args_list
+        assert len(calls) == 3  # Solution execution + 2 env cleanups
+
+        # Check solution execution call
+        first_call_args = calls[0]
+        assert first_call_args[1]["env"] == {"API_KEY": "test123", "DEBUG": "true"}
+
+        # Check cleanup was called for all env vars
+        cleanup_calls = [call[0][0] for call in calls[1:]]
+        assert ["unset", "API_KEY"] in cleanup_calls
+        assert ["unset", "DEBUG"] in cleanup_calls
+
+
+@pytest.mark.asyncio
+async def test_oracle_resolves_env_var_templates(monkeypatch: pytest.MonkeyPatch):
+    """Test that oracle resolves environment variable templates like ${VAR}."""
+    # Set up test environment variable
+    monkeypatch.setenv("TEST_SOLVER_API_KEY", "sk-test-oracle-456")
+
+    state = TaskState(
+        model=ModelName("mockprovider/test-model"),
+        sample_id="test-sample",
+        epoch=0,
+        input="test input",
+        messages=[],
+        metadata={
+            "solution_dir": "/fake/solution",
+            "solve_path": "/fake/solution/solve.sh",
+            "solution_env": {
+                "OPENAI_API_KEY": "${TEST_SOLVER_API_KEY}",
+                "MODEL_NAME": "gpt-4o",
+                "DEBUG": "true",
             },
         },
     )
@@ -95,11 +147,26 @@ async def test_oracle_with_environment_variables():
         solver_fn = oracle()
         await solver_fn(state, Mock())
 
-        # Check the first call (solution script execution, not cleanup)
+        # Check the calls (solution script execution + env cleanup)
         calls = mock_sandbox.exec.call_args_list
-        assert len(calls) == 2  # Solution execution + cleanup
+        assert len(calls) == 4  # Solution execution + 3 env cleanups
+
+        # Check solution execution call - verify template was resolved
         first_call_args = calls[0]
-        assert first_call_args[1]["env"] == {"API_KEY": "test123", "DEBUG": "true"}
+        assert (
+            first_call_args[1]["env"]
+            == {
+                "OPENAI_API_KEY": "sk-test-oracle-456",  # Resolved from ${TEST_SOLVER_API_KEY}
+                "MODEL_NAME": "gpt-4o",
+                "DEBUG": "true",
+            }
+        )
+
+        # Check cleanup was called for all env vars
+        cleanup_calls = [call[0][0] for call in calls[1:]]
+        assert ["unset", "OPENAI_API_KEY"] in cleanup_calls
+        assert ["unset", "MODEL_NAME"] in cleanup_calls
+        assert ["unset", "DEBUG"] in cleanup_calls
 
 
 @pytest.mark.asyncio
@@ -178,10 +245,8 @@ async def test_oracle_with_relative_solve_path():
         solver_fn = oracle()
         await solver_fn(state, Mock())
 
-        # First call should be to execute the solution script
+        assert len(exec_calls) == 1
         assert exec_calls[0] == ["bash", "-l", "/solution/scripts/solve.sh"]
-        # Second call should be cleanup
-        assert exec_calls[1] == ["rm", "-rf", "/solution"]
 
 
 @pytest.mark.asyncio
@@ -349,3 +414,129 @@ async def test_oracle_solve_path_not_relative_to_solution_dir():
     ):
         solver_fn = oracle()
         await solver_fn(state, Mock())
+
+
+@pytest.mark.asyncio
+async def test_oracle_cleans_up_env_vars_after_execution():
+    """Test that oracle cleans up environment variables after executing solution."""
+    state = TaskState(
+        model=ModelName("mockprovider/test-model"),
+        sample_id="test-sample",
+        epoch=0,
+        input="test input",
+        messages=[],
+        metadata={
+            "solution_dir": "/fake/solution",
+            "solve_path": "/fake/solution/solve.sh",
+            "solution_env": {
+                "API_KEY": "test-key-789",
+                "MODEL": "test-model",
+                "DEBUG": "true",
+            },
+        },
+    )
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+
+    # Track exec calls to verify env cleanup was called
+    exec_calls: list[list[str]] = []
+
+    async def track_exec(cmd: list[str], **_kwargs: object) -> Mock:
+        exec_calls.append(cmd)
+        return Mock(returncode=0, stdout="", stderr="")
+
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+
+    with (
+        patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ),
+        patch("inspect_harbor.harbor._solver.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor.harbor._solver.copy_directory_to_sandbox",
+            new_callable=AsyncMock,
+        ),
+        patch("pathlib.Path.exists", return_value=True),
+    ):
+        solver_fn = oracle()
+        await solver_fn(state, Mock())
+
+        # Verify cleanup was called AFTER solution execution
+        # Expected calls:
+        # 1. bash solve.sh
+        # 2. unset API_KEY
+        # 3. unset MODEL
+        # 4. unset DEBUG
+        assert len(exec_calls) == 4
+        assert exec_calls[0] == ["bash", "-l", "/solution/solve.sh"]
+        env_cleanup_calls = exec_calls[1:]
+        assert ["unset", "API_KEY"] in env_cleanup_calls
+        assert ["unset", "MODEL"] in env_cleanup_calls
+        assert ["unset", "DEBUG"] in env_cleanup_calls
+
+
+@pytest.mark.asyncio
+async def test_oracle_no_env_cleanup_when_no_env_vars():
+    """Test that oracle doesn't call env cleanup when solution_env is not set."""
+    state = TaskState(
+        model=ModelName("mockprovider/test-model"),
+        sample_id="test-sample",
+        epoch=0,
+        input="test input",
+        messages=[],
+        metadata={
+            "solution_dir": "/fake/solution",
+            "solve_path": "/fake/solution/solve.sh",
+            # No solution_env
+        },
+    )
+
+    mock_sandbox = Mock()
+    exec_calls: list[list[str]] = []
+
+    async def track_exec(cmd: list[str], **_kwargs: object) -> Mock:
+        exec_calls.append(cmd)
+        return Mock(returncode=0, stdout="", stderr="")
+
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.write_file = AsyncMock()
+
+    with (
+        patch(
+            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        ),
+        patch("inspect_harbor.harbor._solver.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor.harbor._solver.copy_directory_to_sandbox",
+            new_callable=AsyncMock,
+        ),
+        patch("pathlib.Path.exists", return_value=True),
+    ):
+        solver_fn = oracle()
+        await solver_fn(state, Mock())
+
+        # Should only have solution script execution (no env cleanup)
+        assert len(exec_calls) == 1
+        assert exec_calls[0] == ["bash", "-l", "/solution/solve.sh"]
+
+
+@pytest.mark.asyncio
+async def test_cleanup_sandbox_env_vars_unit():
+    """Test cleanup_sandbox_env_vars function directly."""
+    mock_sandbox = Mock()
+    mock_exec_result = Mock()
+    mock_exec_result.success = True
+    mock_sandbox.exec = AsyncMock(return_value=mock_exec_result)
+
+    with patch(
+        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+    ):
+        await cleanup_sandbox_env_vars(["VAR1", "VAR2", "VAR3"])
+
+        assert mock_sandbox.exec.call_count == 3
+        calls = mock_sandbox.exec.call_args_list
+
+        assert calls[0][0][0] == ["unset", "VAR1"]
+        assert calls[1][0][0] == ["unset", "VAR2"]
+        assert calls[2][0][0] == ["unset", "VAR3"]
