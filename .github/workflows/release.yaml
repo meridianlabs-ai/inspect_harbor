@@ -22,6 +22,7 @@ jobs:
         with:
           release-type: python
           config-file: .release-please-config.json
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
 
   publish:
     needs: release-please
