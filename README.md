@@ -20,6 +20,14 @@ cd inspect_harbor
 pip install -e .
 ```
 
+## Prerequisites
+
+Before running Harbor tasks, ensure you have:
+
+- **Python 3.12 or higher** - Required by inspect_harbor
+- **Docker installed and running** - Required for execution when using Docker sandbox (default)
+- **Model API keys** - Set appropriate environment variables (e.g., `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`)
+
 ## Understanding Harbor Tasks
 
 ### What is a Harbor Task?
@@ -36,7 +44,7 @@ A typical Harbor task directory contains the following components:
 my_task/
 ├── instruction.md      # Task instructions/prompt shown to the agent
 ├── task.toml           # Metadata, timeouts, resource specs (CPU/memory/GPU), env vars
-├── environment/        # (Optional) Environment setup - Dockerfile or docker-compose.yaml
+├── environment/        # Environment setup - Dockerfile or docker-compose.yaml
 │   └── Dockerfile      # Docker environment spec (varies by sandbox provider)
 ├── solution/           # (Optional) Reference solution for sanity checking
 │   ├── solve.sh        # Executable solution script used by Oracle solver
@@ -45,8 +53,6 @@ my_task/
     ├── test.sh         # Test script executed by verifier
     └── ...             # Outputs reward.txt or reward.json to /logs/verifier/
 ```
-
-**Note:** The `environment/` directory structure depends on the [sandbox provider](https://inspect.aisi.org.uk/sandboxing.html) being used.
 
 ### Harbor to Inspect Mapping
 
@@ -68,7 +74,7 @@ Inspect Harbor bridges Harbor tasks to the Inspect AI evaluation framework using
 
 ## Quick Start
 
-The fastest way to get started is to run a task from the [Harbor registry](https://github.com/laude-institute/harbor/blob/main/registry.json).
+The fastest way to get started is to run a task from the [Harbor registry](https://harborframework.com/registry).
 
 ### Evaluate with a Model
 
@@ -82,8 +88,9 @@ inspect eval inspect_harbor/harbor \
 ```
 
 This command:
-- Loads the `aime@1.0` dataset from the Harbor registry
-- Runs only the `aime_60` task
+- Loads the `aime@1.0` dataset from the [Harbor registry](https://harborframework.com/registry)
+- Downloads and caches the `aime_60` task
+- Runs the `aime_60` task
 - Evaluates using GPT-4o-mini with the [default ReAct agent scaffold](#default-agent-scaffold)
 - Executes in a [Docker sandbox environment](https://inspect.aisi.org.uk/sandboxing.html#sec-docker-configuration)
 - Stores results in `./logs`
@@ -103,86 +110,50 @@ inspect eval inspect_harbor/harbor \
 
 The Oracle solver executes the task's `solution/solve.sh` script to confirm the task is correctly configured and solvable.
 
-**Prerequisites:** Docker must be installed and running for sandbox execution.
+### Using the Python API
 
-## Usage
+You can also run Harbor tasks programmatically using the Python API:
 
-### Agents and Solvers
+```python
+from inspect_ai import eval
+from inspect_harbor import harbor
 
-[Solvers](https://inspect.aisi.org.uk/solvers.html) are the execution components in Inspect AI. They can run [agent scaffolds](https://inspect.aisi.org.uk/agents.html) (like [ReAct](https://inspect.aisi.org.uk/react-agent.html)), execute solution scripts (like the Oracle solver), perform prompt engineering, and more. Both solvers and agents can be used to solve Harbor tasks.
-
-#### Default Agent Scaffold
-
-When no agent or solver is specified, Inspect Harbor provides a default agent scaffold for your model:
-
-- **Agent Type**: [ReAct agent](https://inspect.aisi.org.uk/react-agent.html)
-- **Tools**: [`bash(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-session), [`python(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-and-python), [`memory()`](https://inspect.aisi.org.uk/tools-standard.html#sec-memory), [`update_plan()`](https://inspect.aisi.org.uk/tools-standard.html#sec-update-plan)
-- **Submission**: Disabled (`submit=False`) - agents write answers to files for evaluation
-- **Compaction**: [`CompactionEdit()`](https://inspect.aisi.org.uk/compaction.html) for context window management
-
-This default configuration is suitable for most Harbor tasks that require command execution and file manipulation.
-
-#### Using Custom Agents
-
-You can provide your own agent or solver implementation using the `--solver` flag:
-
-**Using a custom agent:**
-```bash
-inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="aime@1.0" \
-  --model openai/gpt-4o-mini \
-  --solver path/to/your_agent.py@custom_agent
+eval(
+    harbor(
+        dataset_name_version="aime@1.0",
+        dataset_task_names=["aime_60"]
+    ),
+    model="openai/gpt-4o-mini"
+)
 ```
 
-For more details:
-- [Agents documentation](https://inspect.aisi.org.uk/agents.html)
-- [Solvers documentation](https://inspect.aisi.org.uk/solvers.html)
+**With Oracle solver:**
+```python
+from inspect_ai import eval
+from inspect_harbor import harbor, oracle
 
-### Task and Dataset Sources
-
-#### From Registry
-
-```bash
-# Load from default Harbor registry
-inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="aime@1.0" \
-  --model openai/gpt-4o-mini
+eval(
+    harbor(
+        dataset_name_version="aime@1.0",
+        dataset_task_names=["aime_60"],
+        solver=oracle()
+    )
+)
 ```
 
-```bash
-# Load from custom registry URL
-inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="aime@1.0" \
-  -T registry_url="https://github.com/custom/registry.json" \
-  --model openai/gpt-4o-mini
-```
+**With custom parameters:**
+```python
+from inspect_ai import eval
+from inspect_harbor import harbor
 
-```bash
-# Load from local registry
-inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="aime@1.0" \
-  -T registry_path="/path/to/local/registry.json" \
-  --model openai/gpt-4o-mini
-```
-
-#### From Local Path
-
-```bash
-# Run a single local task or dataset
-inspect eval inspect_harbor/harbor \
-  -T path="/path/to/task_or_dataset/directory" \
-  --model openai/gpt-4o-mini
-```
-
-#### From Git Repository
-
-```bash
-# Download and run a task from a git repository
-inspect eval inspect_harbor/harbor \
-  -T path="aime_60" \
-  -T task_git_url="https://github.com/example/tasks.git" \
-  -T task_git_commit_id="abc123" \
-  --model openai/gpt-4o-mini
+eval(
+    harbor(
+        path="/path/to/local/dataset",
+        message_limit=100,
+    ),
+    model="openai/gpt-4o-mini",
+    continue_on_fail=True
+)
 ```
 
 ## Harbor Registry
@@ -191,7 +162,7 @@ The Harbor registry is a centralized catalog of curated Harbor datasets and task
 
 ### Default Registry
 
-By default, Inspect Harbor uses the official Harbor registry at https://github.com/laude-institute/harbor/blob/main/registry.json. When you specify a `dataset_name_version`, it automatically:
+By default, Inspect Harbor uses the official [Harbor registry](https://github.com/laude-institute/harbor/blob/main/registry.json). When you specify a `dataset_name_version`, it automatically:
 
 1. Looks up the dataset in the registry
 2. Finds the corresponding GitHub repository
@@ -239,7 +210,91 @@ inspect eval inspect_harbor/harbor \
   --model openai/gpt-4o-mini
 ```
 
-## Task Parameters
+## Usage
+
+### Agents and Solvers
+
+[Solvers](https://inspect.aisi.org.uk/solvers.html) are the execution components in Inspect AI. They can run [agent scaffolds](https://inspect.aisi.org.uk/agents.html) (like [ReAct](https://inspect.aisi.org.uk/react-agent.html)), execute solution scripts (like the Oracle solver), perform prompt engineering, and more. Both solvers and agents can be used to solve Harbor tasks.
+
+#### Default Agent Scaffold
+
+When no agent or solver is specified, Inspect Harbor provides a default agent scaffold for your model:
+
+- **Agent Type**: [ReAct agent](https://inspect.aisi.org.uk/react-agent.html)
+- **Tools**: [`bash(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-session), [`python(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-and-python), [`memory()`](https://inspect.aisi.org.uk/tools-standard.html#sec-memory), [`update_plan()`](https://inspect.aisi.org.uk/tools-standard.html#sec-update-plan)
+- **Submission**: Disabled (`submit=False`) - agents write answers to files for evaluation
+- **Compaction**: [`CompactionEdit()`](https://inspect.aisi.org.uk/compaction.html) for context window management
+
+This default configuration is suitable for most Harbor tasks that require command execution and file manipulation.
+
+#### Using Custom Agents
+
+You can provide your own agent or solver implementation using the `--solver` flag:
+
+**Using a custom agent:**
+```bash
+inspect eval inspect_harbor/harbor \
+  -T dataset_name_version="aime@1.0" \
+  --solver path/to/custom/agent.py@custom_agent
+  --model openai/gpt-4o-mini
+```
+
+**Using Inspect SWE agent framework:**
+
+First install the required package:
+```bash
+pip install inspect-swe
+```
+
+Then use it via CLI:
+```bash
+inspect eval inspect_harbor/harbor \
+  -T dataset_name_version="aime@1.0" \
+  --solver inspect_swe/claude_code
+```
+
+Or via Python API:
+```python
+from inspect_ai import eval
+from inspect_harbor import harbor
+from inspect_swe import claude_code
+
+eval(
+    harbor(dataset_name_version="aime@1.0"),
+    solver=claude_code(),
+)
+```
+
+For more details:
+- [Agents documentation](https://inspect.aisi.org.uk/agents.html)
+- [Solvers documentation](https://inspect.aisi.org.uk/solvers.html)
+- [Inspect SWE documentation](https://meridianlabs-ai.github.io/inspect_swe/)
+
+### Task and Dataset Sources
+
+In addition to the [Harbor Registry](#harbor-registry) (covered above), you can also load Harbor tasks from local filesystems or git repositories.
+
+#### From Local Path
+
+```bash
+# Run a single local task or dataset
+inspect eval inspect_harbor/harbor \
+  -T path="/path/to/task_or_dataset/directory" \
+  --model openai/gpt-4o-mini
+```
+
+#### From Git Repository
+
+```bash
+# Download and run a task from a git repository
+inspect eval inspect_harbor/harbor \
+  -T path="aime_60" \
+  -T task_git_url="https://github.com/example/tasks.git" \
+  -T task_git_commit_id="abc123" \
+  --model openai/gpt-4o-mini
+```
+
+### Task Parameters
 
 The following parameters configure the Inspect Harbor task interface. They can be used in Python by importing `inspect_harbor.harbor` or via the command line with `inspect eval inspect_harbor/harbor -T <parameter>=<value>`.
 
