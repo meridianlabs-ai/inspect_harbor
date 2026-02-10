@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.1.1...v0.2.0) (2026-02-10)
+
+
+### Features
+
+* simplify harbor() API by removing solver parameter ([#7](https://github.com/meridianlabs-ai/inspect_harbor/issues/7)) ([37ef434](https://github.com/meridianlabs-ai/inspect_harbor/commit/37ef434a522f77366ca9b94f23425ef08cf8bc0a))
+
+
+### Bug Fixes
+
+* add RELEASE_PLEASE_TOKEN to release workflow ([#8](https://github.com/meridianlabs-ai/inspect_harbor/issues/8)) ([f99615c](https://github.com/meridianlabs-ai/inspect_harbor/commit/f99615c187206f36d0f746d5dfdd21f77589a970))
+
 ## 0.1.0 (2026-02-10)
 
 ### Features
