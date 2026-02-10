@@ -12,8 +12,8 @@
 | src/inspect\_harbor/harbor/\_sandbox\_utils.py |       38 |        0 |       14 |        0 |    100% |           |
 | src/inspect\_harbor/harbor/\_scorer.py         |       75 |        3 |       18 |        2 |     95% |72-73, 159 |
 | src/inspect\_harbor/harbor/\_solver.py         |       34 |        2 |        8 |        0 |     95% |     43-44 |
-| src/inspect\_harbor/harbor/\_task.py           |       71 |       18 |       20 |        1 |     73% |197-201, 222-229, 242-265 |
-| **TOTAL**                                      |  **276** |   **40** |   **72** |    **5** | **85%** |           |
+| src/inspect\_harbor/harbor/\_task.py           |       70 |       18 |       20 |        1 |     72% |193-197, 218-225, 238-261 |
+| **TOTAL**                                      |  **275** |   **40** |   **72** |    **5** | **85%** |           |
 
 
 ## Setup coverage badge
