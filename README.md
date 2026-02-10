@@ -193,7 +193,6 @@ When no agent or solver is specified, Inspect Harbor provides a default agent sc
 
 - **Agent Type**: [ReAct agent](https://inspect.aisi.org.uk/react-agent.html)
 - **Tools**: [`bash(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-session), [`python(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-and-python), [`memory()`](https://inspect.aisi.org.uk/tools-standard.html#sec-memory), [`update_plan()`](https://inspect.aisi.org.uk/tools-standard.html#sec-update-plan)
-- **Submission**: Disabled (`submit=False`) - agents write answers to files for evaluation
 - **Compaction**: [`CompactionEdit()`](https://inspect.aisi.org.uk/compaction.html) for context window management
 
 This default configuration is suitable for most Harbor tasks that require command execution and file manipulation.
@@ -309,7 +308,6 @@ The following parameters configure the Inspect Harbor task interface. They can b
 | `disable_verification` | Skip task verification checks | `true` or `false` |
 | `overwrite_cache` | Force re-download and overwrite cached tasks (default: `false`). Works for both git tasks and registry datasets. | `true` or `false` |
 | `sandbox_env_name` | Sandbox environment name (default: `"docker"`) | `"modal"` or `"docker"` |
-| `solver` | Custom solver (defaults to ReAct agent with bash/python/memory/update_plan tools) | `inspect_harbor/oracle` |
 
 **Note:** These are task-specific parameters passed with `-T`. For additional `inspect eval` command-line flags (like `--model`, `--message-limit`, `--epochs`, `--fail-on-error`, `--log-dir`, `--log-level`, `--max-tasks`, etc.), see the [Inspect eval CLI reference](https://inspect.aisi.org.uk/reference/inspect_eval.html) or [Python API reference](https://inspect.aisi.org.uk/reference/inspect_ai.html#eval).
 
