@@ -12,7 +12,6 @@ from harbor.tasks.client import TaskClient
 from inspect_ai import Task, task
 from inspect_ai.agent import react
 from inspect_ai.model import CompactionEdit
-from inspect_ai.solver import Solver
 from inspect_ai.tool import bash, memory, python, update_plan
 
 from inspect_harbor.harbor._converters import harbor_task_to_sample
@@ -33,7 +32,6 @@ def harbor(
     disable_verification: bool = False,
     overwrite_cache: bool = False,
     sandbox_env_name: str = "docker",
-    solver: Solver | None = None,
 ) -> Task:
     """Harbor task loader for Inspect AI.
 
@@ -51,7 +49,6 @@ def harbor(
         disable_verification: Disable task verification. Verfication checks whether task files exist.
         overwrite_cache: Force re-download and overwrite cached tasks (default: False).
         sandbox_env_name: Sandbox environment name (default: "docker").
-        solver: Optional custom solver. If None, uses react() with bash/python tools.
 
     Returns:
         Task: Configured Inspect AI task
@@ -78,11 +75,9 @@ def harbor(
 
     return Task(
         dataset=samples,
-        solver=solver
-        or react(
+        solver=react(
             tools=[bash(timeout=300), python(timeout=300), memory(), update_plan()],
             compaction=CompactionEdit(),
-            submit=False,  # Agent is expected to write a file with its answer
         ),
         scorer=harbor_scorer(),
         time_limit=max_timeout,
