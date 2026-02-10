@@ -1,0 +1,41 @@
+name: Publish Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "yes" to confirm publishing to PyPI'
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/inspect-harbor
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Display version
+        run: |
+          echo "Version: $(git describe --tags --always)"
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip build
+      - name: Build package
+        run: |
+          python -m build
+      - name: List built packages
+        run: ls -lh dist/
+      - name: Publish package distributions to PyPI
+        if: ${{ github.event.inputs.confirm == 'yes' }}
+        uses: pypa/gh-action-pypi-publish@release/v1
