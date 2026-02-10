@@ -8,6 +8,7 @@ dynamic = ["version"]
 description = "Inspect AI interface to Harbor tasks"
 authors = [{ name = "Meridian Labs" }]
 readme = "README.md"
+# Note: harbor package requires Python >=3.12, so we cannot lower this requirement
 requires-python = ">=3.12"
 license = { text = "MIT License" }
 dependencies = [

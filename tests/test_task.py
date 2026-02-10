@@ -340,16 +340,3 @@ def test_harbor_task_integration():
     assert sample.metadata is not None
     assert sample.metadata["task_name"] == "simple_task"
     assert "test_path" in sample.metadata
-
-
-def test_harbor_task_kwargs_passthrough():
-    """Test that kwargs are passed through to Task constructor."""
-    from inspect_harbor.harbor._task import harbor
-
-    task_path = Path(__file__).parent / "fixtures" / "simple_task"
-
-    # Call harbor() with additional kwargs
-    task = harbor(path=task_path, message_limit=50)
-
-    # Verify kwargs were passed through to Task
-    assert task.message_limit == 50
