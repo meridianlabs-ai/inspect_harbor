@@ -1,24 +1,22 @@
 # Inspect Harbor
 
-This package provides an interface to run [Harbor tasks](https://harborframework.com/docs/tasks) using [Inspect AI](https://inspect.ai-safety-institute.org.uk/).
+This package provides an interface to run [Harbor](https://harborframework.com/) tasks using [Inspect AI](https://inspect.ai-safety-institute.org.uk/).
 
 ## Installation
 
-Using uv:
+Install from PyPI:
 
 ```bash
-git clone https://github.com/meridianlabs-ai/inspect_harbor.git
-cd inspect_harbor
-uv sync
+pip install inspect-harbor
 ```
 
-Using pip:
+Or with uv:
 
 ```bash
-git clone https://github.com/meridianlabs-ai/inspect_harbor.git
-cd inspect_harbor
-pip install -e .
+uv add inspect-harbor
 ```
+
+For development installation, see the [Development](#development) section.
 
 ## Prerequisites
 
@@ -27,6 +25,49 @@ Before running Harbor tasks, ensure you have:
 - **Python 3.12 or higher** - Required by inspect_harbor
 - **Docker installed and running** - Required for execution when using Docker sandbox (default)
 - **Model API keys** - Set appropriate environment variables (e.g., `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`)
+
+## Quick Start
+
+The fastest way to get started is to run a dataset from the [Harbor registry](https://harborframework.com/registry).
+
+### Evaluate with a Model
+
+Run a Harbor dataset with any [Inspect-compatible model](https://inspect.aisi.org.uk/models.html):
+
+```bash
+inspect eval inspect_harbor/harbor \
+  -T dataset_name_version="hello-world@1.0" \
+  --model openai/gpt-5-mini
+```
+
+Or run a different dataset:
+
+```bash
+inspect eval inspect_harbor/harbor \
+  -T dataset_name_version="terminal-bench-sample@2.0" \
+  --model openai/gpt-5-mini
+```
+
+This command:
+- Loads the `terminal-bench-sample@2.0` dataset from the [Harbor registry](https://harborframework.com/registry)
+- Downloads and caches all [10 tasks](https://harborframework.com/registry/terminal-bench-sample/2.0)
+- Solves the tasks with the [default ReAct agent](#default-agent-scaffold) using GPT-5-mini
+- Executes in a [Docker sandbox environment](https://inspect.aisi.org.uk/sandboxing.html#sec-docker-configuration)
+- Stores results in `./logs`
+
+### Using the Python API
+
+You can also run Harbor tasks programmatically using the Python API:
+
+```python
+from inspect_ai import eval
+from inspect_harbor import harbor
+
+eval(
+    harbor(dataset_name_version="hello-world@1.0"),
+    model="openai/gpt-5-mini"
+)
+```
 
 ## Understanding Harbor Tasks
 
@@ -86,88 +127,6 @@ The verifier script (`tests/test.sh`) uses these environment variables to call t
 
 **Note:** Most Harbor tasks use deterministic test scripts and don't require LLM judges.
 
-## Quick Start
-
-The fastest way to get started is to run a task from the [Harbor registry](https://harborframework.com/registry).
-
-### Evaluate with a Model
-
-Run a Harbor task with any [Inspect-compatible model](https://inspect.aisi.org.uk/models.html):
-
-```bash
-inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="aime@1.0" \
-  -T dataset_task_names='["aime_60"]' \
-  --model openai/gpt-4o-mini
-```
-
-This command:
-- Loads the `aime@1.0` dataset from the [Harbor registry](https://harborframework.com/registry)
-- Downloads and caches the `aime_60` task
-- Runs the `aime_60` task
-- Solves the task with the [default ReAct agent](#default-agent-scaffold) using GPT-4o-mini
-- Executes in a [Docker sandbox environment](https://inspect.aisi.org.uk/sandboxing.html#sec-docker-configuration)
-- Stores results in `./logs`
-
-**Note:** To execute the whole dataset, omit the `dataset_task_names` task parameter.
-
-### Verify with Oracle Solver
-
-Before evaluating with models, you can verify that a task is solvable using its reference solution:
-
-```bash
-inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="aime@1.0" \
-  -T dataset_task_names='["aime_60"]' \
-  --solver inspect_harbor/oracle
-```
-
-The Oracle solver executes the task's `solution/solve.sh` script to confirm the task is correctly configured and solvable.
-
-### Using the Python API
-
-You can also run Harbor tasks programmatically using the Python API:
-
-```python
-from inspect_ai import eval
-from inspect_harbor import harbor
-
-eval(
-    harbor(
-        dataset_name_version="aime@1.0",
-        dataset_task_names=["aime_60"]
-    ),
-    model="openai/gpt-4o-mini"
-)
-```
-
-**With Oracle solver:**
-```python
-from inspect_ai import eval
-from inspect_harbor import harbor, oracle
-
-eval(
-    harbor(
-        dataset_name_version="aime@1.0",
-        dataset_task_names=["aime_60"],
-        solver=oracle()
-    )
-)
-```
-
-**With custom parameters:**
-```python
-from inspect_ai import eval
-from inspect_harbor import harbor
-
-eval(
-    harbor(path="/path/to/local/dataset"),
-    model="openai/gpt-4o-mini",
-    continue_on_fail=True,
-    message_limit=100,
-)
-```
-
 ## Harbor Registry
 
 The Harbor registry is a centralized catalog of curated Harbor datasets and tasks. Inspect Harbor uses this registry to automatically download and resolve datasets, following the same behavior as Harbor.
@@ -186,7 +145,7 @@ By default, Inspect Harbor uses the official [Harbor registry](https://github.co
 inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   -T dataset_task_names='["aime_60"]' \
-  --model openai/gpt-4o-mini
+  --model openai/gpt-5-mini
 ```
 
 → Resolves to [harbor-datasets/aime](https://github.com/laude-institute/harbor-datasets/tree/main/datasets/aime) version `1.0` and downloads only the `aime_60` task
@@ -200,7 +159,7 @@ You can use custom registries for private or organization-specific datasets:
 inspect eval inspect_harbor/harbor \
   -T dataset_name_version="my_dataset@1.0" \
   -T registry_url="https://github.com/myorg/registry.json" \
-  --model openai/gpt-4o-mini
+  --model openai/gpt-5-mini
 ```
 
 **Local registry:**
@@ -208,7 +167,7 @@ inspect eval inspect_harbor/harbor \
 inspect eval inspect_harbor/harbor \
   -T dataset_name_version="my_dataset@1.0" \
   -T registry_path="/path/to/local/registry.json" \
-  --model openai/gpt-4o-mini
+  --model openai/gpt-5-mini
 ```
 
 ### Cache Management
@@ -219,7 +178,7 @@ Downloaded tasks are cached locally. To force a fresh download:
 inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   -T overwrite_cache=true \
-  --model openai/gpt-4o-mini
+  --model openai/gpt-5-mini
 ```
 
 ## Usage
@@ -248,7 +207,7 @@ You can provide your own agent or solver implementation using the `--solver` fla
 inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   --solver path/to/custom/agent.py@custom_agent \
-  --model openai/gpt-4o-mini
+  --model openai/gpt-5-mini
 ```
 
 **Using Inspect SWE agent framework:**
@@ -281,6 +240,28 @@ eval(
 
 **Note**: Make sure you have your `ANTHROPIC_API_KEY` in a `.env` file or set as an environment variable.
 
+#### Oracle Solver
+
+The Oracle solver is useful for verifying that a dataset is correctly configured and solvable. It executes the task's reference solution (`solution/solve.sh` script) instead of using a model.
+
+**CLI usage:**
+```bash
+inspect eval inspect_harbor/harbor \
+  -T dataset_name_version="hello-world@1.0" \
+  --solver inspect_harbor/oracle
+```
+
+**Python API usage:**
+```python
+from inspect_ai import eval
+from inspect_harbor import harbor, oracle
+
+eval(
+    harbor(dataset_name_version="hello-world@1.0"),
+    solver=oracle()
+)
+```
+
 For more details:
 - [Agents documentation](https://inspect.aisi.org.uk/agents.html)
 - [Solvers documentation](https://inspect.aisi.org.uk/solvers.html)
@@ -296,7 +277,7 @@ In addition to the [Harbor Registry](#harbor-registry) (covered above), you can 
 # Run a single local task or dataset
 inspect eval inspect_harbor/harbor \
   -T path="/path/to/task_or_dataset/directory" \
-  --model openai/gpt-4o-mini
+  --model openai/gpt-5-mini
 ```
 
 #### From Git Repository
@@ -307,7 +288,7 @@ inspect eval inspect_harbor/harbor \
   -T path="aime_60" \
   -T task_git_url="https://github.com/example/tasks.git" \
   -T task_git_commit_id="abc123" \
-  --model openai/gpt-4o-mini
+  --model openai/gpt-5-mini
 ```
 
 ### Task Parameters
@@ -334,16 +315,12 @@ The following parameters configure the Inspect Harbor task interface. They can b
 
 ## Development
 
-Install development dependencies:
+Clone the repository and install development dependencies:
 
 ```bash
+git clone https://github.com/meridianlabs-ai/inspect_harbor.git
+cd inspect_harbor
 make install  # Installs dependencies and sets up pre-commit hooks
-```
-
-Or manually using uv:
-
-```bash
-uv sync
 ```
 
 Run tests and checks:
