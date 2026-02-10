@@ -1,7 +1,6 @@
 """Inspect AI Task interface to Harbor tasks"""
 
 from pathlib import Path
-from typing import Any
 
 from harbor.dataset.client import DatasetClient
 from harbor.models.job.config import LocalDatasetConfig, RegistryDatasetConfig
@@ -35,7 +34,6 @@ def harbor(
     overwrite_cache: bool = False,
     sandbox_env_name: str = "docker",
     solver: Solver | None = None,
-    **kwargs: Any,
 ) -> Task:
     """Harbor task loader for Inspect AI.
 
@@ -54,7 +52,6 @@ def harbor(
         overwrite_cache: Force re-download and overwrite cached tasks (default: False).
         sandbox_env_name: Sandbox environment name (default: "docker").
         solver: Optional custom solver. If None, uses react() with bash/python tools.
-        **kwargs: Additional keyword arguments passed through to Task() (e.g., message_limit, epochs, fail_on_error).
 
     Returns:
         Task: Configured Inspect AI task
@@ -89,7 +86,6 @@ def harbor(
         ),
         scorer=harbor_scorer(),
         time_limit=max_timeout,
-        **kwargs,
     )
 
 

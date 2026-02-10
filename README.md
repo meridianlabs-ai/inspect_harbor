@@ -1,6 +1,6 @@
 # Inspect Harbor
 
-This package provides an interface to run [Harbor](https://harborframework.com/docs/tasks) tasks using [Inspect AI](https://inspect.ai-safety-institute.org.uk/).
+This package provides an interface to run [Harbor tasks](https://harborframework.com/docs/tasks) using [Inspect AI](https://inspect.ai-safety-institute.org.uk/).
 
 ## Installation
 
@@ -67,10 +67,24 @@ Inspect Harbor bridges Harbor tasks to the Inspect AI evaluation framework using
 | **tests/test.sh** | [`Scorer`](https://inspect.aisi.org.uk/scorers.html) ([`inspect_harbor/harbor_scorer`](src/inspect_harbor/harbor/_scorer.py)) | Test script executed by the scorer to produce reward/metrics |
 | **solution/solve.sh** | [`Solver`](https://inspect.aisi.org.uk/solvers.html) ([`inspect_harbor/oracle`](src/inspect_harbor/harbor/_solver.py)) | Reference solution script executed by the Oracle solver for sanity checking |
 | **task.toml[metadata]** | [`Sample.metadata`](https://inspect.aisi.org.uk/datasets.html#dataset-samples) | Task metadata: author, difficulty, category, tags |
-| **task.toml[verifier]** | Scorer timeout/env vars | Timeout and environment configuration for test execution |
+| **task.toml[verifier]** | Scorer timeout/env vars | Timeout and environment configuration for scorer execution |
 | **task.toml[agent]** | [`Task.time_limit`](https://inspect.aisi.org.uk/tasks.html#task-options) | Agent timeout per Harbor task. Mapped to `Task.time_limit` using the maximum value across all samples |
 | **task.toml[solution]** | Oracle solver env vars | Environment variables to set when running the solution script |
 | **task.toml[environment]** | [`SandboxEnvironmentSpec.config`](https://inspect.aisi.org.uk/sandboxing.html#sandbox-environments) | Resource specifications (CPU, memory, storage, GPU, internet). Overwrites resource limits in `environment/docker-compose.yaml` |
+
+### LLM Judges in Verification
+
+Some Harbor tasks use LLM judges for verification (e.g., evaluating open-ended responses or code quality). These tasks specify the model in their `task.toml`:
+
+```toml
+[verifier.env]
+MODEL_NAME = "claude-haiku-4-5"
+ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY}"
+```
+
+The verifier script (`tests/test.sh`) uses these environment variables to call the LLM. Make sure to set the appropriate API key (e.g., `ANTHROPIC_API_KEY`) when running tasks with LLM judges.
+
+**Note:** Most Harbor tasks use deterministic test scripts and don't require LLM judges.
 
 ## Quick Start
 
@@ -91,7 +105,7 @@ This command:
 - Loads the `aime@1.0` dataset from the [Harbor registry](https://harborframework.com/registry)
 - Downloads and caches the `aime_60` task
 - Runs the `aime_60` task
-- Evaluates using GPT-4o-mini with the [default ReAct agent scaffold](#default-agent-scaffold)
+- Solves the task with the [default ReAct agent](#default-agent-scaffold) using GPT-4o-mini
 - Executes in a [Docker sandbox environment](https://inspect.aisi.org.uk/sandboxing.html#sec-docker-configuration)
 - Stores results in `./logs`
 
@@ -147,12 +161,10 @@ from inspect_ai import eval
 from inspect_harbor import harbor
 
 eval(
-    harbor(
-        path="/path/to/local/dataset",
-        message_limit=100,
-    ),
+    harbor(path="/path/to/local/dataset"),
     model="openai/gpt-4o-mini",
-    continue_on_fail=True
+    continue_on_fail=True,
+    message_limit=100,
 )
 ```
 
@@ -235,7 +247,7 @@ You can provide your own agent or solver implementation using the `--solver` fla
 ```bash
 inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
-  --solver path/to/custom/agent.py@custom_agent
+  --solver path/to/custom/agent.py@custom_agent \
   --model openai/gpt-4o-mini
 ```
 
@@ -250,7 +262,8 @@ Then use it via CLI:
 ```bash
 inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
-  --solver inspect_swe/claude_code
+  --solver inspect_swe/claude_code \
+  --model anthropic/claude-sonnet-4-5
 ```
 
 Or via Python API:
@@ -262,8 +275,11 @@ from inspect_swe import claude_code
 eval(
     harbor(dataset_name_version="aime@1.0"),
     solver=claude_code(),
+    model="anthropic/claude-sonnet-4-5"
 )
 ```
+
+**Note**: Make sure you have your `ANTHROPIC_API_KEY` in a `.env` file or set as an environment variable.
 
 For more details:
 - [Agents documentation](https://inspect.aisi.org.uk/agents.html)
@@ -313,9 +329,8 @@ The following parameters configure the Inspect Harbor task interface. They can b
 | `overwrite_cache` | Force re-download and overwrite cached tasks (default: `false`). Works for both git tasks and registry datasets. | `true` or `false` |
 | `sandbox_env_name` | Sandbox environment name (default: `"docker"`) | `"modal"` or `"docker"` |
 | `solver` | Custom solver (defaults to ReAct agent with bash/python/memory/update_plan tools) | `inspect_harbor/oracle` |
-| `**kwargs` | Additional keyword arguments passed to `Task()` (e.g., `message_limit`, `epochs`, `fail_on_error`) | `message_limit=100` |
 
-**Note:** These are task-specific parameters passed with `-T`. For additional `inspect eval` command-line flags (like `--model`, `--log-dir`, `--log-level`, `--max-tasks`, etc.), see the [Inspect eval reference documentation](https://inspect.aisi.org.uk/reference/inspect_eval.html).
+**Note:** These are task-specific parameters passed with `-T`. For additional `inspect eval` command-line flags (like `--model`, `--message-limit`, `--epochs`, `--fail-on-error`, `--log-dir`, `--log-level`, `--max-tasks`, etc.), see the [Inspect eval CLI reference](https://inspect.aisi.org.uk/reference/inspect_eval.html) or [Python API reference](https://inspect.aisi.org.uk/reference/inspect_ai.html#eval).
 
 ## Development
 
