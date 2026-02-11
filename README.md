@@ -8,11 +8,11 @@
 | src/inspect\_harbor/\_registry.py              |        3 |        3 |        0 |        0 |      0% |       2-4 |
 | src/inspect\_harbor/\_version.py               |       13 |       13 |        0 |        0 |      0% |      4-34 |
 | src/inspect\_harbor/harbor/\_\_init\_\_.py     |        0 |        0 |        0 |        0 |    100% |           |
-| src/inspect\_harbor/harbor/\_converters.py     |       39 |        1 |       12 |        2 |     94% |44->51, 49 |
+| src/inspect\_harbor/harbor/\_converters.py     |       39 |        1 |       12 |        2 |     94% |71->78, 76 |
 | src/inspect\_harbor/harbor/\_sandbox\_utils.py |       38 |        0 |       14 |        0 |    100% |           |
 | src/inspect\_harbor/harbor/\_scorer.py         |       75 |        3 |       18 |        2 |     95% |72-73, 159 |
 | src/inspect\_harbor/harbor/\_solver.py         |       34 |        2 |        8 |        0 |     95% |     43-44 |
-| src/inspect\_harbor/harbor/\_task.py           |       69 |       18 |       20 |        1 |     72% |188-192, 213-220, 233-256 |
+| src/inspect\_harbor/harbor/\_task.py           |       69 |       18 |       20 |        1 |     72% |200-204, 225-232, 245-268 |
 | **TOTAL**                                      |  **274** |   **40** |   **72** |    **5** | **85%** |           |
 
 
