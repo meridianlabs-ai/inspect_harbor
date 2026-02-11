@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.2.0...v0.3.0) (2026-02-11)
+
+
+### Features
+
+* add resource override parameters to harbor() task ([#11](https://github.com/meridianlabs-ai/inspect_harbor/issues/11)) ([e765c4c](https://github.com/meridianlabs-ai/inspect_harbor/commit/e765c4c26952773a8b10817f3f53ebc43e7321c8))
+
 ## [0.2.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.1.1...v0.2.0) (2026-02-10)
 
 
