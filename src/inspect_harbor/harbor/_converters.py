@@ -26,7 +26,10 @@ def harbor_to_compose_config(harbor_task: HarborTask) -> ComposeConfig:
 
     # Extract resource configuration from Harbor config
     cpus = float(env_config.cpus) if env_config.cpus is not None else 1.0
-    memory_mb = env_config.memory_mb if env_config.memory_mb is not None else 2048
+    # claude code is a nodejs app so requires ~ 2GB by itself so make room for it
+    MIN_MEMORY = 6144
+    memory_mb = env_config.memory_mb if env_config.memory_mb is not None else MIN_MEMORY
+    memory_mb = max(memory_mb, MIN_MEMORY)
     gpus = env_config.gpus if env_config.gpus is not None else 0
     gpu_types = env_config.gpu_types
     # Note: storage_mb is not currently supported by Inspect AI's ComposeService
