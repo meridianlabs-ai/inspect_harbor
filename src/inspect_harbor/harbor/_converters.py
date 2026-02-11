@@ -45,19 +45,22 @@ def harbor_to_compose_config(
         if override_cpus is not None
         else (float(env_config.cpus) if env_config.cpus is not None else 1.0)
     )
+
+    # Harbor's default of 2048 MB (2 GB) is too restrictive for modern agents.
+    # Enforce a minimum of 6144 MB (6 GB) unless explicitly overridden.
+    MIN_MEMORY_MB = 6144  # 6 GB
     memory_mb = (
         override_memory_mb
         if override_memory_mb is not None
-        else env_config.memory_mb  # Could be None = unlimited
+        else max(env_config.memory_mb or 0, MIN_MEMORY_MB)
     )
+
     gpus = (
         override_gpus
         if override_gpus is not None
         else (env_config.gpus if env_config.gpus is not None else 0)
     )
     gpu_types = env_config.gpu_types
-    # Note: storage_mb is not supported - Docker Compose doesn't have standard storage
-
     gpu_deploy = _create_gpu_deploy_config(gpus, gpu_types)
 
     # Use existing docker-compose.yaml if present
