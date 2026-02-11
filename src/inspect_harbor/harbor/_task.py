@@ -83,7 +83,6 @@ def harbor(
         )
         for ht in harbor_task_objects
     ]
-    max_timeout = _get_max_timeout_sec(harbor_task_objects)
 
     return Task(
         dataset=samples,
@@ -92,7 +91,6 @@ def harbor(
             compaction=CompactionEdit(),
         ),
         scorer=harbor_scorer(),
-        time_limit=max_timeout,
     )
 
 
@@ -266,9 +264,3 @@ def _load_from_registry(
     dataset_client = DatasetClient()
     downloaded_tasks = dataset_client.download_dataset_from_config(dataset_config)
     return [dt.local_path for dt in downloaded_tasks]
-
-
-def _get_max_timeout_sec(harbor_tasks: list[HarborTask]) -> int | None:
-    """Extract the maximum timeout_sec from a list of Harbor tasks."""
-    timeout_values = [ht.config.agent.timeout_sec for ht in harbor_tasks]
-    return int(max(timeout_values)) if timeout_values else None

@@ -36,7 +36,7 @@ Run a Harbor dataset with any [Inspect-compatible model](https://inspect.aisi.or
 
 ```bash
 inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="hello-world@1.0" \
+  -T dataset_name_version="hello-world" \
   --model openai/gpt-5-mini
 ```
 
@@ -44,12 +44,12 @@ Or run a different dataset:
 
 ```bash
 inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="terminal-bench-sample@2.0" \
+  -T dataset_name_version="terminal-bench-sample" \
   --model openai/gpt-5-mini
 ```
 
 This command:
-- Loads the `terminal-bench-sample@2.0` dataset from the [Harbor registry](https://harborframework.com/registry)
+- Loads the `terminal-bench-sample@2.0` dataset (latest version) from the [Harbor registry](https://harborframework.com/registry)
 - Downloads and caches all [10 tasks](https://harborframework.com/registry/terminal-bench-sample/2.0)
 - Solves the tasks with the [default ReAct agent](#default-agent-scaffold) using GPT-5-mini
 - Executes in a [Docker sandbox environment](https://inspect.aisi.org.uk/sandboxing.html#sec-docker-configuration)
@@ -64,7 +64,7 @@ from inspect_ai import eval
 from inspect_harbor import harbor
 
 eval(
-    harbor(dataset_name_version="hello-world@1.0"),
+    harbor(dataset_name_version="hello-world"),
     model="openai/gpt-5-mini"
 )
 ```
@@ -73,7 +73,7 @@ eval(
 
 ### What is a Harbor Task?
 
-Harbor is a framework for building, evaluating, and optimizing agents and models in containerized environments. A Harbor task is a self-contained evaluation unit that includes an instruction, execution environment, scoring criteria, and optionally a reference solution.
+[Harbor](https://harborframework.com/) is a framework for building, evaluating, and optimizing agents and models in containerized environments. A Harbor task is a self-contained evaluation unit that includes an instruction, execution environment, scoring criteria, and optionally a reference solution.
 
 For comprehensive details about Harbor tasks, see the [Harbor documentation](https://harborframework.com/docs/tasks).
 
@@ -109,7 +109,7 @@ Inspect Harbor bridges Harbor tasks to the Inspect AI evaluation framework using
 | **solution/solve.sh** | [`Solver`](https://inspect.aisi.org.uk/solvers.html) ([`inspect_harbor/oracle`](src/inspect_harbor/harbor/_solver.py)) | Reference solution script executed by the Oracle solver for sanity checking |
 | **task.toml[metadata]** | [`Sample.metadata`](https://inspect.aisi.org.uk/datasets.html#dataset-samples) | Task metadata: author, difficulty, category, tags |
 | **task.toml[verifier]** | Scorer timeout/env vars | Timeout and environment configuration for scorer execution |
-| **task.toml[agent]** | [`Task.time_limit`](https://inspect.aisi.org.uk/tasks.html#task-options) | Agent timeout per Harbor task. Mapped to `Task.time_limit` using the maximum value across all samples |
+| **task.toml[agent]** | Agent solver env vars | Environment variables for agent execution. Agent timeout_sec is ignored. |
 | **task.toml[solution]** | Oracle solver env vars | Environment variables to set when running the solution script |
 | **task.toml[environment]** | [`SandboxEnvironmentSpec.config`](https://inspect.aisi.org.uk/sandboxing.html#sandbox-environments) | Resource specifications (CPU, memory, storage, GPU, internet). Overwrites resource limits in `environment/docker-compose.yaml` |
 
@@ -125,7 +125,29 @@ ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY}"
 
 The verifier script (`tests/test.sh`) uses these environment variables to call the LLM. Make sure to set the appropriate API key (e.g., `ANTHROPIC_API_KEY`) when running tasks with LLM judges.
 
-**Note:** Most Harbor tasks use deterministic test scripts and don't require LLM judges.
+## Task Parameters
+
+The following parameters configure the Inspect Harbor task interface. They can be used in Python by importing `inspect_harbor.harbor` or via the command line with `inspect eval inspect_harbor/harbor -T <parameter>=<value>`.
+
+| Parameter | Description | Default | Example |
+|-----------|-------------|---------|---------|
+| `path` | Local path to task/dataset directory, or task identifier for git tasks | `None` | `"/path/to/local_dataset_or_task"` or `"datasets/aime/aime_60"` |
+| `task_git_url` | Git repository URL for downloading tasks | `None` | `"https://github.com/laude-institute/harbor-datasets.git"` |
+| `task_git_commit_id` | Git commit ID to pin task version | `None` | `"414014c23ce4d32128073d12b057252c918cccf4"` |
+| `registry_url` | Custom registry URL | `None` (uses Harbor registry) | `"https://raw.githubusercontent.com/laude-institute/harbor/refs/heads/main/registry.json"` |
+| `registry_path` | Path to local registry | `None` | `"/path/to/local/registry.json"` |
+| `dataset_name_version` | Dataset name and optional version (format: `name@version`). Omitted versions resolve to: `"head"` > highest semver > lexically last. | `None` | `"aime"` or `"aime@1.0"` |
+| `dataset_task_names` | List of task names to include (supports glob patterns) | `None` | `'["aime_60", "aime_61"]'` or `'["aime*"]'` |
+| `dataset_exclude_task_names` | List of task names to exclude (supports glob patterns) | `None` | `'["aime_60", "aime_61"]'` or `'["aime*"]'` |
+| `n_tasks` | Maximum number of tasks to run. Preferred over `--max-samples`: only downloads n tasks instead of entire dataset. | `None` | `10` |
+| `disable_verification` | Skip task verification checks | `False` | `true` or `false` |
+| `overwrite_cache` | Force re-download and overwrite cached tasks. Works for both git tasks and registry datasets. | `False` | `true` or `false` |
+| `sandbox_env_name` | Sandbox environment name | `"docker"` | `"modal"` or `"docker"` |
+| `override_cpus` | Override the number of CPUs from `task.toml` | `None` | `4` |
+| `override_memory_mb` | Override the memory (in MB) from `task.toml` | `None` | `16384` |
+| `override_gpus` | Override the number of GPUs from `task.toml` | `None` | `1` |
+
+**Note:** These are task-specific parameters passed with `-T`. For additional `inspect eval` command-line flags (like `--model`, `--message-limit`, `--epochs`, `--fail-on-error`, `--log-dir`, `--log-level`, `--max-tasks`, etc.), see the [Inspect eval CLI reference](https://inspect.aisi.org.uk/reference/inspect_eval.html) or [Python API reference](https://inspect.aisi.org.uk/reference/inspect_ai.html#eval).
 
 ## Harbor Registry
 
@@ -133,7 +155,7 @@ The Harbor registry is a centralized catalog of curated Harbor datasets and task
 
 ### Default Registry
 
-By default, Inspect Harbor uses the official [Harbor registry](https://github.com/laude-institute/harbor/blob/main/registry.json). When you specify a `dataset_name_version`, it automatically:
+By default, Inspect Harbor uses the official [Harbor registry](https://raw.githubusercontent.com/laude-institute/harbor/refs/heads/main/registry.json). When you specify a `dataset_name_version`, it automatically:
 
 1. Looks up the dataset in the registry
 2. Finds the corresponding GitHub repository
@@ -172,13 +194,18 @@ inspect eval inspect_harbor/harbor \
 
 ### Cache Management
 
-Downloaded tasks are cached locally. To force a fresh download:
+Downloaded tasks are cached locally in `~/.harbor/cache/`. To force a fresh download:
 
 ```bash
 inspect eval inspect_harbor/harbor \
   -T dataset_name_version="aime@1.0" \
   -T overwrite_cache=true \
   --model openai/gpt-5-mini
+```
+
+To manually clear the entire cache:
+```bash
+rm -rf ~/.harbor/cache/
 ```
 
 ## Usage
@@ -192,7 +219,7 @@ inspect eval inspect_harbor/harbor \
 When no agent or solver is specified, Inspect Harbor provides a default agent scaffold for your model:
 
 - **Agent Type**: [ReAct agent](https://inspect.aisi.org.uk/react-agent.html)
-- **Tools**: [`bash(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-session), [`python(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-and-python), [`memory()`](https://inspect.aisi.org.uk/tools-standard.html#sec-memory), [`update_plan()`](https://inspect.aisi.org.uk/tools-standard.html#sec-update-plan)
+- **Tools**: [`bash(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-session), [`python(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-and-python), [`update_plan()`](https://inspect.aisi.org.uk/tools-standard.html#sec-update-plan)
 - **Compaction**: [`CompactionEdit()`](https://inspect.aisi.org.uk/compaction.html) for context window management
 
 This default configuration is suitable for most Harbor tasks that require command execution and file manipulation.
@@ -204,7 +231,7 @@ You can provide your own agent or solver implementation using the `--solver` fla
 **Using a custom agent:**
 ```bash
 inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="aime@1.0" \
+  -T dataset_name_version="aime" \
   --solver path/to/custom/agent.py@custom_agent \
   --model openai/gpt-5-mini
 ```
@@ -216,10 +243,12 @@ First install the required package:
 pip install inspect-swe
 ```
 
+**Note**: Make sure you have your `ANTHROPIC_API_KEY` in a `.env` file or set as an environment variable.
+
 Then use it via CLI:
 ```bash
 inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="aime@1.0" \
+  -T dataset_name_version="aime" \
   --solver inspect_swe/claude_code \
   --model anthropic/claude-sonnet-4-5
 ```
@@ -231,13 +260,11 @@ from inspect_harbor import harbor
 from inspect_swe import claude_code
 
 eval(
-    harbor(dataset_name_version="aime@1.0"),
+    harbor(dataset_name_version="aime"),
     solver=claude_code(),
     model="anthropic/claude-sonnet-4-5"
 )
 ```
-
-**Note**: Make sure you have your `ANTHROPIC_API_KEY` in a `.env` file or set as an environment variable.
 
 #### Oracle Solver
 
@@ -246,7 +273,7 @@ The Oracle solver is useful for verifying that a dataset is correctly configured
 **CLI usage:**
 ```bash
 inspect eval inspect_harbor/harbor \
-  -T dataset_name_version="hello-world@1.0" \
+  -T dataset_name_version="hello-world" \
   --solver inspect_harbor/oracle
 ```
 
@@ -256,7 +283,7 @@ from inspect_ai import eval
 from inspect_harbor import harbor, oracle
 
 eval(
-    harbor(dataset_name_version="hello-world@1.0"),
+    harbor(dataset_name_version="hello-world"),
     solver=oracle()
 )
 ```
@@ -269,6 +296,17 @@ For more details:
 ### Task and Dataset Sources
 
 In addition to the [Harbor Registry](#harbor-registry) (covered above), you can also load Harbor tasks from local filesystems or git repositories.
+
+#### Parameter Combinations
+
+There are four primary patterns for loading Harbor tasks:
+
+| Pattern | Required Parameters | Optional Parameters |
+|---------|---------------------|---------------------|
+| **Registry Dataset** | `dataset_name_version` | `registry_url` or `registry_path`<br>`dataset_task_names`<br>`dataset_exclude_task_names`<br>`n_tasks`<br>`overwrite_cache` |
+| **Git Task** | `path`<br>`task_git_url` | `task_git_commit_id`<br>`overwrite_cache` |
+| **Local Task** | `path` | `disable_verification` |
+| **Local Dataset** | `path` | `dataset_task_names`<br>`dataset_exclude_task_names`<br>`n_tasks`<br>`disable_verification` |
 
 #### From Local Path
 
@@ -284,32 +322,53 @@ inspect eval inspect_harbor/harbor \
 ```bash
 # Download and run a task from a git repository
 inspect eval inspect_harbor/harbor \
-  -T path="aime_60" \
-  -T task_git_url="https://github.com/example/tasks.git" \
-  -T task_git_commit_id="abc123" \
+  -T path="datasets/aime/aime_6" \
+  -T task_git_url="https://github.com/laude-institute/harbor-datasets.git" \
+  -T task_git_commit_id="414014c23ce4d32128073d12b057252c918cccf4" \
   --model openai/gpt-5-mini
 ```
 
-### Task Parameters
+### Overrides
 
-The following parameters configure the Inspect Harbor task interface. They can be used in Python by importing `inspect_harbor.harbor` or via the command line with `inspect eval inspect_harbor/harbor -T <parameter>=<value>`.
+Inspect Harbor supports overriding resource specifications from a task's `task.toml` configuration. This is useful when you need more resources than specified in the task configuration.
 
-| Parameter | Description | Example |
-|-----------|-------------|---------|
-| `path` | Local path to task/dataset directory, or task identifier for git tasks | `"/path/to/task"` or `"aime_i-9"` |
-| `task_git_url` | Git repository URL for downloading tasks | `"https://github.com/example/tasks.git"` |
-| `task_git_commit_id` | Git commit ID to pin task version | `"abc123"` |
-| `registry_url` | Custom registry URL (defaults to Harbor registry) | `"https://github.com/custom/registry.json"` |
-| `registry_path` | Path to local registry | `"/path/to/registry.json"` |
-| `dataset_name_version` | Dataset name and version (format: `name@version`) | `"aime@1.0"` |
-| `dataset_task_names` | List of task names to include (supports glob patterns) | `'["aime_60", "aime_61"]'` or `'["aime*"]'` |
-| `dataset_exclude_task_names` | List of task names to exclude (supports glob patterns) | `'["task1", "task2"]'` |
-| `n_tasks` | Maximum number of tasks to run | `10` |
-| `disable_verification` | Skip task verification checks | `true` or `false` |
-| `overwrite_cache` | Force re-download and overwrite cached tasks (default: `false`). Works for both git tasks and registry datasets. | `true` or `false` |
-| `sandbox_env_name` | Sandbox environment name (default: `"docker"`) | `"modal"` or `"docker"` |
+#### Default Values
 
-**Note:** These are task-specific parameters passed with `-T`. For additional `inspect eval` command-line flags (like `--model`, `--message-limit`, `--epochs`, `--fail-on-error`, `--log-dir`, `--log-level`, `--max-tasks`, etc.), see the [Inspect eval CLI reference](https://inspect.aisi.org.uk/reference/inspect_eval.html) or [Python API reference](https://inspect.aisi.org.uk/reference/inspect_ai.html#eval).
+| Parameter | Default | Notes |
+|-----------|---------|-------|
+| `cpus` | 1 | Respects task config or override |
+| `memory_mb` | 6144 (6GB) | 6GB minimum enforced (uses task config or override if ≥ 6GB) |
+| `gpus` | 0 | Respects task config or override |
+
+#### Examples
+
+For example, `terminal-bench-sample` tasks may require more memory than the default 6GB minimum when using agents like Claude Code:
+
+**CLI usage:**
+```bash
+# Override memory for Claude Code agent
+inspect eval inspect_harbor/harbor \
+  -T dataset_name_version="terminal-bench-sample" \
+  -T override_memory_mb=16384 \
+  --solver inspect_swe/claude_code \
+  --model anthropic/claude-sonnet-4-5
+```
+
+**Python API usage:**
+```python
+from inspect_ai import eval
+from inspect_harbor import harbor
+from inspect_swe import claude_code
+
+eval(
+    harbor(
+        dataset_name_version="terminal-bench-sample",
+        override_memory_mb=16384,  # 16GB in MB
+    ),
+    solver=claude_code(),
+    model="anthropic/claude-sonnet-4-5"
+)
+```
 
 ## Development
 

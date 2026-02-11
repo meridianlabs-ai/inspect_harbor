@@ -54,7 +54,8 @@ services:
 
         service = result.services["default"]
         assert service.cpus == 2.0
-        assert service.mem_limit == "4096m"
+        # 6GB minimum is applied (config has 4096m which is below minimum)
+        assert service.mem_limit == "6144m"
 
 
 def test_harbor_to_compose_config_with_dockerfile():
@@ -91,7 +92,8 @@ def test_harbor_to_compose_config_with_dockerfile():
         assert service.build.context == "/task/environment"
         assert service.image is None
         assert service.cpus == 1.0
-        assert service.mem_limit == "2048m"
+        # 6GB minimum is applied (config has 2048m which is below minimum)
+        assert service.mem_limit == "6144m"
         assert service.command == "tail -f /dev/null"
         assert service.init is True
         assert service.network_mode == "bridge"
@@ -125,7 +127,8 @@ def test_harbor_to_compose_config_with_prebuilt_image():
         assert service.image == "my-custom-image:latest"
         assert service.build is None
         assert service.cpus == 1.5
-        assert service.mem_limit == "3072m"
+        # 6GB minimum is applied (config has 3072m which is below minimum)
+        assert service.mem_limit == "6144m"
         assert service.network_mode == "none"
 
 
@@ -176,8 +179,8 @@ def test_harbor_to_compose_config_default_resource_limits():
 
         service = result.services["default"]
         assert service.cpus == 1.0
-        # When memory_mb is None, no limit is set (unlimited memory)
-        assert service.mem_limit is None
+        # When memory_mb is None, 6GB minimum is applied
+        assert service.mem_limit == "6144m"
 
 
 def test_harbor_to_compose_config_network_mode_with_internet():
@@ -316,7 +319,8 @@ def test_harbor_task_to_sample_sandbox_spec():
         service = compose_config.services["default"]
         assert service.image == "ubuntu:latest"
         assert service.cpus == 1.0
-        assert service.mem_limit == "2048m"
+        # 6GB minimum is applied (config has 2048m which is below minimum)
+        assert service.mem_limit == "6144m"
         assert service.network_mode == "none"
 
 
@@ -581,16 +585,16 @@ def mock_harbor_task():
     [
         # Override all parameters
         (8, 16384, 4, 8, "16384m", 4),
-        # Override only cpus
-        (16, None, None, 16, "4096m", 1),
+        # Override only cpus (memory uses 6GB minimum since config has 4GB)
+        (16, None, None, 16, "6144m", 1),
         # Override only memory
         (None, 8192, None, 2, "8192m", 1),
-        # Override only gpus
-        (None, None, 2, 2, "4096m", 2),
-        # Override to zero gpus (disables GPU)
-        (None, None, 0, 2, "4096m", None),
-        # No overrides (use config defaults)
-        (None, None, None, 2, "4096m", 1),
+        # Override only gpus (memory uses 6GB minimum since config has 4GB)
+        (None, None, 2, 2, "6144m", 2),
+        # Override to zero gpus (memory uses 6GB minimum since config has 4GB)
+        (None, None, 0, 2, "6144m", None),
+        # No overrides (memory uses 6GB minimum since config has 4GB)
+        (None, None, None, 2, "6144m", 1),
     ],
 )
 def test_harbor_to_compose_config_overrides(
@@ -650,8 +654,21 @@ def test_harbor_task_to_sample_passes_overrides(mock_harbor_task: Any):
         assert device.count == 4
 
 
-def test_harbor_to_compose_config_unlimited_memory():
-    """Test that memory_mb=None results in no memory limit (unlimited)."""
+@pytest.mark.parametrize(
+    "config_memory_mb,expected_memory",
+    [
+        (None, "6144m"),  # None -> 6GB minimum
+        (2048, "6144m"),  # 2GB (Harbor default) -> 6GB minimum
+        (4096, "6144m"),  # 4GB -> 6GB minimum
+        (6144, "6144m"),  # Exactly 6GB -> 6GB
+        (8192, "8192m"),  # 8GB -> respected (above minimum)
+        (16384, "16384m"),  # 16GB -> respected (above minimum)
+    ],
+)
+def test_harbor_to_compose_config_memory_minimum(
+    config_memory_mb: int | None, expected_memory: str
+):
+    """Test that 6GB minimum is enforced for low/unset values, but higher values are respected."""
     mock_task = Mock()
     mock_paths = Mock()
     mock_paths.environment_dir = Path("/task/environment")
@@ -659,7 +676,7 @@ def test_harbor_to_compose_config_unlimited_memory():
 
     mock_env_config = Mock()
     mock_env_config.cpus = 2
-    mock_env_config.memory_mb = None  # No memory limit specified
+    mock_env_config.memory_mb = config_memory_mb
     mock_env_config.docker_image = "ubuntu:latest"
     mock_env_config.allow_internet = True
     mock_env_config.gpus = 0
@@ -670,7 +687,4 @@ def test_harbor_to_compose_config_unlimited_memory():
         result = harbor_to_compose_config(mock_task)
 
         service = result.services["default"]
-        assert service.cpus == 2
-        # mem_limit should be None when memory_mb is None (unlimited)
-        assert service.mem_limit is None
-        assert service.deploy is None
+        assert service.mem_limit == expected_memory

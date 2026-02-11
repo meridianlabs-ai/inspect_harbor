@@ -6,7 +6,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 from harbor.models.task.task import Task as HarborTask
-from inspect_harbor.harbor._task import _get_max_timeout_sec, load_harbor_tasks
+from inspect_harbor.harbor._task import harbor, load_harbor_tasks
 
 
 def test_load_local_single_task():
@@ -284,36 +284,8 @@ def test_load_harbor_tasks_parameter_passing(
         mock_load_local.assert_called_once_with(*expected_call_args)
 
 
-@pytest.mark.parametrize(
-    "timeout_values,expected",
-    [
-        ([100, 200, 150], 200),  # Multiple timeouts, returns max
-        ([100.5], 100),  # Float conversion to int
-        ([], None),  # Empty list returns None
-    ],
-)
-def test_get_max_timeout_sec(
-    timeout_values: list[int | float], expected: int | None
-) -> None:
-    """Test _get_max_timeout_sec with various inputs."""
-    tasks = []
-    for val in timeout_values:
-        task = Mock(spec=HarborTask)
-        task.config = Mock()
-        task.config.agent = Mock()
-        task.config.agent.timeout_sec = val
-        tasks.append(task)
-
-    result = _get_max_timeout_sec(tasks)
-    assert result == expected
-    if expected is not None:
-        assert isinstance(result, int)
-
-
 def test_harbor_task_integration():
     """Integration test: Load a real Harbor task and verify Task object."""
-    from inspect_harbor.harbor._task import harbor
-
     # Load the test Harbor task fixture
     task_path = Path(__file__).parent / "fixtures" / "simple_task"
     assert task_path.exists(), f"Test fixture not found at {task_path}"
@@ -344,8 +316,6 @@ def test_harbor_task_integration():
 
 def test_harbor_task_with_overrides():
     """Integration test: Verify override parameters are applied to sample environment."""
-    from inspect_harbor.harbor._task import harbor
-
     # Load the test Harbor task fixture
     task_path = Path(__file__).parent / "fixtures" / "simple_task"
     assert task_path.exists(), f"Test fixture not found at {task_path}"
