@@ -1,6 +1,7 @@
 """Tests for Harbor to Inspect AI converters."""
 
 from pathlib import Path
+from typing import Any
 from unittest.mock import Mock, mock_open, patch
 
 import pytest
@@ -175,7 +176,8 @@ def test_harbor_to_compose_config_default_resource_limits():
 
         service = result.services["default"]
         assert service.cpus == 1.0
-        assert service.mem_limit == "2048m"
+        # When memory_mb is None, no limit is set (unlimited memory)
+        assert service.mem_limit is None
 
 
 def test_harbor_to_compose_config_network_mode_with_internet():
@@ -533,3 +535,142 @@ def test_harbor_task_to_sample_without_verifier_env():
         assert result.metadata is not None
         assert "verifier_env" in result.metadata
         assert result.metadata["verifier_env"] == {}
+
+
+@pytest.fixture
+def mock_harbor_task():
+    """Create a mock Harbor task with standard test configuration."""
+    mock_task = Mock()
+    mock_task.name = "test-task"
+    mock_task.instruction = "Test instruction"
+    mock_task.task_dir = Path("/tasks/test-task")
+
+    mock_paths = Mock()
+    mock_paths.environment_dir = Path("/tasks/test-task/environment")
+    mock_paths.test_path = Path("/tasks/test-task/tests/test.py")
+    mock_paths.tests_dir = Path("/tasks/test-task/tests")
+    mock_paths.solution_dir = Path("/tasks/test-task/solution")
+    mock_paths.solve_path = Path("/tasks/test-task/solution/solve.py")
+    mock_task.paths = mock_paths
+
+    mock_env_config = Mock()
+    mock_env_config.cpus = 2
+    mock_env_config.memory_mb = 4096
+    mock_env_config.docker_image = "ubuntu:latest"
+    mock_env_config.allow_internet = True
+    mock_env_config.gpus = 1
+    mock_env_config.gpu_types = ["H100"]
+    mock_task.config.environment = mock_env_config
+
+    mock_verifier_config = Mock()
+    mock_verifier_config.timeout_sec = 300
+    mock_verifier_config.env = {}
+    mock_task.config.verifier = mock_verifier_config
+
+    mock_solution_config = Mock()
+    mock_solution_config.env = {}
+    mock_task.config.solution = mock_solution_config
+
+    mock_task.config.model_dump = Mock(return_value={})
+
+    return mock_task
+
+
+@pytest.mark.parametrize(
+    "override_cpus,override_memory_mb,override_gpus,expected_cpus,expected_memory,expected_gpus",
+    [
+        # Override all parameters
+        (8, 16384, 4, 8, "16384m", 4),
+        # Override only cpus
+        (16, None, None, 16, "4096m", 1),
+        # Override only memory
+        (None, 8192, None, 2, "8192m", 1),
+        # Override only gpus
+        (None, None, 2, 2, "4096m", 2),
+        # Override to zero gpus (disables GPU)
+        (None, None, 0, 2, "4096m", None),
+        # No overrides (use config defaults)
+        (None, None, None, 2, "4096m", 1),
+    ],
+)
+def test_harbor_to_compose_config_overrides(
+    mock_harbor_task: Any,
+    override_cpus: int | None,
+    override_memory_mb: int | None,
+    override_gpus: int | None,
+    expected_cpus: int,
+    expected_memory: str,
+    expected_gpus: int | None,
+):
+    """Test that override parameters correctly override task config values."""
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_to_compose_config(
+            mock_harbor_task,
+            override_cpus=override_cpus,
+            override_memory_mb=override_memory_mb,
+            override_gpus=override_gpus,
+        )
+
+        service = result.services["default"]
+        assert service.cpus == expected_cpus
+        assert service.mem_limit == expected_memory
+
+        if expected_gpus is None:
+            assert service.deploy is None
+        else:
+            assert service.deploy is not None
+            assert service.deploy.resources is not None
+            assert service.deploy.resources.reservations is not None
+            assert service.deploy.resources.reservations.devices is not None
+            device = service.deploy.resources.reservations.devices[0]
+            assert device.count == expected_gpus
+
+
+def test_harbor_task_to_sample_passes_overrides(mock_harbor_task: Any):
+    """Test that harbor_task_to_sample correctly passes overrides through."""
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_task_to_sample(
+            mock_harbor_task,
+            override_cpus=8,
+            override_memory_mb=16384,
+            override_gpus=4,
+        )
+
+        assert result.sandbox is not None
+        compose_config = result.sandbox.config
+        service = compose_config.services["default"]
+
+        assert service.cpus == 8
+        assert service.mem_limit == "16384m"
+        assert service.deploy is not None
+        assert service.deploy.resources is not None
+        assert service.deploy.resources.reservations is not None
+        assert service.deploy.resources.reservations.devices is not None
+        device = service.deploy.resources.reservations.devices[0]
+        assert device.count == 4
+
+
+def test_harbor_to_compose_config_unlimited_memory():
+    """Test that memory_mb=None results in no memory limit (unlimited)."""
+    mock_task = Mock()
+    mock_paths = Mock()
+    mock_paths.environment_dir = Path("/task/environment")
+    mock_task.paths = mock_paths
+
+    mock_env_config = Mock()
+    mock_env_config.cpus = 2
+    mock_env_config.memory_mb = None  # No memory limit specified
+    mock_env_config.docker_image = "ubuntu:latest"
+    mock_env_config.allow_internet = True
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_task.config.environment = mock_env_config
+
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_to_compose_config(mock_task)
+
+        service = result.services["default"]
+        assert service.cpus == 2
+        # mem_limit should be None when memory_mb is None (unlimited)
+        assert service.mem_limit is None
+        assert service.deploy is None

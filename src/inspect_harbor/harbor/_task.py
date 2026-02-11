@@ -12,7 +12,7 @@ from harbor.tasks.client import TaskClient
 from inspect_ai import Task, task
 from inspect_ai.agent import react
 from inspect_ai.model import CompactionEdit
-from inspect_ai.tool import bash, memory, python, update_plan
+from inspect_ai.tool import bash, python, update_plan
 
 from inspect_harbor.harbor._converters import harbor_task_to_sample
 from inspect_harbor.harbor._scorer import harbor_scorer
@@ -32,6 +32,9 @@ def harbor(
     disable_verification: bool = False,
     overwrite_cache: bool = False,
     sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
 ) -> Task:
     """Harbor task loader for Inspect AI.
 
@@ -49,6 +52,9 @@ def harbor(
         disable_verification: Disable task verification. Verfication checks whether task files exist.
         overwrite_cache: Force re-download and overwrite cached tasks (default: False).
         sandbox_env_name: Sandbox environment name (default: "docker").
+        override_cpus: Override the number of CPUs for the environment.
+        override_memory_mb: Override the memory (in MB) for the environment.
+        override_gpus: Override the number of GPUs for the environment.
 
     Returns:
         Task: Configured Inspect AI task
@@ -68,7 +74,13 @@ def harbor(
     )
 
     samples = [
-        harbor_task_to_sample(ht, sandbox_env_name=sandbox_env_name)
+        harbor_task_to_sample(
+            ht,
+            sandbox_env_name=sandbox_env_name,
+            override_cpus=override_cpus,
+            override_memory_mb=override_memory_mb,
+            override_gpus=override_gpus,
+        )
         for ht in harbor_task_objects
     ]
     max_timeout = _get_max_timeout_sec(harbor_task_objects)
@@ -76,7 +88,7 @@ def harbor(
     return Task(
         dataset=samples,
         solver=react(
-            tools=[bash(timeout=300), python(timeout=300), memory(), update_plan()],
+            tools=[bash(timeout=300), python(timeout=300), update_plan()],
             compaction=CompactionEdit(),
         ),
         scorer=harbor_scorer(),
