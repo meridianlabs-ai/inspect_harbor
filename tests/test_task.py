@@ -340,3 +340,46 @@ def test_harbor_task_integration():
     assert sample.metadata is not None
     assert sample.metadata["task_name"] == "simple_task"
     assert "test_path" in sample.metadata
+
+
+def test_harbor_task_with_overrides():
+    """Integration test: Verify override parameters are applied to sample environment."""
+    from inspect_harbor.harbor._task import harbor
+
+    # Load the test Harbor task fixture
+    task_path = Path(__file__).parent / "fixtures" / "simple_task"
+    assert task_path.exists(), f"Test fixture not found at {task_path}"
+
+    # Call harbor() with override parameters
+    task = harbor(
+        path=task_path,
+        override_cpus=8,
+        override_memory_mb=16384,
+        override_gpus=2,
+    )
+
+    # Verify Task object created
+    assert task is not None
+    assert len(task.dataset) == 1
+
+    # Get the sample and verify sandbox config
+    sample = task.dataset[0]
+    assert sample.sandbox is not None
+
+    # Verify compose config has overridden values
+    compose_config = sample.sandbox.config
+    assert compose_config.services is not None
+    assert "default" in compose_config.services
+
+    service = compose_config.services["default"]
+
+    # Verify overrides were applied
+    assert service.cpus == 8
+    assert service.mem_limit == "16384m"
+    assert service.deploy is not None
+    assert service.deploy.resources is not None
+    assert service.deploy.resources.reservations is not None
+    assert service.deploy.resources.reservations.devices is not None
+    assert len(service.deploy.resources.reservations.devices) == 1
+    device = service.deploy.resources.reservations.devices[0]
+    assert device.count == 2

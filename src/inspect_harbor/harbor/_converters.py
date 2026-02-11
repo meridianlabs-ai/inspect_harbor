@@ -17,19 +17,46 @@ from inspect_ai.util._sandbox.compose import (
 )
 
 
-def harbor_to_compose_config(harbor_task: HarborTask) -> ComposeConfig:
-    """Convert Harbor task environment to Inspect ComposeConfig."""
+def harbor_to_compose_config(
+    harbor_task: HarborTask,
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> ComposeConfig:
+    """Convert Harbor task environment to Inspect ComposeConfig.
+
+    Args:
+        harbor_task: The Harbor task to convert.
+        override_cpus: Override the number of CPUs for the environment.
+        override_memory_mb: Override the memory (in MB) for the environment.
+        override_gpus: Override the number of GPUs for the environment.
+
+    Returns:
+        ComposeConfig: The compose configuration for the task.
+    """
     env_dir = harbor_task.paths.environment_dir
     compose_yaml_path = env_dir / "docker-compose.yaml"
     dockerfile_path = env_dir / "Dockerfile"
     env_config = harbor_task.config.environment
 
-    # Extract resource configuration from Harbor config
-    cpus = float(env_config.cpus) if env_config.cpus is not None else 1.0
-    memory_mb = env_config.memory_mb if env_config.memory_mb is not None else 2048
-    gpus = env_config.gpus if env_config.gpus is not None else 0
+    # Extract resource configuration from Harbor config, applying overrides
+    cpus = (
+        float(override_cpus)
+        if override_cpus is not None
+        else (float(env_config.cpus) if env_config.cpus is not None else 1.0)
+    )
+    memory_mb = (
+        override_memory_mb
+        if override_memory_mb is not None
+        else env_config.memory_mb  # Could be None = unlimited
+    )
+    gpus = (
+        override_gpus
+        if override_gpus is not None
+        else (env_config.gpus if env_config.gpus is not None else 0)
+    )
     gpu_types = env_config.gpu_types
-    # Note: storage_mb is not currently supported by Inspect AI's ComposeService
+    # Note: storage_mb is not supported - Docker Compose doesn't have standard storage
 
     gpu_deploy = _create_gpu_deploy_config(gpus, gpu_types)
 
@@ -44,7 +71,7 @@ def harbor_to_compose_config(harbor_task: HarborTask) -> ComposeConfig:
         if compose_config.services:
             for service in compose_config.services.values():
                 service.cpus = cpus
-                service.mem_limit = f"{memory_mb}m"
+                service.mem_limit = f"{memory_mb}m" if memory_mb is not None else None
                 if gpu_deploy:
                     service.deploy = gpu_deploy
 
@@ -61,7 +88,7 @@ def harbor_to_compose_config(harbor_task: HarborTask) -> ComposeConfig:
                 else None
             ),
             cpus=cpus,
-            mem_limit=f"{memory_mb}m",
+            mem_limit=f"{memory_mb}m" if memory_mb is not None else None,
             command="tail -f /dev/null",
             init=True,
             network_mode="bridge" if env_config.allow_internet else "none",
@@ -72,18 +99,30 @@ def harbor_to_compose_config(harbor_task: HarborTask) -> ComposeConfig:
 
 
 def harbor_task_to_sample(
-    harbor_task: HarborTask, sandbox_env_name: str = "docker"
+    harbor_task: HarborTask,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
 ) -> Sample:
     """Convert a Harbor task to an Inspect AI Sample.
 
     Args:
         harbor_task: The Harbor task to convert.
         sandbox_env_name: Sandbox environment name (default: "docker").
+        override_cpus: Override the number of CPUs for the environment.
+        override_memory_mb: Override the memory (in MB) for the environment.
+        override_gpus: Override the number of GPUs for the environment.
 
     Returns:
         Sample: Inspect AI sample with sandbox configuration.
     """
-    compose_config = harbor_to_compose_config(harbor_task)
+    compose_config = harbor_to_compose_config(
+        harbor_task,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
 
     return Sample(
         input=harbor_task.instruction,
