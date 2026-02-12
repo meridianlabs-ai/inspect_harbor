@@ -11,11 +11,7 @@ readme = "README.md"
 # Note: harbor package requires Python >=3.12, so we cannot lower this requirement
 requires-python = ">=3.12"
 license = { text = "MIT License" }
-dependencies = [
-    "inspect-ai>=0.3.176",
-    "harbor>=0.1.44",
-    "pyyaml",
-]
+dependencies = ["inspect-ai>=0.3.176", "harbor>=0.1.44", "pyyaml"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
@@ -30,10 +26,18 @@ classifiers = [
 Documentation = "https://meridianlabs-ai.github.io/inspect_harbor/"
 
 [project.entry-points.inspect_ai]
-evals = "inspect_harbor._registry"
+inspect_harbor = "inspect_harbor._registry"
 
 [dependency-groups]
-dev = ["pre-commit", "pyright", "pytest", "pytest-asyncio>=1.3.0", "pytest-cov", "ruff", "types-PyYAML"]
+dev = [
+    "pre-commit",
+    "pyright",
+    "pytest",
+    "pytest-asyncio>=1.3.0",
+    "pytest-cov",
+    "ruff",
+    "types-PyYAML",
+]
 
 [tool.hatch.version]
 source = "vcs"
@@ -102,7 +106,7 @@ asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 # Filter deprecation warnings from third-party dependencies
 filterwarnings = [
-    "ignore::pyparsing.PyparsingDeprecationWarning",  # pyiceberg's use of pyparsing (harbor → supabase → storage3 → pyiceberg)
-    "ignore::pydantic.PydanticDeprecatedSince212",    # pyiceberg's use of pydantic (harbor → supabase → storage3 → pyiceberg)
-    "ignore::DeprecationWarning:harbor.models.task.config",  # harbor's deprecated field checks (storage vs storage_mb)
+    "ignore::pyparsing.PyparsingDeprecationWarning",        # pyiceberg's use of pyparsing (harbor → supabase → storage3 → pyiceberg)
+    "ignore::pydantic.PydanticDeprecatedSince212",          # pyiceberg's use of pydantic (harbor → supabase → storage3 → pyiceberg)
+    "ignore::DeprecationWarning:harbor.models.task.config", # harbor's deprecated field checks (storage vs storage_mb)
 ]
