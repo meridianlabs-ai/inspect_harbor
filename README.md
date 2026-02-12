@@ -69,11 +69,14 @@ Inspect Harbor provides task functions for each dataset in the [Harbor registry]
 ```python
 from inspect_harbor import (
     terminal_bench,
+    swebenchpro,
     swe_lancer_diamond,
     swebench_verified,
     # ... and many more
 )
 ```
+
+**For a complete list of available datasets and versions (including swebenchpro, terminal-bench-pro, replicationbench, compilebench, and 40+ more), see [`REGISTRY.md`](REGISTRY.md).**
 
 ### Dataset Versioning
 
@@ -92,18 +95,6 @@ eval(terminal_bench(), model="openai/gpt-5-mini")
 # Pins to version 2.0 explicitly
 eval(terminal_bench_2_0(), model="openai/gpt-5-mini")
 ```
-
-### Featured Datasets
-
-Here are some popular datasets available in Inspect Harbor:
-
-| Harbor Dataset | Inspect Task | Description | Samples |
-|---------------|--------------|-------------|---------|
-| [swe-lancer-diamond@all](https://harborframework.com/registry/swe-lancer-diamond/all) | `swe_lancer_diamond_all` | Adapter for SWE-Lancer (https://github.com/openai/preparedness/blob/main/project/swelancer/README.md). Both manager and individual contributor tasks. | 463 |
-| [swebenchpro@1.0](https://harborframework.com/registry/swebenchpro/1.0) | `swebenchpro_1_0` | SWE-bench Pro: A multi-language software engineering benchmark with 731 instances covering Python, JavaScript/TypeScript, and Go. Evaluates AI systems' ability to resolve real-world bugs and implement features across diverse production codebases. | 731 |
-| [terminal-bench-pro@1.0](https://harborframework.com/registry/terminal-bench-pro/1.0) | `terminal_bench_pro_1_0` | Terminal-Bench Pro (Public Set) is an extended benchmark dataset for testing AI agents in real terminal environments. From compiling code to training models and setting up servers, Terminal-Bench Pro evaluates how well agents can handle real-world, end-to-end tasks autonomously. | 200 |
-
-For a complete list of available datasets and versions, see [`REGISTRY.md`](REGISTRY.md).
 
 ## Agents and Solvers
 

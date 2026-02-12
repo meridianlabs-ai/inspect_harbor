@@ -6,6 +6,7 @@ dataset-specific task functions.
 """
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 from urllib.request import urlopen
@@ -88,6 +89,23 @@ eval(aime_1_0(), model="openai/gpt-5")
 
 *Registry: {registry_url}*
 """
+
+
+def shorten_urls_in_text(text: str) -> str:
+    """Replace long URLs in text with short [link] markdown links.
+
+    Examples:
+        "See (https://example.com)" -> "See ([link](https://example.com))"
+        "Visit https://example.com for more" -> "Visit [link](https://example.com) for more"
+    """
+    # Pattern to match URLs (http:// or https://)
+    url_pattern = r"(https?://[^\s\)]+)"
+
+    def replace_url(match):
+        url = match.group(1)
+        return f"[link]({url})"
+
+    return re.sub(url_pattern, replace_url, text)
 
 
 def fetch_registry() -> list[dict[str, Any]]:
@@ -201,8 +219,9 @@ def generate_registry_md_content(registry: list) -> str:
             )
             harbor_cell = f"[{dataset_name_version}]({harbor_link})"
 
-            # Format description to be single-line
+            # Format description to be single-line and shorten URLs
             description_clean = description.replace("\n", " ").strip()
+            description_clean = shorten_urls_in_text(description_clean)
 
             # Create table row
             table_row = f"| {harbor_cell} | `{func_name}` | {description_clean} | {num_samples} |"
