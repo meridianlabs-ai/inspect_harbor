@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.0...v0.4.1) (2026-02-12)
+
+
+### Documentation
+
+* improve REGISTRY.md table formatting and highlight featured datasets ([#20](https://github.com/meridianlabs-ai/inspect_harbor/issues/20)) ([8d995aa](https://github.com/meridianlabs-ai/inspect_harbor/commit/8d995aabba94ac59e6db234584645e915762930a))
+
 ## [0.4.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.3.0...v0.4.0) (2026-02-12)
 
 
