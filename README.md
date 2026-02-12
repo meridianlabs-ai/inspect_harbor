@@ -69,6 +69,7 @@ Inspect Harbor provides task functions for each dataset in the [Harbor registry]
 ```python
 from inspect_harbor import (
     terminal_bench,
+    swebenchpro,
     swe_lancer_diamond,
     swebench_verified,
     # ... and many more
