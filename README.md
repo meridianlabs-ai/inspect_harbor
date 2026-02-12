@@ -62,6 +62,155 @@ eval(terminal_bench_sample(), model="openai/gpt-5")
 - Executes in a [Docker sandbox environment](https://inspect.aisi.org.uk/sandboxing.html#sec-docker-configuration)
 - Stores results in `./logs`
 
+## Available Datasets
+
+Inspect Harbor provides task functions for each dataset in the [Harbor registry](https://harborframework.com/registry). You can import and use them directly:
+
+```python
+from inspect_harbor import (
+    terminal_bench,
+    swe_lancer_diamond,
+    swebench_verified,
+    # ... and many more
+)
+```
+
+### Dataset Versioning
+
+Each dataset has both **unversioned** and **versioned** task functions:
+
+- **Unversioned functions** (e.g., `terminal_bench()`) automatically use the latest version available in the registry
+- **Versioned functions** (e.g., `terminal_bench_2_0()`) pin to a specific version for reproducibility
+
+**Example:**
+```python
+from inspect_harbor import terminal_bench, terminal_bench_2_0
+
+# Uses latest version (currently 2.0)
+eval(terminal_bench(), model="openai/gpt-5-mini")
+
+# Pins to version 2.0 explicitly
+eval(terminal_bench_2_0(), model="openai/gpt-5-mini")
+```
+
+### Featured Datasets
+
+Here are some popular datasets available in Inspect Harbor:
+
+| Harbor Dataset | Inspect Task | Description | Samples |
+|---------------|--------------|-------------|---------|
+| [swe-lancer-diamond@all](https://harborframework.com/registry/swe-lancer-diamond/all) | `swe_lancer_diamond_all` | Adapter for SWE-Lancer (https://github.com/openai/preparedness/blob/main/project/swelancer/README.md). Both manager and individual contributor tasks. | 463 |
+| [swebenchpro@1.0](https://harborframework.com/registry/swebenchpro/1.0) | `swebenchpro_1_0` | SWE-bench Pro: A multi-language software engineering benchmark with 731 instances covering Python, JavaScript/TypeScript, and Go. Evaluates AI systems' ability to resolve real-world bugs and implement features across diverse production codebases. | 731 |
+| [terminal-bench-pro@1.0](https://harborframework.com/registry/terminal-bench-pro/1.0) | `terminal_bench_pro_1_0` | Terminal-Bench Pro (Public Set) is an extended benchmark dataset for testing AI agents in real terminal environments. From compiling code to training models and setting up servers, Terminal-Bench Pro evaluates how well agents can handle real-world, end-to-end tasks autonomously. | 200 |
+
+For a complete list of available datasets and versions, see [`REGISTRY.md`](REGISTRY.md).
+
+## Agents and Solvers
+
+[Solvers](https://inspect.aisi.org.uk/solvers.html) are the execution components in Inspect AI. They can run [agent scaffolds](https://inspect.aisi.org.uk/agents.html) (like [ReAct](https://inspect.aisi.org.uk/react-agent.html)), execute solution scripts (like the Oracle solver), perform prompt engineering, and more. Both solvers and agents can be used to solve Harbor tasks.
+
+### Default Agent Scaffold
+
+When no agent or solver is specified, Inspect Harbor provides a default agent scaffold for your model:
+
+- **Agent Type**: [ReAct agent](https://inspect.aisi.org.uk/react-agent.html)
+- **Tools**: [`bash(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-session), [`python(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-and-python), [`update_plan()`](https://inspect.aisi.org.uk/tools-standard.html#sec-update-plan)
+- **Compaction**: [`CompactionEdit()`](https://inspect.aisi.org.uk/compaction.html) for context window management
+
+This default configuration is suitable for most Harbor tasks that require command execution and file manipulation.
+
+### Using Custom Agents
+
+You can provide your own agent or solver implementation using the `--solver` flag:
+
+**Using a custom agent:**
+```bash
+inspect eval inspect_harbor/terminal_bench \
+  --solver path/to/custom/agent.py@custom_agent \
+  --model openai/gpt-5
+```
+
+**Using Inspect SWE agent framework:**
+
+First install the required package:
+
+```bash
+pip install inspect-swe
+```
+
+**CLI:**
+```bash
+inspect eval inspect_harbor/terminal_bench_sample \
+  --solver inspect_swe/claude_code \
+  --model anthropic/claude-sonnet-4-5
+```
+
+**Python API:**
+```python
+from inspect_ai import eval
+from inspect_harbor import terminal_bench_sample
+from inspect_swe import claude_code
+
+eval(
+    terminal_bench_sample(),
+    solver=claude_code(),
+    model="anthropic/claude-sonnet-4-5"
+)
+```
+
+For more details:
+- [Agents documentation](https://inspect.aisi.org.uk/agents.html)
+- [Solvers documentation](https://inspect.aisi.org.uk/solvers.html)
+- [Inspect SWE documentation](https://meridianlabs-ai.github.io/inspect_swe/)
+
+## Task Parameters
+
+Task functions (like `terminal_bench()`, `swe_lancer_diamond()`, etc.) accept the following parameters:
+
+| Parameter | Description | Default | Python Example | CLI Example |
+|-----------|-------------|---------|----------------|-------------|
+| `dataset_task_names` | List of task names to include (supports glob patterns) | `None` | `["aime_60", "aime_61"]` | `'["aime_60"]'` |
+| `dataset_exclude_task_names` | List of task names to exclude (supports glob patterns) | `None` | `["aime_60"]` | `'["aime_60"]'` |
+| `n_tasks` | Maximum number of tasks to run | `None` | `10` | `10` |
+| `overwrite_cache` | Force re-download and overwrite cached tasks | `False` | `True` | `true` |
+| `sandbox_env_name` | Sandbox environment name | `"docker"` | `"modal"` | `"modal"` |
+| `override_cpus` | Override the number of CPUs from `task.toml` | `None` | `4` | `4` |
+| `override_memory_mb` | Override the memory (in MB) from `task.toml` | `None` | `16384` | `16384` |
+| `override_gpus` | Override the number of GPUs from `task.toml` | `None` | `1` | `1` |
+
+### Example
+
+Here's an example showing how to use multiple parameters together:
+
+**CLI:**
+```bash
+inspect eval inspect_harbor/terminal_bench_sample \
+  -T n_tasks=5 \
+  -T overwrite_cache=true \
+  -T override_memory_mb=8192 \
+  --model anthropic/claude-sonnet-4-5
+```
+
+**Python API:**
+```python
+from inspect_ai import eval
+from inspect_harbor import terminal_bench_sample
+
+eval(
+    terminal_bench_sample(
+        n_tasks=5,
+        overwrite_cache=True,
+        override_memory_mb=8192,
+    ),
+    model="anthropic/claude-sonnet-4-5"
+)
+```
+
+This example:
+- Limits to 5 tasks using `n_tasks`
+- Forces fresh download with `overwrite_cache`
+- Allocates 8GB of memory
+
 ## Understanding Harbor Tasks
 
 ### What is a Harbor Task?
@@ -118,143 +267,9 @@ ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY}"
 
 The verifier script (`tests/test.sh`) uses these environment variables to call the LLM. Make sure to set the appropriate API key (e.g., `ANTHROPIC_API_KEY`) when running tasks with LLM judges.
 
-## Available Datasets
+## Advanced
 
-Inspect Harbor provides task functions for each dataset in the [Harbor registry](https://harborframework.com/registry). You can import and use them directly:
-
-```python
-from inspect_harbor import (
-    terminal_bench,
-    swe_lancer_diamond,
-    swebench_verified,
-    # ... and many more
-)
-```
-
-### Dataset Versioning
-
-Each dataset has both **unversioned** and **versioned** task functions:
-
-- **Unversioned functions** (e.g., `terminal_bench()`) automatically use the latest version available in the registry
-- **Versioned functions** (e.g., `terminal_bench_2_0()`) pin to a specific version for reproducibility
-
-**Example:**
-```python
-from inspect_harbor import terminal_bench, terminal_bench_2_0
-
-# Uses latest version (currently 2.0)
-eval(terminal_bench(), model="openai/gpt-5-mini")
-
-# Pins to version 2.0 explicitly
-eval(terminal_bench_2_0(), model="openai/gpt-5-mini")
-```
-
-For a complete list of available datasets and versions, see the [Harbor registry](https://harborframework.com/registry).
-
-## Task Parameters
-
-Task functions (like `terminal_bench()`, `swe_lancer_diamond()`, etc.) accept the following parameters:
-
-| Parameter | Description | Default | Python Example | CLI Example |
-|-----------|-------------|---------|----------------|-------------|
-| `dataset_task_names` | List of task names to include (supports glob patterns) | `None` | `["aime_60", "aime_61"]` | `'["aime_60"]'` |
-| `dataset_exclude_task_names` | List of task names to exclude (supports glob patterns) | `None` | `["aime_60"]` | `'["aime_60"]'` |
-| `n_tasks` | Maximum number of tasks to run | `None` | `10` | `10` |
-| `overwrite_cache` | Force re-download and overwrite cached tasks | `False` | `True` | `true` |
-| `sandbox_env_name` | Sandbox environment name | `"docker"` | `"modal"` | `"modal"` |
-| `override_cpus` | Override the number of CPUs from `task.toml` | `None` | `4` | `4` |
-| `override_memory_mb` | Override the memory (in MB) from `task.toml` | `None` | `16384` | `16384` |
-| `override_gpus` | Override the number of GPUs from `task.toml` | `None` | `1` | `1` |
-
-### Example
-
-Here's an example showing how to use multiple parameters together:
-
-**CLI:**
-```bash
-inspect eval inspect_harbor/terminal_bench_sample \
-  -T n_tasks=5 \
-  -T overwrite_cache=true \
-  -T override_memory_mb=8192 \
-  --model anthropic/claude-sonnet-4-5
-```
-
-**Python API:**
-```python
-from inspect_ai import eval
-from inspect_harbor import terminal_bench_sample
-
-eval(
-    terminal_bench_sample(
-        n_tasks=5,
-        overwrite_cache=True,
-        override_memory_mb=8192,
-    ),
-    model="anthropic/claude-sonnet-4-5"
-)
-```
-
-This example:
-- Limits to 5 tasks using `n_tasks`
-- Forces fresh download with `overwrite_cache`
-- Allocates 8GB of memory
-
-## Usage
-
-### Agents and Solvers
-
-[Solvers](https://inspect.aisi.org.uk/solvers.html) are the execution components in Inspect AI. They can run [agent scaffolds](https://inspect.aisi.org.uk/agents.html) (like [ReAct](https://inspect.aisi.org.uk/react-agent.html)), execute solution scripts (like the Oracle solver), perform prompt engineering, and more. Both solvers and agents can be used to solve Harbor tasks.
-
-#### Default Agent Scaffold
-
-When no agent or solver is specified, Inspect Harbor provides a default agent scaffold for your model:
-
-- **Agent Type**: [ReAct agent](https://inspect.aisi.org.uk/react-agent.html)
-- **Tools**: [`bash(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-session), [`python(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-and-python), [`update_plan()`](https://inspect.aisi.org.uk/tools-standard.html#sec-update-plan)
-- **Compaction**: [`CompactionEdit()`](https://inspect.aisi.org.uk/compaction.html) for context window management
-
-This default configuration is suitable for most Harbor tasks that require command execution and file manipulation.
-
-#### Using Custom Agents
-
-You can provide your own agent or solver implementation using the `--solver` flag:
-
-**Using a custom agent:**
-```bash
-inspect eval inspect_harbor/terminal_bench \
-  --solver path/to/custom/agent.py@custom_agent \
-  --model openai/gpt-5
-```
-
-**Using Inspect SWE agent framework:**
-
-First install the required package:
-
-```bash
-pip install inspect-swe
-```
-
-**CLI:**
-```bash
-inspect eval inspect_harbor/terminal_bench_sample \
-  --solver inspect_swe/claude_code \
-  --model anthropic/claude-sonnet-4-5
-```
-
-**Python API:**
-```python
-from inspect_ai import eval
-from inspect_harbor import terminal_bench_sample
-from inspect_swe import claude_code
-
-eval(
-    terminal_bench_sample(),
-    solver=claude_code(),
-    model="anthropic/claude-sonnet-4-5"
-)
-```
-
-#### Oracle Solver
+### Oracle Solver
 
 The Oracle solver is useful for verifying that a dataset is correctly configured and solvable. It executes the task's reference solution (`solution/solve.sh` script) instead of using a model.
 
@@ -272,14 +287,7 @@ from inspect_harbor import hello_world, oracle
 eval(hello_world(), solver=oracle())
 ```
 
-For more details:
-- [Agents documentation](https://inspect.aisi.org.uk/agents.html)
-- [Solvers documentation](https://inspect.aisi.org.uk/solvers.html)
-- [Inspect SWE documentation](https://meridianlabs-ai.github.io/inspect_swe/)
-
-### Advanced
-
-#### Generic Harbor Interface
+### Generic Harbor Interface
 
 For advanced use cases, you can use the generic `harbor()` interface directly. This provides access to all task loading options including custom registries, git repositories, and local paths.
 
@@ -352,7 +360,7 @@ inspect eval inspect_harbor/harbor \
   --model openai/gpt-5
 ```
 
-#### Cache Management
+### Cache Management
 
 Downloaded tasks are cached locally in `~/.harbor/cache/`. To force a fresh download:
 
