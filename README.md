@@ -389,3 +389,10 @@ Clean up build artifacts:
 ```bash
 make clean    # Remove cache and build artifacts
 ```
+
+## Credits
+
+This work is based on contributions by [@iphan](https://github.com/iphan) and [@anthonyduong9](https://github.com/anthonyduong9) from the `inspect_evals` repository:
+
+- [@iphan](https://github.com/iphan)'s [Terminal Bench implementation](https://github.com/UKGovernmentBEIS/inspect_evals/pull/791)
+- [@anthonyduong9](https://github.com/anthonyduong9)'s [Harbor task implementation](https://github.com/UKGovernmentBEIS/inspect_evals/pull/945)
