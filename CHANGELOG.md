@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.1...v0.4.2) (2026-02-14)
+
+
+### Documentation
+
+* add credits section to README ([#22](https://github.com/meridianlabs-ai/inspect_harbor/issues/22)) ([2621ac7](https://github.com/meridianlabs-ai/inspect_harbor/commit/2621ac7245cef755db93c3856ddc928292d4fb70))
+
 ## [0.4.1](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.0...v0.4.1) (2026-02-12)
 
 
