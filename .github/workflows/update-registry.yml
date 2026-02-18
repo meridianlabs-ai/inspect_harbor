@@ -51,8 +51,8 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
-          commit-message: 'chore: update Harbor registry tasks'
-          title: 'Update Harbor Registry Tasks'
+          commit-message: 'fix: update Harbor registry tasks'
+          title: 'fix: update Harbor registry tasks'
           body: |
             ## 🤖 Automated Update
 
