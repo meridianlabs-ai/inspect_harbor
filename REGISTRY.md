@@ -27,6 +27,7 @@ eval(aime_1_0(), model="openai/gpt-5")
 | [arc_agi_2@1.0](https://harborframework.com/registry/arc_agi_2/1.0) | `arc_agi_2_1_0` | ARC-AGI-2: A benchmark measuring abstract reasoning through visual grid puzzles requiring rule inference and generalization. | 167 |
 | [autocodebench@lite200](https://harborframework.com/registry/autocodebench/lite200) | `autocodebench_lite200` | Adapter for AutoCodeBench ([link](https://github.com/Tencent-Hunyuan/AutoCodeBenchmark)). | 200 |
 | [binary-audit@1.0](https://harborframework.com/registry/binary-audit/1.0) | `binary_audit_1_0` | An open-source benchmark for evaluating AI agents' ability to find backdoors hidden in compiled binaries. | 46 |
+| [bird-bench@parity](https://harborframework.com/registry/bird-bench/parity) | `bird_bench_parity` | BIRD SQL parity subset (150 tasks, seed 42). Original benchmark: [link](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106.) Adapter: [link](https://github.com/laude-institute/harbor/tree/main/adapters/bird-bench.) | 150 |
 | [bixbench@1.5](https://harborframework.com/registry/bixbench/1.5) | `bixbench_1_5` | BixBench - A benchmark for evaluating AI agents on bioinformatics and computational biology tasks. | 205 |
 | [bixbench-cli@1.5](https://harborframework.com/registry/bixbench-cli/1.5) | `bixbench_cli_1_5` | bixbench-cli - A benchmark for evaluating AI agents on bioinformatics and computational biology tasks. (Adapted for CLI execution) | 205 |
 | [code-contests@1.0](https://harborframework.com/registry/code-contests/1.0) | `code_contests_1_0` | A competitive programming benchmark from DeepMind that evaluates AI agents' ability to solve algorithmic problems, covering algorithms, data structures, and competitive programming challenges. | 9644 |
@@ -36,10 +37,15 @@ eval(aime_1_0(), model="openai/gpt-5")
 | [dabstep@1.0](https://harborframework.com/registry/dabstep/1.0) | `dabstep_1_0` | DABstep: Data Agent Benchmark for Multi-step Reasoning. 450 tasks where agents analyze payment transaction data with Python/pandas to answer business questions. | 450 |
 | [ds-1000@head](https://harborframework.com/registry/ds-1000/head) | `ds_1000_head` | DS-1000 is a code generation benchmark with 1000 realistic data science problems across seven popular Python libraries. | 1000 |
 | [evoeval@1.0](https://harborframework.com/registry/evoeval/1.0) | `evoeval_1_0` | EvoEval_difficult: 100 challenging Python programming tasks evolved from HumanEval. | 100 |
+| [gaia@1.0](https://harborframework.com/registry/gaia/1.0) | `gaia_1_0` | GAIA (General AI Assistants): 165 validation tasks for multi-step reasoning, tool use, and multimodal question answering. | 165 |
 | [gpqa-diamond@1.0](https://harborframework.com/registry/gpqa-diamond/1.0) | `gpqa_diamond_1_0` | GPQA Diamond subset: 198 graduate-level multiple-choice questions in biology, physics, and chemistry for evaluating scientific reasoning. | 198 |
 | [hello-world@1.0](https://harborframework.com/registry/hello-world/1.0) | `hello_world_1_0` | A simple example task to create a hello.txt file with 'Hello, world!' as content. | 1 |
 | [humanevalfix@1.0](https://harborframework.com/registry/humanevalfix/1.0) | `humanevalfix_1_0` | HumanEvalFix: 164 Python code repair tasks from HumanEvalPack. | 164 |
 | [ineqmath@1.0](https://harborframework.com/registry/ineqmath/1.0) | `ineqmath_1_0` | This adapter brings IneqMath, the dev set of the first inequality-proof Q\&A benchmark for LLMs, into Harbor, enabling standardized evaluation of models on mathematical reasoning and proof construction. | 100 |
+| [kumo@1.0](https://harborframework.com/registry/kumo/1.0) | `kumo_1_0` | KUMO full dataset (5300 tasks; 50 instances per scenario). | 5300 |
+| [kumo@easy](https://harborframework.com/registry/kumo/easy) | `kumo_easy` | KUMO(easy) split (5050 tasks; 50 instances per scenario). | 5050 |
+| [kumo@hard](https://harborframework.com/registry/kumo/hard) | `kumo_hard` | KUMO(hard) split (250 tasks; 50 instances per scenario). | 250 |
+| [kumo@parity](https://harborframework.com/registry/kumo/parity) | `kumo_parity` | KUMO parity subset (seeds 0/1; 212 tasks). | 212 |
 | [lawbench@1.0](https://harborframework.com/registry/lawbench/1.0) | `lawbench_1_0` | LawBench: Benchmarking Legal Knowledge of Large Language Models | 1000 |
 | [livecodebench@6.0](https://harborframework.com/registry/livecodebench/6.0) | `livecodebench_6_0` | A subset of 100 sampled tasks from the release_v6 version of LiveCodeBench tasks. | 100 |
 | [mlgym-bench@1.0](https://harborframework.com/registry/mlgym-bench/1.0) | `mlgym_bench_1_0` | Evaluates agents on ML tasks across computer vision, RL, tabular ML, and game theory. | 12 |
