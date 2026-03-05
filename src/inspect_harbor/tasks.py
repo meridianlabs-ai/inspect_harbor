@@ -302,6 +302,180 @@ def autocodebench(
 
 
 @task
+def bfcl_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Berkeley Function-Calling Leaderboard: 3,641 function calling tasks for evaluating LLM tool use capabilities across simple, multiple, parallel, and irrelevance categories.
+
+    Dataset: bfcl@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="bfcl@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def bfcl(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Berkeley Function-Calling Leaderboard: 3,641 function calling tasks for evaluating LLM tool use capabilities across simple, multiple, parallel, and irrelevance categories.
+
+    Dataset: bfcl
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="bfcl",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def bfcl_parity_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""BFCL parity subset: 123 stratified sampled tasks for validating Harbor adapter equivalence with original BFCL benchmark.
+
+    Dataset: bfcl_parity@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="bfcl_parity@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def bfcl_parity(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""BFCL parity subset: 123 stratified sampled tasks for validating Harbor adapter equivalence with original BFCL benchmark.
+
+    Dataset: bfcl_parity
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="bfcl_parity",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def bigcodebench_hard_complete_1_0_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""BigCodeBench-Hard complete benchmark adapter for Harbor - challenging Python programming tasks with reward-based verification
+
+    Dataset: bigcodebench-hard-complete@1.0.0
+    Version: 1.0.0
+    """
+    return _harbor_base(
+        dataset_name_version="bigcodebench-hard-complete@1.0.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def bigcodebench_hard_complete(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""BigCodeBench-Hard complete benchmark adapter for Harbor - challenging Python programming tasks with reward-based verification
+
+    Dataset: bigcodebench-hard-complete
+    Version: Latest available (1.0.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="bigcodebench-hard-complete",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def binary_audit_1_0(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -824,6 +998,64 @@ def dabstep(
 
 
 @task
+def deveval_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""DevEval benchmark: comprehensive evaluation of LLMs across software development lifecycle (implementation, unit testing, acceptance testing) for 21 real-world repositories across Python, C++, Java, and JavaScript
+
+    Dataset: deveval@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="deveval@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def deveval(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""DevEval benchmark: comprehensive evaluation of LLMs across software development lifecycle (implementation, unit testing, acceptance testing) for 21 real-world repositories across Python, C++, Java, and JavaScript
+
+    Dataset: deveval
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="deveval",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def ds_1000_head(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -928,6 +1160,64 @@ def evoeval(
     """
     return _harbor_base(
         dataset_name_version="evoeval",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def financeagent_public(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Finance Agent is a tool for financial research and analysis that leverages large language models and specialized financial tools to answer complex queries about companies, financial statements, and SEC filings.Original benchmark: https://github.com/vals-ai/finance-agent
+
+    Dataset: financeagent@public
+    Version: public
+    """
+    return _harbor_base(
+        dataset_name_version="financeagent@public",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def financeagent(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Finance Agent is a tool for financial research and analysis that leverages large language models and specialized financial tools to answer complex queries about companies, financial statements, and SEC filings.Original benchmark: https://github.com/vals-ai/finance-agent
+
+    Dataset: financeagent
+    Version: Latest available (public when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="financeagent",
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
         n_tasks=n_tasks,
@@ -1375,6 +1665,64 @@ def kumo_parity(
 
 
 @task
+def labbench_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""LAB-Bench FigQA: 181 scientific figure reasoning tasks in biology from Future-House LAB-Bench.
+
+    Dataset: labbench@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="labbench@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def labbench(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""LAB-Bench FigQA: 181 scientific figure reasoning tasks in biology from Future-House LAB-Bench.
+
+    Dataset: labbench
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="labbench",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def lawbench_1_0(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -1479,6 +1827,64 @@ def livecodebench(
     """
     return _harbor_base(
         dataset_name_version="livecodebench",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def medagentbench_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""MedAgentBench: 300 patient-specific clinically-derived tasks across 10 categories in a FHIR-compliant interactive healthcare environment.
+
+    Dataset: medagentbench@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="medagentbench@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def medagentbench(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""MedAgentBench: 300 patient-specific clinically-derived tasks across 10 categories in a FHIR-compliant interactive healthcare environment.
+
+    Dataset: medagentbench
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="medagentbench",
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
         n_tasks=n_tasks,
@@ -1781,6 +2187,122 @@ def otel_bench(
 
 
 @task
+def qcircuitbench_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""QCircuitBench evaluates agents on quantum algorithm design using quantum programming languages. Original benchmark: https://github.com/EstelYang/QCircuitBench.
+
+    Dataset: qcircuitbench@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="qcircuitbench@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def qcircuitbench(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""QCircuitBench evaluates agents on quantum algorithm design using quantum programming languages. Original benchmark: https://github.com/EstelYang/QCircuitBench.
+
+    Dataset: qcircuitbench
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="qcircuitbench",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def quixbugs_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""QuixBugs is a multi-lingual program repair benchmark with 40 Python and 40 Java programs, each containing a single-line defect. Tasks cover algorithms and data structures including sorting, graph, dynamic programming, math, and string/array operations.
+
+    Dataset: quixbugs@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="quixbugs@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def quixbugs(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""QuixBugs is a multi-lingual program repair benchmark with 40 Python and 40 Java programs, each containing a single-line defect. Tasks cover algorithms and data structures including sorting, graph, dynamic programming, math, and string/array operations.
+
+    Dataset: quixbugs
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="quixbugs",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def reasoning_gym_easy_parity(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -1943,6 +2465,64 @@ def replicationbench(
     """
     return _harbor_base(
         dataset_name_version="replicationbench",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def satbench_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""SATBench is a benchmark for evaluating the logical reasoning capabilities of LLMs through logical puzzles derived from Boolean satisfiability (SAT) problems.
+
+    Dataset: satbench@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="satbench@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def satbench(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""SATBench is a benchmark for evaluating the logical reasoning capabilities of LLMs through logical puzzles derived from Boolean satisfiability (SAT) problems.
+
+    Dataset: satbench
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="satbench",
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
         n_tasks=n_tasks,
