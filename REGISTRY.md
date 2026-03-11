@@ -21,6 +21,7 @@ eval(aime_1_0(), model="openai/gpt-5")
 
 | Harbor Dataset | Inspect Task | Description | Samples |
 |---------------|--------------|-------------|---------|
+| [ade-bench@1.0](https://harborframework.com/registry/ade-bench/1.0) | `ade_bench_1_0` | Analytics Data Engineer Bench: tasks evaluating AI agents on dbt/SQL data analytics engineering bugs. Original benchmark: [link](https://github.com/dbt-labs/ade-bench.) | 48 |
 | [aider-polyglot@1.0](https://harborframework.com/registry/aider-polyglot/1.0) | `aider_polyglot_1_0` | A polyglot coding benchmark that evaluates AI agents' ability to perform code editing and generation tasks across multiple programming languages. | 225 |
 | [aime@1.0](https://harborframework.com/registry/aime/1.0) | `aime_1_0` | American Invitational Mathematics Examination (AIME) benchmark for evaluating mathematical reasoning and problem-solving capabilities. Contains 60 competition-level mathematics problems from AIME 2024, 2025-I, and 2025-II competitions. | 60 |
 | [algotune@1.0](https://harborframework.com/registry/algotune/1.0) | `algotune_1_0` | AlgoTune: 154 algorithm optimization tasks focusing on speedup-based scoring from the AlgoTune benchmark. | 154 |
