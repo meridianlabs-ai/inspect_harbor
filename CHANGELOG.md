@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.10](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.9...v0.4.10) (2026-03-16)
+
+
+### Bug Fixes
+
+* enforce allow_internet network mode in compose-file path ([#42](https://github.com/meridianlabs-ai/inspect_harbor/issues/42)) ([14bdc24](https://github.com/meridianlabs-ai/inspect_harbor/commit/14bdc24750b646eb98a55ad619631546d9a0dbd2))
+* update Harbor registry tasks ([#40](https://github.com/meridianlabs-ai/inspect_harbor/issues/40)) ([290c0ca](https://github.com/meridianlabs-ai/inspect_harbor/commit/290c0cad0c158b16a0d09840f4f59f2aa4ef7efa))
+
 ## [0.4.9](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.8...v0.4.9) (2026-03-11)
 
 
