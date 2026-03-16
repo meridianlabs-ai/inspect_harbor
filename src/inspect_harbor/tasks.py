@@ -1230,6 +1230,238 @@ def evoeval(
 
 
 @task
+def featurebench_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""FeatureBench full split: 200 feature-implementation tasks across 24 Python repos. 7 tasks require Ampere+ GPU. Original benchmark: https://github.com/LiberCoders/FeatureBench. Adapter: https://github.com/harbor-framework/harbor/pull/875.
+
+    Dataset: featurebench@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="featurebench@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def featurebench(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""FeatureBench full split: 200 feature-implementation tasks across 24 Python repos. 7 tasks require Ampere+ GPU. Original benchmark: https://github.com/LiberCoders/FeatureBench. Adapter: https://github.com/harbor-framework/harbor/pull/875.
+
+    Dataset: featurebench
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="featurebench",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def featurebench_lite_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""FeatureBench lite split: 30 feature-implementation tasks (26 lv1 + 4 lv2) across Python repos. Original benchmark: https://github.com/LiberCoders/FeatureBench. Adapter: https://github.com/harbor-framework/harbor/pull/875.
+
+    Dataset: featurebench-lite@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="featurebench-lite@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def featurebench_lite(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""FeatureBench lite split: 30 feature-implementation tasks (26 lv1 + 4 lv2) across Python repos. Original benchmark: https://github.com/LiberCoders/FeatureBench. Adapter: https://github.com/harbor-framework/harbor/pull/875.
+
+    Dataset: featurebench-lite
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="featurebench-lite",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def featurebench_lite_modal_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""FeatureBench lite split for Modal: 30 feature-implementation tasks with gpus=1 for GPU tasks (7/30). Use with -e modal. Original benchmark: https://github.com/LiberCoders/FeatureBench.
+
+    Dataset: featurebench-lite-modal@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="featurebench-lite-modal@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def featurebench_lite_modal(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""FeatureBench lite split for Modal: 30 feature-implementation tasks with gpus=1 for GPU tasks (7/30). Use with -e modal. Original benchmark: https://github.com/LiberCoders/FeatureBench.
+
+    Dataset: featurebench-lite-modal
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="featurebench-lite-modal",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def featurebench_modal_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""FeatureBench full split for Modal: 200 feature-implementation tasks with gpus=1 for GPU tasks (44/200). Use with -e modal. Original benchmark: https://github.com/LiberCoders/FeatureBench.
+
+    Dataset: featurebench-modal@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="featurebench-modal@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def featurebench_modal(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""FeatureBench full split for Modal: 200 feature-implementation tasks with gpus=1 for GPU tasks (44/200). Use with -e modal. Original benchmark: https://github.com/LiberCoders/FeatureBench.
+
+    Dataset: featurebench-modal
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="featurebench-modal",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def financeagent_public(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
