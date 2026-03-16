@@ -70,11 +70,15 @@ def harbor_to_compose_config(
 
         compose_config = ComposeConfig(**compose_dict)
 
-        # Apply resource limits from Harbor config to services
+        # Apply resource limits and network mode from Harbor config to services
         if compose_config.services:
             for service in compose_config.services.values():
                 service.cpus = cpus
                 service.mem_limit = f"{memory_mb}m" if memory_mb is not None else None
+                # Harbor's behavior: allow_internet=False forces network
+                # isolation; otherwise don't touch network_mode.
+                if not env_config.allow_internet:
+                    service.network_mode = "none"
                 if gpu_deploy:
                     service.deploy = gpu_deploy
 

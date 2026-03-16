@@ -28,6 +28,7 @@ def test_harbor_to_compose_config_with_existing_compose_yaml():
     mock_env_config.memory_mb = 4096
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.allow_internet = True
     mock_task.config.environment = mock_env_config
 
     # Mock docker-compose.yaml content (without version field as ComposeConfig doesn't accept it)
@@ -56,6 +57,8 @@ services:
         assert service.cpus == 2.0
         # 6GB minimum is applied (config has 4096m which is below minimum)
         assert service.mem_limit == "6144m"
+        # No network_mode in compose file + allow_internet=True -> left unset
+        assert service.network_mode is None
 
 
 def test_harbor_to_compose_config_with_dockerfile():
@@ -181,6 +184,111 @@ def test_harbor_to_compose_config_default_resource_limits():
         assert service.cpus == 1.0
         # When memory_mb is None, 6GB minimum is applied
         assert service.mem_limit == "6144m"
+
+
+def test_harbor_to_compose_config_compose_yaml_no_internet_overrides_network_mode():
+    """Test that allow_internet=False forces network_mode=none even when compose file sets it."""
+    mock_task = Mock()
+    mock_paths = Mock()
+    mock_paths.environment_dir = Path("/task/environment")
+    mock_task.paths = mock_paths
+
+    mock_env_config = Mock()
+    mock_env_config.cpus = 1.0
+    mock_env_config.memory_mb = 2048
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_env_config.allow_internet = False
+    mock_task.config.environment = mock_env_config
+
+    compose_yaml_content = """
+services:
+  default:
+    image: python:3.11
+    network_mode: bridge
+"""
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=compose_yaml_content)),
+    ):
+        mock_exists.side_effect = lambda: True
+
+        result = harbor_to_compose_config(mock_task)
+
+        service = result.services["default"]
+        assert service.network_mode == "none"
+
+
+def test_harbor_to_compose_config_compose_yaml_preserves_custom_network_mode():
+    """Test that compose file's network_mode is preserved when allow_internet=True."""
+    mock_task = Mock()
+    mock_paths = Mock()
+    mock_paths.environment_dir = Path("/task/environment")
+    mock_task.paths = mock_paths
+
+    mock_env_config = Mock()
+    mock_env_config.cpus = 1.0
+    mock_env_config.memory_mb = 2048
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_env_config.allow_internet = True
+    mock_task.config.environment = mock_env_config
+
+    compose_yaml_content = """
+services:
+  default:
+    image: python:3.11
+    network_mode: host
+"""
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=compose_yaml_content)),
+    ):
+        mock_exists.side_effect = lambda: True
+
+        result = harbor_to_compose_config(mock_task)
+
+        service = result.services["default"]
+        assert service.network_mode == "host"
+
+
+def test_harbor_to_compose_config_compose_yaml_no_network_mode_left_unset():
+    """Test that compose file without network_mode is left unset when allow_internet=True.
+
+    This preserves Docker Compose's default project network with inter-service DNS,
+    matching Harbor's behavior of not touching network_mode when allow_internet=True.
+    """
+    mock_task = Mock()
+    mock_paths = Mock()
+    mock_paths.environment_dir = Path("/task/environment")
+    mock_task.paths = mock_paths
+
+    mock_env_config = Mock()
+    mock_env_config.cpus = 1.0
+    mock_env_config.memory_mb = 2048
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_env_config.allow_internet = True
+    mock_task.config.environment = mock_env_config
+
+    compose_yaml_content = """
+services:
+  default:
+    image: python:3.11
+"""
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=compose_yaml_content)),
+    ):
+        mock_exists.side_effect = lambda: True
+
+        result = harbor_to_compose_config(mock_task)
+
+        service = result.services["default"]
+        assert service.network_mode is None
 
 
 def test_harbor_to_compose_config_network_mode_with_internet():
