@@ -1,7 +1,10 @@
 """Converters for Harbor tasks to Inspect AI structures."""
 
+import re
+
 import yaml
 from harbor.models.task.task import Task as HarborTask
+from harbor.models.trial.paths import EnvironmentPaths
 from inspect_ai.dataset import Sample
 from inspect_ai.util import (
     ComposeBuild,
@@ -66,8 +69,15 @@ def harbor_to_compose_config(
     # Use existing docker-compose.yaml if present
     if compose_yaml_path.exists():
         with open(compose_yaml_path, encoding="utf-8") as f:
-            compose_dict = yaml.safe_load(f)
+            raw_yaml = f.read()
 
+        # Expand ${VAR} references used by Harbor's Docker Compose files.
+        # Harbor's DinD mode passes these as env vars to `docker compose`;
+        # since we feed the YAML directly to sandbox providers, we must
+        # expand them ourselves.
+        raw_yaml = _expand_compose_vars(raw_yaml, harbor_task, cpus, memory_mb)
+
+        compose_dict = yaml.safe_load(raw_yaml)
         compose_config = ComposeConfig(**compose_dict)
 
         # Apply resource limits and network mode from Harbor config to services
@@ -184,3 +194,60 @@ def _create_gpu_deploy_config(
             reservations=ComposeResourceReservations(devices=[device_reservation])
         )
     )
+
+
+def _expand_compose_vars(
+    raw_yaml: str,
+    harbor_task: HarborTask,
+    cpus: float,
+    memory_mb: int,
+) -> str:
+    """Expand ${VAR} references in a Harbor docker-compose.yaml string.
+
+    Harbor passes these variables as environment variables to the
+    ``docker compose`` process, which performs the substitution natively.
+    Since inspect_harbor is decoupled from the execution/provider layer
+    (it produces a ``ComposeConfig`` without invoking ``docker compose``),
+    we must perform the substitution here before YAML parsing.
+
+    The variable mapping matches Harbor's
+    ``_DaytonaDinD._compose_env_vars()`` logic:
+    https://github.com/harbor-framework/harbor/blob/c935c6c06471e6cd891cda50f9e1b65e35bbd486/src/harbor/environments/daytona.py#L329
+
+    Limitation: ``HOST_*`` paths (the host side of volume mounts) are set to
+    the same container-side ``EnvironmentPaths`` values as ``ENV_*``. In
+    Harbor's DinD setup these differ (e.g. ``/harbor/logs/verifier`` on the
+    VM vs ``/logs/verifier`` in the container), but we cannot resolve
+    host-side paths here because they depend on the sandbox provider.
+    """
+    if "${" not in raw_yaml:
+        return raw_yaml
+
+    env_dir = str(harbor_task.paths.environment_dir)
+    task_name = harbor_task.name
+
+    var_map: dict[str, str] = {
+        "CONTEXT_DIR": env_dir,
+        "MAIN_IMAGE_NAME": f"hb__{task_name}",
+        "CPUS": str(int(cpus)),
+        "MEMORY": f"{memory_mb}M",
+        "HOST_VERIFIER_LOGS_PATH": str(EnvironmentPaths.verifier_dir),
+        "HOST_AGENT_LOGS_PATH": str(EnvironmentPaths.agent_dir),
+        "HOST_ARTIFACTS_PATH": str(EnvironmentPaths.artifacts_dir),
+        "ENV_VERIFIER_LOGS_PATH": str(EnvironmentPaths.verifier_dir),
+        "ENV_AGENT_LOGS_PATH": str(EnvironmentPaths.agent_dir),
+        "ENV_ARTIFACTS_PATH": str(EnvironmentPaths.artifacts_dir),
+    }
+
+    # Also pull TEST_DIR from the task's env if set
+    task_env = harbor_task.config.verifier.env or {}
+    if "TEST_DIR" in task_env:
+        var_map["TEST_DIR"] = task_env["TEST_DIR"]
+    else:
+        var_map["TEST_DIR"] = str(EnvironmentPaths.tests_dir)
+
+    def _replace(match: re.Match[str]) -> str:
+        var_name = match.group(1)
+        return var_map.get(var_name, match.group(0))
+
+    return re.sub(r"\$\{([^}]+)}", _replace, raw_yaml)

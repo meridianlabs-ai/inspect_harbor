@@ -10,6 +10,7 @@ from inspect_ai.dataset import Sample
 from inspect_ai.util import ComposeBuild, ComposeConfig, SandboxEnvironmentSpec
 from inspect_ai.util._sandbox.compose import ComposeDeviceReservation
 from inspect_harbor.harbor._converters import (
+    _expand_compose_vars,
     harbor_task_to_sample,
     harbor_to_compose_config,
 )
@@ -760,6 +761,112 @@ def test_harbor_task_to_sample_passes_overrides(mock_harbor_task: Any):
         assert service.deploy.resources.reservations.devices is not None
         device = service.deploy.resources.reservations.devices[0]
         assert device.count == 4
+
+
+def test_expand_compose_vars_basic():
+    """Test that ${VAR} references are expanded in compose YAML."""
+    mock_task = Mock()
+    mock_task.name = "my-task"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/cache/tasks/abc/my-task/environment")
+    mock_task.config.verifier.env = {}
+
+    raw = """\
+services:
+  main:
+    build:
+      context: ${CONTEXT_DIR}
+      dockerfile: Dockerfile
+    image: ${MAIN_IMAGE_NAME}
+    deploy:
+      resources:
+        limits:
+          cpus: ${CPUS}
+          memory: ${MEMORY}
+"""
+    result = _expand_compose_vars(raw, mock_task, cpus=4.0, memory_mb=8192)
+
+    assert "${" not in result
+    assert "/cache/tasks/abc/my-task/environment" in result
+    assert "hb__my-task" in result
+    assert "cpus: 4" in result
+    assert "memory: 8192M" in result
+
+
+def test_expand_compose_vars_no_vars():
+    """Test that YAML without variables is returned unchanged."""
+    mock_task = Mock()
+    mock_task.name = "t"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/env")
+    mock_task.config.verifier.env = {}
+
+    raw = "services:\n  default:\n    image: python:3.12\n"
+    assert _expand_compose_vars(raw, mock_task, 1.0, 2048) == raw
+
+
+def test_expand_compose_vars_unknown_left_as_is():
+    """Test that unknown variables are left as literal strings."""
+    mock_task = Mock()
+    mock_task.name = "t"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/env")
+    mock_task.config.verifier.env = {}
+
+    raw = "image: ${UNKNOWN_VAR}"
+    result = _expand_compose_vars(raw, mock_task, 1.0, 2048)
+    assert result == "image: ${UNKNOWN_VAR}"
+
+
+def test_expand_compose_vars_test_dir_from_verifier_env():
+    """Test that TEST_DIR is pulled from verifier env if set."""
+    mock_task = Mock()
+    mock_task.name = "t"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/env")
+    mock_task.config.verifier.env = {"TEST_DIR": "/custom/tests"}
+
+    raw = "TEST_DIR=${TEST_DIR}"
+    result = _expand_compose_vars(raw, mock_task, 1.0, 2048)
+    assert result == "TEST_DIR=/custom/tests"
+
+
+def test_expand_compose_vars_in_harbor_to_compose_config(tmp_path: Path):
+    """Test end-to-end: compose YAML with variables is expanded before parsing."""
+    env_dir = tmp_path / "environment"
+    env_dir.mkdir()
+
+    compose_yaml = env_dir / "docker-compose.yaml"
+    compose_yaml.write_text("""\
+services:
+  default:
+    build:
+      context: ${CONTEXT_DIR}
+      dockerfile: Dockerfile
+    image: ${MAIN_IMAGE_NAME}
+""")
+
+    # Create a Dockerfile so the build context is valid
+    (env_dir / "Dockerfile").write_text("FROM python:3.12\n")
+
+    mock_task = Mock()
+    mock_task.name = "test-task"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = env_dir
+    mock_task.config.environment = Mock()
+    mock_task.config.environment.cpus = 2
+    mock_task.config.environment.memory_mb = 8192
+    mock_task.config.environment.gpus = 0
+    mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.allow_internet = True
+    mock_task.config.verifier.env = {}
+
+    result = harbor_to_compose_config(mock_task)
+
+    service = result.services["default"]
+    assert service.image == "hb__test-task"
+    assert isinstance(service.build, ComposeBuild)
+    assert service.build.context == str(env_dir)
 
 
 @pytest.mark.parametrize(
