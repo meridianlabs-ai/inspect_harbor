@@ -229,7 +229,6 @@ def _expand_compose_vars(
         "ENV_ARTIFACTS_PATH": str(EnvironmentPaths.artifacts_dir),
     }
 
-    # Also pull TEST_DIR from the task's env if set
     task_env = harbor_task.config.verifier.env or {}
     if "TEST_DIR" in task_env:
         var_map["TEST_DIR"] = task_env["TEST_DIR"]
