@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.11](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.10...v0.4.11) (2026-03-18)
+
+
+### Bug Fixes
+
+* enforce network mode & handle variable expansion ([#43](https://github.com/meridianlabs-ai/inspect_harbor/issues/43)) ([3858da2](https://github.com/meridianlabs-ai/inspect_harbor/commit/3858da2ebc6bee99e2c5211af62156344d376e52))
+
 ## [0.4.10](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.9...v0.4.10) (2026-03-16)
 
 
