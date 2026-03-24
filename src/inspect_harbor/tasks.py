@@ -2187,6 +2187,64 @@ def medagentbench(
 
 
 @task
+def ml_dev_bench_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ML-Dev-Bench: A benchmark for testing AI agents on machine learning development tasks including model implementation, training, debugging, and optimization.
+
+    Dataset: ml-dev-bench@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="ml-dev-bench@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def ml_dev_bench(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ML-Dev-Bench: A benchmark for testing AI agents on machine learning development tasks including model implementation, training, debugging, and optimization.
+
+    Dataset: ml-dev-bench
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="ml-dev-bench",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def mlgym_bench_1_0(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
