@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.13](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.12...v0.4.13) (2026-03-25)
+
+
+### Bug Fixes
+
+* pin litellm&lt;1.82.7 to block compromised versions ([#48](https://github.com/meridianlabs-ai/inspect_harbor/issues/48)) ([5e7328b](https://github.com/meridianlabs-ai/inspect_harbor/commit/5e7328b73601dad3e1f77e944b23dfbaf20609ac))
+* update Harbor registry tasks ([#47](https://github.com/meridianlabs-ai/inspect_harbor/issues/47)) ([10752d5](https://github.com/meridianlabs-ai/inspect_harbor/commit/10752d53c39d74b0d9f075bfa7ffc4eb71ec9020))
+
 ## [0.4.12](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.11...v0.4.12) (2026-03-24)
 
 
