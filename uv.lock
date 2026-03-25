@@ -1370,6 +1370,7 @@ source = { editable = "." }
 dependencies = [
     { name = "harbor" },
     { name = "inspect-ai" },
+    { name = "litellm" },
     { name = "pyyaml" },
 ]
 
@@ -1388,6 +1389,7 @@ dev = [
 requires-dist = [
     { name = "harbor", specifier = ">=0.1.45" },
     { name = "inspect-ai", specifier = ">=0.3.199" },
+    { name = "litellm", specifier = "<1.82.7" },
     { name = "pyyaml" },
 ]
 

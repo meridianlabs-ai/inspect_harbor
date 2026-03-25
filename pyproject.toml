@@ -11,7 +11,9 @@ readme = "README.md"
 # Note: harbor package requires Python >=3.12, so we cannot lower this requirement
 requires-python = ">=3.12"
 license = { text = "MIT License" }
-dependencies = ["inspect-ai>=0.3.199", "harbor>=0.1.45", "pyyaml"]
+# litellm 1.82.7 and 1.82.8 were compromised with supply-chain malware.
+# See: https://github.com/harbor-framework/harbor/issues/1265
+dependencies = ["inspect-ai>=0.3.199", "harbor>=0.1.45", "pyyaml", "litellm<1.82.7"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",

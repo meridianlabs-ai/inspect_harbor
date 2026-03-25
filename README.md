@@ -366,6 +366,12 @@ To manually clear the entire cache:
 rm -rf ~/.harbor/cache/
 ```
 
+## Known Dataset Issues
+
+| Dataset | Issue | Status |
+|---------|-------|--------|
+| ds_1000 | Multiple configuration issues preventing execution (`pull access denied for ds1000`) | [harbor-datasets#103](https://github.com/laude-institute/harbor-datasets/issues/103) |
+
 ## Development
 
 Clone the repository and install development dependencies:
