@@ -13,7 +13,8 @@ requires-python = ">=3.12"
 license = { text = "MIT License" }
 # litellm 1.82.7 and 1.82.8 were compromised with supply-chain malware.
 # See: https://github.com/harbor-framework/harbor/issues/1265
-dependencies = ["inspect-ai>=0.3.199", "harbor>=0.1.45", "pyyaml", "litellm<1.82.7"]
+# harbor 0.3.0 removed harbor.dataset.client and harbor.models.job.config modules
+dependencies = ["inspect-ai>=0.3.201", "harbor>=0.1.45,<0.3.0", "pyyaml", "litellm<1.82.7"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
