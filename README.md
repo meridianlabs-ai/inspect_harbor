@@ -8,7 +8,7 @@
 | src/inspect\_harbor/\_registry.py              |        4 |        0 |        0 |        0 |    100% |           |
 | src/inspect\_harbor/\_version.py               |       11 |       11 |        0 |        0 |      0% |      3-24 |
 | src/inspect\_harbor/harbor/\_\_init\_\_.py     |        0 |        0 |        0 |        0 |    100% |           |
-| src/inspect\_harbor/harbor/\_converters.py     |       60 |        1 |       18 |        2 |     96% |79->90, 88 |
+| src/inspect\_harbor/harbor/\_converters.py     |       60 |        1 |       18 |        2 |     96% |79-\>90, 88 |
 | src/inspect\_harbor/harbor/\_sandbox\_utils.py |       38 |        0 |       14 |        0 |    100% |           |
 | src/inspect\_harbor/harbor/\_scorer.py         |       75 |        3 |       18 |        2 |     95% |72-73, 159 |
 | src/inspect\_harbor/harbor/\_solver.py         |       34 |        2 |        8 |        0 |     95% |     43-44 |
