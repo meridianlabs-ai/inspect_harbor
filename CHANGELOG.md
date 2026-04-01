@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.15](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.14...v0.4.15) (2026-04-01)
+
+
+### Bug Fixes
+
+* pin harbor&lt;0.3.0 and bump inspect-ai&gt;=0.3.201 ([#52](https://github.com/meridianlabs-ai/inspect_harbor/issues/52)) ([0cb0a46](https://github.com/meridianlabs-ai/inspect_harbor/commit/0cb0a4682af660990b7ac73fc2a8ce627f682479))
+
 ## [0.4.14](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.13...v0.4.14) (2026-03-30)
 
 
