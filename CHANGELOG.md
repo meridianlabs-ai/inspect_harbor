@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.16](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.15...v0.4.16) (2026-04-08)
+
+
+### Bug Fixes
+
+* apply resource overrides only to default service ([#56](https://github.com/meridianlabs-ai/inspect_harbor/issues/56)) ([ea5e86f](https://github.com/meridianlabs-ai/inspect_harbor/commit/ea5e86f5676c80f114969c555df68ff182ba953d))
+
 ## [0.4.15](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.14...v0.4.15) (2026-04-01)
 
 
