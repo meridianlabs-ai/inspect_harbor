@@ -6,14 +6,14 @@ from unittest.mock import Mock, patch
 
 import pytest
 from harbor.models.task.task import Task as HarborTask
-from inspect_harbor.harbor._task import harbor, load_harbor_tasks
+from inspect_harbor._harbor.task import harbor, load_harbor_tasks
 
 
 def test_load_local_single_task():
     """Test loading a single local task."""
     with (
-        patch("inspect_harbor.harbor._task._load_local_path") as mock_load_local,
-        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor._harbor._task._load_local_path") as mock_load_local,
+        patch("inspect_harbor._harbor._task.HarborTask") as mock_harbor_task,
     ):
         # Setup mocks - _load_local_path returns list of Path objects
         task_path = Path("/local/path/to/task")
@@ -43,8 +43,8 @@ def test_load_local_single_task():
 def test_load_git_task():
     """Test loading a task from git repository."""
     with (
-        patch("inspect_harbor.harbor._task._load_git_task") as mock_load_git,
-        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor._harbor._task._load_git_task") as mock_load_git,
+        patch("inspect_harbor._harbor._task.HarborTask") as mock_harbor_task,
     ):
         # Setup mocks - _load_git_task returns list of Path objects
         task_path = Path("/cache/downloaded/task")
@@ -77,8 +77,8 @@ def test_load_git_task():
 def test_load_local_dataset():
     """Test loading multiple tasks from a local dataset directory."""
     with (
-        patch("inspect_harbor.harbor._task._load_local_path") as mock_load_local,
-        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor._harbor._task._load_local_path") as mock_load_local,
+        patch("inspect_harbor._harbor._task.HarborTask") as mock_harbor_task,
     ):
         # Setup mocks - _load_local_path returns list of Path objects
         task_path_1 = Path("/dataset/task1")
@@ -110,8 +110,8 @@ def test_load_local_dataset():
 def test_load_from_registry():
     """Test loading tasks from a registry dataset."""
     with (
-        patch("inspect_harbor.harbor._task._load_from_registry") as mock_load_registry,
-        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor._harbor._task._load_from_registry") as mock_load_registry,
+        patch("inspect_harbor._harbor._task.HarborTask") as mock_harbor_task,
     ):
         # Setup mocks - _load_from_registry returns list of Path objects
         task_path = Path("/cache/registry/task")
@@ -142,8 +142,8 @@ def test_load_from_registry():
 def test_load_git_task_with_overwrite_cache():
     """Test loading a git task with overwrite_cache=True."""
     with (
-        patch("inspect_harbor.harbor._task._load_git_task") as mock_load_git,
-        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor._harbor._task._load_git_task") as mock_load_git,
+        patch("inspect_harbor._harbor._task.HarborTask") as mock_harbor_task,
     ):
         # Setup mocks
         task_path = Path("/cache/downloaded/task")
@@ -174,8 +174,8 @@ def test_load_git_task_with_overwrite_cache():
 def test_load_registry_with_overwrite_cache():
     """Test loading a registry dataset with overwrite_cache=True."""
     with (
-        patch("inspect_harbor.harbor._task._load_from_registry") as mock_load_registry,
-        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor._harbor._task._load_from_registry") as mock_load_registry,
+        patch("inspect_harbor._harbor._task.HarborTask") as mock_harbor_task,
     ):
         # Setup mocks
         task_path = Path("/cache/registry/task")
@@ -269,8 +269,8 @@ def test_load_harbor_tasks_parameter_passing(
 ) -> None:
     """Test that parameters are correctly passed to internal functions."""
     with (
-        patch("inspect_harbor.harbor._task._load_local_path") as mock_load_local,
-        patch("inspect_harbor.harbor._task.HarborTask") as mock_harbor_task,
+        patch("inspect_harbor._harbor._task._load_local_path") as mock_load_local,
+        patch("inspect_harbor._harbor._task.HarborTask") as mock_harbor_task,
     ):
         task_path = Path("/mock/path")
         mock_load_local.return_value = [task_path]

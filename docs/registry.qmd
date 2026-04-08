@@ -1,15 +1,20 @@
-# Inspect Harbor Registry
+---
+title: Registry
+llms-description: Complete catalog of Harbor datasets available as Inspect tasks.
+---
 
 The following table lists all available Harbor datasets and their corresponding Inspect tasks.
 
 ## Usage
 
 **CLI:**
+
 ```bash
 inspect eval inspect_harbor/aime_1_0 --model openai/gpt-5
 ```
 
 **Python:**
+
 ```python
 from inspect_ai import eval
 from inspect_harbor import aime_1_0
@@ -18,6 +23,8 @@ eval(aime_1_0(), model="openai/gpt-5")
 ```
 
 ## Available Datasets
+
+::: {.column-page-right}
 
 | Harbor Dataset | Inspect Task | Description | Samples |
 |---------------|--------------|-------------|---------|
@@ -49,6 +56,7 @@ eval(aime_1_0(), model="openai/gpt-5")
 | [financeagent@public](https://harborframework.com/registry/financeagent/public) | `financeagent_public` | Finance Agent is a tool for financial research and analysis that leverages large language models and specialized financial tools to answer complex queries about companies, financial statements, and SEC filings.Original benchmark: [link](https://github.com/vals-ai/finance-agent) | 50 |
 | [gaia@1.0](https://harborframework.com/registry/gaia/1.0) | `gaia_1_0` | GAIA (General AI Assistants): 165 validation tasks for multi-step reasoning, tool use, and multimodal question answering. | 165 |
 | [gpqa-diamond@1.0](https://harborframework.com/registry/gpqa-diamond/1.0) | `gpqa_diamond_1_0` | GPQA Diamond subset: 198 graduate-level multiple-choice questions in biology, physics, and chemistry for evaluating scientific reasoning. | 198 |
+| [gso@1.0](https://harborframework.com/registry/gso/1.0) | `gso_1_0` | GSO: 102 software optimization tasks focusing on performance improvement. | 102 |
 | [hello-world@1.0](https://harborframework.com/registry/hello-world/1.0) | `hello_world_1_0` | A simple example task to create a hello.txt file with 'Hello, world!' as content. | 1 |
 | [humanevalfix@1.0](https://harborframework.com/registry/humanevalfix/1.0) | `humanevalfix_1_0` | HumanEvalFix: 164 Python code repair tasks from HumanEvalPack. | 164 |
 | [ineqmath@1.0](https://harborframework.com/registry/ineqmath/1.0) | `ineqmath_1_0` | This adapter brings IneqMath, the dev set of the first inequality-proof Q\&A benchmark for LLMs, into Harbor, enabling standardized evaluation of models on mathematical reasoning and proof construction. | 100 |
@@ -58,6 +66,7 @@ eval(aime_1_0(), model="openai/gpt-5")
 | [kumo@parity](https://harborframework.com/registry/kumo/parity) | `kumo_parity` | KUMO parity subset (seeds 0/1; 212 tasks). | 212 |
 | [labbench@1.0](https://harborframework.com/registry/labbench/1.0) | `labbench_1_0` | LAB-Bench FigQA: 181 scientific figure reasoning tasks in biology from Future-House LAB-Bench. | 181 |
 | [lawbench@1.0](https://harborframework.com/registry/lawbench/1.0) | `lawbench_1_0` | LawBench: Benchmarking Legal Knowledge of Large Language Models | 1000 |
+| [legacy-bench@1.0](https://harborframework.com/registry/legacy-bench/1.0) | `legacy_bench_1_0` | A benchmark for evaluating AI agents on legacy code maintenance and modernization tasks across multiple language families including COBOL, Java 7, C, Fortran, and Assembly. | 10 |
 | [livecodebench@6.0](https://harborframework.com/registry/livecodebench/6.0) | `livecodebench_6_0` | A subset of 100 sampled tasks from the release_v6 version of LiveCodeBench tasks. | 100 |
 | [medagentbench@1.0](https://harborframework.com/registry/medagentbench/1.0) | `medagentbench_1_0` | MedAgentBench: 300 patient-specific clinically-derived tasks across 10 categories in a FHIR-compliant interactive healthcare environment. | 300 |
 | [ml-dev-bench@1.0](https://harborframework.com/registry/ml-dev-bench/1.0) | `ml_dev_bench_1_0` | ML-Dev-Bench: A benchmark for testing AI agents on machine learning development tasks including model implementation, training, debugging, and optimization. | 33 |
@@ -74,6 +83,8 @@ eval(aime_1_0(), model="openai/gpt-5")
 | [replicationbench@1.0](https://harborframework.com/registry/replicationbench/1.0) | `replicationbench_1_0` | ReplicationBench - A benchmark for evaluating AI agents on reproducing computational results from astrophysics research papers. Adapted from Christine8888/replicationbench-release. | 90 |
 | [rexbench@1.0](https://harborframework.com/registry/rexbench/1.0) | `rexbench_1_0` | A benchmark to evaluate the ability of AI agents to extend existing AI research through research experiment implementation tasks. Original benchmark: [link](https://github.com/tinlaboratory/rexbench.) Website: [link](https://rexbench.com/.) | 2 |
 | [satbench@1.0](https://harborframework.com/registry/satbench/1.0) | `satbench_1_0` | SATBench is a benchmark for evaluating the logical reasoning capabilities of LLMs through logical puzzles derived from Boolean satisfiability (SAT) problems. | 2100 |
+| [scale-ai/swe-atlas-qna@1.0](https://harborframework.com/registry/scale-ai/swe-atlas-qna/1.0) | `scale_ai/swe_atlas_qna_1_0` | SWE-Atlas Codebase QnA benchmark that evaluates AI agents' ability to comprehend and query existing codebases. | 124 |
+| [scale-ai/swe-atlas-tw@1.0](https://harborframework.com/registry/scale-ai/swe-atlas-tw/1.0) | `scale_ai/swe_atlas_tw_1_0` | SWE-Atlas Test Writing benchmark that evaluates AI agents' ability to write comprehensive unit tests. | 90 |
 | [seta-env@1.0](https://harborframework.com/registry/seta-env/1.0) | `seta_env_1_0` | CAMEL SETA Environment for RL training | 1376 |
 | [simpleqa@1.0](https://harborframework.com/registry/simpleqa/1.0) | `simpleqa_1_0` | SimpleQA: 4,326 short, fact-seeking questions from OpenAI for evaluating language model factuality. Uses LLM-as-a-judge grading. Source: [link](https://openai.com/index/introducing-simpleqa/) | 4326 |
 | [sldbench@1.0](https://harborframework.com/registry/sldbench/1.0) | `sldbench_1_0` | SLDBench: A benchmark for scaling law discovery with symbolic regression tasks. | 8 |
@@ -85,6 +96,7 @@ eval(aime_1_0(), model="openai/gpt-5")
 | [swe-lancer-diamond@ic](https://harborframework.com/registry/swe-lancer-diamond/ic) | `swe_lancer_diamond_ic` | Adapter for SWE-Lancer ([link](https://github.com/openai/preparedness/blob/main/project/swelancer/README.md)). Only the individual contributor SWE tasks. | 198 |
 | [swe-lancer-diamond@manager](https://harborframework.com/registry/swe-lancer-diamond/manager) | `swe_lancer_diamond_manager` | Adapter for SWE-Lancer ([link](https://github.com/openai/preparedness/blob/main/project/swelancer/README.md)). Only the manager tasks. | 265 |
 | [swebench-verified@1.0](https://harborframework.com/registry/swebench-verified/1.0) | `swebench_verified_1_0` | A human-validated subset of 500 SWE-bench tasks | 500 |
+| [swebench_multilingual@1.0](https://harborframework.com/registry/swebench_multilingual/1.0) | `swebench_multilingual_1_0` | SWE-bench Multilingual extends the original Python-focused SWE-bench benchmark to support multiple programming languages. Original benchmark: [link](https://www.swebench.com/multilingual.html.) | 300 |
 | [swebenchpro@1.0](https://harborframework.com/registry/swebenchpro/1.0) | `swebenchpro_1_0` | SWE-bench Pro: A multi-language software engineering benchmark with 731 instances covering Python, JavaScript/TypeScript, and Go. Evaluates AI systems' ability to resolve real-world bugs and implement features across diverse production codebases. Original benchmark: [link](https://github.com/scaleapi/SWE-bench_Pro-os.) Adapter details: [link](https://github.com/laude-institute/harbor/tree/main/adapters/swebenchpro) | 731 |
 | [swesmith@1.0](https://harborframework.com/registry/swesmith/1.0) | `swesmith_1_0` | SWE-smith is a synthetically generated dataset of software engineering tasks derived from GitHub issues for training and evaluating code generation models. | 100 |
 | [swtbench-verified@1.0](https://harborframework.com/registry/swtbench-verified/1.0) | `swtbench_verified_1_0` | SWTBench Verified - Software Testing Benchmark for code generation | 433 |
@@ -94,6 +106,10 @@ eval(aime_1_0(), model="openai/gpt-5")
 | [terminal-bench-sample@2.0](https://harborframework.com/registry/terminal-bench-sample/2.0) | `terminal_bench_sample_2_0` | A sample of tasks from Terminal-Bench 2.0. | 10 |
 | [usaco@2.0](https://harborframework.com/registry/usaco/2.0) | `usaco_2_0` | USACO: 304 Python programming problems from USACO competition. | 304 |
 | [vmax-tasks@1.0](https://harborframework.com/registry/vmax-tasks/1.0) | `vmax_tasks_1_0` | A collection of 1,043 validated real-world bug-fixing tasks from popular open-source JavaScript projects including Vue.js, Docusaurus, Redux, and Chalk. Each task presents an authentic bug report with reproduction steps and expected behavior. | 1043 |
+
+: {tbl-colwidths="[25,25,45,15]"}
+
+:::
 
 ---
 

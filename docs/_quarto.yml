@@ -1,0 +1,24 @@
+project:
+  type: meridianlabs-ai/inspect-docs
+
+inspect-docs:
+  title: Inspect Harbor
+  description: Inspect AI interface to Harbor tasks
+  url: https://meridianlabs-ai.github.io/inspect_harbor
+  module: inspect_harbor
+  repo: meridianlabs-ai/inspect_harbor
+  org: Meridian Labs
+  external_refs:
+    inspect_ai: https://inspect.aisi.org.uk
+  navigation:
+    - text: Getting Started
+      href: index.qmd
+    - text: Using Harbor
+      contents:
+        - href: datasets.qmd
+        - href: parameters.qmd
+        - href: agents.qmd
+        - href: tasks.qmd
+        - href: advanced.qmd
+    - text: Registry
+      href: registry.qmd

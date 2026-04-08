@@ -8,13 +8,13 @@ from unittest.mock import AsyncMock, Mock, patch
 import pytest
 from inspect_ai.scorer import Target
 from inspect_ai.solver import TaskState
-from inspect_harbor.harbor._sandbox_utils import (
+from inspect_harbor._harbor.sandbox_utils import (
     cleanup_sandbox_directories,
     cleanup_sandbox_env_vars,
     copy_directory_to_sandbox,
     resolve_env_vars,
 )
-from inspect_harbor.harbor._scorer import (
+from inspect_harbor._harbor.scorer import (
     CopyTestsDirError,
     RewardFileEmptyError,
     RewardFileNotFoundError,
@@ -30,7 +30,7 @@ async def test_parse_reward_txt_valid():
     mock_sandbox = Mock()
     mock_sandbox.read_file = AsyncMock(return_value="0.85")
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         reward_value, reward_dict = await _parse_reward_file(exit_code=0)
 
         assert reward_value == 0.85
@@ -44,7 +44,7 @@ async def test_parse_reward_txt_empty():
     mock_sandbox = Mock()
     mock_sandbox.read_file = AsyncMock(return_value="   ")
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(RewardFileEmptyError, match="Reward file is empty"):
             await _parse_reward_file(exit_code=0)
 
@@ -55,7 +55,7 @@ async def test_parse_reward_txt_invalid():
     mock_sandbox = Mock()
     mock_sandbox.read_file = AsyncMock(return_value="not a number")
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(
             VerifierOutputParseError, match="Failed to parse reward.txt as float"
         ):
@@ -73,7 +73,7 @@ async def test_parse_reward_json_with_reward_key():
         ]
     )
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         reward_value, reward_dict = await _parse_reward_file(exit_code=0)
 
         assert reward_value == 1.0
@@ -91,7 +91,7 @@ async def test_parse_reward_json_with_other_keys():
         ]
     )
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         reward_value, reward_dict = await _parse_reward_file(exit_code=0)
 
         assert reward_value == 0.75
@@ -116,7 +116,7 @@ async def test_parse_reward_json_with_mixed_types():
         ]
     )
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         reward_value, reward_dict = await _parse_reward_file(exit_code=0)
 
         assert reward_value == 0.8
@@ -135,7 +135,7 @@ async def test_parse_reward_json_empty():
         ]
     )
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(RewardFileEmptyError, match="Reward file is empty"):
             await _parse_reward_file(exit_code=0)
 
@@ -151,7 +151,7 @@ async def test_parse_reward_json_invalid():
         ]
     )
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(
             VerifierOutputParseError, match="Failed to parse reward.json"
         ):
@@ -169,7 +169,7 @@ async def test_parse_reward_neither_file_exists():
         ]
     )
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(
             RewardFileNotFoundError, match="No reward file found.*exit code was 1"
         ):
@@ -188,7 +188,7 @@ async def test_copy_directory_to_sandbox(tmp_path: Path):
     mock_sandbox.write_file = AsyncMock()
 
     with patch(
-        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
     ):
         await copy_directory_to_sandbox(test_dir, "/tests")
 
@@ -219,7 +219,7 @@ async def test_copy_nested_directory_to_sandbox(tmp_path: Path):
     mock_sandbox.write_file = AsyncMock()
 
     with patch(
-        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
     ):
         await copy_directory_to_sandbox(test_dir, "/tests")
 
@@ -257,7 +257,7 @@ async def test_copy_binary_files_to_sandbox(tmp_path: Path):
     mock_sandbox.write_file = AsyncMock()
 
     with patch(
-        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
     ):
         await copy_directory_to_sandbox(test_dir, "/tests")
 
@@ -290,7 +290,7 @@ async def test_cleanup_sandbox_directories():
     mock_sandbox.exec = AsyncMock(return_value=mock_exec_result)
 
     with patch(
-        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
     ):
         await cleanup_sandbox_directories("/tests", "/logs/verifier")
 
@@ -313,7 +313,7 @@ async def test_cleanup_sandbox_directories_handles_errors():
     mock_sandbox.exec = AsyncMock(side_effect=RuntimeError("Sandbox exec failed"))
 
     with patch(
-        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
     ):
         # Should not raise exception
         await cleanup_sandbox_directories("/tests", "/logs/verifier")
@@ -334,7 +334,7 @@ async def test_cleanup_sandbox_directories_partial_failure():
     )
 
     with patch(
-        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
     ):
         # Should not raise exception
         await cleanup_sandbox_directories("/tests", "/logs/verifier")
@@ -382,9 +382,9 @@ async def test_harbor_scorer_stores_reward_dict_in_metadata(tmp_path: Path):
         ]
     )
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         with patch(
-            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
         ):
             scorer = harbor_scorer()
             result = await scorer(mock_state, mock_target)
@@ -503,9 +503,9 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
     # Mock reward file reading
     mock_sandbox.read_file = AsyncMock(return_value="1.0")
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         with patch(
-            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
         ):
             scorer = harbor_scorer()
             result = await scorer(mock_state, mock_target)
@@ -640,9 +640,9 @@ async def test_harbor_scorer_passes_verifier_env_to_exec(
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
     mock_sandbox.read_file = AsyncMock(return_value="1.0")
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         with patch(
-            "inspect_harbor.harbor._sandbox_utils.sandbox",
+            "inspect_harbor._harbor._sandbox_utils.sandbox",
             return_value=mock_sandbox,
         ):
             scorer = harbor_scorer()
@@ -701,9 +701,9 @@ async def test_harbor_scorer_no_verifier_env(tmp_path: Path):
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
     mock_sandbox.read_file = AsyncMock(return_value="1.0")
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         with patch(
-            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
         ):
             scorer = harbor_scorer()
             result = await scorer(mock_state, mock_target)
@@ -760,9 +760,9 @@ async def test_harbor_scorer_empty_verifier_env(tmp_path: Path):
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
     mock_sandbox.read_file = AsyncMock(return_value="1.0")
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         with patch(
-            "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
         ):
             scorer = harbor_scorer()
             result = await scorer(mock_state, mock_target)
@@ -790,7 +790,7 @@ async def test_cleanup_sandbox_env_vars():
     mock_sandbox.exec = AsyncMock(return_value=mock_exec_result)
 
     with patch(
-        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
     ):
         await cleanup_sandbox_env_vars(["API_KEY", "SECRET_TOKEN", "MODEL_NAME"])
 
@@ -812,7 +812,7 @@ async def test_cleanup_sandbox_env_vars_handles_errors():
     mock_sandbox.exec = AsyncMock(side_effect=RuntimeError("Sandbox exec failed"))
 
     with patch(
-        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
     ):
         # Should not raise exception
         await cleanup_sandbox_env_vars(["VAR1", "VAR2"])
@@ -833,7 +833,7 @@ async def test_cleanup_sandbox_env_vars_partial_failure():
     )
 
     with patch(
-        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
     ):
         # Should not raise exception
         await cleanup_sandbox_env_vars(["VAR1", "VAR2"])
@@ -849,7 +849,7 @@ async def test_cleanup_sandbox_env_vars_empty_list():
     mock_sandbox.exec = AsyncMock()
 
     with patch(
-        "inspect_harbor.harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
     ):
         await cleanup_sandbox_env_vars([])
 
@@ -903,9 +903,9 @@ async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
     mock_sandbox.read_file = AsyncMock(return_value="1.0")
 
-    with patch("inspect_harbor.harbor._scorer.sandbox", return_value=mock_sandbox):
+    with patch("inspect_harbor._harbor._scorer.sandbox", return_value=mock_sandbox):
         with patch(
-            "inspect_harbor.harbor._sandbox_utils.sandbox",
+            "inspect_harbor._harbor._sandbox_utils.sandbox",
             return_value=mock_sandbox,
         ):
             scorer = harbor_scorer()

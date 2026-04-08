@@ -1,0 +1,84 @@
+---
+title: Agents and Solvers
+llms-description: Default agent scaffold, custom agents, and the Oracle solver for verifying Harbor datasets.
+---
+
+[Solvers](https://inspect.aisi.org.uk/solvers.html) are the execution components in Inspect AI. They can run [agent scaffolds](https://inspect.aisi.org.uk/agents.html) (like [ReAct](https://inspect.aisi.org.uk/react-agent.html)), execute solution scripts (like the Oracle solver), perform prompt engineering, and more. Both solvers and agents can be used to solve Harbor tasks.
+
+## Default Agent Scaffold
+
+When no agent or solver is specified, Inspect Harbor provides a default agent scaffold for your model:
+
+- **Agent Type**: [ReAct agent](https://inspect.aisi.org.uk/react-agent.html).
+- **Tools**: [`bash(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-session), [`python(timeout=300)`](https://inspect.aisi.org.uk/tools-standard.html#sec-bash-and-python), [`update_plan()`](https://inspect.aisi.org.uk/tools-standard.html#sec-update-plan).
+- **Compaction**: [`CompactionEdit()`](https://inspect.aisi.org.uk/compaction.html) for context window management.
+
+This default configuration is suitable for most Harbor tasks that require command execution and file manipulation.
+
+## Using Custom Agents
+
+You can provide your own agent or solver implementation using the `--solver` flag.
+
+**Using a custom agent:**
+
+```bash
+inspect eval inspect_harbor/terminal_bench \
+  --solver path/to/custom/agent.py@custom_agent \
+  --model openai/gpt-5
+```
+
+**Using the Inspect SWE agent framework:**
+
+First install the required package:
+
+```bash
+pip install inspect-swe
+```
+
+**CLI:**
+
+```bash
+inspect eval inspect_harbor/terminal_bench_sample \
+  --solver inspect_swe/claude_code \
+  --model anthropic/claude-sonnet-4-5
+```
+
+**Python API:**
+
+```python
+from inspect_ai import eval
+from inspect_harbor import terminal_bench_sample
+from inspect_swe import claude_code
+
+eval(
+    terminal_bench_sample(),
+    solver=claude_code(),
+    model="anthropic/claude-sonnet-4-5"
+)
+```
+
+For more details:
+
+- [Agents documentation](https://inspect.aisi.org.uk/agents.html)
+- [Solvers documentation](https://inspect.aisi.org.uk/solvers.html)
+- [Inspect SWE documentation](https://meridianlabs-ai.github.io/inspect_swe/)
+
+## Oracle Solver
+
+The `oracle()` solver is useful for verifying that a dataset is correctly configured and solvable. It executes the task's reference solution (`solution/solve.sh` script) instead of using a model.
+
+**CLI:**
+
+```bash
+inspect eval inspect_harbor/hello_world \
+  --solver inspect_harbor/oracle
+```
+
+**Python API:**
+
+```python
+from inspect_ai import eval
+from inspect_harbor import hello_world, oracle
+
+eval(hello_world(), solver=oracle())
+```

@@ -9,7 +9,7 @@ import yaml
 from inspect_ai.dataset import Sample
 from inspect_ai.util import ComposeBuild, ComposeConfig, SandboxEnvironmentSpec
 from inspect_ai.util._sandbox.compose import ComposeDeviceReservation
-from inspect_harbor.harbor._converters import (
+from inspect_harbor._harbor.converters import (
     _expand_compose_vars,
     harbor_task_to_sample,
     harbor_to_compose_config,

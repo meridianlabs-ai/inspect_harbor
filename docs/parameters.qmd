@@ -1,0 +1,58 @@
+---
+title: Task Parameters
+llms-description: Reference for the parameters accepted by Harbor task functions.
+tbl-colwidths: [20,30,12,20,18]
+---
+
+Task functions (like `terminal_bench()`, `swe_lancer_diamond()`, etc.) accept the following parameters:
+
+::: {.column-page-right}
+| Parameter | Description | Default | Python Example | CLI Example |
+|-----------|-------------|---------|----------------|-------------|
+| `dataset_task_names` | List of task names to include (supports glob patterns) | `None` | `["aime_60", "aime_61"]` | `'["aime_60"]'` |
+| `dataset_exclude_task_names` | List of task names to exclude (supports glob patterns) | `None` | `["aime_60"]` | `'["aime_60"]'` |
+| `n_tasks` | Maximum number of tasks to run | `None` | `10` | `10` |
+| `overwrite_cache` | Force re-download and overwrite cached tasks | `False` | `True` | `true` |
+| `sandbox_env_name` | Sandbox environment name | `"docker"` | `"modal"` | `"modal"` |
+| `override_cpus` | Override the number of CPUs from `task.toml` | `None` | `4` | `4` |
+| `override_memory_mb` | Override the memory (in MB) from `task.toml` | `None` | `16384` | `16384` |
+| `override_gpus` | Override the number of GPUs from `task.toml` | `None` | `1` | `1` |
+:::
+
+> **Multi-service compose & DinD providers:** Resource overrides are applied only to the **default service** (selected by `x-default: true`, or a service named "default"/"main", or the first service). Sidecar services run without explicit resource limits, within the sandbox's total capacity. For DinD-based sandbox providers (e.g. Daytona) that aggregate per-service resources to size the VM, you can control sandbox-level resources directly via the provider's compose extension (e.g. `x-daytona: { resources: { cpu: 4, memory: 8 } }`) in your `docker-compose.yaml`. See the [Daytona sandbox provider docs](https://github.com/meridianlabs-ai/inspect_sandboxes) for details.
+
+## Example
+
+Here's an example showing how to use multiple parameters together:
+
+**CLI:**
+
+```bash
+inspect eval inspect_harbor/terminal_bench_sample \
+  -T n_tasks=5 \
+  -T overwrite_cache=true \
+  -T override_memory_mb=8192 \
+  --model anthropic/claude-sonnet-4-5
+```
+
+**Python API:**
+
+```python
+from inspect_ai import eval
+from inspect_harbor import terminal_bench_sample
+
+eval(
+    terminal_bench_sample(
+        n_tasks=5,
+        overwrite_cache=True,
+        override_memory_mb=8192,
+    ),
+    model="anthropic/claude-sonnet-4-5"
+)
+```
+
+This example:
+
+- Limits to 5 tasks using `n_tasks`.
+- Forces a fresh download with `overwrite_cache`.
+- Allocates 8GB of memory.
