@@ -30,9 +30,9 @@ def harbor_to_compose_config(
 
     Args:
         harbor_task: The Harbor task to convert.
-        override_cpus: Override the number of CPUs for the environment.
-        override_memory_mb: Override the memory (in MB) for the environment.
-        override_gpus: Override the number of GPUs for the environment.
+        override_cpus: Override the number of CPUs for the default service.
+        override_memory_mb: Override the memory (in MB) for the default service.
+        override_gpus: Override the number of GPUs for the default service.
 
     Returns:
         ComposeConfig: The compose configuration for the task.
@@ -75,17 +75,19 @@ def harbor_to_compose_config(
         compose_dict = yaml.safe_load(raw_yaml)
         compose_config = ComposeConfig(**compose_dict)
 
-        # Apply resource limits and network mode from Harbor config to services
         if compose_config.services:
-            for service in compose_config.services.values():
-                service.cpus = cpus
-                service.mem_limit = f"{memory_mb}m" if memory_mb is not None else None
-                # Harbor's behavior: allow_internet=False forces network
-                # isolation; otherwise don't touch network_mode.
-                if not env_config.allow_internet:
+            _, default_service = _find_default_service(compose_config)
+            default_service.cpus = cpus
+            default_service.mem_limit = (
+                f"{memory_mb}m" if memory_mb is not None else None
+            )
+            if gpu_deploy:
+                default_service.deploy = gpu_deploy
+
+            # Network isolation applies to all services.
+            if not env_config.allow_internet:
+                for service in compose_config.services.values():
                     service.network_mode = "none"
-                if gpu_deploy:
-                    service.deploy = gpu_deploy
 
         return compose_config
     else:
@@ -155,6 +157,21 @@ def harbor_task_to_sample(
             "harbor_config": harbor_task.config.model_dump(),
         },
     )
+
+
+def _find_default_service(config: ComposeConfig) -> tuple[str, ComposeService]:
+    """Find the default service in a compose config.
+
+    Priority: ``x-default: true`` > service named "default" or "main" > first.
+    """
+    for name, svc in config.services.items():
+        if svc.x_default:
+            return name, svc
+    for candidate in ("default", "main"):
+        if candidate in config.services:
+            return candidate, config.services[candidate]
+    name = next(iter(config.services))
+    return name, config.services[name]
 
 
 def _create_gpu_deploy_config(

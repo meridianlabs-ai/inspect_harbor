@@ -169,6 +169,8 @@ Task functions (like `terminal_bench()`, `swe_lancer_diamond()`, etc.) accept th
 | `override_memory_mb` | Override the memory (in MB) from `task.toml` | `None` | `16384` | `16384` |
 | `override_gpus` | Override the number of GPUs from `task.toml` | `None` | `1` | `1` |
 
+> **Multi-service compose & DinD providers:** Resource overrides are applied only to the **default service** (selected by `x-default: true`, or a service named "default"/"main", or the first service). Sidecar services run without explicit resource limits, within the sandbox's total capacity. For DinD-based sandbox providers (e.g. Daytona) that aggregate per-service resources to size the VM, you can control sandbox-level resources directly via the provider's compose extension (e.g. `x-daytona: { resources: { cpu: 4, memory: 8 } }`) in your `docker-compose.yaml`. See the [Daytona sandbox provider docs](https://github.com/meridianlabs-ai/inspect_sandboxes) for details.
+
 ### Example
 
 Here's an example showing how to use multiple parameters together:

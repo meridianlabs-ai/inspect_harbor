@@ -763,6 +763,157 @@ def test_harbor_task_to_sample_passes_overrides(mock_harbor_task: Any):
         assert device.count == 4
 
 
+MULTI_SERVICE_YAML = """\
+services:
+  main:
+    image: python:3.11
+    command: tail -f /dev/null
+  helper:
+    image: redis:7
+"""
+
+
+def _make_multi_service_task(
+    cpus: float = 4,
+    memory_mb: int = 8192,
+    gpus: int = 0,
+    gpu_types: list[str] | None = None,
+    allow_internet: bool = True,
+) -> Mock:
+    mock_task = Mock()
+    mock_task.name = "multi-svc-task"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/task/environment")
+    mock_task.config.environment = Mock()
+    mock_task.config.environment.cpus = cpus
+    mock_task.config.environment.memory_mb = memory_mb
+    mock_task.config.environment.gpus = gpus
+    mock_task.config.environment.gpu_types = gpu_types
+    mock_task.config.environment.allow_internet = allow_internet
+    mock_task.config.verifier.env = {}
+    return mock_task
+
+
+def test_multi_service_resources_only_on_default_service():
+    """Only the default ('main') service gets resource limits."""
+    mock_task = _make_multi_service_task(cpus=4, memory_mb=8192)
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=MULTI_SERVICE_YAML)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    # Default service ("main") gets resources
+    assert result.services["main"].cpus == 4
+    assert result.services["main"].mem_limit == "8192m"
+
+    # Sidecar ("helper") is untouched
+    assert result.services["helper"].cpus is None
+    assert result.services["helper"].mem_limit is None
+
+
+def test_multi_service_overrides_only_on_default_service():
+    """Overrides are applied only to the default service."""
+    mock_task = _make_multi_service_task()
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=MULTI_SERVICE_YAML)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(
+            mock_task, override_cpus=2, override_memory_mb=4096
+        )
+
+    assert result.services["main"].cpus == 2
+    assert result.services["main"].mem_limit == "4096m"
+    assert result.services["helper"].cpus is None
+    assert result.services["helper"].mem_limit is None
+
+
+def test_multi_service_gpu_only_on_default_service():
+    """GPU deploy config is applied only to the default service."""
+    mock_task = _make_multi_service_task(gpus=1, gpu_types=["H100"])
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=MULTI_SERVICE_YAML)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    assert result.services["main"].deploy is not None
+    assert result.services["helper"].deploy is None
+
+
+def test_multi_service_network_isolation_all_services():
+    """Network isolation applies to all services, not just default."""
+    mock_task = _make_multi_service_task(allow_internet=False)
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=MULTI_SERVICE_YAML)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    assert result.services["main"].network_mode == "none"
+    assert result.services["helper"].network_mode == "none"
+
+
+def test_multi_service_x_default_takes_priority():
+    """A service with x-default: true is chosen over name-based matching."""
+    yaml_with_x_default = """\
+services:
+  main:
+    image: python:3.11
+  sidecar:
+    image: redis:7
+    x-default: true
+"""
+    mock_task = _make_multi_service_task(cpus=8, memory_mb=16384)
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=yaml_with_x_default)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    # x-default service gets resources, not "main"
+    assert result.services["sidecar"].cpus == 8
+    assert result.services["sidecar"].mem_limit == "16384m"
+    assert result.services["main"].cpus is None
+    assert result.services["main"].mem_limit is None
+
+
+def test_multi_service_first_service_fallback():
+    """When no service is named 'default'/'main' or has x-default, first wins."""
+    yaml_no_default = """\
+services:
+  app:
+    image: python:3.11
+  db:
+    image: postgres:16
+"""
+    mock_task = _make_multi_service_task(cpus=2, memory_mb=8192)
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=yaml_no_default)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    # First service gets resources
+    assert result.services["app"].cpus == 2
+    assert result.services["app"].mem_limit == "8192m"
+    assert result.services["db"].cpus is None
+    assert result.services["db"].mem_limit is None
+
+
 def test_expand_compose_vars_basic():
     """Test that ${VAR} references are expanded in compose YAML."""
     mock_task = Mock()
