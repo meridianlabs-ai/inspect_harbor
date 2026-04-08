@@ -8,7 +8,7 @@ Registry: https://raw.githubusercontent.com/laude-institute/harbor/refs/heads/ma
 
 from inspect_ai import Task, task
 
-from inspect_harbor._harbor._task import harbor as _harbor_base
+from inspect_harbor._harbor.task import harbor as _harbor_base
 
 
 @task
@@ -3115,7 +3115,7 @@ def satbench(
 
 
 @task
-def scale_ai/swe_atlas_qna_1_0(
+def swe_atlas_qna_1_0(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
     n_tasks: int | None = None,
@@ -3144,7 +3144,7 @@ def scale_ai/swe_atlas_qna_1_0(
 
 
 @task
-def scale_ai/swe_atlas_qna(
+def swe_atlas_qna(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
     n_tasks: int | None = None,
@@ -3173,7 +3173,7 @@ def scale_ai/swe_atlas_qna(
 
 
 @task
-def scale_ai/swe_atlas_tw_1_0(
+def swe_atlas_tw_1_0(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
     n_tasks: int | None = None,
@@ -3202,7 +3202,7 @@ def scale_ai/swe_atlas_tw_1_0(
 
 
 @task
-def scale_ai/swe_atlas_tw(
+def swe_atlas_tw(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
     n_tasks: int | None = None,
@@ -4388,4 +4388,3 @@ def vmax_tasks(
         override_memory_mb=override_memory_mb,
         override_gpus=override_gpus,
     )
-
