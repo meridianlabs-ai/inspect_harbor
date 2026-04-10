@@ -40,11 +40,11 @@ async def test_oracle_executes_solution_script():
 
     with (
         patch(
-            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
         ),
-        patch("inspect_harbor._harbor._solver.sandbox", return_value=mock_sandbox),
+        patch("inspect_harbor._harbor.solver.sandbox", return_value=mock_sandbox),
         patch(
-            "inspect_harbor._harbor._solver.copy_directory_to_sandbox",
+            "inspect_harbor._harbor.solver.copy_directory_to_sandbox",
             new_callable=AsyncMock,
         ) as mock_copy,
         patch("pathlib.Path.exists", return_value=True),
@@ -81,11 +81,11 @@ async def test_oracle_with_environment_variables():
 
     with (
         patch(
-            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
         ),
-        patch("inspect_harbor._harbor._solver.sandbox", return_value=mock_sandbox),
+        patch("inspect_harbor._harbor.solver.sandbox", return_value=mock_sandbox),
         patch(
-            "inspect_harbor._harbor._solver.copy_directory_to_sandbox",
+            "inspect_harbor._harbor.solver.copy_directory_to_sandbox",
             new_callable=AsyncMock,
         ),
         patch("pathlib.Path.exists", return_value=True),
@@ -135,11 +135,11 @@ async def test_oracle_resolves_env_var_templates(monkeypatch: pytest.MonkeyPatch
 
     with (
         patch(
-            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
         ),
-        patch("inspect_harbor._harbor._solver.sandbox", return_value=mock_sandbox),
+        patch("inspect_harbor._harbor.solver.sandbox", return_value=mock_sandbox),
         patch(
-            "inspect_harbor._harbor._solver.copy_directory_to_sandbox",
+            "inspect_harbor._harbor.solver.copy_directory_to_sandbox",
             new_callable=AsyncMock,
         ),
         patch("pathlib.Path.exists", return_value=True),
@@ -191,11 +191,11 @@ async def test_oracle_with_nonzero_exit_code():
 
     with (
         patch(
-            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
         ),
-        patch("inspect_harbor._harbor._solver.sandbox", return_value=mock_sandbox),
+        patch("inspect_harbor._harbor.solver.sandbox", return_value=mock_sandbox),
         patch(
-            "inspect_harbor._harbor._solver.copy_directory_to_sandbox",
+            "inspect_harbor._harbor.solver.copy_directory_to_sandbox",
             new_callable=AsyncMock,
         ),
         patch("pathlib.Path.exists", return_value=True),
@@ -233,11 +233,11 @@ async def test_oracle_with_relative_solve_path():
 
     with (
         patch(
-            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
         ),
-        patch("inspect_harbor._harbor._solver.sandbox", return_value=mock_sandbox),
+        patch("inspect_harbor._harbor.solver.sandbox", return_value=mock_sandbox),
         patch(
-            "inspect_harbor._harbor._solver.copy_directory_to_sandbox",
+            "inspect_harbor._harbor.solver.copy_directory_to_sandbox",
             new_callable=AsyncMock,
         ),
         patch("pathlib.Path.exists", return_value=True),
@@ -265,7 +265,7 @@ async def test_copy_directory_to_sandbox():
         mock_sandbox.write_file = AsyncMock()
 
         with patch(
-            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
         ):
             await copy_directory_to_sandbox(str(tmp_path), "/test")
 
@@ -301,7 +301,7 @@ async def test_copy_directory_with_binary_files_to_sandbox():
         mock_sandbox.write_file = AsyncMock()
 
         with patch(
-            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
         ):
             await copy_directory_to_sandbox(str(tmp_path), "/solution")
 
@@ -405,7 +405,7 @@ async def test_oracle_solve_path_not_relative_to_solution_dir():
     mock_sandbox.write_file = AsyncMock()
 
     with (
-        patch("inspect_harbor._harbor._solver.sandbox", return_value=mock_sandbox),
+        patch("inspect_harbor._harbor.solver.sandbox", return_value=mock_sandbox),
         patch("pathlib.Path.exists", return_value=True),
         pytest.raises(
             CopySolutionDirError,
@@ -450,11 +450,11 @@ async def test_oracle_cleans_up_env_vars_after_execution():
 
     with (
         patch(
-            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
         ),
-        patch("inspect_harbor._harbor._solver.sandbox", return_value=mock_sandbox),
+        patch("inspect_harbor._harbor.solver.sandbox", return_value=mock_sandbox),
         patch(
-            "inspect_harbor._harbor._solver.copy_directory_to_sandbox",
+            "inspect_harbor._harbor.solver.copy_directory_to_sandbox",
             new_callable=AsyncMock,
         ),
         patch("pathlib.Path.exists", return_value=True),
@@ -504,11 +504,11 @@ async def test_oracle_no_env_cleanup_when_no_env_vars():
 
     with (
         patch(
-            "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
         ),
-        patch("inspect_harbor._harbor._solver.sandbox", return_value=mock_sandbox),
+        patch("inspect_harbor._harbor.solver.sandbox", return_value=mock_sandbox),
         patch(
-            "inspect_harbor._harbor._solver.copy_directory_to_sandbox",
+            "inspect_harbor._harbor.solver.copy_directory_to_sandbox",
             new_callable=AsyncMock,
         ),
         patch("pathlib.Path.exists", return_value=True),
@@ -530,7 +530,7 @@ async def test_cleanup_sandbox_env_vars_unit():
     mock_sandbox.exec = AsyncMock(return_value=mock_exec_result)
 
     with patch(
-        "inspect_harbor._harbor._sandbox_utils.sandbox", return_value=mock_sandbox
+        "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
     ):
         await cleanup_sandbox_env_vars(["VAR1", "VAR2", "VAR3"])
 
