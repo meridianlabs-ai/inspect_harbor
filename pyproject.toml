@@ -40,6 +40,15 @@ dev = [
     "pytest-cov",
     "ruff",
     "types-PyYAML",
+    {include-group = "doc"},
+]
+doc = [
+    "quarto-cli>=1.9.36",
+    "jupyter",
+    "panflute",
+    "markdown",
+    "griffe>=2",
+    "pyyaml"
 ]
 
 [tool.hatch.version]

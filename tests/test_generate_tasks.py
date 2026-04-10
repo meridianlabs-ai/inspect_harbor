@@ -151,7 +151,7 @@ def test_generate_tasks_includes_required_imports(
     content = generate_tasks_content(mock_registry_data)
 
     assert "from inspect_ai import Task, task" in content
-    assert "from inspect_harbor.harbor._task import harbor as _harbor_base" in content
+    assert "from inspect_harbor._harbor._task import harbor as _harbor_base" in content
 
 
 def test_generate_tasks_includes_task_decorator(

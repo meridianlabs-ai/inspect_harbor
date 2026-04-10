@@ -1,0 +1,87 @@
+---
+title: Advanced
+llms-description: Generic harbor() interface, custom registries, loading from git or local paths, and cache management.
+tbl-colwidths: [20,30,12,20,18]
+reference: inspect_harbor
+---
+
+## Generic Harbor Interface
+
+For advanced use cases, you can use the generic `harbor()` interface directly. This provides access to all task loading options including custom registries, git repositories, and local paths.
+
+### Harbor Interface Parameters {reference="harbor"}
+
+
+
+> **Note:** These are task-specific parameters passed with `-T`. For additional `inspect eval` command-line flags (like `--model`, `--message-limit`, `--epochs`, `--fail-on-error`, `--log-dir`, `--log-level`, `--max-tasks`, etc.), see the [Inspect eval CLI reference](https://inspect.aisi.org.uk/reference/inspect_eval.html) or [Python API reference](https://inspect.aisi.org.uk/reference/inspect_ai.html#eval).
+
+### Parameter Combinations
+
+There are four primary patterns for loading Harbor tasks:
+
+| Pattern | Required Parameters | Optional Parameters |
+|---------|---------------------|---------------------|
+| **Registry Dataset** | `dataset_name_version` | `registry_url` or `registry_path`, `dataset_task_names`, `dataset_exclude_task_names`, `n_tasks`, `overwrite_cache` |
+| **Git Task** | `path`, `task_git_url` | `task_git_commit_id`, `overwrite_cache` |
+| **Local Task** | `path` | `disable_verification` |
+| **Local Dataset** | `path` | `dataset_task_names`, `dataset_exclude_task_names`, `n_tasks`, `disable_verification` |
+
+## Custom Registries
+
+You can use custom registries for private or organization-specific datasets.
+
+**Remote registry:**
+
+```bash
+inspect eval inspect_harbor/harbor \
+  -T dataset_name_version="my_dataset@1.0" \
+  -T registry_url="https://github.com/myorg/registry.json" \
+  --model openai/gpt-5-mini
+```
+
+**Local registry:**
+
+```bash
+inspect eval inspect_harbor/harbor \
+  -T dataset_name_version="my_dataset@1.0" \
+  -T registry_path="/path/to/local/registry.json" \
+  --model openai/gpt-5-mini
+```
+
+## Loading from Git Repositories
+
+You can load tasks directly from git repositories:
+
+```bash
+inspect eval inspect_harbor/harbor \
+  -T path="datasets/aime/aime_6" \
+  -T task_git_url="https://github.com/laude-institute/harbor-datasets.git" \
+  -T task_git_commit_id="414014c23ce4d32128073d12b057252c918cccf4" \
+  --model openai/gpt-5-mini
+```
+
+## Loading from Local Paths
+
+You can run tasks from your local filesystem:
+
+```bash
+inspect eval inspect_harbor/harbor \
+  -T path="/path/to/task_or_dataset/directory" \
+  --model openai/gpt-5
+```
+
+## Cache Management
+
+Downloaded tasks are cached locally in `~/.harbor/cache/`. To force a fresh download:
+
+```bash
+inspect eval inspect_harbor/aime_1_0 \
+  -T overwrite_cache=true \
+  --model openai/gpt-5
+```
+
+To manually clear the entire cache:
+
+```bash
+rm -rf ~/.harbor/cache/
+```

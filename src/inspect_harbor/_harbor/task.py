@@ -14,8 +14,8 @@ from inspect_ai.agent import react
 from inspect_ai.model import CompactionEdit
 from inspect_ai.tool import bash, python, update_plan
 
-from inspect_harbor.harbor._converters import harbor_task_to_sample
-from inspect_harbor.harbor._scorer import harbor_scorer
+from inspect_harbor._harbor.converters import harbor_task_to_sample
+from inspect_harbor._harbor.scorer import harbor_scorer
 
 
 @task

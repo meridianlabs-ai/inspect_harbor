@@ -1,0 +1,43 @@
+---
+title: Datasets
+llms-description: Available Harbor datasets, dataset versioning, and known issues.
+---
+
+Inspect Harbor provides task functions for each dataset in the [Harbor registry](https://harborframework.com/registry). You can import and use them directly:
+
+```python
+from inspect_harbor import (
+    terminal_bench,
+    swebenchpro,
+    swe_lancer_diamond,
+    swebench_verified,
+    # ... and many more
+)
+```
+
+For a complete list of available datasets and versions (including swebenchpro, terminal-bench-pro, replicationbench, compilebench, and 40+ more), see the [Registry](registry.qmd).
+
+## Dataset Versioning
+
+Each dataset has both **unversioned** and **versioned** task functions:
+
+- **Unversioned functions** (e.g. `terminal_bench()`) automatically use the latest version available in the registry.
+- **Versioned functions** (e.g. `terminal_bench_2_0()`) pin to a specific version for reproducibility.
+
+**Example:**
+
+```python
+from inspect_harbor import terminal_bench, terminal_bench_2_0
+
+# Uses latest version (currently 2.0)
+eval(terminal_bench(), model="openai/gpt-5-mini")
+
+# Pins to version 2.0 explicitly
+eval(terminal_bench_2_0(), model="openai/gpt-5-mini")
+```
+
+## Known Dataset Issues
+
+| Dataset | Issue | Status |
+|---------|-------|--------|
+| ds_1000 | Multiple configuration issues preventing execution (`pull access denied for ds1000`) | [harbor-datasets#103](https://github.com/laude-institute/harbor-datasets/issues/103) |

@@ -8,7 +8,7 @@ from inspect_ai.scorer import Score, Scorer, Target, accuracy, scorer, stderr
 from inspect_ai.solver import TaskState
 from inspect_ai.util import sandbox
 
-from inspect_harbor.harbor._sandbox_utils import (
+from inspect_harbor._harbor.sandbox_utils import (
     cleanup_sandbox_directories,
     cleanup_sandbox_env_vars,
     copy_directory_to_sandbox,

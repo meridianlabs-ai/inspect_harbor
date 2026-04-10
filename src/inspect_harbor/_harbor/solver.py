@@ -5,7 +5,7 @@ from pathlib import Path
 from inspect_ai.solver import Generate, Solver, TaskState, solver
 from inspect_ai.util import sandbox
 
-from inspect_harbor.harbor._sandbox_utils import (
+from inspect_harbor._harbor.sandbox_utils import (
     cleanup_sandbox_env_vars,
     copy_directory_to_sandbox,
     resolve_env_vars,

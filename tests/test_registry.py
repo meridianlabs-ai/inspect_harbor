@@ -8,7 +8,7 @@ import pytest
 
 def _get_generated_tasks():
     """Helper to get only generated task functions (not imports)."""
-    import inspect_harbor.tasks as tasks
+    import inspect_harbor._tasks as tasks
 
     return [
         getattr(tasks, name)
@@ -16,7 +16,7 @@ def _get_generated_tasks():
         if not name.startswith("_")
         and callable(getattr(tasks, name))
         and hasattr(getattr(tasks, name), "__module__")
-        and getattr(tasks, name).__module__ == "inspect_harbor.tasks"
+        and getattr(tasks, name).__module__ == "inspect_harbor._tasks"
     ]
 
 
@@ -85,7 +85,7 @@ def test_task_calls_harbor_base():
     task_funcs = _get_generated_tasks()
     first_task = task_funcs[0]
 
-    with patch("inspect_harbor.tasks._harbor_base") as mock_harbor:
+    with patch("inspect_harbor._tasks._harbor_base") as mock_harbor:
         mock_harbor.return_value = Mock()
 
         # Call the task with some parameters
@@ -106,7 +106,7 @@ def test_task_parameters_passed_through():
     task_funcs = _get_generated_tasks()
     first_task = task_funcs[0]
 
-    with patch("inspect_harbor.tasks._harbor_base") as mock_harbor:
+    with patch("inspect_harbor._tasks._harbor_base") as mock_harbor:
         mock_harbor.return_value = Mock()
 
         # Call with all parameters
