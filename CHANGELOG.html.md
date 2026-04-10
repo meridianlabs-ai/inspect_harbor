@@ -1,0 +1,148 @@
+# Changelog
+
+## [0.4.16](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.15...v0.4.16) (2026-04-08)
+
+### Bug Fixes
+
+- apply resource overrides only to default service ([\#56](https://github.com/meridianlabs-ai/inspect_harbor/issues/56)) ([ea5e86f](https://github.com/meridianlabs-ai/inspect_harbor/commit/ea5e86f5676c80f114969c555df68ff182ba953d))
+
+## [0.4.15](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.14...v0.4.15) (2026-04-01)
+
+### Bug Fixes
+
+- pin harbor\<0.3.0 and bump inspect-ai\>=0.3.201 ([\#52](https://github.com/meridianlabs-ai/inspect_harbor/issues/52)) ([0cb0a46](https://github.com/meridianlabs-ai/inspect_harbor/commit/0cb0a4682af660990b7ac73fc2a8ce627f682479))
+
+## [0.4.14](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.13...v0.4.14) (2026-03-30)
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#50](https://github.com/meridianlabs-ai/inspect_harbor/issues/50)) ([5f49ac9](https://github.com/meridianlabs-ai/inspect_harbor/commit/5f49ac99f33c88ce89ed791b9dd3e7ad992c4347))
+
+## [0.4.13](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.12...v0.4.13) (2026-03-25)
+
+### Bug Fixes
+
+- pin litellm\<1.82.7 to block compromised versions ([\#48](https://github.com/meridianlabs-ai/inspect_harbor/issues/48)) ([5e7328b](https://github.com/meridianlabs-ai/inspect_harbor/commit/5e7328b73601dad3e1f77e944b23dfbaf20609ac))
+- update Harbor registry tasks ([\#47](https://github.com/meridianlabs-ai/inspect_harbor/issues/47)) ([10752d5](https://github.com/meridianlabs-ai/inspect_harbor/commit/10752d53c39d74b0d9f075bfa7ffc4eb71ec9020))
+
+## [0.4.12](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.11...v0.4.12) (2026-03-24)
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#45](https://github.com/meridianlabs-ai/inspect_harbor/issues/45)) ([dc25090](https://github.com/meridianlabs-ai/inspect_harbor/commit/dc2509029c67dd389971a7db826c303e484358c4))
+
+## [0.4.11](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.10...v0.4.11) (2026-03-18)
+
+### Bug Fixes
+
+- enforce network mode & handle variable expansion ([\#43](https://github.com/meridianlabs-ai/inspect_harbor/issues/43)) ([3858da2](https://github.com/meridianlabs-ai/inspect_harbor/commit/3858da2ebc6bee99e2c5211af62156344d376e52))
+
+## [0.4.10](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.9...v0.4.10) (2026-03-16)
+
+### Bug Fixes
+
+- enforce allow_internet network mode in compose-file path ([\#42](https://github.com/meridianlabs-ai/inspect_harbor/issues/42)) ([14bdc24](https://github.com/meridianlabs-ai/inspect_harbor/commit/14bdc24750b646eb98a55ad619631546d9a0dbd2))
+- update Harbor registry tasks ([\#40](https://github.com/meridianlabs-ai/inspect_harbor/issues/40)) ([290c0ca](https://github.com/meridianlabs-ai/inspect_harbor/commit/290c0cad0c158b16a0d09840f4f59f2aa4ef7efa))
+
+## [0.4.9](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.8...v0.4.9) (2026-03-11)
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#38](https://github.com/meridianlabs-ai/inspect_harbor/issues/38)) ([47dd23f](https://github.com/meridianlabs-ai/inspect_harbor/commit/47dd23fc45be4d129a49262c57f41aa402f4859e))
+
+## [0.4.8](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.7...v0.4.8) (2026-03-05)
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#36](https://github.com/meridianlabs-ai/inspect_harbor/issues/36)) ([ec31a18](https://github.com/meridianlabs-ai/inspect_harbor/commit/ec31a18c970b6d4ced2c12d2e6f903d7775a333f))
+
+## [0.4.7](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.6...v0.4.7) (2026-03-03)
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#34](https://github.com/meridianlabs-ai/inspect_harbor/issues/34)) ([e810779](https://github.com/meridianlabs-ai/inspect_harbor/commit/e810779be81fccce70bbfb120cb54feb50a5e159))
+
+## [0.4.6](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.5...v0.4.6) (2026-03-02)
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#32](https://github.com/meridianlabs-ai/inspect_harbor/issues/32)) ([fd04b4a](https://github.com/meridianlabs-ai/inspect_harbor/commit/fd04b4aa68969701c4ab4d67001e9b0db4e7b512))
+
+## [0.4.5](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.4...v0.4.5) (2026-02-24)
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#29](https://github.com/meridianlabs-ai/inspect_harbor/issues/29)) ([9252db7](https://github.com/meridianlabs-ai/inspect_harbor/commit/9252db775f65cb41e5083ee1c4b89745f0972353))
+
+## [0.4.4](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.3...v0.4.4) (2026-02-23)
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#27](https://github.com/meridianlabs-ai/inspect_harbor/issues/27)) ([663915c](https://github.com/meridianlabs-ai/inspect_harbor/commit/663915c903a2ac64a78354c2d10c1a0c3fff8062))
+
+## [0.4.3](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.2...v0.4.3) (2026-02-18)
+
+### Bug Fixes
+
+- Update Harbor Registry Tasks ([\#25](https://github.com/meridianlabs-ai/inspect_harbor/issues/25)) ([7c8e394](https://github.com/meridianlabs-ai/inspect_harbor/commit/7c8e394a983e0c3bf48111167481ef23ad359c75))
+
+## [0.4.2](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.1...v0.4.2) (2026-02-14)
+
+### Documentation
+
+- add credits section to README ([\#22](https://github.com/meridianlabs-ai/inspect_harbor/issues/22)) ([2621ac7](https://github.com/meridianlabs-ai/inspect_harbor/commit/2621ac7245cef755db93c3856ddc928292d4fb70))
+
+## [0.4.1](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.0...v0.4.1) (2026-02-12)
+
+### Documentation
+
+- improve REGISTRY.md table formatting and highlight featured datasets ([\#20](https://github.com/meridianlabs-ai/inspect_harbor/issues/20)) ([8d995aa](https://github.com/meridianlabs-ai/inspect_harbor/commit/8d995aabba94ac59e6db234584645e915762930a))
+
+## [0.4.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.3.0...v0.4.0) (2026-02-12)
+
+### Features
+
+- add autogenerated REGISTRY.md with dataset catalog ([\#19](https://github.com/meridianlabs-ai/inspect_harbor/issues/19)) ([f643583](https://github.com/meridianlabs-ai/inspect_harbor/commit/f643583b6d116ba6ff1d4dbd5148202054cf6ea1))
+- add static task generation from Harbor registry ([\#14](https://github.com/meridianlabs-ai/inspect_harbor/issues/14)) ([801fcb4](https://github.com/meridianlabs-ai/inspect_harbor/commit/801fcb4b024381f3f8b15128ee9e0697e2458e5b))
+
+### Bug Fixes
+
+- add RELEASE_PLEASE_TOKEN to update-registry workflow ([\#16](https://github.com/meridianlabs-ai/inspect_harbor/issues/16)) ([3cd9ebc](https://github.com/meridianlabs-ai/inspect_harbor/commit/3cd9ebc34db41bd495c61e7d22e544b295084d94))
+- remove timestamp from generated tasks ([\#18](https://github.com/meridianlabs-ai/inspect_harbor/issues/18)) ([08ffc96](https://github.com/meridianlabs-ai/inspect_harbor/commit/08ffc962d75bd2131118790e1bc030d820a1813a))
+
+## [0.3.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.2.0...v0.3.0) (2026-02-11)
+
+### Features
+
+- add resource override parameters to harbor() task ([\#11](https://github.com/meridianlabs-ai/inspect_harbor/issues/11)) ([e765c4c](https://github.com/meridianlabs-ai/inspect_harbor/commit/e765c4c26952773a8b10817f3f53ebc43e7321c8))
+
+## [0.2.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.1.1...v0.2.0) (2026-02-10)
+
+### Features
+
+- simplify harbor() API by removing solver parameter ([\#7](https://github.com/meridianlabs-ai/inspect_harbor/issues/7)) ([37ef434](https://github.com/meridianlabs-ai/inspect_harbor/commit/37ef434a522f77366ca9b94f23425ef08cf8bc0a))
+
+### Bug Fixes
+
+- add RELEASE_PLEASE_TOKEN to release workflow ([\#8](https://github.com/meridianlabs-ai/inspect_harbor/issues/8)) ([f99615c](https://github.com/meridianlabs-ai/inspect_harbor/commit/f99615c187206f36d0f746d5dfdd21f77589a970))
+
+## 0.1.0 (2026-02-10)
+
+### Features
+
+- Initial release of inspect_harbor
+- Inspect AI interface to Harbor tasks
+- Support for Harbor task execution and evaluation
+- Integration with Inspect AI evaluation registry
+
+### Documentation
+
+- Add comprehensive README with usage examples
+- Add project documentation and setup instructions
+
+### Miscellaneous
+
+- Set up CI/CD with GitHub Actions
+- Add test suite with pytest
+- Configure code quality tools (ruff, pyright)
+- Add pre-commit hooks

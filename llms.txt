@@ -1,0 +1,19 @@
+# Inspect Harbor
+
+> Inspect AI interface to Harbor tasks
+
+## Getting Started
+
+- [Getting Started](https://meridianlabs-ai.github.io/inspect_harbor/index.html.md): Overview, installation, prerequisites, and quick start for Inspect Harbor.
+
+## Using Harbor
+
+- [Datasets](https://meridianlabs-ai.github.io/inspect_harbor/datasets.html.md): Available Harbor datasets, dataset versioning, and known issues.
+- [Task Parameters](https://meridianlabs-ai.github.io/inspect_harbor/parameters.html.md): Reference for the parameters accepted by Harbor task functions.
+- [Agents and Solvers](https://meridianlabs-ai.github.io/inspect_harbor/agents.html.md): Default agent scaffold, custom agents, and the Oracle solver for verifying Harbor datasets.
+- [Task Format](https://meridianlabs-ai.github.io/inspect_harbor/tasks.html.md): The Harbor task file structure and how Harbor concepts map to Inspect AI concepts, including LLM judge verification.
+- [Advanced](https://meridianlabs-ai.github.io/inspect_harbor/advanced.html.md): Generic harbor() interface, custom registries, loading from git or local paths, and cache management.
+
+## Registry
+
+- [Registry](https://meridianlabs-ai.github.io/inspect_harbor/registry.html.md): Complete catalog of Harbor datasets available as Inspect tasks.
