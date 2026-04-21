@@ -1,4 +1,4 @@
-# Task Parameters
+# Task Parameters – Inspect Harbor
 
 Task functions (like `terminal_bench()`, `swe_lancer_diamond()`, etc.) accept the following parameters:
 

@@ -1,4 +1,4 @@
-# Advanced
+# Advanced – Inspect Harbor
 
 ## Generic Harbor Interface
 
@@ -8,7 +8,7 @@ For advanced use cases, you can use the generic `harbor()` interface directly. T
 
 Harbor task loader for Inspect AI.
 
-[Source](https://github.com/meridianlabs-ai/inspect_harbor/blob/6d989790c54a8e7af815a2ac29e677e848657cba/src/inspect_harbor/_harbor/task.py#L21)
+[Source](https://github.com/meridianlabs-ai/inspect_harbor/blob/cc002285fe4e5fe03e73ef098cfd8ae833c8f3df/src/inspect_harbor/_harbor/task.py#L21)
 
 ``` python
 @task

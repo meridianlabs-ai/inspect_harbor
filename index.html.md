@@ -26,7 +26,7 @@ Before running Harbor tasks, ensure you have:
 
 ## Quick Start
 
-The fastest way to get started is to run a dataset from the [Harbor registry](registry.html.md).
+The fastest way to get started is to run a dataset from the [Harbor registry](./registry.html.md).
 
 **CLI:**
 
@@ -53,10 +53,10 @@ eval(terminal_bench_sample(), model="openai/gpt-5")
 
 ### What this does
 
-- Loads the dataset from the [Harbor registry](registry.html.md).
+- Loads the dataset from the [Harbor registry](./registry.html.md).
 - Downloads and caches all tasks in the dataset.
-- Solves the tasks with the [default ReAct agent](agents.html.md#default-agent-scaffold) scaffold.
+- Solves the tasks with the [default ReAct agent](./agents.html.md#default-agent-scaffold) scaffold.
 - Executes in a [Docker sandbox environment](https://inspect.aisi.org.uk/sandboxing.html#sec-docker-configuration).
 - Stores results in `./logs`.
 
-See the [Registry](registry.html.md) for the full list of available datasets, and the [Using Harbor](datasets.html.md) guides for more detail on datasets, task parameters, agents, and advanced features.
+See the [Registry](./registry.html.md) for the full list of available datasets, and the [Using Harbor](./datasets.html.md) guides for more detail on datasets, task parameters, agents, and advanced features.

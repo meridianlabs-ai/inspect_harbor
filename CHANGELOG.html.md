@@ -1,4 +1,4 @@
-# Changelog
+# changelog – Inspect Harbor
 
 ## [0.4.16](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.15...v0.4.16) (2026-04-08)
 

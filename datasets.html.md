@@ -1,4 +1,4 @@
-# Datasets
+# Datasets – Inspect Harbor
 
 Inspect Harbor provides task functions for each dataset in the [Harbor registry](https://harborframework.com/registry). You can import and use them directly:
 
@@ -12,7 +12,7 @@ from inspect_harbor import (
 )
 ```
 
-For a complete list of available datasets and versions (including swebenchpro, terminal-bench-pro, replicationbench, compilebench, and 40+ more), see the [Registry](registry.html.md).
+For a complete list of available datasets and versions (including swebenchpro, terminal-bench-pro, replicationbench, compilebench, and 40+ more), see the [Registry](./registry.html.md).
 
 ## Dataset Versioning
 
