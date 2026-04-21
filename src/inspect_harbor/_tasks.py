@@ -26,6 +26,7 @@ def ade_bench_1_0(
 
     Dataset: ade-bench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/dbt-labs/ade-bench/latest
     """
     return _harbor_base(
         dataset_name_version="ade-bench@1.0",
@@ -55,6 +56,7 @@ def ade_bench(
 
     Dataset: ade-bench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/dbt-labs/ade-bench/latest
     """
     return _harbor_base(
         dataset_name_version="ade-bench",
@@ -84,6 +86,7 @@ def aider_polyglot_1_0(
 
     Dataset: aider-polyglot@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/aider/aider-polyglot/latest
     """
     return _harbor_base(
         dataset_name_version="aider-polyglot@1.0",
@@ -113,6 +116,7 @@ def aider_polyglot(
 
     Dataset: aider-polyglot
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/aider/aider-polyglot/latest
     """
     return _harbor_base(
         dataset_name_version="aider-polyglot",
@@ -142,6 +146,7 @@ def aime_1_0(
 
     Dataset: aime@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/aime/aime/latest
     """
     return _harbor_base(
         dataset_name_version="aime@1.0",
@@ -171,6 +176,7 @@ def aime(
 
     Dataset: aime
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/aime/aime/latest
     """
     return _harbor_base(
         dataset_name_version="aime",
@@ -200,6 +206,7 @@ def algotune_1_0(
 
     Dataset: algotune@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/algotune/algotune/latest
     """
     return _harbor_base(
         dataset_name_version="algotune@1.0",
@@ -229,6 +236,7 @@ def algotune(
 
     Dataset: algotune
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/algotune/algotune/latest
     """
     return _harbor_base(
         dataset_name_version="algotune",
@@ -258,6 +266,7 @@ def arc_agi_2_1_0(
 
     Dataset: arc_agi_2@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/arcprize/arc-agi-2/latest
     """
     return _harbor_base(
         dataset_name_version="arc_agi_2@1.0",
@@ -287,6 +296,7 @@ def arc_agi_2(
 
     Dataset: arc_agi_2
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/arcprize/arc-agi-2/latest
     """
     return _harbor_base(
         dataset_name_version="arc_agi_2",
@@ -316,6 +326,7 @@ def autocodebench_lite200(
 
     Dataset: autocodebench@lite200
     Version: lite200
+    Harbor URL: https://registry.harborframework.com/datasets/tencent/autocodebench/latest
     """
     return _harbor_base(
         dataset_name_version="autocodebench@lite200",
@@ -345,6 +356,7 @@ def autocodebench(
 
     Dataset: autocodebench
     Version: Latest available (lite200 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/tencent/autocodebench/latest
     """
     return _harbor_base(
         dataset_name_version="autocodebench",
@@ -374,6 +386,7 @@ def bfcl_1_0(
 
     Dataset: bfcl@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/gorilla/bfcl/latest
     """
     return _harbor_base(
         dataset_name_version="bfcl@1.0",
@@ -403,6 +416,7 @@ def bfcl(
 
     Dataset: bfcl
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/gorilla/bfcl/latest
     """
     return _harbor_base(
         dataset_name_version="bfcl",
@@ -432,6 +446,7 @@ def bfcl_parity_1_0(
 
     Dataset: bfcl_parity@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=bfcl_parity
     """
     return _harbor_base(
         dataset_name_version="bfcl_parity@1.0",
@@ -461,6 +476,7 @@ def bfcl_parity(
 
     Dataset: bfcl_parity
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=bfcl_parity
     """
     return _harbor_base(
         dataset_name_version="bfcl_parity",
@@ -490,6 +506,7 @@ def bigcodebench_hard_complete_1_0_0(
 
     Dataset: bigcodebench-hard-complete@1.0.0
     Version: 1.0.0
+    Harbor URL: https://registry.harborframework.com/datasets/bigcode/bigcodebench-hard-complete/latest
     """
     return _harbor_base(
         dataset_name_version="bigcodebench-hard-complete@1.0.0",
@@ -519,6 +536,7 @@ def bigcodebench_hard_complete(
 
     Dataset: bigcodebench-hard-complete
     Version: Latest available (1.0.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/bigcode/bigcodebench-hard-complete/latest
     """
     return _harbor_base(
         dataset_name_version="bigcodebench-hard-complete",
@@ -548,6 +566,7 @@ def binary_audit_1_0(
 
     Dataset: binary-audit@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/binary-audit/binary-audit/latest
     """
     return _harbor_base(
         dataset_name_version="binary-audit@1.0",
@@ -577,6 +596,7 @@ def binary_audit(
 
     Dataset: binary-audit
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/binary-audit/binary-audit/latest
     """
     return _harbor_base(
         dataset_name_version="binary-audit",
@@ -606,6 +626,7 @@ def bird_bench_parity(
 
     Dataset: bird-bench@parity
     Version: parity
+    Harbor URL: https://registry.harborframework.com/datasets?q=bird-bench
     """
     return _harbor_base(
         dataset_name_version="bird-bench@parity",
@@ -635,6 +656,7 @@ def bird_bench(
 
     Dataset: bird-bench
     Version: Latest available (parity when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=bird-bench
     """
     return _harbor_base(
         dataset_name_version="bird-bench",
@@ -664,6 +686,7 @@ def bixbench_1_5(
 
     Dataset: bixbench@1.5
     Version: 1.5
+    Harbor URL: https://registry.harborframework.com/datasets/futurehouse/bixbench/latest
     """
     return _harbor_base(
         dataset_name_version="bixbench@1.5",
@@ -693,6 +716,7 @@ def bixbench(
 
     Dataset: bixbench
     Version: Latest available (1.5 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/futurehouse/bixbench/latest
     """
     return _harbor_base(
         dataset_name_version="bixbench",
@@ -722,6 +746,7 @@ def bixbench_cli_1_5(
 
     Dataset: bixbench-cli@1.5
     Version: 1.5
+    Harbor URL: https://registry.harborframework.com/datasets/futurehouse/bixbench-cli/latest
     """
     return _harbor_base(
         dataset_name_version="bixbench-cli@1.5",
@@ -751,6 +776,7 @@ def bixbench_cli(
 
     Dataset: bixbench-cli
     Version: Latest available (1.5 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/futurehouse/bixbench-cli/latest
     """
     return _harbor_base(
         dataset_name_version="bixbench-cli",
@@ -780,6 +806,7 @@ def code_contests_1_0(
 
     Dataset: code-contests@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=code-contests
     """
     return _harbor_base(
         dataset_name_version="code-contests@1.0",
@@ -809,6 +836,7 @@ def code_contests(
 
     Dataset: code-contests
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=code-contests
     """
     return _harbor_base(
         dataset_name_version="code-contests",
@@ -838,6 +866,7 @@ def codepde_1_0(
 
     Dataset: codepde@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/codepde/codepde/latest
     """
     return _harbor_base(
         dataset_name_version="codepde@1.0",
@@ -867,6 +896,7 @@ def codepde(
 
     Dataset: codepde
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/codepde/codepde/latest
     """
     return _harbor_base(
         dataset_name_version="codepde",
@@ -896,6 +926,7 @@ def compilebench_1_0(
 
     Dataset: compilebench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/quesma/compilebench/latest
     """
     return _harbor_base(
         dataset_name_version="compilebench@1.0",
@@ -925,6 +956,7 @@ def compilebench(
 
     Dataset: compilebench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/quesma/compilebench/latest
     """
     return _harbor_base(
         dataset_name_version="compilebench",
@@ -954,6 +986,7 @@ def cooperbench_1_0(
 
     Dataset: cooperbench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=cooperbench
     """
     return _harbor_base(
         dataset_name_version="cooperbench@1.0",
@@ -983,6 +1016,7 @@ def cooperbench(
 
     Dataset: cooperbench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=cooperbench
     """
     return _harbor_base(
         dataset_name_version="cooperbench",
@@ -1012,6 +1046,7 @@ def crustbench_1_0(
 
     Dataset: crustbench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/crustbench/crustbench/latest
     """
     return _harbor_base(
         dataset_name_version="crustbench@1.0",
@@ -1041,6 +1076,7 @@ def crustbench(
 
     Dataset: crustbench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/crustbench/crustbench/latest
     """
     return _harbor_base(
         dataset_name_version="crustbench",
@@ -1070,6 +1106,7 @@ def dabstep_1_0(
 
     Dataset: dabstep@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/adyen/dabstep/latest
     """
     return _harbor_base(
         dataset_name_version="dabstep@1.0",
@@ -1099,6 +1136,7 @@ def dabstep(
 
     Dataset: dabstep
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/adyen/dabstep/latest
     """
     return _harbor_base(
         dataset_name_version="dabstep",
@@ -1128,6 +1166,7 @@ def deveval_1_0(
 
     Dataset: deveval@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/deveval/deveval/latest
     """
     return _harbor_base(
         dataset_name_version="deveval@1.0",
@@ -1157,6 +1196,7 @@ def deveval(
 
     Dataset: deveval
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/deveval/deveval/latest
     """
     return _harbor_base(
         dataset_name_version="deveval",
@@ -1186,6 +1226,7 @@ def ds_1000_head(
 
     Dataset: ds-1000@head
     Version: head
+    Harbor URL: https://registry.harborframework.com/datasets/xlang/ds-1000/latest
     """
     return _harbor_base(
         dataset_name_version="ds-1000@head",
@@ -1215,6 +1256,7 @@ def ds_1000(
 
     Dataset: ds-1000
     Version: Latest available (head when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/xlang/ds-1000/latest
     """
     return _harbor_base(
         dataset_name_version="ds-1000",
@@ -1244,6 +1286,7 @@ def evoeval_1_0(
 
     Dataset: evoeval@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/evoeval/evoeval/latest
     """
     return _harbor_base(
         dataset_name_version="evoeval@1.0",
@@ -1273,6 +1316,7 @@ def evoeval(
 
     Dataset: evoeval
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/evoeval/evoeval/latest
     """
     return _harbor_base(
         dataset_name_version="evoeval",
@@ -1302,6 +1346,7 @@ def featurebench_1_0(
 
     Dataset: featurebench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/featurebench/featurebench/latest
     """
     return _harbor_base(
         dataset_name_version="featurebench@1.0",
@@ -1331,6 +1376,7 @@ def featurebench(
 
     Dataset: featurebench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/featurebench/featurebench/latest
     """
     return _harbor_base(
         dataset_name_version="featurebench",
@@ -1360,6 +1406,7 @@ def featurebench_lite_1_0(
 
     Dataset: featurebench-lite@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/featurebench/featurebench-lite/latest
     """
     return _harbor_base(
         dataset_name_version="featurebench-lite@1.0",
@@ -1389,6 +1436,7 @@ def featurebench_lite(
 
     Dataset: featurebench-lite
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/featurebench/featurebench-lite/latest
     """
     return _harbor_base(
         dataset_name_version="featurebench-lite",
@@ -1418,6 +1466,7 @@ def featurebench_lite_modal_1_0(
 
     Dataset: featurebench-lite-modal@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/featurebench/featurebench-lite-modal/latest
     """
     return _harbor_base(
         dataset_name_version="featurebench-lite-modal@1.0",
@@ -1447,6 +1496,7 @@ def featurebench_lite_modal(
 
     Dataset: featurebench-lite-modal
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/featurebench/featurebench-lite-modal/latest
     """
     return _harbor_base(
         dataset_name_version="featurebench-lite-modal",
@@ -1476,6 +1526,7 @@ def featurebench_modal_1_0(
 
     Dataset: featurebench-modal@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/featurebench/featurebench-modal/latest
     """
     return _harbor_base(
         dataset_name_version="featurebench-modal@1.0",
@@ -1505,6 +1556,7 @@ def featurebench_modal(
 
     Dataset: featurebench-modal
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/featurebench/featurebench-modal/latest
     """
     return _harbor_base(
         dataset_name_version="featurebench-modal",
@@ -1534,6 +1586,7 @@ def financeagent_public(
 
     Dataset: financeagent@public
     Version: public
+    Harbor URL: https://registry.harborframework.com/datasets/vals/financeagent/latest
     """
     return _harbor_base(
         dataset_name_version="financeagent@public",
@@ -1563,6 +1616,7 @@ def financeagent(
 
     Dataset: financeagent
     Version: Latest available (public when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/vals/financeagent/latest
     """
     return _harbor_base(
         dataset_name_version="financeagent",
@@ -1592,6 +1646,7 @@ def gaia_1_0(
 
     Dataset: gaia@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/gaia/gaia/latest
     """
     return _harbor_base(
         dataset_name_version="gaia@1.0",
@@ -1621,6 +1676,7 @@ def gaia(
 
     Dataset: gaia
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/gaia/gaia/latest
     """
     return _harbor_base(
         dataset_name_version="gaia",
@@ -1650,6 +1706,7 @@ def gpqa_diamond_1_0(
 
     Dataset: gpqa-diamond@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/gpqa-diamond/gpqa-diamond/latest
     """
     return _harbor_base(
         dataset_name_version="gpqa-diamond@1.0",
@@ -1679,6 +1736,7 @@ def gpqa_diamond(
 
     Dataset: gpqa-diamond
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/gpqa-diamond/gpqa-diamond/latest
     """
     return _harbor_base(
         dataset_name_version="gpqa-diamond",
@@ -1708,6 +1766,7 @@ def gso_1_0(
 
     Dataset: gso@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=gso
     """
     return _harbor_base(
         dataset_name_version="gso@1.0",
@@ -1737,6 +1796,7 @@ def gso(
 
     Dataset: gso
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=gso
     """
     return _harbor_base(
         dataset_name_version="gso",
@@ -1766,6 +1826,7 @@ def hello_world_1_0(
 
     Dataset: hello-world@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/harbor/hello-world/latest
     """
     return _harbor_base(
         dataset_name_version="hello-world@1.0",
@@ -1795,6 +1856,7 @@ def hello_world(
 
     Dataset: hello-world
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/harbor/hello-world/latest
     """
     return _harbor_base(
         dataset_name_version="hello-world",
@@ -1824,6 +1886,7 @@ def humanevalfix_1_0(
 
     Dataset: humanevalfix@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/bigcode/humanevalfix/latest
     """
     return _harbor_base(
         dataset_name_version="humanevalfix@1.0",
@@ -1853,6 +1916,7 @@ def humanevalfix(
 
     Dataset: humanevalfix
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/bigcode/humanevalfix/latest
     """
     return _harbor_base(
         dataset_name_version="humanevalfix",
@@ -1882,6 +1946,7 @@ def ineqmath_1_0(
 
     Dataset: ineqmath@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/ineqmath/ineqmath/latest
     """
     return _harbor_base(
         dataset_name_version="ineqmath@1.0",
@@ -1911,6 +1976,7 @@ def ineqmath(
 
     Dataset: ineqmath
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/ineqmath/ineqmath/latest
     """
     return _harbor_base(
         dataset_name_version="ineqmath",
@@ -1940,6 +2006,7 @@ def kumo_1_0(
 
     Dataset: kumo@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=kumo
     """
     return _harbor_base(
         dataset_name_version="kumo@1.0",
@@ -1969,6 +2036,7 @@ def kumo(
 
     Dataset: kumo
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=kumo
     """
     return _harbor_base(
         dataset_name_version="kumo",
@@ -1998,6 +2066,7 @@ def kumo_easy(
 
     Dataset: kumo@easy
     Version: easy
+    Harbor URL: https://registry.harborframework.com/datasets?q=kumo
     """
     return _harbor_base(
         dataset_name_version="kumo@easy",
@@ -2027,6 +2096,7 @@ def kumo_hard(
 
     Dataset: kumo@hard
     Version: hard
+    Harbor URL: https://registry.harborframework.com/datasets?q=kumo
     """
     return _harbor_base(
         dataset_name_version="kumo@hard",
@@ -2056,6 +2126,7 @@ def kumo_parity(
 
     Dataset: kumo@parity
     Version: parity
+    Harbor URL: https://registry.harborframework.com/datasets?q=kumo
     """
     return _harbor_base(
         dataset_name_version="kumo@parity",
@@ -2085,6 +2156,7 @@ def labbench_1_0(
 
     Dataset: labbench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/futurehouse/labbench/latest
     """
     return _harbor_base(
         dataset_name_version="labbench@1.0",
@@ -2114,6 +2186,7 @@ def labbench(
 
     Dataset: labbench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/futurehouse/labbench/latest
     """
     return _harbor_base(
         dataset_name_version="labbench",
@@ -2143,6 +2216,7 @@ def lawbench_1_0(
 
     Dataset: lawbench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/lawbench/lawbench/latest
     """
     return _harbor_base(
         dataset_name_version="lawbench@1.0",
@@ -2172,6 +2246,7 @@ def lawbench(
 
     Dataset: lawbench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/lawbench/lawbench/latest
     """
     return _harbor_base(
         dataset_name_version="lawbench",
@@ -2201,6 +2276,7 @@ def legacy_bench_1_0(
 
     Dataset: legacy-bench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/factory-ai/legacy-bench/latest
     """
     return _harbor_base(
         dataset_name_version="legacy-bench@1.0",
@@ -2230,6 +2306,7 @@ def legacy_bench(
 
     Dataset: legacy-bench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/factory-ai/legacy-bench/latest
     """
     return _harbor_base(
         dataset_name_version="legacy-bench",
@@ -2259,6 +2336,7 @@ def livecodebench_6_0(
 
     Dataset: livecodebench@6.0
     Version: 6.0
+    Harbor URL: https://registry.harborframework.com/datasets/livecodebench/livecodebench/latest
     """
     return _harbor_base(
         dataset_name_version="livecodebench@6.0",
@@ -2288,6 +2366,7 @@ def livecodebench(
 
     Dataset: livecodebench
     Version: Latest available (6.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/livecodebench/livecodebench/latest
     """
     return _harbor_base(
         dataset_name_version="livecodebench",
@@ -2317,6 +2396,7 @@ def medagentbench_1_0(
 
     Dataset: medagentbench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/stanford/medagentbench/latest
     """
     return _harbor_base(
         dataset_name_version="medagentbench@1.0",
@@ -2346,6 +2426,7 @@ def medagentbench(
 
     Dataset: medagentbench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/stanford/medagentbench/latest
     """
     return _harbor_base(
         dataset_name_version="medagentbench",
@@ -2375,6 +2456,7 @@ def ml_dev_bench_1_0(
 
     Dataset: ml-dev-bench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=ml-dev-bench
     """
     return _harbor_base(
         dataset_name_version="ml-dev-bench@1.0",
@@ -2404,6 +2486,7 @@ def ml_dev_bench(
 
     Dataset: ml-dev-bench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=ml-dev-bench
     """
     return _harbor_base(
         dataset_name_version="ml-dev-bench",
@@ -2433,6 +2516,7 @@ def mlgym_bench_1_0(
 
     Dataset: mlgym-bench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/meta/mlgym-bench/latest
     """
     return _harbor_base(
         dataset_name_version="mlgym-bench@1.0",
@@ -2462,6 +2546,7 @@ def mlgym_bench(
 
     Dataset: mlgym-bench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/meta/mlgym-bench/latest
     """
     return _harbor_base(
         dataset_name_version="mlgym-bench",
@@ -2491,6 +2576,7 @@ def mmau_1_0(
 
     Dataset: mmau@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/apple/mmau/latest
     """
     return _harbor_base(
         dataset_name_version="mmau@1.0",
@@ -2520,6 +2606,7 @@ def mmau(
 
     Dataset: mmau
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/apple/mmau/latest
     """
     return _harbor_base(
         dataset_name_version="mmau",
@@ -2549,6 +2636,7 @@ def mmmlu_parity(
 
     Dataset: mmmlu@parity
     Version: parity
+    Harbor URL: https://registry.harborframework.com/datasets/openai/mmmlu/latest
     """
     return _harbor_base(
         dataset_name_version="mmmlu@parity",
@@ -2578,6 +2666,7 @@ def mmmlu(
 
     Dataset: mmmlu
     Version: Latest available (parity when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/openai/mmmlu/latest
     """
     return _harbor_base(
         dataset_name_version="mmmlu",
@@ -2607,6 +2696,7 @@ def openthoughts_tblite_2_0(
 
     Dataset: openthoughts-tblite@2.0
     Version: 2.0
+    Harbor URL: https://registry.harborframework.com/datasets/openthoughts/openthoughts-tblite/latest
     """
     return _harbor_base(
         dataset_name_version="openthoughts-tblite@2.0",
@@ -2636,6 +2726,7 @@ def openthoughts_tblite(
 
     Dataset: openthoughts-tblite
     Version: Latest available (2.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/openthoughts/openthoughts-tblite/latest
     """
     return _harbor_base(
         dataset_name_version="openthoughts-tblite",
@@ -2665,6 +2756,7 @@ def otel_bench_1_0(
 
     Dataset: otel-bench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/quesma/otel-bench/latest
     """
     return _harbor_base(
         dataset_name_version="otel-bench@1.0",
@@ -2694,6 +2786,7 @@ def otel_bench(
 
     Dataset: otel-bench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/quesma/otel-bench/latest
     """
     return _harbor_base(
         dataset_name_version="otel-bench",
@@ -2723,6 +2816,7 @@ def pixiu_parity(
 
     Dataset: pixiu@parity
     Version: parity
+    Harbor URL: https://registry.harborframework.com/datasets?q=pixiu
     """
     return _harbor_base(
         dataset_name_version="pixiu@parity",
@@ -2752,6 +2846,7 @@ def pixiu(
 
     Dataset: pixiu
     Version: Latest available (parity when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=pixiu
     """
     return _harbor_base(
         dataset_name_version="pixiu",
@@ -2781,6 +2876,7 @@ def qcircuitbench_1_0(
 
     Dataset: qcircuitbench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/qcircuitbench/qcircuitbench/latest
     """
     return _harbor_base(
         dataset_name_version="qcircuitbench@1.0",
@@ -2810,6 +2906,7 @@ def qcircuitbench(
 
     Dataset: qcircuitbench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/qcircuitbench/qcircuitbench/latest
     """
     return _harbor_base(
         dataset_name_version="qcircuitbench",
@@ -2839,6 +2936,7 @@ def quixbugs_1_0(
 
     Dataset: quixbugs@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/quixbugs/quixbugs/latest
     """
     return _harbor_base(
         dataset_name_version="quixbugs@1.0",
@@ -2868,6 +2966,7 @@ def quixbugs(
 
     Dataset: quixbugs
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/quixbugs/quixbugs/latest
     """
     return _harbor_base(
         dataset_name_version="quixbugs",
@@ -2897,6 +2996,7 @@ def reasoning_gym_easy_parity(
 
     Dataset: reasoning-gym-easy@parity
     Version: parity
+    Harbor URL: https://registry.harborframework.com/datasets/reasoning-gym/reasoning-gym-easy/latest
     """
     return _harbor_base(
         dataset_name_version="reasoning-gym-easy@parity",
@@ -2926,6 +3026,7 @@ def reasoning_gym_easy(
 
     Dataset: reasoning-gym-easy
     Version: Latest available (parity when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/reasoning-gym/reasoning-gym-easy/latest
     """
     return _harbor_base(
         dataset_name_version="reasoning-gym-easy",
@@ -2955,6 +3056,7 @@ def reasoning_gym_hard_parity(
 
     Dataset: reasoning-gym-hard@parity
     Version: parity
+    Harbor URL: https://registry.harborframework.com/datasets/reasoning-gym/reasoning-gym-hard/latest
     """
     return _harbor_base(
         dataset_name_version="reasoning-gym-hard@parity",
@@ -2984,6 +3086,7 @@ def reasoning_gym_hard(
 
     Dataset: reasoning-gym-hard
     Version: Latest available (parity when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/reasoning-gym/reasoning-gym-hard/latest
     """
     return _harbor_base(
         dataset_name_version="reasoning-gym-hard",
@@ -3013,6 +3116,7 @@ def replicationbench_1_0(
 
     Dataset: replicationbench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/replicationbench/replicationbench/latest
     """
     return _harbor_base(
         dataset_name_version="replicationbench@1.0",
@@ -3042,6 +3146,7 @@ def replicationbench(
 
     Dataset: replicationbench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/replicationbench/replicationbench/latest
     """
     return _harbor_base(
         dataset_name_version="replicationbench",
@@ -3071,6 +3176,7 @@ def researchcodebench_1_0(
 
     Dataset: researchcodebench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=researchcodebench
     """
     return _harbor_base(
         dataset_name_version="researchcodebench@1.0",
@@ -3100,6 +3206,7 @@ def researchcodebench(
 
     Dataset: researchcodebench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=researchcodebench
     """
     return _harbor_base(
         dataset_name_version="researchcodebench",
@@ -3129,6 +3236,7 @@ def rexbench_1_0(
 
     Dataset: rexbench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=rexbench
     """
     return _harbor_base(
         dataset_name_version="rexbench@1.0",
@@ -3158,6 +3266,7 @@ def rexbench(
 
     Dataset: rexbench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=rexbench
     """
     return _harbor_base(
         dataset_name_version="rexbench",
@@ -3187,6 +3296,7 @@ def satbench_1_0(
 
     Dataset: satbench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/satbench/satbench/latest
     """
     return _harbor_base(
         dataset_name_version="satbench@1.0",
@@ -3216,6 +3326,7 @@ def satbench(
 
     Dataset: satbench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/satbench/satbench/latest
     """
     return _harbor_base(
         dataset_name_version="satbench",
@@ -3245,6 +3356,7 @@ def scale_ai_swe_atlas_qna_1_0(
 
     Dataset: scale-ai/swe-atlas-qna@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/scale-ai/swe-atlas-qna/latest
     """
     return _harbor_base(
         dataset_name_version="scale-ai/swe-atlas-qna@1.0",
@@ -3274,6 +3386,7 @@ def scale_ai_swe_atlas_qna(
 
     Dataset: scale-ai/swe-atlas-qna
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/scale-ai/swe-atlas-qna/latest
     """
     return _harbor_base(
         dataset_name_version="scale-ai/swe-atlas-qna",
@@ -3303,6 +3416,7 @@ def scale_ai_swe_atlas_tw_1_0(
 
     Dataset: scale-ai/swe-atlas-tw@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/scale-ai/swe-atlas-tw/latest
     """
     return _harbor_base(
         dataset_name_version="scale-ai/swe-atlas-tw@1.0",
@@ -3332,6 +3446,7 @@ def scale_ai_swe_atlas_tw(
 
     Dataset: scale-ai/swe-atlas-tw
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/scale-ai/swe-atlas-tw/latest
     """
     return _harbor_base(
         dataset_name_version="scale-ai/swe-atlas-tw",
@@ -3361,6 +3476,7 @@ def seta_env_1_0(
 
     Dataset: seta-env@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/camel-ai/seta-env/latest
     """
     return _harbor_base(
         dataset_name_version="seta-env@1.0",
@@ -3390,6 +3506,7 @@ def seta_env(
 
     Dataset: seta-env
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/camel-ai/seta-env/latest
     """
     return _harbor_base(
         dataset_name_version="seta-env",
@@ -3419,6 +3536,7 @@ def simpleqa_1_0(
 
     Dataset: simpleqa@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/openai/simpleqa/latest
     """
     return _harbor_base(
         dataset_name_version="simpleqa@1.0",
@@ -3448,6 +3566,7 @@ def simpleqa(
 
     Dataset: simpleqa
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/openai/simpleqa/latest
     """
     return _harbor_base(
         dataset_name_version="simpleqa",
@@ -3477,6 +3596,7 @@ def sldbench_1_0(
 
     Dataset: sldbench@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/sldbench/sldbench/latest
     """
     return _harbor_base(
         dataset_name_version="sldbench@1.0",
@@ -3506,6 +3626,7 @@ def sldbench(
 
     Dataset: sldbench
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/sldbench/sldbench/latest
     """
     return _harbor_base(
         dataset_name_version="sldbench",
@@ -3535,6 +3656,7 @@ def spider2_dbt_1_0(
 
     Dataset: spider2-dbt@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=spider2-dbt
     """
     return _harbor_base(
         dataset_name_version="spider2-dbt@1.0",
@@ -3564,6 +3686,7 @@ def spider2_dbt(
 
     Dataset: spider2-dbt
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=spider2-dbt
     """
     return _harbor_base(
         dataset_name_version="spider2-dbt",
@@ -3593,6 +3716,7 @@ def spreadsheetbench_verified_1_0(
 
     Dataset: spreadsheetbench-verified@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=spreadsheetbench-verified
     """
     return _harbor_base(
         dataset_name_version="spreadsheetbench-verified@1.0",
@@ -3622,6 +3746,7 @@ def spreadsheetbench_verified(
 
     Dataset: spreadsheetbench-verified
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=spreadsheetbench-verified
     """
     return _harbor_base(
         dataset_name_version="spreadsheetbench-verified",
@@ -3651,6 +3776,7 @@ def strongreject_parity(
 
     Dataset: strongreject@parity
     Version: parity
+    Harbor URL: https://registry.harborframework.com/datasets/strongreject/strongreject/latest
     """
     return _harbor_base(
         dataset_name_version="strongreject@parity",
@@ -3680,6 +3806,7 @@ def strongreject(
 
     Dataset: strongreject
     Version: Latest available (parity when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/strongreject/strongreject/latest
     """
     return _harbor_base(
         dataset_name_version="strongreject",
@@ -3709,6 +3836,7 @@ def swe_gen_js_1_0(
 
     Dataset: swe-gen-js@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/abundant/swe-gen-js/latest
     """
     return _harbor_base(
         dataset_name_version="swe-gen-js@1.0",
@@ -3738,6 +3866,7 @@ def swe_gen_js(
 
     Dataset: swe-gen-js
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/abundant/swe-gen-js/latest
     """
     return _harbor_base(
         dataset_name_version="swe-gen-js",
@@ -3767,6 +3896,7 @@ def swe_lancer_diamond_all(
 
     Dataset: swe-lancer-diamond@all
     Version: all
+    Harbor URL: https://registry.harborframework.com/datasets?q=swe-lancer-diamond
     """
     return _harbor_base(
         dataset_name_version="swe-lancer-diamond@all",
@@ -3796,6 +3926,7 @@ def swe_lancer_diamond(
 
     Dataset: swe-lancer-diamond
     Version: Latest available (all when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=swe-lancer-diamond
     """
     return _harbor_base(
         dataset_name_version="swe-lancer-diamond",
@@ -3825,6 +3956,7 @@ def swe_lancer_diamond_ic(
 
     Dataset: swe-lancer-diamond@ic
     Version: ic
+    Harbor URL: https://registry.harborframework.com/datasets?q=swe-lancer-diamond
     """
     return _harbor_base(
         dataset_name_version="swe-lancer-diamond@ic",
@@ -3854,6 +3986,7 @@ def swe_lancer_diamond_manager(
 
     Dataset: swe-lancer-diamond@manager
     Version: manager
+    Harbor URL: https://registry.harborframework.com/datasets?q=swe-lancer-diamond
     """
     return _harbor_base(
         dataset_name_version="swe-lancer-diamond@manager",
@@ -3883,6 +4016,7 @@ def swebench_verified_1_0(
 
     Dataset: swebench-verified@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=swebench-verified
     """
     return _harbor_base(
         dataset_name_version="swebench-verified@1.0",
@@ -3912,6 +4046,7 @@ def swebench_verified(
 
     Dataset: swebench-verified
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=swebench-verified
     """
     return _harbor_base(
         dataset_name_version="swebench-verified",
@@ -3941,6 +4076,7 @@ def swebench_multilingual_1_0(
 
     Dataset: swebench_multilingual@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=swebench_multilingual
     """
     return _harbor_base(
         dataset_name_version="swebench_multilingual@1.0",
@@ -3970,6 +4106,7 @@ def swebench_multilingual(
 
     Dataset: swebench_multilingual
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=swebench_multilingual
     """
     return _harbor_base(
         dataset_name_version="swebench_multilingual",
@@ -3999,6 +4136,7 @@ def swebenchpro_1_0(
 
     Dataset: swebenchpro@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/cais/swebenchpro/latest
     """
     return _harbor_base(
         dataset_name_version="swebenchpro@1.0",
@@ -4028,6 +4166,7 @@ def swebenchpro(
 
     Dataset: swebenchpro
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/cais/swebenchpro/latest
     """
     return _harbor_base(
         dataset_name_version="swebenchpro",
@@ -4057,6 +4196,7 @@ def swesmith_1_0(
 
     Dataset: swesmith@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=swesmith
     """
     return _harbor_base(
         dataset_name_version="swesmith@1.0",
@@ -4086,6 +4226,7 @@ def swesmith(
 
     Dataset: swesmith
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=swesmith
     """
     return _harbor_base(
         dataset_name_version="swesmith",
@@ -4115,6 +4256,7 @@ def swtbench_verified_1_0(
 
     Dataset: swtbench-verified@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=swtbench-verified
     """
     return _harbor_base(
         dataset_name_version="swtbench-verified@1.0",
@@ -4144,6 +4286,7 @@ def swtbench_verified(
 
     Dataset: swtbench-verified
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=swtbench-verified
     """
     return _harbor_base(
         dataset_name_version="swtbench-verified",
@@ -4173,6 +4316,7 @@ def termigen_environments_1_0(
 
     Dataset: termigen-environments@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/termigen/termigen-environments/latest
     """
     return _harbor_base(
         dataset_name_version="termigen-environments@1.0",
@@ -4202,6 +4346,7 @@ def termigen_environments(
 
     Dataset: termigen-environments
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/termigen/termigen-environments/latest
     """
     return _harbor_base(
         dataset_name_version="termigen-environments",
@@ -4231,6 +4376,7 @@ def terminal_bench_2_0(
 
     Dataset: terminal-bench@2.0
     Version: 2.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=terminal-bench
     """
     return _harbor_base(
         dataset_name_version="terminal-bench@2.0",
@@ -4260,6 +4406,7 @@ def terminal_bench(
 
     Dataset: terminal-bench
     Version: Latest available (2.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=terminal-bench
     """
     return _harbor_base(
         dataset_name_version="terminal-bench",
@@ -4289,6 +4436,7 @@ def terminal_bench_pro_1_0(
 
     Dataset: terminal-bench-pro@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/terminal-bench-pro/terminal-bench-pro/latest
     """
     return _harbor_base(
         dataset_name_version="terminal-bench-pro@1.0",
@@ -4318,6 +4466,7 @@ def terminal_bench_pro(
 
     Dataset: terminal-bench-pro
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/terminal-bench-pro/terminal-bench-pro/latest
     """
     return _harbor_base(
         dataset_name_version="terminal-bench-pro",
@@ -4347,6 +4496,7 @@ def terminal_bench_sample_2_0(
 
     Dataset: terminal-bench-sample@2.0
     Version: 2.0
+    Harbor URL: https://registry.harborframework.com/datasets?q=terminal-bench-sample
     """
     return _harbor_base(
         dataset_name_version="terminal-bench-sample@2.0",
@@ -4376,6 +4526,7 @@ def terminal_bench_sample(
 
     Dataset: terminal-bench-sample
     Version: Latest available (2.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets?q=terminal-bench-sample
     """
     return _harbor_base(
         dataset_name_version="terminal-bench-sample",
@@ -4405,6 +4556,7 @@ def usaco_2_0(
 
     Dataset: usaco@2.0
     Version: 2.0
+    Harbor URL: https://registry.harborframework.com/datasets/usaco/usaco/latest
     """
     return _harbor_base(
         dataset_name_version="usaco@2.0",
@@ -4434,6 +4586,7 @@ def usaco(
 
     Dataset: usaco
     Version: Latest available (2.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/usaco/usaco/latest
     """
     return _harbor_base(
         dataset_name_version="usaco",
@@ -4463,6 +4616,7 @@ def vmax_tasks_1_0(
 
     Dataset: vmax-tasks@1.0
     Version: 1.0
+    Harbor URL: https://registry.harborframework.com/datasets/vmax/vmax-tasks/latest
     """
     return _harbor_base(
         dataset_name_version="vmax-tasks@1.0",
@@ -4492,6 +4646,7 @@ def vmax_tasks(
 
     Dataset: vmax-tasks
     Version: Latest available (1.0 when generated)
+    Harbor URL: https://registry.harborframework.com/datasets/vmax/vmax-tasks/latest
     """
     return _harbor_base(
         dataset_name_version="vmax-tasks",

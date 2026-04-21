@@ -128,7 +128,7 @@ def test_generate_tasks_creates_versioned_functions(
     mock_registry_data: list[dict[str, Any]],
 ) -> None:
     """Test that versioned task functions are generated."""
-    content = generate_tasks_content(mock_registry_data)
+    content = generate_tasks_content(mock_registry_data, {})
 
     # Check versioned functions are created
     assert "def test_dataset_1_0(" in content
@@ -142,7 +142,7 @@ def test_generate_tasks_creates_unversioned_functions(
     mock_registry_data: list[dict[str, Any]],
 ) -> None:
     """Test that unversioned task functions are created for backwards compatibility."""
-    content = generate_tasks_content(mock_registry_data)
+    content = generate_tasks_content(mock_registry_data, {})
 
     # Check unversioned functions are created (one per unique dataset name)
     assert "def test_dataset(" in content
@@ -154,7 +154,7 @@ def test_generate_tasks_includes_correct_dataset_name_version(
     mock_registry_data: list[dict[str, Any]],
 ) -> None:
     """Test that generated functions pass correct dataset_name_version."""
-    content = generate_tasks_content(mock_registry_data)
+    content = generate_tasks_content(mock_registry_data, {})
 
     # Versioned tasks should pass dataset@version
     assert 'dataset_name_version="test-dataset@1.0"' in content
@@ -171,7 +171,7 @@ def test_generate_tasks_includes_descriptions(
     mock_registry_data: list[dict[str, Any]],
 ) -> None:
     """Test that generated functions include dataset descriptions in docstrings."""
-    content = generate_tasks_content(mock_registry_data)
+    content = generate_tasks_content(mock_registry_data, {})
 
     assert "Test dataset version 1.0" in content
     assert "Test dataset version 2.0" in content
@@ -183,7 +183,7 @@ def test_generate_tasks_includes_version_info(
     mock_registry_data: list[dict[str, Any]],
 ) -> None:
     """Test that generated functions include version information."""
-    content = generate_tasks_content(mock_registry_data)
+    content = generate_tasks_content(mock_registry_data, {})
 
     # Versioned tasks should show explicit version
     assert "Version: 1.0" in content
@@ -194,11 +194,30 @@ def test_generate_tasks_includes_version_info(
     assert "Latest available" in content
 
 
+def test_generate_tasks_embeds_harbor_url_in_docstring(
+    mock_registry_data: list[dict[str, Any]],
+) -> None:
+    """Each @task function's docstring exposes a resolved Harbor URL for downstream consumers."""
+    org_map = {"test-dataset": "some-org", "simple-dataset": "some-org"}
+    content = generate_tasks_content(mock_registry_data, org_map)
+
+    # Canonical URL for mapped datasets
+    assert (
+        "Harbor URL: https://registry.harborframework.com/datasets/some-org/test-dataset/latest"
+        in content
+    )
+    # Fallback search URL for unmapped datasets
+    assert (
+        "Harbor URL: https://registry.harborframework.com/datasets?q=multi-variant"
+        in content
+    )
+
+
 def test_generate_tasks_includes_required_imports(
     mock_registry_data: list[dict[str, Any]],
 ) -> None:
     """Test that generated code includes necessary imports."""
-    content = generate_tasks_content(mock_registry_data)
+    content = generate_tasks_content(mock_registry_data, {})
 
     assert "from inspect_ai import Task, task" in content
     assert "from inspect_harbor._harbor.task import harbor as _harbor_base" in content
@@ -208,7 +227,7 @@ def test_generate_tasks_includes_task_decorator(
     mock_registry_data: list[dict[str, Any]],
 ) -> None:
     """Test that all generated functions have @task decorator."""
-    content = generate_tasks_content(mock_registry_data)
+    content = generate_tasks_content(mock_registry_data, {})
 
     # Count @task decorators - should equal number of generated functions
     # 5 versioned + 3 unversioned (test-dataset, multi-variant, simple-dataset)
@@ -220,7 +239,7 @@ def test_generate_tasks_includes_all_parameters(
     mock_registry_data: list[dict[str, Any]],
 ) -> None:
     """Test that generated functions include all expected parameters."""
-    content = generate_tasks_content(mock_registry_data)
+    content = generate_tasks_content(mock_registry_data, {})
 
     assert "dataset_task_names: list[str] | None = None" in content
     assert "dataset_exclude_task_names: list[str] | None = None" in content
@@ -236,7 +255,7 @@ def test_generate_tasks_passes_parameters_to_base(
     mock_registry_data: list[dict[str, Any]],
 ) -> None:
     """Test that generated functions pass parameters to _harbor_base."""
-    content = generate_tasks_content(mock_registry_data)
+    content = generate_tasks_content(mock_registry_data, {})
 
     assert "dataset_task_names=dataset_task_names" in content
     assert "dataset_exclude_task_names=dataset_exclude_task_names" in content
@@ -255,7 +274,7 @@ def test_generate_tasks_skips_entries_without_name() -> None:
         {"name": "valid-dataset", "version": "1.0", "description": "Has name"},
     ]
 
-    content = generate_tasks_content(invalid_registry)
+    content = generate_tasks_content(invalid_registry, {})
 
     # Should only generate function for valid entry
     assert "def valid_dataset_1_0(" in content
@@ -277,7 +296,7 @@ def test_generate_tasks_deduplicates_versions(
         }
     ]
 
-    content = generate_tasks_content(registry_with_duplicate)
+    content = generate_tasks_content(registry_with_duplicate, {})
 
     # Should still only have one function for test-dataset@1.0
     # Count how many times the exact function definition appears

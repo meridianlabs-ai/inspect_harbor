@@ -48,6 +48,7 @@ def {func_name}(
 
     Dataset: {dataset_name}
     {version_info}
+    Harbor URL: {harbor_url}
     """
     return _harbor_base(
         dataset_name_version="{dataset_name_version}",
@@ -231,7 +232,7 @@ def dataset_name_to_function_name(dataset_name_version: str) -> str:
     )
 
 
-def generate_tasks_content(registry: list) -> str:
+def generate_tasks_content(registry: list, org_map: dict[str, str]) -> str:
     """Generate the content of _tasks.py from the registry."""
     functions = []
     seen_datasets = set()
@@ -250,6 +251,7 @@ def generate_tasks_content(registry: list) -> str:
         description = dataset.get(
             "description", f"{dataset_name} dataset from Harbor registry"
         )
+        harbor_url, _ = build_harbor_url(dataset_name, org_map)
 
         # Create versioned function (e.g., terminal_bench_2_0 for terminal-bench@2.0)
         if version:
@@ -264,6 +266,7 @@ def generate_tasks_content(registry: list) -> str:
                     dataset_name=dataset_name_version,
                     dataset_name_version=dataset_name_version,
                     version_info=f"Version: {version}",
+                    harbor_url=harbor_url,
                 )
                 functions.append(function_code)
 
@@ -281,6 +284,7 @@ def generate_tasks_content(registry: list) -> str:
                 dataset_name=dataset_name,
                 dataset_name_version=dataset_name,
                 version_info=f"Version: {version_text}",
+                harbor_url=harbor_url,
             )
             functions.append(function_code)
 
@@ -360,9 +364,14 @@ def main():
     registry = fetch_registry()
     print(f"Found {len(registry)} datasets")
 
+    # Scrape the new Harbor registry site for the dataset→org mapping needed
+    # to build working documentation links (embedded in _tasks.py docstrings
+    # and in the registry.qmd table).
+    org_map = fetch_org_map()
+
     # Generate _tasks.py
     print("\nGenerating _tasks.py...")
-    tasks_content = generate_tasks_content(registry)
+    tasks_content = generate_tasks_content(registry, org_map)
     TASKS_FILE.parent.mkdir(parents=True, exist_ok=True)
     TASKS_FILE.write_text(tasks_content)
     print(f"✓ Generated: {TASKS_FILE}")
@@ -370,10 +379,6 @@ def main():
     print(
         f"  Functions: {len([line for line in tasks_content.split('\n') if line.startswith('@task')])}"
     )
-
-    # Scrape the new Harbor registry site for the dataset→org mapping needed
-    # to build working documentation links.
-    org_map = fetch_org_map()
 
     # Generate docs/registry.qmd
     print("\nGenerating docs/registry.qmd...")
