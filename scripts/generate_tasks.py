@@ -7,11 +7,15 @@ dataset-specific task functions.
 
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
 from urllib.request import urlopen
 
 REGISTRY_URL = "https://raw.githubusercontent.com/laude-institute/harbor/refs/heads/main/registry.json"
+REGISTRY_SITE_BASE = "https://registry.harborframework.com"
+REGISTRY_SITE_MAX_PAGES = 20
+REGISTRY_FETCH_TIMEOUT = 15
 TASKS_FILE = Path(__file__).parent.parent / "src" / "inspect_harbor" / "_tasks.py"
 REGISTRY_QMD_FILE = Path(__file__).parent.parent / "docs" / "registry.qmd"
 TASKS_TEMPLATE = '''"""Harbor registry dataset tasks.
@@ -24,7 +28,7 @@ Registry: {registry_url}
 
 from inspect_ai import Task, task
 
-from inspect_harbor._harbor._task import harbor as _harbor_base
+from inspect_harbor._harbor.task import harbor as _harbor_base
 
 {functions}
 '''
@@ -126,6 +130,89 @@ def fetch_registry() -> list[dict[str, Any]]:
         return json.loads(response.read().decode())
 
 
+def fetch_org_map() -> dict[str, str]:
+    """Scrape the public registry site to build a dataset-slug → org-slug map.
+
+    The Harbor registry website (`registry.harborframework.com`) owns the
+    canonical dataset-to-org mapping; the JSON registry we fetch does not
+    expose an org field. Paginating `/datasets?page=N` yields every public
+    dataset as `/datasets/<org>/<name>` anchors.
+
+    Raises:
+        URLError: if the first page fetch fails — we refuse to silently
+        emit all-fallback URLs.
+    """
+    print(f"Scraping org map from {REGISTRY_SITE_BASE}/datasets...")
+    mapping: dict[str, str] = {}
+    href_pattern = re.compile(r'href="/datasets/([a-z0-9-]+)/([a-z0-9-]+)"')
+    pages_scraped = 0
+
+    for page in range(1, REGISTRY_SITE_MAX_PAGES + 1):
+        url = f"{REGISTRY_SITE_BASE}/datasets?page={page}"
+        with urlopen(url, timeout=REGISTRY_FETCH_TIMEOUT) as response:
+            body = response.read().decode()
+        pages_scraped = page
+        pairs = set(href_pattern.findall(body))
+        new = 0
+        for org, name in pairs:
+            if name not in mapping:
+                mapping[name] = org
+                new += 1
+        if new == 0:
+            break
+
+    print(f"  Mapped {len(mapping)} datasets across {pages_scraped} page(s)")
+    return mapping
+
+
+def build_harbor_url(dataset_name: str, org_map: dict[str, str]) -> tuple[str, bool]:
+    """Build a link to the dataset's page on the new Harbor registry site.
+
+    Returns (url, is_canonical). `is_canonical=False` means we fell back to
+    the site's search URL because we could not resolve an org for this
+    dataset — typically because Harbor has renamed or not yet published it.
+
+    We always link to the dataset's `latest` revision rather than the exact
+    registry version string. The site normalizes versions inconsistently
+    (e.g. strips trailing `.0`), so registry versions like `1.0` or `2.0` do
+    not resolve as path segments; `latest` always does.
+
+    Registry names come in two shapes:
+        - plain (e.g. `ade-bench`): org looked up in `org_map`
+        - slash-prefixed (e.g. `scale-ai/swe-atlas-qna`): org is the prefix
+    """
+    if "/" in dataset_name:
+        prefix_org, short = dataset_name.split("/", 1)
+        return (
+            f"{REGISTRY_SITE_BASE}/datasets/{prefix_org}/{short}/latest",
+            True,
+        )
+
+    # Exact site-slug match
+    if dataset_name in org_map:
+        return (
+            f"{REGISTRY_SITE_BASE}/datasets/{org_map[dataset_name]}/{dataset_name}/latest",
+            True,
+        )
+
+    # Registry sometimes uses underscores where the site uses hyphens
+    # (e.g. arc_agi_2 on our side vs arc-agi-2 on the site).
+    normalized = dataset_name.replace("_", "-")
+    if normalized in org_map:
+        return (
+            f"{REGISTRY_SITE_BASE}/datasets/{org_map[normalized]}/{normalized}/latest",
+            True,
+        )
+
+    # Harbor has likely renamed or not yet published this dataset.
+    # Per project decision: fall back to the search URL with the bare
+    # dataset name (version suffixes don't help the search).
+    return (
+        f"{REGISTRY_SITE_BASE}/datasets?q={dataset_name}",
+        False,
+    )
+
+
 def dataset_name_to_function_name(dataset_name_version: str) -> str:
     """Convert dataset name or name@version to valid Python function name.
 
@@ -134,8 +221,14 @@ def dataset_name_to_function_name(dataset_name_version: str) -> str:
         terminal-bench@2.0 -> terminal_bench_2_0
         aime -> aime
         swe-lancer-diamond@all -> swe_lancer_diamond_all
+        scale-ai/swe-atlas-qna@1.0 -> scale_ai_swe_atlas_qna_1_0
     """
-    return dataset_name_version.replace("-", "_").replace("@", "_").replace(".", "_")
+    return (
+        dataset_name_version.replace("-", "_")
+        .replace("@", "_")
+        .replace(".", "_")
+        .replace("/", "_")
+    )
 
 
 def generate_tasks_content(registry: list) -> str:
@@ -197,9 +290,14 @@ def generate_tasks_content(registry: list) -> str:
     )
 
 
-def generate_registry_qmd_content(registry: list) -> str:
-    """Generate the content of docs/registry.qmd from the registry."""
+def generate_registry_qmd_content(registry: list, org_map: dict[str, str]) -> str:
+    """Generate the content of docs/registry.qmd from the registry.
+
+    Emits a stderr warning listing any datasets whose Harbor-site URL could
+    not be resolved from `org_map` and fell back to the search URL.
+    """
     table_rows = []
+    fallback_datasets: list[str] = []
     seen_versioned_datasets = set()
 
     # Process each dataset and create table rows for versioned datasets only
@@ -225,9 +323,9 @@ def generate_registry_qmd_content(registry: list) -> str:
             func_name = dataset_name_to_function_name(dataset_name_version)
 
             # Create Harbor registry link
-            harbor_link = (
-                f"https://harborframework.com/registry/{dataset_name}/{version}"
-            )
+            harbor_link, is_canonical = build_harbor_url(dataset_name, org_map)
+            if not is_canonical:
+                fallback_datasets.append(dataset_name_version)
             harbor_cell = f"[{dataset_name_version}]({harbor_link})"
 
             # Format description to be single-line and shorten URLs
@@ -237,6 +335,15 @@ def generate_registry_qmd_content(registry: list) -> str:
             # Create table row
             table_row = f"| {harbor_cell} | `{func_name}` | {description_clean} | {num_samples} |"
             table_rows.append(table_row)
+
+    if fallback_datasets:
+        print(
+            f"\n⚠ {len(fallback_datasets)} dataset(s) could not be resolved "
+            f"to an org on {REGISTRY_SITE_BASE} and fell back to the search URL:",
+            file=sys.stderr,
+        )
+        for d in fallback_datasets:
+            print(f"  - {d}", file=sys.stderr)
 
     return REGISTRY_QMD_TEMPLATE.format(
         registry_url=REGISTRY_URL,
@@ -264,9 +371,13 @@ def main():
         f"  Functions: {len([line for line in tasks_content.split('\n') if line.startswith('@task')])}"
     )
 
+    # Scrape the new Harbor registry site for the dataset→org mapping needed
+    # to build working documentation links.
+    org_map = fetch_org_map()
+
     # Generate docs/registry.qmd
     print("\nGenerating docs/registry.qmd...")
-    registry_qmd_content = generate_registry_qmd_content(registry)
+    registry_qmd_content = generate_registry_qmd_content(registry, org_map)
     REGISTRY_QMD_FILE.parent.mkdir(parents=True, exist_ok=True)
     REGISTRY_QMD_FILE.write_text(registry_qmd_content)
     print(f"✓ Generated: {REGISTRY_QMD_FILE}")

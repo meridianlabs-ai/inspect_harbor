@@ -940,6 +940,64 @@ def compilebench(
 
 
 @task
+def cooperbench_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""CooperBench: multi-agent cooperation benchmark. 652 feature pairs across 12 repos requiring two agents to coordinate via messaging.
+
+    Dataset: cooperbench@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="cooperbench@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def cooperbench(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""CooperBench: multi-agent cooperation benchmark. 652 feature pairs across 12 repos requiring two agents to coordinate via messaging.
+
+    Dataset: cooperbench
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="cooperbench",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def crustbench_1_0(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -2999,6 +3057,64 @@ def replicationbench(
 
 
 @task
+def researchcodebench_1_0(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ResearchCodeBench evaluates AI agents' ability to implement algorithms from academic papers. Contains 212 code implementation tasks across 20 ML/AI research problems from top-tier venues (ICLR, NeurIPS, CVPR, COLM). Tests paper comprehension, algorithm understanding, and precise code implementation skills with 1,449 lines of reference code.
+
+    Dataset: researchcodebench@1.0
+    Version: 1.0
+    """
+    return _harbor_base(
+        dataset_name_version="researchcodebench@1.0",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def researchcodebench(
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ResearchCodeBench evaluates AI agents' ability to implement algorithms from academic papers. Contains 212 code implementation tasks across 20 ML/AI research problems from top-tier venues (ICLR, NeurIPS, CVPR, COLM). Tests paper comprehension, algorithm understanding, and precise code implementation skills with 1,449 lines of reference code.
+
+    Dataset: researchcodebench
+    Version: Latest available (1.0 when generated)
+    """
+    return _harbor_base(
+        dataset_name_version="researchcodebench",
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def rexbench_1_0(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -3115,7 +3231,7 @@ def satbench(
 
 
 @task
-def swe_atlas_qna_1_0(
+def scale_ai_swe_atlas_qna_1_0(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
     n_tasks: int | None = None,
@@ -3144,7 +3260,7 @@ def swe_atlas_qna_1_0(
 
 
 @task
-def swe_atlas_qna(
+def scale_ai_swe_atlas_qna(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
     n_tasks: int | None = None,
@@ -3173,7 +3289,7 @@ def swe_atlas_qna(
 
 
 @task
-def swe_atlas_tw_1_0(
+def scale_ai_swe_atlas_tw_1_0(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
     n_tasks: int | None = None,
@@ -3202,7 +3318,7 @@ def swe_atlas_tw_1_0(
 
 
 @task
-def swe_atlas_tw(
+def scale_ai_swe_atlas_tw(
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
     n_tasks: int | None = None,

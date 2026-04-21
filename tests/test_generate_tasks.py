@@ -11,6 +11,7 @@ scripts_dir = Path(__file__).parent.parent / "scripts"
 sys.path.insert(0, str(scripts_dir))
 
 from generate_tasks import (  # type: ignore[import-not-found]  # noqa: E402
+    build_harbor_url,
     dataset_name_to_function_name,
     generate_tasks_content,
 )
@@ -72,6 +73,55 @@ def test_dataset_name_to_function_name_complex() -> None:
         dataset_name_to_function_name("multi-part-name@1.2.3")
         == "multi_part_name_1_2_3"
     )
+
+
+def test_dataset_name_to_function_name_with_slash() -> None:
+    """Registry names with a '/' (e.g. scale-ai/swe-atlas-qna) must sanitize to valid identifiers."""
+    assert (
+        dataset_name_to_function_name("scale-ai/swe-atlas-qna@1.0")
+        == "scale_ai_swe_atlas_qna_1_0"
+    )
+    assert (
+        dataset_name_to_function_name("scale-ai/swe-atlas-tw")
+        == "scale_ai_swe_atlas_tw"
+    )
+
+
+def test_build_harbor_url_exact_match() -> None:
+    """Plain name present in org_map → canonical dataset URL at 'latest'."""
+    org_map = {"ade-bench": "dbt-labs"}
+    url, is_canonical = build_harbor_url("ade-bench", org_map)
+    assert is_canonical
+    assert (
+        url == "https://registry.harborframework.com/datasets/dbt-labs/ade-bench/latest"
+    )
+
+
+def test_build_harbor_url_slash_prefixed() -> None:
+    """Slash-prefixed registry names carry the org in the name itself."""
+    url, is_canonical = build_harbor_url("scale-ai/swe-atlas-qna", {})
+    assert is_canonical
+    assert (
+        url
+        == "https://registry.harborframework.com/datasets/scale-ai/swe-atlas-qna/latest"
+    )
+
+
+def test_build_harbor_url_underscore_normalization() -> None:
+    """Registry uses underscores where the site uses hyphens (e.g. arc_agi_2 → arc-agi-2)."""
+    org_map = {"arc-agi-2": "arcprize"}
+    url, is_canonical = build_harbor_url("arc_agi_2", org_map)
+    assert is_canonical
+    assert (
+        url == "https://registry.harborframework.com/datasets/arcprize/arc-agi-2/latest"
+    )
+
+
+def test_build_harbor_url_fallback_to_search() -> None:
+    """Unresolvable datasets fall back to the site's search URL with the bare name."""
+    url, is_canonical = build_harbor_url("bird-bench", {})
+    assert not is_canonical
+    assert url == "https://registry.harborframework.com/datasets?q=bird-bench"
 
 
 def test_generate_tasks_creates_versioned_functions(
@@ -151,7 +201,7 @@ def test_generate_tasks_includes_required_imports(
     content = generate_tasks_content(mock_registry_data)
 
     assert "from inspect_ai import Task, task" in content
-    assert "from inspect_harbor._harbor._task import harbor as _harbor_base" in content
+    assert "from inspect_harbor._harbor.task import harbor as _harbor_base" in content
 
 
 def test_generate_tasks_includes_task_decorator(
