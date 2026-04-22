@@ -1,5 +1,11 @@
 project:
   type: meridianlabs-ai/inspect-docs
+  pre-render:
+    # Refresh docs artifacts (registry-listing.yml + registry/*.qmd pages)
+    # from the Harbor registry. --docs-only leaves src/inspect_harbor/_tasks.py
+    # alone so local docs builds don't churn that file; the nightly cron is
+    # what regenerates _tasks.py.
+    - python ../scripts/generate_tasks.py --docs-only
 
 inspect-docs:
   title: Inspect Harbor

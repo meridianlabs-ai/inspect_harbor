@@ -1,0 +1,6 @@
+# Vendored Quarto extensions are upstream code that we only patch
+# minimally; their lint hygiene isn't ours to enforce (e.g. the
+# inspect-docs theme has `.jinja2 .ot {` which typos flags as a typo
+# of `to`).
+[files]
+extend-exclude = ["docs/_extensions/"]

@@ -1,0 +1,351 @@
+# Per-dataset metadata overrides for Harbor datasets exposed by inspect_harbor.
+#
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │  IMPORTANT: this file is a published interface, not just an internal    │
+# │  config. Two consumers read it:                                         │
+# │                                                                         │
+# │    1. scripts/generate_tasks.py (this repo)                             │
+# │         Reads `categories` per dataset to populate filter chips on      │
+# │         the registry listing at docs/registry.qmd.                      │
+# │                                                                         │
+# │    2. inspect_ai's docs/evals/sync_harbor.py                            │
+# │         Fetches this file over HTTP from                                │
+# │         raw.githubusercontent.com/meridianlabs-ai/inspect_harbor/main/  │
+# │         docs/overrides.yml                                              │
+# │         and uses *all* fields (categories, arxiv, repo, tags, kind,     │
+# │         modalities, contributors, title, desc, featured) to drive the   │
+# │         evals browser at inspect.aisi.org.uk/evals.                     │
+# │                                                                         │
+# │  Consequences:                                                          │
+# │    - Do NOT change the file path (docs/overrides.yml) without           │
+# │      coordinating a matching PR against inspect_ai. The URL above is    │
+# │      hardcoded there.                                                   │
+# │    - Do NOT change the schema (add/rename/remove fields, alter types)   │
+# │      without coordinating with inspect_ai. inspect_ai validates         │
+# │      required fields and will fail its sync if the shape shifts. The   │
+# │      safe change is: add a new *optional* field that old readers        │
+# │      ignore.                                                            │
+# │    - The category vocabulary is owned by inspect_ai (see                │
+# │      docs/evals/sync.py:CATEGORY_VOCAB). We mirror it as a constant in  │
+# │      scripts/validate_overrides.py and must keep it in sync if they     │
+# │      extend the list.                                                   │
+# └─────────────────────────────────────────────────────────────────────────┘
+#
+# Keyed by dataset `name` (unversioned, as it appears in the Harbor registry).
+# Every dataset in the Harbor registry should have an entry here. New entries
+# are auto-stubbed by scripts/generate_tasks.py when Harbor adds a dataset;
+# fill in the fields before merging the nightly PR. CI validation
+# (scripts/validate_overrides.py) will block merges on unfilled stubs.
+#
+# Fields:
+#   categories:   REQUIRED, non-empty. One or more of:
+#                   Coding | Assistants | Reasoning | Knowledge |
+#                   Cybersecurity | Safeguards | Science | Mathematics |
+#                   Biology | Chemistry | Physics | Professional |
+#                   Finance | Medicine | Law | Multimodal | Scheming |
+#                   Behavior
+#   arxiv:        arxiv paper URL                             (optional)
+#   repo:         canonical upstream GitHub repo              (optional)
+#   tags:         list of strings                             (optional)
+#   kind:         agent|qa|generation|multimodal              (optional)
+#   modalities:   list                                        (optional)
+#   contributors: list of GitHub usernames                    (optional)
+#   title:        override the auto-derived display title     (optional)
+#   desc:         override the auto-derived description       (optional)
+#   featured:     boolean                                     (optional)
+
+ade-bench:
+  categories: [Coding]
+  repo: https://github.com/dbt-labs/ade-bench
+
+aider-polyglot:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2503.03656
+
+aime:
+  categories: [Mathematics]
+
+algotune:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2507.15887
+
+arc_agi_2:
+  categories: [Reasoning, Multimodal]
+  arxiv: https://arxiv.org/abs/2505.11831
+
+autocodebench:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2508.09101
+  title: AutoCodeBench
+  desc: Multilingual automated code generation benchmark evaluating LLMs across diverse programming tasks and languages.
+
+bfcl:
+  categories: [Assistants]
+  repo: https://github.com/ShishirPatil/gorilla
+
+bfcl_parity:
+  categories: [Assistants]
+  repo: https://github.com/ShishirPatil/gorilla
+
+bigcodebench-hard-complete:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2406.15877
+
+binary-audit:
+  categories: [Cybersecurity]
+  repo: https://github.com/QuesmaOrg/BinaryAudit
+
+bird-bench:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2305.03111
+
+bixbench:
+  categories: [Science, Biology, Coding]
+  arxiv: https://arxiv.org/abs/2503.00096
+
+bixbench-cli:
+  categories: [Science, Biology, Coding]
+  arxiv: https://arxiv.org/abs/2503.00096
+
+code-contests:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2203.07814
+
+codepde:
+  categories: [Science, Physics, Coding]
+  arxiv: https://arxiv.org/abs/2505.08783
+
+compilebench:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2509.25248
+
+cooperbench:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2601.13295
+
+crustbench:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2504.15254
+
+dabstep:
+  categories: [Professional, Finance, Assistants, Coding]
+  arxiv: https://arxiv.org/abs/2506.23719
+
+deveval:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2403.08604
+
+ds-1000:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2211.11501
+
+evoeval:
+  categories: [Coding]
+  repo: https://github.com/evo-eval/evoeval
+
+featurebench:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2602.10975
+
+featurebench-lite:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2602.10975
+
+featurebench-lite-modal:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2602.10975
+
+featurebench-modal:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2602.10975
+
+financeagent:
+  categories: [Professional, Finance, Assistants]
+  arxiv: https://arxiv.org/abs/2508.00828
+
+gaia:
+  categories: [Assistants, Multimodal]
+  arxiv: https://arxiv.org/abs/2311.12983
+
+gpqa-diamond:
+  categories: [Science, Biology, Chemistry, Physics, Knowledge]
+  arxiv: https://arxiv.org/abs/2311.12022
+
+gso:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2505.23671
+
+hello-world:
+  categories: [Coding]
+
+humanevalfix:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2308.07124
+
+ineqmath:
+  categories: [Mathematics, Reasoning]
+  arxiv: https://arxiv.org/abs/2506.07927
+
+kumo:
+  categories: [Reasoning]
+
+labbench:
+  categories: [Science, Biology, Knowledge]
+  arxiv: https://arxiv.org/abs/2407.10362
+
+lawbench:
+  categories: [Professional, Law, Knowledge]
+  arxiv: https://arxiv.org/abs/2309.16289
+
+legacy-bench:
+  categories: [Coding]
+  repo: https://factory.ai/news/legacy-bench
+
+livecodebench:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2403.07974
+
+medagentbench:
+  categories: [Professional, Medicine, Assistants]
+  arxiv: https://arxiv.org/abs/2501.14654
+
+ml-dev-bench:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2502.00964
+
+mlgym-bench:
+  categories: [Coding, Science]
+  arxiv: https://arxiv.org/abs/2502.14499
+
+mmau:
+  categories: [Multimodal]
+  arxiv: https://arxiv.org/abs/2410.19168
+
+mmmlu:
+  categories: [Knowledge, Reasoning]
+  arxiv: https://arxiv.org/abs/2503.10497
+
+openthoughts-tblite:
+  categories: [Coding]
+  repo: https://github.com/open-thoughts/OpenThoughts-TBLite
+
+otel-bench:
+  categories: [Coding]
+  repo: https://github.com/QuesmaOrg/otel-bench
+
+pixiu:
+  categories: [Professional, Finance, Knowledge]
+  arxiv: https://arxiv.org/abs/2306.05443
+
+qcircuitbench:
+  categories: [Science, Physics, Coding]
+  arxiv: https://arxiv.org/abs/2410.07961
+
+quixbugs:
+  categories: [Coding]
+  repo: https://github.com/jkoppel/QuixBugs
+
+reasoning-gym-easy:
+  categories: [Reasoning]
+  arxiv: https://arxiv.org/abs/2505.24760
+
+reasoning-gym-hard:
+  categories: [Reasoning]
+  arxiv: https://arxiv.org/abs/2505.24760
+
+replicationbench:
+  categories: [Science, Physics, Coding]
+  arxiv: https://arxiv.org/abs/2510.24591
+
+researchcodebench:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2506.02314
+
+rexbench:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2506.22598
+
+satbench:
+  categories: [Reasoning]
+  arxiv: https://arxiv.org/abs/2505.14615
+
+scale-ai/swe-atlas-qna:
+  categories: [Coding]
+  repo: https://github.com/scaleapi/SWE-Atlas
+
+scale-ai/swe-atlas-tw:
+  categories: [Coding]
+  repo: https://github.com/scaleapi/SWE-Atlas
+
+seta-env:
+  categories: [Coding]
+
+simpleqa:
+  categories: [Knowledge]
+  arxiv: https://arxiv.org/abs/2411.04368
+
+sldbench:
+  categories: [Science, Reasoning, Mathematics]
+  arxiv: https://arxiv.org/abs/2507.21184
+
+spider2-dbt:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2411.07763
+
+spreadsheetbench-verified:
+  categories: [Professional, Assistants]
+  arxiv: https://arxiv.org/abs/2406.14991
+
+strongreject:
+  categories: [Safeguards]
+  arxiv: https://arxiv.org/abs/2402.10260
+
+swe-gen-js:
+  categories: [Coding]
+  repo: https://www.swebench.com/post-260113-swesmith-javascript.html
+
+swe-lancer-diamond:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2502.12115
+
+swebench-verified:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2310.06770
+
+swebench_multilingual:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2504.02605
+
+swebenchpro:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2509.16941
+
+swesmith:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2504.21798
+
+swtbench-verified:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2406.12952
+
+termigen-environments:
+  categories: [Coding]
+
+terminal-bench:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2601.11868
+
+terminal-bench-pro:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2601.11868
+
+terminal-bench-sample:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2601.11868
+
+usaco:
+  categories: [Coding]
+  arxiv: https://arxiv.org/abs/2404.10952
+
+vmax-tasks:
+  categories: [Coding]

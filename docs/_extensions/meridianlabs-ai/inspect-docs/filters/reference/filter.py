@@ -23,6 +23,14 @@ from griffe import Extensions, Module, UnpackTypedDictExtension
 import griffe
 import panflute as pf  # type: ignore
 
+# Quarto serializes values in frontmatter fields like `categories:` as
+# pandoc RawInline elements with `format="pandoc-native"`. panflute 2.x
+# doesn't list that format in its RAW_FORMATS set, so any page whose
+# frontmatter reaches pandoc's AST via that path blows up when
+# `pf.run_filters` parses stdin. Widening the set before the filter body
+# loads lets such pages pass through unchanged.
+pf.elements.RAW_FORMATS.add("pandoc-native")
+
 from rich.console import Console
 
 from parse import DocParseOptions, MissingDocstringError, parse_docs
