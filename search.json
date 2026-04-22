@@ -36,6 +36,846 @@
     ]
   },
   {
+    "objectID": "registry/swebench_verified_1_0.html",
+    "href": "registry/swebench_verified_1_0.html",
+    "title": "swebench-verified@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/swebench_verified_1_0.html#run-this-task",
+    "href": "registry/swebench_verified_1_0.html#run-this-task",
+    "title": "swebench-verified@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/swebench_verified_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import swebench_verified_1_0\n\neval(swebench_verified_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/swebench_verified_1_0.html#dataset-information",
+    "href": "registry/swebench_verified_1_0.html#dataset-information",
+    "title": "swebench-verified@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nswebench-verified@1.0\n\n\nInspect task\nswebench_verified_1_0\n\n\nVersion\n1.0\n\n\nSamples\n500\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/terminal_bench_pro_1_0.html",
+    "href": "registry/terminal_bench_pro_1_0.html",
+    "title": "terminal-bench-pro@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/terminal_bench_pro_1_0.html#run-this-task",
+    "href": "registry/terminal_bench_pro_1_0.html#run-this-task",
+    "title": "terminal-bench-pro@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/terminal_bench_pro_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import terminal_bench_pro_1_0\n\neval(terminal_bench_pro_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/terminal_bench_pro_1_0.html#dataset-information",
+    "href": "registry/terminal_bench_pro_1_0.html#dataset-information",
+    "title": "terminal-bench-pro@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nterminal-bench-pro@1.0\n\n\nInspect task\nterminal_bench_pro_1_0\n\n\nVersion\n1.0\n\n\nSamples\n200\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/otel_bench_1_0.html",
+    "href": "registry/otel_bench_1_0.html",
+    "title": "otel-bench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/otel_bench_1_0.html#run-this-task",
+    "href": "registry/otel_bench_1_0.html#run-this-task",
+    "title": "otel-bench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/otel_bench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import otel_bench_1_0\n\neval(otel_bench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/otel_bench_1_0.html#dataset-information",
+    "href": "registry/otel_bench_1_0.html#dataset-information",
+    "title": "otel-bench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\notel-bench@1.0\n\n\nInspect task\notel_bench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n26\n\n\nSource\nhttps://github.com/QuesmaOrg/otel-bench\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/swe_lancer_diamond_manager.html",
+    "href": "registry/swe_lancer_diamond_manager.html",
+    "title": "swe-lancer-diamond@manager",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/swe_lancer_diamond_manager.html#run-this-task",
+    "href": "registry/swe_lancer_diamond_manager.html#run-this-task",
+    "title": "swe-lancer-diamond@manager",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/swe_lancer_diamond_manager --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import swe_lancer_diamond_manager\n\neval(swe_lancer_diamond_manager(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/swe_lancer_diamond_manager.html#dataset-information",
+    "href": "registry/swe_lancer_diamond_manager.html#dataset-information",
+    "title": "swe-lancer-diamond@manager",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nswe-lancer-diamond@manager\n\n\nInspect task\nswe_lancer_diamond_manager\n\n\nVersion\nmanager\n\n\nSamples\n265\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/financeagent_public.html",
+    "href": "registry/financeagent_public.html",
+    "title": "financeagent@public",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/financeagent_public.html#run-this-task",
+    "href": "registry/financeagent_public.html#run-this-task",
+    "title": "financeagent@public",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/financeagent_public --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import financeagent_public\n\neval(financeagent_public(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/financeagent_public.html#dataset-information",
+    "href": "registry/financeagent_public.html#dataset-information",
+    "title": "financeagent@public",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nfinanceagent@public\n\n\nInspect task\nfinanceagent_public\n\n\nVersion\npublic\n\n\nSamples\n50\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/aider_polyglot_1_0.html",
+    "href": "registry/aider_polyglot_1_0.html",
+    "title": "aider-polyglot@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/aider_polyglot_1_0.html#run-this-task",
+    "href": "registry/aider_polyglot_1_0.html#run-this-task",
+    "title": "aider-polyglot@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/aider_polyglot_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import aider_polyglot_1_0\n\neval(aider_polyglot_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/aider_polyglot_1_0.html#dataset-information",
+    "href": "registry/aider_polyglot_1_0.html#dataset-information",
+    "title": "aider-polyglot@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\naider-polyglot@1.0\n\n\nInspect task\naider_polyglot_1_0\n\n\nVersion\n1.0\n\n\nSamples\n225\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/mmmlu_parity.html",
+    "href": "registry/mmmlu_parity.html",
+    "title": "mmmlu@parity",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/mmmlu_parity.html#run-this-task",
+    "href": "registry/mmmlu_parity.html#run-this-task",
+    "title": "mmmlu@parity",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/mmmlu_parity --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import mmmlu_parity\n\neval(mmmlu_parity(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/mmmlu_parity.html#dataset-information",
+    "href": "registry/mmmlu_parity.html#dataset-information",
+    "title": "mmmlu@parity",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nmmmlu@parity\n\n\nInspect task\nmmmlu_parity\n\n\nVersion\nparity\n\n\nSamples\n150\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/ds_1000_head.html",
+    "href": "registry/ds_1000_head.html",
+    "title": "ds-1000@head",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/ds_1000_head.html#run-this-task",
+    "href": "registry/ds_1000_head.html#run-this-task",
+    "title": "ds-1000@head",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/ds_1000_head --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import ds_1000_head\n\neval(ds_1000_head(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/ds_1000_head.html#dataset-information",
+    "href": "registry/ds_1000_head.html#dataset-information",
+    "title": "ds-1000@head",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nds-1000@head\n\n\nInspect task\nds_1000_head\n\n\nVersion\nhead\n\n\nSamples\n1000\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/featurebench_1_0.html",
+    "href": "registry/featurebench_1_0.html",
+    "title": "featurebench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/featurebench_1_0.html#run-this-task",
+    "href": "registry/featurebench_1_0.html#run-this-task",
+    "title": "featurebench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/featurebench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import featurebench_1_0\n\neval(featurebench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/featurebench_1_0.html#dataset-information",
+    "href": "registry/featurebench_1_0.html#dataset-information",
+    "title": "featurebench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nfeaturebench@1.0\n\n\nInspect task\nfeaturebench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n200\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/arc_agi_2_1_0.html",
+    "href": "registry/arc_agi_2_1_0.html",
+    "title": "arc_agi_2@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/arc_agi_2_1_0.html#run-this-task",
+    "href": "registry/arc_agi_2_1_0.html#run-this-task",
+    "title": "arc_agi_2@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/arc_agi_2_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import arc_agi_2_1_0\n\neval(arc_agi_2_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/arc_agi_2_1_0.html#dataset-information",
+    "href": "registry/arc_agi_2_1_0.html#dataset-information",
+    "title": "arc_agi_2@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\narc_agi_2@1.0\n\n\nInspect task\narc_agi_2_1_0\n\n\nVersion\n1.0\n\n\nSamples\n167\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/bfcl_parity_1_0.html",
+    "href": "registry/bfcl_parity_1_0.html",
+    "title": "bfcl_parity@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/bfcl_parity_1_0.html#run-this-task",
+    "href": "registry/bfcl_parity_1_0.html#run-this-task",
+    "title": "bfcl_parity@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/bfcl_parity_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import bfcl_parity_1_0\n\neval(bfcl_parity_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/bfcl_parity_1_0.html#dataset-information",
+    "href": "registry/bfcl_parity_1_0.html#dataset-information",
+    "title": "bfcl_parity@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nbfcl_parity@1.0\n\n\nInspect task\nbfcl_parity_1_0\n\n\nVersion\n1.0\n\n\nSamples\n123\n\n\nSource\nhttps://github.com/ShishirPatil/gorilla\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/sldbench_1_0.html",
+    "href": "registry/sldbench_1_0.html",
+    "title": "sldbench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/sldbench_1_0.html#run-this-task",
+    "href": "registry/sldbench_1_0.html#run-this-task",
+    "title": "sldbench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/sldbench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import sldbench_1_0\n\neval(sldbench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/sldbench_1_0.html#dataset-information",
+    "href": "registry/sldbench_1_0.html#dataset-information",
+    "title": "sldbench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nsldbench@1.0\n\n\nInspect task\nsldbench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n8\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/legacy_bench_1_0.html",
+    "href": "registry/legacy_bench_1_0.html",
+    "title": "legacy-bench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/legacy_bench_1_0.html#run-this-task",
+    "href": "registry/legacy_bench_1_0.html#run-this-task",
+    "title": "legacy-bench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/legacy_bench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import legacy_bench_1_0\n\neval(legacy_bench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/legacy_bench_1_0.html#dataset-information",
+    "href": "registry/legacy_bench_1_0.html#dataset-information",
+    "title": "legacy-bench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nlegacy-bench@1.0\n\n\nInspect task\nlegacy_bench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n10\n\n\nSource\nhttps://factory.ai/news/legacy-bench\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/quixbugs_1_0.html",
+    "href": "registry/quixbugs_1_0.html",
+    "title": "quixbugs@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/quixbugs_1_0.html#run-this-task",
+    "href": "registry/quixbugs_1_0.html#run-this-task",
+    "title": "quixbugs@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/quixbugs_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import quixbugs_1_0\n\neval(quixbugs_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/quixbugs_1_0.html#dataset-information",
+    "href": "registry/quixbugs_1_0.html#dataset-information",
+    "title": "quixbugs@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nquixbugs@1.0\n\n\nInspect task\nquixbugs_1_0\n\n\nVersion\n1.0\n\n\nSamples\n80\n\n\nSource\nhttps://github.com/jkoppel/QuixBugs\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/gaia_1_0.html",
+    "href": "registry/gaia_1_0.html",
+    "title": "gaia@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/gaia_1_0.html#run-this-task",
+    "href": "registry/gaia_1_0.html#run-this-task",
+    "title": "gaia@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/gaia_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import gaia_1_0\n\neval(gaia_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/gaia_1_0.html#dataset-information",
+    "href": "registry/gaia_1_0.html#dataset-information",
+    "title": "gaia@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\ngaia@1.0\n\n\nInspect task\ngaia_1_0\n\n\nVersion\n1.0\n\n\nSamples\n165\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/evoeval_1_0.html",
+    "href": "registry/evoeval_1_0.html",
+    "title": "evoeval@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/evoeval_1_0.html#run-this-task",
+    "href": "registry/evoeval_1_0.html#run-this-task",
+    "title": "evoeval@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/evoeval_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import evoeval_1_0\n\neval(evoeval_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/evoeval_1_0.html#dataset-information",
+    "href": "registry/evoeval_1_0.html#dataset-information",
+    "title": "evoeval@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nevoeval@1.0\n\n\nInspect task\nevoeval_1_0\n\n\nVersion\n1.0\n\n\nSamples\n100\n\n\nSource\nhttps://github.com/evo-eval/evoeval\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/binary_audit_1_0.html",
+    "href": "registry/binary_audit_1_0.html",
+    "title": "binary-audit@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/binary_audit_1_0.html#run-this-task",
+    "href": "registry/binary_audit_1_0.html#run-this-task",
+    "title": "binary-audit@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/binary_audit_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import binary_audit_1_0\n\neval(binary_audit_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/binary_audit_1_0.html#dataset-information",
+    "href": "registry/binary_audit_1_0.html#dataset-information",
+    "title": "binary-audit@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nbinary-audit@1.0\n\n\nInspect task\nbinary_audit_1_0\n\n\nVersion\n1.0\n\n\nSamples\n46\n\n\nSource\nhttps://github.com/QuesmaOrg/BinaryAudit\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/usaco_2_0.html",
+    "href": "registry/usaco_2_0.html",
+    "title": "usaco@2.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/usaco_2_0.html#run-this-task",
+    "href": "registry/usaco_2_0.html#run-this-task",
+    "title": "usaco@2.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/usaco_2_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import usaco_2_0\n\neval(usaco_2_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/usaco_2_0.html#dataset-information",
+    "href": "registry/usaco_2_0.html#dataset-information",
+    "title": "usaco@2.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nusaco@2.0\n\n\nInspect task\nusaco_2_0\n\n\nVersion\n2.0\n\n\nSamples\n304\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/lawbench_1_0.html",
+    "href": "registry/lawbench_1_0.html",
+    "title": "lawbench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/lawbench_1_0.html#run-this-task",
+    "href": "registry/lawbench_1_0.html#run-this-task",
+    "title": "lawbench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/lawbench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import lawbench_1_0\n\neval(lawbench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/lawbench_1_0.html#dataset-information",
+    "href": "registry/lawbench_1_0.html#dataset-information",
+    "title": "lawbench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nlawbench@1.0\n\n\nInspect task\nlawbench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n1000\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/pixiu_parity.html",
+    "href": "registry/pixiu_parity.html",
+    "title": "pixiu@parity",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/pixiu_parity.html#run-this-task",
+    "href": "registry/pixiu_parity.html#run-this-task",
+    "title": "pixiu@parity",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/pixiu_parity --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import pixiu_parity\n\neval(pixiu_parity(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/pixiu_parity.html#dataset-information",
+    "href": "registry/pixiu_parity.html#dataset-information",
+    "title": "pixiu@parity",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\npixiu@parity\n\n\nInspect task\npixiu_parity\n\n\nVersion\nparity\n\n\nSamples\n435\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/codepde_1_0.html",
+    "href": "registry/codepde_1_0.html",
+    "title": "codepde@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/codepde_1_0.html#run-this-task",
+    "href": "registry/codepde_1_0.html#run-this-task",
+    "title": "codepde@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/codepde_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import codepde_1_0\n\neval(codepde_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/codepde_1_0.html#dataset-information",
+    "href": "registry/codepde_1_0.html#dataset-information",
+    "title": "codepde@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\ncodepde@1.0\n\n\nInspect task\ncodepde_1_0\n\n\nVersion\n1.0\n\n\nSamples\n5\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/gpqa_diamond_1_0.html",
+    "href": "registry/gpqa_diamond_1_0.html",
+    "title": "gpqa-diamond@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/gpqa_diamond_1_0.html#run-this-task",
+    "href": "registry/gpqa_diamond_1_0.html#run-this-task",
+    "title": "gpqa-diamond@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/gpqa_diamond_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import gpqa_diamond_1_0\n\neval(gpqa_diamond_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/gpqa_diamond_1_0.html#dataset-information",
+    "href": "registry/gpqa_diamond_1_0.html#dataset-information",
+    "title": "gpqa-diamond@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\ngpqa-diamond@1.0\n\n\nInspect task\ngpqa_diamond_1_0\n\n\nVersion\n1.0\n\n\nSamples\n198\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/crustbench_1_0.html",
+    "href": "registry/crustbench_1_0.html",
+    "title": "crustbench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/crustbench_1_0.html#run-this-task",
+    "href": "registry/crustbench_1_0.html#run-this-task",
+    "title": "crustbench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/crustbench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import crustbench_1_0\n\neval(crustbench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/crustbench_1_0.html#dataset-information",
+    "href": "registry/crustbench_1_0.html#dataset-information",
+    "title": "crustbench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\ncrustbench@1.0\n\n\nInspect task\ncrustbench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n100\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/rexbench_1_0.html",
+    "href": "registry/rexbench_1_0.html",
+    "title": "rexbench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/rexbench_1_0.html#run-this-task",
+    "href": "registry/rexbench_1_0.html#run-this-task",
+    "title": "rexbench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/rexbench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import rexbench_1_0\n\neval(rexbench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/rexbench_1_0.html#dataset-information",
+    "href": "registry/rexbench_1_0.html#dataset-information",
+    "title": "rexbench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nrexbench@1.0\n\n\nInspect task\nrexbench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n2\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/algotune_1_0.html",
+    "href": "registry/algotune_1_0.html",
+    "title": "algotune@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/algotune_1_0.html#run-this-task",
+    "href": "registry/algotune_1_0.html#run-this-task",
+    "title": "algotune@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/algotune_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import algotune_1_0\n\neval(algotune_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/algotune_1_0.html#dataset-information",
+    "href": "registry/algotune_1_0.html#dataset-information",
+    "title": "algotune@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nalgotune@1.0\n\n\nInspect task\nalgotune_1_0\n\n\nVersion\n1.0\n\n\nSamples\n154\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/bigcodebench_hard_complete_1_0_0.html",
+    "href": "registry/bigcodebench_hard_complete_1_0_0.html",
+    "title": "bigcodebench-hard-complete@1.0.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/bigcodebench_hard_complete_1_0_0.html#run-this-task",
+    "href": "registry/bigcodebench_hard_complete_1_0_0.html#run-this-task",
+    "title": "bigcodebench-hard-complete@1.0.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/bigcodebench_hard_complete_1_0_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import bigcodebench_hard_complete_1_0_0\n\neval(bigcodebench_hard_complete_1_0_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/bigcodebench_hard_complete_1_0_0.html#dataset-information",
+    "href": "registry/bigcodebench_hard_complete_1_0_0.html#dataset-information",
+    "title": "bigcodebench-hard-complete@1.0.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nbigcodebench-hard-complete@1.0.0\n\n\nInspect task\nbigcodebench_hard_complete_1_0_0\n\n\nVersion\n1.0.0\n\n\nSamples\n145\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/medagentbench_1_0.html",
+    "href": "registry/medagentbench_1_0.html",
+    "title": "medagentbench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/medagentbench_1_0.html#run-this-task",
+    "href": "registry/medagentbench_1_0.html#run-this-task",
+    "title": "medagentbench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/medagentbench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import medagentbench_1_0\n\neval(medagentbench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/medagentbench_1_0.html#dataset-information",
+    "href": "registry/medagentbench_1_0.html#dataset-information",
+    "title": "medagentbench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nmedagentbench@1.0\n\n\nInspect task\nmedagentbench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n300\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/gso_1_0.html",
+    "href": "registry/gso_1_0.html",
+    "title": "gso@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/gso_1_0.html#run-this-task",
+    "href": "registry/gso_1_0.html#run-this-task",
+    "title": "gso@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/gso_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import gso_1_0\n\neval(gso_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/gso_1_0.html#dataset-information",
+    "href": "registry/gso_1_0.html#dataset-information",
+    "title": "gso@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\ngso@1.0\n\n\nInspect task\ngso_1_0\n\n\nVersion\n1.0\n\n\nSamples\n102\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/ade_bench_1_0.html",
+    "href": "registry/ade_bench_1_0.html",
+    "title": "ade-bench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/ade_bench_1_0.html#run-this-task",
+    "href": "registry/ade_bench_1_0.html#run-this-task",
+    "title": "ade-bench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/ade_bench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import ade_bench_1_0\n\neval(ade_bench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/ade_bench_1_0.html#dataset-information",
+    "href": "registry/ade_bench_1_0.html#dataset-information",
+    "title": "ade-bench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nade-bench@1.0\n\n\nInspect task\nade_bench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n48\n\n\nSource\nhttps://github.com/dbt-labs/ade-bench\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/kumo_easy.html",
+    "href": "registry/kumo_easy.html",
+    "title": "kumo@easy",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/kumo_easy.html#run-this-task",
+    "href": "registry/kumo_easy.html#run-this-task",
+    "title": "kumo@easy",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/kumo_easy --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import kumo_easy\n\neval(kumo_easy(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/kumo_easy.html#dataset-information",
+    "href": "registry/kumo_easy.html#dataset-information",
+    "title": "kumo@easy",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nkumo@easy\n\n\nInspect task\nkumo_easy\n\n\nVersion\neasy\n\n\nSamples\n5050\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/bfcl_1_0.html",
+    "href": "registry/bfcl_1_0.html",
+    "title": "bfcl@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/bfcl_1_0.html#run-this-task",
+    "href": "registry/bfcl_1_0.html#run-this-task",
+    "title": "bfcl@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/bfcl_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import bfcl_1_0\n\neval(bfcl_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/bfcl_1_0.html#dataset-information",
+    "href": "registry/bfcl_1_0.html#dataset-information",
+    "title": "bfcl@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nbfcl@1.0\n\n\nInspect task\nbfcl_1_0\n\n\nVersion\n1.0\n\n\nSamples\n3641\n\n\nSource\nhttps://github.com/ShishirPatil/gorilla\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/replicationbench_1_0.html",
+    "href": "registry/replicationbench_1_0.html",
+    "title": "replicationbench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/replicationbench_1_0.html#run-this-task",
+    "href": "registry/replicationbench_1_0.html#run-this-task",
+    "title": "replicationbench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/replicationbench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import replicationbench_1_0\n\neval(replicationbench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/replicationbench_1_0.html#dataset-information",
+    "href": "registry/replicationbench_1_0.html#dataset-information",
+    "title": "replicationbench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nreplicationbench@1.0\n\n\nInspect task\nreplicationbench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n90\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/bixbench_cli_1_5.html",
+    "href": "registry/bixbench_cli_1_5.html",
+    "title": "bixbench-cli@1.5",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/bixbench_cli_1_5.html#run-this-task",
+    "href": "registry/bixbench_cli_1_5.html#run-this-task",
+    "title": "bixbench-cli@1.5",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/bixbench_cli_1_5 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import bixbench_cli_1_5\n\neval(bixbench_cli_1_5(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/bixbench_cli_1_5.html#dataset-information",
+    "href": "registry/bixbench_cli_1_5.html#dataset-information",
+    "title": "bixbench-cli@1.5",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nbixbench-cli@1.5\n\n\nInspect task\nbixbench_cli_1_5\n\n\nVersion\n1.5\n\n\nSamples\n205\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/livecodebench_6_0.html",
+    "href": "registry/livecodebench_6_0.html",
+    "title": "livecodebench@6.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/livecodebench_6_0.html#run-this-task",
+    "href": "registry/livecodebench_6_0.html#run-this-task",
+    "title": "livecodebench@6.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/livecodebench_6_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import livecodebench_6_0\n\neval(livecodebench_6_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/livecodebench_6_0.html#dataset-information",
+    "href": "registry/livecodebench_6_0.html#dataset-information",
+    "title": "livecodebench@6.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nlivecodebench@6.0\n\n\nInspect task\nlivecodebench_6_0\n\n\nVersion\n6.0\n\n\nSamples\n100\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/swebench_multilingual_1_0.html",
+    "href": "registry/swebench_multilingual_1_0.html",
+    "title": "swebench_multilingual@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/swebench_multilingual_1_0.html#run-this-task",
+    "href": "registry/swebench_multilingual_1_0.html#run-this-task",
+    "title": "swebench_multilingual@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/swebench_multilingual_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import swebench_multilingual_1_0\n\neval(swebench_multilingual_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/swebench_multilingual_1_0.html#dataset-information",
+    "href": "registry/swebench_multilingual_1_0.html#dataset-information",
+    "title": "swebench_multilingual@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nswebench_multilingual@1.0\n\n\nInspect task\nswebench_multilingual_1_0\n\n\nVersion\n1.0\n\n\nSamples\n300\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/labbench_1_0.html",
+    "href": "registry/labbench_1_0.html",
+    "title": "labbench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/labbench_1_0.html#run-this-task",
+    "href": "registry/labbench_1_0.html#run-this-task",
+    "title": "labbench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/labbench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import labbench_1_0\n\neval(labbench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/labbench_1_0.html#dataset-information",
+    "href": "registry/labbench_1_0.html#dataset-information",
+    "title": "labbench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nlabbench@1.0\n\n\nInspect task\nlabbench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n181\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/kumo_1_0.html",
+    "href": "registry/kumo_1_0.html",
+    "title": "kumo@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/kumo_1_0.html#run-this-task",
+    "href": "registry/kumo_1_0.html#run-this-task",
+    "title": "kumo@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/kumo_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import kumo_1_0\n\neval(kumo_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/kumo_1_0.html#dataset-information",
+    "href": "registry/kumo_1_0.html#dataset-information",
+    "title": "kumo@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nkumo@1.0\n\n\nInspect task\nkumo_1_0\n\n\nVersion\n1.0\n\n\nSamples\n5300\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/compilebench_1_0.html",
+    "href": "registry/compilebench_1_0.html",
+    "title": "compilebench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/compilebench_1_0.html#run-this-task",
+    "href": "registry/compilebench_1_0.html#run-this-task",
+    "title": "compilebench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/compilebench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import compilebench_1_0\n\neval(compilebench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/compilebench_1_0.html#dataset-information",
+    "href": "registry/compilebench_1_0.html#dataset-information",
+    "title": "compilebench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\ncompilebench@1.0\n\n\nInspect task\ncompilebench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n15\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/mmau_1_0.html",
+    "href": "registry/mmau_1_0.html",
+    "title": "mmau@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/mmau_1_0.html#run-this-task",
+    "href": "registry/mmau_1_0.html#run-this-task",
+    "title": "mmau@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/mmau_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import mmau_1_0\n\neval(mmau_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/mmau_1_0.html#dataset-information",
+    "href": "registry/mmau_1_0.html#dataset-information",
+    "title": "mmau@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nmmau@1.0\n\n\nInspect task\nmmau_1_0\n\n\nVersion\n1.0\n\n\nSamples\n1000\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/terminal_bench_2_0.html",
+    "href": "registry/terminal_bench_2_0.html",
+    "title": "terminal-bench@2.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/terminal_bench_2_0.html#run-this-task",
+    "href": "registry/terminal_bench_2_0.html#run-this-task",
+    "title": "terminal-bench@2.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/terminal_bench_2_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import terminal_bench_2_0\n\neval(terminal_bench_2_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/terminal_bench_2_0.html#dataset-information",
+    "href": "registry/terminal_bench_2_0.html#dataset-information",
+    "title": "terminal-bench@2.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nterminal-bench@2.0\n\n\nInspect task\nterminal_bench_2_0\n\n\nVersion\n2.0\n\n\nSamples\n89\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
     "objectID": "parameters.html",
     "href": "parameters.html",
     "title": "Task Parameters",
@@ -64,144 +904,151 @@
     "href": "CHANGELOG.html",
     "title": "Changelog",
     "section": "",
-    "text": "apply resource overrides only to default service (#56) (ea5e86f)"
+    "text": "embed Harbor URL in each task’s docstring (#64) (b76d374)\nrestore registry tracker and repoint docs URLs to new Harbor site (#61) (cc00228)"
   },
   {
     "objectID": "CHANGELOG.html#section",
     "href": "CHANGELOG.html#section",
     "title": "Changelog",
     "section": "",
-    "text": "apply resource overrides only to default service (#56) (ea5e86f)"
+    "text": "embed Harbor URL in each task’s docstring (#64) (b76d374)\nrestore registry tracker and repoint docs URLs to new Harbor site (#61) (cc00228)"
   },
   {
     "objectID": "CHANGELOG.html#section-1",
     "href": "CHANGELOG.html#section-1",
     "title": "Changelog",
-    "section": "0.4.15 (2026-04-01)",
-    "text": "0.4.15 (2026-04-01)\n\nBug Fixes\n\npin harbor&lt;0.3.0 and bump inspect-ai&gt;=0.3.201 (#52) (0cb0a46)"
+    "section": "0.4.16 (2026-04-08)",
+    "text": "0.4.16 (2026-04-08)\n\nBug Fixes\n\napply resource overrides only to default service (#56) (ea5e86f)"
   },
   {
     "objectID": "CHANGELOG.html#section-2",
     "href": "CHANGELOG.html#section-2",
     "title": "Changelog",
-    "section": "0.4.14 (2026-03-30)",
-    "text": "0.4.14 (2026-03-30)\n\nBug Fixes\n\nupdate Harbor registry tasks (#50) (5f49ac9)"
+    "section": "0.4.15 (2026-04-01)",
+    "text": "0.4.15 (2026-04-01)\n\nBug Fixes\n\npin harbor&lt;0.3.0 and bump inspect-ai&gt;=0.3.201 (#52) (0cb0a46)"
   },
   {
     "objectID": "CHANGELOG.html#section-3",
     "href": "CHANGELOG.html#section-3",
     "title": "Changelog",
-    "section": "0.4.13 (2026-03-25)",
-    "text": "0.4.13 (2026-03-25)\n\nBug Fixes\n\npin litellm&lt;1.82.7 to block compromised versions (#48) (5e7328b)\nupdate Harbor registry tasks (#47) (10752d5)"
+    "section": "0.4.14 (2026-03-30)",
+    "text": "0.4.14 (2026-03-30)\n\nBug Fixes\n\nupdate Harbor registry tasks (#50) (5f49ac9)"
   },
   {
     "objectID": "CHANGELOG.html#section-4",
     "href": "CHANGELOG.html#section-4",
     "title": "Changelog",
-    "section": "0.4.12 (2026-03-24)",
-    "text": "0.4.12 (2026-03-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#45) (dc25090)"
+    "section": "0.4.13 (2026-03-25)",
+    "text": "0.4.13 (2026-03-25)\n\nBug Fixes\n\npin litellm&lt;1.82.7 to block compromised versions (#48) (5e7328b)\nupdate Harbor registry tasks (#47) (10752d5)"
   },
   {
     "objectID": "CHANGELOG.html#section-5",
     "href": "CHANGELOG.html#section-5",
     "title": "Changelog",
-    "section": "0.4.11 (2026-03-18)",
-    "text": "0.4.11 (2026-03-18)\n\nBug Fixes\n\nenforce network mode & handle variable expansion (#43) (3858da2)"
+    "section": "0.4.12 (2026-03-24)",
+    "text": "0.4.12 (2026-03-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#45) (dc25090)"
   },
   {
     "objectID": "CHANGELOG.html#section-6",
     "href": "CHANGELOG.html#section-6",
     "title": "Changelog",
-    "section": "0.4.10 (2026-03-16)",
-    "text": "0.4.10 (2026-03-16)\n\nBug Fixes\n\nenforce allow_internet network mode in compose-file path (#42) (14bdc24)\nupdate Harbor registry tasks (#40) (290c0ca)"
+    "section": "0.4.11 (2026-03-18)",
+    "text": "0.4.11 (2026-03-18)\n\nBug Fixes\n\nenforce network mode & handle variable expansion (#43) (3858da2)"
   },
   {
     "objectID": "CHANGELOG.html#section-7",
     "href": "CHANGELOG.html#section-7",
     "title": "Changelog",
-    "section": "0.4.9 (2026-03-11)",
-    "text": "0.4.9 (2026-03-11)\n\nBug Fixes\n\nupdate Harbor registry tasks (#38) (47dd23f)"
+    "section": "0.4.10 (2026-03-16)",
+    "text": "0.4.10 (2026-03-16)\n\nBug Fixes\n\nenforce allow_internet network mode in compose-file path (#42) (14bdc24)\nupdate Harbor registry tasks (#40) (290c0ca)"
   },
   {
     "objectID": "CHANGELOG.html#section-8",
     "href": "CHANGELOG.html#section-8",
     "title": "Changelog",
-    "section": "0.4.8 (2026-03-05)",
-    "text": "0.4.8 (2026-03-05)\n\nBug Fixes\n\nupdate Harbor registry tasks (#36) (ec31a18)"
+    "section": "0.4.9 (2026-03-11)",
+    "text": "0.4.9 (2026-03-11)\n\nBug Fixes\n\nupdate Harbor registry tasks (#38) (47dd23f)"
   },
   {
     "objectID": "CHANGELOG.html#section-9",
     "href": "CHANGELOG.html#section-9",
     "title": "Changelog",
-    "section": "0.4.7 (2026-03-03)",
-    "text": "0.4.7 (2026-03-03)\n\nBug Fixes\n\nupdate Harbor registry tasks (#34) (e810779)"
+    "section": "0.4.8 (2026-03-05)",
+    "text": "0.4.8 (2026-03-05)\n\nBug Fixes\n\nupdate Harbor registry tasks (#36) (ec31a18)"
   },
   {
     "objectID": "CHANGELOG.html#section-10",
     "href": "CHANGELOG.html#section-10",
     "title": "Changelog",
-    "section": "0.4.6 (2026-03-02)",
-    "text": "0.4.6 (2026-03-02)\n\nBug Fixes\n\nupdate Harbor registry tasks (#32) (fd04b4a)"
+    "section": "0.4.7 (2026-03-03)",
+    "text": "0.4.7 (2026-03-03)\n\nBug Fixes\n\nupdate Harbor registry tasks (#34) (e810779)"
   },
   {
     "objectID": "CHANGELOG.html#section-11",
     "href": "CHANGELOG.html#section-11",
     "title": "Changelog",
-    "section": "0.4.5 (2026-02-24)",
-    "text": "0.4.5 (2026-02-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#29) (9252db7)"
+    "section": "0.4.6 (2026-03-02)",
+    "text": "0.4.6 (2026-03-02)\n\nBug Fixes\n\nupdate Harbor registry tasks (#32) (fd04b4a)"
   },
   {
     "objectID": "CHANGELOG.html#section-12",
     "href": "CHANGELOG.html#section-12",
     "title": "Changelog",
-    "section": "0.4.4 (2026-02-23)",
-    "text": "0.4.4 (2026-02-23)\n\nBug Fixes\n\nupdate Harbor registry tasks (#27) (663915c)"
+    "section": "0.4.5 (2026-02-24)",
+    "text": "0.4.5 (2026-02-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#29) (9252db7)"
   },
   {
     "objectID": "CHANGELOG.html#section-13",
     "href": "CHANGELOG.html#section-13",
     "title": "Changelog",
-    "section": "0.4.3 (2026-02-18)",
-    "text": "0.4.3 (2026-02-18)\n\nBug Fixes\n\nUpdate Harbor Registry Tasks (#25) (7c8e394)"
+    "section": "0.4.4 (2026-02-23)",
+    "text": "0.4.4 (2026-02-23)\n\nBug Fixes\n\nupdate Harbor registry tasks (#27) (663915c)"
   },
   {
     "objectID": "CHANGELOG.html#section-14",
     "href": "CHANGELOG.html#section-14",
     "title": "Changelog",
-    "section": "0.4.2 (2026-02-14)",
-    "text": "0.4.2 (2026-02-14)\n\nDocumentation\n\nadd credits section to README (#22) (2621ac7)"
+    "section": "0.4.3 (2026-02-18)",
+    "text": "0.4.3 (2026-02-18)\n\nBug Fixes\n\nUpdate Harbor Registry Tasks (#25) (7c8e394)"
   },
   {
     "objectID": "CHANGELOG.html#section-15",
     "href": "CHANGELOG.html#section-15",
     "title": "Changelog",
-    "section": "0.4.1 (2026-02-12)",
-    "text": "0.4.1 (2026-02-12)\n\nDocumentation\n\nimprove REGISTRY.md table formatting and highlight featured datasets (#20) (8d995aa)"
+    "section": "0.4.2 (2026-02-14)",
+    "text": "0.4.2 (2026-02-14)\n\nDocumentation\n\nadd credits section to README (#22) (2621ac7)"
   },
   {
     "objectID": "CHANGELOG.html#section-16",
     "href": "CHANGELOG.html#section-16",
     "title": "Changelog",
-    "section": "0.4.0 (2026-02-12)",
-    "text": "0.4.0 (2026-02-12)\n\nFeatures\n\nadd autogenerated REGISTRY.md with dataset catalog (#19) (f643583)\nadd static task generation from Harbor registry (#14) (801fcb4)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to update-registry workflow (#16) (3cd9ebc)\nremove timestamp from generated tasks (#18) (08ffc96)"
+    "section": "0.4.1 (2026-02-12)",
+    "text": "0.4.1 (2026-02-12)\n\nDocumentation\n\nimprove REGISTRY.md table formatting and highlight featured datasets (#20) (8d995aa)"
   },
   {
     "objectID": "CHANGELOG.html#section-17",
     "href": "CHANGELOG.html#section-17",
     "title": "Changelog",
-    "section": "0.3.0 (2026-02-11)",
-    "text": "0.3.0 (2026-02-11)\n\nFeatures\n\nadd resource override parameters to harbor() task (#11) (e765c4c)"
+    "section": "0.4.0 (2026-02-12)",
+    "text": "0.4.0 (2026-02-12)\n\nFeatures\n\nadd autogenerated REGISTRY.md with dataset catalog (#19) (f643583)\nadd static task generation from Harbor registry (#14) (801fcb4)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to update-registry workflow (#16) (3cd9ebc)\nremove timestamp from generated tasks (#18) (08ffc96)"
   },
   {
     "objectID": "CHANGELOG.html#section-18",
     "href": "CHANGELOG.html#section-18",
     "title": "Changelog",
-    "section": "0.2.0 (2026-02-10)",
-    "text": "0.2.0 (2026-02-10)\n\nFeatures\n\nsimplify harbor() API by removing solver parameter (#7) (37ef434)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to release workflow (#8) (f99615c)"
+    "section": "0.3.0 (2026-02-11)",
+    "text": "0.3.0 (2026-02-11)\n\nFeatures\n\nadd resource override parameters to harbor() task (#11) (e765c4c)"
   },
   {
     "objectID": "CHANGELOG.html#section-19",
     "href": "CHANGELOG.html#section-19",
+    "title": "Changelog",
+    "section": "0.2.0 (2026-02-10)",
+    "text": "0.2.0 (2026-02-10)\n\nFeatures\n\nsimplify harbor() API by removing solver parameter (#7) (37ef434)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to release workflow (#8) (f99615c)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-20",
+    "href": "CHANGELOG.html#section-20",
     "title": "Changelog",
     "section": "0.1.0 (2026-02-10)",
     "text": "0.1.0 (2026-02-10)\n\nFeatures\n\nInitial release of inspect_harbor\nInspect AI interface to Harbor tasks\nSupport for Harbor task execution and evaluation\nIntegration with Inspect AI evaluation registry\n\n\n\nDocumentation\n\nAdd comprehensive README with usage examples\nAdd project documentation and setup instructions\n\n\n\nMiscellaneous\n\nSet up CI/CD with GitHub Actions\nAdd test suite with pytest\nConfigure code quality tools (ruff, pyright)\nAdd pre-commit hooks"
@@ -211,7 +1058,7 @@
     "href": "registry.html",
     "title": "Registry",
     "section": "",
-    "text": "The following table lists all available Harbor datasets and their corresponding Inspect tasks.",
+    "text": "All Harbor datasets available as Inspect tasks. Use the search box to filter by name or description, the category chips to filter by topic, and the column headers to sort. Click a dataset’s name to open its page here, which includes a link to the dataset’s page on the Harbor registry.",
     "crumbs": [
       "Getting Started",
       "Registry"
@@ -233,7 +1080,7 @@
     "href": "registry.html#available-datasets",
     "title": "Registry",
     "section": "Available Datasets",
-    "text": "Available Datasets\n\n\n\n\n\n\n\n\n\n\nHarbor Dataset\nInspect Task\nDescription\nSamples\n\n\n\n\nade-bench@1.0\nade_bench_1_0\nAnalytics Data Engineer Bench: tasks evaluating AI agents on dbt/SQL data analytics engineering bugs. Original benchmark: link\n48\n\n\naider-polyglot@1.0\naider_polyglot_1_0\nA polyglot coding benchmark that evaluates AI agents’ ability to perform code editing and generation tasks across multiple programming languages.\n225\n\n\naime@1.0\naime_1_0\nAmerican Invitational Mathematics Examination (AIME) benchmark for evaluating mathematical reasoning and problem-solving capabilities. Contains 60 competition-level mathematics problems from AIME 2024, 2025-I, and 2025-II competitions.\n60\n\n\nalgotune@1.0\nalgotune_1_0\nAlgoTune: 154 algorithm optimization tasks focusing on speedup-based scoring from the AlgoTune benchmark.\n154\n\n\narc_agi_2@1.0\narc_agi_2_1_0\nARC-AGI-2: A benchmark measuring abstract reasoning through visual grid puzzles requiring rule inference and generalization.\n167\n\n\nautocodebench@lite200\nautocodebench_lite200\nAdapter for AutoCodeBench (link).\n200\n\n\nbfcl@1.0\nbfcl_1_0\nBerkeley Function-Calling Leaderboard: 3,641 function calling tasks for evaluating LLM tool use capabilities across simple, multiple, parallel, and irrelevance categories.\n3641\n\n\nbfcl_parity@1.0\nbfcl_parity_1_0\nBFCL parity subset: 123 stratified sampled tasks for validating Harbor adapter equivalence with original BFCL benchmark.\n123\n\n\nbigcodebench-hard-complete@1.0.0\nbigcodebench_hard_complete_1_0_0\nBigCodeBench-Hard complete benchmark adapter for Harbor - challenging Python programming tasks with reward-based verification\n145\n\n\nbinary-audit@1.0\nbinary_audit_1_0\nAn open-source benchmark for evaluating AI agents’ ability to find backdoors hidden in compiled binaries.\n46\n\n\nbird-bench@parity\nbird_bench_parity\nBIRD SQL parity subset (150 tasks, seed 42). Original benchmark: link Adapter: link\n150\n\n\nbixbench@1.5\nbixbench_1_5\nBixBench - A benchmark for evaluating AI agents on bioinformatics and computational biology tasks.\n205\n\n\nbixbench-cli@1.5\nbixbench_cli_1_5\nbixbench-cli - A benchmark for evaluating AI agents on bioinformatics and computational biology tasks. (Adapted for CLI execution)\n205\n\n\ncode-contests@1.0\ncode_contests_1_0\nA competitive programming benchmark from DeepMind that evaluates AI agents’ ability to solve algorithmic problems, covering algorithms, data structures, and competitive programming challenges.\n9644\n\n\ncodepde@1.0\ncodepde_1_0\nCodePDE evaluates code generation capabilities on scientific computing tasks, specifically focusing on Partial Differential Equation (PDE) solving.\n5\n\n\ncompilebench@1.0\ncompilebench_1_0\nVersion 1.0 of CompileBench, a benchmark on real open-source projects against dependency hell, legacy toolchains, and complex build systems.\n15\n\n\ncooperbench@1.0\ncooperbench_1_0\nCooperBench: multi-agent cooperation benchmark. 652 feature pairs across 12 repos requiring two agents to coordinate via messaging.\n652\n\n\ncrustbench@1.0\ncrustbench_1_0\nCRUST-bench: 100 C-to-safe-Rust transpilation tasks from real-world C repositories.\n100\n\n\ndabstep@1.0\ndabstep_1_0\nDABstep: Data Agent Benchmark for Multi-step Reasoning. 450 tasks where agents analyze payment transaction data with Python/pandas to answer business questions.\n450\n\n\ndeveval@1.0\ndeveval_1_0\nDevEval benchmark: comprehensive evaluation of LLMs across software development lifecycle (implementation, unit testing, acceptance testing) for 21 real-world repositories across Python, C++, Java, and JavaScript\n63\n\n\nds-1000@head\nds_1000_head\nDS-1000 is a code generation benchmark with 1000 realistic data science problems across seven popular Python libraries.\n1000\n\n\nevoeval@1.0\nevoeval_1_0\nEvoEval_difficult: 100 challenging Python programming tasks evolved from HumanEval.\n100\n\n\nfeaturebench@1.0\nfeaturebench_1_0\nFeatureBench full split: 200 feature-implementation tasks across 24 Python repos. 7 tasks require Ampere+ GPU. Original benchmark: link Adapter: link\n200\n\n\nfeaturebench-lite@1.0\nfeaturebench_lite_1_0\nFeatureBench lite split: 30 feature-implementation tasks (26 lv1 + 4 lv2) across Python repos. Original benchmark: link Adapter: link\n30\n\n\nfeaturebench-lite-modal@1.0\nfeaturebench_lite_modal_1_0\nFeatureBench lite split for Modal: 30 feature-implementation tasks with gpus=1 for GPU tasks (7/30). Use with -e modal. Original benchmark: link\n30\n\n\nfeaturebench-modal@1.0\nfeaturebench_modal_1_0\nFeatureBench full split for Modal: 200 feature-implementation tasks with gpus=1 for GPU tasks (44/200). Use with -e modal. Original benchmark: link\n200\n\n\nfinanceagent@public\nfinanceagent_public\nFinance Agent is a tool for financial research and analysis that leverages large language models and specialized financial tools to answer complex queries about companies, financial statements, and SEC filings.Original benchmark: link\n50\n\n\ngaia@1.0\ngaia_1_0\nGAIA (General AI Assistants): 165 validation tasks for multi-step reasoning, tool use, and multimodal question answering.\n165\n\n\ngpqa-diamond@1.0\ngpqa_diamond_1_0\nGPQA Diamond subset: 198 graduate-level multiple-choice questions in biology, physics, and chemistry for evaluating scientific reasoning.\n198\n\n\ngso@1.0\ngso_1_0\nGSO: 102 software optimization tasks focusing on performance improvement.\n102\n\n\nhello-world@1.0\nhello_world_1_0\nA simple example task to create a hello.txt file with ‘Hello, world!’ as content.\n1\n\n\nhumanevalfix@1.0\nhumanevalfix_1_0\nHumanEvalFix: 164 Python code repair tasks from HumanEvalPack.\n164\n\n\nineqmath@1.0\nineqmath_1_0\nThis adapter brings IneqMath, the dev set of the first inequality-proof Q&A benchmark for LLMs, into Harbor, enabling standardized evaluation of models on mathematical reasoning and proof construction.\n100\n\n\nkumo@1.0\nkumo_1_0\nKUMO full dataset (5300 tasks; 50 instances per scenario).\n5300\n\n\nkumo@easy\nkumo_easy\nKUMO(easy) split (5050 tasks; 50 instances per scenario).\n5050\n\n\nkumo@hard\nkumo_hard\nKUMO(hard) split (250 tasks; 50 instances per scenario).\n250\n\n\nkumo@parity\nkumo_parity\nKUMO parity subset (seeds 0/1; 212 tasks).\n212\n\n\nlabbench@1.0\nlabbench_1_0\nLAB-Bench FigQA: 181 scientific figure reasoning tasks in biology from Future-House LAB-Bench.\n181\n\n\nlawbench@1.0\nlawbench_1_0\nLawBench: Benchmarking Legal Knowledge of Large Language Models\n1000\n\n\nlegacy-bench@1.0\nlegacy_bench_1_0\nA benchmark for evaluating AI agents on legacy code maintenance and modernization tasks across multiple language families including COBOL, Java 7, C, Fortran, and Assembly.\n10\n\n\nlivecodebench@6.0\nlivecodebench_6_0\nA subset of 100 sampled tasks from the release_v6 version of LiveCodeBench tasks.\n100\n\n\nmedagentbench@1.0\nmedagentbench_1_0\nMedAgentBench: 300 patient-specific clinically-derived tasks across 10 categories in a FHIR-compliant interactive healthcare environment.\n300\n\n\nml-dev-bench@1.0\nml_dev_bench_1_0\nML-Dev-Bench: A benchmark for testing AI agents on machine learning development tasks including model implementation, training, debugging, and optimization.\n33\n\n\nmlgym-bench@1.0\nmlgym_bench_1_0\nEvaluates agents on ML tasks across computer vision, RL, tabular ML, and game theory.\n12\n\n\nmmau@1.0\nmmau_1_0\nMMAU: 1000 carefully curated audio clips paired with human-annotated natural language questions and answers spanning speech, environmental sounds, and music.\n1000\n\n\nmmmlu@parity\nmmmlu_parity\nMMMLU (Multilingual MMLU) parity validation subset with 10 tasks per language across 15 languages (150 tasks total). Evaluates language models’ subject knowledge and reasoning across multiple languages using multiple-choice questions covering 57 academic subjects.\n150\n\n\nopenthoughts-tblite@2.0\nopenthoughts_tblite_2_0\nOpenThoughts-TBLite: A difficulty-calibrated benchmark of 100 tasks for building terminal agents. By OpenThoughts Agent team, Snorkel AI, Bespoke Labs.\n100\n\n\notel-bench@1.0\notel_bench_1_0\nOpenTelemetry Benchmark - evaluates AI agents’ ability to instrument applications with OpenTelemetry tracing across multiple languages.\n26\n\n\npixiu@parity\npixiu_parity\nPIXIU: A Large Language Model, Instruction Data and Evaluation Benchmark for Finance. Original benchmark: link Adapter details: link Total tasks: 435 across 29 financial NLP datasets.\n435\n\n\nqcircuitbench@1.0\nqcircuitbench_1_0\nQCircuitBench evaluates agents on quantum algorithm design using quantum programming languages. Original benchmark: link\n28\n\n\nquixbugs@1.0\nquixbugs_1_0\nQuixBugs is a multi-lingual program repair benchmark with 40 Python and 40 Java programs, each containing a single-line defect. Tasks cover algorithms and data structures including sorting, graph, dynamic programming, math, and string/array operations.\n80\n\n\nreasoning-gym-easy@parity\nreasoning_gym_easy_parity\nReasoning Gym benchmark (easy difficulty). Original benchmark: link\n288\n\n\nreasoning-gym-hard@parity\nreasoning_gym_hard_parity\nReasoning Gym benchmark (hard difficulty). Original benchmark: link\n288\n\n\nreplicationbench@1.0\nreplicationbench_1_0\nReplicationBench - A benchmark for evaluating AI agents on reproducing computational results from astrophysics research papers. Adapted from Christine8888/replicationbench-release.\n90\n\n\nresearchcodebench@1.0\nresearchcodebench_1_0\nResearchCodeBench evaluates AI agents’ ability to implement algorithms from academic papers. Contains 212 code implementation tasks across 20 ML/AI research problems from top-tier venues (ICLR, NeurIPS, CVPR, COLM). Tests paper comprehension, algorithm understanding, and precise code implementation skills with 1,449 lines of reference code.\n212\n\n\nrexbench@1.0\nrexbench_1_0\nA benchmark to evaluate the ability of AI agents to extend existing AI research through research experiment implementation tasks. Original benchmark: link Website: link\n2\n\n\nsatbench@1.0\nsatbench_1_0\nSATBench is a benchmark for evaluating the logical reasoning capabilities of LLMs through logical puzzles derived from Boolean satisfiability (SAT) problems.\n2100\n\n\nscale-ai/swe-atlas-qna@1.0\nscale_ai_swe_atlas_qna_1_0\nSWE-Atlas Codebase QnA benchmark that evaluates AI agents’ ability to comprehend and query existing codebases.\n124\n\n\nscale-ai/swe-atlas-tw@1.0\nscale_ai_swe_atlas_tw_1_0\nSWE-Atlas Test Writing benchmark that evaluates AI agents’ ability to write comprehensive unit tests.\n90\n\n\nseta-env@1.0\nseta_env_1_0\nCAMEL SETA Environment for RL training\n1376\n\n\nsimpleqa@1.0\nsimpleqa_1_0\nSimpleQA: 4,326 short, fact-seeking questions from OpenAI for evaluating language model factuality. Uses LLM-as-a-judge grading. Source: link\n4326\n\n\nsldbench@1.0\nsldbench_1_0\nSLDBench: A benchmark for scaling law discovery with symbolic regression tasks.\n8\n\n\nspider2-dbt@1.0\nspider2_dbt_1_0\nSpider 2.0-DBT is a comprehensive code generation agent task that includes 68 examples. Solving these tasks requires models to understand project code, navigating complex SQL environments and handling long contexts, surpassing traditional text-to-SQL challenges.\n64\n\n\nspreadsheetbench-verified@1.0\nspreadsheetbench_verified_1_0\nA benchmark evaluating AI agents on real-world spreadsheet manipulation tasks (400 tasks from verified_400). Tasks involve Excel file manipulation including formula writing, data transformation, formatting, and conditional logic.\n400\n\n\nstrongreject@parity\nstrongreject_parity\nStrongReject benchmark for evaluating LLM safety and jailbreak resistance. Parity subset with 150 tasks (50 prompts * 3 jailbreaks).\n150\n\n\nswe-gen-js@1.0\nswe_gen_js_1_0\nSWE-gen-JS: 1000 JavaScript/TypeScript bug fix tasks from 30 open-source GitHub repos, generated using SWE-gen.\n1000\n\n\nswe-lancer-diamond@all\nswe_lancer_diamond_all\nAdapter for SWE-Lancer (link). Both manager and individual contributor tasks.\n463\n\n\nswe-lancer-diamond@ic\nswe_lancer_diamond_ic\nAdapter for SWE-Lancer (link). Only the individual contributor SWE tasks.\n198\n\n\nswe-lancer-diamond@manager\nswe_lancer_diamond_manager\nAdapter for SWE-Lancer (link). Only the manager tasks.\n265\n\n\nswebench-verified@1.0\nswebench_verified_1_0\nA human-validated subset of 500 SWE-bench tasks\n500\n\n\nswebench_multilingual@1.0\nswebench_multilingual_1_0\nSWE-bench Multilingual extends the original Python-focused SWE-bench benchmark to support multiple programming languages. Original benchmark: link\n300\n\n\nswebenchpro@1.0\nswebenchpro_1_0\nSWE-bench Pro: A multi-language software engineering benchmark with 731 instances covering Python, JavaScript/TypeScript, and Go. Evaluates AI systems’ ability to resolve real-world bugs and implement features across diverse production codebases. Original benchmark: link Adapter details: link\n731\n\n\nswesmith@1.0\nswesmith_1_0\nSWE-smith is a synthetically generated dataset of software engineering tasks derived from GitHub issues for training and evaluating code generation models.\n100\n\n\nswtbench-verified@1.0\nswtbench_verified_1_0\nSWTBench Verified - Software Testing Benchmark for code generation\n433\n\n\ntermigen-environments@1.0\ntermigen_environments_1_0\n3,500+ verified Docker environments for training and evaluating terminal agents, spanning 11 task categories across infrastructure, data/algorithm applications, and specialized domains including software build, system administration, security, data processing, ML/MLOps, algorithms, scientific computing, and more.\n3566\n\n\nterminal-bench@2.0\nterminal_bench_2_0\nVersion 2.0 of Terminal-Bench, a benchmark for testing agents in terminal environments. More tasks, harder, and higher quality than 1.0.\n89\n\n\nterminal-bench-pro@1.0\nterminal_bench_pro_1_0\nTerminal-Bench Pro (Public Set) is an extended benchmark dataset for testing AI agents in real terminal environments. From compiling code to training models and setting up servers, Terminal-Bench Pro evaluates how well agents can handle real-world, end-to-end tasks autonomously.\n200\n\n\nterminal-bench-sample@2.0\nterminal_bench_sample_2_0\nA sample of tasks from Terminal-Bench 2.0.\n10\n\n\nusaco@2.0\nusaco_2_0\nUSACO: 304 Python programming problems from USACO competition.\n304\n\n\nvmax-tasks@1.0\nvmax_tasks_1_0\nA collection of 1,043 validated real-world bug-fixing tasks from popular open-source JavaScript projects including Vue.js, Docusaurus, Redux, and Chalk. Each task presents an authentic bug report with reproduction steps and expected behavior.\n1043\n\n\n\n\n\nThis file is auto-generated by scripts/generate_tasks.py. Do not edit manually.\nRegistry: https://raw.githubusercontent.com/laude-institute/harbor/refs/heads/main/registry.json",
+    "text": "Available Datasets\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Harbor Dataset\n      \n      \n        Inspect Task\n      \n      \n        Samples (Low to High)\n      \n      \n        Samples (High to Low)\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nHarbor Dataset\n\n\n\nInspect Task\n\n\n\nDescription\n\n\n\nSamples\n\n\n\n\n\n\n\n\nade-bench@1.0\n\n\nade_bench_1_0\n\n\nAnalytics Data Engineer Bench: tasks evaluating AI agents on dbt/SQL data analytics engineering bugs.\n\n\n48\n\n\n\n\n\n\naider-polyglot@1.0\n\n\naider_polyglot_1_0\n\n\nA polyglot coding benchmark that evaluates AI agents’ ability to perform code editing and generation tasks across multiple programming languages.\n\n\n225\n\n\n\n\n\n\naime@1.0\n\n\naime_1_0\n\n\nAmerican Invitational Mathematics Examination (AIME) benchmark for evaluating mathematical reasoning and problem-solving capabilities. Contains 60 competition-level mathematics problems from AIME 2024, 2025-I, and 2025-II competitions.\n\n\n60\n\n\n\n\n\n\nalgotune@1.0\n\n\nalgotune_1_0\n\n\nAlgoTune: 154 algorithm optimization tasks focusing on speedup-based scoring from the AlgoTune benchmark.\n\n\n154\n\n\n\n\n\n\narc_agi_2@1.0\n\n\narc_agi_2_1_0\n\n\nARC-AGI-2: A benchmark measuring abstract reasoning through visual grid puzzles requiring rule inference and generalization.\n\n\n167\n\n\n\n\n\n\nautocodebench@lite200\n\n\nautocodebench_lite200\n\n\nAdapter for AutoCodeBench.\n\n\n200\n\n\n\n\n\n\nbfcl@1.0\n\n\nbfcl_1_0\n\n\nBerkeley Function-Calling Leaderboard: 3,641 function calling tasks for evaluating LLM tool use capabilities across simple, multiple, parallel, and irrelevance categories.\n\n\n3641\n\n\n\n\n\n\nbfcl_parity@1.0\n\n\nbfcl_parity_1_0\n\n\nBFCL parity subset: 123 stratified sampled tasks for validating Harbor adapter equivalence with original BFCL benchmark.\n\n\n123\n\n\n\n\n\n\nbigcodebench-hard-complete@1.0.0\n\n\nbigcodebench_hard_complete_1_0_0\n\n\nBigCodeBench-Hard complete benchmark adapter for Harbor - challenging Python programming tasks with reward-based verification.\n\n\n145\n\n\n\n\n\n\nbinary-audit@1.0\n\n\nbinary_audit_1_0\n\n\nAn open-source benchmark for evaluating AI agents’ ability to find backdoors hidden in compiled binaries.\n\n\n46\n\n\n\n\n\n\nbird-bench@parity\n\n\nbird_bench_parity\n\n\nBIRD SQL parity subset (150 tasks, seed 42).\n\n\n150\n\n\n\n\n\n\nbixbench-cli@1.5\n\n\nbixbench_cli_1_5\n\n\nbixbench-cli - A benchmark for evaluating AI agents on bioinformatics and computational biology tasks. (Adapted for CLI execution).\n\n\n205\n\n\n\n\n\n\nbixbench@1.5\n\n\nbixbench_1_5\n\n\nBixBench - A benchmark for evaluating AI agents on bioinformatics and computational biology tasks.\n\n\n205\n\n\n\n\n\n\ncode-contests@1.0\n\n\ncode_contests_1_0\n\n\nA competitive programming benchmark from DeepMind that evaluates AI agents’ ability to solve algorithmic problems, covering algorithms, data structures, and competitive programming challenges.\n\n\n9644\n\n\n\n\n\n\ncodepde@1.0\n\n\ncodepde_1_0\n\n\nCodePDE evaluates code generation capabilities on scientific computing tasks, specifically focusing on Partial Differential Equation (PDE) solving.\n\n\n5\n\n\n\n\n\n\ncompilebench@1.0\n\n\ncompilebench_1_0\n\n\nVersion 1.0 of CompileBench, a benchmark on real open-source projects against dependency hell, legacy toolchains, and complex build systems.\n\n\n15\n\n\n\n\n\n\ncooperbench@1.0\n\n\ncooperbench_1_0\n\n\nCooperBench: multi-agent cooperation benchmark. 652 feature pairs across 12 repos requiring two agents to coordinate via messaging.\n\n\n652\n\n\n\n\n\n\ncrustbench@1.0\n\n\ncrustbench_1_0\n\n\nCRUST-bench: 100 C-to-safe-Rust transpilation tasks from real-world C repositories.\n\n\n100\n\n\n\n\n\n\ndabstep@1.0\n\n\ndabstep_1_0\n\n\nDABstep: Data Agent Benchmark for Multi-step Reasoning. 450 tasks where agents analyze payment transaction data with Python/pandas to answer business questions.\n\n\n450\n\n\n\n\n\n\ndeveval@1.0\n\n\ndeveval_1_0\n\n\nDevEval benchmark: comprehensive evaluation of LLMs across software development lifecycle (implementation, unit testing, acceptance testing) for 21 real-world repositories across Python, C++, Java, and JavaScript.\n\n\n63\n\n\n\n\n\n\nds-1000@head\n\n\nds_1000_head\n\n\nDS-1000 is a code generation benchmark with 1000 realistic data science problems across seven popular Python libraries.\n\n\n1000\n\n\n\n\n\n\nevoeval@1.0\n\n\nevoeval_1_0\n\n\nEvoEval_difficult: 100 challenging Python programming tasks evolved from HumanEval.\n\n\n100\n\n\n\n\n\n\nfeaturebench-lite-modal@1.0\n\n\nfeaturebench_lite_modal_1_0\n\n\nFeatureBench lite split for Modal: 30 feature-implementation tasks with gpus=1 for GPU tasks (7/30). Use with -e modal.\n\n\n30\n\n\n\n\n\n\nfeaturebench-lite@1.0\n\n\nfeaturebench_lite_1_0\n\n\nFeatureBench lite split: 30 feature-implementation tasks (26 lv1 + 4 lv2) across Python repos.\n\n\n30\n\n\n\n\n\n\nfeaturebench-modal@1.0\n\n\nfeaturebench_modal_1_0\n\n\nFeatureBench full split for Modal: 200 feature-implementation tasks with gpus=1 for GPU tasks (44/200). Use with -e modal.\n\n\n200\n\n\n\n\n\n\nfeaturebench@1.0\n\n\nfeaturebench_1_0\n\n\nFeatureBench full split: 200 feature-implementation tasks across 24 Python repos. 7 tasks require Ampere+ GPU.\n\n\n200\n\n\n\n\n\n\nfinanceagent@public\n\n\nfinanceagent_public\n\n\nFinance Agent is a tool for financial research and analysis that leverages large language models and specialized financial tools to answer complex queries about companies, financial statements, and SEC filings.\n\n\n50\n\n\n\n\n\n\ngaia@1.0\n\n\ngaia_1_0\n\n\nGAIA (General AI Assistants): 165 validation tasks for multi-step reasoning, tool use, and multimodal question answering.\n\n\n165\n\n\n\n\n\n\ngpqa-diamond@1.0\n\n\ngpqa_diamond_1_0\n\n\nGPQA Diamond subset: 198 graduate-level multiple-choice questions in biology, physics, and chemistry for evaluating scientific reasoning.\n\n\n198\n\n\n\n\n\n\ngso@1.0\n\n\ngso_1_0\n\n\nGSO: 102 software optimization tasks focusing on performance improvement.\n\n\n102\n\n\n\n\n\n\nhello-world@1.0\n\n\nhello_world_1_0\n\n\nA simple example task to create a hello.txt file with ‘Hello, world!’ as content.\n\n\n1\n\n\n\n\n\n\nhumanevalfix@1.0\n\n\nhumanevalfix_1_0\n\n\nHumanEvalFix: 164 Python code repair tasks from HumanEvalPack.\n\n\n164\n\n\n\n\n\n\nineqmath@1.0\n\n\nineqmath_1_0\n\n\nThis adapter brings IneqMath, the dev set of the first inequality-proof Q&A benchmark for LLMs, into Harbor, enabling standardized evaluation of models on mathematical reasoning and proof construction.\n\n\n100\n\n\n\n\n\n\nkumo@1.0\n\n\nkumo_1_0\n\n\nKUMO full dataset (5300 tasks; 50 instances per scenario).\n\n\n5300\n\n\n\n\n\n\nkumo@easy\n\n\nkumo_easy\n\n\nKUMO(easy) split (5050 tasks; 50 instances per scenario).\n\n\n5050\n\n\n\n\n\n\nkumo@hard\n\n\nkumo_hard\n\n\nKUMO(hard) split (250 tasks; 50 instances per scenario).\n\n\n250\n\n\n\n\n\n\nkumo@parity\n\n\nkumo_parity\n\n\nKUMO parity subset (seeds 0/1; 212 tasks).\n\n\n212\n\n\n\n\n\n\nlabbench@1.0\n\n\nlabbench_1_0\n\n\nLAB-Bench FigQA: 181 scientific figure reasoning tasks in biology from Future-House LAB-Bench.\n\n\n181\n\n\n\n\n\n\nlawbench@1.0\n\n\nlawbench_1_0\n\n\nLawBench: Benchmarking Legal Knowledge of Large Language Models.\n\n\n1000\n\n\n\n\n\n\nlegacy-bench@1.0\n\n\nlegacy_bench_1_0\n\n\nA benchmark for evaluating AI agents on legacy code maintenance and modernization tasks across multiple language families including COBOL, Java 7, C, Fortran, and Assembly.\n\n\n10\n\n\n\n\n\n\nlivecodebench@6.0\n\n\nlivecodebench_6_0\n\n\nA subset of 100 sampled tasks from the release_v6 version of LiveCodeBench tasks.\n\n\n100\n\n\n\n\n\n\nmedagentbench@1.0\n\n\nmedagentbench_1_0\n\n\nMedAgentBench: 300 patient-specific clinically-derived tasks across 10 categories in a FHIR-compliant interactive healthcare environment.\n\n\n300\n\n\n\n\n\n\nml-dev-bench@1.0\n\n\nml_dev_bench_1_0\n\n\nML-Dev-Bench: A benchmark for testing AI agents on machine learning development tasks including model implementation, training, debugging, and optimization.\n\n\n33\n\n\n\n\n\n\nmlgym-bench@1.0\n\n\nmlgym_bench_1_0\n\n\nEvaluates agents on ML tasks across computer vision, RL, tabular ML, and game theory.\n\n\n12\n\n\n\n\n\n\nmmau@1.0\n\n\nmmau_1_0\n\n\nMMAU: 1000 carefully curated audio clips paired with human-annotated natural language questions and answers spanning speech, environmental sounds, and music.\n\n\n1000\n\n\n\n\n\n\nmmmlu@parity\n\n\nmmmlu_parity\n\n\nMMMLU (Multilingual MMLU) parity validation subset with 10 tasks per language across 15 languages (150 tasks total). Evaluates language models’ subject knowledge and reasoning across multiple languages using multiple-choice questions covering 57 academic subjects.\n\n\n150\n\n\n\n\n\n\nopenthoughts-tblite@2.0\n\n\nopenthoughts_tblite_2_0\n\n\nOpenThoughts-TBLite: A difficulty-calibrated benchmark of 100 tasks for building terminal agents. By OpenThoughts Agent team, Snorkel AI, Bespoke Labs.\n\n\n100\n\n\n\n\n\n\notel-bench@1.0\n\n\notel_bench_1_0\n\n\nOpenTelemetry Benchmark - evaluates AI agents’ ability to instrument applications with OpenTelemetry tracing across multiple languages.\n\n\n26\n\n\n\n\n\n\npixiu@parity\n\n\npixiu_parity\n\n\nPIXIU: A Large Language Model, Instruction Data and Evaluation Benchmark for Finance. Total tasks: 435 across 29 financial NLP datasets.\n\n\n435\n\n\n\n\n\n\nqcircuitbench@1.0\n\n\nqcircuitbench_1_0\n\n\nQCircuitBench evaluates agents on quantum algorithm design using quantum programming languages.\n\n\n28\n\n\n\n\n\n\nquixbugs@1.0\n\n\nquixbugs_1_0\n\n\nQuixBugs is a multi-lingual program repair benchmark with 40 Python and 40 Java programs, each containing a single-line defect. Tasks cover algorithms and data structures including sorting, graph, dynamic programming, math, and string/array operations.\n\n\n80\n\n\n\n\n\n\nreasoning-gym-easy@parity\n\n\nreasoning_gym_easy_parity\n\n\nReasoning Gym benchmark (easy difficulty).\n\n\n288\n\n\n\n\n\n\nreasoning-gym-hard@parity\n\n\nreasoning_gym_hard_parity\n\n\nReasoning Gym benchmark (hard difficulty).\n\n\n288\n\n\n\n\n\n\nreplicationbench@1.0\n\n\nreplicationbench_1_0\n\n\nReplicationBench - A benchmark for evaluating AI agents on reproducing computational results from astrophysics research papers. Adapted from Christine8888/replicationbench-release.\n\n\n90\n\n\n\n\n\n\nresearchcodebench@1.0\n\n\nresearchcodebench_1_0\n\n\nResearchCodeBench evaluates AI agents’ ability to implement algorithms from academic papers. Contains 212 code implementation tasks across 20 ML/AI research problems from top-tier venues (ICLR, NeurIPS, CVPR, COLM). Tests paper comprehension, algorithm understanding, and precise code implementation skills with 1,449 lines of reference code.\n\n\n212\n\n\n\n\n\n\nrexbench@1.0\n\n\nrexbench_1_0\n\n\nA benchmark to evaluate the ability of AI agents to extend existing AI research through research experiment implementation tasks.\n\n\n2\n\n\n\n\n\n\nsatbench@1.0\n\n\nsatbench_1_0\n\n\nSATBench is a benchmark for evaluating the logical reasoning capabilities of LLMs through logical puzzles derived from Boolean satisfiability (SAT) problems.\n\n\n2100\n\n\n\n\n\n\nscale-ai/swe-atlas-qna@1.0\n\n\nscale_ai_swe_atlas_qna_1_0\n\n\nSWE-Atlas Codebase QnA benchmark that evaluates AI agents’ ability to comprehend and query existing codebases.\n\n\n124\n\n\n\n\n\n\nscale-ai/swe-atlas-tw@1.0\n\n\nscale_ai_swe_atlas_tw_1_0\n\n\nSWE-Atlas Test Writing benchmark that evaluates AI agents’ ability to write comprehensive unit tests.\n\n\n90\n\n\n\n\n\n\nseta-env@1.0\n\n\nseta_env_1_0\n\n\nCAMEL SETA Environment for RL training.\n\n\n1376\n\n\n\n\n\n\nsimpleqa@1.0\n\n\nsimpleqa_1_0\n\n\nSimpleQA: 4,326 short, fact-seeking questions from OpenAI for evaluating language model factuality. Uses LLM-as-a-judge grading.\n\n\n4326\n\n\n\n\n\n\nsldbench@1.0\n\n\nsldbench_1_0\n\n\nSLDBench: A benchmark for scaling law discovery with symbolic regression tasks.\n\n\n8\n\n\n\n\n\n\nspider2-dbt@1.0\n\n\nspider2_dbt_1_0\n\n\nSpider 2.0-DBT is a comprehensive code generation agent task that includes 68 examples. Solving these tasks requires models to understand project code, navigating complex SQL environments and handling long contexts, surpassing traditional text-to-SQL challenges.\n\n\n64\n\n\n\n\n\n\nspreadsheetbench-verified@1.0\n\n\nspreadsheetbench_verified_1_0\n\n\nA benchmark evaluating AI agents on real-world spreadsheet manipulation tasks (400 tasks from verified_400). Tasks involve Excel file manipulation including formula writing, data transformation, formatting, and conditional logic.\n\n\n400\n\n\n\n\n\n\nstrongreject@parity\n\n\nstrongreject_parity\n\n\nStrongReject benchmark for evaluating LLM safety and jailbreak resistance. Parity subset with 150 tasks (50 prompts * 3 jailbreaks).\n\n\n150\n\n\n\n\n\n\nswe-gen-js@1.0\n\n\nswe_gen_js_1_0\n\n\nSWE-gen-JS: 1000 JavaScript/TypeScript bug fix tasks from 30 open-source GitHub repos, generated using SWE-gen.\n\n\n1000\n\n\n\n\n\n\nswe-lancer-diamond@all\n\n\nswe_lancer_diamond_all\n\n\nAdapter for SWE-Lancer. Both manager and individual contributor tasks.\n\n\n463\n\n\n\n\n\n\nswe-lancer-diamond@ic\n\n\nswe_lancer_diamond_ic\n\n\nAdapter for SWE-Lancer. Only the individual contributor SWE tasks.\n\n\n198\n\n\n\n\n\n\nswe-lancer-diamond@manager\n\n\nswe_lancer_diamond_manager\n\n\nAdapter for SWE-Lancer. Only the manager tasks.\n\n\n265\n\n\n\n\n\n\nswebench-verified@1.0\n\n\nswebench_verified_1_0\n\n\nA human-validated subset of 500 SWE-bench tasks.\n\n\n500\n\n\n\n\n\n\nswebench_multilingual@1.0\n\n\nswebench_multilingual_1_0\n\n\nSWE-bench Multilingual extends the original Python-focused SWE-bench benchmark to support multiple programming languages.\n\n\n300\n\n\n\n\n\n\nswebenchpro@1.0\n\n\nswebenchpro_1_0\n\n\nSWE-bench Pro: A multi-language software engineering benchmark with 731 instances covering Python, JavaScript/TypeScript, and Go. Evaluates AI systems’ ability to resolve real-world bugs and implement features across diverse production codebases.\n\n\n731\n\n\n\n\n\n\nswesmith@1.0\n\n\nswesmith_1_0\n\n\nSWE-smith is a synthetically generated dataset of software engineering tasks derived from GitHub issues for training and evaluating code generation models.\n\n\n100\n\n\n\n\n\n\nswtbench-verified@1.0\n\n\nswtbench_verified_1_0\n\n\nSWTBench Verified - Software Testing Benchmark for code generation.\n\n\n433\n\n\n\n\n\n\ntermigen-environments@1.0\n\n\ntermigen_environments_1_0\n\n\n3,500+ verified Docker environments for training and evaluating terminal agents, spanning 11 task categories across infrastructure, data/algorithm applications, and specialized domains including software build, system administration, security, data processing, ML/MLOps, algorithms, scientific computing, and more.\n\n\n3566\n\n\n\n\n\n\nterminal-bench-pro@1.0\n\n\nterminal_bench_pro_1_0\n\n\nTerminal-Bench Pro (Public Set) is an extended benchmark dataset for testing AI agents in real terminal environments. From compiling code to training models and setting up servers, Terminal-Bench Pro evaluates how well agents can handle real-world, end-to-end tasks autonomously.\n\n\n200\n\n\n\n\n\n\nterminal-bench-sample@2.0\n\n\nterminal_bench_sample_2_0\n\n\nA sample of tasks from Terminal-Bench 2.0.\n\n\n10\n\n\n\n\n\n\nterminal-bench@2.0\n\n\nterminal_bench_2_0\n\n\nVersion 2.0 of Terminal-Bench, a benchmark for testing agents in terminal environments. More tasks, harder, and higher quality than 1.0.\n\n\n89\n\n\n\n\n\n\nusaco@2.0\n\n\nusaco_2_0\n\n\nUSACO: 304 Python programming problems from USACO competition.\n\n\n304\n\n\n\n\n\n\nvmax-tasks@1.0\n\n\nvmax_tasks_1_0\n\n\nA collection of 1,043 validated real-world bug-fixing tasks from popular open-source JavaScript projects including Vue.js, Docusaurus, Redux, and Chalk. Each task presents an authentic bug report with reproduction steps and expected behavior.\n\n\n1043\n\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Getting Started",
       "Registry"
@@ -458,5 +1305,845 @@
       "Using Harbor",
       "Advanced"
     ]
+  },
+  {
+    "objectID": "registry/strongreject_parity.html",
+    "href": "registry/strongreject_parity.html",
+    "title": "strongreject@parity",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/strongreject_parity.html#run-this-task",
+    "href": "registry/strongreject_parity.html#run-this-task",
+    "title": "strongreject@parity",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/strongreject_parity --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import strongreject_parity\n\neval(strongreject_parity(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/strongreject_parity.html#dataset-information",
+    "href": "registry/strongreject_parity.html#dataset-information",
+    "title": "strongreject@parity",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nstrongreject@parity\n\n\nInspect task\nstrongreject_parity\n\n\nVersion\nparity\n\n\nSamples\n150\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/featurebench_modal_1_0.html",
+    "href": "registry/featurebench_modal_1_0.html",
+    "title": "featurebench-modal@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/featurebench_modal_1_0.html#run-this-task",
+    "href": "registry/featurebench_modal_1_0.html#run-this-task",
+    "title": "featurebench-modal@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/featurebench_modal_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import featurebench_modal_1_0\n\neval(featurebench_modal_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/featurebench_modal_1_0.html#dataset-information",
+    "href": "registry/featurebench_modal_1_0.html#dataset-information",
+    "title": "featurebench-modal@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nfeaturebench-modal@1.0\n\n\nInspect task\nfeaturebench_modal_1_0\n\n\nVersion\n1.0\n\n\nSamples\n200\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/satbench_1_0.html",
+    "href": "registry/satbench_1_0.html",
+    "title": "satbench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/satbench_1_0.html#run-this-task",
+    "href": "registry/satbench_1_0.html#run-this-task",
+    "title": "satbench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/satbench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import satbench_1_0\n\neval(satbench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/satbench_1_0.html#dataset-information",
+    "href": "registry/satbench_1_0.html#dataset-information",
+    "title": "satbench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nsatbench@1.0\n\n\nInspect task\nsatbench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n2100\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/vmax_tasks_1_0.html",
+    "href": "registry/vmax_tasks_1_0.html",
+    "title": "vmax-tasks@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/vmax_tasks_1_0.html#run-this-task",
+    "href": "registry/vmax_tasks_1_0.html#run-this-task",
+    "title": "vmax-tasks@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/vmax_tasks_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import vmax_tasks_1_0\n\neval(vmax_tasks_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/vmax_tasks_1_0.html#dataset-information",
+    "href": "registry/vmax_tasks_1_0.html#dataset-information",
+    "title": "vmax-tasks@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nvmax-tasks@1.0\n\n\nInspect task\nvmax_tasks_1_0\n\n\nVersion\n1.0\n\n\nSamples\n1043\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/spreadsheetbench_verified_1_0.html",
+    "href": "registry/spreadsheetbench_verified_1_0.html",
+    "title": "spreadsheetbench-verified@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/spreadsheetbench_verified_1_0.html#run-this-task",
+    "href": "registry/spreadsheetbench_verified_1_0.html#run-this-task",
+    "title": "spreadsheetbench-verified@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/spreadsheetbench_verified_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import spreadsheetbench_verified_1_0\n\neval(spreadsheetbench_verified_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/spreadsheetbench_verified_1_0.html#dataset-information",
+    "href": "registry/spreadsheetbench_verified_1_0.html#dataset-information",
+    "title": "spreadsheetbench-verified@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nspreadsheetbench-verified@1.0\n\n\nInspect task\nspreadsheetbench_verified_1_0\n\n\nVersion\n1.0\n\n\nSamples\n400\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/humanevalfix_1_0.html",
+    "href": "registry/humanevalfix_1_0.html",
+    "title": "humanevalfix@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/humanevalfix_1_0.html#run-this-task",
+    "href": "registry/humanevalfix_1_0.html#run-this-task",
+    "title": "humanevalfix@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/humanevalfix_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import humanevalfix_1_0\n\neval(humanevalfix_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/humanevalfix_1_0.html#dataset-information",
+    "href": "registry/humanevalfix_1_0.html#dataset-information",
+    "title": "humanevalfix@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nhumanevalfix@1.0\n\n\nInspect task\nhumanevalfix_1_0\n\n\nVersion\n1.0\n\n\nSamples\n164\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/kumo_hard.html",
+    "href": "registry/kumo_hard.html",
+    "title": "kumo@hard",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/kumo_hard.html#run-this-task",
+    "href": "registry/kumo_hard.html#run-this-task",
+    "title": "kumo@hard",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/kumo_hard --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import kumo_hard\n\neval(kumo_hard(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/kumo_hard.html#dataset-information",
+    "href": "registry/kumo_hard.html#dataset-information",
+    "title": "kumo@hard",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nkumo@hard\n\n\nInspect task\nkumo_hard\n\n\nVersion\nhard\n\n\nSamples\n250\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/swebenchpro_1_0.html",
+    "href": "registry/swebenchpro_1_0.html",
+    "title": "swebenchpro@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/swebenchpro_1_0.html#run-this-task",
+    "href": "registry/swebenchpro_1_0.html#run-this-task",
+    "title": "swebenchpro@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/swebenchpro_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import swebenchpro_1_0\n\neval(swebenchpro_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/swebenchpro_1_0.html#dataset-information",
+    "href": "registry/swebenchpro_1_0.html#dataset-information",
+    "title": "swebenchpro@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nswebenchpro@1.0\n\n\nInspect task\nswebenchpro_1_0\n\n\nVersion\n1.0\n\n\nSamples\n731\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/kumo_parity.html",
+    "href": "registry/kumo_parity.html",
+    "title": "kumo@parity",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/kumo_parity.html#run-this-task",
+    "href": "registry/kumo_parity.html#run-this-task",
+    "title": "kumo@parity",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/kumo_parity --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import kumo_parity\n\neval(kumo_parity(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/kumo_parity.html#dataset-information",
+    "href": "registry/kumo_parity.html#dataset-information",
+    "title": "kumo@parity",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nkumo@parity\n\n\nInspect task\nkumo_parity\n\n\nVersion\nparity\n\n\nSamples\n212\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/dabstep_1_0.html",
+    "href": "registry/dabstep_1_0.html",
+    "title": "dabstep@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/dabstep_1_0.html#run-this-task",
+    "href": "registry/dabstep_1_0.html#run-this-task",
+    "title": "dabstep@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/dabstep_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import dabstep_1_0\n\neval(dabstep_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/dabstep_1_0.html#dataset-information",
+    "href": "registry/dabstep_1_0.html#dataset-information",
+    "title": "dabstep@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\ndabstep@1.0\n\n\nInspect task\ndabstep_1_0\n\n\nVersion\n1.0\n\n\nSamples\n450\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/deveval_1_0.html",
+    "href": "registry/deveval_1_0.html",
+    "title": "deveval@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/deveval_1_0.html#run-this-task",
+    "href": "registry/deveval_1_0.html#run-this-task",
+    "title": "deveval@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/deveval_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import deveval_1_0\n\neval(deveval_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/deveval_1_0.html#dataset-information",
+    "href": "registry/deveval_1_0.html#dataset-information",
+    "title": "deveval@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\ndeveval@1.0\n\n\nInspect task\ndeveval_1_0\n\n\nVersion\n1.0\n\n\nSamples\n63\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/scale_ai_swe_atlas_tw_1_0.html",
+    "href": "registry/scale_ai_swe_atlas_tw_1_0.html",
+    "title": "scale-ai/swe-atlas-tw@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/scale_ai_swe_atlas_tw_1_0.html#run-this-task",
+    "href": "registry/scale_ai_swe_atlas_tw_1_0.html#run-this-task",
+    "title": "scale-ai/swe-atlas-tw@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/scale_ai_swe_atlas_tw_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import scale_ai_swe_atlas_tw_1_0\n\neval(scale_ai_swe_atlas_tw_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/scale_ai_swe_atlas_tw_1_0.html#dataset-information",
+    "href": "registry/scale_ai_swe_atlas_tw_1_0.html#dataset-information",
+    "title": "scale-ai/swe-atlas-tw@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nscale-ai/swe-atlas-tw@1.0\n\n\nInspect task\nscale_ai_swe_atlas_tw_1_0\n\n\nVersion\n1.0\n\n\nSamples\n90\n\n\nSource\nhttps://github.com/scaleapi/SWE-Atlas\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/featurebench_lite_1_0.html",
+    "href": "registry/featurebench_lite_1_0.html",
+    "title": "featurebench-lite@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/featurebench_lite_1_0.html#run-this-task",
+    "href": "registry/featurebench_lite_1_0.html#run-this-task",
+    "title": "featurebench-lite@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/featurebench_lite_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import featurebench_lite_1_0\n\neval(featurebench_lite_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/featurebench_lite_1_0.html#dataset-information",
+    "href": "registry/featurebench_lite_1_0.html#dataset-information",
+    "title": "featurebench-lite@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nfeaturebench-lite@1.0\n\n\nInspect task\nfeaturebench_lite_1_0\n\n\nVersion\n1.0\n\n\nSamples\n30\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/bixbench_1_5.html",
+    "href": "registry/bixbench_1_5.html",
+    "title": "bixbench@1.5",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/bixbench_1_5.html#run-this-task",
+    "href": "registry/bixbench_1_5.html#run-this-task",
+    "title": "bixbench@1.5",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/bixbench_1_5 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import bixbench_1_5\n\neval(bixbench_1_5(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/bixbench_1_5.html#dataset-information",
+    "href": "registry/bixbench_1_5.html#dataset-information",
+    "title": "bixbench@1.5",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nbixbench@1.5\n\n\nInspect task\nbixbench_1_5\n\n\nVersion\n1.5\n\n\nSamples\n205\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/terminal_bench_sample_2_0.html",
+    "href": "registry/terminal_bench_sample_2_0.html",
+    "title": "terminal-bench-sample@2.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/terminal_bench_sample_2_0.html#run-this-task",
+    "href": "registry/terminal_bench_sample_2_0.html#run-this-task",
+    "title": "terminal-bench-sample@2.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/terminal_bench_sample_2_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import terminal_bench_sample_2_0\n\neval(terminal_bench_sample_2_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/terminal_bench_sample_2_0.html#dataset-information",
+    "href": "registry/terminal_bench_sample_2_0.html#dataset-information",
+    "title": "terminal-bench-sample@2.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nterminal-bench-sample@2.0\n\n\nInspect task\nterminal_bench_sample_2_0\n\n\nVersion\n2.0\n\n\nSamples\n10\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/swe_lancer_diamond_all.html",
+    "href": "registry/swe_lancer_diamond_all.html",
+    "title": "swe-lancer-diamond@all",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/swe_lancer_diamond_all.html#run-this-task",
+    "href": "registry/swe_lancer_diamond_all.html#run-this-task",
+    "title": "swe-lancer-diamond@all",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/swe_lancer_diamond_all --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import swe_lancer_diamond_all\n\neval(swe_lancer_diamond_all(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/swe_lancer_diamond_all.html#dataset-information",
+    "href": "registry/swe_lancer_diamond_all.html#dataset-information",
+    "title": "swe-lancer-diamond@all",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nswe-lancer-diamond@all\n\n\nInspect task\nswe_lancer_diamond_all\n\n\nVersion\nall\n\n\nSamples\n463\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/spider2_dbt_1_0.html",
+    "href": "registry/spider2_dbt_1_0.html",
+    "title": "spider2-dbt@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/spider2_dbt_1_0.html#run-this-task",
+    "href": "registry/spider2_dbt_1_0.html#run-this-task",
+    "title": "spider2-dbt@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/spider2_dbt_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import spider2_dbt_1_0\n\neval(spider2_dbt_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/spider2_dbt_1_0.html#dataset-information",
+    "href": "registry/spider2_dbt_1_0.html#dataset-information",
+    "title": "spider2-dbt@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nspider2-dbt@1.0\n\n\nInspect task\nspider2_dbt_1_0\n\n\nVersion\n1.0\n\n\nSamples\n64\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/mlgym_bench_1_0.html",
+    "href": "registry/mlgym_bench_1_0.html",
+    "title": "mlgym-bench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/mlgym_bench_1_0.html#run-this-task",
+    "href": "registry/mlgym_bench_1_0.html#run-this-task",
+    "title": "mlgym-bench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/mlgym_bench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import mlgym_bench_1_0\n\neval(mlgym_bench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/mlgym_bench_1_0.html#dataset-information",
+    "href": "registry/mlgym_bench_1_0.html#dataset-information",
+    "title": "mlgym-bench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nmlgym-bench@1.0\n\n\nInspect task\nmlgym_bench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n12\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/openthoughts_tblite_2_0.html",
+    "href": "registry/openthoughts_tblite_2_0.html",
+    "title": "openthoughts-tblite@2.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/openthoughts_tblite_2_0.html#run-this-task",
+    "href": "registry/openthoughts_tblite_2_0.html#run-this-task",
+    "title": "openthoughts-tblite@2.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/openthoughts_tblite_2_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import openthoughts_tblite_2_0\n\neval(openthoughts_tblite_2_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/openthoughts_tblite_2_0.html#dataset-information",
+    "href": "registry/openthoughts_tblite_2_0.html#dataset-information",
+    "title": "openthoughts-tblite@2.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nopenthoughts-tblite@2.0\n\n\nInspect task\nopenthoughts_tblite_2_0\n\n\nVersion\n2.0\n\n\nSamples\n100\n\n\nSource\nhttps://github.com/open-thoughts/OpenThoughts-TBLite\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/qcircuitbench_1_0.html",
+    "href": "registry/qcircuitbench_1_0.html",
+    "title": "qcircuitbench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/qcircuitbench_1_0.html#run-this-task",
+    "href": "registry/qcircuitbench_1_0.html#run-this-task",
+    "title": "qcircuitbench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/qcircuitbench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import qcircuitbench_1_0\n\neval(qcircuitbench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/qcircuitbench_1_0.html#dataset-information",
+    "href": "registry/qcircuitbench_1_0.html#dataset-information",
+    "title": "qcircuitbench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nqcircuitbench@1.0\n\n\nInspect task\nqcircuitbench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n28\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/cooperbench_1_0.html",
+    "href": "registry/cooperbench_1_0.html",
+    "title": "cooperbench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/cooperbench_1_0.html#run-this-task",
+    "href": "registry/cooperbench_1_0.html#run-this-task",
+    "title": "cooperbench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/cooperbench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import cooperbench_1_0\n\neval(cooperbench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/cooperbench_1_0.html#dataset-information",
+    "href": "registry/cooperbench_1_0.html#dataset-information",
+    "title": "cooperbench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\ncooperbench@1.0\n\n\nInspect task\ncooperbench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n652\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/swe_gen_js_1_0.html",
+    "href": "registry/swe_gen_js_1_0.html",
+    "title": "swe-gen-js@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/swe_gen_js_1_0.html#run-this-task",
+    "href": "registry/swe_gen_js_1_0.html#run-this-task",
+    "title": "swe-gen-js@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/swe_gen_js_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import swe_gen_js_1_0\n\neval(swe_gen_js_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/swe_gen_js_1_0.html#dataset-information",
+    "href": "registry/swe_gen_js_1_0.html#dataset-information",
+    "title": "swe-gen-js@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nswe-gen-js@1.0\n\n\nInspect task\nswe_gen_js_1_0\n\n\nVersion\n1.0\n\n\nSamples\n1000\n\n\nSource\nhttps://www.swebench.com/post-260113-swesmith-javascript.html\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/seta_env_1_0.html",
+    "href": "registry/seta_env_1_0.html",
+    "title": "seta-env@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/seta_env_1_0.html#run-this-task",
+    "href": "registry/seta_env_1_0.html#run-this-task",
+    "title": "seta-env@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/seta_env_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import seta_env_1_0\n\neval(seta_env_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/seta_env_1_0.html#dataset-information",
+    "href": "registry/seta_env_1_0.html#dataset-information",
+    "title": "seta-env@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nseta-env@1.0\n\n\nInspect task\nseta_env_1_0\n\n\nVersion\n1.0\n\n\nSamples\n1376\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/aime_1_0.html",
+    "href": "registry/aime_1_0.html",
+    "title": "aime@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/aime_1_0.html#run-this-task",
+    "href": "registry/aime_1_0.html#run-this-task",
+    "title": "aime@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/aime_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import aime_1_0\n\neval(aime_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/aime_1_0.html#dataset-information",
+    "href": "registry/aime_1_0.html#dataset-information",
+    "title": "aime@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\naime@1.0\n\n\nInspect task\naime_1_0\n\n\nVersion\n1.0\n\n\nSamples\n60\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/researchcodebench_1_0.html",
+    "href": "registry/researchcodebench_1_0.html",
+    "title": "researchcodebench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/researchcodebench_1_0.html#run-this-task",
+    "href": "registry/researchcodebench_1_0.html#run-this-task",
+    "title": "researchcodebench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/researchcodebench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import researchcodebench_1_0\n\neval(researchcodebench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/researchcodebench_1_0.html#dataset-information",
+    "href": "registry/researchcodebench_1_0.html#dataset-information",
+    "title": "researchcodebench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nresearchcodebench@1.0\n\n\nInspect task\nresearchcodebench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n212\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/reasoning_gym_hard_parity.html",
+    "href": "registry/reasoning_gym_hard_parity.html",
+    "title": "reasoning-gym-hard@parity",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/reasoning_gym_hard_parity.html#run-this-task",
+    "href": "registry/reasoning_gym_hard_parity.html#run-this-task",
+    "title": "reasoning-gym-hard@parity",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/reasoning_gym_hard_parity --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import reasoning_gym_hard_parity\n\neval(reasoning_gym_hard_parity(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/reasoning_gym_hard_parity.html#dataset-information",
+    "href": "registry/reasoning_gym_hard_parity.html#dataset-information",
+    "title": "reasoning-gym-hard@parity",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nreasoning-gym-hard@parity\n\n\nInspect task\nreasoning_gym_hard_parity\n\n\nVersion\nparity\n\n\nSamples\n288\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/reasoning_gym_easy_parity.html",
+    "href": "registry/reasoning_gym_easy_parity.html",
+    "title": "reasoning-gym-easy@parity",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/reasoning_gym_easy_parity.html#run-this-task",
+    "href": "registry/reasoning_gym_easy_parity.html#run-this-task",
+    "title": "reasoning-gym-easy@parity",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/reasoning_gym_easy_parity --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import reasoning_gym_easy_parity\n\neval(reasoning_gym_easy_parity(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/reasoning_gym_easy_parity.html#dataset-information",
+    "href": "registry/reasoning_gym_easy_parity.html#dataset-information",
+    "title": "reasoning-gym-easy@parity",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nreasoning-gym-easy@parity\n\n\nInspect task\nreasoning_gym_easy_parity\n\n\nVersion\nparity\n\n\nSamples\n288\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/swesmith_1_0.html",
+    "href": "registry/swesmith_1_0.html",
+    "title": "swesmith@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/swesmith_1_0.html#run-this-task",
+    "href": "registry/swesmith_1_0.html#run-this-task",
+    "title": "swesmith@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/swesmith_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import swesmith_1_0\n\neval(swesmith_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/swesmith_1_0.html#dataset-information",
+    "href": "registry/swesmith_1_0.html#dataset-information",
+    "title": "swesmith@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nswesmith@1.0\n\n\nInspect task\nswesmith_1_0\n\n\nVersion\n1.0\n\n\nSamples\n100\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/code_contests_1_0.html",
+    "href": "registry/code_contests_1_0.html",
+    "title": "code-contests@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/code_contests_1_0.html#run-this-task",
+    "href": "registry/code_contests_1_0.html#run-this-task",
+    "title": "code-contests@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/code_contests_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import code_contests_1_0\n\neval(code_contests_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/code_contests_1_0.html#dataset-information",
+    "href": "registry/code_contests_1_0.html#dataset-information",
+    "title": "code-contests@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\ncode-contests@1.0\n\n\nInspect task\ncode_contests_1_0\n\n\nVersion\n1.0\n\n\nSamples\n9644\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/termigen_environments_1_0.html",
+    "href": "registry/termigen_environments_1_0.html",
+    "title": "termigen-environments@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/termigen_environments_1_0.html#run-this-task",
+    "href": "registry/termigen_environments_1_0.html#run-this-task",
+    "title": "termigen-environments@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/termigen_environments_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import termigen_environments_1_0\n\neval(termigen_environments_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/termigen_environments_1_0.html#dataset-information",
+    "href": "registry/termigen_environments_1_0.html#dataset-information",
+    "title": "termigen-environments@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\ntermigen-environments@1.0\n\n\nInspect task\ntermigen_environments_1_0\n\n\nVersion\n1.0\n\n\nSamples\n3566\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/autocodebench_lite200.html",
+    "href": "registry/autocodebench_lite200.html",
+    "title": "autocodebench@lite200",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/autocodebench_lite200.html#run-this-task",
+    "href": "registry/autocodebench_lite200.html#run-this-task",
+    "title": "autocodebench@lite200",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/autocodebench_lite200 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import autocodebench_lite200\n\neval(autocodebench_lite200(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/autocodebench_lite200.html#dataset-information",
+    "href": "registry/autocodebench_lite200.html#dataset-information",
+    "title": "autocodebench@lite200",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nautocodebench@lite200\n\n\nInspect task\nautocodebench_lite200\n\n\nVersion\nlite200\n\n\nSamples\n200\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/ml_dev_bench_1_0.html",
+    "href": "registry/ml_dev_bench_1_0.html",
+    "title": "ml-dev-bench@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/ml_dev_bench_1_0.html#run-this-task",
+    "href": "registry/ml_dev_bench_1_0.html#run-this-task",
+    "title": "ml-dev-bench@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/ml_dev_bench_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import ml_dev_bench_1_0\n\neval(ml_dev_bench_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/ml_dev_bench_1_0.html#dataset-information",
+    "href": "registry/ml_dev_bench_1_0.html#dataset-information",
+    "title": "ml-dev-bench@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nml-dev-bench@1.0\n\n\nInspect task\nml_dev_bench_1_0\n\n\nVersion\n1.0\n\n\nSamples\n33\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/bird_bench_parity.html",
+    "href": "registry/bird_bench_parity.html",
+    "title": "bird-bench@parity",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/bird_bench_parity.html#run-this-task",
+    "href": "registry/bird_bench_parity.html#run-this-task",
+    "title": "bird-bench@parity",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/bird_bench_parity --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import bird_bench_parity\n\neval(bird_bench_parity(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/bird_bench_parity.html#dataset-information",
+    "href": "registry/bird_bench_parity.html#dataset-information",
+    "title": "bird-bench@parity",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nbird-bench@parity\n\n\nInspect task\nbird_bench_parity\n\n\nVersion\nparity\n\n\nSamples\n150\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/simpleqa_1_0.html",
+    "href": "registry/simpleqa_1_0.html",
+    "title": "simpleqa@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/simpleqa_1_0.html#run-this-task",
+    "href": "registry/simpleqa_1_0.html#run-this-task",
+    "title": "simpleqa@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/simpleqa_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import simpleqa_1_0\n\neval(simpleqa_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/simpleqa_1_0.html#dataset-information",
+    "href": "registry/simpleqa_1_0.html#dataset-information",
+    "title": "simpleqa@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nsimpleqa@1.0\n\n\nInspect task\nsimpleqa_1_0\n\n\nVersion\n1.0\n\n\nSamples\n4326\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/ineqmath_1_0.html",
+    "href": "registry/ineqmath_1_0.html",
+    "title": "ineqmath@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/ineqmath_1_0.html#run-this-task",
+    "href": "registry/ineqmath_1_0.html#run-this-task",
+    "title": "ineqmath@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/ineqmath_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import ineqmath_1_0\n\neval(ineqmath_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/ineqmath_1_0.html#dataset-information",
+    "href": "registry/ineqmath_1_0.html#dataset-information",
+    "title": "ineqmath@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nineqmath@1.0\n\n\nInspect task\nineqmath_1_0\n\n\nVersion\n1.0\n\n\nSamples\n100\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/swe_lancer_diamond_ic.html",
+    "href": "registry/swe_lancer_diamond_ic.html",
+    "title": "swe-lancer-diamond@ic",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/swe_lancer_diamond_ic.html#run-this-task",
+    "href": "registry/swe_lancer_diamond_ic.html#run-this-task",
+    "title": "swe-lancer-diamond@ic",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/swe_lancer_diamond_ic --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import swe_lancer_diamond_ic\n\neval(swe_lancer_diamond_ic(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/swe_lancer_diamond_ic.html#dataset-information",
+    "href": "registry/swe_lancer_diamond_ic.html#dataset-information",
+    "title": "swe-lancer-diamond@ic",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nswe-lancer-diamond@ic\n\n\nInspect task\nswe_lancer_diamond_ic\n\n\nVersion\nic\n\n\nSamples\n198\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/swtbench_verified_1_0.html",
+    "href": "registry/swtbench_verified_1_0.html",
+    "title": "swtbench-verified@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/swtbench_verified_1_0.html#run-this-task",
+    "href": "registry/swtbench_verified_1_0.html#run-this-task",
+    "title": "swtbench-verified@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/swtbench_verified_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import swtbench_verified_1_0\n\neval(swtbench_verified_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/swtbench_verified_1_0.html#dataset-information",
+    "href": "registry/swtbench_verified_1_0.html#dataset-information",
+    "title": "swtbench-verified@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nswtbench-verified@1.0\n\n\nInspect task\nswtbench_verified_1_0\n\n\nVersion\n1.0\n\n\nSamples\n433\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/hello_world_1_0.html",
+    "href": "registry/hello_world_1_0.html",
+    "title": "hello-world@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/hello_world_1_0.html#run-this-task",
+    "href": "registry/hello_world_1_0.html#run-this-task",
+    "title": "hello-world@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/hello_world_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import hello_world_1_0\n\neval(hello_world_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/hello_world_1_0.html#dataset-information",
+    "href": "registry/hello_world_1_0.html#dataset-information",
+    "title": "hello-world@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nhello-world@1.0\n\n\nInspect task\nhello_world_1_0\n\n\nVersion\n1.0\n\n\nSamples\n1\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/scale_ai_swe_atlas_qna_1_0.html",
+    "href": "registry/scale_ai_swe_atlas_qna_1_0.html",
+    "title": "scale-ai/swe-atlas-qna@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/scale_ai_swe_atlas_qna_1_0.html#run-this-task",
+    "href": "registry/scale_ai_swe_atlas_qna_1_0.html#run-this-task",
+    "title": "scale-ai/swe-atlas-qna@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/scale_ai_swe_atlas_qna_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import scale_ai_swe_atlas_qna_1_0\n\neval(scale_ai_swe_atlas_qna_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/scale_ai_swe_atlas_qna_1_0.html#dataset-information",
+    "href": "registry/scale_ai_swe_atlas_qna_1_0.html#dataset-information",
+    "title": "scale-ai/swe-atlas-qna@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nscale-ai/swe-atlas-qna@1.0\n\n\nInspect task\nscale_ai_swe_atlas_qna_1_0\n\n\nVersion\n1.0\n\n\nSamples\n124\n\n\nSource\nhttps://github.com/scaleapi/SWE-Atlas\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/featurebench_lite_modal_1_0.html",
+    "href": "registry/featurebench_lite_modal_1_0.html",
+    "title": "featurebench-lite-modal@1.0",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/featurebench_lite_modal_1_0.html#run-this-task",
+    "href": "registry/featurebench_lite_modal_1_0.html#run-this-task",
+    "title": "featurebench-lite-modal@1.0",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/featurebench_lite_modal_1_0 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import featurebench_lite_modal_1_0\n\neval(featurebench_lite_modal_1_0(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/featurebench_lite_modal_1_0.html#dataset-information",
+    "href": "registry/featurebench_lite_modal_1_0.html#dataset-information",
+    "title": "featurebench-lite-modal@1.0",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nfeaturebench-lite-modal@1.0\n\n\nInspect task\nfeaturebench_lite_modal_1_0\n\n\nVersion\n1.0\n\n\nSamples\n30\n\n\nPaper\narxiv\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
   }
 ]

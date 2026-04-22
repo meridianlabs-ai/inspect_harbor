@@ -1,5 +1,12 @@
 # changelog – Inspect Harbor
 
+## [0.4.17](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.16...v0.4.17) (2026-04-21)
+
+### Bug Fixes
+
+- embed Harbor URL in each task’s docstring ([\#64](https://github.com/meridianlabs-ai/inspect_harbor/issues/64)) ([b76d374](https://github.com/meridianlabs-ai/inspect_harbor/commit/b76d374e9370673004b5d39b4cb4a242f01fb12f))
+- restore registry tracker and repoint docs URLs to new Harbor site ([\#61](https://github.com/meridianlabs-ai/inspect_harbor/issues/61)) ([cc00228](https://github.com/meridianlabs-ai/inspect_harbor/commit/cc002285fe4e5fe03e73ef098cfd8ae833c8f3df))
+
 ## [0.4.16](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.15...v0.4.16) (2026-04-08)
 
 ### Bug Fixes
