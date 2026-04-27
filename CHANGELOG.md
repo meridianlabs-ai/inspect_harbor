@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.18](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.17...v0.4.18) (2026-04-27)
+
+
+### Bug Fixes
+
+* update Harbor registry tasks ([#67](https://github.com/meridianlabs-ai/inspect_harbor/issues/67)) ([f7e8364](https://github.com/meridianlabs-ai/inspect_harbor/commit/f7e836452508d52d75e35c769c9da025a32a687a))
+
+
+### Documentation
+
+* searchable registry listing + per-benchmark landing pages ([#65](https://github.com/meridianlabs-ai/inspect_harbor/issues/65)) ([ccbda21](https://github.com/meridianlabs-ai/inspect_harbor/commit/ccbda21ae9d201f15ad02f2d306b9020ca971683))
+
 ## [0.4.17](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.16...v0.4.17) (2026-04-21)
 
 
