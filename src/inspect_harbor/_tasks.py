@@ -3236,7 +3236,7 @@ def rexbench_1_0(
 
     Dataset: rexbench@1.0
     Version: 1.0
-    Harbor URL: https://registry.harborframework.com/datasets?q=rexbench
+    Harbor URL: https://registry.harborframework.com/datasets/rexbench/rexbench/latest
     """
     return _harbor_base(
         dataset_name_version="rexbench@1.0",
@@ -3266,7 +3266,7 @@ def rexbench(
 
     Dataset: rexbench
     Version: Latest available (1.0 when generated)
-    Harbor URL: https://registry.harborframework.com/datasets?q=rexbench
+    Harbor URL: https://registry.harborframework.com/datasets/rexbench/rexbench/latest
     """
     return _harbor_base(
         dataset_name_version="rexbench",
