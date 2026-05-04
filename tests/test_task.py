@@ -1,12 +1,19 @@
 """Tests for Harbor task."""
 
+import threading
+import time
 from pathlib import Path
 from typing import Any
 from unittest.mock import Mock, patch
 
 import pytest
 from harbor.models.task.task import Task as HarborTask
-from inspect_harbor._harbor.task import harbor, load_harbor_tasks
+from inspect_harbor._harbor import task as task_module
+from inspect_harbor._harbor.task import (
+    _disambiguate_sample_ids,
+    harbor,
+    load_harbor_tasks,
+)
 
 
 def test_load_local_single_task():
@@ -20,6 +27,7 @@ def test_load_local_single_task():
         mock_load_local.return_value = [task_path]
 
         mock_task = Mock(spec=HarborTask)
+        mock_task.has_steps = False
         mock_task.name = "test-task"
         mock_task.task_dir = task_path
         mock_harbor_task.return_value = mock_task
@@ -51,6 +59,7 @@ def test_load_git_task():
         mock_load_git.return_value = [task_path]
 
         mock_task = Mock(spec=HarborTask)
+        mock_task.has_steps = False
         mock_task.name = "git-task"
         mock_task.task_dir = task_path
         mock_harbor_task.return_value = mock_task
@@ -86,8 +95,10 @@ def test_load_local_dataset():
         mock_load_local.return_value = [task_path_1, task_path_2]
 
         mock_task_1 = Mock(spec=HarborTask)
+        mock_task_1.has_steps = False
         mock_task_1.name = "task1"
         mock_task_2 = Mock(spec=HarborTask)
+        mock_task_2.has_steps = False
         mock_task_2.name = "task2"
         mock_harbor_task.side_effect = [mock_task_1, mock_task_2]
 
@@ -107,6 +118,53 @@ def test_load_local_dataset():
         )
 
 
+def test_load_from_package():
+    """Test loading tasks from a package-based dataset (Harbor 0.3.0+)."""
+    with (
+        patch("inspect_harbor._harbor.task._load_from_package") as mock_load_package,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        task_path = Path("/cache/packages/harbor/hello-world")
+        mock_load_package.return_value = [task_path]
+
+        mock_task = Mock(spec=HarborTask)
+        mock_task.has_steps = False
+        mock_task.name = "harbor/hello-world"
+        mock_harbor_task.return_value = mock_task
+
+        result = load_harbor_tasks(
+            package_name="harbor/hello-world", package_ref="latest"
+        )
+
+        assert len(result) == 1
+        assert result[0] == mock_task
+        mock_load_package.assert_called_once_with(
+            "harbor/hello-world",
+            "latest",
+            None,  # dataset_task_names
+            None,  # dataset_exclude_task_names
+            None,  # n_tasks
+            False,  # overwrite_cache default
+        )
+
+
+def test_load_multi_step_task_raises():
+    """Multi-step Harbor tasks (with [[steps]]) are surfaced as a NotImplementedError."""
+    with (
+        patch("inspect_harbor._harbor.task._load_local_path") as mock_load_local,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        mock_load_local.return_value = [Path("/some/multi/step/task")]
+
+        mock_task = Mock(spec=HarborTask)
+        mock_task.has_steps = True
+        mock_task.name = "multi-step-task"
+        mock_harbor_task.return_value = mock_task
+
+        with pytest.raises(NotImplementedError, match="Multi-step Harbor tasks"):
+            load_harbor_tasks(path="/some/multi/step/task")
+
+
 def test_load_from_registry():
     """Test loading tasks from a registry dataset."""
     with (
@@ -118,6 +176,7 @@ def test_load_from_registry():
         mock_load_registry.return_value = [task_path]
 
         mock_task = Mock(spec=HarborTask)
+        mock_task.has_steps = False
         mock_task.name = "registry-task"
         mock_harbor_task.return_value = mock_task
 
@@ -150,6 +209,7 @@ def test_load_git_task_with_overwrite_cache():
         mock_load_git.return_value = [task_path]
 
         mock_task = Mock(spec=HarborTask)
+        mock_task.has_steps = False
         mock_task.name = "git-task"
         mock_harbor_task.return_value = mock_task
 
@@ -182,6 +242,7 @@ def test_load_registry_with_overwrite_cache():
         mock_load_registry.return_value = [task_path]
 
         mock_task = Mock(spec=HarborTask)
+        mock_task.has_steps = False
         mock_task.name = "registry-task"
         mock_harbor_task.return_value = mock_task
 
@@ -214,13 +275,38 @@ def test_load_registry_with_overwrite_cache():
                 "task_git_url": "https://github.com/org/repo",
                 "dataset_name_version": "dataset@1.0",
             },
-            "Cannot specify both task and dataset parameters",
+            "Cannot mix task, dataset, and package parameters",
+        ),
+        (
+            {
+                "task_git_url": "https://github.com/org/repo",
+                "package_name": "harbor/hello-world",
+            },
+            "Cannot mix task, dataset, and package parameters",
+        ),
+        (
+            {
+                "dataset_name_version": "dataset@1.0",
+                "package_name": "harbor/hello-world",
+            },
+            "Cannot mix task, dataset, and package parameters",
+        ),
+        (
+            {
+                "task_git_url": "https://github.com/org/repo",
+                "dataset_name_version": "dataset@1.0",
+                "package_name": "harbor/hello-world",
+            },
+            "Cannot mix task, dataset, and package parameters",
         ),
         (
             {"task_git_url": "https://github.com/org/repo"},
             "Task configuration with task_git_url requires path parameter",
         ),
-        ({}, "Must specify either path, task parameters, or dataset parameters"),
+        (
+            {},
+            "Must specify either path, task parameters, dataset parameters, or package parameters",
+        ),
         (
             {"registry_url": "https://registry.example.com"},
             "Cannot specify registry_url, registry_path, dataset_task_names, or "
@@ -276,6 +362,7 @@ def test_load_harbor_tasks_parameter_passing(
         mock_load_local.return_value = [task_path]
 
         mock_task = Mock(spec=HarborTask)
+        mock_task.has_steps = False
         mock_task.name = "test-task"
         mock_harbor_task.return_value = mock_task
 
@@ -304,14 +391,61 @@ def test_harbor_task_integration():
 
     # Verify sample structure
     sample = task.dataset[0]
-    assert sample.id == "simple_task"
+    assert sample.id == "harbor-test/simple-task"
     assert sample.input is not None
     assert "Simple Addition Task" in sample.input or "2 + 2" in sample.input
 
     # Verify metadata
     assert sample.metadata is not None
-    assert sample.metadata["task_name"] == "simple_task"
+    assert sample.metadata["task_name"] == "harbor-test/simple-task"
     assert "test_path" in sample.metadata
+
+
+def test_disambiguate_sample_ids_no_collisions():
+    """Unique names pass through unchanged."""
+    t1 = Mock(spec=HarborTask)
+    t1.name = "alpha"
+    t1.task_dir = Path("/cache/a")
+    t2 = Mock(spec=HarborTask)
+    t2.name = "beta"
+    t2.task_dir = Path("/cache/b")
+
+    assert _disambiguate_sample_ids([t1, t2]) == ["alpha", "beta"]
+
+
+def test_disambiguate_sample_ids_collisions_get_hash_suffix():
+    """Tasks sharing a name get an ``@<hash>`` suffix derived from task_dir."""
+    t1 = Mock(spec=HarborTask)
+    t1.name = "shared"
+    t1.task_dir = Path("/cache/one")
+    t2 = Mock(spec=HarborTask)
+    t2.name = "shared"
+    t2.task_dir = Path("/cache/two")
+    t3 = Mock(spec=HarborTask)
+    t3.name = "unique"
+    t3.task_dir = Path("/cache/three")
+
+    ids = _disambiguate_sample_ids([t1, t2, t3])
+    # Unique name unchanged; colliding ones disambiguated and distinct.
+    assert ids[2] == "unique"
+    assert ids[0].startswith("shared@") and ids[1].startswith("shared@")
+    assert ids[0] != ids[1]
+    # Suffix shape: 8-hex-char content hash.
+    assert len(ids[0].split("@", 1)[1]) == 8
+
+
+async def test_load_harbor_tasks_inside_running_event_loop():
+    """Sync API must bridge correctly when invoked from a running event loop.
+
+    Covers the Jupyter / FastAPI lifespan / ``async def`` user-script case.
+    """
+    task_path = Path(__file__).parent / "fixtures" / "simple_task"
+    assert task_path.exists()
+
+    tasks = load_harbor_tasks(path=task_path)
+
+    assert len(tasks) == 1
+    assert tasks[0].name == "harbor-test/simple-task"
 
 
 def test_harbor_task_with_overrides():
@@ -353,3 +487,69 @@ def test_harbor_task_with_overrides():
     assert len(service.deploy.resources.reservations.devices) == 1
     device = service.deploy.resources.reservations.devices[0]
     assert device.count == 2
+
+
+def _drain_coroutine(coro: Any) -> list[Any]:
+    """Close the coroutine without running it (avoids un-awaited RuntimeWarning)."""
+    coro.close()
+    return []
+
+
+def test_download_dataset_calls_reset_client() -> None:
+    """``_download_dataset`` resets Harbor's cached Supabase client.
+
+    Without the reset, a stale client bound to a destroyed loop trips
+    ``RuntimeError: Event loop is closed`` on the next request.
+    """
+    with (
+        patch.object(task_module, "reset_client") as mock_reset,
+        patch.object(
+            task_module, "run_coroutine", side_effect=_drain_coroutine
+        ) as mock_run,
+    ):
+        result = task_module._download_dataset(Mock(), overwrite_cache=False)
+
+    mock_reset.assert_called_once()
+    assert mock_run.call_count == 1
+    assert result == []
+
+
+def test_download_dataset_serializes_concurrent_calls() -> None:
+    """Concurrent ``_download_dataset`` calls must not overlap.
+
+    The lock prevents two threads from observing a half-reset Supabase client.
+    """
+    in_section: list[str] = []
+    overlap_seen = threading.Event()
+
+    def slow_reset() -> None:
+        # Mark we're inside the critical section. If another thread is
+        # already here, the lock isn't doing its job.
+        if in_section:
+            overlap_seen.set()
+        in_section.append(threading.current_thread().name)
+        time.sleep(0.05)  # hold long enough for concurrent threads to collide
+        in_section.pop()
+
+    with (
+        patch.object(task_module, "reset_client", side_effect=slow_reset),
+        patch.object(task_module, "run_coroutine", side_effect=_drain_coroutine),
+    ):
+        threads = [
+            threading.Thread(
+                target=lambda: task_module._download_dataset(
+                    Mock(), overwrite_cache=False
+                ),
+                name=f"t{i}",
+            )
+            for i in range(5)
+        ]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+
+    assert not overlap_seen.is_set(), (
+        "Two threads were inside _download_dataset's critical section "
+        "simultaneously — the lock isn't serializing reset_client + run_coroutine."
+    )

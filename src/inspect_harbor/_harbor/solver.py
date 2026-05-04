@@ -56,6 +56,7 @@ def oracle() -> Solver:
         await sandbox().exec(
             ["bash", "-l", container_solve_path],
             env=solution_env,
+            user=state.metadata.get("agent_user"),
         )
 
         # We don't cleanup /solution directory: some tasks require the scorer to access

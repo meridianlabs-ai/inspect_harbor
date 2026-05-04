@@ -1,7 +1,6 @@
 [task]
-name = "simple_task"
+name = "harbor-test/simple-task"
 description = "A simple test task for integration testing"
-version = "1.0.0"
 
 [environment]
 docker_image = "python:3.11-slim"

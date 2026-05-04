@@ -6,6 +6,7 @@ from unittest.mock import Mock, mock_open, patch
 
 import pytest
 import yaml
+from harbor.models.task.config import AgentConfig, VerifierConfig
 from inspect_ai.dataset import Sample
 from inspect_ai.util import ComposeBuild, ComposeConfig, SandboxEnvironmentSpec
 from inspect_ai.util._sandbox.compose import ComposeDeviceReservation
@@ -161,17 +162,21 @@ def test_harbor_to_compose_config_custom_resource_limits():
         assert service.mem_limit == "8192m"
 
 
-def test_harbor_to_compose_config_default_resource_limits():
-    """Test default resource limits when not specified."""
-    # Setup mock Harbor task
+def test_harbor_to_compose_config_harbor_defaults():
+    """Test Harbor's schema defaults are passed through.
+
+    Harbor defaults (cpus=1, memory_mb=2048) flow into the compose
+    config, with our 6GB memory minimum enforced on top.
+    """
     mock_task = Mock()
     mock_paths = Mock()
     mock_paths.environment_dir = Path("/task/environment")
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
-    mock_env_config.cpus = None
-    mock_env_config.memory_mb = None
+    # EnvironmentConfig defaults: cpus=1, memory_mb=2048, gpus=0.
+    mock_env_config.cpus = 1
+    mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "ubuntu:latest"
     mock_env_config.allow_internet = True
     mock_env_config.gpus = 0
@@ -183,7 +188,7 @@ def test_harbor_to_compose_config_default_resource_limits():
 
         service = result.services["default"]
         assert service.cpus == 1.0
-        # When memory_mb is None, 6GB minimum is applied
+        # 2048 < 6144 minimum -> bumped to 6144m.
         assert service.mem_limit == "6144m"
 
 
@@ -301,8 +306,8 @@ def test_harbor_to_compose_config_network_mode_with_internet():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
-    mock_env_config.cpus = None
-    mock_env_config.memory_mb = None
+    mock_env_config.cpus = 1
+    mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "ubuntu:latest"
     mock_env_config.allow_internet = True
     mock_env_config.gpus = 0
@@ -323,8 +328,8 @@ def test_harbor_to_compose_config_network_mode_without_internet():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
-    mock_env_config.cpus = None
-    mock_env_config.memory_mb = None
+    mock_env_config.cpus = 1
+    mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "ubuntu:latest"
     mock_env_config.allow_internet = False
     mock_env_config.gpus = 0
@@ -364,6 +369,7 @@ def test_harbor_task_to_sample_metadata_preserved():
     mock_verifier_config = Mock()
     mock_verifier_config.timeout_sec = 300
     mock_task.config.verifier = mock_verifier_config
+    mock_task.config.task = None
     mock_task.config.model_dump = Mock(return_value={"test": "config"})
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -412,6 +418,7 @@ def test_harbor_task_to_sample_sandbox_spec():
     mock_verifier_config = Mock()
     mock_verifier_config.timeout_sec = 60
     mock_task.config.verifier = mock_verifier_config
+    mock_task.config.task = None
     mock_task.config.model_dump = Mock(return_value={})
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -595,6 +602,7 @@ def test_harbor_task_to_sample_with_verifier_env():
         "MODEL_NAME": "gpt-4o",
     }
     mock_task.config.verifier = mock_verifier_config
+    mock_task.config.task = None
     mock_task.config.model_dump = Mock(return_value={"test": "config"})
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -634,11 +642,12 @@ def test_harbor_task_to_sample_without_verifier_env():
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
 
-    # Mock verifier config WITHOUT env vars (None or not set)
+    # Mock verifier config without env vars (Harbor's default empty-dict).
     mock_verifier_config = Mock()
     mock_verifier_config.timeout_sec = 600
-    mock_verifier_config.env = None
+    mock_verifier_config.env = {}
     mock_task.config.verifier = mock_verifier_config
+    mock_task.config.task = None
     mock_task.config.model_dump = Mock(return_value={"test": "config"})
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -648,6 +657,134 @@ def test_harbor_task_to_sample_without_verifier_env():
         assert result.metadata is not None
         assert "verifier_env" in result.metadata
         assert result.metadata["verifier_env"] == {}
+
+
+def test_harbor_task_to_sample_with_package_info():
+    """When ``[task]`` is present in task.toml, surface package metadata."""
+    mock_task = Mock()
+    mock_task.name = "harbor/hello-world"
+    mock_task.instruction = "Say hello."
+    mock_task.task_dir = Path("/tasks/harbor-hello-world")
+
+    mock_paths = Mock()
+    mock_paths.environment_dir = Path("/tasks/harbor-hello-world/environment")
+    mock_paths.test_path = Path("/tasks/harbor-hello-world/tests/test.sh")
+    mock_paths.tests_dir = Path("/tasks/harbor-hello-world/tests")
+    mock_paths.solution_dir = Path("/tasks/harbor-hello-world/solution")
+    mock_paths.solve_path = Path("/tasks/harbor-hello-world/solution/solve.sh")
+    mock_task.paths = mock_paths
+
+    mock_env_config = Mock()
+    mock_env_config.cpus = 1
+    mock_env_config.memory_mb = 2048
+    mock_env_config.docker_image = "python:3.11"
+    mock_env_config.allow_internet = True
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_task.config.environment = mock_env_config
+
+    mock_task.config.verifier = Mock(timeout_sec=60, env={}, user=None)
+    mock_task.config.agent = Mock(user=None)
+    mock_task.config.solution = Mock(env={})
+    mock_task.config.model_dump = Mock(return_value={})
+
+    # Realistic PackageInfo payload — note ``authors`` is a list of pydantic
+    # models in production; we mock model_dump() to return its dict form.
+    package = Mock()
+    package.name = "harbor/hello-world"
+    package.description = "A friendly greeting"
+    package.keywords = ["hello", "world"]
+    author = Mock()
+    author.model_dump = Mock(
+        return_value={"name": "Alice", "email": "alice@example.com"}
+    )
+    package.authors = [author]
+    mock_task.config.task = package
+
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_task_to_sample(mock_task)
+
+    assert result.metadata is not None
+    assert result.metadata["package_name"] == "harbor/hello-world"
+    assert result.metadata["package_description"] == "A friendly greeting"
+    assert result.metadata["package_keywords"] == ["hello", "world"]
+    assert result.metadata["package_authors"] == [
+        {"name": "Alice", "email": "alice@example.com"}
+    ]
+
+
+@pytest.mark.parametrize(
+    "verifier_config,agent_config,expected_verifier,expected_agent",
+    [
+        pytest.param(
+            Mock(timeout_sec=60, env={}, user=None),
+            Mock(user=None),
+            None,
+            None,
+            id="both-none",
+        ),
+        pytest.param(
+            Mock(timeout_sec=60, env={}, user="agent"),
+            Mock(user="root"),
+            "agent",
+            "root",
+            id="both-strings",
+        ),
+        pytest.param(
+            Mock(timeout_sec=60, env={}, user=1000),
+            Mock(user="agent"),
+            "1000",
+            "agent",
+            id="int-uid-coerced-mock",
+        ),
+        pytest.param(
+            VerifierConfig(timeout_sec=60, user=1000),
+            AgentConfig(user="agent"),
+            "1000",
+            "agent",
+            id="int-uid-coerced-real-pydantic",
+        ),
+    ],
+)
+def test_harbor_task_to_sample_user_fields(
+    verifier_config: Any,
+    agent_config: Any,
+    expected_verifier: str | None,
+    expected_agent: str | None,
+) -> None:
+    """User fields from ``[verifier]`` / ``[agent]`` flow into ``Sample.metadata``."""
+    mock_task = Mock()
+    mock_task.name = "test-task"
+    mock_task.instruction = "x"
+    mock_task.task_dir = Path("/t")
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/t/env")
+    mock_task.paths.test_path = Path("/t/tests/test.sh")
+    mock_task.paths.tests_dir = Path("/t/tests")
+    mock_task.paths.solution_dir = Path("/t/solution")
+    mock_task.paths.solve_path = Path("/t/solution/solve.sh")
+
+    mock_env_config = Mock()
+    mock_env_config.cpus = 1
+    mock_env_config.memory_mb = 2048
+    mock_env_config.docker_image = "python:3.11"
+    mock_env_config.allow_internet = True
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_task.config.environment = mock_env_config
+
+    mock_task.config.verifier = verifier_config
+    mock_task.config.agent = agent_config
+    mock_task.config.solution = Mock(env={})
+    mock_task.config.task = None
+    mock_task.config.model_dump = Mock(return_value={})
+
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_task_to_sample(mock_task)
+
+    assert result.metadata is not None
+    assert result.metadata["verifier_user"] == expected_verifier
+    assert result.metadata["agent_user"] == expected_agent
 
 
 @pytest.fixture
@@ -678,12 +815,18 @@ def mock_harbor_task():
     mock_verifier_config = Mock()
     mock_verifier_config.timeout_sec = 300
     mock_verifier_config.env = {}
+    mock_verifier_config.user = None
     mock_task.config.verifier = mock_verifier_config
+
+    mock_agent_config = Mock()
+    mock_agent_config.user = None
+    mock_task.config.agent = mock_agent_config
 
     mock_solution_config = Mock()
     mock_solution_config.env = {}
     mock_task.config.solution = mock_solution_config
 
+    mock_task.config.task = None
     mock_task.config.model_dump = Mock(return_value={})
 
     return mock_task
@@ -969,6 +1112,40 @@ def test_expand_compose_vars_unknown_left_as_is():
     assert result == "image: ${UNKNOWN_VAR}"
 
 
+@pytest.mark.parametrize(
+    "raw,cpus,expected",
+    [
+        # Unknown var falls back to the default.
+        ("image: ${UNKNOWN:-fallback-image}", 1.0, "image: fallback-image"),
+        # Known var wins over the default.
+        ("cpus: ${CPUS:-99}", 4.0, "cpus: 4"),
+    ],
+)
+def test_expand_compose_vars_default_syntax(
+    raw: str, cpus: float, expected: str
+) -> None:
+    """``${VAR:-default}`` is resolved per Harbor 0.6.3+ template syntax."""
+    mock_task = Mock()
+    mock_task.name = "t"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/env")
+    mock_task.config.verifier.env = {}
+
+    assert _expand_compose_vars(raw, mock_task, cpus, memory_mb=2048) == expected
+
+
+def test_expand_compose_vars_image_name_sanitized_for_package_task():
+    """Sanitize ``MAIN_IMAGE_NAME`` for package-style task names."""
+    mock_task = Mock()
+    mock_task.name = "harbor/Hello.World"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/env")
+    mock_task.config.verifier.env = {}
+
+    result = _expand_compose_vars("image: ${MAIN_IMAGE_NAME}", mock_task, 1.0, 2048)
+    assert result == "image: hb__harbor-hello.world"
+
+
 def test_expand_compose_vars_test_dir_from_verifier_env():
     """Test that TEST_DIR is pulled from verifier env if set."""
     mock_task = Mock()
@@ -1023,7 +1200,6 @@ services:
 @pytest.mark.parametrize(
     "config_memory_mb,expected_memory",
     [
-        (None, "6144m"),  # None -> 6GB minimum
         (2048, "6144m"),  # 2GB (Harbor default) -> 6GB minimum
         (4096, "6144m"),  # 4GB -> 6GB minimum
         (6144, "6144m"),  # Exactly 6GB -> 6GB
@@ -1032,7 +1208,7 @@ services:
     ],
 )
 def test_harbor_to_compose_config_memory_minimum(
-    config_memory_mb: int | None, expected_memory: str
+    config_memory_mb: int, expected_memory: str
 ):
     """Test that 6GB minimum is enforced for low/unset values, but higher values are respected."""
     mock_task = Mock()

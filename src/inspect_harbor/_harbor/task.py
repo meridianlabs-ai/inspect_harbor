@@ -1,15 +1,18 @@
 """Inspect AI Task interface to Harbor tasks"""
 
+import hashlib
+import threading
+from collections import Counter
 from pathlib import Path
 
-from harbor.dataset.client import DatasetClient
-from harbor.models.job.config import LocalDatasetConfig, RegistryDatasetConfig
-from harbor.models.registry import LocalRegistryInfo, RemoteRegistryInfo
+from harbor.auth.client import reset_client
+from harbor.models.job.config import DatasetConfig
 from harbor.models.task.paths import TaskPaths
 from harbor.models.task.task import Task as HarborTask
 from harbor.models.trial.config import TaskConfig
 from harbor.tasks.client import TaskClient
 from inspect_ai import Task, task
+from inspect_ai._util._async import run_coroutine
 from inspect_ai.agent import react
 from inspect_ai.model import CompactionEdit
 from inspect_ai.tool import bash, python, update_plan
@@ -26,6 +29,8 @@ def harbor(
     registry_url: str | None = None,
     registry_path: str | Path | None = None,
     dataset_name_version: str | None = None,
+    package_name: str | None = None,
+    package_ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
     n_tasks: int | None = None,
@@ -40,18 +45,20 @@ def harbor(
 
     Args:
         path: For local tasks/datasets: absolute path to task or dataset directory.
-              For git tasks: task identifier within the repository (e.g., "aime_i-9").
+              For git tasks: task identifier within the repository (e.g. ``aime_i-9``).
         task_git_url: Git URL for downloading a task from a remote repository.
         task_git_commit_id: Git commit ID to pin the task version (requires task_git_url).
         registry_url: Registry URL for remote datasets.
         registry_path: Path to local registry for datasets.
-        dataset_name_version: Dataset name@version (e.g., 'dataset@1.0').
+        dataset_name_version: Dataset ``name@version`` (e.g. ``dataset@1.0``).
+        package_name: Package dataset name in ``org/name`` form (e.g. ``harbor/hello-world``).
+        package_ref: Package dataset ref (tag, revision, or ``sha256:...`` digest). Defaults to ``latest``.
         dataset_task_names: Task names to include from dataset (supports glob patterns, multiple values).
         dataset_exclude_task_names: Task names to exclude from dataset (supports glob patterns, multiple values).
         n_tasks: Maximum number of tasks to include (applied after task_names/exclude_task_names filtering).
-        disable_verification: Disable task verification. Verfication checks whether task files exist.
+        disable_verification: Disable task verification. Verification checks whether task files exist.
         overwrite_cache: Force re-download and overwrite cached tasks (default: False).
-        sandbox_env_name: Sandbox environment name (default: "docker").
+        sandbox_env_name: Sandbox environment name (default: ``docker``).
         override_cpus: Override the number of CPUs for the environment.
         override_memory_mb: Override the memory (in MB) for the environment.
         override_gpus: Override the number of GPUs for the environment.
@@ -66,6 +73,8 @@ def harbor(
         registry_url=registry_url,
         registry_path=registry_path,
         dataset_name_version=dataset_name_version,
+        package_name=package_name,
+        package_ref=package_ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
         n_tasks=n_tasks,
@@ -73,6 +82,7 @@ def harbor(
         overwrite_cache=overwrite_cache,
     )
 
+    sample_ids = _disambiguate_sample_ids(harbor_task_objects)
     samples = [
         harbor_task_to_sample(
             ht,
@@ -80,8 +90,9 @@ def harbor(
             override_cpus=override_cpus,
             override_memory_mb=override_memory_mb,
             override_gpus=override_gpus,
+            sample_id=sid,
         )
-        for ht in harbor_task_objects
+        for ht, sid in zip(harbor_task_objects, sample_ids, strict=True)
     ]
 
     return Task(
@@ -101,6 +112,8 @@ def load_harbor_tasks(
     registry_url: str | None = None,
     registry_path: str | Path | None = None,
     dataset_name_version: str | None = None,
+    package_name: str | None = None,
+    package_ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
     n_tasks: int | None = None,
@@ -111,16 +124,18 @@ def load_harbor_tasks(
 
     Args:
         path: For local tasks/datasets: absolute path to task or dataset directory.
-              For git tasks: task identifier within the repository (e.g., "aime_i-9").
+              For git tasks: task identifier within the repository (e.g. ``aime_i-9``).
         task_git_url: Git URL for downloading a task from a remote repository.
         task_git_commit_id: Git commit ID to pin the task version (requires task_git_url).
         registry_url: Registry URL for remote datasets.
         registry_path: Path to local registry for datasets.
-        dataset_name_version: Dataset name@version (e.g., 'dataset@1.0').
+        dataset_name_version: Dataset ``name@version`` (e.g. ``dataset@1.0``).
+        package_name: Package dataset name in ``org/name`` form (e.g. ``harbor/hello-world``).
+        package_ref: Package dataset ref (tag, revision, or ``sha256:...`` digest). Defaults to ``latest``.
         dataset_task_names: Task names to include from dataset (supports glob patterns, multiple values).
         dataset_exclude_task_names: Task names to exclude from dataset (supports glob patterns, multiple values).
         n_tasks: Maximum number of tasks to include (applied after task_names/exclude_task_names filtering).
-        disable_verification: Disable task verification. Verfication checks whether task files exist.
+        disable_verification: Disable task verification. Verification checks whether task files exist.
         overwrite_cache: Force re-download and overwrite cached tasks.
 
     Returns:
@@ -136,12 +151,15 @@ def load_harbor_tasks(
         or dataset_task_names is not None
         or dataset_exclude_task_names is not None
     )
+    package_specified: bool = package_name is not None
 
-    if task_specified and dataset_specified:
+    sources = sum([task_specified, dataset_specified, package_specified])
+    if sources > 1:
         raise ValueError(
-            f"Cannot specify both task and dataset parameters. "
+            "Cannot mix task, dataset, and package parameters. "
             f"Task params: git_url={task_git_url}, commit={task_git_commit_id}. "
-            f"Dataset params: name_version={dataset_name_version}, registry_url={registry_url}"
+            f"Dataset params: name_version={dataset_name_version}, registry_url={registry_url}. "
+            f"Package params: package_name={package_name}, package_ref={package_ref}."
         )
 
     if path is not None:
@@ -157,7 +175,7 @@ def load_harbor_tasks(
                 n_tasks,
                 disable_verification,
             )
-        return [HarborTask(task_dir=task_path) for task_path in task_paths]
+        return _build_harbor_tasks(task_paths)
 
     if task_specified:
         raise ValueError("Task configuration with task_git_url requires path parameter")
@@ -178,9 +196,45 @@ def load_harbor_tasks(
             n_tasks,
             overwrite_cache,
         )
-        return [HarborTask(task_dir=task_path) for task_path in task_paths]
+        return _build_harbor_tasks(task_paths)
 
-    raise ValueError("Must specify either path, task parameters, or dataset parameters")
+    if package_name is not None:
+        task_paths = _load_from_package(
+            package_name,
+            package_ref,
+            dataset_task_names,
+            dataset_exclude_task_names,
+            n_tasks,
+            overwrite_cache,
+        )
+        return _build_harbor_tasks(task_paths)
+
+    raise ValueError(
+        "Must specify either path, task parameters, dataset parameters, or package parameters"
+    )
+
+
+def _disambiguate_sample_ids(harbor_tasks: list[HarborTask]) -> list[str]:
+    """Return a unique ``Sample.id`` for each task."""
+    name_counts = Counter(t.name for t in harbor_tasks)
+    return [
+        t.name
+        if name_counts[t.name] == 1
+        else f"{t.name}@{hashlib.sha256(str(t.task_dir).encode()).hexdigest()[:8]}"
+        for t in harbor_tasks
+    ]
+
+
+def _build_harbor_tasks(task_paths: list[Path]) -> list[HarborTask]:
+    """Construct ``HarborTask`` objects, rejecting multi-step tasks."""
+    harbor_tasks = [HarborTask(task_dir=p) for p in task_paths]
+    multi_step = [t.name for t in harbor_tasks if t.has_steps]
+    if multi_step:
+        raise NotImplementedError(
+            "Multi-step Harbor tasks are not yet supported by inspect_harbor: "
+            f"{multi_step}."
+        )
+    return harbor_tasks
 
 
 def _normalize_paths(*paths: str | Path | None) -> tuple[Path | None, ...]:
@@ -199,9 +253,12 @@ def _load_git_task(
         path=path, git_url=task_git_url, git_commit_id=task_git_commit_id
     )
     task_client = TaskClient()
-    return task_client.download_tasks(
-        task_ids=[task_config.get_task_id()], overwrite=overwrite_cache
+    result = run_coroutine(
+        task_client.download_tasks(
+            task_ids=[task_config.get_task_id()], overwrite=overwrite_cache
+        )
     )
+    return result.paths
 
 
 def _load_local_path(
@@ -220,14 +277,16 @@ def _load_local_path(
     if is_task:
         return [path]
 
-    dataset_config = LocalDatasetConfig(
+    dataset_config = DatasetConfig(
         path=path,
         task_names=dataset_task_names,
         exclude_task_names=dataset_exclude_task_names,
         n_tasks=n_tasks,
     )
-    local_configs = dataset_config.get_task_configs(disable_verification)
-    return [config.path for config in local_configs]
+    local_configs = run_coroutine(
+        dataset_config.get_task_configs(disable_verification=disable_verification)
+    )
+    return [config.path for config in local_configs if config.path is not None]
 
 
 def _load_from_registry(
@@ -245,22 +304,55 @@ def _load_from_registry(
     else:
         name, version = dataset_name_version, None
 
-    if registry_url is not None:
-        registry_info = RemoteRegistryInfo(url=registry_url)
-    elif registry_path is not None:
-        registry_info = LocalRegistryInfo(path=registry_path)
-    else:
-        registry_info = RemoteRegistryInfo()
-
-    dataset_config = RegistryDatasetConfig(
-        registry=registry_info,
+    dataset_config = DatasetConfig(
         name=name,
         version=version,
+        registry_url=registry_url,
+        registry_path=registry_path,
         task_names=dataset_task_names,
         exclude_task_names=dataset_exclude_task_names,
         n_tasks=n_tasks,
         overwrite=overwrite_cache,
     )
-    dataset_client = DatasetClient()
-    downloaded_tasks = dataset_client.download_dataset_from_config(dataset_config)
-    return [dt.local_path for dt in downloaded_tasks]
+    return _download_dataset(dataset_config, overwrite_cache)
+
+
+def _load_from_package(
+    package_name: str,
+    package_ref: str,
+    dataset_task_names: list[str] | None,
+    dataset_exclude_task_names: list[str] | None,
+    n_tasks: int | None,
+    overwrite_cache: bool,
+) -> list[Path]:
+    """Load tasks from a package-based dataset."""
+    dataset_config = DatasetConfig(
+        name=package_name,
+        ref=package_ref,
+        task_names=dataset_task_names,
+        exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite=overwrite_cache,
+    )
+    return _download_dataset(dataset_config, overwrite_cache)
+
+
+_DOWNLOAD_LOCK = threading.Lock()
+
+
+def _download_dataset(
+    dataset_config: DatasetConfig, overwrite_cache: bool
+) -> list[Path]:
+    """Resolve a dataset to TaskConfigs, then download to local paths."""
+
+    async def _resolve_and_download() -> list[Path]:
+        task_configs = await dataset_config.get_task_configs()
+        result = await TaskClient().download_tasks(
+            task_ids=[tc.get_task_id() for tc in task_configs],
+            overwrite=overwrite_cache,
+        )
+        return result.paths
+
+    with _DOWNLOAD_LOCK:
+        reset_client()
+        return run_coroutine(_resolve_and_download())
