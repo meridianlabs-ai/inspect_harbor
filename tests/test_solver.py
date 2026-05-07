@@ -540,3 +540,55 @@ async def test_cleanup_sandbox_env_vars_unit():
         assert calls[0][0][0] == ["unset", "VAR1"]
         assert calls[1][0][0] == ["unset", "VAR2"]
         assert calls[2][0][0] == ["unset", "VAR3"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "agent_user,expected_user_kwarg",
+    [
+        (None, None),
+        ("agent", "agent"),
+    ],
+    ids=["no-user", "explicit-user"],
+)
+async def test_oracle_passes_agent_user(
+    agent_user: str | None, expected_user_kwarg: str | None
+) -> None:
+    """``[agent].user`` from metadata flows to ``sandbox().exec(user=...)``."""
+    state = TaskState(
+        model=ModelName("mockprovider/test-model"),
+        sample_id="test-sample",
+        epoch=0,
+        input="x",
+        messages=[],
+        metadata={
+            "solution_dir": "/fake/solution",
+            "solve_path": "/fake/solution/solve.sh",
+            "agent_user": agent_user,
+        },
+    )
+
+    captured_kwargs: dict[str, object] = {}
+
+    async def track_exec(cmd: list[str], **kwargs: object) -> Mock:
+        if cmd[:2] == ["bash", "-l"]:
+            captured_kwargs.update(kwargs)
+        return Mock(returncode=0, stdout="", stderr="")
+
+    mock_sandbox = Mock()
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+
+    with (
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
+        ),
+        patch("inspect_harbor._harbor.solver.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.solver.copy_directory_to_sandbox",
+            new_callable=AsyncMock,
+        ),
+        patch("pathlib.Path.exists", return_value=True),
+    ):
+        await oracle()(state, Mock())
+
+    assert captured_kwargs.get("user") == expected_user_kwarg

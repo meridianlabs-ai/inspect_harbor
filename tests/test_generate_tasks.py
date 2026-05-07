@@ -2,7 +2,6 @@
 
 import sys
 from pathlib import Path
-from typing import Any
 
 import pytest
 
@@ -10,237 +9,146 @@ import pytest
 scripts_dir = Path(__file__).parent.parent / "scripts"
 sys.path.insert(0, str(scripts_dir))
 
-from generate_tasks import (  # type: ignore[import-not-found]  # noqa: E402
-    build_harbor_url,
+from generate_tasks import (  # noqa: E402
+    Dataset,
+    FetchedDataset,
+    _build_table_rows,
+    _clean_registry_description,
     dataset_name_to_function_name,
+    decorate_datasets,
+    generate_registry_pages,
     generate_tasks_content,
+    resolve_categories,
 )
 
 
 @pytest.fixture
-def mock_registry_data() -> list[dict[str, Any]]:
-    """Mock Harbor registry data with versioned datasets."""
+def mock_fetched() -> list[FetchedDataset]:
+    """Mock package datasets in ``fetch_package_datasets`` emission shape.
+
+    One row per dataset, ``org/name`` slug.
+    """
     return [
         {
-            "name": "test-dataset",
-            "version": "1.0",
-            "description": "Test dataset version 1.0",
+            "name": "dbt-labs/ade-bench",
+            "description": "ADE bench description",
+            "samples": 20,
+            "version": "sha256:ade",
         },
         {
-            "name": "test-dataset",
-            "version": "2.0",
-            "description": "Test dataset version 2.0",
+            "name": "harbor/hello-world",
+            "description": "A friendly greeting",
+            "samples": 1,
+            "version": "sha256:abc123",
         },
         {
-            "name": "multi-variant",
-            "version": "all",
-            "description": "Multi variant dataset - all",
-        },
-        {
-            "name": "multi-variant",
-            "version": "subset",
-            "description": "Multi variant dataset - subset",
-        },
-        {
-            "name": "simple-dataset",
-            "version": "1.0",
-            "description": "Simple dataset",
+            "name": "LiteCoder/LiteCoder-rl",
+            "description": "LiteCoder RL environments",
+            "samples": 602,
+            "version": "sha256:def456",
         },
     ]
 
 
+@pytest.fixture
+def mock_registry(
+    mock_fetched: list[FetchedDataset],
+) -> list[Dataset]:
+    """Decorated registry with no overrides (auto-derived function names)."""
+    return decorate_datasets(mock_fetched, {})
+
+
 def test_dataset_name_to_function_name_basic() -> None:
-    """Test basic dataset name conversion."""
+    """Plain hyphenated names map to lowercase underscore identifiers."""
     assert dataset_name_to_function_name("terminal-bench") == "terminal_bench"
     assert dataset_name_to_function_name("hello-world") == "hello_world"
-    assert dataset_name_to_function_name("simple") == "simple"
-
-
-def test_dataset_name_to_function_name_with_version() -> None:
-    """Test dataset name conversion with versions."""
-    assert dataset_name_to_function_name("terminal-bench@2.0") == "terminal_bench_2_0"
-    assert dataset_name_to_function_name("bixbench@1.5") == "bixbench_1_5"
-    assert dataset_name_to_function_name("dataset@all") == "dataset_all"
-
-
-def test_dataset_name_to_function_name_complex() -> None:
-    """Test complex dataset name conversion."""
-    assert (
-        dataset_name_to_function_name("swe-lancer-diamond@all")
-        == "swe_lancer_diamond_all"
-    )
-    assert (
-        dataset_name_to_function_name("multi-part-name@1.2.3")
-        == "multi_part_name_1_2_3"
-    )
 
 
 def test_dataset_name_to_function_name_with_slash() -> None:
-    """Registry names with a '/' (e.g. scale-ai/swe-atlas-qna) must sanitize to valid identifiers."""
+    """``org/name`` slugs lowercase the org and join with underscore."""
     assert (
-        dataset_name_to_function_name("scale-ai/swe-atlas-qna@1.0")
-        == "scale_ai_swe_atlas_qna_1_0"
+        dataset_name_to_function_name("scale-ai/swe-atlas-qna")
+        == "scale_ai_swe_atlas_qna"
+    )
+    assert dataset_name_to_function_name("harbor/hello-world") == "harbor_hello_world"
+
+
+def test_dataset_name_to_function_name_lowercases_mixed_case() -> None:
+    """Mixed-case orgs are lowercased to satisfy PEP 8 / CLI ergonomics."""
+    assert (
+        dataset_name_to_function_name("LiteCoder/LiteCoder-rl")
+        == "litecoder_litecoder_rl"
     )
     assert (
-        dataset_name_to_function_name("scale-ai/swe-atlas-tw")
-        == "scale_ai_swe_atlas_tw"
-    )
-
-
-def test_build_harbor_url_exact_match() -> None:
-    """Plain name present in org_map → canonical dataset URL at 'latest'."""
-    org_map = {"ade-bench": "dbt-labs"}
-    url, is_canonical = build_harbor_url("ade-bench", org_map)
-    assert is_canonical
-    assert (
-        url == "https://registry.harborframework.com/datasets/dbt-labs/ade-bench/latest"
-    )
-
-
-def test_build_harbor_url_slash_prefixed() -> None:
-    """Slash-prefixed registry names carry the org in the name itself."""
-    url, is_canonical = build_harbor_url("scale-ai/swe-atlas-qna", {})
-    assert is_canonical
-    assert (
-        url
-        == "https://registry.harborframework.com/datasets/scale-ai/swe-atlas-qna/latest"
+        dataset_name_to_function_name("MichaelY310/devopsgym")
+        == "michaely310_devopsgym"
     )
 
 
-def test_build_harbor_url_underscore_normalization() -> None:
-    """Registry uses underscores where the site uses hyphens (e.g. arc_agi_2 → arc-agi-2)."""
-    org_map = {"arc-agi-2": "arcprize"}
-    url, is_canonical = build_harbor_url("arc_agi_2", org_map)
-    assert is_canonical
-    assert (
-        url == "https://registry.harborframework.com/datasets/arcprize/arc-agi-2/latest"
-    )
-
-
-def test_build_harbor_url_fallback_to_search() -> None:
-    """Unresolvable datasets fall back to the site's search URL with the bare name."""
-    url, is_canonical = build_harbor_url("bird-bench", {})
-    assert not is_canonical
-    assert url == "https://registry.harborframework.com/datasets?q=bird-bench"
-
-
-def test_generate_tasks_creates_versioned_functions(
-    mock_registry_data: list[dict[str, Any]],
+def test_generate_tasks_emits_one_function_per_dataset(
+    mock_registry: list[Dataset],
 ) -> None:
-    """Test that versioned task functions are generated."""
-    content = generate_tasks_content(mock_registry_data, {})
+    """One ``@task`` per dataset, named via the auto-derived identifier."""
+    content = generate_tasks_content(mock_registry)
 
-    # Check versioned functions are created
-    assert "def test_dataset_1_0(" in content
-    assert "def test_dataset_2_0(" in content
-    assert "def multi_variant_all(" in content
-    assert "def multi_variant_subset(" in content
-    assert "def simple_dataset_1_0(" in content
+    assert "def dbt_labs_ade_bench(" in content
+    assert "def harbor_hello_world(" in content
+    assert "def litecoder_litecoder_rl(" in content
+    assert content.count("@task\n") == 3
 
 
-def test_generate_tasks_creates_unversioned_functions(
-    mock_registry_data: list[dict[str, Any]],
+def test_generate_tasks_signature_uses_ref_default_latest(
+    mock_registry: list[Dataset],
 ) -> None:
-    """Test that unversioned task functions are created for backwards compatibility."""
-    content = generate_tasks_content(mock_registry_data, {})
-
-    # Check unversioned functions are created (one per unique dataset name)
-    assert "def test_dataset(" in content
-    assert "def multi_variant(" in content
-    assert "def simple_dataset(" in content
+    """Every generated task takes ``ref: str = "latest"`` as its first parameter."""
+    content = generate_tasks_content(mock_registry)
+    assert 'ref: str = "latest"' in content
+    # The legacy ``version`` parameter is gone.
+    assert "version: str" not in content
 
 
-def test_generate_tasks_includes_correct_dataset_name_version(
-    mock_registry_data: list[dict[str, Any]],
+def test_generate_tasks_body_forwards_package_name_and_ref(
+    mock_registry: list[Dataset],
 ) -> None:
-    """Test that generated functions pass correct dataset_name_version."""
-    content = generate_tasks_content(mock_registry_data, {})
+    """Function body forwards ``package_name`` + ``package_ref=ref`` to ``_harbor_base``."""
+    content = generate_tasks_content(mock_registry)
+    assert 'package_name="harbor/hello-world"' in content
+    assert "package_ref=ref" in content
 
-    # Versioned tasks should pass dataset@version
-    assert 'dataset_name_version="test-dataset@1.0"' in content
-    assert 'dataset_name_version="test-dataset@2.0"' in content
-    assert 'dataset_name_version="multi-variant@all"' in content
 
-    # Unversioned tasks should pass just dataset name
-    # These appear in the unversioned function definitions
-    assert 'dataset_name_version="test-dataset"' in content
-    assert 'dataset_name_version="multi-variant"' in content
+def test_generate_tasks_docstring_shows_slug_and_latest_digest(
+    mock_registry: list[Dataset],
+) -> None:
+    """Docstring carries the slug and the resolved digest for the ``latest`` ref."""
+    content = generate_tasks_content(mock_registry)
+    assert "Slug: harbor/hello-world" in content
+    assert "Latest digest: sha256:abc123" in content
 
 
 def test_generate_tasks_includes_descriptions(
-    mock_registry_data: list[dict[str, Any]],
+    mock_registry: list[Dataset],
 ) -> None:
-    """Test that generated functions include dataset descriptions in docstrings."""
-    content = generate_tasks_content(mock_registry_data, {})
-
-    assert "Test dataset version 1.0" in content
-    assert "Test dataset version 2.0" in content
-    assert "Multi variant dataset - all" in content
-    assert "Simple dataset" in content
-
-
-def test_generate_tasks_includes_version_info(
-    mock_registry_data: list[dict[str, Any]],
-) -> None:
-    """Test that generated functions include version information."""
-    content = generate_tasks_content(mock_registry_data, {})
-
-    # Versioned tasks should show explicit version
-    assert "Version: 1.0" in content
-    assert "Version: 2.0" in content
-    assert "Version: all" in content
-
-    # Unversioned tasks should indicate they're using latest
-    assert "Latest available" in content
-
-
-def test_generate_tasks_embeds_harbor_url_in_docstring(
-    mock_registry_data: list[dict[str, Any]],
-) -> None:
-    """Each @task function's docstring exposes a resolved Harbor URL for downstream consumers."""
-    org_map = {"test-dataset": "some-org", "simple-dataset": "some-org"}
-    content = generate_tasks_content(mock_registry_data, org_map)
-
-    # Canonical URL for mapped datasets
-    assert (
-        "Harbor URL: https://registry.harborframework.com/datasets/some-org/test-dataset/latest"
-        in content
-    )
-    # Fallback search URL for unmapped datasets
-    assert (
-        "Harbor URL: https://registry.harborframework.com/datasets?q=multi-variant"
-        in content
-    )
+    """Per-dataset descriptions surface in their docstrings."""
+    content = generate_tasks_content(mock_registry)
+    assert "ADE bench description" in content
+    assert "A friendly greeting" in content
 
 
 def test_generate_tasks_includes_required_imports(
-    mock_registry_data: list[dict[str, Any]],
+    mock_registry: list[Dataset],
 ) -> None:
-    """Test that generated code includes necessary imports."""
-    content = generate_tasks_content(mock_registry_data, {})
-
+    """Generated module imports Inspect's @task decorator and our harbor base."""
+    content = generate_tasks_content(mock_registry)
     assert "from inspect_ai import Task, task" in content
     assert "from inspect_harbor._harbor.task import harbor as _harbor_base" in content
 
 
-def test_generate_tasks_includes_task_decorator(
-    mock_registry_data: list[dict[str, Any]],
-) -> None:
-    """Test that all generated functions have @task decorator."""
-    content = generate_tasks_content(mock_registry_data, {})
-
-    # Count @task decorators - should equal number of generated functions
-    # 5 versioned + 3 unversioned (test-dataset, multi-variant, simple-dataset)
-    decorator_count = content.count("@task\n")
-    assert decorator_count == 8
-
-
 def test_generate_tasks_includes_all_parameters(
-    mock_registry_data: list[dict[str, Any]],
+    mock_registry: list[Dataset],
 ) -> None:
-    """Test that generated functions include all expected parameters."""
-    content = generate_tasks_content(mock_registry_data, {})
-
+    """Generated functions include every parameter the public API takes."""
+    content = generate_tasks_content(mock_registry)
+    assert 'ref: str = "latest"' in content
     assert "dataset_task_names: list[str] | None = None" in content
     assert "dataset_exclude_task_names: list[str] | None = None" in content
     assert "n_tasks: int | None = None" in content
@@ -252,11 +160,10 @@ def test_generate_tasks_includes_all_parameters(
 
 
 def test_generate_tasks_passes_parameters_to_base(
-    mock_registry_data: list[dict[str, Any]],
+    mock_registry: list[Dataset],
 ) -> None:
-    """Test that generated functions pass parameters to _harbor_base."""
-    content = generate_tasks_content(mock_registry_data, {})
-
+    """Every parameter is forwarded to ``_harbor_base``."""
+    content = generate_tasks_content(mock_registry)
     assert "dataset_task_names=dataset_task_names" in content
     assert "dataset_exclude_task_names=dataset_exclude_task_names" in content
     assert "n_tasks=n_tasks" in content
@@ -267,38 +174,330 @@ def test_generate_tasks_passes_parameters_to_base(
     assert "override_gpus=override_gpus" in content
 
 
-def test_generate_tasks_skips_entries_without_name() -> None:
-    """Test that generator skips registry entries without a name."""
-    invalid_registry = [
-        {"version": "1.0", "description": "No name"},
-        {"name": "valid-dataset", "version": "1.0", "description": "Has name"},
-    ]
-
-    content = generate_tasks_content(invalid_registry, {})
-
-    # Should only generate function for valid entry
-    assert "def valid_dataset_1_0(" in content
-    assert "@task" in content
-    # Count should be 2: versioned + unversioned for valid-dataset
-    assert content.count("@task") == 2
-
-
-def test_generate_tasks_deduplicates_versions(
-    mock_registry_data: list[dict[str, Any]],
-) -> None:
-    """Test that duplicate version entries are handled correctly."""
-    # Add duplicate entry
-    registry_with_duplicate = mock_registry_data + [
+def test_generate_tasks_collision_check_raises() -> None:
+    """If two datasets ever map to the same function name the run fails loudly."""
+    fetched: list[FetchedDataset] = [
         {
-            "name": "test-dataset",
-            "version": "1.0",
-            "description": "Duplicate entry",
+            "name": "foo/bar",
+            "description": "x",
+            "samples": 1,
+            "version": "sha256:x",
+        },
+    ]
+    # Two distinct datasets, both forced to the same function name via override.
+    overrides: dict[str, dict[str, object]] = {
+        "foo/bar": {"function_name": "shared_name"},
+    }
+    decorated = decorate_datasets(fetched, overrides)
+    decorated.append(
+        Dataset(
+            name="foo/baz",
+            description="y",
+            samples=1,
+            version="sha256:y",
+            func_name="shared_name",  # forced collision
+            harbor_url="https://hub.harborframework.com/datasets/foo/baz/latest",
+            clean_description="y.",
+        )
+    )
+    with pytest.raises(RuntimeError, match="Function-name collision"):
+        generate_tasks_content(decorated)
+
+
+def test_clean_registry_description_adds_trailing_period() -> None:
+    """Plain descriptions get a trailing period if they don't already have one."""
+    assert _clean_registry_description("Hello world") == "Hello world."
+    assert _clean_registry_description("Hello world.") == "Hello world."
+
+
+def test_clean_registry_description_flattens_newlines_and_whitespace() -> None:
+    """Newlines collapse to spaces; runs of whitespace shrink to one."""
+    assert _clean_registry_description("Hello\nworld") == "Hello world."
+    assert _clean_registry_description("Foo  bar   baz") == "Foo bar baz."
+
+
+def test_clean_registry_description_strips_named_url_footers() -> None:
+    """Named URL footers (``Adapter:``, ``Source:`` etc.) are stripped.
+
+    Covers ``Original benchmark:``, ``Adapter:``, ``Source:``, ``Website:``
+    and ``Adapter details:``.
+    """
+    assert (
+        _clean_registry_description("Hello. Original benchmark: https://example.com")
+        == "Hello."
+    )
+    assert (
+        _clean_registry_description("Hello. Adapter: https://example.com/foo")
+        == "Hello."
+    )
+    assert _clean_registry_description("Hello. Source: https://example.com") == "Hello."
+    assert (
+        _clean_registry_description("Hello. Website: https://example.com") == "Hello."
+    )
+    # ``Adapter details`` must match before the shorter ``Adapter`` alternative.
+    assert (
+        _clean_registry_description("Hello. Adapter details: https://example.com/x")
+        == "Hello."
+    )
+
+
+def test_clean_registry_description_strips_inline_urls() -> None:
+    """Bare URLs and URLs in parens are removed, with surrounding whitespace eaten."""
+    assert _clean_registry_description("Hello (https://example.com).") == "Hello."
+    assert _clean_registry_description("Hello https://example.com") == "Hello."
+
+
+def test_clean_registry_description_empty() -> None:
+    """Empty / whitespace-only descriptions return an empty string (no lone ``.``)."""
+    assert _clean_registry_description("") == ""
+    assert _clean_registry_description("   ") == ""
+
+
+def test_decorate_datasets_attaches_all_derived_fields() -> None:
+    """All three derived fields land on each dataset, with original keys kept.
+
+    Verifies ``func_name``, ``harbor_url``, and ``clean_description`` are
+    populated correctly.
+    """
+    fetched: list[FetchedDataset] = [
+        {
+            "name": "acme/foo-bench",
+            "description": "Foo. Original benchmark: https://x.com/y",
+            "samples": 5,
+            "version": "sha256:abc",
         }
     ]
+    decorated = decorate_datasets(fetched, {})
 
-    content = generate_tasks_content(registry_with_duplicate, {})
+    assert len(decorated) == 1
+    d = decorated[0]
+    assert d["func_name"] == "acme_foo_bench"
+    # URL is constructed deterministically from the slug.
+    assert (
+        d["harbor_url"]
+        == "https://hub.harborframework.com/datasets/acme/foo-bench/latest"
+    )
+    # ``Original benchmark: …`` footer is stripped.
+    assert d["clean_description"] == "Foo."
+    # Original FetchedDataset fields are preserved.
+    assert d["name"] == "acme/foo-bench"
+    assert d["version"] == "sha256:abc"
 
-    # Should still only have one function for test-dataset@1.0
-    # Count how many times the exact function definition appears
-    test_dataset_1_0_count = content.count("def test_dataset_1_0(")
-    assert test_dataset_1_0_count == 1
+
+def test_decorate_datasets_honors_function_name_override() -> None:
+    """``function_name:`` in overrides shortens the auto-derived identifier."""
+    fetched: list[FetchedDataset] = [
+        {
+            "name": "swe-bench/swe-bench-verified",
+            "description": "x",
+            "samples": 1,
+            "version": "sha256:x",
+        }
+    ]
+    overrides = {
+        "swe-bench/swe-bench-verified": {"function_name": "swe_bench_verified"}
+    }
+    decorated = decorate_datasets(fetched, overrides)
+    assert decorated[0]["func_name"] == "swe_bench_verified"
+
+
+def test_decorate_datasets_rejects_invalid_function_name_override() -> None:
+    """Non-identifier ``function_name`` overrides raise a clear error."""
+    fetched: list[FetchedDataset] = [
+        {
+            "name": "foo/bar",
+            "description": "x",
+            "samples": 1,
+            "version": "sha256:x",
+        }
+    ]
+    overrides = {"foo/bar": {"function_name": "not a valid identifier!"}}
+    with pytest.raises(RuntimeError, match="Invalid function_name override"):
+        decorate_datasets(fetched, overrides)
+
+
+def test_decorate_datasets_honors_desc_override() -> None:
+    """``desc:`` in overrides replaces the Harbor description.
+
+    The override flows through to ``description`` (used in @task docstrings)
+    and ``clean_description`` (used in listing/.qmd pages).
+    """
+    fetched: list[FetchedDataset] = [
+        {
+            "name": "foo/bar",
+            "description": "Harbor's brief description.",
+            "samples": 1,
+            "version": "sha256:x",
+        }
+    ]
+    overrides = {"foo/bar": {"desc": "A much richer hand-written description."}}
+    decorated = decorate_datasets(fetched, overrides)
+    assert decorated[0]["description"] == "A much richer hand-written description."
+    assert (
+        decorated[0]["clean_description"] == "A much richer hand-written description."
+    )
+
+
+def test_decorate_datasets_ignores_empty_desc_override() -> None:
+    """Empty / whitespace-only ``desc`` falls through to the Harbor default."""
+    fetched: list[FetchedDataset] = [
+        {
+            "name": "foo/bar",
+            "description": "Harbor's description.",
+            "samples": 1,
+            "version": "sha256:x",
+        }
+    ]
+    overrides = {"foo/bar": {"desc": "   "}}
+    decorated = decorate_datasets(fetched, overrides)
+    assert decorated[0]["description"] == "Harbor's description."
+
+
+def test_decorate_datasets_rejects_non_string_desc_override() -> None:
+    """Non-string ``desc`` overrides raise a clear error."""
+    fetched: list[FetchedDataset] = [
+        {
+            "name": "foo/bar",
+            "description": "x",
+            "samples": 1,
+            "version": "sha256:x",
+        }
+    ]
+    overrides: dict[str, dict[str, object]] = {"foo/bar": {"desc": 42}}
+    with pytest.raises(RuntimeError, match="Invalid desc override"):
+        decorate_datasets(fetched, overrides)
+
+
+def test_resolve_categories_groups_overrides_and_stubs_missing(
+    mock_registry: list[Dataset],
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Resolve_categories: groups overrides, stubs missing, leaves blank stubs.
+
+    Overrides with non-empty ``categories`` populate the map; missing
+    entries are auto-stubbed into ``overrides.yml``; entries that exist
+    with empty categories are left alone (not re-stubbed).
+    """
+    # Pre-existing overrides file — append_stub_entries needs it to exist.
+    overrides_file = tmp_path / "overrides.yml"
+    overrides_file.write_text("# header\n")
+    monkeypatch.setattr("generate_tasks.OVERRIDES_FILE", overrides_file)
+
+    overrides: dict[str, dict[str, object]] = {
+        "dbt-labs/ade-bench": {"categories": ["agentic", "coding"]},
+        # ``harbor/hello-world`` exists with empty categories — a blank
+        # stub waiting on a human. resolve_categories must NOT re-stub it.
+        "harbor/hello-world": {"categories": []},
+        # ``LiteCoder/LiteCoder-rl`` is missing entirely → should be auto-stubbed.
+    }
+
+    categories_map, new_names = resolve_categories(mock_registry, overrides)
+
+    # Both "valid" and "empty-stub" overrides land in the map (empty lists
+    # are kept verbatim — the listing just shows no category chip).
+    assert categories_map == {
+        "dbt-labs/ade-bench": ["agentic", "coding"],
+        "harbor/hello-world": [],
+    }
+    # Only the truly-missing dataset is stubbed — present-but-empty stays put.
+    assert new_names == ["LiteCoder/LiteCoder-rl"]
+    # The stub was appended to the overrides file.
+    assert "LiteCoder/LiteCoder-rl:" in overrides_file.read_text()
+    assert "categories: []" in overrides_file.read_text()
+
+
+def test_resolve_categories_skips_non_string_category_lists(
+    mock_registry: list[Dataset],
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Malformed ``categories`` values are silently dropped from the map.
+
+    Covers ``null``, non-list, and list-with-non-strings. The dataset is
+    not re-stubbed because the override entry itself exists.
+    """
+    overrides_file = tmp_path / "overrides.yml"
+    overrides_file.write_text("# header\n")
+    monkeypatch.setattr("generate_tasks.OVERRIDES_FILE", overrides_file)
+
+    overrides: dict[str, dict[str, object]] = {
+        "dbt-labs/ade-bench": {"categories": None},  # malformed
+        "harbor/hello-world": {"categories": "not-a-list"},  # malformed
+        "LiteCoder/LiteCoder-rl": {"categories": ["valid"]},
+    }
+    categories_map, new_names = resolve_categories(mock_registry, overrides)
+    assert categories_map == {"LiteCoder/LiteCoder-rl": ["valid"]}
+    assert new_names == []
+
+
+def test_build_table_rows_shows_latest_digest_and_samples(
+    mock_registry: list[Dataset],
+) -> None:
+    """The table rows surface the latest digest, sample count, and the func name."""
+    pkg = next(d for d in mock_registry if d["name"] == "harbor/hello-world")
+    rows = _build_table_rows(pkg, {})
+    assert "| Latest digest   | sha256:abc123 |" in rows
+    assert "| Inspect task    | `harbor_hello_world` |" in rows
+    assert "| Samples         | 1 |" in rows
+
+
+def test_build_table_rows_includes_arxiv_and_repo_overrides(
+    mock_registry: list[Dataset],
+) -> None:
+    """``arxiv`` and ``repo`` keys from overrides become Paper / Source rows."""
+    pkg = next(d for d in mock_registry if d["name"] == "dbt-labs/ade-bench")
+    override = {
+        "arxiv": "https://arxiv.org/abs/1234.5678",
+        "repo": "https://github.com/acme/foo",
+    }
+    rows = _build_table_rows(pkg, override)
+    assert "| Paper           | [arxiv](https://arxiv.org/abs/1234.5678) |" in rows
+    assert (
+        "| Source          | [https://github.com/acme/foo](https://github.com/acme/foo) |"
+        in rows
+    )
+
+
+def test_build_table_rows_omits_paper_and_source_when_overrides_empty(
+    mock_registry: list[Dataset],
+) -> None:
+    """Without ``arxiv``/``repo`` in overrides, Paper / Source rows are absent."""
+    pkg = next(d for d in mock_registry if d["name"] == "dbt-labs/ade-bench")
+    rows = _build_table_rows(pkg, {})
+    assert "Paper" not in rows
+    assert "Source" not in rows
+
+
+def test_generate_registry_pages_writes_one_qmd_per_dataset(
+    mock_registry: list[Dataset],
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """One ``.qmd`` is written per dataset under ``REGISTRY_PAGES_DIR``."""
+    monkeypatch.setattr("generate_tasks.REGISTRY_PAGES_DIR", tmp_path)
+    written = generate_registry_pages(mock_registry, {}, {})
+    assert written == 3
+    assert (tmp_path / "dbt_labs_ade_bench.qmd").exists()
+    assert (tmp_path / "harbor_hello_world.qmd").exists()
+    assert (tmp_path / "litecoder_litecoder_rl.qmd").exists()
+
+
+def test_generate_registry_pages_deletes_orphans(
+    mock_registry: list[Dataset],
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Stale ``.qmd`` files (datasets removed/renamed since last run) are deleted."""
+    monkeypatch.setattr("generate_tasks.REGISTRY_PAGES_DIR", tmp_path)
+    # Leftover from a previous run — dataset no longer in the registry.
+    stale = tmp_path / "removed_dataset.qmd"
+    stale.write_text("---\ntitle: gone\n---\n")
+    # An unrelated file (not .qmd) should NOT be touched.
+    unrelated = tmp_path / "notes.md"
+    unrelated.write_text("keep me")
+
+    generate_registry_pages(mock_registry, {}, {})
+
+    assert not stale.exists()
+    assert unrelated.exists()

@@ -1,0 +1,7 @@
+# Hand-maintained list of fnmatch globs against `org/name` slugs.
+# Slugs matching any pattern here are dropped during scraping.
+
+- cookbook/test
+- harbor/hello-world
+- openthoughts/*
+- shogunpurple/9CBCC967-BDAF-43D0-9485-52EBBE4A5094

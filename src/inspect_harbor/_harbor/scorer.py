@@ -86,11 +86,13 @@ def harbor_scorer(
 
         verifier_env_raw = state.metadata.get("verifier_env", {})
         verifier_env = resolve_env_vars(verifier_env_raw) if verifier_env_raw else None
+        verifier_user = state.metadata.get("verifier_user")
 
         result = await sandbox().exec(
             ["bash", "-l", container_test_path],
             timeout=int(verifier_timeout_sec),
             env=verifier_env,
+            user=verifier_user,
         )
 
         reward_value, reward_dict = await _parse_reward_file(result.returncode)

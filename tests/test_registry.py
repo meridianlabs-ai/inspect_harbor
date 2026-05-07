@@ -48,6 +48,17 @@ def test_tasks_have_task_decorator():
         )
 
 
+def test_generated_function_names_are_unique():
+    """Every ``def`` in ``_tasks.py`` resolves to a unique name."""
+    task_funcs = _get_generated_tasks()
+    names = [f.__name__ for f in task_funcs]
+    duplicates = sorted({n for n in names if names.count(n) > 1})
+    assert not duplicates, (
+        f"Duplicate function names in _tasks.py: {duplicates}. "
+        "Disambiguate via `function_name:` in docs/overrides.yml."
+    )
+
+
 def test_import_nonexistent_task_raises():
     """Test that importing nonexistent task raises ImportError."""
     with pytest.raises(ImportError, match="cannot import name"):
@@ -80,23 +91,20 @@ def test_task_has_correct_signature():
         assert param in param_names, f"Task should have {param} parameter"
 
 
-def test_task_calls_harbor_base():
-    """Test that generated tasks call _harbor_base with correct parameters."""
-    task_funcs = _get_generated_tasks()
-    first_task = task_funcs[0]
+def test_package_task_calls_harbor_base_with_package_name_and_ref():
+    """Generated package tasks forward ``package_name``/``package_ref`` to ``_harbor_base``."""
+    package_task = _get_generated_tasks()[0]
 
     with patch("inspect_harbor._tasks._harbor_base") as mock_harbor:
         mock_harbor.return_value = Mock()
 
-        # Call the task with some parameters
-        first_task(n_tasks=5, overwrite_cache=True)
+        package_task(n_tasks=5, overwrite_cache=True)
 
-        # Verify _harbor_base was called
         mock_harbor.assert_called_once()
         call_kwargs = mock_harbor.call_args[1]
 
-        # Check expected parameters were passed through
-        assert "dataset_name_version" in call_kwargs
+        assert "package_name" in call_kwargs
+        assert "package_ref" in call_kwargs
         assert call_kwargs["n_tasks"] == 5
         assert call_kwargs["overwrite_cache"] is True
 

@@ -1,8 +1,10 @@
 """Converters for Harbor tasks to Inspect AI structures."""
 
 import re
+from typing import Any
 
 import yaml
+from harbor.environments.docker.docker import _sanitize_docker_image_name
 from harbor.models.task.task import Task as HarborTask
 from harbor.models.trial.paths import EnvironmentPaths
 from inspect_ai.dataset import Sample
@@ -43,11 +45,7 @@ def harbor_to_compose_config(
     env_config = harbor_task.config.environment
 
     # Extract resource configuration from Harbor config, applying overrides
-    cpus = (
-        float(override_cpus)
-        if override_cpus is not None
-        else (float(env_config.cpus) if env_config.cpus is not None else 1.0)
-    )
+    cpus = float(override_cpus) if override_cpus is not None else float(env_config.cpus)
 
     # Harbor's default of 2048 MB (2 GB) is too restrictive for modern agents.
     # Enforce a minimum of 6144 MB (6 GB) unless explicitly overridden.
@@ -55,16 +53,11 @@ def harbor_to_compose_config(
     memory_mb = (
         override_memory_mb
         if override_memory_mb is not None
-        else max(env_config.memory_mb or 0, MIN_MEMORY_MB)
+        else max(env_config.memory_mb, MIN_MEMORY_MB)
     )
 
-    gpus = (
-        override_gpus
-        if override_gpus is not None
-        else (env_config.gpus if env_config.gpus is not None else 0)
-    )
-    gpu_types = env_config.gpu_types
-    gpu_deploy = _create_gpu_deploy_config(gpus, gpu_types)
+    gpus = override_gpus if override_gpus is not None else env_config.gpus
+    gpu_deploy = _create_gpu_deploy_config(gpus, env_config.gpu_types)
 
     # Use existing docker-compose.yaml if present
     if compose_yaml_path.exists():
@@ -78,9 +71,7 @@ def harbor_to_compose_config(
         if compose_config.services:
             _, default_service = _find_default_service(compose_config)
             default_service.cpus = cpus
-            default_service.mem_limit = (
-                f"{memory_mb}m" if memory_mb is not None else None
-            )
+            default_service.mem_limit = f"{memory_mb}m"
             if gpu_deploy:
                 default_service.deploy = gpu_deploy
 
@@ -94,7 +85,7 @@ def harbor_to_compose_config(
         # Build programmatically from Dockerfile or docker_image
         service = ComposeService(
             # Use prebuilt image if specified, otherwise will build from Dockerfile
-            image=env_config.docker_image if env_config.docker_image else None,
+            image=env_config.docker_image or None,
             # Use Dockerfile if it exists and no prebuilt image specified
             build=(
                 ComposeBuild(context=str(env_dir))
@@ -102,11 +93,12 @@ def harbor_to_compose_config(
                 else None
             ),
             cpus=cpus,
-            mem_limit=f"{memory_mb}m" if memory_mb is not None else None,
+            mem_limit=f"{memory_mb}m",
             command="tail -f /dev/null",
             init=True,
             network_mode="bridge" if env_config.allow_internet else "none",
             deploy=gpu_deploy,
+            environment=dict(env_config.env) if env_config.env else None,
         )
 
         return ComposeConfig(services={"default": service})
@@ -118,15 +110,19 @@ def harbor_task_to_sample(
     override_cpus: int | None = None,
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
+    sample_id: str | None = None,
 ) -> Sample:
     """Convert a Harbor task to an Inspect AI Sample.
 
     Args:
         harbor_task: The Harbor task to convert.
-        sandbox_env_name: Sandbox environment name (default: "docker").
+        sandbox_env_name: Sandbox environment name (default: ``docker``).
         override_cpus: Override the number of CPUs for the environment.
         override_memory_mb: Override the memory (in MB) for the environment.
         override_gpus: Override the number of GPUs for the environment.
+        sample_id: Override the resulting ``Sample.id``. Defaults to
+            ``harbor_task.name`` when ``None``. Used by the loader to
+            disambiguate samples whose Harbor names collide.
 
     Returns:
         Sample: Inspect AI sample with sandbox configuration.
@@ -138,25 +134,39 @@ def harbor_task_to_sample(
         override_gpus=override_gpus,
     )
 
+    metadata: dict[str, Any] = {
+        "task_name": harbor_task.name,
+        "task_dir": str(harbor_task.task_dir),
+        "test_path": str(harbor_task.paths.test_path),
+        "tests_dir": str(harbor_task.paths.tests_dir),
+        "solution_dir": str(harbor_task.paths.solution_dir),
+        "solve_path": str(harbor_task.paths.solve_path),
+        "verifier_timeout_sec": harbor_task.config.verifier.timeout_sec,
+        "verifier_env": harbor_task.config.verifier.env,
+        "solution_env": harbor_task.config.solution.env,
+        "verifier_user": _user_to_str(harbor_task.config.verifier.user),
+        "agent_user": _user_to_str(harbor_task.config.agent.user),
+        "harbor_config": harbor_task.config.model_dump(),
+    }
+
+    if harbor_task.config.task is not None:
+        package_info = harbor_task.config.task
+        metadata["package_name"] = package_info.name
+        metadata["package_description"] = package_info.description
+        metadata["package_keywords"] = list(package_info.keywords)
+        metadata["package_authors"] = [a.model_dump() for a in package_info.authors]
+
     return Sample(
         input=harbor_task.instruction,
-        id=harbor_task.name,
+        id=sample_id if sample_id is not None else harbor_task.name,
         sandbox=SandboxEnvironmentSpec(sandbox_env_name, compose_config),
-        # Store Harbor task metadata for scorer to access later
-        # (tests_dir will be used by scorer to copy tests at scoring time)
-        metadata={
-            "task_name": harbor_task.name,
-            "task_dir": str(harbor_task.task_dir),
-            "test_path": str(harbor_task.paths.test_path),
-            "tests_dir": str(harbor_task.paths.tests_dir),
-            "solution_dir": str(harbor_task.paths.solution_dir),
-            "solve_path": str(harbor_task.paths.solve_path),
-            "verifier_timeout_sec": harbor_task.config.verifier.timeout_sec,
-            "verifier_env": harbor_task.config.verifier.env or {},
-            "solution_env": harbor_task.config.solution.env or {},
-            "harbor_config": harbor_task.config.model_dump(),
-        },
+        metadata=metadata,
     )
+
+
+def _user_to_str(user: str | int | None) -> str | None:
+    """Coerce Harbor's ``user`` config (str | int | None) to Inspect's ``str | None``."""
+    return str(user) if user is not None else None
 
 
 def _find_default_service(config: ComposeConfig) -> tuple[str, ComposeService]:
@@ -214,13 +224,10 @@ def _expand_compose_vars(
     cpus: float,
     memory_mb: int,
 ) -> str:
-    """Expand ${VAR} references in a Harbor docker-compose.yaml.
+    """Expand ``${VAR}`` and ``${VAR:-default}`` references in a Harbor docker-compose.yaml.
 
     Harbor passes these variables as environment variables to the
     ``docker compose`` process, which performs the substitution natively.
-
-    The variable mapping matches:
-    https://github.com/harbor-framework/harbor/blob/c935c6c06471e6cd891cda50f9e1b65e35bbd486/src/harbor/environments/daytona.py#L329
 
     Limitation: ``HOST_*`` paths (the host side of volume mounts) are set to
     the same container-side ``EnvironmentPaths`` values as ``ENV_*``. In
@@ -231,29 +238,43 @@ def _expand_compose_vars(
         return raw_yaml
 
     env_dir = str(harbor_task.paths.environment_dir)
-    task_name = harbor_task.name
+    paths = EnvironmentPaths()
 
     var_map: dict[str, str] = {
         "CONTEXT_DIR": env_dir,
-        "MAIN_IMAGE_NAME": f"hb__{task_name}",
+        # Mirror Harbor's own ``hb__<task.name>`` + ``_sanitize_docker_image_name``
+        # so package tasks (org/name) produce the same image name Harbor would.
+        "MAIN_IMAGE_NAME": _sanitize_docker_image_name(f"hb__{harbor_task.name}"),
         "CPUS": str(int(cpus)),
         "MEMORY": f"{memory_mb}M",
-        "HOST_VERIFIER_LOGS_PATH": str(EnvironmentPaths.verifier_dir),
-        "HOST_AGENT_LOGS_PATH": str(EnvironmentPaths.agent_dir),
-        "HOST_ARTIFACTS_PATH": str(EnvironmentPaths.artifacts_dir),
-        "ENV_VERIFIER_LOGS_PATH": str(EnvironmentPaths.verifier_dir),
-        "ENV_AGENT_LOGS_PATH": str(EnvironmentPaths.agent_dir),
-        "ENV_ARTIFACTS_PATH": str(EnvironmentPaths.artifacts_dir),
+        "HOST_VERIFIER_LOGS_PATH": str(paths.verifier_dir),
+        "HOST_AGENT_LOGS_PATH": str(paths.agent_dir),
+        "HOST_ARTIFACTS_PATH": str(paths.artifacts_dir),
+        "ENV_VERIFIER_LOGS_PATH": str(paths.verifier_dir),
+        "ENV_AGENT_LOGS_PATH": str(paths.agent_dir),
+        "ENV_ARTIFACTS_PATH": str(paths.artifacts_dir),
     }
 
-    task_env = harbor_task.config.verifier.env or {}
-    if "TEST_DIR" in task_env:
-        var_map["TEST_DIR"] = task_env["TEST_DIR"]
+    verifier_env = harbor_task.config.verifier.env
+    if "TEST_DIR" in verifier_env:
+        var_map["TEST_DIR"] = verifier_env["TEST_DIR"]
     else:
-        var_map["TEST_DIR"] = str(EnvironmentPaths.tests_dir)
+        var_map["TEST_DIR"] = str(paths.tests_dir)
+
+    task_env = harbor_task.config.environment.env
+    for key, value in task_env.items():
+        var_map.setdefault(key, value)
 
     def _replace(match: re.Match[str]) -> str:
-        var_name = match.group(1)
-        return var_map.get(var_name, match.group(0))
+        body = match.group(1)
+        if ":-" in body:
+            var_name, default = body.split(":-", 1)
+        else:
+            var_name, default = body, None
+        if var_name in var_map:
+            return var_map[var_name]
+        if default is not None:
+            return default
+        return match.group(0)
 
     return re.sub(r"\$\{([^}]+)}", _replace, raw_yaml)

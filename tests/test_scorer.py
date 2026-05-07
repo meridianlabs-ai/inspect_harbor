@@ -934,3 +934,58 @@ async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
             env_cleanup_calls = exec_calls[5:]
             assert ["unset", "OPENAI_API_KEY"] in env_cleanup_calls
             assert ["unset", "MODEL_NAME"] in env_cleanup_calls
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "verifier_user,expected_user_kwarg",
+    [
+        (None, None),
+        ("agent", "agent"),
+    ],
+)
+async def test_harbor_scorer_passes_verifier_user(
+    tmp_path: Path,
+    verifier_user: str | None,
+    expected_user_kwarg: str | None,
+) -> None:
+    """``[verifier].user`` from metadata flows to ``sandbox().exec(user=...)``."""
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+        "verifier_user": verifier_user,
+    }
+    mock_target = Mock(spec=Target)
+
+    test_exec_kwargs: dict[str, Any] = {}
+
+    async def track_exec(cmd: list[str], **kwargs: Any) -> Mock:
+        if cmd[:2] == ["bash", "-l"]:
+            test_exec_kwargs.update(kwargs)
+        result = Mock()
+        result.returncode = 0
+        result.stdout = ""
+        result.stderr = ""
+        return result
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
+        with patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox",
+            return_value=mock_sandbox,
+        ):
+            scorer = harbor_scorer()
+            await scorer(mock_state, mock_target)
+
+    assert test_exec_kwargs.get("user") == expected_user_kwarg

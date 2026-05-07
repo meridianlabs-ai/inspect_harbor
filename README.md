@@ -1,6 +1,6 @@
 # Inspect Harbor
 
-Inspect Harbor provides an interface to run [Harbor](https://harborframework.com/) tasks using [Inspect AI](https://inspect.aisi.org.uk/).
+[Harbor](https://harborframework.com/) is a framework for building, evaluating, and optimizing AI agents in containerized environments. Inspect Harbor provides an interface to run Harbor tasks using [Inspect AI](https://inspect.aisi.org.uk/).
 
 ```bash
 pip install inspect-harbor
@@ -10,12 +10,24 @@ Then in Python:
 
 ```python
 from inspect_ai import eval
-from inspect_harbor import hello_world
+from inspect_harbor import aider_polyglot
 
-eval(hello_world(), model="openai/gpt-5-mini")
+eval(aider_polyglot(), model="openai/gpt-5-mini")
 ```
 
-For full documentation, see <https://meridianlabs-ai.github.io/inspect_harbor>. The docs site covers installation, the Harbor task model, the default agent scaffold, task parameters, the generic `harbor()` interface for custom registries and local/git tasks, and a complete catalog of available datasets.
+Or load any dataset directly via the generic `harbor()` interface:
+
+```python
+from inspect_ai import eval
+from inspect_harbor import harbor
+
+eval(
+    harbor(package_name="aider/aider-polyglot", package_ref="latest"),
+    model="openai/gpt-5-mini",
+)
+```
+
+For full documentation, see <https://meridianlabs-ai.github.io/inspect_harbor>. The docs site covers installation, the Harbor task model, the default agent scaffold, task parameters, the generic `harbor()` interface (`org/name` and `name@version` datasets, plus local/git tasks), and a complete catalog of available datasets.
 
 See [CHANGELOG.md](CHANGELOG.md) for release notes.
 

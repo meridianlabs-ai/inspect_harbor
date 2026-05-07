@@ -6,7 +6,35 @@ from unittest.mock import Mock, patch
 
 import pytest
 from harbor.models.task.task import Task as HarborTask
-from inspect_harbor._harbor.task import harbor, load_harbor_tasks
+from inspect_harbor._harbor.task import (
+    _disambiguate_sample_ids,
+    harbor,
+    load_harbor_tasks,
+)
+
+
+def _make_harbor_task_mock(
+    name: str = "test-task",
+    task_dir: Path | None = None,
+    has_steps: bool = False,
+    os: str = "linux",
+) -> Mock:
+    """Create a Mock HarborTask wired up for ``_build_harbor_tasks``'s validator.
+
+    ``HarborTask.config`` is set in ``__init__`` from ``task.toml`` — it isn't
+    a class attribute, so ``Mock(spec=HarborTask)`` doesn't expose it. We
+    attach a plain Mock with the ``[environment]`` defaults the validator reads.
+    """
+    m = Mock(spec=HarborTask)
+    m.has_steps = has_steps
+    m.name = name
+    m.task_dir = task_dir or Path("/tmp")
+    m.config = Mock()
+    m.config.environment.os = os
+    m.config.environment.healthcheck = None
+    m.config.environment.mcp_servers = []
+    m.config.environment.skills_dir = None
+    return m
 
 
 def test_load_local_single_task():
@@ -19,9 +47,7 @@ def test_load_local_single_task():
         task_path = Path("/local/path/to/task")
         mock_load_local.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.name = "test-task"
-        mock_task.task_dir = task_path
+        mock_task = _make_harbor_task_mock(name="test-task", task_dir=task_path)
         mock_harbor_task.return_value = mock_task
 
         # Execute
@@ -50,9 +76,7 @@ def test_load_git_task():
         task_path = Path("/cache/downloaded/task")
         mock_load_git.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.name = "git-task"
-        mock_task.task_dir = task_path
+        mock_task = _make_harbor_task_mock(name="git-task", task_dir=task_path)
         mock_harbor_task.return_value = mock_task
 
         # Execute
@@ -85,10 +109,8 @@ def test_load_local_dataset():
         task_path_2 = Path("/dataset/task2")
         mock_load_local.return_value = [task_path_1, task_path_2]
 
-        mock_task_1 = Mock(spec=HarborTask)
-        mock_task_1.name = "task1"
-        mock_task_2 = Mock(spec=HarborTask)
-        mock_task_2.name = "task2"
+        mock_task_1 = _make_harbor_task_mock(name="task1", task_dir=task_path_1)
+        mock_task_2 = _make_harbor_task_mock(name="task2", task_dir=task_path_2)
         mock_harbor_task.side_effect = [mock_task_1, mock_task_2]
 
         # Execute
@@ -107,6 +129,67 @@ def test_load_local_dataset():
         )
 
 
+def test_load_from_package():
+    """Test loading tasks from a package-based dataset (Harbor 0.3.0+)."""
+    with (
+        patch("inspect_harbor._harbor.task._load_from_package") as mock_load_package,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        task_path = Path("/cache/packages/harbor/hello-world")
+        mock_load_package.return_value = [task_path]
+
+        mock_task = _make_harbor_task_mock(
+            name="harbor/hello-world", task_dir=task_path
+        )
+        mock_harbor_task.return_value = mock_task
+
+        result = load_harbor_tasks(
+            package_name="harbor/hello-world", package_ref="latest"
+        )
+
+        assert len(result) == 1
+        assert result[0] == mock_task
+        mock_load_package.assert_called_once_with(
+            "harbor/hello-world",
+            "latest",
+            None,  # dataset_task_names
+            None,  # dataset_exclude_task_names
+            None,  # n_tasks
+            False,  # overwrite_cache default
+        )
+
+
+@pytest.mark.parametrize(
+    "kwargs,expected_match",
+    [
+        (
+            {"has_steps": True},
+            r"Multi-step tasks: \['blocking-task'\]",
+        ),
+        (
+            {"os": "windows"},
+            r"Windows containers .*\['blocking-task'\]",
+        ),
+    ],
+    ids=["multi_step", "windows_os"],
+)
+def test_build_harbor_tasks_blocks_unsupported_features(
+    kwargs: dict[str, Any], expected_match: str
+) -> None:
+    """Multi-step and Windows-OS tasks raise ``NotImplementedError`` from the validator."""
+    with (
+        patch("inspect_harbor._harbor.task._load_local_path") as mock_load_local,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        mock_load_local.return_value = [Path("/some/blocking/task")]
+        mock_harbor_task.return_value = _make_harbor_task_mock(
+            name="blocking-task", **kwargs
+        )
+
+        with pytest.raises(NotImplementedError, match=expected_match):
+            load_harbor_tasks(path="/some/blocking/task")
+
+
 def test_load_from_registry():
     """Test loading tasks from a registry dataset."""
     with (
@@ -117,8 +200,7 @@ def test_load_from_registry():
         task_path = Path("/cache/registry/task")
         mock_load_registry.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.name = "registry-task"
+        mock_task = _make_harbor_task_mock(name="registry-task", task_dir=task_path)
         mock_harbor_task.return_value = mock_task
 
         # Execute
@@ -149,8 +231,7 @@ def test_load_git_task_with_overwrite_cache():
         task_path = Path("/cache/downloaded/task")
         mock_load_git.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.name = "git-task"
+        mock_task = _make_harbor_task_mock(name="git-task", task_dir=task_path)
         mock_harbor_task.return_value = mock_task
 
         # Execute with overwrite_cache=True
@@ -181,8 +262,7 @@ def test_load_registry_with_overwrite_cache():
         task_path = Path("/cache/registry/task")
         mock_load_registry.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.name = "registry-task"
+        mock_task = _make_harbor_task_mock(name="registry-task", task_dir=task_path)
         mock_harbor_task.return_value = mock_task
 
         # Execute with overwrite_cache=True
@@ -214,13 +294,38 @@ def test_load_registry_with_overwrite_cache():
                 "task_git_url": "https://github.com/org/repo",
                 "dataset_name_version": "dataset@1.0",
             },
-            "Cannot specify both task and dataset parameters",
+            "Cannot mix task, dataset, and package parameters",
+        ),
+        (
+            {
+                "task_git_url": "https://github.com/org/repo",
+                "package_name": "harbor/hello-world",
+            },
+            "Cannot mix task, dataset, and package parameters",
+        ),
+        (
+            {
+                "dataset_name_version": "dataset@1.0",
+                "package_name": "harbor/hello-world",
+            },
+            "Cannot mix task, dataset, and package parameters",
+        ),
+        (
+            {
+                "task_git_url": "https://github.com/org/repo",
+                "dataset_name_version": "dataset@1.0",
+                "package_name": "harbor/hello-world",
+            },
+            "Cannot mix task, dataset, and package parameters",
         ),
         (
             {"task_git_url": "https://github.com/org/repo"},
             "Task configuration with task_git_url requires path parameter",
         ),
-        ({}, "Must specify either path, task parameters, or dataset parameters"),
+        (
+            {},
+            "Must specify either path, task parameters, dataset parameters, or package parameters",
+        ),
         (
             {"registry_url": "https://registry.example.com"},
             "Cannot specify registry_url, registry_path, dataset_task_names, or "
@@ -275,8 +380,7 @@ def test_load_harbor_tasks_parameter_passing(
         task_path = Path("/mock/path")
         mock_load_local.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.name = "test-task"
+        mock_task = _make_harbor_task_mock(name="test-task", task_dir=task_path)
         mock_harbor_task.return_value = mock_task
 
         load_harbor_tasks(**kwargs)
@@ -304,14 +408,61 @@ def test_harbor_task_integration():
 
     # Verify sample structure
     sample = task.dataset[0]
-    assert sample.id == "simple_task"
+    assert sample.id == "harbor-test/simple-task"
     assert sample.input is not None
     assert "Simple Addition Task" in sample.input or "2 + 2" in sample.input
 
     # Verify metadata
     assert sample.metadata is not None
-    assert sample.metadata["task_name"] == "simple_task"
+    assert sample.metadata["task_name"] == "harbor-test/simple-task"
     assert "test_path" in sample.metadata
+
+
+def test_disambiguate_sample_ids_no_collisions():
+    """Unique names pass through unchanged."""
+    t1 = Mock(spec=HarborTask)
+    t1.name = "alpha"
+    t1.task_dir = Path("/cache/a")
+    t2 = Mock(spec=HarborTask)
+    t2.name = "beta"
+    t2.task_dir = Path("/cache/b")
+
+    assert _disambiguate_sample_ids([t1, t2]) == ["alpha", "beta"]
+
+
+def test_disambiguate_sample_ids_collisions_get_hash_suffix():
+    """Tasks sharing a name get an ``@<hash>`` suffix derived from task_dir."""
+    t1 = Mock(spec=HarborTask)
+    t1.name = "shared"
+    t1.task_dir = Path("/cache/one")
+    t2 = Mock(spec=HarborTask)
+    t2.name = "shared"
+    t2.task_dir = Path("/cache/two")
+    t3 = Mock(spec=HarborTask)
+    t3.name = "unique"
+    t3.task_dir = Path("/cache/three")
+
+    ids = _disambiguate_sample_ids([t1, t2, t3])
+    # Unique name unchanged; colliding ones disambiguated and distinct.
+    assert ids[2] == "unique"
+    assert ids[0].startswith("shared@") and ids[1].startswith("shared@")
+    assert ids[0] != ids[1]
+    # Suffix shape: 8-hex-char content hash.
+    assert len(ids[0].split("@", 1)[1]) == 8
+
+
+async def test_load_harbor_tasks_inside_running_event_loop():
+    """Sync API must bridge correctly when invoked from a running event loop.
+
+    Covers the Jupyter / FastAPI lifespan / ``async def`` user-script case.
+    """
+    task_path = Path(__file__).parent / "fixtures" / "simple_task"
+    assert task_path.exists()
+
+    tasks = load_harbor_tasks(path=task_path)
+
+    assert len(tasks) == 1
+    assert tasks[0].name == "harbor-test/simple-task"
 
 
 def test_harbor_task_with_overrides():

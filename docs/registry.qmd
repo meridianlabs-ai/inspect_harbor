@@ -20,23 +20,23 @@ listing:
     samples: number
 ---
 
-All Harbor datasets available as Inspect tasks. Use the search box to filter by name or description, the category chips to filter by topic, and the column headers to sort. Click a dataset's name to open its page here, which includes a link to the dataset's page on the Harbor registry.
+All Harbor datasets available as Inspect tasks. Use the search box to filter by name or description, the category chips to filter by topic, and the column headers to sort. Click a dataset's name to open its details page.
 
 ## Usage
 
 **CLI:**
 
 ```bash
-inspect eval inspect_harbor/aime_1_0 --model openai/gpt-5
+inspect eval inspect_harbor/aider_polyglot --model openai/gpt-5
 ```
 
 **Python:**
 
 ```python
 from inspect_ai import eval
-from inspect_harbor import aime_1_0
+from inspect_harbor import aider_polyglot
 
-eval(aime_1_0(), model="openai/gpt-5")
+eval(aider_polyglot(), model="openai/gpt-5")
 ```
 
 ## Available Datasets
