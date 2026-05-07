@@ -271,7 +271,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#harbor-interface-parameters" id="toc-harbor-interface-parameters" class="nav-link" data-scroll-target="#harbor-interface-parameters">Harbor Interface Parameters</a></li>
   <li><a href="#parameter-combinations" id="toc-parameter-combinations" class="nav-link" data-scroll-target="#parameter-combinations">Parameter Combinations</a></li>
   </ul></li>
-  <li><a href="#custom-registries" id="toc-custom-registries" class="nav-link" data-scroll-target="#custom-registries">Custom Registries</a></li>
+  <li><a href="#loading-an-orgname-dataset" id="toc-loading-an-orgname-dataset" class="nav-link" data-scroll-target="#loading-an-orgname-dataset">Loading an <code>org/name</code> Dataset</a></li>
+  <li><a href="#loading-a-nameversion-dataset" id="toc-loading-a-nameversion-dataset" class="nav-link" data-scroll-target="#loading-a-nameversion-dataset">Loading a <code>name@version</code> Dataset</a></li>
   <li><a href="#loading-from-git-repositories" id="toc-loading-from-git-repositories" class="nav-link" data-scroll-target="#loading-from-git-repositories">Loading from Git Repositories</a></li>
   <li><a href="#loading-from-local-paths" id="toc-loading-from-local-paths" class="nav-link" data-scroll-target="#loading-from-local-paths">Loading from Local Paths</a></li>
   <li><a href="#cache-management" id="toc-cache-management" class="nav-link" data-scroll-target="#cache-management">Cache Management</a></li>
@@ -302,12 +303,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="generic-harbor-interface" class="level2">
 <h2 class="anchored" data-anchor-id="generic-harbor-interface">Generic Harbor Interface</h2>
-<p>For advanced use cases, you can use the generic <code>harbor()</code> interface directly. This provides access to all task loading options including custom registries, git repositories, and local paths.</p>
+<p>For advanced use cases, you can use the generic <code>harbor()</code> interface directly. This provides access to all task loading options: <code>org/name</code> datasets from the Harbor hub, <code>name@version</code> datasets from a Harbor registry file, git repositories, and local paths.</p>
 <section id="harbor-interface-parameters" class="level3" data-reference="harbor">
 <h3 data-reference="harbor" class="anchored" data-anchor-id="harbor-interface-parameters">Harbor Interface Parameters</h3>
 <p>Harbor task loader for Inspect AI.</p>
 <div class="source-link">
-<a href="https://github.com/meridianlabs-ai/inspect_harbor/blob/ccbda21ae9d201f15ad02f2d306b9020ca971683/src/inspect_harbor/_harbor/task.py#L21">Source</a>
+<a href="https://github.com/meridianlabs-ai/inspect_harbor/blob/f51ac3c12f5af57d5c1fc4f265070b517a045647/src/inspect_harbor/_harbor/task.py#L23">Source</a>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python doc-declaration code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="at">@task</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> harbor(</span>
@@ -317,20 +318,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    registry_url: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    registry_path: <span class="bu">str</span> <span class="op">|</span> Path <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    dataset_name_version: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    dataset_task_names: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    dataset_exclude_task_names: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    n_tasks: <span class="bu">int</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    disable_verification: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    overwrite_cache: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    sandbox_env_name: <span class="bu">str</span> <span class="op">=</span> <span class="st">"docker"</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    override_cpus: <span class="bu">int</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    override_memory_mb: <span class="bu">int</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    override_gpus: <span class="bu">int</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Task</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    package_name: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    package_ref: <span class="bu">str</span> <span class="op">=</span> <span class="st">"latest"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    dataset_task_names: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    dataset_exclude_task_names: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    n_tasks: <span class="bu">int</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    disable_verification: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    overwrite_cache: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    sandbox_env_name: <span class="bu">str</span> <span class="op">=</span> <span class="st">"docker"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    override_cpus: <span class="bu">int</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    override_memory_mb: <span class="bu">int</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    override_gpus: <span class="bu">int</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Task</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl>
 <dt><code class="ref-definition">path</code> <span class="element-type"><span class="element-type-name">str</span> | <span class="element-type-name">Path</span> | <span class="element-type-name">None</span></span></dt>
 <dd>
-<p>For local tasks/datasets: absolute path to task or dataset directory. For git tasks: task identifier within the repository (e.g., “aime_i-9”).</p>
+<p>For local tasks/datasets: absolute path to task or dataset directory. For git tasks: task identifier within the repository (e.g.&nbsp;<code>aime_i-9</code>).</p>
 </dd>
 <dt><code class="ref-definition">task_git_url</code> <span class="element-type"><span class="element-type-name">str</span> | <span class="element-type-name">None</span></span></dt>
 <dd>
@@ -350,7 +353,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dd>
 <dt><code class="ref-definition">dataset_name_version</code> <span class="element-type"><span class="element-type-name">str</span> | <span class="element-type-name">None</span></span></dt>
 <dd>
-<p>Dataset <a href="mailto:name@version" class="email">name@version</a> (e.g., ‘<a href="mailto:dataset@1.0" class="email">dataset@1.0</a>’).</p>
+<p>Dataset <code>name@version</code> (e.g.&nbsp;<code>dataset@1.0</code>).</p>
+</dd>
+<dt><code class="ref-definition">package_name</code> <span class="element-type"><span class="element-type-name">str</span> | <span class="element-type-name">None</span></span></dt>
+<dd>
+<p>Slug of a hub-published dataset in <code>org/name</code> form (e.g.&nbsp;<code>harbor/hello-world</code>).</p>
+</dd>
+<dt><code class="ref-definition">package_ref</code> <span class="element-type"><span class="element-type-name">str</span></span></dt>
+<dd>
+<p>Harbor ref to pin to (digest, revision number, tag, or <code>latest</code>). Defaults to <code>latest</code>.</p>
 </dd>
 <dt><code class="ref-definition">dataset_task_names</code> <span class="element-type">list[<span class="element-type-name">str</span>] | <span class="element-type-name">None</span></span></dt>
 <dd>
@@ -366,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dd>
 <dt><code class="ref-definition">disable_verification</code> <span class="element-type"><span class="element-type-name">bool</span></span></dt>
 <dd>
-<p>Disable task verification. Verfication checks whether task files exist.</p>
+<p>Disable task verification. Verification checks whether task files exist.</p>
 </dd>
 <dt><code class="ref-definition">overwrite_cache</code> <span class="element-type"><span class="element-type-name">bool</span></span></dt>
 <dd>
@@ -374,7 +385,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dd>
 <dt><code class="ref-definition">sandbox_env_name</code> <span class="element-type"><span class="element-type-name">str</span></span></dt>
 <dd>
-<p>Sandbox environment name (default: “docker”).</p>
+<p>Sandbox environment name (default: <code>docker</code>).</p>
 </dd>
 <dt><code class="ref-definition">override_cpus</code> <span class="element-type"><span class="element-type-name">int</span> | <span class="element-type-name">None</span></span></dt>
 <dd>
@@ -395,7 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="parameter-combinations" class="level3">
 <h3 class="anchored" data-anchor-id="parameter-combinations">Parameter Combinations</h3>
-<p>There are four primary patterns for loading Harbor tasks:</p>
+<p>There are five primary patterns for loading Harbor tasks:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 20%">
@@ -411,67 +422,96 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Registry Dataset</strong></td>
+<td><strong><code>org/name</code> dataset</strong></td>
+<td><code>package_name</code></td>
+<td><code>package_ref</code> (defaults to <code>"latest"</code>), <code>dataset_task_names</code>, <code>dataset_exclude_task_names</code>, <code>n_tasks</code>, <code>overwrite_cache</code></td>
+</tr>
+<tr class="even">
+<td><strong><code>name@version</code> dataset</strong></td>
 <td><code>dataset_name_version</code></td>
 <td><code>registry_url</code> or <code>registry_path</code>, <code>dataset_task_names</code>, <code>dataset_exclude_task_names</code>, <code>n_tasks</code>, <code>overwrite_cache</code></td>
 </tr>
-<tr class="even">
-<td><strong>Git Task</strong></td>
+<tr class="odd">
+<td><strong>Git task</strong></td>
 <td><code>path</code>, <code>task_git_url</code></td>
 <td><code>task_git_commit_id</code>, <code>overwrite_cache</code></td>
 </tr>
-<tr class="odd">
-<td><strong>Local Task</strong></td>
+<tr class="even">
+<td><strong>Local task</strong></td>
 <td><code>path</code></td>
 <td><code>disable_verification</code></td>
 </tr>
-<tr class="even">
-<td><strong>Local Dataset</strong></td>
+<tr class="odd">
+<td><strong>Local dataset</strong></td>
 <td><code>path</code></td>
 <td><code>dataset_task_names</code>, <code>dataset_exclude_task_names</code>, <code>n_tasks</code>, <code>disable_verification</code></td>
 </tr>
 </tbody>
 </table>
+<p>The <strong><code>org/name</code></strong> pattern is what every dataset on the <a href="./registry.html">Registry</a> uses under the hood. Use <code>harbor()</code> directly when you need a slug that isn’t exposed on the <a href="./registry.html">Registry</a> (e.g.&nbsp;a private fork).</p>
+<blockquote class="blockquote">
+<p><strong>Two ways to reference a dataset.</strong> Harbor has two slug formats and two backends behind them:</p>
+<ul>
+<li><strong><code>org/name</code></strong> — published self-service to <a href="https://hub.harborframework.com/datasets">hub.harborframework.com</a>, pinned via <code>package_ref</code> (digest, revision number, tag, or <code>latest</code>). This is the <a href="https://www.harborframework.com/news/harbor-registry">self-service Harbor registry</a> introduced in March 2026.</li>
+<li><strong><code>name@version</code></strong> — entry in a Harbor <code>registry.json</code>, resolved against the curated <a href="https://github.com/laude-institute/harbor"><code>laude-institute/harbor</code></a> registry by default; override via <code>registry_url=</code>/<code>registry_path=</code> for private/org registries.</li>
+</ul>
+<p>Most public datasets are now on the hub; the <code>name@version</code> form remains useful for curated benchmarks not yet on the hub and for private registries.</p>
+</blockquote>
 </section>
 </section>
-<section id="custom-registries" class="level2">
-<h2 class="anchored" data-anchor-id="custom-registries">Custom Registries</h2>
-<p>You can use custom registries for private or organization-specific datasets.</p>
-<p><strong>Remote registry:</strong></p>
+<section id="loading-an-orgname-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="loading-an-orgname-dataset">Loading an <code>org/name</code> Dataset</h2>
+<p>Pass a Harbor slug directly to <code>harbor()</code>. The default <code>package_ref="latest"</code> follows the upstream tag; pin to a <code>sha256:...</code> digest, revision number, or named tag for reproducibility.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/harbor <span class="dt">\</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> dataset_name_version=<span class="st">"my_dataset@1.0"</span> <span class="dt">\</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> registry_url=<span class="st">"https://github.com/myorg/registry.json"</span> <span class="dt">\</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5-mini</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Local registry:</strong></p>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> package_name=<span class="st">"aider/aider-polyglot"</span> <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5-mini</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Pinned to a specific digest:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/harbor <span class="dt">\</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> dataset_name_version=<span class="st">"my_dataset@1.0"</span> <span class="dt">\</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> registry_path=<span class="st">"/path/to/local/registry.json"</span> <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> package_name=<span class="st">"aider/aider-polyglot"</span> <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> package_ref=<span class="st">"sha256:01e28d85e46beae5b7e29a29f57cb49d882b5486583d52cec4ee5bf3540a1c84"</span> <span class="dt">\</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5-mini</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="loading-a-nameversion-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="loading-a-nameversion-dataset">Loading a <code>name@version</code> Dataset</h2>
+<p>Datasets keyed by <code>name@version</code> are resolved against the default Harbor registry unless <code>registry_url</code> or <code>registry_path</code> is supplied:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/harbor <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> dataset_name_version=<span class="st">"aime@1.0"</span> <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5-mini</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Custom remote registry</strong> (for private or organization-specific datasets):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/harbor <span class="dt">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> dataset_name_version=<span class="st">"my_dataset@1.0"</span> <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> registry_url=<span class="st">"https://github.com/myorg/registry.json"</span> <span class="dt">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5-mini</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Local registry:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/harbor <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> dataset_name_version=<span class="st">"my_dataset@1.0"</span> <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> registry_path=<span class="st">"/path/to/local/registry.json"</span> <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5-mini</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="loading-from-git-repositories" class="level2">
 <h2 class="anchored" data-anchor-id="loading-from-git-repositories">Loading from Git Repositories</h2>
 <p>You can load tasks directly from git repositories:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/harbor <span class="dt">\</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> path=<span class="st">"datasets/aime/aime_6"</span> <span class="dt">\</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> task_git_url=<span class="st">"https://github.com/laude-institute/harbor-datasets.git"</span> <span class="dt">\</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> task_git_commit_id=<span class="st">"414014c23ce4d32128073d12b057252c918cccf4"</span> <span class="dt">\</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5-mini</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/harbor <span class="dt">\</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> path=<span class="st">"datasets/aime/aime_60"</span> <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> task_git_url=<span class="st">"https://github.com/laude-institute/harbor-datasets.git"</span> <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> task_git_commit_id=<span class="st">"515f914f9e5ecc3bc3f421307f455f6694ce5a01"</span> <span class="dt">\</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5-mini</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="loading-from-local-paths" class="level2">
 <h2 class="anchored" data-anchor-id="loading-from-local-paths">Loading from Local Paths</h2>
 <p>You can run tasks from your local filesystem:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/harbor <span class="dt">\</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> path=<span class="st">"/path/to/task_or_dataset/directory"</span> <span class="dt">\</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/harbor <span class="dt">\</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> path=<span class="st">"/path/to/task_or_dataset/directory"</span> <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="cache-management" class="level2">
 <h2 class="anchored" data-anchor-id="cache-management">Cache Management</h2>
 <p>Downloaded tasks are cached locally in <code>~/.harbor/cache/</code>. To force a fresh download:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/aime_1_0 <span class="dt">\</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> overwrite_cache=true <span class="dt">\</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/aime <span class="dt">\</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> overwrite_cache=true <span class="dt">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To manually clear the entire cache:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> ~/.harbor/cache/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> ~/.harbor/cache/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>

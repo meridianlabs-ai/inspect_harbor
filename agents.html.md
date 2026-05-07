@@ -2,7 +2,7 @@
 
 [Solvers](https://inspect.aisi.org.uk/solvers.html) are the execution components in Inspect AI. They can run [agent scaffolds](https://inspect.aisi.org.uk/agents.html) (like [ReAct](https://inspect.aisi.org.uk/react-agent.html)), execute solution scripts (like the Oracle solver), perform prompt engineering, and more. Both solvers and agents can be used to solve Harbor tasks.
 
-## Default Agent Scaffold
+## Default Agent
 
 When no agent or solver is specified, Inspect Harbor provides a default agent scaffold for your model:
 
@@ -12,14 +12,14 @@ When no agent or solver is specified, Inspect Harbor provides a default agent sc
 
 This default configuration is suitable for most Harbor tasks that require command execution and file manipulation.
 
-## Using Custom Agents
+## Custom Agents
 
 You can provide your own agent or solver implementation using the `--solver` flag.
 
 **Using a custom agent:**
 
 ``` bash
-inspect eval inspect_harbor/terminal_bench \
+inspect eval inspect_harbor/terminal_bench_2 \
   --solver path/to/custom/agent.py@custom_agent \
   --model openai/gpt-5
 ```
@@ -35,7 +35,7 @@ pip install inspect-swe
 **CLI:**
 
 ``` bash
-inspect eval inspect_harbor/terminal_bench_sample \
+inspect eval inspect_harbor/terminal_bench_2 \
   --solver inspect_swe/claude_code \
   --model anthropic/claude-sonnet-4-5
 ```
@@ -44,11 +44,11 @@ inspect eval inspect_harbor/terminal_bench_sample \
 
 ``` python
 from inspect_ai import eval
-from inspect_harbor import terminal_bench_sample
+from inspect_harbor import terminal_bench_2
 from inspect_swe import claude_code
 
 eval(
-    terminal_bench_sample(),
+    terminal_bench_2(),
     solver=claude_code(),
     model="anthropic/claude-sonnet-4-5"
 )
@@ -62,12 +62,12 @@ For more details:
 
 ## Oracle Solver
 
-The `oracle()` solver is useful for verifying that a dataset is correctly configured and solvable. It executes the task’s reference solution (`solution/solve.sh` script) instead of using a model.
+The `oracle()` solver is useful for verifying that a dataset is correctly configured and solvable. It executes the task’s reference solution (`solution/solve.sh` or `solve.bat`) instead of using a model.
 
 **CLI:**
 
 ``` bash
-inspect eval inspect_harbor/hello_world \
+inspect eval inspect_harbor/aider_polyglot \
   --solver inspect_harbor/oracle
 ```
 
@@ -75,7 +75,7 @@ inspect eval inspect_harbor/hello_world \
 
 ``` python
 from inspect_ai import eval
-from inspect_harbor import hello_world, oracle
+from inspect_harbor import aider_polyglot, oracle
 
-eval(hello_world(), solver=oracle())
+eval(aider_polyglot(), solver=oracle())
 ```

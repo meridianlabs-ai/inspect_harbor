@@ -1,4 +1,4 @@
-# kumo@easy – Inspect Harbor
+# kumo/kumo-easy – Inspect Harbor
 
 [← Back to Registry](../registry.html.md)
 
@@ -23,9 +23,11 @@ eval(kumo_easy(), model="openai/gpt-5")
 
 |  |  |
 |----|----|
-| Harbor registry | [kumo@easy](https://registry.harborframework.com/datasets?q=kumo) |
+| Harbor registry | [kumo/kumo-easy](https://hub.harborframework.com/datasets/kumo/kumo-easy/latest) |
 | Inspect task | `kumo_easy` |
-| Version | easy |
-| Samples | 5050 |
+| Latest digest | sha256:139cb4201654f1e12a110554b8c8630fa3d7759464436f9b48692d56fdc3d6d8 |
+| Samples | 1000 |
+| Paper | [arxiv](https://arxiv.org/abs/2504.02810) |
+| Source | <https://github.com/linhaowei1/kumo> |
 
 See [Task Parameters](../parameters.html.md) for the parameter set shared across all Harbor tasks.

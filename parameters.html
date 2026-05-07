@@ -292,7 +292,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Task functions (like <code>terminal_bench()</code>, <code>swe_lancer_diamond()</code>, etc.) accept the following parameters:</p>
+<p>Task functions (like <code>aider_polyglot()</code>, <code>terminal_bench_2()</code>, etc.) accept the following parameters:</p>
 <div class="column-page-right">
 <table class="caption-top table">
 <colgroup>
@@ -313,57 +313,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
+<td><code>ref</code></td>
+<td>Harbor ref (digest, revision number, tag, or <code>latest</code>)</td>
+<td><code>"latest"</code></td>
+<td><code>"sha256:01e28d85..."</code></td>
+<td><code>sha256:01e28d85...</code></td>
+</tr>
+<tr class="even">
 <td><code>dataset_task_names</code></td>
 <td>List of task names to include (supports glob patterns)</td>
 <td><code>None</code></td>
 <td><code>["aime_60", "aime_61"]</code></td>
 <td><code>'["aime_60"]'</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>dataset_exclude_task_names</code></td>
 <td>List of task names to exclude (supports glob patterns)</td>
 <td><code>None</code></td>
 <td><code>["aime_60"]</code></td>
 <td><code>'["aime_60"]'</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>n_tasks</code></td>
 <td>Maximum number of tasks to run</td>
 <td><code>None</code></td>
 <td><code>10</code></td>
 <td><code>10</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>overwrite_cache</code></td>
 <td>Force re-download and overwrite cached tasks</td>
 <td><code>False</code></td>
 <td><code>True</code></td>
 <td><code>true</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>sandbox_env_name</code></td>
 <td>Sandbox environment name</td>
 <td><code>"docker"</code></td>
 <td><code>"modal"</code></td>
 <td><code>"modal"</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>override_cpus</code></td>
-<td>Override the number of CPUs from <code>task.toml</code></td>
+<td>Override the number of CPUs</td>
 <td><code>None</code></td>
 <td><code>4</code></td>
 <td><code>4</code></td>
+</tr>
+<tr class="even">
+<td><code>override_memory_mb</code></td>
+<td>Override the memory (in MB)</td>
+<td><code>None</code></td>
+<td><code>16384</code></td>
+<td><code>16384</code></td>
 </tr>
 <tr class="odd">
-<td><code>override_memory_mb</code></td>
-<td>Override the memory (in MB) from <code>task.toml</code></td>
-<td><code>None</code></td>
-<td><code>16384</code></td>
-<td><code>16384</code></td>
-</tr>
-<tr class="even">
 <td><code>override_gpus</code></td>
-<td>Override the number of GPUs from <code>task.toml</code></td>
+<td>Override the number of GPUs</td>
 <td><code>None</code></td>
 <td><code>1</code></td>
 <td><code>1</code></td>
@@ -378,17 +385,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="example">Example</h2>
 <p>Here’s an example showing how to use multiple parameters together:</p>
 <p><strong>CLI:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/terminal_bench_sample <span class="dt">\</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/terminal_bench_2 <span class="dt">\</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> n_tasks=5 <span class="dt">\</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> overwrite_cache=true <span class="dt">\</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> override_memory_mb=8192 <span class="dt">\</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> anthropic/claude-sonnet-4-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Python API:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_ai <span class="im">import</span> <span class="bu">eval</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> terminal_bench_sample</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> terminal_bench_2</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    terminal_bench_sample(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    terminal_bench_2(</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        n_tasks<span class="op">=</span><span class="dv">5</span>,</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        overwrite_cache<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        override_memory_mb<span class="op">=</span><span class="dv">8192</span>,</span>

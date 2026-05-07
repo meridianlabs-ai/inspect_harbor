@@ -1,17 +1,18 @@
 # Task Parameters – Inspect Harbor
 
-Task functions (like `terminal_bench()`, `swe_lancer_diamond()`, etc.) accept the following parameters:
+Task functions (like `aider_polyglot()`, `terminal_bench_2()`, etc.) accept the following parameters:
 
 | Parameter | Description | Default | Python Example | CLI Example |
 |----|----|----|----|----|
+| `ref` | Harbor ref (digest, revision number, tag, or `latest`) | `"latest"` | `"sha256:01e28d85..."` | `sha256:01e28d85...` |
 | `dataset_task_names` | List of task names to include (supports glob patterns) | `None` | `["aime_60", "aime_61"]` | `'["aime_60"]'` |
 | `dataset_exclude_task_names` | List of task names to exclude (supports glob patterns) | `None` | `["aime_60"]` | `'["aime_60"]'` |
 | `n_tasks` | Maximum number of tasks to run | `None` | `10` | `10` |
 | `overwrite_cache` | Force re-download and overwrite cached tasks | `False` | `True` | `true` |
 | `sandbox_env_name` | Sandbox environment name | `"docker"` | `"modal"` | `"modal"` |
-| `override_cpus` | Override the number of CPUs from `task.toml` | `None` | `4` | `4` |
-| `override_memory_mb` | Override the memory (in MB) from `task.toml` | `None` | `16384` | `16384` |
-| `override_gpus` | Override the number of GPUs from `task.toml` | `None` | `1` | `1` |
+| `override_cpus` | Override the number of CPUs | `None` | `4` | `4` |
+| `override_memory_mb` | Override the memory (in MB) | `None` | `16384` | `16384` |
+| `override_gpus` | Override the number of GPUs | `None` | `1` | `1` |
 
 > **Multi-service compose & DinD providers:** Resource overrides are applied only to the **default service** (selected by `x-default: true`, or a service named “default”/“main”, or the first service). Sidecar services run without explicit resource limits, within the sandbox’s total capacity. For DinD-based sandbox providers (e.g. Daytona) that aggregate per-service resources to size the VM, you can control sandbox-level resources directly via the provider’s compose extension (e.g. `x-daytona: { resources: { cpu: 4, memory: 8 } }`) in your `docker-compose.yaml`. See the [Daytona sandbox provider docs](https://github.com/meridianlabs-ai/inspect_sandboxes) for details.
 
@@ -22,7 +23,7 @@ Here’s an example showing how to use multiple parameters together:
 **CLI:**
 
 ``` bash
-inspect eval inspect_harbor/terminal_bench_sample \
+inspect eval inspect_harbor/terminal_bench_2 \
   -T n_tasks=5 \
   -T overwrite_cache=true \
   -T override_memory_mb=8192 \
@@ -33,10 +34,10 @@ inspect eval inspect_harbor/terminal_bench_sample \
 
 ``` python
 from inspect_ai import eval
-from inspect_harbor import terminal_bench_sample
+from inspect_harbor import terminal_bench_2
 
 eval(
-    terminal_bench_sample(
+    terminal_bench_2(
         n_tasks=5,
         overwrite_cache=True,
         override_memory_mb=8192,

@@ -1,40 +1,50 @@
 # Datasets – Inspect Harbor
 
-Inspect Harbor provides task functions for each dataset in the [Harbor registry](https://harborframework.com/registry). You can import and use them directly:
+Inspect Harbor provides one task function per dataset in the [Harbor registry](https://hub.harborframework.com/datasets). You can import and use them directly:
 
 ``` python
 from inspect_harbor import (
-    terminal_bench,
-    swebenchpro,
-    swe_lancer_diamond,
-    swebench_verified,
+    aider_polyglot,
+    swe_bench_verified,
+    terminal_bench_2,
+    aime,
+    gpqa_diamond,
+    usaco,
     # ... and many more
 )
 ```
 
-For a complete list of available datasets and versions (including swebenchpro, terminal-bench-pro, replicationbench, compilebench, and 40+ more), see the [Registry](./registry.html.md).
+For the complete list of available datasets, see the [Registry](./registry.html.md).
 
-## Dataset Versioning
+## Pinning
 
-Each dataset has both **unversioned** and **versioned** task functions:
-
-- **Unversioned functions** (e.g. `terminal_bench()`) automatically use the latest version available in the registry.
-- **Versioned functions** (e.g. `terminal_bench_2_0()`) pin to a specific version for reproducibility.
-
-**Example:**
+Each generated task accepts a `ref` parameter that selects which Harbor revision to load. The default is `"latest"`:
 
 ``` python
-from inspect_harbor import terminal_bench, terminal_bench_2_0
+from inspect_harbor import aider_polyglot
 
-# Uses latest version (currently 2.0)
-eval(terminal_bench(), model="openai/gpt-5-mini")
+# Uses the latest revision
+eval(aider_polyglot(), model="openai/gpt-5-mini")
 
-# Pins to version 2.0 explicitly
-eval(terminal_bench_2_0(), model="openai/gpt-5-mini")
+# Pins to a specific Harbor ref (digest, revision number, or tag) for reproducibility
+eval(
+    aider_polyglot(
+        ref="sha256:01e28d85e46beae5b7e29a29f57cb49d882b5486583d52cec4ee5bf3540a1c84",
+    ),
+    model="openai/gpt-5-mini",
+)
 ```
 
-## Known Dataset Issues
+The exact `sha256:` digest of `latest` at generation time is recorded in each task’s docstring (`Latest digest:` line) and on its details page (linked from the [Registry](./registry.html.md)).
+
+## Known Issues
+
+These are upstream issues we’ve encountered while integrating Harbor datasets. Each of these tasks is currently unrunnable as-is:
 
 | Dataset | Issue | Status |
 |----|----|----|
-| ds_1000 | Multiple configuration issues preventing execution (`pull access denied for ds1000`) | [harbor-datasets#103](https://github.com/laude-institute/harbor-datasets/issues/103) |
+| `xlang/ds-1000` | Multiple configuration issues preventing execution (`pull access denied for ds1000`) | [harbor-datasets#103](https://github.com/laude-institute/harbor-datasets/issues/103) |
+| `grafana/o11y-bench` | `docker-compose.yaml` uses `depends_on` which inspect_ai’s `ComposeConfig` rejects | WIP |
+| `scale-ai/hil-bench` | `docker-compose.yaml` uses `pull_policy` which inspect_ai’s `ComposeConfig` rejects | WIP |
+| `sierra-research/tau3-bench` | `docker-compose.yaml` uses `depends_on` which inspect_ai’s `ComposeConfig` rejects | WIP |
+| `yanagiorigami/frontier-cs` | `docker-compose.yaml` uses `depends_on` and `privileged` which inspect_ai’s `ComposeConfig` rejects | WIP |

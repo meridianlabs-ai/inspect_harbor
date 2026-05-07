@@ -266,8 +266,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#dataset-versioning" id="toc-dataset-versioning" class="nav-link active" data-scroll-target="#dataset-versioning">Dataset Versioning</a></li>
-  <li><a href="#known-dataset-issues" id="toc-known-dataset-issues" class="nav-link" data-scroll-target="#known-dataset-issues">Known Dataset Issues</a></li>
+  <li><a href="#pinning" id="toc-pinning" class="nav-link active" data-scroll-target="#pinning">Pinning</a></li>
+  <li><a href="#known-issues" id="toc-known-issues" class="nav-link" data-scroll-target="#known-issues">Known Issues</a></li>
   </ul>
 </nav>
     </div>
@@ -293,33 +293,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Inspect Harbor provides task functions for each dataset in the <a href="https://harborframework.com/registry">Harbor registry</a>. You can import and use them directly:</p>
+<p>Inspect Harbor provides one task function per dataset in the <a href="https://hub.harborframework.com/datasets">Harbor registry</a>. You can import and use them directly:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> (</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    terminal_bench,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    swebenchpro,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    swe_lancer_diamond,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    swebench_verified,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... and many more</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>For a complete list of available datasets and versions (including swebenchpro, terminal-bench-pro, replicationbench, compilebench, and 40+ more), see the <a href="./registry.html">Registry</a>.</p>
-<section id="dataset-versioning" class="level2">
-<h2 class="anchored" data-anchor-id="dataset-versioning">Dataset Versioning</h2>
-<p>Each dataset has both <strong>unversioned</strong> and <strong>versioned</strong> task functions:</p>
-<ul>
-<li><strong>Unversioned functions</strong> (e.g.&nbsp;<code>terminal_bench()</code>) automatically use the latest version available in the registry.</li>
-<li><strong>Versioned functions</strong> (e.g.&nbsp;<code>terminal_bench_2_0()</code>) pin to a specific version for reproducibility.</li>
-</ul>
-<p><strong>Example:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> terminal_bench, terminal_bench_2_0</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    aider_polyglot,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    swe_bench_verified,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    terminal_bench_2,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    aime,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    gpqa_diamond,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    usaco,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... and many more</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For the complete list of available datasets, see the <a href="./registry.html">Registry</a>.</p>
+<section id="pinning" class="level2">
+<h2 class="anchored" data-anchor-id="pinning">Pinning</h2>
+<p>Each generated task accepts a <code>ref</code> parameter that selects which Harbor revision to load. The default is <code>"latest"</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> aider_polyglot</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Uses latest version (currently 2.0)</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(terminal_bench(), model<span class="op">=</span><span class="st">"openai/gpt-5-mini"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Uses the latest revision</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(aider_polyglot(), model<span class="op">=</span><span class="st">"openai/gpt-5-mini"</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Pins to version 2.0 explicitly</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(terminal_bench_2_0(), model<span class="op">=</span><span class="st">"openai/gpt-5-mini"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Pins to a specific Harbor ref (digest, revision number, or tag) for reproducibility</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    aider_polyglot(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        ref<span class="op">=</span><span class="st">"sha256:01e28d85e46beae5b7e29a29f57cb49d882b5486583d52cec4ee5bf3540a1c84"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"openai/gpt-5-mini"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The exact <code>sha256:</code> digest of <code>latest</code> at generation time is recorded in each task’s docstring (<code>Latest digest:</code> line) and on its details page (linked from the <a href="./registry.html">Registry</a>).</p>
 </section>
-<section id="known-dataset-issues" class="level2">
-<h2 class="anchored" data-anchor-id="known-dataset-issues">Known Dataset Issues</h2>
+<section id="known-issues" class="level2">
+<h2 class="anchored" data-anchor-id="known-issues">Known Issues</h2>
+<p>These are upstream issues we’ve encountered while integrating Harbor datasets. Each of these tasks is currently unrunnable as-is:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -330,9 +334,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td>ds_1000</td>
+<td><code>xlang/ds-1000</code></td>
 <td>Multiple configuration issues preventing execution (<code>pull access denied for ds1000</code>)</td>
 <td><a href="https://github.com/laude-institute/harbor-datasets/issues/103">harbor-datasets#103</a></td>
+</tr>
+<tr class="even">
+<td><code>grafana/o11y-bench</code></td>
+<td><code>docker-compose.yaml</code> uses <code>depends_on</code> which inspect_ai’s <code>ComposeConfig</code> rejects</td>
+<td>WIP</td>
+</tr>
+<tr class="odd">
+<td><code>scale-ai/hil-bench</code></td>
+<td><code>docker-compose.yaml</code> uses <code>pull_policy</code> which inspect_ai’s <code>ComposeConfig</code> rejects</td>
+<td>WIP</td>
+</tr>
+<tr class="even">
+<td><code>sierra-research/tau3-bench</code></td>
+<td><code>docker-compose.yaml</code> uses <code>depends_on</code> which inspect_ai’s <code>ComposeConfig</code> rejects</td>
+<td>WIP</td>
+</tr>
+<tr class="odd">
+<td><code>yanagiorigami/frontier-cs</code></td>
+<td><code>docker-compose.yaml</code> uses <code>depends_on</code> and <code>privileged</code> which inspect_ai’s <code>ComposeConfig</code> rejects</td>
+<td>WIP</td>
 </tr>
 </tbody>
 </table>

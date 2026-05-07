@@ -1,107 +1,117 @@
 # Registry – Inspect Harbor
 
-All Harbor datasets available as Inspect tasks. Use the search box to filter by name or description, the category chips to filter by topic, and the column headers to sort. Click a dataset’s name to open its page here, which includes a link to the dataset’s page on the Harbor registry.
+All Harbor datasets available as Inspect tasks. Use the search box to filter by name or description, the category chips to filter by topic, and the column headers to sort. Click a dataset’s name to open its details page.
 
 ## Usage
 
 **CLI:**
 
 ``` bash
-inspect eval inspect_harbor/aime_1_0 --model openai/gpt-5
+inspect eval inspect_harbor/aider_polyglot --model openai/gpt-5
 ```
 
 **Python:**
 
 ``` python
 from inspect_ai import eval
-from inspect_harbor import aime_1_0
+from inspect_harbor import aider_polyglot
 
-eval(aime_1_0(), model="openai/gpt-5")
+eval(aider_polyglot(), model="openai/gpt-5")
 ```
 
 ## Available Datasets
 
 | Harbor Dataset | Inspect Task | Description | Samples |
 |----|----|----|----|
-| [ade-bench@1.0](registry/ade_bench_1_0.html.md) | ade_bench_1_0 | Analytics Data Engineer Bench: tasks evaluating AI agents on dbt/SQL data analytics engineering bugs. | 48 |
-| [aider-polyglot@1.0](registry/aider_polyglot_1_0.html.md) | aider_polyglot_1_0 | A polyglot coding benchmark that evaluates AI agents’ ability to perform code editing and generation tasks across multiple programming languages. | 225 |
-| [aime@1.0](registry/aime_1_0.html.md) | aime_1_0 | American Invitational Mathematics Examination (AIME) benchmark for evaluating mathematical reasoning and problem-solving capabilities. Contains 60 competition-level mathematics problems from AIME 2024, 2025-I, and 2025-II competitions. | 60 |
-| [algotune@1.0](registry/algotune_1_0.html.md) | algotune_1_0 | AlgoTune: 154 algorithm optimization tasks focusing on speedup-based scoring from the AlgoTune benchmark. | 154 |
-| [arc_agi_2@1.0](registry/arc_agi_2_1_0.html.md) | arc_agi_2_1_0 | ARC-AGI-2: A benchmark measuring abstract reasoning through visual grid puzzles requiring rule inference and generalization. | 167 |
-| [autocodebench@lite200](registry/autocodebench_lite200.html.md) | autocodebench_lite200 | Adapter for AutoCodeBench. | 200 |
-| [bfcl@1.0](registry/bfcl_1_0.html.md) | bfcl_1_0 | Berkeley Function-Calling Leaderboard: 3,641 function calling tasks for evaluating LLM tool use capabilities across simple, multiple, parallel, and irrelevance categories. | 3641 |
-| [bfcl_parity@1.0](registry/bfcl_parity_1_0.html.md) | bfcl_parity_1_0 | BFCL parity subset: 123 stratified sampled tasks for validating Harbor adapter equivalence with original BFCL benchmark. | 123 |
-| [bigcodebench-hard-complete@1.0.0](registry/bigcodebench_hard_complete_1_0_0.html.md) | bigcodebench_hard_complete_1_0_0 | BigCodeBench-Hard complete benchmark adapter for Harbor - challenging Python programming tasks with reward-based verification. | 145 |
-| [binary-audit@1.0](registry/binary_audit_1_0.html.md) | binary_audit_1_0 | An open-source benchmark for evaluating AI agents’ ability to find backdoors hidden in compiled binaries. | 46 |
-| [bird-bench@parity](registry/bird_bench_parity.html.md) | bird_bench_parity | BIRD SQL parity subset (150 tasks, seed 42). | 150 |
-| [bixbench-cli@1.5](registry/bixbench_cli_1_5.html.md) | bixbench_cli_1_5 | bixbench-cli - A benchmark for evaluating AI agents on bioinformatics and computational biology tasks. (Adapted for CLI execution). | 205 |
-| [bixbench@1.5](registry/bixbench_1_5.html.md) | bixbench_1_5 | BixBench - A benchmark for evaluating AI agents on bioinformatics and computational biology tasks. | 205 |
-| [code-contests@1.0](registry/code_contests_1_0.html.md) | code_contests_1_0 | A competitive programming benchmark from DeepMind that evaluates AI agents’ ability to solve algorithmic problems, covering algorithms, data structures, and competitive programming challenges. | 9644 |
-| [codepde@1.0](registry/codepde_1_0.html.md) | codepde_1_0 | CodePDE evaluates code generation capabilities on scientific computing tasks, specifically focusing on Partial Differential Equation (PDE) solving. | 5 |
-| [compilebench@1.0](registry/compilebench_1_0.html.md) | compilebench_1_0 | Version 1.0 of CompileBench, a benchmark on real open-source projects against dependency hell, legacy toolchains, and complex build systems. | 15 |
-| [cooperbench@1.0](registry/cooperbench_1_0.html.md) | cooperbench_1_0 | CooperBench: multi-agent cooperation benchmark. 652 feature pairs across 12 repos requiring two agents to coordinate via messaging. | 652 |
-| [crustbench@1.0](registry/crustbench_1_0.html.md) | crustbench_1_0 | CRUST-bench: 100 C-to-safe-Rust transpilation tasks from real-world C repositories. | 100 |
-| [dabstep@1.0](registry/dabstep_1_0.html.md) | dabstep_1_0 | DABstep: Data Agent Benchmark for Multi-step Reasoning. 450 tasks where agents analyze payment transaction data with Python/pandas to answer business questions. | 450 |
-| [deveval@1.0](registry/deveval_1_0.html.md) | deveval_1_0 | DevEval benchmark: comprehensive evaluation of LLMs across software development lifecycle (implementation, unit testing, acceptance testing) for 21 real-world repositories across Python, C++, Java, and JavaScript. | 63 |
-| [ds-1000@head](registry/ds_1000_head.html.md) | ds_1000_head | DS-1000 is a code generation benchmark with 1000 realistic data science problems across seven popular Python libraries. | 1000 |
-| [evoeval@1.0](registry/evoeval_1_0.html.md) | evoeval_1_0 | EvoEval_difficult: 100 challenging Python programming tasks evolved from HumanEval. | 100 |
-| [featurebench-lite-modal@1.0](registry/featurebench_lite_modal_1_0.html.md) | featurebench_lite_modal_1_0 | FeatureBench lite split for Modal: 30 feature-implementation tasks with gpus=1 for GPU tasks (7/30). Use with -e modal. | 30 |
-| [featurebench-lite@1.0](registry/featurebench_lite_1_0.html.md) | featurebench_lite_1_0 | FeatureBench lite split: 30 feature-implementation tasks (26 lv1 + 4 lv2) across Python repos. | 30 |
-| [featurebench-modal@1.0](registry/featurebench_modal_1_0.html.md) | featurebench_modal_1_0 | FeatureBench full split for Modal: 200 feature-implementation tasks with gpus=1 for GPU tasks (44/200). Use with -e modal. | 200 |
-| [featurebench@1.0](registry/featurebench_1_0.html.md) | featurebench_1_0 | FeatureBench full split: 200 feature-implementation tasks across 24 Python repos. 7 tasks require Ampere+ GPU. | 200 |
-| [financeagent@public](registry/financeagent_public.html.md) | financeagent_public | Finance Agent is a tool for financial research and analysis that leverages large language models and specialized financial tools to answer complex queries about companies, financial statements, and SEC filings. | 50 |
-| [gaia@1.0](registry/gaia_1_0.html.md) | gaia_1_0 | GAIA (General AI Assistants): 165 validation tasks for multi-step reasoning, tool use, and multimodal question answering. | 165 |
-| [gpqa-diamond@1.0](registry/gpqa_diamond_1_0.html.md) | gpqa_diamond_1_0 | GPQA Diamond subset: 198 graduate-level multiple-choice questions in biology, physics, and chemistry for evaluating scientific reasoning. | 198 |
-| [gso@1.0](registry/gso_1_0.html.md) | gso_1_0 | GSO: 102 software optimization tasks focusing on performance improvement. | 102 |
-| [hello-world@1.0](registry/hello_world_1_0.html.md) | hello_world_1_0 | A simple example task to create a hello.txt file with ‘Hello, world!’ as content. | 1 |
-| [humanevalfix@1.0](registry/humanevalfix_1_0.html.md) | humanevalfix_1_0 | HumanEvalFix: 164 Python code repair tasks from HumanEvalPack. | 164 |
-| [ineqmath@1.0](registry/ineqmath_1_0.html.md) | ineqmath_1_0 | This adapter brings IneqMath, the dev set of the first inequality-proof Q&A benchmark for LLMs, into Harbor, enabling standardized evaluation of models on mathematical reasoning and proof construction. | 100 |
-| [kumo@1.0](registry/kumo_1_0.html.md) | kumo_1_0 | KUMO full dataset (5300 tasks; 50 instances per scenario). | 5300 |
-| [kumo@easy](registry/kumo_easy.html.md) | kumo_easy | KUMO(easy) split (5050 tasks; 50 instances per scenario). | 5050 |
-| [kumo@hard](registry/kumo_hard.html.md) | kumo_hard | KUMO(hard) split (250 tasks; 50 instances per scenario). | 250 |
-| [kumo@parity](registry/kumo_parity.html.md) | kumo_parity | KUMO parity subset (seeds 0/1; 212 tasks). | 212 |
-| [labbench@1.0](registry/labbench_1_0.html.md) | labbench_1_0 | LAB-Bench FigQA: 181 scientific figure reasoning tasks in biology from Future-House LAB-Bench. | 181 |
-| [lawbench@1.0](registry/lawbench_1_0.html.md) | lawbench_1_0 | LawBench: Benchmarking Legal Knowledge of Large Language Models. | 1000 |
-| [legacy-bench@1.0](registry/legacy_bench_1_0.html.md) | legacy_bench_1_0 | A benchmark for evaluating AI agents on legacy code maintenance and modernization tasks across multiple language families including COBOL, Java 7, C, Fortran, and Assembly. | 10 |
-| [livecodebench@6.0](registry/livecodebench_6_0.html.md) | livecodebench_6_0 | A subset of 100 sampled tasks from the release_v6 version of LiveCodeBench tasks. | 100 |
-| [medagentbench@1.0](registry/medagentbench_1_0.html.md) | medagentbench_1_0 | MedAgentBench: 300 patient-specific clinically-derived tasks across 10 categories in a FHIR-compliant interactive healthcare environment. | 300 |
-| [ml-dev-bench@1.0](registry/ml_dev_bench_1_0.html.md) | ml_dev_bench_1_0 | ML-Dev-Bench: A benchmark for testing AI agents on machine learning development tasks including model implementation, training, debugging, and optimization. | 33 |
-| [mlgym-bench@1.0](registry/mlgym_bench_1_0.html.md) | mlgym_bench_1_0 | Evaluates agents on ML tasks across computer vision, RL, tabular ML, and game theory. | 12 |
-| [mmau@1.0](registry/mmau_1_0.html.md) | mmau_1_0 | MMAU: 1000 carefully curated audio clips paired with human-annotated natural language questions and answers spanning speech, environmental sounds, and music. | 1000 |
-| [mmmlu@parity](registry/mmmlu_parity.html.md) | mmmlu_parity | MMMLU (Multilingual MMLU) parity validation subset with 10 tasks per language across 15 languages (150 tasks total). Evaluates language models’ subject knowledge and reasoning across multiple languages using multiple-choice questions covering 57 academic subjects. | 150 |
-| [openthoughts-tblite@2.0](registry/openthoughts_tblite_2_0.html.md) | openthoughts_tblite_2_0 | OpenThoughts-TBLite: A difficulty-calibrated benchmark of 100 tasks for building terminal agents. By OpenThoughts Agent team, Snorkel AI, Bespoke Labs. | 100 |
-| [otel-bench@1.0](registry/otel_bench_1_0.html.md) | otel_bench_1_0 | OpenTelemetry Benchmark - evaluates AI agents’ ability to instrument applications with OpenTelemetry tracing across multiple languages. | 26 |
-| [pixiu@parity](registry/pixiu_parity.html.md) | pixiu_parity | PIXIU: A Large Language Model, Instruction Data and Evaluation Benchmark for Finance. Total tasks: 435 across 29 financial NLP datasets. | 435 |
-| [qcircuitbench@1.0](registry/qcircuitbench_1_0.html.md) | qcircuitbench_1_0 | QCircuitBench evaluates agents on quantum algorithm design using quantum programming languages. | 28 |
-| [quixbugs@1.0](registry/quixbugs_1_0.html.md) | quixbugs_1_0 | QuixBugs is a multi-lingual program repair benchmark with 40 Python and 40 Java programs, each containing a single-line defect. Tasks cover algorithms and data structures including sorting, graph, dynamic programming, math, and string/array operations. | 80 |
-| [reasoning-gym-easy@parity](registry/reasoning_gym_easy_parity.html.md) | reasoning_gym_easy_parity | Reasoning Gym benchmark (easy difficulty). | 288 |
-| [reasoning-gym-hard@parity](registry/reasoning_gym_hard_parity.html.md) | reasoning_gym_hard_parity | Reasoning Gym benchmark (hard difficulty). | 288 |
-| [replicationbench@1.0](registry/replicationbench_1_0.html.md) | replicationbench_1_0 | ReplicationBench - A benchmark for evaluating AI agents on reproducing computational results from astrophysics research papers. Adapted from Christine8888/replicationbench-release. | 90 |
-| [researchcodebench@1.0](registry/researchcodebench_1_0.html.md) | researchcodebench_1_0 | ResearchCodeBench evaluates AI agents’ ability to implement algorithms from academic papers. Contains 212 code implementation tasks across 20 ML/AI research problems from top-tier venues (ICLR, NeurIPS, CVPR, COLM). Tests paper comprehension, algorithm understanding, and precise code implementation skills with 1,449 lines of reference code. | 212 |
-| [rexbench@1.0](registry/rexbench_1_0.html.md) | rexbench_1_0 | A benchmark to evaluate the ability of AI agents to extend existing AI research through research experiment implementation tasks. | 2 |
-| [satbench@1.0](registry/satbench_1_0.html.md) | satbench_1_0 | SATBench is a benchmark for evaluating the logical reasoning capabilities of LLMs through logical puzzles derived from Boolean satisfiability (SAT) problems. | 2100 |
-| [scale-ai/swe-atlas-qna@1.0](registry/scale_ai_swe_atlas_qna_1_0.html.md) | scale_ai_swe_atlas_qna_1_0 | SWE-Atlas Codebase QnA benchmark that evaluates AI agents’ ability to comprehend and query existing codebases. | 124 |
-| [scale-ai/swe-atlas-tw@1.0](registry/scale_ai_swe_atlas_tw_1_0.html.md) | scale_ai_swe_atlas_tw_1_0 | SWE-Atlas Test Writing benchmark that evaluates AI agents’ ability to write comprehensive unit tests. | 90 |
-| [seta-env@1.0](registry/seta_env_1_0.html.md) | seta_env_1_0 | CAMEL SETA Environment for RL training. | 1376 |
-| [simpleqa@1.0](registry/simpleqa_1_0.html.md) | simpleqa_1_0 | SimpleQA: 4,326 short, fact-seeking questions from OpenAI for evaluating language model factuality. Uses LLM-as-a-judge grading. | 4326 |
-| [sldbench@1.0](registry/sldbench_1_0.html.md) | sldbench_1_0 | SLDBench: A benchmark for scaling law discovery with symbolic regression tasks. | 8 |
-| [spider2-dbt@1.0](registry/spider2_dbt_1_0.html.md) | spider2_dbt_1_0 | Spider 2.0-DBT is a comprehensive code generation agent task that includes 68 examples. Solving these tasks requires models to understand project code, navigating complex SQL environments and handling long contexts, surpassing traditional text-to-SQL challenges. | 64 |
-| [spreadsheetbench-verified@1.0](registry/spreadsheetbench_verified_1_0.html.md) | spreadsheetbench_verified_1_0 | A benchmark evaluating AI agents on real-world spreadsheet manipulation tasks (400 tasks from verified_400). Tasks involve Excel file manipulation including formula writing, data transformation, formatting, and conditional logic. | 400 |
-| [strongreject@parity](registry/strongreject_parity.html.md) | strongreject_parity | StrongReject benchmark for evaluating LLM safety and jailbreak resistance. Parity subset with 150 tasks (50 prompts \* 3 jailbreaks). | 150 |
-| [swe-gen-js@1.0](registry/swe_gen_js_1_0.html.md) | swe_gen_js_1_0 | SWE-gen-JS: 1000 JavaScript/TypeScript bug fix tasks from 30 open-source GitHub repos, generated using SWE-gen. | 1000 |
-| [swe-lancer-diamond@all](registry/swe_lancer_diamond_all.html.md) | swe_lancer_diamond_all | Adapter for SWE-Lancer. Both manager and individual contributor tasks. | 463 |
-| [swe-lancer-diamond@ic](registry/swe_lancer_diamond_ic.html.md) | swe_lancer_diamond_ic | Adapter for SWE-Lancer. Only the individual contributor SWE tasks. | 198 |
-| [swe-lancer-diamond@manager](registry/swe_lancer_diamond_manager.html.md) | swe_lancer_diamond_manager | Adapter for SWE-Lancer. Only the manager tasks. | 265 |
-| [swebench-verified@1.0](registry/swebench_verified_1_0.html.md) | swebench_verified_1_0 | A human-validated subset of 500 SWE-bench tasks. | 500 |
-| [swebench_multilingual@1.0](registry/swebench_multilingual_1_0.html.md) | swebench_multilingual_1_0 | SWE-bench Multilingual extends the original Python-focused SWE-bench benchmark to support multiple programming languages. | 300 |
-| [swebenchpro@1.0](registry/swebenchpro_1_0.html.md) | swebenchpro_1_0 | SWE-bench Pro: A multi-language software engineering benchmark with 731 instances covering Python, JavaScript/TypeScript, and Go. Evaluates AI systems’ ability to resolve real-world bugs and implement features across diverse production codebases. | 731 |
-| [swesmith@1.0](registry/swesmith_1_0.html.md) | swesmith_1_0 | SWE-smith is a synthetically generated dataset of software engineering tasks derived from GitHub issues for training and evaluating code generation models. | 100 |
-| [swtbench-verified@1.0](registry/swtbench_verified_1_0.html.md) | swtbench_verified_1_0 | SWTBench Verified - Software Testing Benchmark for code generation. | 433 |
-| [termigen-environments@1.0](registry/termigen_environments_1_0.html.md) | termigen_environments_1_0 | 3,500+ verified Docker environments for training and evaluating terminal agents, spanning 11 task categories across infrastructure, data/algorithm applications, and specialized domains including software build, system administration, security, data processing, ML/MLOps, algorithms, scientific computing, and more. | 3566 |
-| [terminal-bench-pro@1.0](registry/terminal_bench_pro_1_0.html.md) | terminal_bench_pro_1_0 | Terminal-Bench Pro (Public Set) is an extended benchmark dataset for testing AI agents in real terminal environments. From compiling code to training models and setting up servers, Terminal-Bench Pro evaluates how well agents can handle real-world, end-to-end tasks autonomously. | 200 |
-| [terminal-bench-sample@2.0](registry/terminal_bench_sample_2_0.html.md) | terminal_bench_sample_2_0 | A sample of tasks from Terminal-Bench 2.0. | 10 |
-| [terminal-bench@2.0](registry/terminal_bench_2_0.html.md) | terminal_bench_2_0 | Version 2.0 of Terminal-Bench, a benchmark for testing agents in terminal environments. More tasks, harder, and higher quality than 1.0. | 89 |
-| [usaco@2.0](registry/usaco_2_0.html.md) | usaco_2_0 | USACO: 304 Python programming problems from USACO competition. | 304 |
-| [vmax-tasks@1.0](registry/vmax_tasks_1_0.html.md) | vmax_tasks_1_0 | A collection of 1,043 validated real-world bug-fixing tasks from popular open-source JavaScript projects including Vue.js, Docusaurus, Redux, and Chalk. Each task presents an authentic bug report with reproduction steps and expected behavior. | 1043 |
+| [LiteCoder/LiteCoder-rl](registry/litecoder_rl.html.md) | litecoder_rl | LiteCoder: terminal-based RL training environments spanning developer workflows, scientific/numeric… | 602 |
+| [MichaelY310/devopsgym](registry/michaely310_devopsgym.html.md) | michaely310_devopsgym | DevOps-Gym benchmark adapted to Harbor format - 729 tasks across 5 categories: Build, Monitoring, I… | 728 |
+| [abundant/swe-gen-cpp](registry/abundant_swe_gen_cpp.html.md) | abundant_swe_gen_cpp | Dataset of C++ SWE tasks. Generated by abundant-ai/SWE-gen tool. | 999 |
+| [abundant/swe-gen-go](registry/abundant_swe_gen_go.html.md) | abundant_swe_gen_go | Dataset of Go SWE tasks. Generated by abundant-ai/SWE-gen tool. | 1000 |
+| [abundant/swe-gen-java](registry/abundant_swe_gen_java.html.md) | abundant_swe_gen_java | Dataset of Java SWE tasks. Generated by abundant-ai/SWE-gen tool. | 1000 |
+| [abundant/swe-gen-js](registry/abundant_swe_gen_js.html.md) | abundant_swe_gen_js | Dataset of JS/TS SWE tasks. Generated by abundant-ai/SWE-gen tool. | 1000 |
+| [abundant/swe-gen-rust](registry/abundant_swe_gen_rust.html.md) | abundant_swe_gen_rust | Dataset of Rust SWE tasks. Generated by abundant-ai/SWE-gen tool. | 1000 |
+| [adyen/dabstep](registry/adyen_dabstep.html.md) | adyen_dabstep | DABstep: real-world data analysis tasks from Adyen’s workloads requiring multi-step reasoning by LL… | 450 |
+| [aider/aider-polyglot](registry/aider_polyglot.html.md) | aider_polyglot | Aider’s polyglot coding benchmark: Exercism exercises across C++, Go, Java, JavaScript, Python, and… | 225 |
+| [aime/aime](registry/aime.html.md) | aime | Problems from the American Invitational Mathematics Examination (AIME), a 3-hour high-school compet… | 60 |
+| [algotune/algotune](registry/algotune.html.md) | algotune | AlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that match… | 154 |
+| [apple/mmau](registry/apple_mmau.html.md) | apple_mmau | MMAU (Massive Multitask Agent Understanding): Apple’s holistic agent benchmark covering tool-use, D… | 1000 |
+| [arcprize/arc-agi-2](registry/arcprize_arc_agi_2.html.md) | arcprize_arc_agi_2 | ARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but… | 167 |
+| [bigcode/bigcodebench-hard-complete](registry/bigcode_bigcodebench_hard_complete.html.md) | bigcode_bigcodebench_hard_complete | BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun… | 145 |
+| [bigcode/humanevalfix](registry/bigcode_humanevalfix.html.md) | bigcode_humanevalfix | HumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo… | 164 |
+| [binary-audit/binary-audit](registry/binary_audit.html.md) | binary_audit | BinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engin… | 46 |
+| [cais/swebenchpro](registry/cais_swebenchpro.html.md) | cais_swebenchpro | SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks,… | 731 |
+| [camel-ai/seta-env](registry/camel_ai_seta_env.html.md) | camel_ai_seta_env | SETA (Scaling Environments for Terminal Agents): CAMEL-AI’s verifiable terminal-agent tasks spannin… | 1000 |
+| [cmu/refav](registry/cmu_refav.html.md) | cmu_refav | Autonomous-vehicle scenario mining via VLM. | 1000 |
+| [codepde/codepde](registry/codepde.html.md) | codepde | CodePDE: framing partial-differential-equation solving as a code-generation task to benchmark LLMs… | 5 |
+| [crustbench/crustbench](registry/crustbench.html.md) | crustbench | CRUST-Bench: real-world C repositories paired with hand-written safe-Rust interfaces and tests, ben… | 100 |
+| [dbt-labs/ade-bench](registry/dbt_labs_ade_bench.html.md) | dbt_labs_ade_bench | Analytics Data Engineer Bench: dbt and SQL data-engineering tasks across DuckDB and Snowflake backe… | 48 |
+| [deveval/deveval](registry/deveval.html.md) | deveval | DevEval: manually-annotated code-generation samples from real-world Python repositories, aligned to… | 63 |
+| [evoeval/evoeval](registry/evoeval.html.md) | evoeval | EvoEval: evolving suite that mutates HumanEval problems along several axes (difficulty, creative, s… | 100 |
+| [factory-ai/legacy-bench](registry/factory_ai_legacy_bench.html.md) | factory_ai_legacy_bench | Legacy-Bench public sample tasks for evaluating AI coding agents on legacy software engineering tas… | 10 |
+| [featurebench/featurebench](registry/featurebench.html.md) | featurebench | FeatureBench: agentic coding on end-to-end feature-development tasks derived from open-source repos… | 200 |
+| [featurebench/featurebench-lite](registry/featurebench_lite.html.md) | featurebench_lite | Lightweight subset of FeatureBench for cheaper evaluation while preserving model rankings. | 30 |
+| [featurebench/featurebench-lite-modal](registry/featurebench_lite_modal.html.md) | featurebench_lite_modal | FeatureBench-Lite executed on Modal’s cloud sandbox runner. | 30 |
+| [featurebench/featurebench-modal](registry/featurebench_modal.html.md) | featurebench_modal | FeatureBench’s full task suite executed on Modal’s cloud sandbox runner. | 200 |
+| [futurehouse/bixbench](registry/futurehouse_bixbench.html.md) | futurehouse_bixbench | BixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM age… | 205 |
+| [futurehouse/bixbench-cli](registry/futurehouse_bixbench_cli.html.md) | futurehouse_bixbench_cli | CLI variant of BixBench: agents solve the same bioinformatics analysis tasks via a command-line / s… | 205 |
+| [futurehouse/labbench](registry/futurehouse_labbench.html.md) | futurehouse_labbench | LAB-Bench (Language Agent Biology Benchmark): questions across 8 categories (literature QA, databas… | 181 |
+| [gabeorlanski/slopcodebench](registry/gabeorlanski_slopcodebench.html.md) | gabeorlanski_slopcodebench | SlopCodeBench multi-checkpoint coding benchmark tasks converted for Harbor. | 36 |
+| [gaia/gaia](registry/gaia.html.md) | gaia | GAIA: real-world questions across three difficulty levels evaluating general AI assistants on reaso… | 165 |
+| [gorilla/bfcl](registry/gorilla_bfcl.html.md) | gorilla_bfcl | Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Pyt… | 1000 |
+| [gorilla/bfcl_parity](registry/gorilla_bfcl_parity.html.md) | gorilla_bfcl_parity | Stratified parity subset of BFCL validating that Harbor’s adapter matches the upstream implementati… | 123 |
+| [gpqa-diamond/gpqa-diamond](registry/gpqa_diamond.html.md) | gpqa_diamond | GPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch… | 198 |
+| [grafana/o11y-bench](registry/grafana_o11y_bench.html.md) | grafana_o11y_bench | o11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo… | 63 |
+| [ineqmath/ineqmath](registry/ineqmath.html.md) | ineqmath | IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou… | 100 |
+| [kgmon/deepsearchqa](registry/kgmon_deepsearchqa.html.md) | kgmon_deepsearchqa | DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research… | 900 |
+| [kumo/kumo-1](registry/kumo_1.html.md) | kumo_1 | KUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic… | 1000 |
+| [kumo/kumo-easy](registry/kumo_easy.html.md) | kumo_easy | KUMO (easy split): easier-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark a… | 1000 |
+| [kumo/kumo-hard](registry/kumo_hard.html.md) | kumo_hard | KUMO (hard split): hard-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark acr… | 250 |
+| [kumo/kumo-parity](registry/kumo_parity.html.md) | kumo_parity | KUMO (parity split): subset of the KUMO procedural-reasoning benchmark used for parity / regression… | 212 |
+| [lawbench/lawbench](registry/lawbench.html.md) | lawbench | LawBench: tasks evaluating LLMs on Chinese-law knowledge — legal entity recognition, reading compre… | 1000 |
+| [lica-world/gdb](registry/lica_world_gdb.html.md) | lica_world_gdb | GraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infograp… | 1000 |
+| [livecodebench/livecodebench](registry/livecodebench.html.md) | livecodebench | LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, a… | 100 |
+| [maxbittker/runebench](registry/maxbittker_runebench.html.md) | maxbittker_runebench | Benchmark suite for evaluating AI agents on RuneScape gameplay tasks. | 32 |
+| [meta/mlgym-bench](registry/meta_mlgym_bench.html.md) | meta_mlgym_bench | MLGym-Bench: Meta’s framework and benchmark for AI research agents covering CV, NLP, RL, and game-t… | 12 |
+| [minnesotanlp/aar](registry/minnesotanlp_aar.html.md) | minnesotanlp_aar | The Amazing Agent Race (AAR): 1400 multi-step scavenger-hunt puzzles for evaluating LLM agents on t… | 1000 |
+| [nvats/codeskills-bench](registry/nvats_codeskills_bench.html.md) | nvats_codeskills_bench | A small set of real-life programming tasks: bug fixes, merge-conflict resolution, dependency cleanu… | 23 |
+| [openai/mmmlu](registry/openai_mmmlu.html.md) | openai_mmmlu | MMMLU (Multilingual MMLU): OpenAI’s professional-human-translation of the MMLU test set into 14 lan… | 150 |
+| [openai/simpleqa](registry/openai_simpleqa.html.md) | openai_simpleqa | SimpleQA: short, fact-seeking questions adversarially collected against GPT-4 to measure short-form… | 1000 |
+| [openai/swe-lancer-diamond-all](registry/openai_swe_lancer_diamond_all.html.md) | openai_swe_lancer_diamond_all | SWE-Lancer Diamond (full): public split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance so… | 463 |
+| [openai/swe-lancer-diamond-ic](registry/openai_swe_lancer_diamond_ic.html.md) | openai_swe_lancer_diamond_ic | A benchmark of freelance software engineering tasks from Upwork, valued at \$1 million USD total in… | 198 |
+| [openai/swe-lancer-diamond-manager](registry/openai_swe_lancer_diamond_manager.html.md) | openai_swe_lancer_diamond_manager | A benchmark of freelance software engineering tasks from Upwork, valued at \$1 million USD total in… | 265 |
+| [pgcodellm/rebench-v2-test](registry/pgcodellm_rebench_v2_test.html.md) | pgcodellm_rebench_v2_test | SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui… | 20 |
+| [qcircuitbench/qcircuitbench](registry/qcircuitbench.html.md) | qcircuitbench | QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const… | 28 |
+| [quesma/compilebench](registry/quesma_compilebench.html.md) | quesma_compilebench | CompileBench: real-world build/compile tasks (curl, GNU coreutils, jq, etc.) ranging from easy buil… | 15 |
+| [quesma/otel-bench](registry/quesma_otel_bench.html.md) | quesma_otel_bench | AI-agent benchmark for OpenTelemetry instrumentation tasks across multiple programming languages. | 26 |
+| [quixbugs/quixbugs](registry/quixbugs.html.md) | quixbugs | QuixBugs: small classic-algorithm programs (Python and Java) each containing a one-line bug, used t… | 80 |
+| [reasoning-gym/reasoning-gym-easy](registry/reasoning_gym_easy.html.md) | reasoning_gym_easy | Reasoning Gym (easy split): procedurally-generated, algorithmically-verifiable reasoning tasks (alg… | 288 |
+| [reasoning-gym/reasoning-gym-hard](registry/reasoning_gym_hard.html.md) | reasoning_gym_hard | Reasoning Gym (hard split): procedurally-generated, algorithmically-verifiable reasoning tasks at h… | 288 |
+| [replicationbench/replicationbench](registry/replicationbench.html.md) | replicationbench | ReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce impleme… | 90 |
+| [rexbench/rexbench](registry/rexbench.html.md) | rexbench | RExBench - 2 tasks (cogs, othello) evaluating AI agents’ ability to extend existing AI research thr… | 2 |
+| [satbench/satbench](registry/satbench.html.md) | satbench | SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable diffi… | 1000 |
+| [scale-ai/hil-bench](registry/scale_ai_hil_bench.html.md) | scale_ai_hil_bench | HiL-Bench (Human-in-the-Loop): tests if agents know when to ask for help rather than proceed with u… | 600 |
+| [scale-ai/swe-atlas-qna](registry/scale_ai_swe_atlas_qna.html.md) | scale_ai_swe_atlas_qna | SWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding… | 124 |
+| [scale-ai/swe-atlas-tw](registry/scale_ai_swe_atlas_tw.html.md) | scale_ai_swe_atlas_tw | SWE-Atlas - Test Writing – A benchmark of comprehensive test writing problems for coding agents. C… | 90 |
+| [scale-ai/swe-bench-pro](registry/scale_ai_swe_bench_pro.html.md) | scale_ai_swe_bench_pro | SWE-Bench-Pro: long-horizon enterprise software engineering tasks. | 731 |
+| [scienceagentbench/scienceagentbench](registry/scienceagentbench.html.md) | scienceagentbench | ScienceAgentBench: data-driven scientific discovery via Python programs across 4 disciplines. | 102 |
+| [sierra-research/tau3-bench](registry/sierra_research_tau3_bench.html.md) | sierra_research_tau3_bench | Third generation of τ-bench, extending the original with knowledge and voice. A simulation framewor… | 375 |
+| [sldbench/sldbench](registry/sldbench.html.md) | sldbench | SLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments w… | 8 |
+| [stanford/medagentbench](registry/stanford_medagentbench.html.md) | stanford_medagentbench | MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benc… | 300 |
+| [strongreject/strongreject](registry/strongreject.html.md) | strongreject | StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks… | 150 |
+| [swe-bench/swe-bench-verified](registry/swe_bench_verified.html.md) | swe_bench_verified | SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs… | 500 |
+| [swe-bench/swe-smith](registry/swe_bench_swe_smith.html.md) | swe_bench_swe_smith | SWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any… | 100 |
+| [swt-bench/swt-bench-verified](registry/swt_bench_verified.html.md) | swt_bench_verified | SWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing u… | 433 |
+| [tencent/autocodebench](registry/tencent_autocodebench.html.md) | tencent_autocodebench | Multilingual automated code generation benchmark evaluating LLMs across diverse programming tasks a… | 200 |
+| [termigen/termigen-environments](registry/termigen_environments.html.md) | termigen_environments | TermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11… | 1000 |
+| [terminal-bench-pro/terminal-bench-pro](registry/terminal_bench_pro.html.md) | terminal_bench_pro | Terminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientifi… | 200 |
+| [terminal-bench/terminal-bench-2](registry/terminal_bench_2.html.md) | terminal_bench_2 | Terminal-Bench v2: benchmark for testing AI agents in real terminal environments — from compiling c… | 89 |
+| [terminal-bench/terminal-bench-2-1](registry/terminal_bench_2_1.html.md) | terminal_bench_2_1 | Terminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ… | 89 |
+| [theagentcompany/theagentcompany](registry/theagentcompany.html.md) | theagentcompany | An agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and R… | 174 |
+| [usaco/usaco](registry/usaco.html.md) | usaco | USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality u… | 304 |
+| [vals/financeagent](registry/vals_financeagent.html.md) | vals_financeagent | Vals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (re… | 50 |
+| [vmax/vmax-tasks](registry/vmax_tasks.html.md) | vmax_tasks | Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux). | 1000 |
+| [webgen-bench/webgen-bench](registry/webgen_bench.html.md) | webgen_bench | WebGen-Bench: Evaluating LLMs on Generating Interactive and Functional Websites from Scratch (101 t… | 101 |
+| [xlang/ds-1000](registry/xlang_ds_1000.html.md) | xlang_ds_1000 | DS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow,… | 1000 |
+| [yanagiorigami/frontier-cs](registry/yanagiorigami_frontier_cs.html.md) | yanagiorigami_frontier_cs | Frontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial sco… | 172 |
 
 No matching items

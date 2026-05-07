@@ -8,11 +8,11 @@
 
 ## Using Harbor
 
-- [Datasets](https://meridianlabs-ai.github.io/inspect_harbor/datasets.html.md): Available Harbor datasets, dataset versioning, and known issues.
+- [Datasets](https://meridianlabs-ai.github.io/inspect_harbor/datasets.html.md): Importing Harbor task functions, pinning to a specific Harbor ref, and known dataset issues.
 - [Task Parameters](https://meridianlabs-ai.github.io/inspect_harbor/parameters.html.md): Reference for the parameters accepted by Harbor task functions.
 - [Agents and Solvers](https://meridianlabs-ai.github.io/inspect_harbor/agents.html.md): Default agent scaffold, custom agents, and the Oracle solver for verifying Harbor datasets.
 - [Task Format](https://meridianlabs-ai.github.io/inspect_harbor/tasks.html.md): The Harbor task file structure and how Harbor concepts map to Inspect AI concepts, including LLM judge verification.
-- [Advanced](https://meridianlabs-ai.github.io/inspect_harbor/advanced.html.md): Generic harbor() interface, custom registries, loading from git or local paths, and cache management.
+- [Advanced](https://meridianlabs-ai.github.io/inspect_harbor/advanced.html.md): Generic harbor() interface, org/name and name@version dataset slugs, loading from git or local paths, and cache management.
 
 ## Registry
 

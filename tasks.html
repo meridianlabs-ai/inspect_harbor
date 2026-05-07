@@ -268,7 +268,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#what-is-a-harbor-task" id="toc-what-is-a-harbor-task" class="nav-link active" data-scroll-target="#what-is-a-harbor-task">What is a Harbor Task?</a></li>
   <li><a href="#harbor-task-file-structure" id="toc-harbor-task-file-structure" class="nav-link" data-scroll-target="#harbor-task-file-structure">Harbor Task File Structure</a></li>
-  <li><a href="#harbor-to-inspect-mapping" id="toc-harbor-to-inspect-mapping" class="nav-link" data-scroll-target="#harbor-to-inspect-mapping">Harbor to Inspect Mapping</a></li>
+  <li><a href="#harbor-to-inspect-mapping" id="toc-harbor-to-inspect-mapping" class="nav-link" data-scroll-target="#harbor-to-inspect-mapping">Harbor to Inspect Mapping</a>
+  <ul class="collapse">
+  <li><a href="#unsupported-task.toml-features" id="toc-unsupported-task.toml-features" class="nav-link" data-scroll-target="#unsupported-task.toml-features">Unsupported <code>task.toml</code> Features</a></li>
+  </ul></li>
   <li><a href="#llm-judges-in-verification" id="toc-llm-judges-in-verification" class="nav-link" data-scroll-target="#llm-judges-in-verification">LLM Judges in Verification</a></li>
   </ul>
 </nav>
@@ -305,17 +308,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A typical Harbor task directory contains the following components:</p>
 <div class="column-page-right">
 <pre><code>my_task/
-├── instruction.md      # Task instructions/prompt shown to the agent
-├── task.toml           # Metadata, timeouts, resource specs (CPU/memory/GPU), env vars
-├── environment/        # Environment setup - Dockerfile or docker-compose.yaml
-│   └── Dockerfile      # Docker environment spec (varies by sandbox provider)
-├── solution/           # (Optional) Reference solution for sanity checking
-│   ├── solve.sh        # Executable solution script used by Oracle solver
-│   └── ...             # Supporting solution files and dependencies
-└── tests/              # Verification and scoring
-    ├── test.sh         # Test script executed by verifier
-    └── ...             # Outputs reward.txt or reward.json to /logs/verifier/</code></pre>
+├── instruction.md             # Task instructions/prompt shown to the agent
+├── task.toml                  # Metadata, timeouts, resource specs, env vars
+├── environment/               # Environment setup - Dockerfile or docker-compose.yaml
+│   └── Dockerfile             # Docker environment spec (varies by sandbox provider)
+├── solution/                  # (Optional) Reference solution for sanity checking
+│   ├── solve.sh / solve.bat   # Executable solution script used by Oracle solver
+│   └── ...                    # Supporting solution files and dependencies
+└── tests/                     # Verification and scoring
+    ├── test.sh / test.bat     # Test script executed by verifier
+    └── ...                    # Outputs reward.txt or reward.json to /logs/verifier/</code></pre>
 </div>
+<p><code>.bat</code> script variants are used when the task targets Windows (controlled by <code>[environment].os</code>); Linux tasks use <code>.sh</code>.</p>
 </section>
 <section id="harbor-to-inspect-mapping" class="level2">
 <h2 class="anchored" data-anchor-id="harbor-to-inspect-mapping">Harbor to Inspect Mapping</h2>
@@ -350,42 +354,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Docker/environment configuration for isolated execution</td>
 </tr>
 <tr class="odd">
-<td><strong>tests/test.sh</strong></td>
+<td><strong>tests/test.sh / test.bat</strong></td>
 <td><a href="https://inspect.aisi.org.uk/scorers.html"><code>Scorer</code></a> (<code>harbor_scorer</code>)</td>
 <td>Test script executed by the scorer to produce reward/metrics</td>
 </tr>
 <tr class="even">
-<td><strong>solution/solve.sh</strong></td>
+<td><strong>solution/solve.sh / solve.bat</strong></td>
 <td><a href="https://inspect.aisi.org.uk/solvers.html"><code>Solver</code></a> (<code>oracle</code>)</td>
 <td>Reference solution script executed by the Oracle solver for sanity checking</td>
 </tr>
 <tr class="odd">
+<td><strong>task.toml[task]</strong></td>
+<td><a href="https://inspect.aisi.org.uk/datasets.html#dataset-samples"><code>Sample.metadata</code></a></td>
+<td>Task name, description, authors, keywords</td>
+</tr>
+<tr class="even">
 <td><strong>task.toml[metadata]</strong></td>
 <td><a href="https://inspect.aisi.org.uk/datasets.html#dataset-samples"><code>Sample.metadata</code></a></td>
-<td>Task metadata: author, difficulty, category, tags</td>
-</tr>
-<tr class="even">
-<td><strong>task.toml[verifier]</strong></td>
-<td>Scorer timeout/env vars</td>
-<td>Timeout and environment configuration for scorer execution</td>
+<td>Arbitrary custom fields (difficulty, category, tags)</td>
 </tr>
 <tr class="odd">
-<td><strong>task.toml[agent]</strong></td>
-<td>Agent solver env vars</td>
-<td>Environment variables for agent execution. Agent timeout_sec is ignored.</td>
+<td><strong>task.toml[verifier]</strong></td>
+<td>Scorer timeout/env vars</td>
+<td>Timeout, env vars, and user for verifier execution</td>
 </tr>
 <tr class="even">
+<td><strong>task.toml[agent]</strong></td>
+<td>Agent solver env vars/user</td>
+<td>Environment variables and user for agent execution. Agent <code>timeout_sec</code> is ignored.</td>
+</tr>
+<tr class="odd">
 <td><strong>task.toml[solution]</strong></td>
 <td>Oracle solver env vars</td>
 <td>Environment variables to set when running the solution script</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>task.toml[environment]</strong></td>
 <td><a href="https://inspect.aisi.org.uk/sandboxing.html#sandbox-environments"><code>SandboxEnvironmentSpec.config</code></a></td>
-<td>Resource specifications (CPU, memory, storage, GPU, internet). Overwrites resource limits in <code>environment/docker-compose.yaml</code></td>
+<td>Docker image, target OS (<code>linux</code>/<code>windows</code>), resource specs (CPU, memory, storage, GPU, internet), MCP servers, healthchecks. Overwrites resource limits in <code>environment/docker-compose.yaml</code>.</td>
 </tr>
 </tbody>
 </table>
+<section id="unsupported-task.toml-features" class="level3">
+<h3 class="anchored" data-anchor-id="unsupported-task.toml-features">Unsupported <code>task.toml</code> Features</h3>
+<p>Loading a task that declares any of the below either raises or warns:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>[[steps]]</code> + <code>multi_step_reward_strategy</code> (multi-step tasks)</td>
+<td><strong>raise</strong></td>
+</tr>
+<tr class="even">
+<td><code>[environment].os = "windows"</code></td>
+<td><strong>raise</strong></td>
+</tr>
+<tr class="odd">
+<td><code>[environment].healthcheck</code></td>
+<td>warn (agent may run before services ready)</td>
+</tr>
+<tr class="even">
+<td><code>[environment].mcp_servers</code></td>
+<td>warn (not exposed to agent)</td>
+</tr>
+<tr class="odd">
+<td><code>[environment].skills_dir</code></td>
+<td>warn (not copied to agent skills dir)</td>
+</tr>
+</tbody>
+</table>
+<p><code>[environment].build_timeout_sec</code>, <code>storage_mb</code>, <code>workdir</code>, and <code>config.source</code> / <code>config.artifacts</code> are ignored.</p>
+</section>
 </section>
 <section id="llm-judges-in-verification" class="level2">
 <h2 class="anchored" data-anchor-id="llm-judges-in-verification">LLM Judges in Verification</h2>
@@ -393,7 +441,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[verifier.env]</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">MODEL_NAME</span> <span class="op">=</span> <span class="st">"claude-haiku-4-5"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">ANTHROPIC_API_KEY</span> <span class="op">=</span> <span class="st">"${ANTHROPIC_API_KEY}"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The verifier script (<code>tests/test.sh</code>) uses these environment variables to call the LLM. Make sure to set the appropriate API key (e.g.&nbsp;<code>ANTHROPIC_API_KEY</code>) when running tasks with LLM judges.</p>
+<p>The verifier script (<code>tests/test.sh</code> or <code>test.bat</code>) uses these environment variables to call the LLM. Make sure to set the appropriate API key (e.g.&nbsp;<code>ANTHROPIC_API_KEY</code>) when running tasks with LLM judges.</p>
 
 
 </section>
