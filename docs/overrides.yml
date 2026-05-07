@@ -164,6 +164,7 @@ arcprize/arc-agi-2:
   repo: https://github.com/arcprize/ARC-AGI-2
   desc: 'ARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but state-of-the-art models still struggle.'
   title: ARC-AGI-2
+  featured: true
 
 bigcode/bigcodebench-hard-complete:
   categories:
@@ -472,6 +473,7 @@ meta/mlgym-bench:
   repo: https://github.com/facebookresearch/MLGym
   desc: 'MLGym-Bench: Meta''s framework and benchmark for AI research agents covering CV, NLP, RL, and game-theory tasks requiring ideation, implementation, training, and analysis of ML experiments.'
   title: MLGym-Bench
+  featured: true
 
 minnesotanlp/aar:
   categories:
@@ -747,6 +749,7 @@ terminal-bench-pro/terminal-bench-pro:
   desc: 'Terminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientific computing, SWE, ML, and security — extending Terminal-Bench with harder real-world scenarios.'
   function_name: terminal_bench_pro
   title: Terminal-Bench Pro
+  featured: true
 
 terminal-bench/terminal-bench-2:
   categories:
