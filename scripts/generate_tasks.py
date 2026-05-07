@@ -506,11 +506,14 @@ def generate_registry_yml_content(
     for d in registry:
         desc = d["clean_description"]
         if len(desc) > LISTING_DESC_MAX:
-            desc = desc[: LISTING_DESC_MAX - 1].rstrip(" .") + "…"
+            desc_trunc = desc[: LISTING_DESC_MAX - 1].rstrip(" .") + "…"
+        else:
+            desc_trunc = desc
         entry: dict[str, Any] = {
             "title": d["name"],
             "path": f"registry/{d['func_name']}.html",
-            "description": desc,
+            "desc": desc,
+            "desc_trunc": desc_trunc,
             "task_function": d["func_name"],
             "samples": d["samples"],
             "version": "latest",
