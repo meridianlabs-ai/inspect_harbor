@@ -1,19 +1,40 @@
 """Tests for Harbor task."""
 
-import threading
-import time
 from pathlib import Path
 from typing import Any
 from unittest.mock import Mock, patch
 
 import pytest
 from harbor.models.task.task import Task as HarborTask
-from inspect_harbor._harbor import task as task_module
 from inspect_harbor._harbor.task import (
     _disambiguate_sample_ids,
     harbor,
     load_harbor_tasks,
 )
+
+
+def _make_harbor_task_mock(
+    name: str = "test-task",
+    task_dir: Path | None = None,
+    has_steps: bool = False,
+    os: str = "linux",
+) -> Mock:
+    """Create a Mock HarborTask wired up for ``_build_harbor_tasks``'s validator.
+
+    ``HarborTask.config`` is set in ``__init__`` from ``task.toml`` — it isn't
+    a class attribute, so ``Mock(spec=HarborTask)`` doesn't expose it. We
+    attach a plain Mock with the ``[environment]`` defaults the validator reads.
+    """
+    m = Mock(spec=HarborTask)
+    m.has_steps = has_steps
+    m.name = name
+    m.task_dir = task_dir or Path("/tmp")
+    m.config = Mock()
+    m.config.environment.os = os
+    m.config.environment.healthcheck = None
+    m.config.environment.mcp_servers = []
+    m.config.environment.skills_dir = None
+    return m
 
 
 def test_load_local_single_task():
@@ -26,10 +47,7 @@ def test_load_local_single_task():
         task_path = Path("/local/path/to/task")
         mock_load_local.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.has_steps = False
-        mock_task.name = "test-task"
-        mock_task.task_dir = task_path
+        mock_task = _make_harbor_task_mock(name="test-task", task_dir=task_path)
         mock_harbor_task.return_value = mock_task
 
         # Execute
@@ -58,10 +76,7 @@ def test_load_git_task():
         task_path = Path("/cache/downloaded/task")
         mock_load_git.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.has_steps = False
-        mock_task.name = "git-task"
-        mock_task.task_dir = task_path
+        mock_task = _make_harbor_task_mock(name="git-task", task_dir=task_path)
         mock_harbor_task.return_value = mock_task
 
         # Execute
@@ -94,12 +109,8 @@ def test_load_local_dataset():
         task_path_2 = Path("/dataset/task2")
         mock_load_local.return_value = [task_path_1, task_path_2]
 
-        mock_task_1 = Mock(spec=HarborTask)
-        mock_task_1.has_steps = False
-        mock_task_1.name = "task1"
-        mock_task_2 = Mock(spec=HarborTask)
-        mock_task_2.has_steps = False
-        mock_task_2.name = "task2"
+        mock_task_1 = _make_harbor_task_mock(name="task1", task_dir=task_path_1)
+        mock_task_2 = _make_harbor_task_mock(name="task2", task_dir=task_path_2)
         mock_harbor_task.side_effect = [mock_task_1, mock_task_2]
 
         # Execute
@@ -127,9 +138,9 @@ def test_load_from_package():
         task_path = Path("/cache/packages/harbor/hello-world")
         mock_load_package.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.has_steps = False
-        mock_task.name = "harbor/hello-world"
+        mock_task = _make_harbor_task_mock(
+            name="harbor/hello-world", task_dir=task_path
+        )
         mock_harbor_task.return_value = mock_task
 
         result = load_harbor_tasks(
@@ -148,21 +159,35 @@ def test_load_from_package():
         )
 
 
-def test_load_multi_step_task_raises():
-    """Multi-step Harbor tasks (with [[steps]]) are surfaced as a NotImplementedError."""
+@pytest.mark.parametrize(
+    "kwargs,expected_match",
+    [
+        (
+            {"has_steps": True},
+            r"Multi-step tasks: \['blocking-task'\]",
+        ),
+        (
+            {"os": "windows"},
+            r"Windows containers .*\['blocking-task'\]",
+        ),
+    ],
+    ids=["multi_step", "windows_os"],
+)
+def test_build_harbor_tasks_blocks_unsupported_features(
+    kwargs: dict[str, Any], expected_match: str
+) -> None:
+    """Multi-step and Windows-OS tasks raise ``NotImplementedError`` from the validator."""
     with (
         patch("inspect_harbor._harbor.task._load_local_path") as mock_load_local,
         patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
     ):
-        mock_load_local.return_value = [Path("/some/multi/step/task")]
+        mock_load_local.return_value = [Path("/some/blocking/task")]
+        mock_harbor_task.return_value = _make_harbor_task_mock(
+            name="blocking-task", **kwargs
+        )
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.has_steps = True
-        mock_task.name = "multi-step-task"
-        mock_harbor_task.return_value = mock_task
-
-        with pytest.raises(NotImplementedError, match="Multi-step Harbor tasks"):
-            load_harbor_tasks(path="/some/multi/step/task")
+        with pytest.raises(NotImplementedError, match=expected_match):
+            load_harbor_tasks(path="/some/blocking/task")
 
 
 def test_load_from_registry():
@@ -175,9 +200,7 @@ def test_load_from_registry():
         task_path = Path("/cache/registry/task")
         mock_load_registry.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.has_steps = False
-        mock_task.name = "registry-task"
+        mock_task = _make_harbor_task_mock(name="registry-task", task_dir=task_path)
         mock_harbor_task.return_value = mock_task
 
         # Execute
@@ -208,9 +231,7 @@ def test_load_git_task_with_overwrite_cache():
         task_path = Path("/cache/downloaded/task")
         mock_load_git.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.has_steps = False
-        mock_task.name = "git-task"
+        mock_task = _make_harbor_task_mock(name="git-task", task_dir=task_path)
         mock_harbor_task.return_value = mock_task
 
         # Execute with overwrite_cache=True
@@ -241,9 +262,7 @@ def test_load_registry_with_overwrite_cache():
         task_path = Path("/cache/registry/task")
         mock_load_registry.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.has_steps = False
-        mock_task.name = "registry-task"
+        mock_task = _make_harbor_task_mock(name="registry-task", task_dir=task_path)
         mock_harbor_task.return_value = mock_task
 
         # Execute with overwrite_cache=True
@@ -361,9 +380,7 @@ def test_load_harbor_tasks_parameter_passing(
         task_path = Path("/mock/path")
         mock_load_local.return_value = [task_path]
 
-        mock_task = Mock(spec=HarborTask)
-        mock_task.has_steps = False
-        mock_task.name = "test-task"
+        mock_task = _make_harbor_task_mock(name="test-task", task_dir=task_path)
         mock_harbor_task.return_value = mock_task
 
         load_harbor_tasks(**kwargs)
@@ -487,69 +504,3 @@ def test_harbor_task_with_overrides():
     assert len(service.deploy.resources.reservations.devices) == 1
     device = service.deploy.resources.reservations.devices[0]
     assert device.count == 2
-
-
-def _drain_coroutine(coro: Any) -> list[Any]:
-    """Close the coroutine without running it (avoids un-awaited RuntimeWarning)."""
-    coro.close()
-    return []
-
-
-def test_download_dataset_calls_reset_client() -> None:
-    """``_download_dataset`` resets Harbor's cached Supabase client.
-
-    Without the reset, a stale client bound to a destroyed loop trips
-    ``RuntimeError: Event loop is closed`` on the next request.
-    """
-    with (
-        patch.object(task_module, "reset_client") as mock_reset,
-        patch.object(
-            task_module, "run_coroutine", side_effect=_drain_coroutine
-        ) as mock_run,
-    ):
-        result = task_module._download_dataset(Mock(), overwrite_cache=False)
-
-    mock_reset.assert_called_once()
-    assert mock_run.call_count == 1
-    assert result == []
-
-
-def test_download_dataset_serializes_concurrent_calls() -> None:
-    """Concurrent ``_download_dataset`` calls must not overlap.
-
-    The lock prevents two threads from observing a half-reset Supabase client.
-    """
-    in_section: list[str] = []
-    overlap_seen = threading.Event()
-
-    def slow_reset() -> None:
-        # Mark we're inside the critical section. If another thread is
-        # already here, the lock isn't doing its job.
-        if in_section:
-            overlap_seen.set()
-        in_section.append(threading.current_thread().name)
-        time.sleep(0.05)  # hold long enough for concurrent threads to collide
-        in_section.pop()
-
-    with (
-        patch.object(task_module, "reset_client", side_effect=slow_reset),
-        patch.object(task_module, "run_coroutine", side_effect=_drain_coroutine),
-    ):
-        threads = [
-            threading.Thread(
-                target=lambda: task_module._download_dataset(
-                    Mock(), overwrite_cache=False
-                ),
-                name=f"t{i}",
-            )
-            for i in range(5)
-        ]
-        for t in threads:
-            t.start()
-        for t in threads:
-            t.join()
-
-    assert not overlap_seen.is_set(), (
-        "Two threads were inside _download_dataset's critical section "
-        "simultaneously — the lock isn't serializing reset_client + run_coroutine."
-    )

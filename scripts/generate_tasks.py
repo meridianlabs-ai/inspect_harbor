@@ -1,47 +1,87 @@
 #!/usr/bin/env python3
-"""Generate static task functions from Harbor registry.
+"""Generate static task functions from the Harbor registry.
 
-This script fetches the Harbor registry and generates _tasks.py with all
-dataset-specific task functions.
+We discover every dataset by scraping ``hub.harborframework.com/datasets``
+for ``(org, name)`` slugs, then fetch metadata for each via
+``PackageDatasetClient.get_dataset_metadata``. The website is the only
+public enumeration source until Harbor exposes a listing API
+(see https://github.com/harbor-framework/harbor/issues/1580).
+
+Per-dataset overrides (categories, hand-mapped function names, paper /
+repo links) live in ``docs/overrides.yml``.
 """
 
 import argparse
+import asyncio
+import fnmatch
 import json
 import re
 import sys
+import time
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, TypedDict
 
 import yaml
 from _http import curl_get
+from _templates import (
+    PACKAGE_TASK_TEMPLATE,
+    PAGE_TEMPLATE,
+    REGISTRY_YML_HEADER,
+    TASKS_TEMPLATE,
+)
+from harbor.registry.client.package import PackageDatasetClient
 
-REGISTRY_URL = "https://raw.githubusercontent.com/laude-institute/harbor/refs/heads/main/registry.json"
-REGISTRY_SITE_BASE = "https://registry.harborframework.com"
+REGISTRY_SITE_BASE = "https://hub.harborframework.com"
 REGISTRY_SITE_MAX_PAGES = 20
+# Concurrency cap on Supabase metadata fetches. ~190 packages × 600ms each
+# is ~2min sequential; with 10 in flight it's ~12s.
+PACKAGE_FETCH_CONCURRENCY = 10
+# Minimum slug count we expect from the scrape (pre-exclude). Below this we
+# refuse to proceed: the website likely changed its HTML, our regex stopped
+# matching, or the site is partially down. Without this guard a broken scrape
+# would silently orphan-drop every entry in overrides.yml.
+MIN_EXPECTED_SLUGS = 50
+# Hard cap on description length in the registry listing table; longer descs
+# are truncated with an ellipsis. Per-dataset .qmd pages keep the full text.
+LISTING_DESC_MAX = 100
+
 TASKS_FILE = Path(__file__).parent.parent / "src" / "inspect_harbor" / "_tasks.py"
 REGISTRY_YML_FILE = Path(__file__).parent.parent / "docs" / "registry-listing.yml"
 OVERRIDES_FILE = Path(__file__).parent.parent / "docs" / "overrides.yml"
-# Per-benchmark landing pages. One .qmd per versioned dataset, linked from
-# the registry listing. Wiped and regenerated on every run; don't hand-edit.
+EXCLUDE_FILE = Path(__file__).parent.parent / "docs" / "exclude.yml"
+# Per-dataset landing pages, one ``.qmd`` per dataset, linked from the
+# registry listing. Wiped and regenerated on every run; don't hand-edit.
 REGISTRY_PAGES_DIR = Path(__file__).parent.parent / "docs" / "registry"
-# Cache for the Harbor registry JSON and scraped org map. Speeds up the
-# Quarto pre-render during `quarto preview` (otherwise every reload would
-# re-download ~13MB + scrape multiple pages). Cleared by deleting the dir.
+# Local-dev cache: speeds up Quarto preview reloads (otherwise every
+# reload would re-scrape + re-fetch metadata). Cleared by deleting the dir.
 CACHE_DIR = Path(__file__).parent.parent / ".cache" / "harbor-registry"
 CACHE_TTL_SECONDS = 10 * 60  # 10 minutes
+
+
+class FetchedDataset(TypedDict):
+    """Raw shape produced by ``fetch_package_datasets``."""
+
+    name: str  # ``org/name`` slug
+    description: str
+    samples: int
+    version: str  # resolved sha for the ``latest`` ref
+
+
+class Dataset(FetchedDataset):
+    """A ``FetchedDataset`` decorated by ``decorate_datasets``.
+
+    Adds the bits consumers (templates, listing emitter) need.
+    """
+
+    func_name: str
+    harbor_url: str
+    clean_description: str
 
 
 def _cached(
     cache_name: str, fetch: Callable[[], bytes], ttl: int = CACHE_TTL_SECONDS
 ) -> bytes:
-    """Read `cache_name` from CACHE_DIR if fresh, else call `fetch` and write.
-
-    The cache is strictly a local-dev accelerator for preview reloads; CI
-    should start from a cold cache each run, which it does naturally because
-    nothing persists CACHE_DIR across jobs.
-    """
-    import time
-
+    """Read ``cache_name`` from CACHE_DIR if fresh, else call ``fetch`` and write."""
     path = CACHE_DIR / cache_name
     if path.exists():
         age = time.time() - path.stat().st_mtime
@@ -54,12 +94,7 @@ def _cached(
 
 
 def _write_if_changed(path: Path, content: str) -> bool:
-    """Write `content` to `path` only if it differs from what's there.
-
-    Stable mtimes matter a lot for `quarto preview`: touching a .qmd file
-    (even with identical content) causes Quarto to re-render it and any
-    page that references it. Returns True iff the file was written.
-    """
+    """Write ``content`` to ``path`` only if it differs from what's there."""
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists() and path.read_text() == content:
         return False
@@ -67,272 +102,246 @@ def _write_if_changed(path: Path, content: str) -> bool:
     return True
 
 
-TASKS_TEMPLATE = '''"""Harbor registry dataset tasks.
-
-This file is auto-generated by scripts/generate_tasks.py.
-Do not edit manually.
-
-Registry: {registry_url}
-"""
-
-from inspect_ai import Task, task
-
-from inspect_harbor._harbor.task import harbor as _harbor_base
-
-{functions}
-'''
-TASK_FUNCTION_TEMPLATE = '''
-@task
-def {func_name}(
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""{description}
-
-    Dataset: {dataset_name}
-    {version_info}
-    Harbor URL: {harbor_url}
-    """
-    return _harbor_base(
-        dataset_name_version="{dataset_name_version}",
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-'''
-
-# Header for the generated listing data file. registry.qmd itself is
-# hand-maintained; only registry-listing.yml is regenerated.
-REGISTRY_YML_HEADER = f"""# This file is auto-generated by scripts/generate_tasks.py. Do not edit manually.
-#
-# Feeds the Quarto listing on docs/registry.qmd.
-#
-# Source of truth: {REGISTRY_URL}
-# Categories: docs/overrides.yml (hand-maintained; see file header)
-"""
-
-
 def _default_description(dataset_name: str) -> str:
-    """Fallback used when the Harbor registry entry has no `description`."""
+    """Fallback used when a Harbor metadata entry has no ``description``."""
     return f"{dataset_name} dataset from Harbor registry"
 
 
-def shorten_urls_in_text(text: str) -> str:
-    """Replace long URLs in text with short [link] markdown links.
-
-    Examples:
-        "See (https://example.com)" -> "See ([link](https://example.com))"
-        "Visit https://example.com for more" -> "Visit [link](https://example.com) for more"
-    """
-    # Pattern to match URLs (http:// or https://)
-    url_pattern = r"(https?://[^\s\)]+)"
-
-    def replace_url(match: re.Match[str]) -> str:
-        url = match.group(1)
-        return f"[link]({url})"
-
-    return re.sub(url_pattern, replace_url, text)
-
-
-def fetch_registry() -> list[dict[str, Any]]:
-    """Fetch the Harbor registry JSON.
-
-    `file://` URLs are handled locally (used by tests to feed a cached
-    registry); HTTP(S) URLs go through the shared curl helper.
-    """
-    print(f"Fetching registry from {REGISTRY_URL}...")
-
-    if REGISTRY_URL.startswith("file://"):
-        path = REGISTRY_URL.removeprefix("file://")
-        return json.loads(Path(path).read_text())
-
-    data = _cached("registry.json", lambda: curl_get(REGISTRY_URL))
-    return json.loads(data.decode())
-
-
-def fetch_org_map() -> dict[str, str]:
-    """Scrape the public registry site to build a dataset-slug → org-slug map.
-
-    The Harbor registry website (`registry.harborframework.com`) owns the
-    canonical dataset-to-org mapping; the JSON registry we fetch does not
-    expose an org field. Paginating `/datasets?page=N` yields every public
-    dataset as `/datasets/<org>/<name>` anchors.
-
-    Failures in `curl_get` exit the script (via SystemExit) so we never
-    silently emit all-fallback URLs.
-    """
-    print(f"Scraping org map from {REGISTRY_SITE_BASE}/datasets...")
-    mapping: dict[str, str] = {}
-    href_pattern = re.compile(r'href="/datasets/([a-z0-9-]+)/([a-z0-9-]+)"')
+def scrape_hub_slugs() -> set[tuple[str, str]]:
+    """Paginate ``hub.harborframework.com/datasets`` and return all (org, name) pairs."""
+    print(f"Scraping {REGISTRY_SITE_BASE}/datasets...")
+    pairs: set[tuple[str, str]] = set()
     pages_scraped = 0
+    href_pattern = re.compile(r'href="/datasets/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)"')
 
     for page in range(1, REGISTRY_SITE_MAX_PAGES + 1):
         url = f"{REGISTRY_SITE_BASE}/datasets?page={page}"
         body = _cached(
-            f"org-map-page-{page}.html",
+            f"hub-page-{page}.html",
             lambda url=url: curl_get(url, max_time=60),
         ).decode()
         pages_scraped = page
-        pairs = set(href_pattern.findall(body))
-        new = 0
-        for org, name in pairs:
-            if name not in mapping:
-                mapping[name] = org
-                new += 1
-        if new == 0:
+        new_pairs = set(href_pattern.findall(body))
+        if not new_pairs - pairs:
             break
+        pairs |= new_pairs
 
-    print(f"  Mapped {len(mapping)} datasets across {pages_scraped} page(s)")
-    return mapping
+    print(f"  {len(pairs)} unique slugs across {pages_scraped} page(s)")
+    if len(pairs) < MIN_EXPECTED_SLUGS:
+        raise RuntimeError(
+            f"Scrape returned only {len(pairs)} slug(s) (expected ≥ "
+            f"{MIN_EXPECTED_SLUGS}). The website likely changed shape or is "
+            "down; refusing to proceed (would orphan-drop every override)."
+        )
+    return pairs
 
 
-def build_harbor_url(dataset_name: str, org_map: dict[str, str]) -> tuple[str, bool]:
-    """Build a link to the dataset's page on the new Harbor registry site.
+def load_exclude_patterns() -> list[str]:
+    """Load slug-exclusion globs from ``docs/exclude.yml``.
 
-    Returns (url, is_canonical). `is_canonical=False` means we fell back to
-    the site's search URL because we could not resolve an org for this
-    dataset — typically because Harbor has renamed or not yet published it.
-
-    We always link to the dataset's `latest` revision rather than the exact
-    registry version string. The site normalizes versions inconsistently
-    (e.g. strips trailing `.0`), so registry versions like `1.0` or `2.0` do
-    not resolve as path segments; `latest` always does.
-
-    Registry names come in two shapes:
-        - plain (e.g. `ade-bench`): org looked up in `org_map`
-        - slash-prefixed (e.g. `scale-ai/swe-atlas-qna`): org is the prefix
+    Each entry is a fnmatch pattern matched against the full ``org/name``
+    slug (e.g. ``openthoughts/*``, ``harbor/hello-world``). Empty list if
+    the file is absent or malformed.
     """
-    if "/" in dataset_name:
-        prefix_org, short = dataset_name.split("/", 1)
-        return (
-            f"{REGISTRY_SITE_BASE}/datasets/{prefix_org}/{short}/latest",
-            True,
+    if not EXCLUDE_FILE.exists():
+        return []
+    try:
+        data = yaml.safe_load(EXCLUDE_FILE.read_text()) or []
+    except yaml.YAMLError as exc:
+        print(f"  ⚠ {EXCLUDE_FILE} failed to parse ({exc})", file=sys.stderr)
+        return []
+    if not isinstance(data, list):
+        print(
+            f"  ⚠ {EXCLUDE_FILE} top-level must be a list; got {type(data).__name__}",
+            file=sys.stderr,
         )
+        return []
+    return [p for p in data if isinstance(p, str)]
 
-    # Exact site-slug match
-    if dataset_name in org_map:
-        return (
-            f"{REGISTRY_SITE_BASE}/datasets/{org_map[dataset_name]}/{dataset_name}/latest",
-            True,
+
+def filter_excluded(
+    slugs: set[tuple[str, str]], patterns: list[str]
+) -> set[tuple[str, str]]:
+    """Drop any ``(org, name)`` whose ``org/name`` slug matches a pattern."""
+    if not patterns:
+        return slugs
+    kept: set[tuple[str, str]] = set()
+    excluded = 0
+    for org, name in slugs:
+        slug = f"{org}/{name}"
+        if any(fnmatch.fnmatch(slug, p) for p in patterns):
+            excluded += 1
+            continue
+        kept.add((org, name))
+    if excluded:
+        print(f"  Excluded {excluded} slug(s) via {len(patterns)} exclude pattern(s)")
+    return kept
+
+
+def fetch_package_datasets(slugs: set[tuple[str, str]]) -> list[FetchedDataset]:
+    """Fetch metadata for every scraped slug via ``PackageDatasetClient``.
+
+    Per-slug responses are cached under
+    ``.cache/harbor-registry/pkg-<org>__<name>.json`` to keep Quarto
+    preview reloads cheap. Aborts if more than half of the fetches fail.
+    """
+    candidates = sorted(slugs)
+    print(f"Fetching metadata for {len(candidates)} package candidate(s)...")
+
+    sem = asyncio.Semaphore(PACKAGE_FETCH_CONCURRENCY)
+    pkg_client = PackageDatasetClient()
+
+    async def _fetch_one(org: str, name: str) -> FetchedDataset | None:
+        slug = f"{org}/{name}"
+        cache_path = CACHE_DIR / f"pkg-{org}__{name}.json"
+        if cache_path.exists():
+            age = time.time() - cache_path.stat().st_mtime
+            if age < CACHE_TTL_SECONDS:
+                return json.loads(cache_path.read_text())
+        async with sem:
+            try:
+                meta = await pkg_client.get_dataset_metadata(slug)
+            except Exception as e:
+                print(
+                    f"  ⚠ {slug}: {type(e).__name__}: {str(e)[:120]}",
+                    file=sys.stderr,
+                )
+                return None
+        entry: FetchedDataset = FetchedDataset(
+            name=slug,
+            description=(meta.description or "").strip(),
+            samples=len(meta.task_ids),
+            version=meta.version or "",
         )
+        CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        cache_path.write_text(json.dumps(entry))
+        return entry
 
-    # Registry sometimes uses underscores where the site uses hyphens
-    # (e.g. arc_agi_2 on our side vs arc-agi-2 on the site).
-    normalized = dataset_name.replace("_", "-")
-    if normalized in org_map:
-        return (
-            f"{REGISTRY_SITE_BASE}/datasets/{org_map[normalized]}/{normalized}/latest",
-            True,
+    async def _fetch_all() -> list[FetchedDataset | None]:
+        return list(await asyncio.gather(*[_fetch_one(o, n) for o, n in candidates]))
+
+    raw = asyncio.run(_fetch_all())
+    packages = [r for r in raw if r is not None]
+    failed = len(raw) - len(packages)
+    if raw and failed / len(raw) > 0.5:
+        raise RuntimeError(
+            f"More than half of package metadata fetches failed "
+            f"({failed}/{len(raw)}); aborting (likely Supabase or network "
+            "issue). See per-slug warnings above."
         )
-
-    # Harbor has likely renamed or not yet published this dataset.
-    # Per project decision: fall back to the search URL with the bare
-    # dataset name (version suffixes don't help the search).
-    return (
-        f"{REGISTRY_SITE_BASE}/datasets?q={dataset_name}",
-        False,
-    )
+    print(f"  Fetched {len(packages)} package metadata entries")
+    return packages
 
 
-def dataset_name_to_function_name(dataset_name_version: str) -> str:
-    """Convert dataset name or name@version to valid Python function name.
+def dataset_name_to_function_name(dataset_name: str) -> str:
+    """Convert a slug to a valid Python function name (auto-derived default).
+
+    Callers can override per-dataset via ``function_name:`` in
+    ``docs/overrides.yml`` — see ``decorate_datasets``.
 
     Examples:
-        terminal-bench -> terminal_bench
-        terminal-bench@2.0 -> terminal_bench_2_0
-        aime -> aime
-        swe-lancer-diamond@all -> swe_lancer_diamond_all
-        scale-ai/swe-atlas-qna@1.0 -> scale_ai_swe_atlas_qna_1_0
+        terminal-bench/terminal-bench   -> terminal_bench_terminal_bench
+        scale-ai/swe-atlas-qna          -> scale_ai_swe_atlas_qna
+        harbor/hello-world              -> harbor_hello_world
+        LiteCoder/LiteCoder-rl          -> litecoder_litecoder_rl
     """
-    return (
-        dataset_name_version.replace("-", "_")
-        .replace("@", "_")
-        .replace(".", "_")
-        .replace("/", "_")
-    )
+    return dataset_name.lower().replace("-", "_").replace(".", "_").replace("/", "_")
 
 
-def generate_tasks_content(
-    registry: list[dict[str, Any]], org_map: dict[str, str]
-) -> str:
-    """Generate the content of _tasks.py from the registry."""
-    functions = []
-    seen_datasets = set()
-    seen_versioned_datasets = set()
+def decorate_datasets(
+    fetched: list[FetchedDataset], overrides: dict[str, dict[str, Any]]
+) -> list[Dataset]:
+    """Attach the derived fields every consumer needs.
 
-    # Registry is an array of benchmark objects
-    for dataset in sorted(
-        registry, key=lambda d: (d.get("name", ""), d.get("version", ""))
-    ):
-        dataset_name = dataset.get("name")
-        version = dataset.get("version")
+    Honors two per-dataset overrides from ``docs/overrides.yml``:
 
-        if not dataset_name:
-            continue
+    * ``function_name`` — replace the auto-derived Python identifier
+      (e.g. ``swe_bench_swe_bench_verified`` → ``swe_bench_verified``).
+      Must be a valid identifier.
+    * ``desc`` — replace Harbor's metadata description. Flows through to
+      the @task docstring, the listing entry, and the per-dataset .qmd.
+      Same field that ``inspect_ai/docs/evals/sync_harbor.py`` reads, so
+      one override drives every consumer.
+    """
+    out: list[Dataset] = []
+    for d in fetched:
+        org, short = d["name"].split("/", 1)
+        url = f"{REGISTRY_SITE_BASE}/datasets/{org}/{short}/latest"
 
-        description = dataset.get("description", _default_description(dataset_name))
-        harbor_url, _ = build_harbor_url(dataset_name, org_map)
+        override = overrides.get(d["name"], {})
 
-        # Create versioned function (e.g., terminal_bench_2_0 for terminal-bench@2.0)
-        if version:
-            dataset_name_version = f"{dataset_name}@{version}"
-            if dataset_name_version not in seen_versioned_datasets:
-                seen_versioned_datasets.add(dataset_name_version)
-                func_name = dataset_name_to_function_name(dataset_name_version)
-
-                function_code = TASK_FUNCTION_TEMPLATE.format(
-                    func_name=func_name,
-                    description=description,
-                    dataset_name=dataset_name_version,
-                    dataset_name_version=dataset_name_version,
-                    version_info=f"Version: {version}",
-                    harbor_url=harbor_url,
+        custom = override.get("function_name")
+        if custom is not None:
+            if not isinstance(custom, str) or not custom.isidentifier():
+                raise RuntimeError(
+                    f"Invalid function_name override for {d['name']!r}: "
+                    f"{custom!r} is not a valid Python identifier."
                 )
-                functions.append(function_code)
+            func_name = custom
+        else:
+            func_name = dataset_name_to_function_name(d["name"])
 
-        # Also create unversioned function for latest/default version
-        if dataset_name not in seen_datasets:
-            seen_datasets.add(dataset_name)
-            func_name = dataset_name_to_function_name(dataset_name)
-            version_text = (
-                f"Latest available ({version} when generated)" if version else "unknown"
-            )
+        description = d["description"]
+        custom_desc = override.get("desc")
+        if custom_desc is not None:
+            if not isinstance(custom_desc, str):
+                raise RuntimeError(
+                    f"Invalid desc override for {d['name']!r}: must be a string."
+                )
+            if custom_desc.strip():
+                description = custom_desc
 
-            function_code = TASK_FUNCTION_TEMPLATE.format(
-                func_name=func_name,
+        out.append(
+            Dataset(
+                name=d["name"],
                 description=description,
-                dataset_name=dataset_name,
-                dataset_name_version=dataset_name,
-                version_info=f"Version: {version_text}",
-                harbor_url=harbor_url,
+                samples=d["samples"],
+                version=d["version"],
+                func_name=func_name,
+                harbor_url=url,
+                clean_description=_clean_registry_description(description),
             )
-            functions.append(function_code)
+        )
+    return out
 
-    return TASKS_TEMPLATE.format(
-        registry_url=REGISTRY_URL,
-        functions="\n".join(functions),
-    )
+
+def generate_tasks_content(registry: list[Dataset]) -> str:
+    """Generate the content of ``_tasks.py`` — one ``@task`` per dataset.
+
+    Each function takes ``ref: str = "latest"`` and forwards
+    ``package_name``/``package_ref`` to ``_harbor_base``. The resolved sha
+    for ``latest`` is surfaced in the docstring.
+    """
+    functions: list[str] = []
+    func_name_to_source: dict[str, str] = {}
+
+    for d in registry:
+        name = d["name"]
+        func_name = d["func_name"]
+
+        prior = func_name_to_source.get(func_name)
+        if prior is not None and prior != name:
+            raise RuntimeError(
+                f"Function-name collision: both {prior!r} and {name!r} map "
+                f"to {func_name!r}. Add a ``function_name:`` override in "
+                f"docs/overrides.yml to disambiguate."
+            )
+        func_name_to_source[func_name] = name
+
+        functions.append(
+            PACKAGE_TASK_TEMPLATE.format(
+                func_name=func_name,
+                description=d["description"] or _default_description(name),
+                package_name=name,
+                resolved_version=d["version"],
+            )
+        )
+
+    return TASKS_TEMPLATE.format(functions="\n".join(functions))
 
 
 def _clean_registry_description(description: str) -> str:
-    """Flatten whitespace and strip inline URLs from a registry description.
-
-    The raw registry descriptions contain `Original benchmark: <url>` footers
-    and parenthesized URLs that are noise in a short table cell. The listing
-    page still carries a link to the Harbor dataset (via `path`), so stripping
-    these leaves the description as a single clean sentence.
-    """
+    """Flatten whitespace and strip inline URLs from a registry description."""
     description = description.replace("\n", " ").strip()
     # Strip "Original benchmark:", "Adapter:", "Source:", "Website:" footers.
     description = re.sub(
@@ -353,9 +362,7 @@ def _clean_registry_description(description: str) -> str:
 def load_overrides() -> dict[str, dict[str, Any]]:
     """Load the hand-maintained per-dataset overrides from docs/overrides.yml.
 
-    Returns a mapping of `{dataset_name: {field: value, ...}}`. We only use
-    the `categories` field ourselves, but the full entry is returned so
-    callers can inspect (e.g. to detect blank-stub entries).
+    Returns a mapping of ``{dataset_name: {field: value, ...}}``.
     """
     if not OVERRIDES_FILE.exists():
         print(
@@ -383,155 +390,135 @@ def load_overrides() -> dict[str, dict[str, Any]]:
     return {name: fields for name, fields in data.items() if isinstance(fields, dict)}
 
 
-def append_stub_entries(new_names: list[str]) -> None:
-    """Append empty-category stub entries to docs/overrides.yml.
+def write_overrides_file(data: dict[str, dict[str, Any]]) -> None:
+    """Rewrite docs/overrides.yml: preserve the header comment block, sort body.
 
-    Called from the nightly cron path when Harbor adds datasets.
-    The stub surfaces the missing metadata in the PR diff, and the CI
-    validator (scripts/validate_overrides.py) blocks merging until a human
-    fills `categories:` in. Appending (rather than alphabetical insertion)
-    keeps the existing file formatting and comments intact; reviewers can
-    move the entry into sort order when they fill it in.
+    Every field on every entry is written back verbatim — ``categories``,
+    ``function_name``, ``arxiv``, ``repo``, etc. The header (everything
+    before the first non-comment line) is preserved; inline comments inside
+    the body are not (the body is purely machine-managed key/value content).
     """
-    if not new_names:
-        return
     if not OVERRIDES_FILE.exists():
         print(
-            f"  ⚠ Cannot stub missing entries: {OVERRIDES_FILE} does not exist.",
+            f"  ⚠ Cannot write overrides: {OVERRIDES_FILE} does not exist.",
             file=sys.stderr,
         )
         return
-    existing = OVERRIDES_FILE.read_text()
-    # Ensure we end on a single trailing newline before appending.
-    if not existing.endswith("\n"):
-        existing += "\n"
+    lines = OVERRIDES_FILE.read_text().splitlines(keepends=True)
+    body_start = next(
+        (
+            i
+            for i, line in enumerate(lines)
+            if line and not line.startswith("#") and not line.isspace()
+        ),
+        len(lines),
+    )
+    header = "".join(lines[:body_start])
 
-    stub_lines = [
-        "",
-        "# === auto-stubbed by scripts/generate_tasks.py ===",
-        "# New datasets added to the Harbor registry that have no override entry.",
-        "# Fill in `categories:` (see vocabulary in this file's header) before",
-        "# merging: validate_overrides.py will fail CI until you do.",
-        "",
-    ]
-    for name in new_names:
-        stub_lines.append(f"{name}:")
-        stub_lines.append("  categories: []  # TODO")
-        stub_lines.append("")
-
-    OVERRIDES_FILE.write_text(existing + "\n".join(stub_lines))
+    chunks: list[str] = []
+    for key, value in sorted(data.items()):
+        chunk = yaml.safe_dump(
+            {key: value},
+            sort_keys=False,
+            allow_unicode=True,
+            default_flow_style=False,
+            width=10000,
+        )
+        chunks.append(chunk)
+    OVERRIDES_FILE.write_text(header + "\n".join(chunks))
 
 
 def resolve_categories(
-    registry: list[dict[str, Any]], overrides: dict[str, dict[str, Any]]
+    registry: list[Dataset], overrides: dict[str, dict[str, Any]]
 ) -> tuple[dict[str, list[str]], list[str]]:
-    """Build the dataset→categories map and auto-stub any missing entries.
+    """Build the dataset→categories map; reconcile overrides.yml with the registry.
 
-    Returns `(categories_map, newly_stubbed_names)`. The caller uses the map
-    to populate the listing entries and the list of newly-stubbed names to
-    write back warnings (and drive the PR body in CI).
+    Symmetric reconciliation on every run:
+
+    * **Missing** entries (registered slug, no override) get an empty
+      ``categories: []`` stub. ``validate_overrides.py`` blocks merging
+      until a human fills it in.
+    * **Orphan** entries (override key, no longer-registered slug) are
+      dropped (e.g. dataset removed from the website, or newly added to
+      ``docs/exclude.yml``).
+
+    The file is rewritten only if anything changed.
     """
     categories_map: dict[str, list[str]] = {}
-    new_names: list[str] = []
-    seen_registry_names: set[str] = set()
+    registry_names: set[str] = set()
 
     for entry in registry:
         name = entry.get("name")
-        if not name or name in seen_registry_names:
+        if not name or name in registry_names:
             continue
-        seen_registry_names.add(name)
-
-        ov = overrides.get(name)
-        if ov is None:
-            new_names.append(name)
-            continue
-
-        cats = ov.get("categories")
+        registry_names.add(name)
+        cats = (overrides.get(name) or {}).get("categories")
         if isinstance(cats, list) and all(isinstance(c, str) for c in cats):
             categories_map[name] = list(cats)
 
-    if new_names:
-        new_names.sort()
+    missing = sorted(registry_names - set(overrides))
+    orphans = sorted(set(overrides) - registry_names)
+
+    if missing:
         print(
-            f"\n⚠ {len(new_names)} registry dataset(s) have no override entry "
-            f"in docs/overrides.yml and were auto-stubbed:",
+            f"\n⚠ {len(missing)} registry dataset(s) have no override entry "
+            "in docs/overrides.yml and were auto-stubbed:",
             file=sys.stderr,
         )
-        for n in new_names:
+        for n in missing:
             print(f"  - {n}", file=sys.stderr)
         print(
             "\n  Fill in `categories:` for each before merging. "
             "scripts/validate_overrides.py will block merges on empty stubs.",
             file=sys.stderr,
         )
-        append_stub_entries(new_names)
 
-    return categories_map, new_names
+    if orphans:
+        print(
+            f"\n⚠ {len(orphans)} override entry/entries no longer match a "
+            "registered dataset and were dropped:",
+            file=sys.stderr,
+        )
+        for n in orphans:
+            print(f"  - {n}", file=sys.stderr)
+
+    if missing or orphans:
+        orphan_set = set(orphans)
+        new_data = {k: v for k, v in overrides.items() if k not in orphan_set}
+        for n in missing:
+            new_data[n] = {"categories": []}
+        write_overrides_file(new_data)
+
+    return categories_map, missing
 
 
 def generate_registry_yml_content(
-    registry: list[dict[str, Any]],
-    org_map: dict[str, str],
+    registry: list[Dataset],
     categories_map: dict[str, list[str]],
 ) -> str:
     """Build docs/registry-listing.yml — the data source for the Quarto listing.
 
-    One entry per versioned dataset. `path` points to the internal
-    per-benchmark page (generated separately by `generate_registry_pages`).
-    `categories` is omitted when we have no override entry for the dataset.
+    One entry per dataset. Title is the ``org/name`` slug; ``version`` is
+    the live ``latest`` tag (Harbor packages are content-addressed under it).
     """
     entries: list[dict[str, Any]] = []
-    seen_versioned_datasets: set[str] = set()
-    fallback_datasets: list[str] = []
 
-    for dataset in sorted(
-        registry, key=lambda d: (d.get("name", ""), d.get("version", ""))
-    ):
-        dataset_name = dataset.get("name")
-        version = dataset.get("version")
-        if not dataset_name or not version:
-            continue
-        description = dataset.get("description", _default_description(dataset_name))
-        tasks = dataset.get("tasks", [])
-        num_samples = len(tasks)
-
-        dataset_name_version = f"{dataset_name}@{version}"
-        if dataset_name_version in seen_versioned_datasets:
-            continue
-        seen_versioned_datasets.add(dataset_name_version)
-
-        func_name = dataset_name_to_function_name(dataset_name_version)
-        # Resolve canonical-vs-fallback once so we can surface a single
-        # aggregated warning below; the URL itself is used by the per-page
-        # generator, not in the listing row.
-        _, is_canonical = build_harbor_url(dataset_name, org_map)
-        if not is_canonical:
-            fallback_datasets.append(dataset_name_version)
-
-        # path: internal per-benchmark page (generated by generate_registry_pages).
-        # The Harbor registry URL moves to the metadata table on that page, which
-        # is also the destination Harbor's mini-pages should now link to.
+    for d in registry:
+        desc = d["clean_description"]
+        if len(desc) > LISTING_DESC_MAX:
+            desc = desc[: LISTING_DESC_MAX - 1].rstrip(" .") + "…"
         entry: dict[str, Any] = {
-            "title": dataset_name_version,
-            "path": f"registry/{func_name}.html",
-            "description": _clean_registry_description(description),
-            "task_function": func_name,
-            "samples": num_samples,
-            "version": version,
+            "title": d["name"],
+            "path": f"registry/{d['func_name']}.html",
+            "description": desc,
+            "task_function": d["func_name"],
+            "samples": d["samples"],
+            "version": "latest",
         }
-        cats = categories_map.get(dataset_name)
+        cats = categories_map.get(d["name"])
         if cats:
             entry["categories"] = cats
         entries.append(entry)
-
-    if fallback_datasets:
-        print(
-            f"\n⚠ {len(fallback_datasets)} dataset(s) could not be resolved "
-            f"to an org on {REGISTRY_SITE_BASE} and fell back to the search URL:",
-            file=sys.stderr,
-        )
-        for d in fallback_datasets:
-            print(f"  - {d}", file=sys.stderr)
 
     body = yaml.safe_dump(
         entries,
@@ -543,153 +530,75 @@ def generate_registry_yml_content(
     return REGISTRY_YML_HEADER + "\n" + body
 
 
-# Per-page `categories:` render as pill-style tags under the page title
-# and link back to the listing filtered by that category.
-PAGE_TEMPLATE = """---
-title: "{title}"
-description: |
-  {description}
-{categories_block}---
+def _build_table_rows(dataset: Dataset, override: dict[str, Any]) -> str:
+    """Render the Markdown rows for a per-dataset details table."""
+    rows: list[str] = [
+        f"| Harbor registry | [{dataset['name']}]({dataset['harbor_url']}) |",
+        f"| Inspect task    | `{dataset['func_name']}` |",
+        f"| Latest digest   | {dataset['version']} |",
+        f"| Samples         | {dataset['samples']} |",
+    ]
 
-[← Back to Registry](../registry.qmd)
-
-## Run this task
-
-**CLI:**
-
-```bash
-inspect eval inspect_harbor/{func_name} --model openai/gpt-5
-```
-
-**Python:**
-
-```python
-from inspect_ai import eval
-from inspect_harbor import {func_name}
-
-eval({func_name}(), model="openai/gpt-5")
-```
-
-## Dataset information
-
-| | |
-|---|---|
-| Harbor registry | [{dataset_name_version}]({harbor_url}) |
-| Inspect task    | `{func_name}` |
-| Version         | {version} |
-| Samples         | {samples} |{optional_rows}
-
-See [Task Parameters](../parameters.qmd) for the parameter set shared across all Harbor tasks.
-"""
+    arxiv = override.get("arxiv")
+    repo = override.get("repo")
+    if isinstance(arxiv, str) and arxiv:
+        rows.append(f"| Paper           | [arxiv]({arxiv}) |")
+    if isinstance(repo, str) and repo:
+        rows.append(f"| Source          | [{repo}]({repo}) |")
+    return "\n".join(rows)
 
 
 def _render_page(
-    dataset_name_version: str,
-    version: str,
-    func_name: str,
-    description: str,
-    samples: int,
-    harbor_url: str,
+    dataset: Dataset,
     categories: list[str],
     override: dict[str, Any],
 ) -> str:
-    """Render the .qmd body for a single per-benchmark page."""
+    """Render the .qmd body for a single per-dataset landing page."""
     # Render frontmatter categories as a YAML block list. Empty string
-    # (not `categories: []`) when no categories, so the frontmatter
+    # (not ``categories: []``) when no categories, so the frontmatter
     # doesn't carry an empty key.
     categories_block = (
         "categories:\n" + "\n".join(f"  - {c}" for c in categories) + "\n"
         if categories
         else ""
     )
-
-    optional: list[str] = []
-    arxiv = override.get("arxiv")
-    repo = override.get("repo")
-    if isinstance(arxiv, str) and arxiv:
-        optional.append(f"| Paper           | [arxiv]({arxiv}) |")
-    if isinstance(repo, str) and repo:
-        # Keep the label terse; the URL host is enough for a reader to scan.
-        optional.append(f"| Source          | [{repo}]({repo}) |")
-    # Prepend the newline so the template can attach `{optional_rows}`
-    # directly after the last required row without introducing a blank
-    # line when there are no optional rows.
-    optional_rows = ("\n" + "\n".join(optional)) if optional else ""
-
     return PAGE_TEMPLATE.format(
-        title=dataset_name_version,
-        description=description,
+        title=dataset["name"],
+        description=dataset["clean_description"],
         categories_block=categories_block,
-        func_name=func_name,
-        dataset_name_version=dataset_name_version,
-        harbor_url=harbor_url,
-        version=version,
-        samples=samples,
-        optional_rows=optional_rows,
+        func_name=dataset["func_name"],
+        table_rows=_build_table_rows(dataset, override),
     )
 
 
 def generate_registry_pages(
-    registry: list[dict[str, Any]],
-    org_map: dict[str, str],
+    registry: list[Dataset],
     overrides: dict[str, dict[str, Any]],
     categories_map: dict[str, list[str]],
 ) -> int:
-    """Write per-benchmark landing pages under docs/registry/.
+    """Write per-dataset landing pages under docs/registry/.
 
-    Returns the number of pages written this invocation (i.e. the number
-    whose content actually changed + any newly-created ones). Uses
-    `_write_if_changed` so unchanged pages keep their mtimes, which is
-    critical for `quarto preview`: touching a .qmd on every pre-render
-    would make Quarto re-render all 80 pages on every reload.
-
-    Orphan pages (for datasets no longer in the registry) are deleted.
+    One ``.qmd`` per dataset. Orphan pages (for datasets no
+    longer present in the registry) are deleted.
     """
     REGISTRY_PAGES_DIR.mkdir(parents=True, exist_ok=True)
 
-    seen_versioned_datasets: set[str] = set()
     expected_files: set[Path] = set()
     written = 0
 
-    for dataset in sorted(
-        registry, key=lambda d: (d.get("name", ""), d.get("version", ""))
-    ):
-        dataset_name = dataset.get("name")
-        version = dataset.get("version")
-        if not dataset_name or not version:
-            continue
-
-        dataset_name_version = f"{dataset_name}@{version}"
-        if dataset_name_version in seen_versioned_datasets:
-            continue
-        seen_versioned_datasets.add(dataset_name_version)
-
-        func_name = dataset_name_to_function_name(dataset_name_version)
-        description = _clean_registry_description(
-            dataset.get("description", _default_description(dataset_name))
-        )
-        samples = len(dataset.get("tasks", []) or [])
-        harbor_url, _ = build_harbor_url(dataset_name, org_map)
-        categories = categories_map.get(dataset_name, [])
-        override = overrides.get(dataset_name, {})
-
+    for d in registry:
         content = _render_page(
-            dataset_name_version=dataset_name_version,
-            version=str(version),
-            func_name=func_name,
-            description=description,
-            samples=samples,
-            harbor_url=harbor_url,
-            categories=categories,
-            override=override,
+            dataset=d,
+            categories=categories_map.get(d["name"], []),
+            override=overrides.get(d["name"], {}),
         )
 
-        page_path = REGISTRY_PAGES_DIR / f"{func_name}.qmd"
+        page_path = REGISTRY_PAGES_DIR / f"{d['func_name']}.qmd"
         expected_files.add(page_path)
         if _write_if_changed(page_path, content):
             written += 1
 
-    # Delete any .qmd that shouldn't be there (dataset removed upstream).
+    # Delete any .qmd that shouldn't be there (dataset removed or renamed).
     for stale in REGISTRY_PAGES_DIR.glob("*.qmd"):
         if stale not in expected_files:
             stale.unlink()
@@ -716,54 +625,43 @@ def main():
     print("Harbor Registry Task Generator")
     print("=" * 50)
 
-    # Fetch registry
-    registry = fetch_registry()
-    print(f"Found {len(registry)} datasets")
+    # Discover datasets via website scrape, then fetch metadata for each.
+    slugs = scrape_hub_slugs()
+    slugs = filter_excluded(slugs, load_exclude_patterns())
+    fetched = fetch_package_datasets(slugs)
 
-    # Scrape the new Harbor registry site for the dataset→org mapping needed
-    # to build working documentation links (embedded in _tasks.py docstrings
-    # and in the registry.qmd table).
-    org_map = fetch_org_map()
+    # Load overrides — decoration honors ``function_name`` overrides.
+    print(f"\nLoading overrides from {OVERRIDES_FILE}...")
+    overrides = load_overrides()
+
+    registry = decorate_datasets(fetched, overrides)
 
     if not args.docs_only:
-        # Generate _tasks.py
         print("\nGenerating _tasks.py...")
-        tasks_content = generate_tasks_content(registry, org_map)
+        tasks_content = generate_tasks_content(registry)
         changed = _write_if_changed(TASKS_FILE, tasks_content)
         print(f"{'✓ Wrote' if changed else '= Unchanged'}: {TASKS_FILE}")
         print(f"  Size: {len(tasks_content)} bytes")
-        print(
-            f"  Functions: {len([line for line in tasks_content.split('\n') if line.startswith('@task')])}"
-        )
+        print(f"  Functions: {tasks_content.count('@task\n')}")
     else:
         print("\nSkipping _tasks.py regeneration (--docs-only).")
 
-    # Load hand-maintained overrides and auto-stub any new datasets. This
-    # always succeeds so the nightly PR still gets opened; CI validation
-    # (scripts/validate_overrides.py) is the gate that blocks merging when
-    # the stubs haven't been filled in.
-    print(f"\nLoading overrides from {OVERRIDES_FILE}...")
-    overrides = load_overrides()
+    # Auto-stub any new dataset names. The nightly PR carries the stubs and
+    # CI (scripts/validate_overrides.py) blocks merging until a human fills
+    # ``categories:`` in.
     categories_map, newly_stubbed = resolve_categories(registry, overrides)
     print(f"  Loaded categories for {len(categories_map)} dataset(s)")
     if newly_stubbed:
         print(f"  Auto-stubbed {len(newly_stubbed)} new dataset(s) in {OVERRIDES_FILE}")
 
-    # Generate docs/registry-listing.yml (data source for the Quarto listing
-    # in docs/registry.qmd, which is itself hand-maintained)
     print("\nGenerating docs/registry-listing.yml...")
-    registry_yml_content = generate_registry_yml_content(
-        registry, org_map, categories_map
-    )
+    registry_yml_content = generate_registry_yml_content(registry, categories_map)
     changed = _write_if_changed(REGISTRY_YML_FILE, registry_yml_content)
     print(f"{'✓ Wrote' if changed else '= Unchanged'}: {REGISTRY_YML_FILE}")
     print(f"  Size: {len(registry_yml_content)} bytes")
 
-    # Generate per-benchmark landing pages under docs/registry/
     print(f"\nGenerating per-benchmark pages in {REGISTRY_PAGES_DIR}...")
-    pages_written = generate_registry_pages(
-        registry, org_map, overrides, categories_map
-    )
+    pages_written = generate_registry_pages(registry, overrides, categories_map)
     if pages_written:
         print(f"✓ Wrote {pages_written} page(s) (others unchanged)")
     else:

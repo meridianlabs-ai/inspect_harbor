@@ -26,6 +26,7 @@ def test_harbor_to_compose_config_with_existing_compose_yaml():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 2.0
     mock_env_config.memory_mb = 4096
     mock_env_config.gpus = 0
@@ -72,6 +73,7 @@ def test_harbor_to_compose_config_with_dockerfile():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = None
@@ -104,6 +106,39 @@ def test_harbor_to_compose_config_with_dockerfile():
         assert service.network_mode == "bridge"
 
 
+def test_harbor_to_compose_config_dockerfile_path_injects_task_env():
+    """No-compose-yaml branch wires ``[environment].env`` into the service."""
+    mock_task = Mock()
+    mock_paths = Mock()
+    mock_paths.environment_dir = Path("/task/environment")
+    mock_task.paths = mock_paths
+
+    mock_env_config = Mock()
+    mock_env_config.env = {
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "LOG_LEVEL": "INFO",
+    }
+    mock_env_config.cpus = 1.0
+    mock_env_config.memory_mb = 2048
+    mock_env_config.docker_image = None
+    mock_env_config.allow_internet = True
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_task.config.environment = mock_env_config
+
+    def exists_side_effect(self: Path) -> bool:
+        return str(self).endswith("Dockerfile")
+
+    with patch("pathlib.Path.exists", exists_side_effect):
+        result = harbor_to_compose_config(mock_task)
+
+    service = result.services["default"]
+    assert service.environment == {
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "LOG_LEVEL": "INFO",
+    }
+
+
 def test_harbor_to_compose_config_with_prebuilt_image():
     """Test converting Harbor task with pre-built docker_image."""
     # Setup mock Harbor task
@@ -113,6 +148,7 @@ def test_harbor_to_compose_config_with_prebuilt_image():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1.5
     mock_env_config.memory_mb = 3072
     mock_env_config.docker_image = "my-custom-image:latest"
@@ -146,6 +182,7 @@ def test_harbor_to_compose_config_custom_resource_limits():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 4.0
     mock_env_config.memory_mb = 8192
     mock_env_config.docker_image = "ubuntu:latest"
@@ -174,6 +211,7 @@ def test_harbor_to_compose_config_harbor_defaults():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     # EnvironmentConfig defaults: cpus=1, memory_mb=2048, gpus=0.
     mock_env_config.cpus = 1
     mock_env_config.memory_mb = 2048
@@ -200,6 +238,7 @@ def test_harbor_to_compose_config_compose_yaml_no_internet_overrides_network_mod
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.gpus = 0
@@ -234,6 +273,7 @@ def test_harbor_to_compose_config_compose_yaml_preserves_custom_network_mode():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.gpus = 0
@@ -272,6 +312,7 @@ def test_harbor_to_compose_config_compose_yaml_no_network_mode_left_unset():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.gpus = 0
@@ -306,6 +347,7 @@ def test_harbor_to_compose_config_network_mode_with_internet():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "ubuntu:latest"
@@ -328,6 +370,7 @@ def test_harbor_to_compose_config_network_mode_without_internet():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "ubuntu:latest"
@@ -358,6 +401,7 @@ def test_harbor_task_to_sample_metadata_preserved():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 2.0
     mock_env_config.memory_mb = 4096
     mock_env_config.docker_image = "python:3.11"
@@ -407,6 +451,7 @@ def test_harbor_task_to_sample_sandbox_spec():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "ubuntu:latest"
@@ -449,6 +494,7 @@ def test_harbor_to_compose_config_with_gpu_settings():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 2.0
     mock_env_config.memory_mb = 4096
     mock_env_config.docker_image = "nvidia/cuda:12.0-base"
@@ -488,6 +534,7 @@ def test_harbor_to_compose_config_without_gpus():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "ubuntu:latest"
@@ -513,6 +560,7 @@ def test_harbor_to_compose_config_with_gpus_no_types():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "tensorflow/tensorflow:latest-gpu"
@@ -586,6 +634,7 @@ def test_harbor_task_to_sample_with_verifier_env():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "python:3.11"
@@ -634,6 +683,7 @@ def test_harbor_task_to_sample_without_verifier_env():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "python:3.11"
@@ -675,6 +725,7 @@ def test_harbor_task_to_sample_with_package_info():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "python:3.11"
@@ -765,6 +816,7 @@ def test_harbor_task_to_sample_user_fields(
     mock_task.paths.solve_path = Path("/t/solution/solve.sh")
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 1
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "python:3.11"
@@ -804,6 +856,7 @@ def mock_harbor_task():
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 2
     mock_env_config.memory_mb = 4096
     mock_env_config.docker_image = "ubuntu:latest"
@@ -934,6 +987,7 @@ def _make_multi_service_task(
     mock_task.config.environment.gpu_types = gpu_types
     mock_task.config.environment.allow_internet = allow_internet
     mock_task.config.verifier.env = {}
+    mock_task.config.environment.env = {}
     return mock_task
 
 
@@ -1064,6 +1118,7 @@ def test_expand_compose_vars_basic():
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/cache/tasks/abc/my-task/environment")
     mock_task.config.verifier.env = {}
+    mock_task.config.environment.env = {}
 
     raw = """\
 services:
@@ -1094,6 +1149,7 @@ def test_expand_compose_vars_no_vars():
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/env")
     mock_task.config.verifier.env = {}
+    mock_task.config.environment.env = {}
 
     raw = "services:\n  default:\n    image: python:3.12\n"
     assert _expand_compose_vars(raw, mock_task, 1.0, 2048) == raw
@@ -1106,6 +1162,7 @@ def test_expand_compose_vars_unknown_left_as_is():
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/env")
     mock_task.config.verifier.env = {}
+    mock_task.config.environment.env = {}
 
     raw = "image: ${UNKNOWN_VAR}"
     result = _expand_compose_vars(raw, mock_task, 1.0, 2048)
@@ -1130,6 +1187,7 @@ def test_expand_compose_vars_default_syntax(
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/env")
     mock_task.config.verifier.env = {}
+    mock_task.config.environment.env = {}
 
     assert _expand_compose_vars(raw, mock_task, cpus, memory_mb=2048) == expected
 
@@ -1141,6 +1199,7 @@ def test_expand_compose_vars_image_name_sanitized_for_package_task():
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/env")
     mock_task.config.verifier.env = {}
+    mock_task.config.environment.env = {}
 
     result = _expand_compose_vars("image: ${MAIN_IMAGE_NAME}", mock_task, 1.0, 2048)
     assert result == "image: hb__harbor-hello.world"
@@ -1153,10 +1212,60 @@ def test_expand_compose_vars_test_dir_from_verifier_env():
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/env")
     mock_task.config.verifier.env = {"TEST_DIR": "/custom/tests"}
+    mock_task.config.environment.env = {}
 
     raw = "TEST_DIR=${TEST_DIR}"
     result = _expand_compose_vars(raw, mock_task, 1.0, 2048)
     assert result == "TEST_DIR=/custom/tests"
+
+
+@pytest.mark.parametrize(
+    "task_env,raw,cpus,expected_substring,reason",
+    [
+        # Plain literal values from task.toml become substitutable in compose.
+        (
+            {"LOG_LEVEL": "DEBUG"},
+            "env: ${LOG_LEVEL}",
+            1.0,
+            "env: DEBUG",
+            "task-env literal value substitutes",
+        ),
+        # ``${HOST_VAR}`` inside a task-env value passes through unchanged so
+        # docker compose can resolve it from the host at run-time.
+        (
+            {"OPENAI_API_KEY": "${OPENAI_API_KEY}"},
+            "env: ${OPENAI_API_KEY}",
+            1.0,
+            "env: ${OPENAI_API_KEY}",
+            "host-var refs pass through to compose",
+        ),
+        # Built-in keys (CPUS, MEMORY, …) win on collision via setdefault.
+        (
+            {"CPUS": "999"},
+            "cpus: ${CPUS}",
+            4.0,
+            "cpus: 4",
+            "built-in CPUS wins over task-env shadow",
+        ),
+    ],
+)
+def test_expand_compose_vars_task_env(
+    task_env: dict[str, str],
+    raw: str,
+    cpus: float,
+    expected_substring: str,
+    reason: str,
+) -> None:
+    """``[environment].env`` entries flow into the substitution map."""
+    mock_task = Mock()
+    mock_task.name = "t"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/env")
+    mock_task.config.verifier.env = {}
+    mock_task.config.environment.env = task_env
+
+    result = _expand_compose_vars(raw, mock_task, cpus, 2048)
+    assert expected_substring in result, reason
 
 
 def test_expand_compose_vars_in_harbor_to_compose_config(tmp_path: Path):
@@ -1187,6 +1296,7 @@ services:
     mock_task.config.environment.gpus = 0
     mock_task.config.environment.gpu_types = None
     mock_task.config.environment.allow_internet = True
+    mock_task.config.environment.env = {}
     mock_task.config.verifier.env = {}
 
     result = harbor_to_compose_config(mock_task)
@@ -1217,6 +1327,7 @@ def test_harbor_to_compose_config_memory_minimum(
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.env = {}
     mock_env_config.cpus = 2
     mock_env_config.memory_mb = config_memory_mb
     mock_env_config.docker_image = "ubuntu:latest"

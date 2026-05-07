@@ -1,11 +1,10 @@
 """Inspect AI Task interface to Harbor tasks"""
 
 import hashlib
-import threading
+import warnings
 from collections import Counter
 from pathlib import Path
 
-from harbor.auth.client import reset_client
 from harbor.models.job.config import DatasetConfig
 from harbor.models.task.paths import TaskPaths
 from harbor.models.task.task import Task as HarborTask
@@ -51,8 +50,8 @@ def harbor(
         registry_url: Registry URL for remote datasets.
         registry_path: Path to local registry for datasets.
         dataset_name_version: Dataset ``name@version`` (e.g. ``dataset@1.0``).
-        package_name: Package dataset name in ``org/name`` form (e.g. ``harbor/hello-world``).
-        package_ref: Package dataset ref (tag, revision, or ``sha256:...`` digest). Defaults to ``latest``.
+        package_name: Slug of a hub-published dataset in ``org/name`` form (e.g. ``harbor/hello-world``).
+        package_ref: Harbor ref to pin to (digest, revision number, tag, or ``latest``). Defaults to ``latest``.
         dataset_task_names: Task names to include from dataset (supports glob patterns, multiple values).
         dataset_exclude_task_names: Task names to exclude from dataset (supports glob patterns, multiple values).
         n_tasks: Maximum number of tasks to include (applied after task_names/exclude_task_names filtering).
@@ -130,8 +129,8 @@ def load_harbor_tasks(
         registry_url: Registry URL for remote datasets.
         registry_path: Path to local registry for datasets.
         dataset_name_version: Dataset ``name@version`` (e.g. ``dataset@1.0``).
-        package_name: Package dataset name in ``org/name`` form (e.g. ``harbor/hello-world``).
-        package_ref: Package dataset ref (tag, revision, or ``sha256:...`` digest). Defaults to ``latest``.
+        package_name: Slug of a hub-published dataset in ``org/name`` form (e.g. ``harbor/hello-world``).
+        package_ref: Harbor ref to pin to (digest, revision number, tag, or ``latest``). Defaults to ``latest``.
         dataset_task_names: Task names to include from dataset (supports glob patterns, multiple values).
         dataset_exclude_task_names: Task names to exclude from dataset (supports glob patterns, multiple values).
         n_tasks: Maximum number of tasks to include (applied after task_names/exclude_task_names filtering).
@@ -226,14 +225,56 @@ def _disambiguate_sample_ids(harbor_tasks: list[HarborTask]) -> list[str]:
 
 
 def _build_harbor_tasks(task_paths: list[Path]) -> list[HarborTask]:
-    """Construct ``HarborTask`` objects, rejecting multi-step tasks."""
+    """Construct ``HarborTask`` objects, validating unsupported task.toml shapes."""
     harbor_tasks = [HarborTask(task_dir=p) for p in task_paths]
-    multi_step = [t.name for t in harbor_tasks if t.has_steps]
+
+    multi_step: list[str] = []
+    windows: list[str] = []
+    healthcheck: list[str] = []
+    mcp_servers: list[str] = []
+    skills_dir: list[str] = []
+
+    for t in harbor_tasks:
+        if t.has_steps:
+            multi_step.append(t.name)
+        env = t.config.environment
+        if str(getattr(env.os, "value", env.os)).lower() == "windows":
+            windows.append(t.name)
+        if env.healthcheck is not None:
+            healthcheck.append(t.name)
+        if env.mcp_servers:
+            mcp_servers.append(t.name)
+        if env.skills_dir is not None:
+            skills_dir.append(t.name)
+
+    blocking: list[str] = []
     if multi_step:
-        raise NotImplementedError(
-            "Multi-step Harbor tasks are not yet supported by inspect_harbor: "
-            f"{multi_step}."
+        blocking.append(f"Multi-step tasks: {multi_step}")
+    if windows:
+        blocking.append(
+            f"Windows containers (`[environment].os = 'windows'`): {windows}"
         )
+    if blocking:
+        raise NotImplementedError(
+            "task.toml features not yet supported by inspect_harbor:\n  - "
+            + "\n  - ".join(blocking)
+        )
+
+    degraded: list[str] = []
+    if healthcheck:
+        degraded.append(f"`[environment].healthcheck`: {healthcheck}")
+    if mcp_servers:
+        degraded.append(f"`[environment].mcp_servers`: {mcp_servers}")
+    if skills_dir:
+        degraded.append(f"`[environment].skills_dir`: {skills_dir}")
+    if degraded:
+        warnings.warn(
+            "task.toml fields declared but not wired up by inspect_harbor "
+            "(task will run with degraded fidelity):\n  - " + "\n  - ".join(degraded),
+            UserWarning,
+            stacklevel=2,
+        )
+
     return harbor_tasks
 
 
@@ -337,9 +378,6 @@ def _load_from_package(
     return _download_dataset(dataset_config, overwrite_cache)
 
 
-_DOWNLOAD_LOCK = threading.Lock()
-
-
 def _download_dataset(
     dataset_config: DatasetConfig, overwrite_cache: bool
 ) -> list[Path]:
@@ -353,6 +391,4 @@ def _download_dataset(
         )
         return result.paths
 
-    with _DOWNLOAD_LOCK:
-        reset_client()
-        return run_coroutine(_resolve_and_download())
+    return run_coroutine(_resolve_and_download())

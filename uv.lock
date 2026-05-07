@@ -1081,7 +1081,7 @@ wheels = [
 
 [[package]]
 name = "harbor"
-version = "0.6.4"
+version = "0.6.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "claude-agent-sdk" },
@@ -1106,9 +1106,9 @@ dependencies = [
     { name = "typer" },
     { name = "uvicorn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b9/b8/d2f0522180a38a52ab1a0f31f62037b3aeb521bd19cdc096d24b68622349/harbor-0.6.4.tar.gz", hash = "sha256:eab7ba3b010b78d880658aeb7af124340a67a1781f63db7d631bad0596119ade", size = 981327, upload-time = "2026-05-01T18:33:21.267Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7d/52/17f8398e749fcb65da9d712b4922995356fd686346eefd24dc959319d8ea/harbor-0.6.5.tar.gz", hash = "sha256:5f66a64afb75076ca1e6fac497f6036bdd34395a44c16324ede03c09597e9b29", size = 983716, upload-time = "2026-05-06T22:00:36.963Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/af/69/e944a417f7e3a612b2758083a74c52a8999ef6b067166791ca15caa07992/harbor-0.6.4-py3-none-any.whl", hash = "sha256:d6c268175ef499fffbe7f70f855b4423198b2125550e5a151386bb283469e6e9", size = 1113713, upload-time = "2026-05-01T18:33:22.623Z" },
+    { url = "https://files.pythonhosted.org/packages/07/ed/19250d1af8a0ab1fc3610633fb9d88b2a4b6a185086192a815f027b3f302/harbor-0.6.5-py3-none-any.whl", hash = "sha256:24f634443c4da245cd2ed7ff619e2c090fba7a8e180e6b4c97e0076a0d7f7054", size = 1116533, upload-time = "2026-05-06T22:00:35.123Z" },
 ]
 
 [[package]]
@@ -1409,7 +1409,7 @@ doc = [
 
 [package.metadata]
 requires-dist = [
-    { name = "harbor", specifier = ">=0.6.3" },
+    { name = "harbor", specifier = ">=0.6.5" },
     { name = "inspect-ai", specifier = ">=0.3.201" },
     { name = "pyyaml" },
 ]

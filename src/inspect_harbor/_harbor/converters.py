@@ -98,6 +98,7 @@ def harbor_to_compose_config(
             init=True,
             network_mode="bridge" if env_config.allow_internet else "none",
             deploy=gpu_deploy,
+            environment=dict(env_config.env) if env_config.env else None,
         )
 
         return ComposeConfig(services={"default": service})
@@ -254,11 +255,15 @@ def _expand_compose_vars(
         "ENV_ARTIFACTS_PATH": str(paths.artifacts_dir),
     }
 
-    task_env = harbor_task.config.verifier.env
-    if "TEST_DIR" in task_env:
-        var_map["TEST_DIR"] = task_env["TEST_DIR"]
+    verifier_env = harbor_task.config.verifier.env
+    if "TEST_DIR" in verifier_env:
+        var_map["TEST_DIR"] = verifier_env["TEST_DIR"]
     else:
         var_map["TEST_DIR"] = str(paths.tests_dir)
+
+    task_env = harbor_task.config.environment.env
+    for key, value in task_env.items():
+        var_map.setdefault(key, value)
 
     def _replace(match: re.Match[str]) -> str:
         body = match.group(1)
