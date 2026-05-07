@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.18...v0.5.0) (2026-05-07)
+
+
+### Features
+
+* migrate to Harbor 0.6 with self-service registry ([#69](https://github.com/meridianlabs-ai/inspect_harbor/issues/69)) ([7838993](https://github.com/meridianlabs-ai/inspect_harbor/commit/7838993b85b7b8229246fa70f85466be31443e16))
+
 ## [0.4.18](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.17...v0.4.18) (2026-04-27)
 
 
