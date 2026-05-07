@@ -10,11 +10,11 @@ listing:
   sort-ui: [title, task_function, samples]
   sort: "title asc"
   page-size: 200
-  fields: [title, task_function, description, samples]
+  fields: [title, task_function, desc_trunc, samples]
   field-display-names:
     title: "Harbor Dataset"
     task_function: "Inspect Task"
-    description: "Description"
+    desc_trunc: "Description"
     samples: "Samples"
   field-types:
     samples: number
