@@ -665,6 +665,8 @@
   task_function: scale_ai_swe_atlas_rf
   samples: 70
   version: latest
+  categories:
+  - Coding
 - title: scale-ai/swe-atlas-tw
   path: registry/scale_ai_swe_atlas_tw.html
   desc: SWE-Atlas - Test Writing -- A benchmark of comprehensive test writing problems for coding agents. Checkout for instructions on running it.
