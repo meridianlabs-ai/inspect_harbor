@@ -633,6 +633,9 @@ scale-ai/swe-atlas-qna:
   repo: https://github.com/scaleapi/SWE-Atlas
   title: SWE-Atlas (QnA)
 
+scale-ai/swe-atlas-rf:
+  categories: []
+
 scale-ai/swe-atlas-tw:
   categories:
   - Coding

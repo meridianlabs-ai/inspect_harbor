@@ -658,6 +658,13 @@
   version: latest
   categories:
   - Coding
+- title: scale-ai/swe-atlas-rf
+  path: registry/scale_ai_swe_atlas_rf.html
+  desc: SWE-Atlas - Refactoring -- A benchmark of refactoring tasks for coding agents.
+  desc_trunc: SWE-Atlas - Refactoring -- A benchmark of refactoring tasks for coding agents.
+  task_function: scale_ai_swe_atlas_rf
+  samples: 70
+  version: latest
 - title: scale-ai/swe-atlas-tw
   path: registry/scale_ai_swe_atlas_tw.html
   desc: SWE-Atlas - Test Writing -- A benchmark of comprehensive test writing problems for coding agents. Checkout for instructions on running it.

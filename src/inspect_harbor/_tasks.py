@@ -2127,6 +2127,37 @@ def scale_ai_swe_atlas_qna(
 
 
 @task
+def scale_ai_swe_atlas_rf(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""SWE-Atlas - Refactoring -- A benchmark of refactoring tasks for coding agents
+
+    Slug: scale-ai/swe-atlas-rf
+    Latest digest: sha256:5f65e33ebd80c3998b2f82d6c78349da1acce1823e4b18e4851f980a03b2ad93
+    """
+    return _harbor_base(
+        package_name="scale-ai/swe-atlas-rf",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def scale_ai_swe_atlas_tw(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
