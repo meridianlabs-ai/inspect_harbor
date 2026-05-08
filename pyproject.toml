@@ -28,6 +28,9 @@ Documentation = "https://meridianlabs-ai.github.io/inspect_harbor/"
 [project.entry-points.inspect_ai]
 inspect_harbor = "inspect_harbor._registry"
 
+[project.optional-dependencies]
+scout = ["inspect-scout>=0.4.0"]
+
 [dependency-groups]
 dev = [
     "pre-commit",
