@@ -49,3 +49,5 @@ This work is based on contributions by [@iphan](https://github.com/iphan) and [@
 
 - [@iphan](https://github.com/iphan)'s [Terminal Bench implementation](https://github.com/UKGovernmentBEIS/inspect_evals/pull/791)
 - [@anthonyduong9](https://github.com/anthonyduong9)'s [Harbor task implementation](https://github.com/UKGovernmentBEIS/inspect_evals/pull/945)
+
+ATIF test fixtures under `tests/atif/fixtures/` are copied verbatim from [harbor's golden tests](https://github.com/harbor-framework/harbor/tree/main/tests/golden) (MIT licensed).
