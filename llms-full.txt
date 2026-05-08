@@ -339,7 +339,7 @@ For advanced use cases, you can use the generic `harbor()` interface directly. T
 
 Harbor task loader for Inspect AI.
 
-[Source](https://github.com/meridianlabs-ai/inspect_harbor/blob/f51ac3c12f5af57d5c1fc4f265070b517a045647/src/inspect_harbor/_harbor/task.py#L23)
+[Source](https://github.com/meridianlabs-ai/inspect_harbor/blob/4a399d1be3fe6b75b26fc3a74fd90826d1da4676/src/inspect_harbor/_harbor/task.py#L23)
 
 ``` python
 @task
@@ -617,6 +617,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [satbench/satbench](registry/satbench.html.md) | satbench | SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable diffi… | 1000 |
 | [scale-ai/hil-bench](registry/scale_ai_hil_bench.html.md) | scale_ai_hil_bench | HiL-Bench (Human-in-the-Loop): tests if agents know when to ask for help rather than proceed with u… | 600 |
 | [scale-ai/swe-atlas-qna](registry/scale_ai_swe_atlas_qna.html.md) | scale_ai_swe_atlas_qna | SWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding… | 124 |
+| [scale-ai/swe-atlas-rf](registry/scale_ai_swe_atlas_rf.html.md) | scale_ai_swe_atlas_rf | SWE-Atlas - Refactoring – A benchmark of refactoring tasks for coding agents. | 70 |
 | [scale-ai/swe-atlas-tw](registry/scale_ai_swe_atlas_tw.html.md) | scale_ai_swe_atlas_tw | SWE-Atlas - Test Writing – A benchmark of comprehensive test writing problems for coding agents. C… | 90 |
 | [scale-ai/swe-bench-pro](registry/scale_ai_swe_bench_pro.html.md) | scale_ai_swe_bench_pro | SWE-Bench-Pro: long-horizon enterprise software engineering tasks. | 731 |
 | [scienceagentbench/scienceagentbench](registry/scienceagentbench.html.md) | scienceagentbench | ScienceAgentBench: data-driven scientific discovery via Python programs across 4 disciplines. | 102 |

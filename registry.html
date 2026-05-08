@@ -118,9 +118,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
 
     const options = {
-      valueNames: ['listing-title','listing-task_function','listing-description','listing-samples',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-title-sort'] },{ data: ['listing-samples-sort'] }],
+      valueNames: ['listing-title','listing-task_function','listing-desc_trunc','listing-samples',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-title-sort'] },{ data: ['listing-samples-sort'] }],
       
-      searchColumns: ["listing-title","listing-description","listing-task_function","listing-samples","listing-version","listing-categories"],
+      searchColumns: ["listing-title","listing-desc","listing-desc_trunc","listing-task_function","listing-samples","listing-version","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -329,7 +329,7 @@ window.Quarto = {
   <li><a href="#available-datasets" id="toc-available-datasets" class="nav-link" data-scroll-target="#available-datasets">Available Datasets</a></li>
   </ul>
 </nav>
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(90)</span></div><div class="category" data-category="QXNzaXN0YW50cw==">Assistants <span class="quarto-category-count">(14)</span></div><div class="category" data-category="QmVoYXZpb3I=">Behavior <span class="quarto-category-count">(3)</span></div><div class="category" data-category="QmlvbG9neQ==">Biology <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Q2hlbWlzdHJ5">Chemistry <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29kaW5n">Coding <span class="quarto-category-count">(62)</span></div><div class="category" data-category="Q3liZXJzZWN1cml0eQ==">Cybersecurity <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RmluYW5jZQ==">Finance <span class="quarto-category-count">(2)</span></div><div class="category" data-category="S25vd2xlZGdl">Knowledge <span class="quarto-category-count">(6)</span></div><div class="category" data-category="TGF3">Law <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWF0aGVtYXRpY3M=">Mathematics <span class="quarto-category-count">(4)</span></div><div class="category" data-category="TWVkaWNpbmU=">Medicine <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TXVsdGltb2RhbA==">Multimodal <span class="quarto-category-count">(4)</span></div><div class="category" data-category="UGh5c2ljcw==">Physics <span class="quarto-category-count">(4)</span></div><div class="category" data-category="UHJvZmVzc2lvbmFs">Professional <span class="quarto-category-count">(10)</span></div><div class="category" data-category="UmVhc29uaW5n">Reasoning <span class="quarto-category-count">(17)</span></div><div class="category" data-category="U2FmZWd1YXJkcw==">Safeguards <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2NpZW5jZQ==">Science <span class="quarto-category-count">(10)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(91)</span></div><div class="category" data-category="QXNzaXN0YW50cw==">Assistants <span class="quarto-category-count">(14)</span></div><div class="category" data-category="QmVoYXZpb3I=">Behavior <span class="quarto-category-count">(3)</span></div><div class="category" data-category="QmlvbG9neQ==">Biology <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Q2hlbWlzdHJ5">Chemistry <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29kaW5n">Coding <span class="quarto-category-count">(63)</span></div><div class="category" data-category="Q3liZXJzZWN1cml0eQ==">Cybersecurity <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RmluYW5jZQ==">Finance <span class="quarto-category-count">(2)</span></div><div class="category" data-category="S25vd2xlZGdl">Knowledge <span class="quarto-category-count">(6)</span></div><div class="category" data-category="TGF3">Law <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWF0aGVtYXRpY3M=">Mathematics <span class="quarto-category-count">(4)</span></div><div class="category" data-category="TWVkaWNpbmU=">Medicine <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TXVsdGltb2RhbA==">Multimodal <span class="quarto-category-count">(4)</span></div><div class="category" data-category="UGh5c2ljcw==">Physics <span class="quarto-category-count">(4)</span></div><div class="category" data-category="UHJvZmVzc2lvbmFs">Professional <span class="quarto-category-count">(10)</span></div><div class="category" data-category="UmVhc29uaW5n">Reasoning <span class="quarto-category-count">(17)</span></div><div class="category" data-category="U2FmZWd1YXJkcw==">Safeguards <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2NpZW5jZQ==">Science <span class="quarto-category-count">(10)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -423,7 +423,7 @@ Description
 <span class="listing-task_function">litecoder_rl</span>
 </td>
 <td>
-<span class="listing-description">LiteCoder: terminal-based RL training environments spanning developer workflows, scientific/numeric…</span>
+<span class="listing-desc_trunc">LiteCoder: terminal-based RL training environments spanning developer workflows, scientific/numeric…</span>
 </td>
 <td>
 <span class="listing-samples">602</span>
@@ -439,7 +439,7 @@ Description
 <span class="listing-task_function">michaely310_devopsgym</span>
 </td>
 <td>
-<span class="listing-description">DevOps-Gym benchmark adapted to Harbor format - 729 tasks across 5 categories: Build, Monitoring, I…</span>
+<span class="listing-desc_trunc">DevOps-Gym benchmark adapted to Harbor format - 729 tasks across 5 categories: Build, Monitoring, I…</span>
 </td>
 <td>
 <span class="listing-samples">728</span>
@@ -455,7 +455,7 @@ Description
 <span class="listing-task_function">abundant_swe_gen_cpp</span>
 </td>
 <td>
-<span class="listing-description">Dataset of C++ SWE tasks. Generated by abundant-ai/SWE-gen tool.</span>
+<span class="listing-desc_trunc">Dataset of C++ SWE tasks. Generated by abundant-ai/SWE-gen tool.</span>
 </td>
 <td>
 <span class="listing-samples">999</span>
@@ -471,7 +471,7 @@ Description
 <span class="listing-task_function">abundant_swe_gen_go</span>
 </td>
 <td>
-<span class="listing-description">Dataset of Go SWE tasks. Generated by abundant-ai/SWE-gen tool.</span>
+<span class="listing-desc_trunc">Dataset of Go SWE tasks. Generated by abundant-ai/SWE-gen tool.</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -487,7 +487,7 @@ Description
 <span class="listing-task_function">abundant_swe_gen_java</span>
 </td>
 <td>
-<span class="listing-description">Dataset of Java SWE tasks. Generated by abundant-ai/SWE-gen tool.</span>
+<span class="listing-desc_trunc">Dataset of Java SWE tasks. Generated by abundant-ai/SWE-gen tool.</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -503,7 +503,7 @@ Description
 <span class="listing-task_function">abundant_swe_gen_js</span>
 </td>
 <td>
-<span class="listing-description">Dataset of JS/TS SWE tasks. Generated by abundant-ai/SWE-gen tool.</span>
+<span class="listing-desc_trunc">Dataset of JS/TS SWE tasks. Generated by abundant-ai/SWE-gen tool.</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -519,7 +519,7 @@ Description
 <span class="listing-task_function">abundant_swe_gen_rust</span>
 </td>
 <td>
-<span class="listing-description">Dataset of Rust SWE tasks. Generated by abundant-ai/SWE-gen tool.</span>
+<span class="listing-desc_trunc">Dataset of Rust SWE tasks. Generated by abundant-ai/SWE-gen tool.</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -535,7 +535,7 @@ Description
 <span class="listing-task_function">adyen_dabstep</span>
 </td>
 <td>
-<span class="listing-description">DABstep: real-world data analysis tasks from Adyen’s workloads requiring multi-step reasoning by LL…</span>
+<span class="listing-desc_trunc">DABstep: real-world data analysis tasks from Adyen’s workloads requiring multi-step reasoning by LL…</span>
 </td>
 <td>
 <span class="listing-samples">450</span>
@@ -551,7 +551,7 @@ Description
 <span class="listing-task_function">aider_polyglot</span>
 </td>
 <td>
-<span class="listing-description">Aider’s polyglot coding benchmark: Exercism exercises across C++, Go, Java, JavaScript, Python, and…</span>
+<span class="listing-desc_trunc">Aider’s polyglot coding benchmark: Exercism exercises across C++, Go, Java, JavaScript, Python, and…</span>
 </td>
 <td>
 <span class="listing-samples">225</span>
@@ -567,7 +567,7 @@ Description
 <span class="listing-task_function">aime</span>
 </td>
 <td>
-<span class="listing-description">Problems from the American Invitational Mathematics Examination (AIME), a 3-hour high-school compet…</span>
+<span class="listing-desc_trunc">Problems from the American Invitational Mathematics Examination (AIME), a 3-hour high-school compet…</span>
 </td>
 <td>
 <span class="listing-samples">60</span>
@@ -583,7 +583,7 @@ Description
 <span class="listing-task_function">algotune</span>
 </td>
 <td>
-<span class="listing-description">AlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that match…</span>
+<span class="listing-desc_trunc">AlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that match…</span>
 </td>
 <td>
 <span class="listing-samples">154</span>
@@ -599,7 +599,7 @@ Description
 <span class="listing-task_function">apple_mmau</span>
 </td>
 <td>
-<span class="listing-description">MMAU (Massive Multitask Agent Understanding): Apple’s holistic agent benchmark covering tool-use, D…</span>
+<span class="listing-desc_trunc">MMAU (Massive Multitask Agent Understanding): Apple’s holistic agent benchmark covering tool-use, D…</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -615,7 +615,7 @@ Description
 <span class="listing-task_function">arcprize_arc_agi_2</span>
 </td>
 <td>
-<span class="listing-description">ARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but…</span>
+<span class="listing-desc_trunc">ARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but…</span>
 </td>
 <td>
 <span class="listing-samples">167</span>
@@ -631,7 +631,7 @@ Description
 <span class="listing-task_function">bigcode_bigcodebench_hard_complete</span>
 </td>
 <td>
-<span class="listing-description">BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun…</span>
+<span class="listing-desc_trunc">BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun…</span>
 </td>
 <td>
 <span class="listing-samples">145</span>
@@ -647,7 +647,7 @@ Description
 <span class="listing-task_function">bigcode_humanevalfix</span>
 </td>
 <td>
-<span class="listing-description">HumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo…</span>
+<span class="listing-desc_trunc">HumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo…</span>
 </td>
 <td>
 <span class="listing-samples">164</span>
@@ -663,7 +663,7 @@ Description
 <span class="listing-task_function">binary_audit</span>
 </td>
 <td>
-<span class="listing-description">BinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engin…</span>
+<span class="listing-desc_trunc">BinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engin…</span>
 </td>
 <td>
 <span class="listing-samples">46</span>
@@ -679,7 +679,7 @@ Description
 <span class="listing-task_function">cais_swebenchpro</span>
 </td>
 <td>
-<span class="listing-description">SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks,…</span>
+<span class="listing-desc_trunc">SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks,…</span>
 </td>
 <td>
 <span class="listing-samples">731</span>
@@ -695,7 +695,7 @@ Description
 <span class="listing-task_function">camel_ai_seta_env</span>
 </td>
 <td>
-<span class="listing-description">SETA (Scaling Environments for Terminal Agents): CAMEL-AI’s verifiable terminal-agent tasks spannin…</span>
+<span class="listing-desc_trunc">SETA (Scaling Environments for Terminal Agents): CAMEL-AI’s verifiable terminal-agent tasks spannin…</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -711,7 +711,7 @@ Description
 <span class="listing-task_function">cmu_refav</span>
 </td>
 <td>
-<span class="listing-description">Autonomous-vehicle scenario mining via VLM.</span>
+<span class="listing-desc_trunc">Autonomous-vehicle scenario mining via VLM.</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -727,7 +727,7 @@ Description
 <span class="listing-task_function">codepde</span>
 </td>
 <td>
-<span class="listing-description">CodePDE: framing partial-differential-equation solving as a code-generation task to benchmark LLMs…</span>
+<span class="listing-desc_trunc">CodePDE: framing partial-differential-equation solving as a code-generation task to benchmark LLMs…</span>
 </td>
 <td>
 <span class="listing-samples">5</span>
@@ -743,7 +743,7 @@ Description
 <span class="listing-task_function">crustbench</span>
 </td>
 <td>
-<span class="listing-description">CRUST-Bench: real-world C repositories paired with hand-written safe-Rust interfaces and tests, ben…</span>
+<span class="listing-desc_trunc">CRUST-Bench: real-world C repositories paired with hand-written safe-Rust interfaces and tests, ben…</span>
 </td>
 <td>
 <span class="listing-samples">100</span>
@@ -759,7 +759,7 @@ Description
 <span class="listing-task_function">dbt_labs_ade_bench</span>
 </td>
 <td>
-<span class="listing-description">Analytics Data Engineer Bench: dbt and SQL data-engineering tasks across DuckDB and Snowflake backe…</span>
+<span class="listing-desc_trunc">Analytics Data Engineer Bench: dbt and SQL data-engineering tasks across DuckDB and Snowflake backe…</span>
 </td>
 <td>
 <span class="listing-samples">48</span>
@@ -775,7 +775,7 @@ Description
 <span class="listing-task_function">deveval</span>
 </td>
 <td>
-<span class="listing-description">DevEval: manually-annotated code-generation samples from real-world Python repositories, aligned to…</span>
+<span class="listing-desc_trunc">DevEval: manually-annotated code-generation samples from real-world Python repositories, aligned to…</span>
 </td>
 <td>
 <span class="listing-samples">63</span>
@@ -791,7 +791,7 @@ Description
 <span class="listing-task_function">evoeval</span>
 </td>
 <td>
-<span class="listing-description">EvoEval: evolving suite that mutates HumanEval problems along several axes (difficulty, creative, s…</span>
+<span class="listing-desc_trunc">EvoEval: evolving suite that mutates HumanEval problems along several axes (difficulty, creative, s…</span>
 </td>
 <td>
 <span class="listing-samples">100</span>
@@ -807,7 +807,7 @@ Description
 <span class="listing-task_function">factory_ai_legacy_bench</span>
 </td>
 <td>
-<span class="listing-description">Legacy-Bench public sample tasks for evaluating AI coding agents on legacy software engineering tas…</span>
+<span class="listing-desc_trunc">Legacy-Bench public sample tasks for evaluating AI coding agents on legacy software engineering tas…</span>
 </td>
 <td>
 <span class="listing-samples">10</span>
@@ -823,7 +823,7 @@ Description
 <span class="listing-task_function">featurebench</span>
 </td>
 <td>
-<span class="listing-description">FeatureBench: agentic coding on end-to-end feature-development tasks derived from open-source repos…</span>
+<span class="listing-desc_trunc">FeatureBench: agentic coding on end-to-end feature-development tasks derived from open-source repos…</span>
 </td>
 <td>
 <span class="listing-samples">200</span>
@@ -839,7 +839,7 @@ Description
 <span class="listing-task_function">featurebench_lite</span>
 </td>
 <td>
-<span class="listing-description">Lightweight subset of FeatureBench for cheaper evaluation while preserving model rankings.</span>
+<span class="listing-desc_trunc">Lightweight subset of FeatureBench for cheaper evaluation while preserving model rankings.</span>
 </td>
 <td>
 <span class="listing-samples">30</span>
@@ -855,7 +855,7 @@ Description
 <span class="listing-task_function">featurebench_lite_modal</span>
 </td>
 <td>
-<span class="listing-description">FeatureBench-Lite executed on Modal’s cloud sandbox runner.</span>
+<span class="listing-desc_trunc">FeatureBench-Lite executed on Modal’s cloud sandbox runner.</span>
 </td>
 <td>
 <span class="listing-samples">30</span>
@@ -871,7 +871,7 @@ Description
 <span class="listing-task_function">featurebench_modal</span>
 </td>
 <td>
-<span class="listing-description">FeatureBench’s full task suite executed on Modal’s cloud sandbox runner.</span>
+<span class="listing-desc_trunc">FeatureBench’s full task suite executed on Modal’s cloud sandbox runner.</span>
 </td>
 <td>
 <span class="listing-samples">200</span>
@@ -887,7 +887,7 @@ Description
 <span class="listing-task_function">futurehouse_bixbench</span>
 </td>
 <td>
-<span class="listing-description">BixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM age…</span>
+<span class="listing-desc_trunc">BixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM age…</span>
 </td>
 <td>
 <span class="listing-samples">205</span>
@@ -903,7 +903,7 @@ Description
 <span class="listing-task_function">futurehouse_bixbench_cli</span>
 </td>
 <td>
-<span class="listing-description">CLI variant of BixBench: agents solve the same bioinformatics analysis tasks via a command-line / s…</span>
+<span class="listing-desc_trunc">CLI variant of BixBench: agents solve the same bioinformatics analysis tasks via a command-line / s…</span>
 </td>
 <td>
 <span class="listing-samples">205</span>
@@ -919,7 +919,7 @@ Description
 <span class="listing-task_function">futurehouse_labbench</span>
 </td>
 <td>
-<span class="listing-description">LAB-Bench (Language Agent Biology Benchmark): questions across 8 categories (literature QA, databas…</span>
+<span class="listing-desc_trunc">LAB-Bench (Language Agent Biology Benchmark): questions across 8 categories (literature QA, databas…</span>
 </td>
 <td>
 <span class="listing-samples">181</span>
@@ -935,7 +935,7 @@ Description
 <span class="listing-task_function">gabeorlanski_slopcodebench</span>
 </td>
 <td>
-<span class="listing-description">SlopCodeBench multi-checkpoint coding benchmark tasks converted for Harbor.</span>
+<span class="listing-desc_trunc">SlopCodeBench multi-checkpoint coding benchmark tasks converted for Harbor.</span>
 </td>
 <td>
 <span class="listing-samples">36</span>
@@ -951,7 +951,7 @@ Description
 <span class="listing-task_function">gaia</span>
 </td>
 <td>
-<span class="listing-description">GAIA: real-world questions across three difficulty levels evaluating general AI assistants on reaso…</span>
+<span class="listing-desc_trunc">GAIA: real-world questions across three difficulty levels evaluating general AI assistants on reaso…</span>
 </td>
 <td>
 <span class="listing-samples">165</span>
@@ -967,7 +967,7 @@ Description
 <span class="listing-task_function">gorilla_bfcl</span>
 </td>
 <td>
-<span class="listing-description">Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Pyt…</span>
+<span class="listing-desc_trunc">Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Pyt…</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -983,7 +983,7 @@ Description
 <span class="listing-task_function">gorilla_bfcl_parity</span>
 </td>
 <td>
-<span class="listing-description">Stratified parity subset of BFCL validating that Harbor’s adapter matches the upstream implementati…</span>
+<span class="listing-desc_trunc">Stratified parity subset of BFCL validating that Harbor’s adapter matches the upstream implementati…</span>
 </td>
 <td>
 <span class="listing-samples">123</span>
@@ -999,7 +999,7 @@ Description
 <span class="listing-task_function">gpqa_diamond</span>
 </td>
 <td>
-<span class="listing-description">GPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch…</span>
+<span class="listing-desc_trunc">GPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch…</span>
 </td>
 <td>
 <span class="listing-samples">198</span>
@@ -1015,7 +1015,7 @@ Description
 <span class="listing-task_function">grafana_o11y_bench</span>
 </td>
 <td>
-<span class="listing-description">o11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo…</span>
+<span class="listing-desc_trunc">o11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo…</span>
 </td>
 <td>
 <span class="listing-samples">63</span>
@@ -1031,7 +1031,7 @@ Description
 <span class="listing-task_function">ineqmath</span>
 </td>
 <td>
-<span class="listing-description">IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou…</span>
+<span class="listing-desc_trunc">IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou…</span>
 </td>
 <td>
 <span class="listing-samples">100</span>
@@ -1047,7 +1047,7 @@ Description
 <span class="listing-task_function">kgmon_deepsearchqa</span>
 </td>
 <td>
-<span class="listing-description">DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research…</span>
+<span class="listing-desc_trunc">DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research…</span>
 </td>
 <td>
 <span class="listing-samples">900</span>
@@ -1063,7 +1063,7 @@ Description
 <span class="listing-task_function">kumo_1</span>
 </td>
 <td>
-<span class="listing-description">KUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic…</span>
+<span class="listing-desc_trunc">KUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic…</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -1079,7 +1079,7 @@ Description
 <span class="listing-task_function">kumo_easy</span>
 </td>
 <td>
-<span class="listing-description">KUMO (easy split): easier-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark a…</span>
+<span class="listing-desc_trunc">KUMO (easy split): easier-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark a…</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -1095,7 +1095,7 @@ Description
 <span class="listing-task_function">kumo_hard</span>
 </td>
 <td>
-<span class="listing-description">KUMO (hard split): hard-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark acr…</span>
+<span class="listing-desc_trunc">KUMO (hard split): hard-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark acr…</span>
 </td>
 <td>
 <span class="listing-samples">250</span>
@@ -1111,7 +1111,7 @@ Description
 <span class="listing-task_function">kumo_parity</span>
 </td>
 <td>
-<span class="listing-description">KUMO (parity split): subset of the KUMO procedural-reasoning benchmark used for parity / regression…</span>
+<span class="listing-desc_trunc">KUMO (parity split): subset of the KUMO procedural-reasoning benchmark used for parity / regression…</span>
 </td>
 <td>
 <span class="listing-samples">212</span>
@@ -1127,7 +1127,7 @@ Description
 <span class="listing-task_function">lawbench</span>
 </td>
 <td>
-<span class="listing-description">LawBench: tasks evaluating LLMs on Chinese-law knowledge — legal entity recognition, reading compre…</span>
+<span class="listing-desc_trunc">LawBench: tasks evaluating LLMs on Chinese-law knowledge — legal entity recognition, reading compre…</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -1143,7 +1143,7 @@ Description
 <span class="listing-task_function">lica_world_gdb</span>
 </td>
 <td>
-<span class="listing-description">GraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infograp…</span>
+<span class="listing-desc_trunc">GraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infograp…</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -1159,7 +1159,7 @@ Description
 <span class="listing-task_function">livecodebench</span>
 </td>
 <td>
-<span class="listing-description">LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, a…</span>
+<span class="listing-desc_trunc">LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, a…</span>
 </td>
 <td>
 <span class="listing-samples">100</span>
@@ -1175,7 +1175,7 @@ Description
 <span class="listing-task_function">maxbittker_runebench</span>
 </td>
 <td>
-<span class="listing-description">Benchmark suite for evaluating AI agents on RuneScape gameplay tasks.</span>
+<span class="listing-desc_trunc">Benchmark suite for evaluating AI agents on RuneScape gameplay tasks.</span>
 </td>
 <td>
 <span class="listing-samples">32</span>
@@ -1191,7 +1191,7 @@ Description
 <span class="listing-task_function">meta_mlgym_bench</span>
 </td>
 <td>
-<span class="listing-description">MLGym-Bench: Meta’s framework and benchmark for AI research agents covering CV, NLP, RL, and game-t…</span>
+<span class="listing-desc_trunc">MLGym-Bench: Meta’s framework and benchmark for AI research agents covering CV, NLP, RL, and game-t…</span>
 </td>
 <td>
 <span class="listing-samples">12</span>
@@ -1207,7 +1207,7 @@ Description
 <span class="listing-task_function">minnesotanlp_aar</span>
 </td>
 <td>
-<span class="listing-description">The Amazing Agent Race (AAR): 1400 multi-step scavenger-hunt puzzles for evaluating LLM agents on t…</span>
+<span class="listing-desc_trunc">The Amazing Agent Race (AAR): 1400 multi-step scavenger-hunt puzzles for evaluating LLM agents on t…</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -1223,7 +1223,7 @@ Description
 <span class="listing-task_function">nvats_codeskills_bench</span>
 </td>
 <td>
-<span class="listing-description">A small set of real-life programming tasks: bug fixes, merge-conflict resolution, dependency cleanu…</span>
+<span class="listing-desc_trunc">A small set of real-life programming tasks: bug fixes, merge-conflict resolution, dependency cleanu…</span>
 </td>
 <td>
 <span class="listing-samples">23</span>
@@ -1239,7 +1239,7 @@ Description
 <span class="listing-task_function">openai_mmmlu</span>
 </td>
 <td>
-<span class="listing-description">MMMLU (Multilingual MMLU): OpenAI’s professional-human-translation of the MMLU test set into 14 lan…</span>
+<span class="listing-desc_trunc">MMMLU (Multilingual MMLU): OpenAI’s professional-human-translation of the MMLU test set into 14 lan…</span>
 </td>
 <td>
 <span class="listing-samples">150</span>
@@ -1255,7 +1255,7 @@ Description
 <span class="listing-task_function">openai_simpleqa</span>
 </td>
 <td>
-<span class="listing-description">SimpleQA: short, fact-seeking questions adversarially collected against GPT-4 to measure short-form…</span>
+<span class="listing-desc_trunc">SimpleQA: short, fact-seeking questions adversarially collected against GPT-4 to measure short-form…</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -1271,7 +1271,7 @@ Description
 <span class="listing-task_function">openai_swe_lancer_diamond_all</span>
 </td>
 <td>
-<span class="listing-description">SWE-Lancer Diamond (full): public split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance so…</span>
+<span class="listing-desc_trunc">SWE-Lancer Diamond (full): public split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance so…</span>
 </td>
 <td>
 <span class="listing-samples">463</span>
@@ -1287,7 +1287,7 @@ Description
 <span class="listing-task_function">openai_swe_lancer_diamond_ic</span>
 </td>
 <td>
-<span class="listing-description">A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in…</span>
+<span class="listing-desc_trunc">A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in…</span>
 </td>
 <td>
 <span class="listing-samples">198</span>
@@ -1303,7 +1303,7 @@ Description
 <span class="listing-task_function">openai_swe_lancer_diamond_manager</span>
 </td>
 <td>
-<span class="listing-description">A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in…</span>
+<span class="listing-desc_trunc">A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in…</span>
 </td>
 <td>
 <span class="listing-samples">265</span>
@@ -1319,7 +1319,7 @@ Description
 <span class="listing-task_function">pgcodellm_rebench_v2_test</span>
 </td>
 <td>
-<span class="listing-description">SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui…</span>
+<span class="listing-desc_trunc">SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui…</span>
 </td>
 <td>
 <span class="listing-samples">20</span>
@@ -1335,7 +1335,7 @@ Description
 <span class="listing-task_function">qcircuitbench</span>
 </td>
 <td>
-<span class="listing-description">QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const…</span>
+<span class="listing-desc_trunc">QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const…</span>
 </td>
 <td>
 <span class="listing-samples">28</span>
@@ -1351,7 +1351,7 @@ Description
 <span class="listing-task_function">quesma_compilebench</span>
 </td>
 <td>
-<span class="listing-description">CompileBench: real-world build/compile tasks (curl, GNU coreutils, jq, etc.) ranging from easy buil…</span>
+<span class="listing-desc_trunc">CompileBench: real-world build/compile tasks (curl, GNU coreutils, jq, etc.) ranging from easy buil…</span>
 </td>
 <td>
 <span class="listing-samples">15</span>
@@ -1367,7 +1367,7 @@ Description
 <span class="listing-task_function">quesma_otel_bench</span>
 </td>
 <td>
-<span class="listing-description">AI-agent benchmark for OpenTelemetry instrumentation tasks across multiple programming languages.</span>
+<span class="listing-desc_trunc">AI-agent benchmark for OpenTelemetry instrumentation tasks across multiple programming languages.</span>
 </td>
 <td>
 <span class="listing-samples">26</span>
@@ -1383,7 +1383,7 @@ Description
 <span class="listing-task_function">quixbugs</span>
 </td>
 <td>
-<span class="listing-description">QuixBugs: small classic-algorithm programs (Python and Java) each containing a one-line bug, used t…</span>
+<span class="listing-desc_trunc">QuixBugs: small classic-algorithm programs (Python and Java) each containing a one-line bug, used t…</span>
 </td>
 <td>
 <span class="listing-samples">80</span>
@@ -1399,7 +1399,7 @@ Description
 <span class="listing-task_function">reasoning_gym_easy</span>
 </td>
 <td>
-<span class="listing-description">Reasoning Gym (easy split): procedurally-generated, algorithmically-verifiable reasoning tasks (alg…</span>
+<span class="listing-desc_trunc">Reasoning Gym (easy split): procedurally-generated, algorithmically-verifiable reasoning tasks (alg…</span>
 </td>
 <td>
 <span class="listing-samples">288</span>
@@ -1415,7 +1415,7 @@ Description
 <span class="listing-task_function">reasoning_gym_hard</span>
 </td>
 <td>
-<span class="listing-description">Reasoning Gym (hard split): procedurally-generated, algorithmically-verifiable reasoning tasks at h…</span>
+<span class="listing-desc_trunc">Reasoning Gym (hard split): procedurally-generated, algorithmically-verifiable reasoning tasks at h…</span>
 </td>
 <td>
 <span class="listing-samples">288</span>
@@ -1431,7 +1431,7 @@ Description
 <span class="listing-task_function">replicationbench</span>
 </td>
 <td>
-<span class="listing-description">ReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce impleme…</span>
+<span class="listing-desc_trunc">ReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce impleme…</span>
 </td>
 <td>
 <span class="listing-samples">90</span>
@@ -1447,7 +1447,7 @@ Description
 <span class="listing-task_function">rexbench</span>
 </td>
 <td>
-<span class="listing-description">RExBench - 2 tasks (cogs, othello) evaluating AI agents’ ability to extend existing AI research thr…</span>
+<span class="listing-desc_trunc">RExBench - 2 tasks (cogs, othello) evaluating AI agents’ ability to extend existing AI research thr…</span>
 </td>
 <td>
 <span class="listing-samples">2</span>
@@ -1463,7 +1463,7 @@ Description
 <span class="listing-task_function">satbench</span>
 </td>
 <td>
-<span class="listing-description">SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable diffi…</span>
+<span class="listing-desc_trunc">SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable diffi…</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -1479,7 +1479,7 @@ Description
 <span class="listing-task_function">scale_ai_hil_bench</span>
 </td>
 <td>
-<span class="listing-description">HiL-Bench (Human-in-the-Loop): tests if agents know when to ask for help rather than proceed with u…</span>
+<span class="listing-desc_trunc">HiL-Bench (Human-in-the-Loop): tests if agents know when to ask for help rather than proceed with u…</span>
 </td>
 <td>
 <span class="listing-samples">600</span>
@@ -1495,7 +1495,7 @@ Description
 <span class="listing-task_function">scale_ai_swe_atlas_qna</span>
 </td>
 <td>
-<span class="listing-description">SWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding…</span>
+<span class="listing-desc_trunc">SWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding…</span>
 </td>
 <td>
 <span class="listing-samples">124</span>
@@ -1503,7 +1503,23 @@ Description
 
 </tr>
 
-<tr data-index="68" data-categories="Q29kaW5n" data-listing-samples-sort="90" data-listing-title-sort="scale-ai/swe-atlas-tw">
+<tr data-index="68" data-categories="Q29kaW5n" data-listing-samples-sort="70" data-listing-title-sort="scale-ai/swe-atlas-rf">
+<td>
+<a href="registry/scale_ai_swe_atlas_rf.html" class="title listing-title">scale-ai/swe-atlas-rf</a>
+</td>
+<td>
+<span class="listing-task_function">scale_ai_swe_atlas_rf</span>
+</td>
+<td>
+<span class="listing-desc_trunc">SWE-Atlas - Refactoring – A benchmark of refactoring tasks for coding agents.</span>
+</td>
+<td>
+<span class="listing-samples">70</span>
+</td>
+
+</tr>
+
+<tr data-index="69" data-categories="Q29kaW5n" data-listing-samples-sort="90" data-listing-title-sort="scale-ai/swe-atlas-tw">
 <td>
 <a href="registry/scale_ai_swe_atlas_tw.html" class="title listing-title">scale-ai/swe-atlas-tw</a>
 </td>
@@ -1511,7 +1527,7 @@ Description
 <span class="listing-task_function">scale_ai_swe_atlas_tw</span>
 </td>
 <td>
-<span class="listing-description">SWE-Atlas - Test Writing – A benchmark of comprehensive test writing problems for coding agents. C…</span>
+<span class="listing-desc_trunc">SWE-Atlas - Test Writing – A benchmark of comprehensive test writing problems for coding agents. C…</span>
 </td>
 <td>
 <span class="listing-samples">90</span>
@@ -1519,7 +1535,7 @@ Description
 
 </tr>
 
-<tr data-index="69" data-categories="Q29kaW5n" data-listing-samples-sort="731" data-listing-title-sort="scale-ai/swe-bench-pro">
+<tr data-index="70" data-categories="Q29kaW5n" data-listing-samples-sort="731" data-listing-title-sort="scale-ai/swe-bench-pro">
 <td>
 <a href="registry/scale_ai_swe_bench_pro.html" class="title listing-title">scale-ai/swe-bench-pro</a>
 </td>
@@ -1527,7 +1543,7 @@ Description
 <span class="listing-task_function">scale_ai_swe_bench_pro</span>
 </td>
 <td>
-<span class="listing-description">SWE-Bench-Pro: long-horizon enterprise software engineering tasks.</span>
+<span class="listing-desc_trunc">SWE-Bench-Pro: long-horizon enterprise software engineering tasks.</span>
 </td>
 <td>
 <span class="listing-samples">731</span>
@@ -1535,7 +1551,7 @@ Description
 
 </tr>
 
-<tr data-index="70" data-categories="U2NpZW5jZSUyQ0NvZGluZyUyQ1JlYXNvbmluZw==" data-listing-samples-sort="102" data-listing-title-sort="scienceagentbench/scienceagentbench">
+<tr data-index="71" data-categories="U2NpZW5jZSUyQ0NvZGluZyUyQ1JlYXNvbmluZw==" data-listing-samples-sort="102" data-listing-title-sort="scienceagentbench/scienceagentbench">
 <td>
 <a href="registry/scienceagentbench.html" class="title listing-title">scienceagentbench/scienceagentbench</a>
 </td>
@@ -1543,7 +1559,7 @@ Description
 <span class="listing-task_function">scienceagentbench</span>
 </td>
 <td>
-<span class="listing-description">ScienceAgentBench: data-driven scientific discovery via Python programs across 4 disciplines.</span>
+<span class="listing-desc_trunc">ScienceAgentBench: data-driven scientific discovery via Python programs across 4 disciplines.</span>
 </td>
 <td>
 <span class="listing-samples">102</span>
@@ -1551,7 +1567,7 @@ Description
 
 </tr>
 
-<tr data-index="71" data-categories="QXNzaXN0YW50cyUyQ1Byb2Zlc3Npb25hbCUyQ0JlaGF2aW9y" data-listing-samples-sort="375" data-listing-title-sort="sierra-research/tau3-bench">
+<tr data-index="72" data-categories="QXNzaXN0YW50cyUyQ1Byb2Zlc3Npb25hbCUyQ0JlaGF2aW9y" data-listing-samples-sort="375" data-listing-title-sort="sierra-research/tau3-bench">
 <td>
 <a href="registry/sierra_research_tau3_bench.html" class="title listing-title">sierra-research/tau3-bench</a>
 </td>
@@ -1559,7 +1575,7 @@ Description
 <span class="listing-task_function">sierra_research_tau3_bench</span>
 </td>
 <td>
-<span class="listing-description">Third generation of τ-bench, extending the original with knowledge and voice. A simulation framewor…</span>
+<span class="listing-desc_trunc">Third generation of τ-bench, extending the original with knowledge and voice. A simulation framewor…</span>
 </td>
 <td>
 <span class="listing-samples">375</span>
@@ -1567,7 +1583,7 @@ Description
 
 </tr>
 
-<tr data-index="72" data-categories="U2NpZW5jZSUyQ1JlYXNvbmluZyUyQ01hdGhlbWF0aWNz" data-listing-samples-sort="8" data-listing-title-sort="sldbench/sldbench">
+<tr data-index="73" data-categories="U2NpZW5jZSUyQ1JlYXNvbmluZyUyQ01hdGhlbWF0aWNz" data-listing-samples-sort="8" data-listing-title-sort="sldbench/sldbench">
 <td>
 <a href="registry/sldbench.html" class="title listing-title">sldbench/sldbench</a>
 </td>
@@ -1575,7 +1591,7 @@ Description
 <span class="listing-task_function">sldbench</span>
 </td>
 <td>
-<span class="listing-description">SLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments w…</span>
+<span class="listing-desc_trunc">SLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments w…</span>
 </td>
 <td>
 <span class="listing-samples">8</span>
@@ -1583,7 +1599,7 @@ Description
 
 </tr>
 
-<tr data-index="73" data-categories="UHJvZmVzc2lvbmFsJTJDTWVkaWNpbmUlMkNBc3Npc3RhbnRz" data-listing-samples-sort="300" data-listing-title-sort="stanford/medagentbench">
+<tr data-index="74" data-categories="UHJvZmVzc2lvbmFsJTJDTWVkaWNpbmUlMkNBc3Npc3RhbnRz" data-listing-samples-sort="300" data-listing-title-sort="stanford/medagentbench">
 <td>
 <a href="registry/stanford_medagentbench.html" class="title listing-title">stanford/medagentbench</a>
 </td>
@@ -1591,7 +1607,7 @@ Description
 <span class="listing-task_function">stanford_medagentbench</span>
 </td>
 <td>
-<span class="listing-description">MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benc…</span>
+<span class="listing-desc_trunc">MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benc…</span>
 </td>
 <td>
 <span class="listing-samples">300</span>
@@ -1599,7 +1615,7 @@ Description
 
 </tr>
 
-<tr data-index="74" data-categories="U2FmZWd1YXJkcw==" data-listing-samples-sort="150" data-listing-title-sort="strongreject/strongreject">
+<tr data-index="75" data-categories="U2FmZWd1YXJkcw==" data-listing-samples-sort="150" data-listing-title-sort="strongreject/strongreject">
 <td>
 <a href="registry/strongreject.html" class="title listing-title">strongreject/strongreject</a>
 </td>
@@ -1607,7 +1623,7 @@ Description
 <span class="listing-task_function">strongreject</span>
 </td>
 <td>
-<span class="listing-description">StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks…</span>
+<span class="listing-desc_trunc">StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks…</span>
 </td>
 <td>
 <span class="listing-samples">150</span>
@@ -1615,7 +1631,7 @@ Description
 
 </tr>
 
-<tr data-index="75" data-categories="Q29kaW5n" data-listing-samples-sort="500" data-listing-title-sort="swe-bench/swe-bench-verified">
+<tr data-index="76" data-categories="Q29kaW5n" data-listing-samples-sort="500" data-listing-title-sort="swe-bench/swe-bench-verified">
 <td>
 <a href="registry/swe_bench_verified.html" class="title listing-title">swe-bench/swe-bench-verified</a>
 </td>
@@ -1623,7 +1639,7 @@ Description
 <span class="listing-task_function">swe_bench_verified</span>
 </td>
 <td>
-<span class="listing-description">SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs…</span>
+<span class="listing-desc_trunc">SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs…</span>
 </td>
 <td>
 <span class="listing-samples">500</span>
@@ -1631,7 +1647,7 @@ Description
 
 </tr>
 
-<tr data-index="76" data-categories="Q29kaW5n" data-listing-samples-sort="100" data-listing-title-sort="swe-bench/swe-smith">
+<tr data-index="77" data-categories="Q29kaW5n" data-listing-samples-sort="100" data-listing-title-sort="swe-bench/swe-smith">
 <td>
 <a href="registry/swe_bench_swe_smith.html" class="title listing-title">swe-bench/swe-smith</a>
 </td>
@@ -1639,7 +1655,7 @@ Description
 <span class="listing-task_function">swe_bench_swe_smith</span>
 </td>
 <td>
-<span class="listing-description">SWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any…</span>
+<span class="listing-desc_trunc">SWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any…</span>
 </td>
 <td>
 <span class="listing-samples">100</span>
@@ -1647,7 +1663,7 @@ Description
 
 </tr>
 
-<tr data-index="77" data-categories="Q29kaW5n" data-listing-samples-sort="433" data-listing-title-sort="swt-bench/swt-bench-verified">
+<tr data-index="78" data-categories="Q29kaW5n" data-listing-samples-sort="433" data-listing-title-sort="swt-bench/swt-bench-verified">
 <td>
 <a href="registry/swt_bench_verified.html" class="title listing-title">swt-bench/swt-bench-verified</a>
 </td>
@@ -1655,7 +1671,7 @@ Description
 <span class="listing-task_function">swt_bench_verified</span>
 </td>
 <td>
-<span class="listing-description">SWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing u…</span>
+<span class="listing-desc_trunc">SWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing u…</span>
 </td>
 <td>
 <span class="listing-samples">433</span>
@@ -1663,7 +1679,7 @@ Description
 
 </tr>
 
-<tr data-index="78" data-categories="Q29kaW5n" data-listing-samples-sort="200" data-listing-title-sort="tencent/autocodebench">
+<tr data-index="79" data-categories="Q29kaW5n" data-listing-samples-sort="200" data-listing-title-sort="tencent/autocodebench">
 <td>
 <a href="registry/tencent_autocodebench.html" class="title listing-title">tencent/autocodebench</a>
 </td>
@@ -1671,7 +1687,7 @@ Description
 <span class="listing-task_function">tencent_autocodebench</span>
 </td>
 <td>
-<span class="listing-description">Multilingual automated code generation benchmark evaluating LLMs across diverse programming tasks a…</span>
+<span class="listing-desc_trunc">Multilingual automated code generation benchmark evaluating LLMs across diverse programming tasks a…</span>
 </td>
 <td>
 <span class="listing-samples">200</span>
@@ -1679,7 +1695,7 @@ Description
 
 </tr>
 
-<tr data-index="79" data-categories="Q29kaW5n" data-listing-samples-sort="1000" data-listing-title-sort="termigen/termigen-environments">
+<tr data-index="80" data-categories="Q29kaW5n" data-listing-samples-sort="1000" data-listing-title-sort="termigen/termigen-environments">
 <td>
 <a href="registry/termigen_environments.html" class="title listing-title">termigen/termigen-environments</a>
 </td>
@@ -1687,7 +1703,7 @@ Description
 <span class="listing-task_function">termigen_environments</span>
 </td>
 <td>
-<span class="listing-description">TermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11…</span>
+<span class="listing-desc_trunc">TermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11…</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -1695,7 +1711,7 @@ Description
 
 </tr>
 
-<tr data-index="80" data-categories="Q29kaW5n" data-listing-samples-sort="200" data-listing-title-sort="terminal-bench-pro/terminal-bench-pro">
+<tr data-index="81" data-categories="Q29kaW5n" data-listing-samples-sort="200" data-listing-title-sort="terminal-bench-pro/terminal-bench-pro">
 <td>
 <a href="registry/terminal_bench_pro.html" class="title listing-title">terminal-bench-pro/terminal-bench-pro</a>
 </td>
@@ -1703,7 +1719,7 @@ Description
 <span class="listing-task_function">terminal_bench_pro</span>
 </td>
 <td>
-<span class="listing-description">Terminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientifi…</span>
+<span class="listing-desc_trunc">Terminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientifi…</span>
 </td>
 <td>
 <span class="listing-samples">200</span>
@@ -1711,7 +1727,7 @@ Description
 
 </tr>
 
-<tr data-index="81" data-categories="Q29kaW5nJTJDQXNzaXN0YW50cw==" data-listing-samples-sort="89" data-listing-title-sort="terminal-bench/terminal-bench-2">
+<tr data-index="82" data-categories="Q29kaW5nJTJDQXNzaXN0YW50cw==" data-listing-samples-sort="89" data-listing-title-sort="terminal-bench/terminal-bench-2">
 <td>
 <a href="registry/terminal_bench_2.html" class="title listing-title">terminal-bench/terminal-bench-2</a>
 </td>
@@ -1719,7 +1735,7 @@ Description
 <span class="listing-task_function">terminal_bench_2</span>
 </td>
 <td>
-<span class="listing-description">Terminal-Bench v2: benchmark for testing AI agents in real terminal environments — from compiling c…</span>
+<span class="listing-desc_trunc">Terminal-Bench v2: benchmark for testing AI agents in real terminal environments — from compiling c…</span>
 </td>
 <td>
 <span class="listing-samples">89</span>
@@ -1727,7 +1743,7 @@ Description
 
 </tr>
 
-<tr data-index="82" data-categories="Q29kaW5nJTJDQXNzaXN0YW50cw==" data-listing-samples-sort="89" data-listing-title-sort="terminal-bench/terminal-bench-2-1">
+<tr data-index="83" data-categories="Q29kaW5nJTJDQXNzaXN0YW50cw==" data-listing-samples-sort="89" data-listing-title-sort="terminal-bench/terminal-bench-2-1">
 <td>
 <a href="registry/terminal_bench_2_1.html" class="title listing-title">terminal-bench/terminal-bench-2-1</a>
 </td>
@@ -1735,7 +1751,7 @@ Description
 <span class="listing-task_function">terminal_bench_2_1</span>
 </td>
 <td>
-<span class="listing-description">Terminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ…</span>
+<span class="listing-desc_trunc">Terminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ…</span>
 </td>
 <td>
 <span class="listing-samples">89</span>
@@ -1743,7 +1759,7 @@ Description
 
 </tr>
 
-<tr data-index="83" data-categories="UHJvZmVzc2lvbmFsJTJDQXNzaXN0YW50cyUyQ0NvZGluZw==" data-listing-samples-sort="174" data-listing-title-sort="theagentcompany/theagentcompany">
+<tr data-index="84" data-categories="UHJvZmVzc2lvbmFsJTJDQXNzaXN0YW50cyUyQ0NvZGluZw==" data-listing-samples-sort="174" data-listing-title-sort="theagentcompany/theagentcompany">
 <td>
 <a href="registry/theagentcompany.html" class="title listing-title">theagentcompany/theagentcompany</a>
 </td>
@@ -1751,7 +1767,7 @@ Description
 <span class="listing-task_function">theagentcompany</span>
 </td>
 <td>
-<span class="listing-description">An agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and R…</span>
+<span class="listing-desc_trunc">An agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and R…</span>
 </td>
 <td>
 <span class="listing-samples">174</span>
@@ -1759,7 +1775,7 @@ Description
 
 </tr>
 
-<tr data-index="84" data-categories="Q29kaW5n" data-listing-samples-sort="304" data-listing-title-sort="usaco/usaco">
+<tr data-index="85" data-categories="Q29kaW5n" data-listing-samples-sort="304" data-listing-title-sort="usaco/usaco">
 <td>
 <a href="registry/usaco.html" class="title listing-title">usaco/usaco</a>
 </td>
@@ -1767,7 +1783,7 @@ Description
 <span class="listing-task_function">usaco</span>
 </td>
 <td>
-<span class="listing-description">USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality u…</span>
+<span class="listing-desc_trunc">USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality u…</span>
 </td>
 <td>
 <span class="listing-samples">304</span>
@@ -1775,7 +1791,7 @@ Description
 
 </tr>
 
-<tr data-index="85" data-categories="UHJvZmVzc2lvbmFsJTJDRmluYW5jZSUyQ0Fzc2lzdGFudHM=" data-listing-samples-sort="50" data-listing-title-sort="vals/financeagent">
+<tr data-index="86" data-categories="UHJvZmVzc2lvbmFsJTJDRmluYW5jZSUyQ0Fzc2lzdGFudHM=" data-listing-samples-sort="50" data-listing-title-sort="vals/financeagent">
 <td>
 <a href="registry/vals_financeagent.html" class="title listing-title">vals/financeagent</a>
 </td>
@@ -1783,7 +1799,7 @@ Description
 <span class="listing-task_function">vals_financeagent</span>
 </td>
 <td>
-<span class="listing-description">Vals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (re…</span>
+<span class="listing-desc_trunc">Vals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (re…</span>
 </td>
 <td>
 <span class="listing-samples">50</span>
@@ -1791,7 +1807,7 @@ Description
 
 </tr>
 
-<tr data-index="86" data-categories="Q29kaW5n" data-listing-samples-sort="1000" data-listing-title-sort="vmax/vmax-tasks">
+<tr data-index="87" data-categories="Q29kaW5n" data-listing-samples-sort="1000" data-listing-title-sort="vmax/vmax-tasks">
 <td>
 <a href="registry/vmax_tasks.html" class="title listing-title">vmax/vmax-tasks</a>
 </td>
@@ -1799,7 +1815,7 @@ Description
 <span class="listing-task_function">vmax_tasks</span>
 </td>
 <td>
-<span class="listing-description">Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).</span>
+<span class="listing-desc_trunc">Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -1807,7 +1823,7 @@ Description
 
 </tr>
 
-<tr data-index="87" data-categories="Q29kaW5n" data-listing-samples-sort="101" data-listing-title-sort="webgen-bench/webgen-bench">
+<tr data-index="88" data-categories="Q29kaW5n" data-listing-samples-sort="101" data-listing-title-sort="webgen-bench/webgen-bench">
 <td>
 <a href="registry/webgen_bench.html" class="title listing-title">webgen-bench/webgen-bench</a>
 </td>
@@ -1815,7 +1831,7 @@ Description
 <span class="listing-task_function">webgen_bench</span>
 </td>
 <td>
-<span class="listing-description">WebGen-Bench: Evaluating LLMs on Generating Interactive and Functional Websites from Scratch (101 t…</span>
+<span class="listing-desc_trunc">WebGen-Bench: Evaluating LLMs on Generating Interactive and Functional Websites from Scratch (101 t…</span>
 </td>
 <td>
 <span class="listing-samples">101</span>
@@ -1823,7 +1839,7 @@ Description
 
 </tr>
 
-<tr data-index="88" data-categories="Q29kaW5n" data-listing-samples-sort="1000" data-listing-title-sort="xlang/ds-1000">
+<tr data-index="89" data-categories="Q29kaW5n" data-listing-samples-sort="1000" data-listing-title-sort="xlang/ds-1000">
 <td>
 <a href="registry/xlang_ds_1000.html" class="title listing-title">xlang/ds-1000</a>
 </td>
@@ -1831,7 +1847,7 @@ Description
 <span class="listing-task_function">xlang_ds_1000</span>
 </td>
 <td>
-<span class="listing-description">DS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow,…</span>
+<span class="listing-desc_trunc">DS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow,…</span>
 </td>
 <td>
 <span class="listing-samples">1000</span>
@@ -1839,7 +1855,7 @@ Description
 
 </tr>
 
-<tr data-index="89" data-categories="Q29kaW5nJTJDUmVhc29uaW5n" data-listing-samples-sort="172" data-listing-title-sort="yanagiorigami/frontier-cs">
+<tr data-index="90" data-categories="Q29kaW5nJTJDUmVhc29uaW5n" data-listing-samples-sort="172" data-listing-title-sort="yanagiorigami/frontier-cs">
 <td>
 <a href="registry/yanagiorigami_frontier_cs.html" class="title listing-title">yanagiorigami/frontier-cs</a>
 </td>
@@ -1847,7 +1863,7 @@ Description
 <span class="listing-task_function">yanagiorigami_frontier_cs</span>
 </td>
 <td>
-<span class="listing-description">Frontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial sco…</span>
+<span class="listing-desc_trunc">Frontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial sco…</span>
 </td>
 <td>
 <span class="listing-samples">172</span>
