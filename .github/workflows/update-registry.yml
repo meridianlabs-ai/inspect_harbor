@@ -33,15 +33,17 @@ jobs:
       - name: Generate tasks
         id: generate
         run: |
-          uv run python scripts/generate_tasks.py 2> gen-stderr.txt
-          cat gen-stderr.txt >&2
+          # Write workflow-only artifacts under $RUNNER_TEMP so they never
+          # enter the working tree and get committed by create-pull-request.
+          uv run python scripts/generate_tasks.py 2> "$RUNNER_TEMP/gen-stderr.txt"
+          cat "$RUNNER_TEMP/gen-stderr.txt" >&2
           # Extract auto-stubbed dataset names (if any) for the PR body.
           # The generator logs them one-per-line as "  - name" between the
           # "auto-stubbed:" header and the "Fill in" footer.
-          awk '/auto-stubbed:$/{flag=1; next} /^  Fill in/{flag=0} flag && /^  - /{sub(/^  - /,""); print}' gen-stderr.txt > stubbed.txt || true
+          awk '/auto-stubbed:$/{flag=1; next} /^  Fill in/{flag=0} flag && /^  - /{sub(/^  - /,""); print}' "$RUNNER_TEMP/gen-stderr.txt" > "$RUNNER_TEMP/stubbed.txt" || true
           {
             echo "stubbed<<EOF"
-            cat stubbed.txt
+            cat "$RUNNER_TEMP/stubbed.txt"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 

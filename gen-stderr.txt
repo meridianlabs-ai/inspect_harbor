@@ -1,5 +1,0 @@
-
-⚠ 1 registry dataset(s) have no override entry in docs/overrides.yml and were auto-stubbed:
-  - scale-ai/swe-atlas-rf
-
-  Fill in `categories:` for each before merging. scripts/validate_overrides.py will block merges on empty stubs.
