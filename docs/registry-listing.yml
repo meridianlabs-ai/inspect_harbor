@@ -372,6 +372,13 @@
   categories:
   - Coding
   - Professional
+- title: harveyai/lab
+  path: registry/harveyai_lab.html
+  desc: Harvey LAB - open-source benchmark for evaluating agents on real legal work.
+  desc_trunc: Harvey LAB - open-source benchmark for evaluating agents on real legal work.
+  task_function: harveyai_lab
+  samples: 1000
+  version: latest
 - title: ineqmath/ineqmath
   path: registry/ineqmath.html
   desc: 'IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bound-estimation and relation-prediction subtasks with stepwise judging.'

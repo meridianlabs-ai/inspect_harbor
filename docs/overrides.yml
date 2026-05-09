@@ -375,6 +375,9 @@ grafana/o11y-bench:
   - Professional
   repo: https://github.com/grafana/o11y-bench
 
+harveyai/lab:
+  categories: []
+
 ineqmath/ineqmath:
   categories:
   - Mathematics
