@@ -1067,6 +1067,37 @@ def gaia(
 
 
 @task
+def gnucleus_ai_cad_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""gNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks
+
+    Slug: gnucleus-ai/cad-bench
+    Latest digest: sha256:a1300ea8054a562259735c02b98246cb234cd6b37941cc60e627b97f97a09252
+    """
+    return _harbor_base(
+        package_name="gnucleus-ai/cad-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def gorilla_bfcl(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1178,6 +1209,37 @@ def grafana_o11y_bench(
     """
     return _harbor_base(
         package_name="grafana/o11y-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def harveyai_lab(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Harvey LAB - open-source benchmark for evaluating agents on real legal work.
+
+    Slug: harveyai/lab
+    Latest digest: sha256:5cbe32ed0ce44c7244191ff764bda7e54b9e6b106726a1cf438b1009080e1628
+    """
+    return _harbor_base(
+        package_name="harveyai/lab",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
