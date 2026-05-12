@@ -1,5 +1,13 @@
 # changelog – Inspect Harbor
 
+## [0.5.1](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.0...v0.5.1) (2026-05-08)
+
+### Bug Fixes
+
+- add title to overrides ([\#73](https://github.com/meridianlabs-ai/inspect_harbor/issues/73)) ([cd5c1dc](https://github.com/meridianlabs-ai/inspect_harbor/commit/cd5c1dc5715c21f5f6f44dc1514cace789c9e1bf))
+- split description into desc + desc_trunc in registry-listing.yml ([\#71](https://github.com/meridianlabs-ai/inspect_harbor/issues/71)) ([0154d4a](https://github.com/meridianlabs-ai/inspect_harbor/commit/0154d4a163aa197aae6262e3cecba52d4c8dad7f))
+- update Harbor registry tasks ([\#74](https://github.com/meridianlabs-ai/inspect_harbor/issues/74)) ([4a399d1](https://github.com/meridianlabs-ai/inspect_harbor/commit/4a399d1be3fe6b75b26fc3a74fd90826d1da4676))
+
 ## [0.5.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.4.18...v0.5.0) (2026-05-07)
 
 ### Features

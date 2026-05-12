@@ -57,10 +57,12 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [futurehouse/labbench](registry/futurehouse_labbench.html.md) | futurehouse_labbench | LAB-Bench (Language Agent Biology Benchmark): questions across 8 categories (literature QA, databas… | 181 |
 | [gabeorlanski/slopcodebench](registry/gabeorlanski_slopcodebench.html.md) | gabeorlanski_slopcodebench | SlopCodeBench multi-checkpoint coding benchmark tasks converted for Harbor. | 36 |
 | [gaia/gaia](registry/gaia.html.md) | gaia | GAIA: real-world questions across three difficulty levels evaluating general AI assistants on reaso… | 165 |
+| [gnucleus-ai/cad-bench](registry/gnucleus_ai_cad_bench.html.md) | gnucleus_ai_cad_bench | gNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks. | 100 |
 | [gorilla/bfcl](registry/gorilla_bfcl.html.md) | gorilla_bfcl | Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Pyt… | 1000 |
 | [gorilla/bfcl_parity](registry/gorilla_bfcl_parity.html.md) | gorilla_bfcl_parity | Stratified parity subset of BFCL validating that Harbor’s adapter matches the upstream implementati… | 123 |
 | [gpqa-diamond/gpqa-diamond](registry/gpqa_diamond.html.md) | gpqa_diamond | GPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch… | 198 |
 | [grafana/o11y-bench](registry/grafana_o11y_bench.html.md) | grafana_o11y_bench | o11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo… | 63 |
+| [harveyai/lab](registry/harveyai_lab.html.md) | harveyai_lab | Harvey LAB - open-source benchmark for evaluating agents on real legal work. | 1000 |
 | [ineqmath/ineqmath](registry/ineqmath.html.md) | ineqmath | IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou… | 100 |
 | [kgmon/deepsearchqa](registry/kgmon_deepsearchqa.html.md) | kgmon_deepsearchqa | DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research… | 900 |
 | [kumo/kumo-1](registry/kumo_1.html.md) | kumo_1 | KUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic… | 1000 |
