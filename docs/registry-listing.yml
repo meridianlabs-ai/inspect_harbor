@@ -331,6 +331,16 @@
   categories:
   - Assistants
   - Multimodal
+- title: gnucleus-ai/cad-bench
+  path: registry/gnucleus_ai_cad_bench.html
+  desc: gNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks.
+  desc_trunc: gNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks.
+  task_function: gnucleus_ai_cad_bench
+  samples: 100
+  version: latest
+  categories:
+  - Coding
+  - Professional
 - title: gorilla/bfcl
   path: registry/gorilla_bfcl.html
   desc: 'Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Python, Java, JavaScript, and REST APIs.'
@@ -379,6 +389,9 @@
   task_function: harveyai_lab
   samples: 1000
   version: latest
+  categories:
+  - Law
+  - Professional
 - title: ineqmath/ineqmath
   path: registry/ineqmath.html
   desc: 'IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bound-estimation and relation-prediction subtasks with stepwise judging.'

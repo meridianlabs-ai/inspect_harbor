@@ -112,7 +112,7 @@ def scrape_hub_slugs() -> set[tuple[str, str]]:
     print(f"Scraping {REGISTRY_SITE_BASE}/datasets...")
     pairs: set[tuple[str, str]] = set()
     pages_scraped = 0
-    href_pattern = re.compile(r'href="/datasets/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)"')
+    href_pattern = re.compile(r"/datasets/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)")
 
     for page in range(1, REGISTRY_SITE_MAX_PAGES + 1):
         url = f"{REGISTRY_SITE_BASE}/datasets?page={page}"

@@ -342,6 +342,13 @@ gaia/gaia:
   function_name: gaia
   title: GAIA
 
+gnucleus-ai/cad-bench:
+  categories:
+  - Coding
+  - Professional
+  title: CAD-Bench
+  repo: https://www.gnucleus.ai/cad-bench
+
 gorilla/bfcl:
   categories:
   - Assistants
@@ -376,7 +383,11 @@ grafana/o11y-bench:
   repo: https://github.com/grafana/o11y-bench
 
 harveyai/lab:
-  categories: []
+  categories:
+  - Law
+  - Professional
+  repo: https://github.com/harveyai/harvey-labs
+  title: Harvey LAB
 
 ineqmath/ineqmath:
   categories:

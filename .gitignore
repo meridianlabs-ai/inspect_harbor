@@ -209,8 +209,9 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# Claude Code local settings
-.claude/
+# Claude Code local settings (but allow shared skills)
+.claude/*
+!.claude/skills/
 
 /.luarc.json
 
