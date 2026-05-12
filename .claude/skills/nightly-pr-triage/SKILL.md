@@ -117,6 +117,21 @@ uv run pytest tests/ --no-header               # 167+ tests; should be 100% pass
 
 The bot's own commit on the branch already says `fix: update Harbor registry tasks`. Your commit can be the same or `fix: fill in categories for <new datasets>`. Push to `origin update-harbor-tasks`.
 
+### 7. After merge: publish the docs site
+
+The user merges the PR. Docs at https://meridianlabs-ai.github.io/inspect_harbor are not auto-published — the new datasets won't show up on the registry listing until someone re-renders + pushes `gh-pages`. Do it as soon as the merge lands so the public docs catch up:
+
+```bash
+git switch main
+git pull --ff-only
+cd docs
+PRE_COMMIT_ALLOW_NO_CONFIG=1 uv run quarto publish gh-pages --no-prompt
+```
+
+The `PRE_COMMIT_ALLOW_NO_CONFIG=1` env var is needed because the user has a global pre-commit hook that blocks the gh-pages worktree (which has no `.pre-commit-config.yaml`). Without it the publish renders successfully but the final commit fails silently and the remote `gh-pages` stays unchanged.
+
+GitHub Pages cache can take a few minutes after the push.
+
 ## Gotchas
 
 ### The scraper regex breaks when Harbor changes hub HTML
@@ -130,10 +145,6 @@ Fix: loosen the regex in `scrape_hub_slugs()` to match any `/datasets/<org>/<nam
 ### `_tasks.py` docstring whitespace churn
 
 Regenerating sometimes produces a `_tasks.py` diff where continuation lines lose 4-space indents (e.g. on multi-line descriptions like `rexbench`). This is pre-existing — `make check` (which runs `ruff format`) re-applies the indent. Don't try to fix this in the template; just run `make check` and commit the result.
-
-### Pre-commit hook complains during `quarto publish gh-pages`
-
-If the user is publishing docs after merge, the gh-pages worktree has no `.pre-commit-config.yaml` and a global pre-commit hook blocks the commit. Workaround: `PRE_COMMIT_ALLOW_NO_CONFIG=1 uv run quarto publish gh-pages`.
 
 ### Category vocabulary is owned by inspect_ai
 
