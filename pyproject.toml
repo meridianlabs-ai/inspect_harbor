@@ -65,6 +65,11 @@ exclude = ["docs/", "tests/"]
 managed = true
 add-bounds = "lower"
 default-groups = ["dev"]
+# Exclude packages published within the last 7 days to protect against supply chain attacks
+exclude-newer = "7 days"
+
+[tool.uv.exclude-newer-package]
+inspect-ai = false
 
 [tool.mypy]
 ignore_missing_imports = false
