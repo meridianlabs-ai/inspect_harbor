@@ -1019,7 +1019,7 @@ def gabeorlanski_slopcodebench(
     r"""SlopCodeBench multi-checkpoint coding benchmark tasks converted for Harbor.
 
     Slug: gabeorlanski/slopcodebench
-    Latest digest: sha256:79c6ffe0a2ac7e1a71ec0d0f50799ae235b14efdd65019f059023485db23122e
+    Latest digest: sha256:73a17cda817d37ce3352d18c272c40a3f6b623061023bee365b4df74adcd11b5
     """
     return _harbor_base(
         package_name="gabeorlanski/slopcodebench",
@@ -1081,7 +1081,7 @@ def gnucleus_ai_cad_bench(
     r"""gNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks
 
     Slug: gnucleus-ai/cad-bench
-    Latest digest: sha256:a1300ea8054a562259735c02b98246cb234cd6b37941cc60e627b97f97a09252
+    Latest digest: sha256:22be8aa80fdbf2d9844e73c9d91ee7e01082d70bcf706d347216d0b97bdf862e
     """
     return _harbor_base(
         package_name="gnucleus-ai/cad-bench",
@@ -2451,7 +2451,7 @@ def swe_bench_verified(
     r"""SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs confirmed each real GitHub issue is solvable given the available repository context.
 
     Slug: swe-bench/swe-bench-verified
-    Latest digest: sha256:235d6032d549851a936db3b5fe08807c4d385c12ee10e7be9c9786a1ff60563c
+    Latest digest: sha256:b934b0cc3dc800fe945eaf9f1623329db97ee3133c706d20644524c7759fb341
     """
     return _harbor_base(
         package_name="swe-bench/swe-bench-verified",
