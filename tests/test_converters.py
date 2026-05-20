@@ -68,6 +68,7 @@ def test_harbor_to_compose_config_with_dockerfile():
     """Test converting Harbor task with Dockerfile (programmatic build)."""
     # Setup mock Harbor task
     mock_task = Mock()
+    mock_task.name = "my-task"
     mock_paths = Mock()
     mock_paths.environment_dir = Path("/task/environment")
     mock_task.paths = mock_paths
@@ -97,7 +98,9 @@ def test_harbor_to_compose_config_with_dockerfile():
         assert service.build is not None
         assert isinstance(service.build, ComposeBuild)
         assert service.build.context == "/task/environment"
-        assert service.image is None
+        # Built image is given a stable, task-derived tag so subsequent
+        # runs can reuse it instead of rebuilding.
+        assert service.image == "hb__my-task"
         assert service.cpus == 1.0
         # 6GB minimum is applied (config has 2048m which is below minimum)
         assert service.mem_limit == "6144m"
@@ -106,9 +109,53 @@ def test_harbor_to_compose_config_with_dockerfile():
         assert service.network_mode == "bridge"
 
 
+def test_harbor_to_compose_config_dockerfile_image_tag_is_deterministic():
+    """Dockerfile-only path stamps the build with a stable ``hb__<task>`` tag.
+
+    Regression test for cache misses on repeat runs: without an explicit
+    ``image:``, Compose tags the build as ``<project>-<service>`` and
+    ``compose_cleanup_images`` deletes it on shutdown (the project name
+    carries a random suffix and the cleanup loop targets that prefix).
+    A stable tag both survives cleanup and lets Docker reuse the image
+    across runs.
+    """
+    mock_task = Mock()
+    # Task name with characters that must be sanitized for a Docker tag
+    # (slash, uppercase) so we lock in the sanitization behavior too.
+    mock_task.name = "swe-bench/Django__django-12406"
+    mock_paths = Mock()
+    mock_paths.environment_dir = Path("/task/environment")
+    mock_task.paths = mock_paths
+
+    mock_env_config = Mock()
+    mock_env_config.env = {}
+    mock_env_config.cpus = 1.0
+    mock_env_config.memory_mb = 6144
+    mock_env_config.docker_image = None
+    mock_env_config.allow_internet = True
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_task.config.environment = mock_env_config
+
+    def exists_side_effect(self: Path) -> bool:
+        return str(self).endswith("Dockerfile")
+
+    with patch("pathlib.Path.exists", exists_side_effect):
+        first = harbor_to_compose_config(mock_task)
+        second = harbor_to_compose_config(mock_task)
+
+    # Same task -> same tag across invocations (this is the whole point).
+    assert first.services["default"].image == second.services["default"].image
+    # Sanitized: lowercased, '/' replaced with '-'.
+    assert first.services["default"].image == "hb__swe-bench-django__django-12406"
+    # And we're still building from the Dockerfile.
+    assert isinstance(first.services["default"].build, ComposeBuild)
+
+
 def test_harbor_to_compose_config_dockerfile_path_injects_task_env():
     """No-compose-yaml branch wires ``[environment].env`` into the service."""
     mock_task = Mock()
+    mock_task.name = "env-injection-task"
     mock_paths = Mock()
     mock_paths.environment_dir = Path("/task/environment")
     mock_task.paths = mock_paths
@@ -1305,6 +1352,103 @@ services:
     assert service.image == "hb__test-task"
     assert isinstance(service.build, ComposeBuild)
     assert service.build.context == str(env_dir)
+
+
+def test_harbor_to_compose_config_compose_yaml_build_without_image_gets_stable_tag(
+    tmp_path: Path,
+):
+    """Compose YAML services with ``build:`` but no ``image:`` get a deterministic tag.
+
+    Without this, Compose auto-names the build as ``<project>-<service>`` —
+    and the project name carries a random suffix that ``compose_cleanup_images``
+    deletes on shutdown. The injected tag tracks the task name plus the
+    service name so multi-service compose files don't collide on a single
+    image.
+    """
+    env_dir = tmp_path / "environment"
+    env_dir.mkdir()
+
+    # Two services that both build, neither sets image: — the case that
+    # vanilla docker-compose tutorials produce.
+    compose_yaml = env_dir / "docker-compose.yaml"
+    compose_yaml.write_text("""\
+services:
+  default:
+    build:
+      context: ${CONTEXT_DIR}
+      dockerfile: Dockerfile
+  worker:
+    build:
+      context: ${CONTEXT_DIR}
+""")
+    (env_dir / "Dockerfile").write_text("FROM python:3.12\n")
+
+    mock_task = Mock()
+    mock_task.name = "Compose/Multi-Service"  # exercise sanitization too
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = env_dir
+    mock_task.config.environment = Mock()
+    mock_task.config.environment.cpus = 1
+    mock_task.config.environment.memory_mb = 6144
+    mock_task.config.environment.gpus = 0
+    mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.allow_internet = True
+    mock_task.config.environment.env = {}
+    mock_task.config.verifier.env = {}
+
+    result = harbor_to_compose_config(mock_task)
+
+    # Each service gets its own stable tag derived from task + service.
+    assert result.services["default"].image == "hb__compose-multi-service__default"
+    assert result.services["worker"].image == "hb__compose-multi-service__worker"
+    # And neither tag starts with inspect_ai's random ``inspect-…`` project
+    # prefix, so compose_cleanup_images won't delete them.
+    assert not result.services["default"].image.startswith("inspect-")
+    assert not result.services["worker"].image.startswith("inspect-")
+
+
+def test_harbor_to_compose_config_compose_yaml_preserves_explicit_image(
+    tmp_path: Path,
+):
+    """We never overwrite an image: that the task author already set.
+
+    Catches a regression where the new tag-injection loop would clobber
+    literal images, ``${MAIN_IMAGE_NAME}`` references, or any other
+    explicit tag the task ships with.
+    """
+    env_dir = tmp_path / "environment"
+    env_dir.mkdir()
+
+    compose_yaml = env_dir / "docker-compose.yaml"
+    compose_yaml.write_text("""\
+services:
+  default:
+    build:
+      context: ${CONTEXT_DIR}
+    image: my-registry/my-image:v1.2.3
+  helper:
+    image: redis:7
+""")
+    (env_dir / "Dockerfile").write_text("FROM python:3.12\n")
+
+    mock_task = Mock()
+    mock_task.name = "explicit-image-task"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = env_dir
+    mock_task.config.environment = Mock()
+    mock_task.config.environment.cpus = 1
+    mock_task.config.environment.memory_mb = 6144
+    mock_task.config.environment.gpus = 0
+    mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.allow_internet = True
+    mock_task.config.environment.env = {}
+    mock_task.config.verifier.env = {}
+
+    result = harbor_to_compose_config(mock_task)
+
+    assert result.services["default"].image == "my-registry/my-image:v1.2.3"
+    # Pure pull-only service (no build:) is also left alone.
+    assert result.services["helper"].image == "redis:7"
 
 
 @pytest.mark.parametrize(

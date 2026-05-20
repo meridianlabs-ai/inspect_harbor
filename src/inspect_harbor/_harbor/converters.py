@@ -80,12 +80,23 @@ def harbor_to_compose_config(
                 for service in compose_config.services.values():
                     service.network_mode = "none"
 
+            # Pin a stable `image:` tag make them reusable across runs.
+            for svc_name, svc in compose_config.services.items():
+                if svc.build is not None and not svc.image:
+                    svc.image = _sanitize_docker_image_name(
+                        f"hb__{harbor_task.name}__{svc_name}"
+                    )
+
         return compose_config
     else:
         # Build programmatically from Dockerfile or docker_image
         service = ComposeService(
-            # Use prebuilt image if specified, otherwise will build from Dockerfile
-            image=env_config.docker_image or None,
+            # Use prebuilt image if specified, otherwise tag our build output
+            # with a deterministic name derived from the task.
+            image=(
+                env_config.docker_image
+                or _sanitize_docker_image_name(f"hb__{harbor_task.name}")
+            ),
             # Use Dockerfile if it exists and no prebuilt image specified
             build=(
                 ComposeBuild(context=str(env_dir))
