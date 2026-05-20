@@ -1,5 +1,27 @@
 # changelog – Inspect Harbor
 
+## [0.5.4](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.3...v0.5.4) (2026-05-20)
+
+### Bug Fixes
+
+- stable docker image tags so repeat eval runs reuse the cached image ([\#82](https://github.com/meridianlabs-ai/inspect_harbor/issues/82)) ([749ba78](https://github.com/meridianlabs-ai/inspect_harbor/commit/749ba78bf437b18f1cf29d4b86b4daf3b1c6a9c8))
+
+## [0.5.3](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.2...v0.5.3) (2026-05-18)
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#79](https://github.com/meridianlabs-ai/inspect_harbor/issues/79)) ([3c3c9f8](https://github.com/meridianlabs-ai/inspect_harbor/commit/3c3c9f8ce7af9cafe1906d0a09a392968f9af12f))
+
+## [0.5.2](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.1...v0.5.2) (2026-05-12)
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#76](https://github.com/meridianlabs-ai/inspect_harbor/issues/76)) ([660d5ca](https://github.com/meridianlabs-ai/inspect_harbor/commit/660d5caaecbe0696fc43a632d0444c633a6b3d09))
+
+### Documentation
+
+- add post-merge publish step to nightly-pr-triage skill ([\#78](https://github.com/meridianlabs-ai/inspect_harbor/issues/78)) ([fc9ad48](https://github.com/meridianlabs-ai/inspect_harbor/commit/fc9ad4888c356be282f21490506650981b76da85))
+
 ## [0.5.1](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.0...v0.5.1) (2026-05-08)
 
 ### Bug Fixes

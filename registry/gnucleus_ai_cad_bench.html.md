@@ -25,7 +25,7 @@ eval(gnucleus_ai_cad_bench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [gnucleus-ai/cad-bench](https://hub.harborframework.com/datasets/gnucleus-ai/cad-bench/latest) |
 | Inspect task | `gnucleus_ai_cad_bench` |
-| Latest digest | sha256:a1300ea8054a562259735c02b98246cb234cd6b37941cc60e627b97f97a09252 |
+| Latest digest | sha256:22be8aa80fdbf2d9844e73c9d91ee7e01082d70bcf706d347216d0b97bdf862e |
 | Samples | 100 |
 | Source | <https://www.gnucleus.ai/cad-bench> |
 

@@ -25,7 +25,7 @@ eval(swe_bench_verified(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [swe-bench/swe-bench-verified](https://hub.harborframework.com/datasets/swe-bench/swe-bench-verified/latest) |
 | Inspect task | `swe_bench_verified` |
-| Latest digest | sha256:235d6032d549851a936db3b5fe08807c4d385c12ee10e7be9c9786a1ff60563c |
+| Latest digest | sha256:b934b0cc3dc800fe945eaf9f1623329db97ee3133c706d20644524c7759fb341 |
 | Samples | 500 |
 | Paper | [arxiv](https://arxiv.org/abs/2310.06770) |
 | Source | <https://github.com/SWE-bench/SWE-bench> |

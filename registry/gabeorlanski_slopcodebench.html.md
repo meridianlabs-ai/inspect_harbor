@@ -25,7 +25,7 @@ eval(gabeorlanski_slopcodebench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [gabeorlanski/slopcodebench](https://hub.harborframework.com/datasets/gabeorlanski/slopcodebench/latest) |
 | Inspect task | `gabeorlanski_slopcodebench` |
-| Latest digest | sha256:79c6ffe0a2ac7e1a71ec0d0f50799ae235b14efdd65019f059023485db23122e |
+| Latest digest | sha256:73a17cda817d37ce3352d18c272c40a3f6b623061023bee365b4df74adcd11b5 |
 | Samples | 36 |
 | Paper | [arxiv](https://arxiv.org/abs/2603.24755) |
 | Source | <https://github.com/SprocketLab/slop-code-bench> |
