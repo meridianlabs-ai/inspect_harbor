@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.4](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.3...v0.5.4) (2026-05-20)
+
+
+### Bug Fixes
+
+* stable docker image tags so repeat eval runs reuse the cached image ([#82](https://github.com/meridianlabs-ai/inspect_harbor/issues/82)) ([749ba78](https://github.com/meridianlabs-ai/inspect_harbor/commit/749ba78bf437b18f1cf29d4b86b4daf3b1c6a9c8))
+
 ## [0.5.3](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.2...v0.5.3) (2026-05-18)
 
 
