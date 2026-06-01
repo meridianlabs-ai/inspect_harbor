@@ -75,7 +75,10 @@ MichaelY310/devopsgym:
   title: DevOps-Gym
 
 aarr/aarri-bench:
-  categories: []
+  categories:
+  - Science
+  - Assistants
+  title: AARRI-Bench
 
 abundant/swe-gen-cpp:
   categories:
@@ -113,7 +116,11 @@ abundant/swe-gen-rust:
   title: SWE-gen (Rust)
 
 actava-ai/chi-bench:
-  categories: []
+  categories:
+  - Medicine
+  - Professional
+  arxiv: https://arxiv.org/abs/2605.16679
+  title: χ-Bench
 
 adyen/dabstep:
   categories:
@@ -127,10 +134,16 @@ adyen/dabstep:
   title: DABstep
 
 agentic-labs/erp-bench:
-  categories: []
+  categories:
+  - Professional
+  arxiv: https://arxiv.org/abs/2605.26321
+  title: ERP-Bench
 
 ai-forever/harness-bench-fast:
-  categories: []
+  categories:
+  - Coding
+  repo: https://github.com/ai-forever/harness-bench-fast
+  title: Harness-Bench (Fast)
 
 aider/aider-polyglot:
   categories:
@@ -179,10 +192,14 @@ arcprize/arc-agi-2:
   featured: true
 
 bauerjustin/tb3-preview-v2:
-  categories: []
+  categories:
+  - Coding
+  title: Terminal-Bench 3 (preview v2)
 
 bauerjustin/terminal-bench-3-test:
-  categories: []
+  categories:
+  - Coding
+  title: Terminal-Bench 3 (test)
 
 bigcode/bigcodebench-hard-complete:
   categories:
@@ -252,7 +269,10 @@ crustbench/crustbench:
   title: CRUST-Bench
 
 datacurve/deep-swe:
-  categories: []
+  categories:
+  - Coding
+  repo: https://github.com/datacurve-ai/deep-swe
+  title: DeepSWE
 
 dbt-labs/ade-bench:
   categories:
@@ -404,7 +424,9 @@ grafana/o11y-bench:
   repo: https://github.com/grafana/o11y-bench
 
 harbor/rewardhackbench:
-  categories: []
+  categories:
+  - Safeguards
+  title: RewardHackBench
 
 harveyai/lab:
   categories:
@@ -480,7 +502,11 @@ lawbench/lawbench:
   title: LawBench
 
 lcb/longswebench-32k:
-  categories: []
+  categories:
+  - Coding
+  arxiv: https://arxiv.org/abs/2505.07897
+  repo: https://github.com/Zteefano/long-code-bench
+  title: LongSWE-Bench (32k)
 
 lica-world/gdb:
   categories:
@@ -523,6 +549,14 @@ minnesotanlp/aar:
   arxiv: https://arxiv.org/abs/2604.10261
   repo: https://github.com/minnesotanlp/the-amazing-agent-race
   title: AAR
+
+mmtb/multimedia-terminalbench:
+  categories:
+  - Coding
+  - Multimodal
+  arxiv: https://arxiv.org/abs/2605.10966
+  repo: https://github.com/mm-tbench/multimedia-terminal-bench
+  title: MultiMedia-TerminalBench
 
 nvats/codeskills-bench:
   categories:
@@ -680,6 +714,12 @@ scale-ai/swe-atlas-rf:
   repo: https://github.com/scaleapi/SWE-Atlas
   title: SWE-Atlas (Refactoring)
 
+scale-ai/swe-atlas-tw:
+  categories:
+  - Coding
+  repo: https://github.com/scaleapi/SWE-Atlas
+  title: SWE-Atlas (Test Writing)
+
 scale-ai/swe-bench-pro:
   categories:
   - Coding
@@ -824,7 +864,10 @@ theagentcompany/theagentcompany:
   title: TheAgentCompany
 
 thetalab/vector-edit-gym:
-  categories: []
+  categories:
+  - Coding
+  - Multimodal
+  title: Vector Edit Gym
 
 usaco/usaco:
   categories:

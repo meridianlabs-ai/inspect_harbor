@@ -1910,6 +1910,37 @@ def minnesotanlp_aar(
 
 
 @task
+def mmtb_multimedia_terminalbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""MultiMedia-TerminalBench (MMTB): a benchmark of 105 realistic multimedia-file tasks in persistent terminal workspaces, across 5 meta-categories grounded in paid practitioner workflows.
+
+    Slug: mmtb/multimedia-terminalbench
+    Latest digest: sha256:0cece363cd8d5809bed7b78574c527aec269add8fe312ff917c493cbdf22c0dd
+    """
+    return _harbor_base(
+        package_name="mmtb/multimedia-terminalbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def nvats_codeskills_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2492,6 +2523,37 @@ def scale_ai_swe_atlas_rf(
     """
     return _harbor_base(
         package_name="scale-ai/swe-atlas-rf",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def scale_ai_swe_atlas_tw(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""SWE-Atlas - Test Writing -- A benchmark of comprehensive test writing problems for coding agents. Checkout https://github.com/scaleapi/SWE-Atlas/ for instructions on running it.
+
+    Slug: scale-ai/swe-atlas-tw
+    Latest digest: sha256:1fe41edad7c1cc96925f100be0d314804cc45f55a9a5b7c8583354f4bca30b44
+    """
+    return _harbor_base(
+        package_name="scale-ai/swe-atlas-tw",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
