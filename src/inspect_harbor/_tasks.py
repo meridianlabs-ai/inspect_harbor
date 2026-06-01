@@ -75,6 +75,37 @@ def michaely310_devopsgym(
 
 
 @task
+def aarr_aarri_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""aarri(act as a real research intern)-bench, for evaluating LLM agents in academic research tasks
+
+    Slug: aarr/aarri-bench
+    Latest digest: sha256:4cdb4aea9a63c16202e4b94b6f800ff2b3e0ba9969d70ca63c4289e185f20438
+    """
+    return _harbor_base(
+        package_name="aarr/aarri-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def abundant_swe_gen_cpp(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -230,6 +261,37 @@ def abundant_swe_gen_rust(
 
 
 @task
+def actava_ai_chi_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""χ-Bench: long-horizon, policy-rich U.S. healthcare workflow agent benchmark spanning provider prior-authorization, payer utilization management, and care management (78 hub tasks).
+
+    Slug: actava-ai/chi-bench
+    Latest digest: sha256:bd0b20dd71a286d4c4e7b7f17b3047bd9af572bb78bae3091db8f01a9761b325
+    """
+    return _harbor_base(
+        package_name="actava-ai/chi-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def adyen_dabstep(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -248,6 +310,68 @@ def adyen_dabstep(
     """
     return _harbor_base(
         package_name="adyen/dabstep",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def agentic_labs_erp_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ERP-Bench is the Odoo 19 benchmark used in the Anchor paper, "Preventing Artifact Drift in Agent Benchmark Generation." It contains 300 long-horizon procurement and manufacturing tasks generated from a single CP-SAT-backed specification.
+
+    Slug: agentic-labs/erp-bench
+    Latest digest: sha256:d3005dc4ff8a5cdba0efbb46e8dae9af29dc63f58255dd2e8329d4785d311605
+    """
+    return _harbor_base(
+        package_name="agentic-labs/erp-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def ai_forever_harness_bench_fast(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Self-contained file-operation agent benchmark
+
+    Slug: ai-forever/harness-bench-fast
+    Latest digest: sha256:c8376d1cd706a6325a7b7c8dbac360e59a5c9645d3075dcc83381b1c333899c0
+    """
+    return _harbor_base(
+        package_name="ai-forever/harness-bench-fast",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -651,6 +775,37 @@ def crustbench(
     """
     return _harbor_base(
         package_name="crustbench/crustbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def datacurve_deep_swe(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""DeepSWE: Measuring frontier coding agents on original, long-horizon engineering tasks
+
+    Slug: datacurve/deep-swe
+    Latest digest: sha256:aaa82ceb8404dccc17689c9383f93dbcbc8f029a7601d2e3856a416f2cb89269
+    """
+    return _harbor_base(
+        package_name="datacurve/deep-swe",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -1222,6 +1377,37 @@ def grafana_o11y_bench(
 
 
 @task
+def harbor_rewardhackbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is labelled for harness-level cheating, task-level reward hacking, and refusals.
+
+    Slug: harbor/rewardhackbench
+    Latest digest: sha256:0dd16e1029495cba180809b7ecfbae375089881b11ff11e369bfbbf3c72a2fd8
+    """
+    return _harbor_base(
+        package_name="harbor/rewardhackbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def harveyai_lab(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1470,6 +1656,37 @@ def lawbench(
 
 
 @task
+def lcb_longswebench_32k(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""LongCodeBench (LCB) LongSWE-Bench tasks — 32k context window bucket
+
+    Slug: lcb/longswebench-32k
+    Latest digest: sha256:dde4db0e62775d1ad50bfc6590214ad4e4bd601b313fdbd1a7437c4cd5f4d8fd
+    """
+    return _harbor_base(
+        package_name="lcb/longswebench-32k",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def lica_world_gdb(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1612,6 +1829,37 @@ def minnesotanlp_aar(
     """
     return _harbor_base(
         package_name="minnesotanlp/aar",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def mmtb_multimedia_terminalbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""MultiMedia-TerminalBench (MMTB): a benchmark of 105 realistic multimedia-file tasks in persistent terminal workspaces, across 5 meta-categories grounded in paid practitioner workflows.
+
+    Slug: mmtb/multimedia-terminalbench
+    Latest digest: sha256:0cece363cd8d5809bed7b78574c527aec269add8fe312ff917c493cbdf22c0dd
+    """
+    return _harbor_base(
+        package_name="mmtb/multimedia-terminalbench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -2716,6 +2964,37 @@ def theagentcompany(
 
 
 @task
+def thetalab_vector_edit_gym(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""106 hand-authored SVG editing tasks across four difficulty tiers (easy / medium / hard / very_hard). Each task is a corrupted SVG plus a natural-language fix instruction. Strict structural and preservation metrics catch stylistic drift.
+
+    Slug: thetalab/vector-edit-gym
+    Latest digest: sha256:b2ce5a813991c55c7b610c77a52a5c54f656aeb2b7239558a0a846a9be62c625
+    """
+    return _harbor_base(
+        package_name="thetalab/vector-edit-gym",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def usaco(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2820,10 +3099,10 @@ def webgen_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""WebGen-Bench: Evaluating LLMs on Generating Interactive and Functional Websites from Scratch (101 test tasks)
+    r"""WebGen-Bench: evaluating LLMs on generating interactive and functional websites from scratch.
 
     Slug: webgen-bench/webgen-bench
-    Latest digest: sha256:d0cdb3a983e5b307d4d46c789bf8a4f926939aa3c4f66ea187e22965cf3e834f
+    Latest digest: sha256:e593e93b325f9942ccae818c2a5d4adedbd837ac2aad96c6c3e3fe623be29374
     """
     return _harbor_base(
         package_name="webgen-bench/webgen-bench",

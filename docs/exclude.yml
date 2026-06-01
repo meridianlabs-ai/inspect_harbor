@@ -1,6 +1,7 @@
 # Hand-maintained list of fnmatch globs against `org/name` slugs.
 # Slugs matching any pattern here are dropped during scraping.
 
+- bauerjustin/*
 - cookbook/test
 - harbor/hello-world
 - openthoughts/*
