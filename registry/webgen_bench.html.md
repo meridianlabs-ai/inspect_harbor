@@ -25,7 +25,7 @@ eval(webgen_bench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [webgen-bench/webgen-bench](https://hub.harborframework.com/datasets/webgen-bench/webgen-bench/latest) |
 | Inspect task | `webgen_bench` |
-| Latest digest | sha256:d0cdb3a983e5b307d4d46c789bf8a4f926939aa3c4f66ea187e22965cf3e834f |
+| Latest digest | sha256:e593e93b325f9942ccae818c2a5d4adedbd837ac2aad96c6c3e3fe623be29374 |
 | Samples | 101 |
 | Paper | [arxiv](https://arxiv.org/abs/2505.03733) |
 | Source | <https://github.com/mnluzimu/WebGen-Bench> |
