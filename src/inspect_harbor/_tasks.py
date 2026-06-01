@@ -272,13 +272,7 @@ def actava_ai_chi_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""χ-Bench — long-horizon, policy-rich U.S. healthcare workflow agent benchmark across provider prior-auth, payer UM, and care management. 78 single-agent tasks on the hub (75 single-domain + 3 marathon); the 23 provider-payer E2E arena tasks need the two-agent dual-pa-e2e harness and run via the source repo, not the hub. Each task builds a self-contained image on demand (no hosted image/registry): Harbor clones the source repo and downloads the public fixtures dataset at build time.
-
-    PREREQUISITES: Docker + Harbor CLI, and an APPROVED Hugging Face token for the gated Managed-Care Operations Handbook (every task needs it; fetched at container start). Request access: https://huggingface.co/datasets/actava/managed-care-operations-handbook
-
-    RUN (HF_TOKEN from shell/--env-file; -y confirms, -i picks one task): HF_TOKEN=<approved-token> harbor run -d actava-ai/chi-bench@v1.0.1 -i actava-ai/pa_t016_t016_o001_p01_p2p_payer -a claude-code -m claude-opus-4-7 -y
-
-    LINKS — Code/runner/CLI: https://github.com/actava-ai/chi-bench · Fixtures dataset: https://huggingface.co/datasets/actava/chi-bench · Handbook (gated): https://huggingface.co/datasets/actava/managed-care-operations-handbook · Leaderboard: https://actava.ai/benchmarks/leaderboards · Paper: https://arxiv.org/abs/2605.16679 · Harbor-hub guide: https://github.com/actava-ai/chi-bench/blob/main/docs/harbor-hub.md
+    r"""χ-Bench: long-horizon, policy-rich U.S. healthcare workflow agent benchmark spanning provider prior-authorization, payer utilization management, and care management (78 hub tasks).
 
     Slug: actava-ai/chi-bench
     Latest digest: sha256:bd0b20dd71a286d4c4e7b7f17b3047bd9af572bb78bae3091db8f01a9761b325
@@ -533,68 +527,6 @@ def arcprize_arc_agi_2(
     """
     return _harbor_base(
         package_name="arcprize/arc-agi-2",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def bauerjustin_tb3_preview_v2(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Snapshot of harbor-framework/terminal-bench-3 tb3-preview-v2 branch (89 tasks)
-
-    Slug: bauerjustin/tb3-preview-v2
-    Latest digest: sha256:0b8665bef41d7783e090585f90da24db88445bb7202e69dc9a63b05bbc77259f
-    """
-    return _harbor_base(
-        package_name="bauerjustin/tb3-preview-v2",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def bauerjustin_terminal_bench_3_test(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Terminal Bench 3 tasks
-
-    Slug: bauerjustin/terminal-bench-3-test
-    Latest digest: sha256:6e510c131dbf307c3ddb4e0ede5e98a2bf383a15766c8e2139918f9e8d4488ce
-    """
-    return _harbor_base(
-        package_name="bauerjustin/terminal-bench-3-test",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -1456,7 +1388,7 @@ def harbor_rewardhackbench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""harbor/rewardhackbench dataset from Harbor registry
+    r"""RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is labelled for harness-level cheating, task-level reward hacking, and refusals.
 
     Slug: harbor/rewardhackbench
     Latest digest: sha256:0dd16e1029495cba180809b7ecfbae375089881b11ff11e369bfbbf3c72a2fd8

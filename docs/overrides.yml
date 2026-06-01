@@ -121,6 +121,7 @@ actava-ai/chi-bench:
   - Professional
   arxiv: https://arxiv.org/abs/2605.16679
   title: χ-Bench
+  desc: 'χ-Bench: long-horizon, policy-rich U.S. healthcare workflow agent benchmark spanning provider prior-authorization, payer utilization management, and care management (78 hub tasks).'
 
 adyen/dabstep:
   categories:
@@ -190,16 +191,6 @@ arcprize/arc-agi-2:
   desc: 'ARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but state-of-the-art models still struggle.'
   title: ARC-AGI-2
   featured: true
-
-bauerjustin/tb3-preview-v2:
-  categories:
-  - Coding
-  title: Terminal-Bench 3 (preview v2)
-
-bauerjustin/terminal-bench-3-test:
-  categories:
-  - Coding
-  title: Terminal-Bench 3 (test)
 
 bigcode/bigcodebench-hard-complete:
   categories:
@@ -427,6 +418,7 @@ harbor/rewardhackbench:
   categories:
   - Safeguards
   title: RewardHackBench
+  desc: 'RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is labelled for harness-level cheating, task-level reward hacking, and refusals.'
 
 harveyai/lab:
   categories:
