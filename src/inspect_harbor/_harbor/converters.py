@@ -1,5 +1,6 @@
 """Converters for Harbor tasks to Inspect AI structures."""
 
+import os
 import re
 from typing import Any
 
@@ -12,6 +13,7 @@ from inspect_ai.util import (
     ComposeBuild,
     ComposeConfig,
     ComposeService,
+    SandboxEnvironmentConfigType,
     SandboxEnvironmentSpec,
 )
 from inspect_ai.util._sandbox.compose import (
@@ -20,6 +22,10 @@ from inspect_ai.util._sandbox.compose import (
     ComposeResourceConfig,
     ComposeResourceReservations,
 )
+
+from inspect_harbor._harbor.sandbox_utils import resolve_env_vars
+
+_NETWORK_MODE_NO_NETWORK = "no-network"  # harbor's NetworkMode.NO_NETWORK value
 
 
 def harbor_to_compose_config(
@@ -76,8 +82,10 @@ def harbor_to_compose_config(
                 default_service.deploy = gpu_deploy
 
             # Network isolation applies to all services.
-            if not env_config.allow_internet:
+            if _is_no_network(env_config):
                 for service in compose_config.services.values():
+                    if service.networks:
+                        continue
                     service.network_mode = "none"
 
             # Pin a stable `image:` tag make them reusable across runs.
@@ -89,7 +97,13 @@ def harbor_to_compose_config(
 
         return compose_config
     else:
-        # Build programmatically from Dockerfile or docker_image
+        # Build programmatically from Dockerfile or docker_image.
+        # Resolve ``${VAR}`` / ``${VAR:-default}`` references.
+        resolved_env: dict[str, str | None] | None = (
+            {k: v for k, v in resolve_env_vars(env_config.env).items()}
+            if env_config.env
+            else None
+        )
         service = ComposeService(
             # Use prebuilt image if specified, otherwise tag our build output
             # with a deterministic name derived from the task.
@@ -107,9 +121,9 @@ def harbor_to_compose_config(
             mem_limit=f"{memory_mb}m",
             command="tail -f /dev/null",
             init=True,
-            network_mode="bridge" if env_config.allow_internet else "none",
+            network_mode="none" if _is_no_network(env_config) else "bridge",
             deploy=gpu_deploy,
-            environment=dict(env_config.env) if env_config.env else None,
+            environment=resolved_env,
         )
 
         return ComposeConfig(services={"default": service})
@@ -237,9 +251,6 @@ def _expand_compose_vars(
 ) -> str:
     """Expand ``${VAR}`` and ``${VAR:-default}`` references in a Harbor docker-compose.yaml.
 
-    Harbor passes these variables as environment variables to the
-    ``docker compose`` process, which performs the substitution natively.
-
     Limitation: ``HOST_*`` paths (the host side of volume mounts) are set to
     the same container-side ``EnvironmentPaths`` values as ``ENV_*``. In
     Harbor's DinD setup these differ, but we cannot resolve host-side paths
@@ -272,8 +283,7 @@ def _expand_compose_vars(
     else:
         var_map["TEST_DIR"] = str(paths.tests_dir)
 
-    task_env = harbor_task.config.environment.env
-    for key, value in task_env.items():
+    for key, value in resolve_env_vars(harbor_task.config.environment.env).items():
         var_map.setdefault(key, value)
 
     def _replace(match: re.Match[str]) -> str:
@@ -284,8 +294,27 @@ def _expand_compose_vars(
             var_name, default = body, None
         if var_name in var_map:
             return var_map[var_name]
+        if var_name in os.environ:
+            return os.environ[var_name]
         if default is not None:
             return default
         return match.group(0)
 
     return re.sub(r"\$\{([^}]+)}", _replace, raw_yaml)
+
+
+def _is_no_network(env_config: SandboxEnvironmentConfigType) -> bool:
+    """Whether an environment should run with no network access.
+
+    Harbor's network-policy field changed across releases:
+    * harbor <0.13 exposes a boolean ``allow_internet``.
+    * harbor >=0.13 migrated to a three-valued ``network_mode`` enum.
+    """
+    # TODO: Drop the legacy ``allow_internet`` fallback and read ``network_mode``
+    # only once we can require harbor >=0.13.
+    allow_internet = getattr(env_config, "allow_internet", None)
+    if allow_internet is not None:
+        return not allow_internet
+
+    network_mode = getattr(env_config, "network_mode", None)
+    return getattr(network_mode, "value", network_mode) == _NETWORK_MODE_NO_NETWORK

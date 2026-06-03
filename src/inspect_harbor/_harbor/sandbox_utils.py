@@ -9,6 +9,10 @@ from inspect_ai.util import sandbox
 
 logger = logging.getLogger(__name__)
 
+# Mirror harbor's ``resolve_env_vars`` template syntax (harbor/utils/env.py):
+# ``${VAR}`` or ``${VAR:-default}``. The body up to ``:-`` is the var name.
+_ENV_TEMPLATE_PATTERN = re.compile(r"\$\{([^}:]+)(?::-(.*))?\}")
+
 
 async def copy_directory_to_sandbox(local_dir: str | Path, container_path: str) -> None:
     """Recursively copy a local directory to the sandbox.
@@ -37,8 +41,9 @@ def resolve_env_vars(env_dict: dict[str, str]) -> dict[str, str]:
     """
     Resolve environment variable templates in a dictionary.
 
-    Templates like "${VAR_NAME}" are replaced with values from os.environ.
-    Literal values are passed through unchanged.
+    Matches harbor's own ``resolve_env_vars`` (harbor/utils/env.py)
+    so the agent/verifier/solution environments resolve identically
+    to a native harbor run.
 
     Args:
         env_dict: Dictionary with potentially templated values
@@ -47,20 +52,24 @@ def resolve_env_vars(env_dict: dict[str, str]) -> dict[str, str]:
         Dictionary with resolved values
 
     Raises:
-        ValueError: If a required environment variable is not found
+        ValueError: If a required environment variable is not found and no
+            default is provided.
     """
     resolved = {}
-    pattern = re.compile(r"\$\{([^}]+)\}")
 
     for key, value in env_dict.items():
-        match = pattern.fullmatch(value)
+        match = _ENV_TEMPLATE_PATTERN.fullmatch(value)
         if match:
             var_name = match.group(1)
-            if var_name not in os.environ:
+            default = match.group(2)
+            if var_name in os.environ:
+                resolved[key] = os.environ[var_name]
+            elif default is not None:
+                resolved[key] = default
+            else:
                 raise ValueError(
                     f"Environment variable '{var_name}' not found in host environment"
                 )
-            resolved[key] = os.environ[var_name]
         else:
             resolved[key] = value
 

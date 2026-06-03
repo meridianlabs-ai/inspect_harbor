@@ -11,7 +11,7 @@ readme = "README.md"
 # Note: harbor package requires Python >=3.12, so we cannot lower this requirement
 requires-python = ">=3.12"
 license = { text = "MIT License" }
-dependencies = ["inspect-ai>=0.3.201", "harbor>=0.6.5", "pyyaml"]
+dependencies = ["inspect-ai>=0.3.225", "harbor>=0.6.5", "pyyaml"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
