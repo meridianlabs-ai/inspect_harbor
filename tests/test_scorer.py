@@ -516,18 +516,85 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
             assert result.answer == "PASS"
             assert result.metadata is None  # reward.txt returns None for reward_dict
 
-            # Verify cleanup was called AFTER scoring
-            # Should have: [mkdir /logs/agent, mkdir /logs/verifier, bash test.sh, rm /tests, rm /logs/verifier]
-            assert len(exec_calls) == 5
-            assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]  # Setup logs
-            assert exec_calls[1] == ["mkdir", "-p", "/logs/verifier"]  # Setup logs
-            assert exec_calls[2] == ["bash", "-l", "/tests/test.sh"]  # Test execution
-            assert exec_calls[3] == ["rm", "-rf", "/tests"]  # Cleanup /tests
-            assert exec_calls[4] == [
-                "rm",
-                "-rf",
-                "/logs/verifier",
-            ]  # Cleanup /logs/verifier
+            # Verify cleanup was called AFTER scoring. Sequence:
+            # mkdir /logs/agent, mkdir /logs/verifier, bash test.sh,
+            # rm /tests, rm /logs/verifier, then unset for each default env
+            # var (currently just TEST_DIR).
+            assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
+            assert exec_calls[1] == ["mkdir", "-p", "/logs/verifier"]
+            assert exec_calls[2] == ["bash", "-l", "/tests/test.sh"]
+            assert exec_calls[3] == ["rm", "-rf", "/tests"]
+            assert exec_calls[4] == ["rm", "-rf", "/logs/verifier"]
+            assert ["unset", "TEST_DIR"] in exec_calls[5:]
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_injects_default_test_dir(tmp_path: Path):
+    """Harbor's scorer always copies tests to /tests, so test scripts can rely on TEST_DIR=/tests being set even when a task's [verifier.env] is empty.
+
+    Task-supplied verifier.env values override the defaults.
+    """
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    async def run_scorer(
+        verifier_env: dict[str, str] | None,
+    ) -> dict[str, str] | None:
+        """Run the scorer and return the env dict passed to the test exec."""
+        mock_state = Mock(spec=TaskState)
+        mock_state.metadata = {
+            "tests_dir": str(tests_dir),
+            "test_path": str(test_script),
+            "verifier_timeout_sec": 60,
+        }
+        if verifier_env is not None:
+            mock_state.metadata["verifier_env"] = verifier_env
+
+        mock_target = Mock(spec=Target)
+        mock_sandbox = Mock()
+        mock_sandbox.write_file = AsyncMock()
+        mock_exec_result = Mock(returncode=0, stdout="", stderr="")
+
+        captured: dict[str, dict[str, str] | None] = {"env": None}
+
+        async def capture_exec(cmd: list[str], **kwargs: object) -> Mock:
+            # The test-script exec is the one we want to inspect.
+            if cmd[:2] == ["bash", "-l"]:
+                captured["env"] = kwargs.get("env")  # type: ignore[assignment]
+            return mock_exec_result
+
+        mock_sandbox.exec = AsyncMock(side_effect=capture_exec)
+        mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+        with (
+            patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+            patch(
+                "inspect_harbor._harbor.sandbox_utils.sandbox",
+                return_value=mock_sandbox,
+            ),
+        ):
+            await harbor_scorer()(mock_state, mock_target)
+        return captured["env"]
+
+    # No verifier.env supplied → defaults applied.
+    env = await run_scorer(verifier_env=None)
+    assert env is not None and env.get("TEST_DIR") == "/tests"
+
+    # Empty verifier.env → defaults still applied.
+    env = await run_scorer(verifier_env={})
+    assert env is not None and env.get("TEST_DIR") == "/tests"
+
+    # User-supplied TEST_DIR overrides the default.
+    env = await run_scorer(verifier_env={"TEST_DIR": "/custom/path"})
+    assert env is not None and env["TEST_DIR"] == "/custom/path"
+
+    # Extra user-supplied vars are passed alongside the defaults.
+    env = await run_scorer(verifier_env={"MY_VAR": "value"})
+    assert env is not None
+    assert env["TEST_DIR"] == "/tests"
+    assert env["MY_VAR"] == "value"
 
 
 def test_resolve_env_vars_with_template(monkeypatch: pytest.MonkeyPatch):
@@ -592,6 +659,24 @@ def test_resolve_env_vars_empty_dict():
     """Test resolving empty dictionary returns empty dictionary."""
     resolved = resolve_env_vars({})
     assert resolved == {}
+
+
+def test_resolve_env_vars_default_syntax(monkeypatch: pytest.MonkeyPatch):
+    """``${VAR:-default}`` uses the host value when set, else the default."""
+    monkeypatch.setenv("SET_VAR", "from-host")
+    monkeypatch.delenv("UNSET_VAR", raising=False)
+
+    resolved = resolve_env_vars(
+        {
+            "FROM_HOST": "${SET_VAR:-fallback}",
+            "FROM_DEFAULT": "${UNSET_VAR:-fallback}",
+            "EMPTY_DEFAULT": "${UNSET_VAR:-}",
+        }
+    )
+
+    assert resolved["FROM_HOST"] == "from-host"
+    assert resolved["FROM_DEFAULT"] == "fallback"
+    assert resolved["EMPTY_DEFAULT"] == ""
 
 
 @pytest.mark.asyncio
@@ -717,9 +802,9 @@ async def test_harbor_scorer_no_verifier_env(tmp_path: Path):
                 call for call in exec_calls if call["cmd"][0] == "bash"
             )
 
-            # Verify env was passed as None (not in metadata)
+            # No verifier_env in metadata, but defaults (TEST_DIR) are injected.
             assert "env" in test_exec_call["kwargs"]
-            assert test_exec_call["kwargs"]["env"] is None
+            assert test_exec_call["kwargs"]["env"] == {"TEST_DIR": "/tests"}
 
 
 @pytest.mark.asyncio
@@ -776,9 +861,9 @@ async def test_harbor_scorer_empty_verifier_env(tmp_path: Path):
                 call for call in exec_calls if call["cmd"][0] == "bash"
             )
 
-            # Verify env was passed as None (empty dict)
+            # Empty verifier_env, but defaults (TEST_DIR) are still injected.
             assert "env" in test_exec_call["kwargs"]
-            assert test_exec_call["kwargs"]["env"] is None
+            assert test_exec_call["kwargs"]["env"] == {"TEST_DIR": "/tests"}
 
 
 @pytest.mark.asyncio
@@ -915,22 +1000,16 @@ async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
             assert result is not None
             assert result.value == 1.0
 
-            # Verify cleanup was called AFTER scoring
-            # Expected calls:
-            # 1. mkdir /logs/agent
-            # 2. mkdir /logs/verifier
-            # 3. bash test.sh
-            # 4. rm /tests
-            # 5. rm /logs/verifier
-            # 6. unset OPENAI_API_KEY
-            # 7. unset MODEL_NAME
-            assert len(exec_calls) == 7
+            # Verify cleanup was called AFTER scoring. Expected sequence:
+            # mkdir /logs/agent, mkdir /logs/verifier, bash test.sh,
+            # rm /tests, rm /logs/verifier, then unset for each env var
+            # (TEST_DIR default + the two user-supplied).
             assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
             assert exec_calls[1] == ["mkdir", "-p", "/logs/verifier"]
             assert exec_calls[2] == ["bash", "-l", "/tests/test.sh"]
             assert exec_calls[3] == ["rm", "-rf", "/tests"]
             assert exec_calls[4] == ["rm", "-rf", "/logs/verifier"]
-            # Check cleanup was called for all env vars
+            # Check cleanup was called for all env vars (user + defaults).
             env_cleanup_calls = exec_calls[5:]
             assert ["unset", "OPENAI_API_KEY"] in env_cleanup_calls
             assert ["unset", "MODEL_NAME"] in env_cleanup_calls

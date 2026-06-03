@@ -152,8 +152,16 @@ def test_harbor_to_compose_config_dockerfile_image_tag_is_deterministic():
     assert isinstance(first.services["default"].build, ComposeBuild)
 
 
-def test_harbor_to_compose_config_dockerfile_path_injects_task_env():
-    """No-compose-yaml branch wires ``[environment].env`` into the service."""
+def test_harbor_to_compose_config_dockerfile_path_injects_task_env(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    """No-compose-yaml branch resolves ``[environment].env`` host refs.
+
+    Mirrors harbor's ``_maybe_resolve_task_env``: ``${VAR}`` is baked in from
+    the host now (so it reaches remote DinD providers), ``${VAR:-default}``
+    falls back, and literals pass through.
+    """
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-resolved")
     mock_task = Mock()
     mock_task.name = "env-injection-task"
     mock_paths = Mock()
@@ -163,6 +171,7 @@ def test_harbor_to_compose_config_dockerfile_path_injects_task_env():
     mock_env_config = Mock()
     mock_env_config.env = {
         "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "MODEL": "${UNSET_MODEL:-gpt-5}",
         "LOG_LEVEL": "INFO",
     }
     mock_env_config.cpus = 1.0
@@ -181,9 +190,38 @@ def test_harbor_to_compose_config_dockerfile_path_injects_task_env():
 
     service = result.services["default"]
     assert service.environment == {
-        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "OPENAI_API_KEY": "sk-resolved",
+        "MODEL": "gpt-5",
         "LOG_LEVEL": "INFO",
     }
+
+
+def test_harbor_to_compose_config_dockerfile_path_missing_env_var_raises(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    """A required host var with no default fails fast (matches harbor)."""
+    monkeypatch.delenv("MISSING_SECRET", raising=False)
+    mock_task = Mock()
+    mock_task.name = "env-injection-task"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/task/environment")
+
+    mock_env_config = Mock()
+    mock_env_config.env = {"API_KEY": "${MISSING_SECRET}"}
+    mock_env_config.cpus = 1.0
+    mock_env_config.memory_mb = 2048
+    mock_env_config.docker_image = None
+    mock_env_config.allow_internet = True
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_task.config.environment = mock_env_config
+
+    def exists_side_effect(self: Path) -> bool:
+        return str(self).endswith("Dockerfile")
+
+    with patch("pathlib.Path.exists", exists_side_effect):
+        with pytest.raises(ValueError, match="MISSING_SECRET"):
+            harbor_to_compose_config(mock_task)
 
 
 def test_harbor_to_compose_config_with_prebuilt_image():
@@ -429,6 +467,168 @@ def test_harbor_to_compose_config_network_mode_without_internet():
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
         assert result.services["default"].network_mode == "none"
+
+
+def test_harbor_to_compose_config_network_mode_field_no_network():
+    """Harbor >= 0.13 ``network_mode='no-network'`` isolates services.
+
+    The legacy ``allow_internet`` is cleared to ``None`` by harbor's
+    validators, so the Dockerfile branch must read ``network_mode``.
+    """
+    mock_task = Mock()
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/task/environment")
+
+    mock_env_config = Mock()
+    mock_env_config.env = {}
+    mock_env_config.cpus = 1
+    mock_env_config.memory_mb = 2048
+    mock_env_config.docker_image = "ubuntu:latest"
+    # Harbor 0.13 clears the legacy boolean and sets the enum value.
+    mock_env_config.allow_internet = None
+    mock_env_config.network_mode = "no-network"
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_task.config.environment = mock_env_config
+
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_to_compose_config(mock_task)
+        assert result.services["default"].network_mode == "none"
+
+
+@pytest.mark.parametrize("network_mode", ["public", "allowlist"])
+def test_harbor_to_compose_config_network_mode_field_allows_network(
+    network_mode: str,
+):
+    """Harbor >= 0.13 ``public``/``allowlist`` allow the network (bridge).
+
+    ``allowlist`` is treated like ``public`` for now (binary network model).
+    """
+    mock_task = Mock()
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/task/environment")
+
+    mock_env_config = Mock()
+    mock_env_config.env = {}
+    mock_env_config.cpus = 1
+    mock_env_config.memory_mb = 2048
+    mock_env_config.docker_image = "ubuntu:latest"
+    mock_env_config.allow_internet = None
+    mock_env_config.network_mode = network_mode
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_task.config.environment = mock_env_config
+
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_to_compose_config(mock_task)
+        assert result.services["default"].network_mode == "bridge"
+
+
+# A kumo-style compose: per-service ``networks:`` plus a top-level network.
+# ``network_mode`` and ``networks`` are mutually exclusive in compose.
+EXPLICIT_NETWORKS_YAML = """\
+services:
+  main:
+    image: python:3.11
+    networks:
+      - internal
+  verifier:
+    image: python:3.11
+    networks:
+      - internal
+networks:
+  internal:
+    driver: bridge
+"""
+
+
+def test_compose_yaml_explicit_networks_not_clobbered_by_network_mode():
+    """Explicit ``networks:`` are never clobbered with ``network_mode``.
+
+    Reproduces the kumo/* failure where docker compose rejected the project
+    with "service X declares mutually exclusive network_mode and networks".
+    The task uses the deprecated ``allow_internet`` (migrated to
+    ``network_mode='public'``) so isolation isn't even requested, yet the old
+    code read the always-None ``allow_internet`` and forced ``none``.
+    """
+    mock_task = Mock()
+    mock_task.name = "kumo-style-task"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/task/environment")
+    mock_task.config.environment = Mock()
+    mock_task.config.environment.cpus = 4
+    mock_task.config.environment.memory_mb = 8192
+    mock_task.config.environment.gpus = 0
+    mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.env = {}
+    # harbor >= 0.13 state: legacy field cleared, enum says network allowed.
+    mock_task.config.environment.allow_internet = None
+    mock_task.config.environment.network_mode = "public"
+    mock_task.config.verifier.env = {}
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=EXPLICIT_NETWORKS_YAML)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    # Explicit networks are preserved; no mutually-exclusive network_mode added.
+    for svc in result.services.values():
+        assert svc.networks == ["internal"]
+        assert svc.network_mode is None
+
+
+def test_compose_yaml_no_network_leaves_explicit_networks_alone():
+    """No-network isolation leaves a service's explicit ``networks:`` intact.
+
+    User-defined networks already isolate the service from the host, so we
+    leave author intent untouched rather than add a mutually-exclusive
+    ``network_mode`` that produces an invalid compose project.
+    """
+    mock_task = Mock()
+    mock_task.name = "kumo-style-task"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/task/environment")
+    mock_task.config.environment = Mock()
+    mock_task.config.environment.cpus = 4
+    mock_task.config.environment.memory_mb = 8192
+    mock_task.config.environment.gpus = 0
+    mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.env = {}
+    mock_task.config.environment.allow_internet = None
+    mock_task.config.environment.network_mode = "no-network"
+    mock_task.config.verifier.env = {}
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=EXPLICIT_NETWORKS_YAML)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    for svc in result.services.values():
+        assert svc.networks == ["internal"]
+        assert svc.network_mode is None
+
+
+def test_compose_yaml_no_network_still_isolates_services_without_networks():
+    """No-network services without explicit ``networks:`` still get ``none``.
+
+    The isolation path must not regress for the common multi-service case.
+    """
+    mock_task = _make_multi_service_task(allow_internet=None)
+    mock_task.config.environment.network_mode = "no-network"
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=MULTI_SERVICE_YAML)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    assert result.services["main"].network_mode == "none"
+    assert result.services["helper"].network_mode == "none"
 
 
 def test_harbor_task_to_sample_metadata_preserved():
@@ -1021,7 +1221,7 @@ def _make_multi_service_task(
     memory_mb: int = 8192,
     gpus: int = 0,
     gpu_types: list[str] | None = None,
-    allow_internet: bool = True,
+    allow_internet: bool | None = True,
 ) -> Mock:
     mock_task = Mock()
     mock_task.name = "multi-svc-task"
@@ -1277,15 +1477,6 @@ def test_expand_compose_vars_test_dir_from_verifier_env():
             "env: DEBUG",
             "task-env literal value substitutes",
         ),
-        # ``${HOST_VAR}`` inside a task-env value passes through unchanged so
-        # docker compose can resolve it from the host at run-time.
-        (
-            {"OPENAI_API_KEY": "${OPENAI_API_KEY}"},
-            "env: ${OPENAI_API_KEY}",
-            1.0,
-            "env: ${OPENAI_API_KEY}",
-            "host-var refs pass through to compose",
-        ),
         # Built-in keys (CPUS, MEMORY, …) win on collision via setdefault.
         (
             {"CPUS": "999"},
@@ -1313,6 +1504,71 @@ def test_expand_compose_vars_task_env(
 
     result = _expand_compose_vars(raw, mock_task, cpus, 2048)
     assert expected_substring in result, reason
+
+
+def _make_expand_task(task_env: dict[str, str]) -> Mock:
+    mock_task = Mock()
+    mock_task.name = "t"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/env")
+    mock_task.config.verifier.env = {}
+    mock_task.config.environment.env = task_env
+    return mock_task
+
+
+def test_expand_compose_vars_resolves_host_ref_in_yaml(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    """A ``${HOST_VAR}`` in the compose text is baked in from ``os.environ``.
+
+    Resolving orchestrator-side is what lets the secret reach a remote DinD
+    provider whose ``docker compose`` can't see the host environment.
+    """
+    monkeypatch.setenv("MY_SECRET", "sk-resolved")
+    mock_task = _make_expand_task({})
+
+    result = _expand_compose_vars("env: ${MY_SECRET}", mock_task, 1.0, 2048)
+    assert result == "env: sk-resolved"
+
+
+def test_expand_compose_vars_resolves_host_ref_via_task_env(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    """A task-env value referencing a host var resolves to the host value."""
+    monkeypatch.setenv("MY_SECRET", "sk-resolved")
+    mock_task = _make_expand_task({"API_KEY": "${MY_SECRET}"})
+
+    result = _expand_compose_vars("env: ${API_KEY}", mock_task, 1.0, 2048)
+    assert result == "env: sk-resolved"
+
+
+def test_expand_compose_vars_unknown_host_ref_left_literal(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    """An unknown ref with no default is left literal (compose YAML is lenient).
+
+    Harbor lets ``docker compose`` resolve these at run-time, so we don't raise
+    on bare compose-text references the orchestrator can't satisfy.
+    """
+    monkeypatch.delenv("TOTALLY_UNKNOWN_VAR", raising=False)
+    mock_task = _make_expand_task({})
+
+    result = _expand_compose_vars("env: ${TOTALLY_UNKNOWN_VAR}", mock_task, 1.0, 2048)
+    assert result == "env: ${TOTALLY_UNKNOWN_VAR}"
+
+
+def test_expand_compose_vars_missing_host_ref_in_task_env_raises(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    """A task-env value with an unset host var (no default) fails fast.
+
+    Mirrors harbor's ``resolve_env_vars`` building ``_compose_task_env``.
+    """
+    monkeypatch.delenv("MISSING_VAR", raising=False)
+    mock_task = _make_expand_task({"API_KEY": "${MISSING_VAR}"})
+
+    with pytest.raises(ValueError, match="MISSING_VAR"):
+        _expand_compose_vars("env: ${API_KEY}", mock_task, 1.0, 2048)
 
 
 def test_expand_compose_vars_in_harbor_to_compose_config(tmp_path: Path):

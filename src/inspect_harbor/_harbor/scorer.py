@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from harbor.models.trial.paths import EnvironmentPaths
 from inspect_ai.scorer import Score, Scorer, Target, accuracy, scorer, stderr
 from inspect_ai.solver import TaskState
 from inspect_ai.util import sandbox
@@ -14,6 +15,11 @@ from inspect_harbor._harbor.sandbox_utils import (
     copy_directory_to_sandbox,
     resolve_env_vars,
 )
+
+# ``TEST_DIR`` is a Terminal-Bench convention some verifier scripts rely on.
+_DEFAULT_VERIFIER_ENV: dict[str, str] = {
+    "TEST_DIR": str(EnvironmentPaths().tests_dir),
+}
 
 
 class CopyTestsDirError(Exception):
@@ -85,7 +91,10 @@ def harbor_scorer(
         await sandbox().exec(["mkdir", "-p", "/logs/verifier"])
 
         verifier_env_raw = state.metadata.get("verifier_env", {})
-        verifier_env = resolve_env_vars(verifier_env_raw) if verifier_env_raw else None
+        resolved_user_env = (
+            resolve_env_vars(verifier_env_raw) if verifier_env_raw else {}
+        )
+        verifier_env = {**_DEFAULT_VERIFIER_ENV, **resolved_user_env}
         verifier_user = state.metadata.get("verifier_user")
 
         result = await sandbox().exec(
@@ -106,8 +115,7 @@ def harbor_scorer(
         )
 
         await cleanup_sandbox_directories("/tests", "/logs/verifier")
-        if verifier_env:
-            await cleanup_sandbox_env_vars(list(verifier_env.keys()))
+        await cleanup_sandbox_env_vars(list(verifier_env.keys()))
 
         return score_result
 
