@@ -28,7 +28,19 @@
     "href": "datasets.html#known-issues",
     "title": "Datasets",
     "section": "Known Issues",
-    "text": "Known Issues\nThese are upstream issues we’ve encountered while integrating Harbor datasets. Each of these tasks is currently unrunnable as-is:\n\n\n\nDataset\nIssue\nStatus\n\n\n\n\nxlang/ds-1000\nMultiple configuration issues preventing execution (pull access denied for ds1000)\nharbor-datasets#103\n\n\ngrafana/o11y-bench\ndocker-compose.yaml uses depends_on which inspect_ai’s ComposeConfig rejects\nWIP\n\n\nscale-ai/hil-bench\ndocker-compose.yaml uses pull_policy which inspect_ai’s ComposeConfig rejects\nWIP\n\n\nsierra-research/tau3-bench\ndocker-compose.yaml uses depends_on which inspect_ai’s ComposeConfig rejects\nWIP\n\n\nyanagiorigami/frontier-cs\ndocker-compose.yaml uses depends_on and privileged which inspect_ai’s ComposeConfig rejects\nWIP",
+    "text": "Known Issues\nThese are upstream issues we’ve encountered while integrating Harbor datasets. Each of these tasks is currently unrunnable as-is:\n\n\n\nDataset\nIssue\nStatus\n\n\n\n\nxlang/ds-1000\nMultiple configuration issues preventing execution (pull access denied for ds1000)\nharbor-datasets#103",
+    "crumbs": [
+      "Getting Started",
+      "Using Harbor",
+      "Datasets"
+    ]
+  },
+  {
+    "objectID": "datasets.html#volume-mount-limitations",
+    "href": "datasets.html#volume-mount-limitations",
+    "title": "Datasets",
+    "section": "Volume mount limitations",
+    "text": "Volume mount limitations\nSome multi-service tasks declare Docker volumes: that inspect_harbor doesn’t yet fully translate (single-service tasks are unaffected).\n\n${HOST_*} /logs binds fail on local Docker (mounts denied) but work on other providers (daytona/e2b). Affected: kumo/* (parity/1/easy/hard), openai/swe-lancer-diamond-* (all/ic/manager), grafana/o11y-bench, sierra-research/tau3-bench, yanagiorigami/frontier-cs.\nTask-file binds aren’t delivered — relative/host-path file mounts (./setup.json, ./AGENT.md, ${CONTEXT_DIR}/../../shared/...) aren’t mounted into the container. Affected: grafana/o11y-bench, yanagiorigami/frontier-cs, scale-ai/hil-bench.",
     "crumbs": [
       "Getting Started",
       "Using Harbor",
@@ -1135,193 +1147,207 @@
     "href": "CHANGELOG.html",
     "title": "Changelog",
     "section": "",
-    "text": "stable docker image tags so repeat eval runs reuse the cached image (#82) (749ba78)"
+    "text": "converters: correct network isolation + resolve task env vars (#87) (d06950d)"
   },
   {
     "objectID": "CHANGELOG.html#section",
     "href": "CHANGELOG.html#section",
     "title": "Changelog",
     "section": "",
-    "text": "stable docker image tags so repeat eval runs reuse the cached image (#82) (749ba78)"
+    "text": "converters: correct network isolation + resolve task env vars (#87) (d06950d)"
   },
   {
     "objectID": "CHANGELOG.html#section-1",
     "href": "CHANGELOG.html#section-1",
     "title": "Changelog",
-    "section": "0.5.3 (2026-05-18)",
-    "text": "0.5.3 (2026-05-18)\n\nBug Fixes\n\nupdate Harbor registry tasks (#79) (3c3c9f8)"
+    "section": "0.5.5 (2026-06-01)",
+    "text": "0.5.5 (2026-06-01)\n\nBug Fixes\n\nupdate Harbor registry tasks (#84) (61192ad)"
   },
   {
     "objectID": "CHANGELOG.html#section-2",
     "href": "CHANGELOG.html#section-2",
     "title": "Changelog",
-    "section": "0.5.2 (2026-05-12)",
-    "text": "0.5.2 (2026-05-12)\n\nBug Fixes\n\nupdate Harbor registry tasks (#76) (660d5ca)\n\n\n\nDocumentation\n\nadd post-merge publish step to nightly-pr-triage skill (#78) (fc9ad48)"
+    "section": "0.5.4 (2026-05-20)",
+    "text": "0.5.4 (2026-05-20)\n\nBug Fixes\n\nstable docker image tags so repeat eval runs reuse the cached image (#82) (749ba78)"
   },
   {
     "objectID": "CHANGELOG.html#section-3",
     "href": "CHANGELOG.html#section-3",
     "title": "Changelog",
-    "section": "0.5.1 (2026-05-08)",
-    "text": "0.5.1 (2026-05-08)\n\nBug Fixes\n\nadd title to overrides (#73) (cd5c1dc)\nsplit description into desc + desc_trunc in registry-listing.yml (#71) (0154d4a)\nupdate Harbor registry tasks (#74) (4a399d1)"
+    "section": "0.5.3 (2026-05-18)",
+    "text": "0.5.3 (2026-05-18)\n\nBug Fixes\n\nupdate Harbor registry tasks (#79) (3c3c9f8)"
   },
   {
     "objectID": "CHANGELOG.html#section-4",
     "href": "CHANGELOG.html#section-4",
     "title": "Changelog",
-    "section": "0.5.0 (2026-05-07)",
-    "text": "0.5.0 (2026-05-07)\n\nFeatures\n\nmigrate to Harbor 0.6 with self-service registry (#69) (7838993)"
+    "section": "0.5.2 (2026-05-12)",
+    "text": "0.5.2 (2026-05-12)\n\nBug Fixes\n\nupdate Harbor registry tasks (#76) (660d5ca)\n\n\n\nDocumentation\n\nadd post-merge publish step to nightly-pr-triage skill (#78) (fc9ad48)"
   },
   {
     "objectID": "CHANGELOG.html#section-5",
     "href": "CHANGELOG.html#section-5",
     "title": "Changelog",
-    "section": "0.4.18 (2026-04-27)",
-    "text": "0.4.18 (2026-04-27)\n\nBug Fixes\n\nupdate Harbor registry tasks (#67) (f7e8364)\n\n\n\nDocumentation\n\nsearchable registry listing + per-benchmark landing pages (#65) (ccbda21)"
+    "section": "0.5.1 (2026-05-08)",
+    "text": "0.5.1 (2026-05-08)\n\nBug Fixes\n\nadd title to overrides (#73) (cd5c1dc)\nsplit description into desc + desc_trunc in registry-listing.yml (#71) (0154d4a)\nupdate Harbor registry tasks (#74) (4a399d1)"
   },
   {
     "objectID": "CHANGELOG.html#section-6",
     "href": "CHANGELOG.html#section-6",
     "title": "Changelog",
-    "section": "0.4.17 (2026-04-21)",
-    "text": "0.4.17 (2026-04-21)\n\nBug Fixes\n\nembed Harbor URL in each task’s docstring (#64) (b76d374)\nrestore registry tracker and repoint docs URLs to new Harbor site (#61) (cc00228)"
+    "section": "0.5.0 (2026-05-07)",
+    "text": "0.5.0 (2026-05-07)\n\nFeatures\n\nmigrate to Harbor 0.6 with self-service registry (#69) (7838993)"
   },
   {
     "objectID": "CHANGELOG.html#section-7",
     "href": "CHANGELOG.html#section-7",
     "title": "Changelog",
-    "section": "0.4.16 (2026-04-08)",
-    "text": "0.4.16 (2026-04-08)\n\nBug Fixes\n\napply resource overrides only to default service (#56) (ea5e86f)"
+    "section": "0.4.18 (2026-04-27)",
+    "text": "0.4.18 (2026-04-27)\n\nBug Fixes\n\nupdate Harbor registry tasks (#67) (f7e8364)\n\n\n\nDocumentation\n\nsearchable registry listing + per-benchmark landing pages (#65) (ccbda21)"
   },
   {
     "objectID": "CHANGELOG.html#section-8",
     "href": "CHANGELOG.html#section-8",
     "title": "Changelog",
-    "section": "0.4.15 (2026-04-01)",
-    "text": "0.4.15 (2026-04-01)\n\nBug Fixes\n\npin harbor&lt;0.3.0 and bump inspect-ai&gt;=0.3.201 (#52) (0cb0a46)"
+    "section": "0.4.17 (2026-04-21)",
+    "text": "0.4.17 (2026-04-21)\n\nBug Fixes\n\nembed Harbor URL in each task’s docstring (#64) (b76d374)\nrestore registry tracker and repoint docs URLs to new Harbor site (#61) (cc00228)"
   },
   {
     "objectID": "CHANGELOG.html#section-9",
     "href": "CHANGELOG.html#section-9",
     "title": "Changelog",
-    "section": "0.4.14 (2026-03-30)",
-    "text": "0.4.14 (2026-03-30)\n\nBug Fixes\n\nupdate Harbor registry tasks (#50) (5f49ac9)"
+    "section": "0.4.16 (2026-04-08)",
+    "text": "0.4.16 (2026-04-08)\n\nBug Fixes\n\napply resource overrides only to default service (#56) (ea5e86f)"
   },
   {
     "objectID": "CHANGELOG.html#section-10",
     "href": "CHANGELOG.html#section-10",
     "title": "Changelog",
-    "section": "0.4.13 (2026-03-25)",
-    "text": "0.4.13 (2026-03-25)\n\nBug Fixes\n\npin litellm&lt;1.82.7 to block compromised versions (#48) (5e7328b)\nupdate Harbor registry tasks (#47) (10752d5)"
+    "section": "0.4.15 (2026-04-01)",
+    "text": "0.4.15 (2026-04-01)\n\nBug Fixes\n\npin harbor&lt;0.3.0 and bump inspect-ai&gt;=0.3.201 (#52) (0cb0a46)"
   },
   {
     "objectID": "CHANGELOG.html#section-11",
     "href": "CHANGELOG.html#section-11",
     "title": "Changelog",
-    "section": "0.4.12 (2026-03-24)",
-    "text": "0.4.12 (2026-03-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#45) (dc25090)"
+    "section": "0.4.14 (2026-03-30)",
+    "text": "0.4.14 (2026-03-30)\n\nBug Fixes\n\nupdate Harbor registry tasks (#50) (5f49ac9)"
   },
   {
     "objectID": "CHANGELOG.html#section-12",
     "href": "CHANGELOG.html#section-12",
     "title": "Changelog",
-    "section": "0.4.11 (2026-03-18)",
-    "text": "0.4.11 (2026-03-18)\n\nBug Fixes\n\nenforce network mode & handle variable expansion (#43) (3858da2)"
+    "section": "0.4.13 (2026-03-25)",
+    "text": "0.4.13 (2026-03-25)\n\nBug Fixes\n\npin litellm&lt;1.82.7 to block compromised versions (#48) (5e7328b)\nupdate Harbor registry tasks (#47) (10752d5)"
   },
   {
     "objectID": "CHANGELOG.html#section-13",
     "href": "CHANGELOG.html#section-13",
     "title": "Changelog",
-    "section": "0.4.10 (2026-03-16)",
-    "text": "0.4.10 (2026-03-16)\n\nBug Fixes\n\nenforce allow_internet network mode in compose-file path (#42) (14bdc24)\nupdate Harbor registry tasks (#40) (290c0ca)"
+    "section": "0.4.12 (2026-03-24)",
+    "text": "0.4.12 (2026-03-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#45) (dc25090)"
   },
   {
     "objectID": "CHANGELOG.html#section-14",
     "href": "CHANGELOG.html#section-14",
     "title": "Changelog",
-    "section": "0.4.9 (2026-03-11)",
-    "text": "0.4.9 (2026-03-11)\n\nBug Fixes\n\nupdate Harbor registry tasks (#38) (47dd23f)"
+    "section": "0.4.11 (2026-03-18)",
+    "text": "0.4.11 (2026-03-18)\n\nBug Fixes\n\nenforce network mode & handle variable expansion (#43) (3858da2)"
   },
   {
     "objectID": "CHANGELOG.html#section-15",
     "href": "CHANGELOG.html#section-15",
     "title": "Changelog",
-    "section": "0.4.8 (2026-03-05)",
-    "text": "0.4.8 (2026-03-05)\n\nBug Fixes\n\nupdate Harbor registry tasks (#36) (ec31a18)"
+    "section": "0.4.10 (2026-03-16)",
+    "text": "0.4.10 (2026-03-16)\n\nBug Fixes\n\nenforce allow_internet network mode in compose-file path (#42) (14bdc24)\nupdate Harbor registry tasks (#40) (290c0ca)"
   },
   {
     "objectID": "CHANGELOG.html#section-16",
     "href": "CHANGELOG.html#section-16",
     "title": "Changelog",
-    "section": "0.4.7 (2026-03-03)",
-    "text": "0.4.7 (2026-03-03)\n\nBug Fixes\n\nupdate Harbor registry tasks (#34) (e810779)"
+    "section": "0.4.9 (2026-03-11)",
+    "text": "0.4.9 (2026-03-11)\n\nBug Fixes\n\nupdate Harbor registry tasks (#38) (47dd23f)"
   },
   {
     "objectID": "CHANGELOG.html#section-17",
     "href": "CHANGELOG.html#section-17",
     "title": "Changelog",
-    "section": "0.4.6 (2026-03-02)",
-    "text": "0.4.6 (2026-03-02)\n\nBug Fixes\n\nupdate Harbor registry tasks (#32) (fd04b4a)"
+    "section": "0.4.8 (2026-03-05)",
+    "text": "0.4.8 (2026-03-05)\n\nBug Fixes\n\nupdate Harbor registry tasks (#36) (ec31a18)"
   },
   {
     "objectID": "CHANGELOG.html#section-18",
     "href": "CHANGELOG.html#section-18",
     "title": "Changelog",
-    "section": "0.4.5 (2026-02-24)",
-    "text": "0.4.5 (2026-02-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#29) (9252db7)"
+    "section": "0.4.7 (2026-03-03)",
+    "text": "0.4.7 (2026-03-03)\n\nBug Fixes\n\nupdate Harbor registry tasks (#34) (e810779)"
   },
   {
     "objectID": "CHANGELOG.html#section-19",
     "href": "CHANGELOG.html#section-19",
     "title": "Changelog",
-    "section": "0.4.4 (2026-02-23)",
-    "text": "0.4.4 (2026-02-23)\n\nBug Fixes\n\nupdate Harbor registry tasks (#27) (663915c)"
+    "section": "0.4.6 (2026-03-02)",
+    "text": "0.4.6 (2026-03-02)\n\nBug Fixes\n\nupdate Harbor registry tasks (#32) (fd04b4a)"
   },
   {
     "objectID": "CHANGELOG.html#section-20",
     "href": "CHANGELOG.html#section-20",
     "title": "Changelog",
-    "section": "0.4.3 (2026-02-18)",
-    "text": "0.4.3 (2026-02-18)\n\nBug Fixes\n\nUpdate Harbor Registry Tasks (#25) (7c8e394)"
+    "section": "0.4.5 (2026-02-24)",
+    "text": "0.4.5 (2026-02-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#29) (9252db7)"
   },
   {
     "objectID": "CHANGELOG.html#section-21",
     "href": "CHANGELOG.html#section-21",
     "title": "Changelog",
-    "section": "0.4.2 (2026-02-14)",
-    "text": "0.4.2 (2026-02-14)\n\nDocumentation\n\nadd credits section to README (#22) (2621ac7)"
+    "section": "0.4.4 (2026-02-23)",
+    "text": "0.4.4 (2026-02-23)\n\nBug Fixes\n\nupdate Harbor registry tasks (#27) (663915c)"
   },
   {
     "objectID": "CHANGELOG.html#section-22",
     "href": "CHANGELOG.html#section-22",
     "title": "Changelog",
-    "section": "0.4.1 (2026-02-12)",
-    "text": "0.4.1 (2026-02-12)\n\nDocumentation\n\nimprove REGISTRY.md table formatting and highlight featured datasets (#20) (8d995aa)"
+    "section": "0.4.3 (2026-02-18)",
+    "text": "0.4.3 (2026-02-18)\n\nBug Fixes\n\nUpdate Harbor Registry Tasks (#25) (7c8e394)"
   },
   {
     "objectID": "CHANGELOG.html#section-23",
     "href": "CHANGELOG.html#section-23",
     "title": "Changelog",
-    "section": "0.4.0 (2026-02-12)",
-    "text": "0.4.0 (2026-02-12)\n\nFeatures\n\nadd autogenerated REGISTRY.md with dataset catalog (#19) (f643583)\nadd static task generation from Harbor registry (#14) (801fcb4)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to update-registry workflow (#16) (3cd9ebc)\nremove timestamp from generated tasks (#18) (08ffc96)"
+    "section": "0.4.2 (2026-02-14)",
+    "text": "0.4.2 (2026-02-14)\n\nDocumentation\n\nadd credits section to README (#22) (2621ac7)"
   },
   {
     "objectID": "CHANGELOG.html#section-24",
     "href": "CHANGELOG.html#section-24",
     "title": "Changelog",
-    "section": "0.3.0 (2026-02-11)",
-    "text": "0.3.0 (2026-02-11)\n\nFeatures\n\nadd resource override parameters to harbor() task (#11) (e765c4c)"
+    "section": "0.4.1 (2026-02-12)",
+    "text": "0.4.1 (2026-02-12)\n\nDocumentation\n\nimprove REGISTRY.md table formatting and highlight featured datasets (#20) (8d995aa)"
   },
   {
     "objectID": "CHANGELOG.html#section-25",
     "href": "CHANGELOG.html#section-25",
     "title": "Changelog",
-    "section": "0.2.0 (2026-02-10)",
-    "text": "0.2.0 (2026-02-10)\n\nFeatures\n\nsimplify harbor() API by removing solver parameter (#7) (37ef434)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to release workflow (#8) (f99615c)"
+    "section": "0.4.0 (2026-02-12)",
+    "text": "0.4.0 (2026-02-12)\n\nFeatures\n\nadd autogenerated REGISTRY.md with dataset catalog (#19) (f643583)\nadd static task generation from Harbor registry (#14) (801fcb4)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to update-registry workflow (#16) (3cd9ebc)\nremove timestamp from generated tasks (#18) (08ffc96)"
   },
   {
     "objectID": "CHANGELOG.html#section-26",
     "href": "CHANGELOG.html#section-26",
+    "title": "Changelog",
+    "section": "0.3.0 (2026-02-11)",
+    "text": "0.3.0 (2026-02-11)\n\nFeatures\n\nadd resource override parameters to harbor() task (#11) (e765c4c)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-27",
+    "href": "CHANGELOG.html#section-27",
+    "title": "Changelog",
+    "section": "0.2.0 (2026-02-10)",
+    "text": "0.2.0 (2026-02-10)\n\nFeatures\n\nsimplify harbor() API by removing solver parameter (#7) (37ef434)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to release workflow (#8) (f99615c)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-28",
+    "href": "CHANGELOG.html#section-28",
     "title": "Changelog",
     "section": "0.1.0 (2026-02-10)",
     "text": "0.1.0 (2026-02-10)\n\nFeatures\n\nInitial release of inspect_harbor\nInspect AI interface to Harbor tasks\nSupport for Harbor task execution and evaluation\nIntegration with Inspect AI evaluation registry\n\n\n\nDocumentation\n\nAdd comprehensive README with usage examples\nAdd project documentation and setup instructions\n\n\n\nMiscellaneous\n\nSet up CI/CD with GitHub Actions\nAdd test suite with pytest\nConfigure code quality tools (ruff, pyright)\nAdd pre-commit hooks"

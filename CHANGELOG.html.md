@@ -1,5 +1,17 @@
 # changelog – Inspect Harbor
 
+## [0.5.6](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.5...v0.5.6) (2026-06-03)
+
+### Bug Fixes
+
+- **converters:** correct network isolation + resolve task env vars ([\#87](https://github.com/meridianlabs-ai/inspect_harbor/issues/87)) ([d06950d](https://github.com/meridianlabs-ai/inspect_harbor/commit/d06950d3475212ea83c92c2a6b28ed3ba4472522))
+
+## [0.5.5](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.4...v0.5.5) (2026-06-01)
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#84](https://github.com/meridianlabs-ai/inspect_harbor/issues/84)) ([61192ad](https://github.com/meridianlabs-ai/inspect_harbor/commit/61192ad9b9257d3e92d7aa38c3ee2a68a6f51290))
+
 ## [0.5.4](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.3...v0.5.4) (2026-05-20)
 
 ### Bug Fixes

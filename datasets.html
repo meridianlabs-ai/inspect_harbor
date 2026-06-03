@@ -268,6 +268,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#pinning" id="toc-pinning" class="nav-link active" data-scroll-target="#pinning">Pinning</a></li>
   <li><a href="#known-issues" id="toc-known-issues" class="nav-link" data-scroll-target="#known-issues">Known Issues</a></li>
+  <li><a href="#volume-mount-limitations" id="toc-volume-mount-limitations" class="nav-link" data-scroll-target="#volume-mount-limitations">Volume mount limitations</a></li>
   </ul>
 </nav>
     </div>
@@ -338,28 +339,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Multiple configuration issues preventing execution (<code>pull access denied for ds1000</code>)</td>
 <td><a href="https://github.com/laude-institute/harbor-datasets/issues/103">harbor-datasets#103</a></td>
 </tr>
-<tr class="even">
-<td><code>grafana/o11y-bench</code></td>
-<td><code>docker-compose.yaml</code> uses <code>depends_on</code> which inspect_ai’s <code>ComposeConfig</code> rejects</td>
-<td>WIP</td>
-</tr>
-<tr class="odd">
-<td><code>scale-ai/hil-bench</code></td>
-<td><code>docker-compose.yaml</code> uses <code>pull_policy</code> which inspect_ai’s <code>ComposeConfig</code> rejects</td>
-<td>WIP</td>
-</tr>
-<tr class="even">
-<td><code>sierra-research/tau3-bench</code></td>
-<td><code>docker-compose.yaml</code> uses <code>depends_on</code> which inspect_ai’s <code>ComposeConfig</code> rejects</td>
-<td>WIP</td>
-</tr>
-<tr class="odd">
-<td><code>yanagiorigami/frontier-cs</code></td>
-<td><code>docker-compose.yaml</code> uses <code>depends_on</code> and <code>privileged</code> which inspect_ai’s <code>ComposeConfig</code> rejects</td>
-<td>WIP</td>
-</tr>
 </tbody>
 </table>
+</section>
+<section id="volume-mount-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="volume-mount-limitations">Volume mount limitations</h2>
+<p>Some multi-service tasks declare Docker <code>volumes:</code> that inspect_harbor doesn’t yet fully translate (single-service tasks are unaffected).</p>
+<ul>
+<li><strong><code>${HOST_*}</code> <code>/logs</code> binds fail on local Docker</strong> (<code>mounts denied</code>) but work on other providers (daytona/e2b). Affected: <code>kumo/*</code> (parity/1/easy/hard), <code>openai/swe-lancer-diamond-*</code> (all/ic/manager), <code>grafana/o11y-bench</code>, <code>sierra-research/tau3-bench</code>, <code>yanagiorigami/frontier-cs</code>.</li>
+<li><strong>Task-file binds aren’t delivered</strong> — relative/host-path file mounts (<code>./setup.json</code>, <code>./AGENT.md</code>, <code>${CONTEXT_DIR}/../../shared/...</code>) aren’t mounted into the container. Affected: <code>grafana/o11y-bench</code>, <code>yanagiorigami/frontier-cs</code>, <code>scale-ai/hil-bench</code>.</li>
+</ul>
 
 
 </section>
