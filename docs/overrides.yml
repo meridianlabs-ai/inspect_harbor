@@ -74,6 +74,18 @@ MichaelY310/devopsgym:
   repo: https://github.com/ucsb-mlsec/DevOps-Gym
   title: DevOps-Gym
 
+NovitaAI/tb21-code-debug:
+  categories: []
+
+NovitaAI/tb21-data-science:
+  categories: []
+
+NovitaAI/tb21-file-recovery:
+  categories: []
+
+NovitaAI/tb21-systems-security:
+  categories: []
+
 aarr/aarri-bench:
   categories:
   - Science
@@ -436,6 +448,9 @@ ineqmath/ineqmath:
   desc: 'IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bound-estimation and relation-prediction subtasks with stepwise judging.'
   function_name: ineqmath
   title: IneqMath
+
+ivanleo/agent-search:
+  categories: []
 
 kgmon/deepsearchqa:
   categories:

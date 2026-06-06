@@ -75,6 +75,130 @@ def michaely310_devopsgym(
 
 
 @task
+def novitaai_tb21_code_debug(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Terminal-Bench 2.1 subset for coding, software engineering, debugging, and game-like reasoning tasks, curated for Novita Sandbox Hackathon.
+
+    Slug: NovitaAI/tb21-code-debug
+    Latest digest: sha256:dd0437022f9604fb3ed437097360bd49a2d698aa52c1481b0cbbf62546a6b7fb
+    """
+    return _harbor_base(
+        package_name="NovitaAI/tb21-code-debug",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def novitaai_tb21_data_science(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Terminal-Bench 2.1 subset for data science, scientific computing, machine learning, model training, optimization, querying, and video processing tasks, curated for Novita Sandbox Hackathon.
+
+    Slug: NovitaAI/tb21-data-science
+    Latest digest: sha256:654fa547936fd901954a3a50ebaa6001fa4f052f0946116923894209a2516723
+    """
+    return _harbor_base(
+        package_name="NovitaAI/tb21-data-science",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def novitaai_tb21_file_recovery(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Terminal-Bench 2.1 subset for file operations, data manipulation, document processing, log analysis, and recovery tasks, curated for Novita Sandbox Hackathon.
+
+    Slug: NovitaAI/tb21-file-recovery
+    Latest digest: sha256:783ef0f552a76f6fa2eea80ce433a8ae5e1dfee97f927d30807fa03cdb21723b
+    """
+    return _harbor_base(
+        package_name="NovitaAI/tb21-file-recovery",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def novitaai_tb21_systems_security(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Terminal-Bench 2.1 subset for systems, operations, security, cryptanalysis, and assistant-style operational tasks, curated for Novita Sandbox Hackathon.
+
+    Slug: NovitaAI/tb21-systems-security
+    Latest digest: sha256:06d0634a5ca55fe8b8ef3ac184decb1a5a2cdd911d87802444ff212d115a5b20
+    """
+    return _harbor_base(
+        package_name="NovitaAI/tb21-systems-security",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def aarr_aarri_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1457,6 +1581,37 @@ def ineqmath(
     """
     return _harbor_base(
         package_name="ineqmath/ineqmath",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def ivanleo_agent_search(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Evaluation dataset for agent-search task.
+
+    Slug: ivanleo/agent-search
+    Latest digest: sha256:14a4f3ce3a9ce0f919bbd76cc3ff296e275f899945c19b9d2114b014e76b899b
+    """
+    return _harbor_base(
+        package_name="ivanleo/agent-search",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
