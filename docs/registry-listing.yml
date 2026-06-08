@@ -460,8 +460,8 @@
   - Reasoning
 - title: ivanleo/agent-search
   path: registry/ivanleo_agent_search.html
-  desc: Evaluation dataset for agent-search task.
-  desc_trunc: Evaluation dataset for agent-search task.
+  desc: Agent answers Gemini API questions by querying an indexed documentation database.
+  desc_trunc: Agent answers Gemini API questions by querying an indexed documentation database.
   task_function: ivanleo_agent_search
   samples: 20
   version: latest

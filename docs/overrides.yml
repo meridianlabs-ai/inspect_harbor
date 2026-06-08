@@ -441,6 +441,7 @@ ivanleo/agent-search:
   categories:
   - Coding
   - Assistants
+  desc: Agent answers Gemini API questions by querying an indexed documentation database.
 
 kgmon/deepsearchqa:
   categories:

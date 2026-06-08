@@ -1481,7 +1481,7 @@ def ivanleo_agent_search(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Evaluation dataset for agent-search task.
+    r"""Agent answers Gemini API questions by querying an indexed documentation database.
 
     Slug: ivanleo/agent-search
     Latest digest: sha256:14a4f3ce3a9ce0f919bbd76cc3ff296e275f899945c19b9d2114b014e76b899b
