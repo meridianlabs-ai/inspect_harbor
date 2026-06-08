@@ -458,6 +458,16 @@
   categories:
   - Mathematics
   - Reasoning
+- title: ivanleo/agent-search
+  path: registry/ivanleo_agent_search.html
+  desc: Agent answers Gemini API questions by querying an indexed documentation database.
+  desc_trunc: Agent answers Gemini API questions by querying an indexed documentation database.
+  task_function: ivanleo_agent_search
+  samples: 20
+  version: latest
+  categories:
+  - Coding
+  - Assistants
 - title: kgmon/deepsearchqa
   path: registry/kgmon_deepsearchqa.html
   desc: DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research agents on difficult multi-step information-seeking tasks.

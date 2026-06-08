@@ -1470,6 +1470,37 @@ def ineqmath(
 
 
 @task
+def ivanleo_agent_search(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Agent answers Gemini API questions by querying an indexed documentation database.
+
+    Slug: ivanleo/agent-search
+    Latest digest: sha256:14a4f3ce3a9ce0f919bbd76cc3ff296e275f899945c19b9d2114b014e76b899b
+    """
+    return _harbor_base(
+        package_name="ivanleo/agent-search",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def kgmon_deepsearchqa(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
