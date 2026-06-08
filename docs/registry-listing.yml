@@ -26,34 +26,6 @@
   categories:
   - Coding
   - Professional
-- title: NovitaAI/tb21-code-debug
-  path: registry/novitaai_tb21_code_debug.html
-  desc: Terminal-Bench 2.1 subset for coding, software engineering, debugging, and game-like reasoning tasks, curated for Novita Sandbox Hackathon.
-  desc_trunc: Terminal-Bench 2.1 subset for coding, software engineering, debugging, and game-like reasoning task…
-  task_function: novitaai_tb21_code_debug
-  samples: 32
-  version: latest
-- title: NovitaAI/tb21-data-science
-  path: registry/novitaai_tb21_data_science.html
-  desc: Terminal-Bench 2.1 subset for data science, scientific computing, machine learning, model training, optimization, querying, and video processing tasks, curated for Novita Sandbox Hackathon.
-  desc_trunc: Terminal-Bench 2.1 subset for data science, scientific computing, machine learning, model training,…
-  task_function: novitaai_tb21_data_science
-  samples: 26
-  version: latest
-- title: NovitaAI/tb21-file-recovery
-  path: registry/novitaai_tb21_file_recovery.html
-  desc: Terminal-Bench 2.1 subset for file operations, data manipulation, document processing, log analysis, and recovery tasks, curated for Novita Sandbox Hackathon.
-  desc_trunc: Terminal-Bench 2.1 subset for file operations, data manipulation, document processing, log analysis…
-  task_function: novitaai_tb21_file_recovery
-  samples: 9
-  version: latest
-- title: NovitaAI/tb21-systems-security
-  path: registry/novitaai_tb21_systems_security.html
-  desc: Terminal-Bench 2.1 subset for systems, operations, security, cryptanalysis, and assistant-style operational tasks, curated for Novita Sandbox Hackathon.
-  desc_trunc: Terminal-Bench 2.1 subset for systems, operations, security, cryptanalysis, and assistant-style ope…
-  task_function: novitaai_tb21_systems_security
-  samples: 22
-  version: latest
 - title: aarr/aarri-bench
   path: registry/aarr_aarri_bench.html
   desc: aarri(act as a real research intern)-bench, for evaluating LLM agents in academic research tasks.
@@ -493,6 +465,9 @@
   task_function: ivanleo_agent_search
   samples: 20
   version: latest
+  categories:
+  - Coding
+  - Assistants
 - title: kgmon/deepsearchqa
   path: registry/kgmon_deepsearchqa.html
   desc: DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research agents on difficult multi-step information-seeking tasks.
