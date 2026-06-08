@@ -49,11 +49,11 @@ For each slug, gather:
 | `title` | Canonical branding. Strongly suggested when the auto-derived form (just the slug suffix) is wrong-cased or non-obvious. |
 | `repo` | Canonical upstream GitHub URL. Almost always exists for benchmarks. |
 | `arxiv` | Paper URL if the benchmark has one. Many don't (especially newer ones). |
-| `desc` | Override only if Harbor's metadata description is unclear or too long for the listing layout (>100 chars truncates). |
+| `desc` | **Read it for every slug you touch, but prefer Harbor's default.** Only override when the default is useless (a placeholder or bare restatement of the slug, e.g. `ivanleo/agent-search` ships `"Evaluation dataset for agent-search task."`), missing entirely, or extremely long. Length alone is usually fine — the listing table uses `desc_trunc`. See "Writing descriptions" below. |
 
 **Order of operations for research:**
 
-1. Check `docs/registry-listing.yml` for the slug — it carries Harbor's own `desc` field. That's often enough context.
+1. Check `docs/registry-listing.yml` for the slug — it carries Harbor's own `desc` field. That's often enough context for categorization, and the default `desc` is usually fine to publish as-is. **Read it, though** — it's surfaced on the registry listing and the AISI evals browser, so if it's a useless placeholder (or missing), plan to override it. See "Writing descriptions" below.
 2. Look at sibling entries in `docs/overrides.yml` (same `org/...` prefix, or same benchmark family) for naming/category patterns. Example: when `scale-ai/swe-atlas-rf` got auto-stubbed, sibling `scale-ai/swe-atlas-qna` and `scale-ai/swe-atlas-tw` already had `Coding` + `repo: https://github.com/scaleapi/SWE-Atlas` + `title: SWE-Atlas (QnA)` / `(Test Writing)` — same pattern applied directly.
 3. WebSearch (`<benchmark name> github`) when the brand or repo isn't obvious from the description. Skip this for self-evident names.
 4. Use `gNucleus AI` / `Harvey AI` style company-and-benchmark phrasing when both matter for findability.
@@ -83,6 +83,12 @@ Use a secondary category when the benchmark spans clear domains (e.g. `MichaelY3
 - Hyphens stay; spaces are for words: `SWE-bench Verified`, `DevOps-Gym`, `Terminal-Bench v2`.
 - Greek/Unicode is fine if it's the project's own form: `τ³-bench` for `sierra-research/tau3-bench`.
 - Skip the override when the leaf slug is already a clean display name (e.g. `runebench`, `vmax-tasks`).
+
+**Writing descriptions:**
+
+Read the `desc` for every slug you're filling in categories for — it's published verbatim on the registry listing and the AISI evals browser. But **prefer Harbor's default**: only write your own when the default is useless (a placeholder or bare restatement of the slug, like `"Evaluation dataset for agent-search task."`), absent, or extremely long. Length on its own isn't a reason — the table layout falls back to `desc_trunc`, so a long-but-informative default can stay.
+
+When you do rewrite, aim for one sentence that says **what the model is asked to do and in what domain** — concrete enough that a reader scanning the listing knows whether the benchmark is relevant. If the default is uninformative, inspect a task input (the one-liner above) to learn what the task really is, then write from that. Example: for `ivanleo/agent-search`, the task loads a docs SQLite DB and asks the agent to answer API questions by writing queries — so a fitting `desc` is `"Agent answers Gemini API questions by querying an indexed documentation database."` rather than the shipped placeholder.
 
 ### 4. Apply the overrides
 
