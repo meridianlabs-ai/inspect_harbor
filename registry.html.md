@@ -70,6 +70,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [harbor/rewardhackbench](registry/harbor_rewardhackbench.html.md) | harbor_rewardhackbench | RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is… | 846 |
 | [harveyai/lab](registry/harveyai_lab.html.md) | harveyai_lab | Harvey LAB - open-source benchmark for evaluating agents on real legal work. | 1000 |
 | [ineqmath/ineqmath](registry/ineqmath.html.md) | ineqmath | IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou… | 100 |
+| [ivanleo/agent-search](registry/ivanleo_agent_search.html.md) | ivanleo_agent_search | Agent answers Gemini API questions by querying an indexed documentation database. | 20 |
 | [kgmon/deepsearchqa](registry/kgmon_deepsearchqa.html.md) | kgmon_deepsearchqa | DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research… | 900 |
 | [kumo/kumo-1](registry/kumo_1.html.md) | kumo_1 | KUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic… | 1000 |
 | [kumo/kumo-easy](registry/kumo_easy.html.md) | kumo_easy | KUMO (easy split): easier-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark a… | 1000 |
