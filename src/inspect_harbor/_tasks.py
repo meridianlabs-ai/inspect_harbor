@@ -354,6 +354,37 @@ def agentic_labs_erp_bench(
 
 
 @task
+def agentscope_ai_pawbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use, reasoning, safety, and multimodal capabilities.
+
+    Slug: agentscope-ai/pawbench
+    Latest digest: sha256:a4197a2fe40bf045abad4ea2ab1037bf9c8bdfab01c378fdcc2b40242f5d63dd
+    """
+    return _harbor_base(
+        package_name="agentscope-ai/pawbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def ai_forever_harness_bench_fast(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2028,37 +2059,6 @@ def openai_swe_lancer_diamond_all(
 
 
 @task
-def openai_swe_lancer_diamond_ic(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Individual Contributor (IC) variant: end-to-end engineering tasks.
-
-    Slug: openai/swe-lancer-diamond-ic
-    Latest digest: sha256:d0645e1152d417dd3ec8b36c324c03a8729b3fa48c8840f8935f93582c4dce28
-    """
-    return _harbor_base(
-        package_name="openai/swe-lancer-diamond-ic",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def openai_swe_lancer_diamond_manager(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2393,37 +2393,6 @@ def satbench(
     """
     return _harbor_base(
         package_name="satbench/satbench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def scale_ai_hil_bench(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""HiL-Bench (Human-in-the-Loop): tests if agents know when to ask for help rather than proceed with uncertain knowledge.
-
-    Slug: scale-ai/hil-bench
-    Latest digest: sha256:a308c71edf51736003412b8353cfb25f0cdfd58065535e18e2e8937fe6f7ac42
-    """
-    return _harbor_base(
-        package_name="scale-ai/hil-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -3137,6 +3106,37 @@ def webgen_bench(
     """
     return _harbor_base(
         package_name="webgen-bench/webgen-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def xiaoboai_pawbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use, reasoning, safety, and multimodal capabilities.
+
+    Slug: xiaoboai/pawbench
+    Latest digest: sha256:6ad7947e6a9a6dcb17b13df7bb322226187facdef24438afee3921a12c828a5d
+    """
+    return _harbor_base(
+        package_name="xiaoboai/pawbench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

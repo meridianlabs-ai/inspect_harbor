@@ -112,6 +112,13 @@
   version: latest
   categories:
   - Professional
+- title: agentscope-ai/pawbench
+  path: registry/agentscope_ai_pawbench.html
+  desc: 'PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use, reasoning, safety, and multimodal capabilities.'
+  desc_trunc: 'PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use,…'
+  task_function: agentscope_ai_pawbench
+  samples: 150
+  version: latest
 - title: ai-forever/harness-bench-fast
   path: registry/ai_forever_harness_bench_fast.html
   desc: Self-contained file-operation agent benchmark.
@@ -631,15 +638,6 @@
   version: latest
   categories:
   - Coding
-- title: openai/swe-lancer-diamond-ic
-  path: registry/openai_swe_lancer_diamond_ic.html
-  desc: 'A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Individual Contributor (IC) variant: end-to-end engineering tasks.'
-  desc_trunc: A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in…
-  task_function: openai_swe_lancer_diamond_ic
-  samples: 198
-  version: latest
-  categories:
-  - Coding
 - title: openai/swe-lancer-diamond-manager
   path: registry/openai_swe_lancer_diamond_manager.html
   desc: 'A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Manager variant: picking between technical implementation proposals.'
@@ -744,16 +742,6 @@
   version: latest
   categories:
   - Reasoning
-- title: scale-ai/hil-bench
-  path: registry/scale_ai_hil_bench.html
-  desc: 'HiL-Bench (Human-in-the-Loop): tests if agents know when to ask for help rather than proceed with uncertain knowledge.'
-  desc_trunc: 'HiL-Bench (Human-in-the-Loop): tests if agents know when to ask for help rather than proceed with u…'
-  task_function: scale_ai_hil_bench
-  samples: 600
-  version: latest
-  categories:
-  - Coding
-  - Behavior
 - title: scale-ai/swe-atlas-qna
   path: registry/scale_ai_swe_atlas_qna.html
   desc: SWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding agents. Checkout for instructions on running it.
@@ -976,6 +964,13 @@
   version: latest
   categories:
   - Coding
+- title: xiaoboai/pawbench
+  path: registry/xiaoboai_pawbench.html
+  desc: 'PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use, reasoning, safety, and multimodal capabilities.'
+  desc_trunc: 'PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use,…'
+  task_function: xiaoboai_pawbench
+  samples: 150
+  version: latest
 - title: xlang/ds-1000
   path: registry/xlang_ds_1000.html
   desc: 'DS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow, PyTorch, SciPy, Scikit-learn, and Matplotlib, with execution-based grading.'

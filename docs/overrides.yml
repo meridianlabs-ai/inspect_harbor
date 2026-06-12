@@ -140,6 +140,9 @@ agentic-labs/erp-bench:
   arxiv: https://arxiv.org/abs/2605.26321
   title: ERP-Bench
 
+agentscope-ai/pawbench:
+  categories: []
+
 ai-forever/harness-bench-fast:
   categories:
   - Coding
@@ -587,14 +590,6 @@ openai/swe-lancer-diamond-all:
   desc: 'SWE-Lancer Diamond (full): public split of OpenAI''s SWE-Lancer benchmark — real Upwork freelance software-engineering tasks worth $500,800, combining IC engineering tasks and managerial decision tasks.'
   title: SWE-Lancer Diamond (Full)
 
-openai/swe-lancer-diamond-ic:
-  categories:
-  - Coding
-  arxiv: https://arxiv.org/abs/2502.12115
-  repo: https://github.com/openai/SWELancer-Benchmark
-  desc: 'A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Individual Contributor (IC) variant: end-to-end engineering tasks.'
-  title: SWE-Lancer Diamond (IC)
-
 openai/swe-lancer-diamond-manager:
   categories:
   - Coding
@@ -690,15 +685,6 @@ satbench/satbench:
   desc: 'SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable difficulty, validated through both LLM and SAT-solver consistency checks.'
   function_name: satbench
   title: SATBench
-
-scale-ai/hil-bench:
-  categories:
-  - Coding
-  - Behavior
-  arxiv: https://arxiv.org/abs/2604.09408
-  repo: https://labs.scale.com/papers/hil
-  desc: 'HiL-Bench (Human-in-the-Loop): tests if agents know when to ask for help rather than proceed with uncertain knowledge.'
-  title: HiL-Bench
 
 scale-ai/swe-atlas-qna:
   categories:
@@ -899,6 +885,9 @@ webgen-bench/webgen-bench:
   repo: https://github.com/mnluzimu/WebGen-Bench
   function_name: webgen_bench
   title: WebGen-Bench
+
+xiaoboai/pawbench:
+  categories: []
 
 xlang/ds-1000:
   categories:
