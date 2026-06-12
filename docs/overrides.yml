@@ -140,6 +140,13 @@ agentic-labs/erp-bench:
   arxiv: https://arxiv.org/abs/2605.26321
   title: ERP-Bench
 
+agentscope-ai/pawbench:
+  categories:
+  - Assistants
+  - Coding
+  title: PawBench
+  repo: https://github.com/agentscope-ai/PawBench
+
 ai-forever/harness-bench-fast:
   categories:
   - Coding
@@ -592,7 +599,7 @@ openai/swe-lancer-diamond-ic:
   - Coding
   arxiv: https://arxiv.org/abs/2502.12115
   repo: https://github.com/openai/SWELancer-Benchmark
-  desc: 'A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Individual Contributor (IC) variant: end-to-end engineering tasks.'
+  desc: 'SWE-Lancer Diamond (IC): individual-contributor split of OpenAI''s SWE-Lancer benchmark — real Upwork freelance software-engineering issues fixed in-repo and graded by end-to-end tests.'
   title: SWE-Lancer Diamond (IC)
 
 openai/swe-lancer-diamond-manager:
@@ -696,8 +703,8 @@ scale-ai/hil-bench:
   - Coding
   - Behavior
   arxiv: https://arxiv.org/abs/2604.09408
-  repo: https://labs.scale.com/papers/hil
-  desc: 'HiL-Bench (Human-in-the-Loop): tests if agents know when to ask for help rather than proceed with uncertain knowledge.'
+  repo: https://github.com/hilbenchauthors/hil-bench
+  desc: 'HiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.'
   title: HiL-Bench
 
 scale-ai/swe-atlas-qna:

@@ -112,6 +112,16 @@
   version: latest
   categories:
   - Professional
+- title: agentscope-ai/pawbench
+  path: registry/agentscope_ai_pawbench.html
+  desc: 'PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use, reasoning, safety, and multimodal capabilities.'
+  desc_trunc: 'PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use,…'
+  task_function: agentscope_ai_pawbench
+  samples: 150
+  version: latest
+  categories:
+  - Assistants
+  - Coding
 - title: ai-forever/harness-bench-fast
   path: registry/ai_forever_harness_bench_fast.html
   desc: Self-contained file-operation agent benchmark.
@@ -633,8 +643,8 @@
   - Coding
 - title: openai/swe-lancer-diamond-ic
   path: registry/openai_swe_lancer_diamond_ic.html
-  desc: 'A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Individual Contributor (IC) variant: end-to-end engineering tasks.'
-  desc_trunc: A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in…
+  desc: 'SWE-Lancer Diamond (IC): individual-contributor split of OpenAI''s SWE-Lancer benchmark — real Upwork freelance software-engineering issues fixed in-repo and graded by end-to-end tests.'
+  desc_trunc: 'SWE-Lancer Diamond (IC): individual-contributor split of OpenAI''s SWE-Lancer benchmark — real Upwor…'
   task_function: openai_swe_lancer_diamond_ic
   samples: 198
   version: latest
@@ -746,8 +756,8 @@
   - Reasoning
 - title: scale-ai/hil-bench
   path: registry/scale_ai_hil_bench.html
-  desc: 'HiL-Bench (Human-in-the-Loop): tests if agents know when to ask for help rather than proceed with uncertain knowledge.'
-  desc_trunc: 'HiL-Bench (Human-in-the-Loop): tests if agents know when to ask for help rather than proceed with u…'
+  desc: 'HiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.'
+  desc_trunc: 'HiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with crit…'
   task_function: scale_ai_hil_bench
   samples: 600
   version: latest

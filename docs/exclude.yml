@@ -7,3 +7,6 @@
 - NovitaAI/tb21-*
 - openthoughts/*
 - shogunpurple/9CBCC967-BDAF-43D0-9485-52EBBE4A5094
+# Verbatim copy of agentscope-ai/pawbench (identical 150 inputs, renamed
+# sample ids); keep only the canonical author org.
+- xiaoboai/pawbench
