@@ -34,6 +34,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [actava-ai/chi-bench](registry/actava_ai_chi_bench.html.md) | actava_ai_chi_bench | χ-Bench: long-horizon, policy-rich U.S. healthcare workflow agent benchmark spanning provider prior… | 78 |
 | [adyen/dabstep](registry/adyen_dabstep.html.md) | adyen_dabstep | DABstep: real-world data analysis tasks from Adyen’s workloads requiring multi-step reasoning by LL… | 450 |
 | [agentic-labs/erp-bench](registry/agentic_labs_erp_bench.html.md) | agentic_labs_erp_bench | ERP-Bench is the Odoo 19 benchmark used in the Anchor paper, “Preventing Artifact Drift in Agent Be… | 300 |
+| [agentscope-ai/pawbench](registry/agentscope_ai_pawbench.html.md) | agentscope_ai_pawbench | PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use,… | 150 |
 | [ai-forever/harness-bench-fast](registry/ai_forever_harness_bench_fast.html.md) | ai_forever_harness_bench_fast | Self-contained file-operation agent benchmark. | 231 |
 | [aider/aider-polyglot](registry/aider_polyglot.html.md) | aider_polyglot | Aider’s polyglot coding benchmark: Exercism exercises across C++, Go, Java, JavaScript, Python, and… | 225 |
 | [aime/aime](registry/aime.html.md) | aime | Problems from the American Invitational Mathematics Examination (AIME), a 3-hour high-school compet… | 60 |
@@ -88,7 +89,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [openai/mmmlu](registry/openai_mmmlu.html.md) | openai_mmmlu | MMMLU (Multilingual MMLU): OpenAI’s professional-human-translation of the MMLU test set into 14 lan… | 150 |
 | [openai/simpleqa](registry/openai_simpleqa.html.md) | openai_simpleqa | SimpleQA: short, fact-seeking questions adversarially collected against GPT-4 to measure short-form… | 1000 |
 | [openai/swe-lancer-diamond-all](registry/openai_swe_lancer_diamond_all.html.md) | openai_swe_lancer_diamond_all | SWE-Lancer Diamond (full): public split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance so… | 463 |
-| [openai/swe-lancer-diamond-ic](registry/openai_swe_lancer_diamond_ic.html.md) | openai_swe_lancer_diamond_ic | A benchmark of freelance software engineering tasks from Upwork, valued at \$1 million USD total in… | 198 |
+| [openai/swe-lancer-diamond-ic](registry/openai_swe_lancer_diamond_ic.html.md) | openai_swe_lancer_diamond_ic | SWE-Lancer Diamond (IC): individual-contributor split of OpenAI’s SWE-Lancer benchmark — real Upwor… | 198 |
 | [openai/swe-lancer-diamond-manager](registry/openai_swe_lancer_diamond_manager.html.md) | openai_swe_lancer_diamond_manager | A benchmark of freelance software engineering tasks from Upwork, valued at \$1 million USD total in… | 265 |
 | [pgcodellm/rebench-v2-test](registry/pgcodellm_rebench_v2_test.html.md) | pgcodellm_rebench_v2_test | SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui… | 20 |
 | [qcircuitbench/qcircuitbench](registry/qcircuitbench.html.md) | qcircuitbench | QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const… | 28 |
@@ -100,7 +101,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [replicationbench/replicationbench](registry/replicationbench.html.md) | replicationbench | ReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce impleme… | 90 |
 | [rexbench/rexbench](registry/rexbench.html.md) | rexbench | RExBench - 2 tasks (cogs, othello) evaluating AI agents’ ability to extend existing AI research thr… | 2 |
 | [satbench/satbench](registry/satbench.html.md) | satbench | SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable diffi… | 1000 |
-| [scale-ai/hil-bench](registry/scale_ai_hil_bench.html.md) | scale_ai_hil_bench | HiL-Bench (Human-in-the-Loop): tests if agents know when to ask for help rather than proceed with u… | 600 |
+| [scale-ai/hil-bench](registry/scale_ai_hil_bench.html.md) | scale_ai_hil_bench | HiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with crit… | 600 |
 | [scale-ai/swe-atlas-qna](registry/scale_ai_swe_atlas_qna.html.md) | scale_ai_swe_atlas_qna | SWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding… | 124 |
 | [scale-ai/swe-atlas-rf](registry/scale_ai_swe_atlas_rf.html.md) | scale_ai_swe_atlas_rf | SWE-Atlas - Refactoring – A benchmark of refactoring tasks for coding agents. | 70 |
 | [scale-ai/swe-atlas-tw](registry/scale_ai_swe_atlas_tw.html.md) | scale_ai_swe_atlas_tw | SWE-Atlas - Test Writing – A benchmark of comprehensive test writing problems for coding agents. C… | 90 |

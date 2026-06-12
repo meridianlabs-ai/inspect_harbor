@@ -28,6 +28,6 @@ eval(scale_ai_hil_bench(), model="openai/gpt-5")
 | Latest digest | sha256:a308c71edf51736003412b8353cfb25f0cdfd58065535e18e2e8937fe6f7ac42 |
 | Samples | 600 |
 | Paper | [arxiv](https://arxiv.org/abs/2604.09408) |
-| Source | <https://labs.scale.com/papers/hil> |
+| Source | <https://github.com/hilbenchauthors/hil-bench> |
 
 See [Task Parameters](../parameters.html.md) for the parameter set shared across all Harbor tasks.

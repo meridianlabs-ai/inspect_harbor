@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="SWE-Lancer Diamond (IC): individual-contributor split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance software-engineering issues fixed in-repo and graded by end-to-end tests.">
+<meta name="description" content="PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use, reasoning, safety, and multimodal capabilities.">
 
-<title>openai/swe-lancer-diamond-ic – Inspect Harbor</title>
+<title>agentscope-ai/pawbench – Inspect Harbor</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -205,15 +205,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">openai/swe-lancer-diamond-ic</h1>
+<h1 class="title">agentscope-ai/pawbench</h1>
   <div class="quarto-categories">
+    <div class="quarto-category">Assistants</div>
     <div class="quarto-category">Coding</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    <p>SWE-Lancer Diamond (IC): individual-contributor split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance software-engineering issues fixed in-repo and graded by end-to-end tests.</p>
+    <p>PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use, reasoning, safety, and multimodal capabilities.</p>
   </div>
 </div>
 
@@ -234,12 +235,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="run-this-task" class="level2">
 <h2 class="anchored" data-anchor-id="run-this-task">Run this task</h2>
 <p><strong>CLI:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/openai_swe_lancer_diamond_ic <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/agentscope_ai_pawbench <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Python:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_ai <span class="im">import</span> <span class="bu">eval</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> openai_swe_lancer_diamond_ic</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> agentscope_ai_pawbench</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(openai_swe_lancer_diamond_ic(), model<span class="op">=</span><span class="st">"openai/gpt-5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(agentscope_ai_pawbench(), model<span class="op">=</span><span class="st">"openai/gpt-5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="dataset-information" class="level2">
 <h2 class="anchored" data-anchor-id="dataset-information">Dataset information</h2>
@@ -247,27 +248,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>Harbor registry</td>
-<td><a href="https://hub.harborframework.com/datasets/openai/swe-lancer-diamond-ic/latest">openai/swe-lancer-diamond-ic</a></td>
+<td><a href="https://hub.harborframework.com/datasets/agentscope-ai/pawbench/latest">agentscope-ai/pawbench</a></td>
 </tr>
 <tr class="even">
 <td>Inspect task</td>
-<td><code>openai_swe_lancer_diamond_ic</code></td>
+<td><code>agentscope_ai_pawbench</code></td>
 </tr>
 <tr class="odd">
 <td>Latest digest</td>
-<td>sha256:d0645e1152d417dd3ec8b36c324c03a8729b3fa48c8840f8935f93582c4dce28</td>
+<td>sha256:a4197a2fe40bf045abad4ea2ab1037bf9c8bdfab01c378fdcc2b40242f5d63dd</td>
 </tr>
 <tr class="even">
 <td>Samples</td>
-<td>198</td>
+<td>150</td>
 </tr>
 <tr class="odd">
-<td>Paper</td>
-<td><a href="https://arxiv.org/abs/2502.12115">arxiv</a></td>
-</tr>
-<tr class="even">
 <td>Source</td>
-<td><a href="https://github.com/openai/SWELancer-Benchmark">https://github.com/openai/SWELancer-Benchmark</a></td>
+<td><a href="https://github.com/agentscope-ai/PawBench">https://github.com/agentscope-ai/PawBench</a></td>
 </tr>
 </tbody>
 </table>
