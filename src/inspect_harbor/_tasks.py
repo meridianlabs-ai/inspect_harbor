@@ -3181,37 +3181,6 @@ def webgen_bench(
 
 
 @task
-def xiaoboai_pawbench(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use, reasoning, safety, and multimodal capabilities.
-
-    Slug: xiaoboai/pawbench
-    Latest digest: sha256:6ad7947e6a9a6dcb17b13df7bb322226187facdef24438afee3921a12c828a5d
-    """
-    return _harbor_base(
-        package_name="xiaoboai/pawbench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def xlang_ds_1000(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,

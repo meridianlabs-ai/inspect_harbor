@@ -986,16 +986,6 @@
   version: latest
   categories:
   - Coding
-- title: xiaoboai/pawbench
-  path: registry/xiaoboai_pawbench.html
-  desc: 'PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use, reasoning, safety, and multimodal capabilities.'
-  desc_trunc: 'PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use,…'
-  task_function: xiaoboai_pawbench
-  samples: 150
-  version: latest
-  categories:
-  - Assistants
-  - Coding
 - title: xlang/ds-1000
   path: registry/xlang_ds_1000.html
   desc: 'DS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow, PyTorch, SciPy, Scikit-learn, and Matplotlib, with execution-based grading.'

@@ -907,13 +907,6 @@ webgen-bench/webgen-bench:
   function_name: webgen_bench
   title: WebGen-Bench
 
-xiaoboai/pawbench:
-  categories:
-  - Assistants
-  - Coding
-  title: PawBench
-  repo: https://github.com/agentscope-ai/PawBench
-
 xlang/ds-1000:
   categories:
   - Coding
