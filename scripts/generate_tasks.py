@@ -113,6 +113,13 @@ def scrape_hub_slugs() -> set[tuple[str, str]]:
     pairs: set[tuple[str, str]] = set()
     pages_scraped = 0
     href_pattern = re.compile(r"/datasets/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)")
+    # The hub streams its payload as Next.js Flight chunks: a single dataset
+    # href can be split across a `</script><script>self.__next_f.push([N,"`
+    # boundary (e.g. `/datasets/scale-ai/hil-b"]) ... push([1,"ench`), which
+    # both fabricates a truncated slug (`hil-b`) and hides the real one
+    # (`hil-bench`). Strip the inter-chunk boilerplate to rejoin the string
+    # before matching.
+    chunk_boundary = re.compile(r'"\]\)</script><script>self\.__next_f\.push\(\[\d+,"')
 
     for page in range(1, REGISTRY_SITE_MAX_PAGES + 1):
         url = f"{REGISTRY_SITE_BASE}/datasets?page={page}"
@@ -121,7 +128,7 @@ def scrape_hub_slugs() -> set[tuple[str, str]]:
             lambda url=url: curl_get(url, max_time=60),
         ).decode()
         pages_scraped = page
-        new_pairs = set(href_pattern.findall(body))
+        new_pairs = set(href_pattern.findall(chunk_boundary.sub("", body)))
         if not new_pairs - pairs:
             break
         pairs |= new_pairs

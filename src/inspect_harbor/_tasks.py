@@ -2059,6 +2059,37 @@ def openai_swe_lancer_diamond_all(
 
 
 @task
+def openai_swe_lancer_diamond_ic(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""SWE-Lancer Diamond (IC): individual-contributor split of OpenAI's SWE-Lancer benchmark — real Upwork freelance software-engineering issues fixed in-repo and graded by end-to-end tests.
+
+    Slug: openai/swe-lancer-diamond-ic
+    Latest digest: sha256:d0645e1152d417dd3ec8b36c324c03a8729b3fa48c8840f8935f93582c4dce28
+    """
+    return _harbor_base(
+        package_name="openai/swe-lancer-diamond-ic",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def openai_swe_lancer_diamond_manager(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2393,6 +2424,37 @@ def satbench(
     """
     return _harbor_base(
         package_name="satbench/satbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def scale_ai_hil_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""HiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.
+
+    Slug: scale-ai/hil-bench
+    Latest digest: sha256:a308c71edf51736003412b8353cfb25f0cdfd58065535e18e2e8937fe6f7ac42
+    """
+    return _harbor_base(
+        package_name="scale-ai/hil-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

@@ -141,7 +141,11 @@ agentic-labs/erp-bench:
   title: ERP-Bench
 
 agentscope-ai/pawbench:
-  categories: []
+  categories:
+  - Assistants
+  - Coding
+  title: PawBench
+  repo: https://github.com/agentscope-ai/PawBench
 
 ai-forever/harness-bench-fast:
   categories:
@@ -590,6 +594,14 @@ openai/swe-lancer-diamond-all:
   desc: 'SWE-Lancer Diamond (full): public split of OpenAI''s SWE-Lancer benchmark — real Upwork freelance software-engineering tasks worth $500,800, combining IC engineering tasks and managerial decision tasks.'
   title: SWE-Lancer Diamond (Full)
 
+openai/swe-lancer-diamond-ic:
+  categories:
+  - Coding
+  arxiv: https://arxiv.org/abs/2502.12115
+  repo: https://github.com/openai/SWELancer-Benchmark
+  desc: 'SWE-Lancer Diamond (IC): individual-contributor split of OpenAI''s SWE-Lancer benchmark — real Upwork freelance software-engineering issues fixed in-repo and graded by end-to-end tests.'
+  title: SWE-Lancer Diamond (IC)
+
 openai/swe-lancer-diamond-manager:
   categories:
   - Coding
@@ -685,6 +697,15 @@ satbench/satbench:
   desc: 'SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable difficulty, validated through both LLM and SAT-solver consistency checks.'
   function_name: satbench
   title: SATBench
+
+scale-ai/hil-bench:
+  categories:
+  - Coding
+  - Behavior
+  arxiv: https://arxiv.org/abs/2604.09408
+  repo: https://github.com/hilbenchauthors/hil-bench
+  desc: 'HiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.'
+  title: HiL-Bench
 
 scale-ai/swe-atlas-qna:
   categories:
@@ -887,7 +908,11 @@ webgen-bench/webgen-bench:
   title: WebGen-Bench
 
 xiaoboai/pawbench:
-  categories: []
+  categories:
+  - Assistants
+  - Coding
+  title: PawBench
+  repo: https://github.com/agentscope-ai/PawBench
 
 xlang/ds-1000:
   categories:
