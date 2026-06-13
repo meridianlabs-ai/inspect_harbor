@@ -421,6 +421,9 @@ grafana/o11y-bench:
   - Professional
   repo: https://github.com/grafana/o11y-bench
 
+grandsmile/unicode:
+  categories: []
+
 harbor/rewardhackbench:
   categories:
   - Safeguards

@@ -439,6 +439,13 @@
   categories:
   - Coding
   - Professional
+- title: grandsmile/unicode
+  path: registry/grandsmile_unicode.html
+  desc: UniCode generative coding benchmark adapted to Harbor. Oracle-verified subset with valid_codes-derived solutions.
+  desc_trunc: UniCode generative coding benchmark adapted to Harbor. Oracle-verified subset with valid_codes-deri…
+  task_function: grandsmile_unicode
+  samples: 399
+  version: latest
 - title: harbor/rewardhackbench
   path: registry/harbor_rewardhackbench.html
   desc: 'RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is labelled for harness-level cheating, task-level reward hacking, and refusals.'
