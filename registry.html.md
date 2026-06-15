@@ -68,6 +68,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [gorilla/bfcl_parity](registry/gorilla_bfcl_parity.html.md) | gorilla_bfcl_parity | Stratified parity subset of BFCL validating that Harbor’s adapter matches the upstream implementati… | 123 |
 | [gpqa-diamond/gpqa-diamond](registry/gpqa_diamond.html.md) | gpqa_diamond | GPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch… | 198 |
 | [grafana/o11y-bench](registry/grafana_o11y_bench.html.md) | grafana_o11y_bench | o11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo… | 63 |
+| [grandsmile/unicode](registry/grandsmile_unicode.html.md) | grandsmile_unicode | UniCode: competitive-programming problems systematically augmented into novel variations to probe g… | 399 |
 | [harbor/rewardhackbench](registry/harbor_rewardhackbench.html.md) | harbor_rewardhackbench | RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is… | 846 |
 | [harveyai/lab](registry/harveyai_lab.html.md) | harveyai_lab | Harvey LAB - open-source benchmark for evaluating agents on real legal work. | 1000 |
 | [ineqmath/ineqmath](registry/ineqmath.html.md) | ineqmath | IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou… | 100 |
