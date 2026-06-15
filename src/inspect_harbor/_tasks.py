@@ -1408,6 +1408,37 @@ def grafana_o11y_bench(
 
 
 @task
+def grandsmile_unicode(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""UniCode: competitive-programming problems systematically augmented into novel variations to probe genuine code reasoning rather than memorized solutions, scored against an oracle-verified solvable subset.
+
+    Slug: grandsmile/unicode
+    Latest digest: sha256:7089553ec020ab38347293a5575c916c9ca490f8398d527da93873b4bc766f2b
+    """
+    return _harbor_base(
+        package_name="grandsmile/unicode",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def harbor_rewardhackbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,

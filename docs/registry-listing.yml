@@ -439,6 +439,15 @@
   categories:
   - Coding
   - Professional
+- title: grandsmile/unicode
+  path: registry/grandsmile_unicode.html
+  desc: 'UniCode: competitive-programming problems systematically augmented into novel variations to probe genuine code reasoning rather than memorized solutions, scored against an oracle-verified solvable subset.'
+  desc_trunc: 'UniCode: competitive-programming problems systematically augmented into novel variations to probe g…'
+  task_function: grandsmile_unicode
+  samples: 399
+  version: latest
+  categories:
+  - Coding
 - title: harbor/rewardhackbench
   path: registry/harbor_rewardhackbench.html
   desc: 'RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is labelled for harness-level cheating, task-level reward hacking, and refusals.'
