@@ -1419,7 +1419,7 @@ def grandsmile_unicode(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""UniCode generative coding benchmark adapted to Harbor. Oracle-verified subset with valid_codes-derived solutions.
+    r"""UniCode: competitive-programming problems systematically augmented into novel variations to probe genuine code reasoning rather than memorized solutions, scored against an oracle-verified solvable subset.
 
     Slug: grandsmile/unicode
     Latest digest: sha256:7089553ec020ab38347293a5575c916c9ca490f8398d527da93873b4bc766f2b

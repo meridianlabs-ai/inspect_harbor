@@ -422,7 +422,12 @@ grafana/o11y-bench:
   repo: https://github.com/grafana/o11y-bench
 
 grandsmile/unicode:
-  categories: []
+  categories:
+  - Coding
+  arxiv: https://arxiv.org/abs/2510.17868
+  repo: https://github.com/grandsmile/UniCode
+  desc: 'UniCode: competitive-programming problems systematically augmented into novel variations to probe genuine code reasoning rather than memorized solutions, scored against an oracle-verified solvable subset.'
+  title: UniCode
 
 harbor/rewardhackbench:
   categories:
