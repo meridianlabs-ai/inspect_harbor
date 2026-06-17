@@ -41,6 +41,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [algotune/algotune](registry/algotune.html.md) | algotune | AlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that match… | 154 |
 | [apple/mmau](registry/apple_mmau.html.md) | apple_mmau | MMAU (Massive Multitask Agent Understanding): Apple’s holistic agent benchmark covering tool-use, D… | 1000 |
 | [arcprize/arc-agi-2](registry/arcprize_arc_agi_2.html.md) | arcprize_arc_agi_2 | ARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but… | 167 |
+| [benchflow/skillsbench](registry/benchflow_skillsbench.html.md) | benchflow_skillsbench | SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folde… | 87 |
 | [bigcode/bigcodebench-hard-complete](registry/bigcode_bigcodebench_hard_complete.html.md) | bigcode_bigcodebench_hard_complete | BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun… | 145 |
 | [bigcode/humanevalfix](registry/bigcode_humanevalfix.html.md) | bigcode_humanevalfix | HumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo… | 164 |
 | [binary-audit/binary-audit](registry/binary_audit.html.md) | binary_audit | BinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engin… | 46 |
