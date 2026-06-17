@@ -199,11 +199,12 @@ arcprize/arc-agi-2:
   title: ARC-AGI-2
   featured: true
 
-ashantanu/task1_v3_1_stock_research_basket_rolling:
-  categories: []
-
 benchflow/skillsbench:
-  categories: []
+  categories:
+  - Assistants
+  repo: https://github.com/benchflow-ai/skillsbench
+  desc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folders of instructions, scripts, and resources) to complete specialized workflows spanning science, engineering, and professional domains.'
+  title: SkillsBench
 
 bigcode/bigcodebench-hard-complete:
   categories:

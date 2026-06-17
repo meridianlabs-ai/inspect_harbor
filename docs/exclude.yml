@@ -10,3 +10,10 @@
 # Verbatim copy of agentscope-ai/pawbench (identical 150 inputs, renamed
 # sample ids); keep only the canonical author org.
 - xiaoboai/pawbench
+# Individual's experimental personal tasks, not a published benchmark
+# (e.g. task1_v3_1_stock_research_basket_rolling).
+- ashantanu/*
+# Experimental Modal-platform port iterations ("patched verifier rebuild",
+# train/eval splits); not a published benchmark and not a real org. The
+# canonical vmax dataset is kept as vmax/vmax-tasks.
+- vmax-modal/*

@@ -39,9 +39,40 @@ org/name:
   categories: []
 ```
 
-### 3. Research each new dataset
+### 3. Triage each stub: keep, exclude, or dedupe
 
-For each slug, gather:
+Not every auto-stubbed slug is a real benchmark worth listing. Before researching, decide for each stub whether it should be **kept** (→ research + fill, the common case), **excluded** (junk), or **deduped** (a copy of one we already list). Excluded/deduped slugs go in `docs/exclude.yml` instead of getting `categories` filled in.
+
+> The live scrape in step 6 (`validate_overrides.py`) often surfaces *more* new slugs than the PR description lists — datasets land on the hub after the nightly bot ran. Triage those the same way. Run validate early to see the full set.
+
+**Exclude experimental / personal junk.** People push half-finished or personal tasks to the hub that aren't published benchmarks. Tells:
+- Slug looks like a working file, not a release: `task1_v3_1_...`, `..._train_patched` / `..._eval_patched`, version/scratch suffixes (`-v1`, `-rolling`).
+- `desc` reads like an internal dev note, e.g. `"Patched verifier rebuild: reworked Modal capability-contract checks ... Tasks identical except tests/verify.py."`
+- Tiny task count (a handful of samples) with a generic name.
+- The org is an **individual**, not a project/company. Check it:
+  ```bash
+  gh api users/<org> -q '.type + " | " + (.name // "") + " | repos=" + (.public_repos|tostring)'
+  ```
+  `type=User` (a person) with no matching benchmark repo is a strong exclude signal; `type=Organization` (or a User whose repo *is* the canonical benchmark) is a keep signal. A slug whose org doesn't resolve at all (`404`) and reads like a dev artifact is junk.
+
+When in doubt about whether something is a real benchmark vs. junk, ask the user before excluding.
+
+**Dedupe copies published under multiple orgs.** The same benchmark sometimes appears under several org slugs (verbatim re-uploads). Keep the copy from the **most credible / original author** — the benchmark's actual authors, or the org that owns the upstream GitHub repo — and exclude the rest. Confirm they're really the same before dropping one:
+```bash
+uv run python -c "
+from inspect_harbor import <func_a>, <func_b>
+a, b = <func_a>().dataset, <func_b>().dataset
+print('counts:', len(a), len(b))
+print('inputs identical:', sorted(s.input for s in a) == sorted(s.input for s in b))
+"
+```
+Identical inputs (even if sample ids are renamed) ⇒ duplicate. Example: `xiaoboai/pawbench` is a verbatim copy of `agentscope-ai/pawbench` (same 150 inputs, renamed ids) — we keep `agentscope-ai` (the author org that owns the PawBench repo) and exclude `xiaoboai/pawbench`.
+
+**How to exclude.** Add a glob to `docs/exclude.yml` with a one-line comment saying *why*, prefer an org-wide glob (`ashantanu/*`, `vmax-modal/*`) for a junk account and an exact slug (`xiaoboai/pawbench`) for a single dedup. Then drop any stub the bot already added to `docs/overrides.yml` (pop it in the helper from step 5, or it'll linger as an orphan-warning). After regenerating, the slug disappears from `_tasks.py` and the listing. See the header of `docs/exclude.yml` for the existing patterns.
+
+### 4. Research each new dataset
+
+For each slug you're keeping, gather:
 
 | Field | Where to find it |
 |---|---|
@@ -90,7 +121,7 @@ Read the `desc` for every slug you're filling in categories for — it's publish
 
 When you do rewrite, aim for one sentence that says **what the model is asked to do and in what domain** — concrete enough that a reader scanning the listing knows whether the benchmark is relevant. If the default is uninformative, inspect a task input (the one-liner above) to learn what the task really is, then write from that. Example: for `ivanleo/agent-search`, the task loads a docs SQLite DB and asks the agent to answer API questions by writing queries — so a fitting `desc` is `"Agent answers Gemini API questions by querying an indexed documentation database."` rather than the shipped placeholder.
 
-### 4. Apply the overrides
+### 5. Apply the overrides
 
 Use the in-script helpers — they preserve the file's header comment and field order:
 
@@ -110,7 +141,7 @@ write_overrides_file(overrides)
 "
 ```
 
-### 5. Validate, regenerate, format, test
+### 6. Validate, regenerate, format, test
 
 ```bash
 uv run python scripts/validate_overrides.py    # CI's gate; must report all valid
@@ -119,11 +150,11 @@ make check                                     # ruff (fixes _tasks.py docstring
 uv run pytest tests/ --no-header               # 167+ tests; should be 100% pass
 ```
 
-### 6. Commit and push
+### 7. Commit and push
 
 The bot's own commit on the branch already says `fix: update Harbor registry tasks`. Your commit can be the same or `fix: fill in categories for <new datasets>`. Push to `origin update-harbor-tasks`.
 
-### 7. After merge: publish the docs site
+### 8. After merge: publish the docs site
 
 The user merges the PR. Docs at https://meridianlabs-ai.github.io/inspect_harbor are not auto-published — the new datasets won't show up on the registry listing until someone re-renders + pushes `gh-pages`. Do it as soon as the merge lands so the public docs catch up:
 
