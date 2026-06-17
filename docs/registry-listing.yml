@@ -180,6 +180,15 @@
   categories:
   - Reasoning
   - Multimodal
+- title: benchflow/skillsbench
+  path: registry/benchflow_skillsbench.html
+  desc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folders of instructions, scripts, and resources) to complete specialized workflows spanning science, engineering, and professional domains.'
+  desc_trunc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folde…'
+  task_function: benchflow_skillsbench
+  samples: 87
+  version: latest
+  categories:
+  - Assistants
 - title: bigcode/bigcodebench-hard-complete
   path: registry/bigcode_bigcodebench_hard_complete.html
   desc: 'BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse function calls and complex instructions, in completion format.'
