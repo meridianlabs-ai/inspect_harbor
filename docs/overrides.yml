@@ -199,6 +199,12 @@ arcprize/arc-agi-2:
   title: ARC-AGI-2
   featured: true
 
+ashantanu/task1_v3_1_stock_research_basket_rolling:
+  categories: []
+
+benchflow/skillsbench:
+  categories: []
+
 bigcode/bigcodebench-hard-complete:
   categories:
   - Coding

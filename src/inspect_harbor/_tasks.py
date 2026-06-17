@@ -571,6 +571,68 @@ def arcprize_arc_agi_2(
 
 
 @task
+def ashantanu_task1_v3_1_stock_research_basket_rolling(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Task 1 v3.1: eight rolling as-of stock research basket tasks for repeated model trajectories.
+
+    Slug: ashantanu/task1_v3_1_stock_research_basket_rolling
+    Latest digest: sha256:ff2fc96ae5e3f92c6ee54fc3f96d5a4de43d70e3c18b274d37144de8bd9b62bc
+    """
+    return _harbor_base(
+        package_name="ashantanu/task1_v3_1_stock_research_basket_rolling",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def benchflow_skillsbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""SkillsBench v1.1 — 87-task benchmark snapshot
+
+    Slug: benchflow/skillsbench
+    Latest digest: sha256:145925c10bc09425dc0201772cfa50d9b800010081cf5ad77969554a644d7ae1
+    """
+    return _harbor_base(
+        package_name="benchflow/skillsbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def bigcode_bigcodebench_hard_complete(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
