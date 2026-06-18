@@ -1035,25 +1035,25 @@
     "text": "Dataset information\n\n\n\nHarbor registry\nlivecodebench/livecodebench\n\n\nInspect task\nlivecodebench\n\n\nLatest digest\nsha256:4dbb3336efa78b7c4d98061d4bdb57af31a2cd52a938b44463e8351ad73b160b\n\n\nSamples\n100\n\n\nPaper\narxiv\n\n\nSource\nhttps://github.com/LiveCodeBench/LiveCodeBench\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
   },
   {
-    "objectID": "registry/harbor_rewardhackbench.html",
-    "href": "registry/harbor_rewardhackbench.html",
-    "title": "harbor/rewardhackbench",
+    "objectID": "registry/orinlabs_horizon_public.html",
+    "href": "registry/orinlabs_horizon_public.html",
+    "title": "orinlabs/horizon-public",
     "section": "",
     "text": "← Back to Registry"
   },
   {
-    "objectID": "registry/harbor_rewardhackbench.html#run-this-task",
-    "href": "registry/harbor_rewardhackbench.html#run-this-task",
-    "title": "harbor/rewardhackbench",
+    "objectID": "registry/orinlabs_horizon_public.html#run-this-task",
+    "href": "registry/orinlabs_horizon_public.html#run-this-task",
+    "title": "orinlabs/horizon-public",
     "section": "Run this task",
-    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/harbor_rewardhackbench --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import harbor_rewardhackbench\n\neval(harbor_rewardhackbench(), model=\"openai/gpt-5\")"
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/orinlabs_horizon_public --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import orinlabs_horizon_public\n\neval(orinlabs_horizon_public(), model=\"openai/gpt-5\")"
   },
   {
-    "objectID": "registry/harbor_rewardhackbench.html#dataset-information",
-    "href": "registry/harbor_rewardhackbench.html#dataset-information",
-    "title": "harbor/rewardhackbench",
+    "objectID": "registry/orinlabs_horizon_public.html#dataset-information",
+    "href": "registry/orinlabs_horizon_public.html#dataset-information",
+    "title": "orinlabs/horizon-public",
     "section": "Dataset information",
-    "text": "Dataset information\n\n\n\nHarbor registry\nharbor/rewardhackbench\n\n\nInspect task\nharbor_rewardhackbench\n\n\nLatest digest\nsha256:0dd16e1029495cba180809b7ecfbae375089881b11ff11e369bfbbf3c72a2fd8\n\n\nSamples\n846\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+    "text": "Dataset information\n\n\n\nHarbor registry\norinlabs/horizon-public\n\n\nInspect task\norinlabs_horizon_public\n\n\nLatest digest\nsha256:38204787d8cd258d35e620e639c4418e4805141f22dc752b5e09431d0a3dd552\n\n\nSamples\n3\n\n\nSource\nhttps://github.com/orinlabs/horizon\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
   },
   {
     "objectID": "registry/camel_ai_seta_env.html",
@@ -1189,228 +1189,235 @@
     "href": "CHANGELOG.html",
     "title": "Changelog",
     "section": "",
-    "text": "update Harbor registry tasks (#94) (1376705)"
+    "text": "update Harbor registry tasks (#96) (1ecadcc)"
   },
   {
     "objectID": "CHANGELOG.html#section",
     "href": "CHANGELOG.html#section",
     "title": "Changelog",
     "section": "",
-    "text": "update Harbor registry tasks (#94) (1376705)"
+    "text": "update Harbor registry tasks (#96) (1ecadcc)"
   },
   {
     "objectID": "CHANGELOG.html#section-1",
     "href": "CHANGELOG.html#section-1",
     "title": "Changelog",
-    "section": "0.5.8 (2026-06-12)",
-    "text": "0.5.8 (2026-06-12)\n\nBug Fixes\n\nupdate Harbor registry tasks (#92) (779bd58)"
+    "section": "0.5.9 (2026-06-15)",
+    "text": "0.5.9 (2026-06-15)\n\nBug Fixes\n\nupdate Harbor registry tasks (#94) (1376705)"
   },
   {
     "objectID": "CHANGELOG.html#section-2",
     "href": "CHANGELOG.html#section-2",
     "title": "Changelog",
-    "section": "0.5.7 (2026-06-08)",
-    "text": "0.5.7 (2026-06-08)\n\nBug Fixes\n\nupdate Harbor registry tasks (#89) (bd47cb4)"
+    "section": "0.5.8 (2026-06-12)",
+    "text": "0.5.8 (2026-06-12)\n\nBug Fixes\n\nupdate Harbor registry tasks (#92) (779bd58)"
   },
   {
     "objectID": "CHANGELOG.html#section-3",
     "href": "CHANGELOG.html#section-3",
     "title": "Changelog",
-    "section": "0.5.6 (2026-06-03)",
-    "text": "0.5.6 (2026-06-03)\n\nBug Fixes\n\nconverters: correct network isolation + resolve task env vars (#87) (d06950d)"
+    "section": "0.5.7 (2026-06-08)",
+    "text": "0.5.7 (2026-06-08)\n\nBug Fixes\n\nupdate Harbor registry tasks (#89) (bd47cb4)"
   },
   {
     "objectID": "CHANGELOG.html#section-4",
     "href": "CHANGELOG.html#section-4",
     "title": "Changelog",
-    "section": "0.5.5 (2026-06-01)",
-    "text": "0.5.5 (2026-06-01)\n\nBug Fixes\n\nupdate Harbor registry tasks (#84) (61192ad)"
+    "section": "0.5.6 (2026-06-03)",
+    "text": "0.5.6 (2026-06-03)\n\nBug Fixes\n\nconverters: correct network isolation + resolve task env vars (#87) (d06950d)"
   },
   {
     "objectID": "CHANGELOG.html#section-5",
     "href": "CHANGELOG.html#section-5",
     "title": "Changelog",
-    "section": "0.5.4 (2026-05-20)",
-    "text": "0.5.4 (2026-05-20)\n\nBug Fixes\n\nstable docker image tags so repeat eval runs reuse the cached image (#82) (749ba78)"
+    "section": "0.5.5 (2026-06-01)",
+    "text": "0.5.5 (2026-06-01)\n\nBug Fixes\n\nupdate Harbor registry tasks (#84) (61192ad)"
   },
   {
     "objectID": "CHANGELOG.html#section-6",
     "href": "CHANGELOG.html#section-6",
     "title": "Changelog",
-    "section": "0.5.3 (2026-05-18)",
-    "text": "0.5.3 (2026-05-18)\n\nBug Fixes\n\nupdate Harbor registry tasks (#79) (3c3c9f8)"
+    "section": "0.5.4 (2026-05-20)",
+    "text": "0.5.4 (2026-05-20)\n\nBug Fixes\n\nstable docker image tags so repeat eval runs reuse the cached image (#82) (749ba78)"
   },
   {
     "objectID": "CHANGELOG.html#section-7",
     "href": "CHANGELOG.html#section-7",
     "title": "Changelog",
-    "section": "0.5.2 (2026-05-12)",
-    "text": "0.5.2 (2026-05-12)\n\nBug Fixes\n\nupdate Harbor registry tasks (#76) (660d5ca)\n\n\n\nDocumentation\n\nadd post-merge publish step to nightly-pr-triage skill (#78) (fc9ad48)"
+    "section": "0.5.3 (2026-05-18)",
+    "text": "0.5.3 (2026-05-18)\n\nBug Fixes\n\nupdate Harbor registry tasks (#79) (3c3c9f8)"
   },
   {
     "objectID": "CHANGELOG.html#section-8",
     "href": "CHANGELOG.html#section-8",
     "title": "Changelog",
-    "section": "0.5.1 (2026-05-08)",
-    "text": "0.5.1 (2026-05-08)\n\nBug Fixes\n\nadd title to overrides (#73) (cd5c1dc)\nsplit description into desc + desc_trunc in registry-listing.yml (#71) (0154d4a)\nupdate Harbor registry tasks (#74) (4a399d1)"
+    "section": "0.5.2 (2026-05-12)",
+    "text": "0.5.2 (2026-05-12)\n\nBug Fixes\n\nupdate Harbor registry tasks (#76) (660d5ca)\n\n\n\nDocumentation\n\nadd post-merge publish step to nightly-pr-triage skill (#78) (fc9ad48)"
   },
   {
     "objectID": "CHANGELOG.html#section-9",
     "href": "CHANGELOG.html#section-9",
     "title": "Changelog",
-    "section": "0.5.0 (2026-05-07)",
-    "text": "0.5.0 (2026-05-07)\n\nFeatures\n\nmigrate to Harbor 0.6 with self-service registry (#69) (7838993)"
+    "section": "0.5.1 (2026-05-08)",
+    "text": "0.5.1 (2026-05-08)\n\nBug Fixes\n\nadd title to overrides (#73) (cd5c1dc)\nsplit description into desc + desc_trunc in registry-listing.yml (#71) (0154d4a)\nupdate Harbor registry tasks (#74) (4a399d1)"
   },
   {
     "objectID": "CHANGELOG.html#section-10",
     "href": "CHANGELOG.html#section-10",
     "title": "Changelog",
-    "section": "0.4.18 (2026-04-27)",
-    "text": "0.4.18 (2026-04-27)\n\nBug Fixes\n\nupdate Harbor registry tasks (#67) (f7e8364)\n\n\n\nDocumentation\n\nsearchable registry listing + per-benchmark landing pages (#65) (ccbda21)"
+    "section": "0.5.0 (2026-05-07)",
+    "text": "0.5.0 (2026-05-07)\n\nFeatures\n\nmigrate to Harbor 0.6 with self-service registry (#69) (7838993)"
   },
   {
     "objectID": "CHANGELOG.html#section-11",
     "href": "CHANGELOG.html#section-11",
     "title": "Changelog",
-    "section": "0.4.17 (2026-04-21)",
-    "text": "0.4.17 (2026-04-21)\n\nBug Fixes\n\nembed Harbor URL in each task’s docstring (#64) (b76d374)\nrestore registry tracker and repoint docs URLs to new Harbor site (#61) (cc00228)"
+    "section": "0.4.18 (2026-04-27)",
+    "text": "0.4.18 (2026-04-27)\n\nBug Fixes\n\nupdate Harbor registry tasks (#67) (f7e8364)\n\n\n\nDocumentation\n\nsearchable registry listing + per-benchmark landing pages (#65) (ccbda21)"
   },
   {
     "objectID": "CHANGELOG.html#section-12",
     "href": "CHANGELOG.html#section-12",
     "title": "Changelog",
-    "section": "0.4.16 (2026-04-08)",
-    "text": "0.4.16 (2026-04-08)\n\nBug Fixes\n\napply resource overrides only to default service (#56) (ea5e86f)"
+    "section": "0.4.17 (2026-04-21)",
+    "text": "0.4.17 (2026-04-21)\n\nBug Fixes\n\nembed Harbor URL in each task’s docstring (#64) (b76d374)\nrestore registry tracker and repoint docs URLs to new Harbor site (#61) (cc00228)"
   },
   {
     "objectID": "CHANGELOG.html#section-13",
     "href": "CHANGELOG.html#section-13",
     "title": "Changelog",
-    "section": "0.4.15 (2026-04-01)",
-    "text": "0.4.15 (2026-04-01)\n\nBug Fixes\n\npin harbor&lt;0.3.0 and bump inspect-ai&gt;=0.3.201 (#52) (0cb0a46)"
+    "section": "0.4.16 (2026-04-08)",
+    "text": "0.4.16 (2026-04-08)\n\nBug Fixes\n\napply resource overrides only to default service (#56) (ea5e86f)"
   },
   {
     "objectID": "CHANGELOG.html#section-14",
     "href": "CHANGELOG.html#section-14",
     "title": "Changelog",
-    "section": "0.4.14 (2026-03-30)",
-    "text": "0.4.14 (2026-03-30)\n\nBug Fixes\n\nupdate Harbor registry tasks (#50) (5f49ac9)"
+    "section": "0.4.15 (2026-04-01)",
+    "text": "0.4.15 (2026-04-01)\n\nBug Fixes\n\npin harbor&lt;0.3.0 and bump inspect-ai&gt;=0.3.201 (#52) (0cb0a46)"
   },
   {
     "objectID": "CHANGELOG.html#section-15",
     "href": "CHANGELOG.html#section-15",
     "title": "Changelog",
-    "section": "0.4.13 (2026-03-25)",
-    "text": "0.4.13 (2026-03-25)\n\nBug Fixes\n\npin litellm&lt;1.82.7 to block compromised versions (#48) (5e7328b)\nupdate Harbor registry tasks (#47) (10752d5)"
+    "section": "0.4.14 (2026-03-30)",
+    "text": "0.4.14 (2026-03-30)\n\nBug Fixes\n\nupdate Harbor registry tasks (#50) (5f49ac9)"
   },
   {
     "objectID": "CHANGELOG.html#section-16",
     "href": "CHANGELOG.html#section-16",
     "title": "Changelog",
-    "section": "0.4.12 (2026-03-24)",
-    "text": "0.4.12 (2026-03-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#45) (dc25090)"
+    "section": "0.4.13 (2026-03-25)",
+    "text": "0.4.13 (2026-03-25)\n\nBug Fixes\n\npin litellm&lt;1.82.7 to block compromised versions (#48) (5e7328b)\nupdate Harbor registry tasks (#47) (10752d5)"
   },
   {
     "objectID": "CHANGELOG.html#section-17",
     "href": "CHANGELOG.html#section-17",
     "title": "Changelog",
-    "section": "0.4.11 (2026-03-18)",
-    "text": "0.4.11 (2026-03-18)\n\nBug Fixes\n\nenforce network mode & handle variable expansion (#43) (3858da2)"
+    "section": "0.4.12 (2026-03-24)",
+    "text": "0.4.12 (2026-03-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#45) (dc25090)"
   },
   {
     "objectID": "CHANGELOG.html#section-18",
     "href": "CHANGELOG.html#section-18",
     "title": "Changelog",
-    "section": "0.4.10 (2026-03-16)",
-    "text": "0.4.10 (2026-03-16)\n\nBug Fixes\n\nenforce allow_internet network mode in compose-file path (#42) (14bdc24)\nupdate Harbor registry tasks (#40) (290c0ca)"
+    "section": "0.4.11 (2026-03-18)",
+    "text": "0.4.11 (2026-03-18)\n\nBug Fixes\n\nenforce network mode & handle variable expansion (#43) (3858da2)"
   },
   {
     "objectID": "CHANGELOG.html#section-19",
     "href": "CHANGELOG.html#section-19",
     "title": "Changelog",
-    "section": "0.4.9 (2026-03-11)",
-    "text": "0.4.9 (2026-03-11)\n\nBug Fixes\n\nupdate Harbor registry tasks (#38) (47dd23f)"
+    "section": "0.4.10 (2026-03-16)",
+    "text": "0.4.10 (2026-03-16)\n\nBug Fixes\n\nenforce allow_internet network mode in compose-file path (#42) (14bdc24)\nupdate Harbor registry tasks (#40) (290c0ca)"
   },
   {
     "objectID": "CHANGELOG.html#section-20",
     "href": "CHANGELOG.html#section-20",
     "title": "Changelog",
-    "section": "0.4.8 (2026-03-05)",
-    "text": "0.4.8 (2026-03-05)\n\nBug Fixes\n\nupdate Harbor registry tasks (#36) (ec31a18)"
+    "section": "0.4.9 (2026-03-11)",
+    "text": "0.4.9 (2026-03-11)\n\nBug Fixes\n\nupdate Harbor registry tasks (#38) (47dd23f)"
   },
   {
     "objectID": "CHANGELOG.html#section-21",
     "href": "CHANGELOG.html#section-21",
     "title": "Changelog",
-    "section": "0.4.7 (2026-03-03)",
-    "text": "0.4.7 (2026-03-03)\n\nBug Fixes\n\nupdate Harbor registry tasks (#34) (e810779)"
+    "section": "0.4.8 (2026-03-05)",
+    "text": "0.4.8 (2026-03-05)\n\nBug Fixes\n\nupdate Harbor registry tasks (#36) (ec31a18)"
   },
   {
     "objectID": "CHANGELOG.html#section-22",
     "href": "CHANGELOG.html#section-22",
     "title": "Changelog",
-    "section": "0.4.6 (2026-03-02)",
-    "text": "0.4.6 (2026-03-02)\n\nBug Fixes\n\nupdate Harbor registry tasks (#32) (fd04b4a)"
+    "section": "0.4.7 (2026-03-03)",
+    "text": "0.4.7 (2026-03-03)\n\nBug Fixes\n\nupdate Harbor registry tasks (#34) (e810779)"
   },
   {
     "objectID": "CHANGELOG.html#section-23",
     "href": "CHANGELOG.html#section-23",
     "title": "Changelog",
-    "section": "0.4.5 (2026-02-24)",
-    "text": "0.4.5 (2026-02-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#29) (9252db7)"
+    "section": "0.4.6 (2026-03-02)",
+    "text": "0.4.6 (2026-03-02)\n\nBug Fixes\n\nupdate Harbor registry tasks (#32) (fd04b4a)"
   },
   {
     "objectID": "CHANGELOG.html#section-24",
     "href": "CHANGELOG.html#section-24",
     "title": "Changelog",
-    "section": "0.4.4 (2026-02-23)",
-    "text": "0.4.4 (2026-02-23)\n\nBug Fixes\n\nupdate Harbor registry tasks (#27) (663915c)"
+    "section": "0.4.5 (2026-02-24)",
+    "text": "0.4.5 (2026-02-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#29) (9252db7)"
   },
   {
     "objectID": "CHANGELOG.html#section-25",
     "href": "CHANGELOG.html#section-25",
     "title": "Changelog",
-    "section": "0.4.3 (2026-02-18)",
-    "text": "0.4.3 (2026-02-18)\n\nBug Fixes\n\nUpdate Harbor Registry Tasks (#25) (7c8e394)"
+    "section": "0.4.4 (2026-02-23)",
+    "text": "0.4.4 (2026-02-23)\n\nBug Fixes\n\nupdate Harbor registry tasks (#27) (663915c)"
   },
   {
     "objectID": "CHANGELOG.html#section-26",
     "href": "CHANGELOG.html#section-26",
     "title": "Changelog",
-    "section": "0.4.2 (2026-02-14)",
-    "text": "0.4.2 (2026-02-14)\n\nDocumentation\n\nadd credits section to README (#22) (2621ac7)"
+    "section": "0.4.3 (2026-02-18)",
+    "text": "0.4.3 (2026-02-18)\n\nBug Fixes\n\nUpdate Harbor Registry Tasks (#25) (7c8e394)"
   },
   {
     "objectID": "CHANGELOG.html#section-27",
     "href": "CHANGELOG.html#section-27",
     "title": "Changelog",
-    "section": "0.4.1 (2026-02-12)",
-    "text": "0.4.1 (2026-02-12)\n\nDocumentation\n\nimprove REGISTRY.md table formatting and highlight featured datasets (#20) (8d995aa)"
+    "section": "0.4.2 (2026-02-14)",
+    "text": "0.4.2 (2026-02-14)\n\nDocumentation\n\nadd credits section to README (#22) (2621ac7)"
   },
   {
     "objectID": "CHANGELOG.html#section-28",
     "href": "CHANGELOG.html#section-28",
     "title": "Changelog",
-    "section": "0.4.0 (2026-02-12)",
-    "text": "0.4.0 (2026-02-12)\n\nFeatures\n\nadd autogenerated REGISTRY.md with dataset catalog (#19) (f643583)\nadd static task generation from Harbor registry (#14) (801fcb4)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to update-registry workflow (#16) (3cd9ebc)\nremove timestamp from generated tasks (#18) (08ffc96)"
+    "section": "0.4.1 (2026-02-12)",
+    "text": "0.4.1 (2026-02-12)\n\nDocumentation\n\nimprove REGISTRY.md table formatting and highlight featured datasets (#20) (8d995aa)"
   },
   {
     "objectID": "CHANGELOG.html#section-29",
     "href": "CHANGELOG.html#section-29",
     "title": "Changelog",
-    "section": "0.3.0 (2026-02-11)",
-    "text": "0.3.0 (2026-02-11)\n\nFeatures\n\nadd resource override parameters to harbor() task (#11) (e765c4c)"
+    "section": "0.4.0 (2026-02-12)",
+    "text": "0.4.0 (2026-02-12)\n\nFeatures\n\nadd autogenerated REGISTRY.md with dataset catalog (#19) (f643583)\nadd static task generation from Harbor registry (#14) (801fcb4)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to update-registry workflow (#16) (3cd9ebc)\nremove timestamp from generated tasks (#18) (08ffc96)"
   },
   {
     "objectID": "CHANGELOG.html#section-30",
     "href": "CHANGELOG.html#section-30",
     "title": "Changelog",
-    "section": "0.2.0 (2026-02-10)",
-    "text": "0.2.0 (2026-02-10)\n\nFeatures\n\nsimplify harbor() API by removing solver parameter (#7) (37ef434)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to release workflow (#8) (f99615c)"
+    "section": "0.3.0 (2026-02-11)",
+    "text": "0.3.0 (2026-02-11)\n\nFeatures\n\nadd resource override parameters to harbor() task (#11) (e765c4c)"
   },
   {
     "objectID": "CHANGELOG.html#section-31",
     "href": "CHANGELOG.html#section-31",
+    "title": "Changelog",
+    "section": "0.2.0 (2026-02-10)",
+    "text": "0.2.0 (2026-02-10)\n\nFeatures\n\nsimplify harbor() API by removing solver parameter (#7) (37ef434)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to release workflow (#8) (f99615c)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-32",
+    "href": "CHANGELOG.html#section-32",
     "title": "Changelog",
     "section": "0.1.0 (2026-02-10)",
     "text": "0.1.0 (2026-02-10)\n\nFeatures\n\nInitial release of inspect_harbor\nInspect AI interface to Harbor tasks\nSupport for Harbor task execution and evaluation\nIntegration with Inspect AI evaluation registry\n\n\n\nDocumentation\n\nAdd comprehensive README with usage examples\nAdd project documentation and setup instructions\n\n\n\nMiscellaneous\n\nSet up CI/CD with GitHub Actions\nAdd test suite with pytest\nConfigure code quality tools (ruff, pyright)\nAdd pre-commit hooks"
@@ -1442,7 +1449,7 @@
     "href": "registry.html#available-datasets",
     "title": "Registry",
     "section": "Available Datasets",
-    "text": "Available Datasets\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Harbor Dataset\n      \n      \n        Inspect Task\n      \n      \n        Samples (Low to High)\n      \n      \n        Samples (High to Low)\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nHarbor Dataset\n\n\n\nInspect Task\n\n\n\nDescription\n\n\n\nSamples\n\n\n\n\n\n\n\n\nLiteCoder/LiteCoder-rl\n\n\nlitecoder_rl\n\n\nLiteCoder: terminal-based RL training environments spanning developer workflows, scientific/numeric…\n\n\n602\n\n\n\n\n\n\nMichaelY310/devopsgym\n\n\nmichaely310_devopsgym\n\n\nDevOps-Gym benchmark adapted to Harbor format - 729 tasks across 5 categories: Build, Monitoring, I…\n\n\n728\n\n\n\n\n\n\naarr/aarri-bench\n\n\naarr_aarri_bench\n\n\naarri(act as a real research intern)-bench, for evaluating LLM agents in academic research tasks.\n\n\n82\n\n\n\n\n\n\nabundant/swe-gen-cpp\n\n\nabundant_swe_gen_cpp\n\n\nDataset of C++ SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n999\n\n\n\n\n\n\nabundant/swe-gen-go\n\n\nabundant_swe_gen_go\n\n\nDataset of Go SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nabundant/swe-gen-java\n\n\nabundant_swe_gen_java\n\n\nDataset of Java SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nabundant/swe-gen-js\n\n\nabundant_swe_gen_js\n\n\nDataset of JS/TS SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nabundant/swe-gen-rust\n\n\nabundant_swe_gen_rust\n\n\nDataset of Rust SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nactava-ai/chi-bench\n\n\nactava_ai_chi_bench\n\n\nχ-Bench: long-horizon, policy-rich U.S. healthcare workflow agent benchmark spanning provider prior…\n\n\n78\n\n\n\n\n\n\nadyen/dabstep\n\n\nadyen_dabstep\n\n\nDABstep: real-world data analysis tasks from Adyen’s workloads requiring multi-step reasoning by LL…\n\n\n450\n\n\n\n\n\n\nagentic-labs/erp-bench\n\n\nagentic_labs_erp_bench\n\n\nERP-Bench is the Odoo 19 benchmark used in the Anchor paper, “Preventing Artifact Drift in Agent Be…\n\n\n300\n\n\n\n\n\n\nagentscope-ai/pawbench\n\n\nagentscope_ai_pawbench\n\n\nPawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use,…\n\n\n150\n\n\n\n\n\n\nai-forever/harness-bench-fast\n\n\nai_forever_harness_bench_fast\n\n\nSelf-contained file-operation agent benchmark.\n\n\n231\n\n\n\n\n\n\naider/aider-polyglot\n\n\naider_polyglot\n\n\nAider’s polyglot coding benchmark: Exercism exercises across C++, Go, Java, JavaScript, Python, and…\n\n\n225\n\n\n\n\n\n\naime/aime\n\n\naime\n\n\nProblems from the American Invitational Mathematics Examination (AIME), a 3-hour high-school compet…\n\n\n60\n\n\n\n\n\n\nalgotune/algotune\n\n\nalgotune\n\n\nAlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that match…\n\n\n154\n\n\n\n\n\n\napple/mmau\n\n\napple_mmau\n\n\nMMAU (Massive Multitask Agent Understanding): Apple’s holistic agent benchmark covering tool-use, D…\n\n\n1000\n\n\n\n\n\n\narcprize/arc-agi-2\n\n\narcprize_arc_agi_2\n\n\nARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but…\n\n\n167\n\n\n\n\n\n\nbenchflow/skillsbench\n\n\nbenchflow_skillsbench\n\n\nSkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folde…\n\n\n87\n\n\n\n\n\n\nbigcode/bigcodebench-hard-complete\n\n\nbigcode_bigcodebench_hard_complete\n\n\nBigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun…\n\n\n145\n\n\n\n\n\n\nbigcode/humanevalfix\n\n\nbigcode_humanevalfix\n\n\nHumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo…\n\n\n164\n\n\n\n\n\n\nbinary-audit/binary-audit\n\n\nbinary_audit\n\n\nBinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engin…\n\n\n46\n\n\n\n\n\n\ncais/swebenchpro\n\n\ncais_swebenchpro\n\n\nSWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks,…\n\n\n731\n\n\n\n\n\n\ncamel-ai/seta-env\n\n\ncamel_ai_seta_env\n\n\nSETA (Scaling Environments for Terminal Agents): CAMEL-AI’s verifiable terminal-agent tasks spannin…\n\n\n1000\n\n\n\n\n\n\ncmu/refav\n\n\ncmu_refav\n\n\nAutonomous-vehicle scenario mining via VLM.\n\n\n1000\n\n\n\n\n\n\ncodepde/codepde\n\n\ncodepde\n\n\nCodePDE: framing partial-differential-equation solving as a code-generation task to benchmark LLMs…\n\n\n5\n\n\n\n\n\n\ncrustbench/crustbench\n\n\ncrustbench\n\n\nCRUST-Bench: real-world C repositories paired with hand-written safe-Rust interfaces and tests, ben…\n\n\n100\n\n\n\n\n\n\ndatacurve/deep-swe\n\n\ndatacurve_deep_swe\n\n\nDeepSWE: Measuring frontier coding agents on original, long-horizon engineering tasks.\n\n\n113\n\n\n\n\n\n\ndbt-labs/ade-bench\n\n\ndbt_labs_ade_bench\n\n\nAnalytics Data Engineer Bench: dbt and SQL data-engineering tasks across DuckDB and Snowflake backe…\n\n\n48\n\n\n\n\n\n\ndeveval/deveval\n\n\ndeveval\n\n\nDevEval: manually-annotated code-generation samples from real-world Python repositories, aligned to…\n\n\n63\n\n\n\n\n\n\nevoeval/evoeval\n\n\nevoeval\n\n\nEvoEval: evolving suite that mutates HumanEval problems along several axes (difficulty, creative, s…\n\n\n100\n\n\n\n\n\n\nfactory-ai/legacy-bench\n\n\nfactory_ai_legacy_bench\n\n\nLegacy-Bench public sample tasks for evaluating AI coding agents on legacy software engineering tas…\n\n\n10\n\n\n\n\n\n\nfeaturebench/featurebench\n\n\nfeaturebench\n\n\nFeatureBench: agentic coding on end-to-end feature-development tasks derived from open-source repos…\n\n\n200\n\n\n\n\n\n\nfeaturebench/featurebench-lite\n\n\nfeaturebench_lite\n\n\nLightweight subset of FeatureBench for cheaper evaluation while preserving model rankings.\n\n\n30\n\n\n\n\n\n\nfeaturebench/featurebench-lite-modal\n\n\nfeaturebench_lite_modal\n\n\nFeatureBench-Lite executed on Modal’s cloud sandbox runner.\n\n\n30\n\n\n\n\n\n\nfeaturebench/featurebench-modal\n\n\nfeaturebench_modal\n\n\nFeatureBench’s full task suite executed on Modal’s cloud sandbox runner.\n\n\n200\n\n\n\n\n\n\nfuturehouse/bixbench\n\n\nfuturehouse_bixbench\n\n\nBixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM age…\n\n\n205\n\n\n\n\n\n\nfuturehouse/bixbench-cli\n\n\nfuturehouse_bixbench_cli\n\n\nCLI variant of BixBench: agents solve the same bioinformatics analysis tasks via a command-line / s…\n\n\n205\n\n\n\n\n\n\nfuturehouse/labbench\n\n\nfuturehouse_labbench\n\n\nLAB-Bench (Language Agent Biology Benchmark): questions across 8 categories (literature QA, databas…\n\n\n181\n\n\n\n\n\n\ngabeorlanski/slopcodebench\n\n\ngabeorlanski_slopcodebench\n\n\nSlopCodeBench multi-checkpoint coding benchmark tasks converted for Harbor.\n\n\n36\n\n\n\n\n\n\ngaia/gaia\n\n\ngaia\n\n\nGAIA: real-world questions across three difficulty levels evaluating general AI assistants on reaso…\n\n\n165\n\n\n\n\n\n\ngnucleus-ai/cad-bench\n\n\ngnucleus_ai_cad_bench\n\n\ngNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks.\n\n\n100\n\n\n\n\n\n\ngorilla/bfcl\n\n\ngorilla_bfcl\n\n\nBerkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Pyt…\n\n\n1000\n\n\n\n\n\n\ngorilla/bfcl_parity\n\n\ngorilla_bfcl_parity\n\n\nStratified parity subset of BFCL validating that Harbor’s adapter matches the upstream implementati…\n\n\n123\n\n\n\n\n\n\ngpqa-diamond/gpqa-diamond\n\n\ngpqa_diamond\n\n\nGPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch…\n\n\n198\n\n\n\n\n\n\ngrafana/o11y-bench\n\n\ngrafana_o11y_bench\n\n\no11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo…\n\n\n63\n\n\n\n\n\n\ngrandsmile/unicode\n\n\ngrandsmile_unicode\n\n\nUniCode: competitive-programming problems systematically augmented into novel variations to probe g…\n\n\n399\n\n\n\n\n\n\nharbor/rewardhackbench\n\n\nharbor_rewardhackbench\n\n\nRewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is…\n\n\n846\n\n\n\n\n\n\nharveyai/lab\n\n\nharveyai_lab\n\n\nHarvey LAB - open-source benchmark for evaluating agents on real legal work.\n\n\n1000\n\n\n\n\n\n\nineqmath/ineqmath\n\n\nineqmath\n\n\nIneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou…\n\n\n100\n\n\n\n\n\n\nivanleo/agent-search\n\n\nivanleo_agent_search\n\n\nAgent answers Gemini API questions by querying an indexed documentation database.\n\n\n20\n\n\n\n\n\n\nkgmon/deepsearchqa\n\n\nkgmon_deepsearchqa\n\n\nDeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research…\n\n\n900\n\n\n\n\n\n\nkumo/kumo-1\n\n\nkumo_1\n\n\nKUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic…\n\n\n1000\n\n\n\n\n\n\nkumo/kumo-easy\n\n\nkumo_easy\n\n\nKUMO (easy split): easier-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark a…\n\n\n1000\n\n\n\n\n\n\nkumo/kumo-hard\n\n\nkumo_hard\n\n\nKUMO (hard split): hard-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark acr…\n\n\n250\n\n\n\n\n\n\nkumo/kumo-parity\n\n\nkumo_parity\n\n\nKUMO (parity split): subset of the KUMO procedural-reasoning benchmark used for parity / regression…\n\n\n212\n\n\n\n\n\n\nlawbench/lawbench\n\n\nlawbench\n\n\nLawBench: tasks evaluating LLMs on Chinese-law knowledge — legal entity recognition, reading compre…\n\n\n1000\n\n\n\n\n\n\nlcb/longswebench-32k\n\n\nlcb_longswebench_32k\n\n\nLongCodeBench (LCB) LongSWE-Bench tasks — 32k context window bucket.\n\n\n3\n\n\n\n\n\n\nlica-world/gdb\n\n\nlica_world_gdb\n\n\nGraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infograp…\n\n\n1000\n\n\n\n\n\n\nlivecodebench/livecodebench\n\n\nlivecodebench\n\n\nLiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, a…\n\n\n100\n\n\n\n\n\n\nmaxbittker/runebench\n\n\nmaxbittker_runebench\n\n\nBenchmark suite for evaluating AI agents on RuneScape gameplay tasks.\n\n\n32\n\n\n\n\n\n\nmeta/mlgym-bench\n\n\nmeta_mlgym_bench\n\n\nMLGym-Bench: Meta’s framework and benchmark for AI research agents covering CV, NLP, RL, and game-t…\n\n\n12\n\n\n\n\n\n\nminnesotanlp/aar\n\n\nminnesotanlp_aar\n\n\nThe Amazing Agent Race (AAR): 1400 multi-step scavenger-hunt puzzles for evaluating LLM agents on t…\n\n\n1000\n\n\n\n\n\n\nmmtb/multimedia-terminalbench\n\n\nmmtb_multimedia_terminalbench\n\n\nMultiMedia-TerminalBench (MMTB): a benchmark of 105 realistic multimedia-file tasks in persistent t…\n\n\n105\n\n\n\n\n\n\nnvats/codeskills-bench\n\n\nnvats_codeskills_bench\n\n\nA small set of real-life programming tasks: bug fixes, merge-conflict resolution, dependency cleanu…\n\n\n23\n\n\n\n\n\n\nopenai/mmmlu\n\n\nopenai_mmmlu\n\n\nMMMLU (Multilingual MMLU): OpenAI’s professional-human-translation of the MMLU test set into 14 lan…\n\n\n150\n\n\n\n\n\n\nopenai/simpleqa\n\n\nopenai_simpleqa\n\n\nSimpleQA: short, fact-seeking questions adversarially collected against GPT-4 to measure short-form…\n\n\n1000\n\n\n\n\n\n\nopenai/swe-lancer-diamond-all\n\n\nopenai_swe_lancer_diamond_all\n\n\nSWE-Lancer Diamond (full): public split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance so…\n\n\n463\n\n\n\n\n\n\nopenai/swe-lancer-diamond-ic\n\n\nopenai_swe_lancer_diamond_ic\n\n\nSWE-Lancer Diamond (IC): individual-contributor split of OpenAI’s SWE-Lancer benchmark — real Upwor…\n\n\n198\n\n\n\n\n\n\nopenai/swe-lancer-diamond-manager\n\n\nopenai_swe_lancer_diamond_manager\n\n\nA benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in…\n\n\n265\n\n\n\n\n\n\npgcodellm/rebench-v2-test\n\n\npgcodellm_rebench_v2_test\n\n\nSWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui…\n\n\n20\n\n\n\n\n\n\nqcircuitbench/qcircuitbench\n\n\nqcircuitbench\n\n\nQCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const…\n\n\n28\n\n\n\n\n\n\nquesma/compilebench\n\n\nquesma_compilebench\n\n\nCompileBench: real-world build/compile tasks (curl, GNU coreutils, jq, etc.) ranging from easy buil…\n\n\n15\n\n\n\n\n\n\nquesma/otel-bench\n\n\nquesma_otel_bench\n\n\nAI-agent benchmark for OpenTelemetry instrumentation tasks across multiple programming languages.\n\n\n26\n\n\n\n\n\n\nquixbugs/quixbugs\n\n\nquixbugs\n\n\nQuixBugs: small classic-algorithm programs (Python and Java) each containing a one-line bug, used t…\n\n\n80\n\n\n\n\n\n\nreasoning-gym/reasoning-gym-easy\n\n\nreasoning_gym_easy\n\n\nReasoning Gym (easy split): procedurally-generated, algorithmically-verifiable reasoning tasks (alg…\n\n\n288\n\n\n\n\n\n\nreasoning-gym/reasoning-gym-hard\n\n\nreasoning_gym_hard\n\n\nReasoning Gym (hard split): procedurally-generated, algorithmically-verifiable reasoning tasks at h…\n\n\n288\n\n\n\n\n\n\nreplicationbench/replicationbench\n\n\nreplicationbench\n\n\nReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce impleme…\n\n\n90\n\n\n\n\n\n\nrexbench/rexbench\n\n\nrexbench\n\n\nRExBench - 2 tasks (cogs, othello) evaluating AI agents’ ability to extend existing AI research thr…\n\n\n2\n\n\n\n\n\n\nsatbench/satbench\n\n\nsatbench\n\n\nSATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable diffi…\n\n\n1000\n\n\n\n\n\n\nscale-ai/hil-bench\n\n\nscale_ai_hil_bench\n\n\nHiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with crit…\n\n\n600\n\n\n\n\n\n\nscale-ai/swe-atlas-qna\n\n\nscale_ai_swe_atlas_qna\n\n\nSWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding…\n\n\n124\n\n\n\n\n\n\nscale-ai/swe-atlas-rf\n\n\nscale_ai_swe_atlas_rf\n\n\nSWE-Atlas - Refactoring – A benchmark of refactoring tasks for coding agents.\n\n\n70\n\n\n\n\n\n\nscale-ai/swe-atlas-tw\n\n\nscale_ai_swe_atlas_tw\n\n\nSWE-Atlas - Test Writing – A benchmark of comprehensive test writing problems for coding agents. C…\n\n\n90\n\n\n\n\n\n\nscale-ai/swe-bench-pro\n\n\nscale_ai_swe_bench_pro\n\n\nSWE-Bench-Pro: long-horizon enterprise software engineering tasks.\n\n\n731\n\n\n\n\n\n\nscienceagentbench/scienceagentbench\n\n\nscienceagentbench\n\n\nScienceAgentBench: data-driven scientific discovery via Python programs across 4 disciplines.\n\n\n102\n\n\n\n\n\n\nsierra-research/tau3-bench\n\n\nsierra_research_tau3_bench\n\n\nThird generation of τ-bench, extending the original with knowledge and voice. A simulation framewor…\n\n\n375\n\n\n\n\n\n\nsldbench/sldbench\n\n\nsldbench\n\n\nSLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments w…\n\n\n8\n\n\n\n\n\n\nstanford/medagentbench\n\n\nstanford_medagentbench\n\n\nMedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benc…\n\n\n300\n\n\n\n\n\n\nstrongreject/strongreject\n\n\nstrongreject\n\n\nStrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks…\n\n\n150\n\n\n\n\n\n\nswe-bench/swe-bench-verified\n\n\nswe_bench_verified\n\n\nSWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs…\n\n\n500\n\n\n\n\n\n\nswe-bench/swe-smith\n\n\nswe_bench_swe_smith\n\n\nSWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any…\n\n\n100\n\n\n\n\n\n\nswt-bench/swt-bench-verified\n\n\nswt_bench_verified\n\n\nSWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing u…\n\n\n433\n\n\n\n\n\n\ntencent/autocodebench\n\n\ntencent_autocodebench\n\n\nMultilingual automated code generation benchmark evaluating LLMs across diverse programming tasks a…\n\n\n200\n\n\n\n\n\n\ntermigen/termigen-environments\n\n\ntermigen_environments\n\n\nTermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11…\n\n\n1000\n\n\n\n\n\n\nterminal-bench-pro/terminal-bench-pro\n\n\nterminal_bench_pro\n\n\nTerminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientifi…\n\n\n200\n\n\n\n\n\n\nterminal-bench/terminal-bench-2\n\n\nterminal_bench_2\n\n\nTerminal-Bench v2: benchmark for testing AI agents in real terminal environments — from compiling c…\n\n\n89\n\n\n\n\n\n\nterminal-bench/terminal-bench-2-1\n\n\nterminal_bench_2_1\n\n\nTerminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ…\n\n\n89\n\n\n\n\n\n\ntheagentcompany/theagentcompany\n\n\ntheagentcompany\n\n\nAn agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and R…\n\n\n174\n\n\n\n\n\n\nthetalab/vector-edit-gym\n\n\nthetalab_vector_edit_gym\n\n\n106 hand-authored SVG editing tasks across four difficulty tiers (easy / medium / hard / very_hard)…\n\n\n106\n\n\n\n\n\n\nusaco/usaco\n\n\nusaco\n\n\nUSACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality u…\n\n\n304\n\n\n\n\n\n\nvals/financeagent\n\n\nvals_financeagent\n\n\nVals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (re…\n\n\n50\n\n\n\n\n\n\nvmax/vmax-tasks\n\n\nvmax_tasks\n\n\nCode-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).\n\n\n1000\n\n\n\n\n\n\nwebgen-bench/webgen-bench\n\n\nwebgen_bench\n\n\nWebGen-Bench: evaluating LLMs on generating interactive and functional websites from scratch.\n\n\n101\n\n\n\n\n\n\nxlang/ds-1000\n\n\nxlang_ds_1000\n\n\nDS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow,…\n\n\n1000\n\n\n\n\n\n\nyanagiorigami/frontier-cs\n\n\nyanagiorigami_frontier_cs\n\n\nFrontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial sco…\n\n\n172\n\n\n\n\n\n\nNo matching items",
+    "text": "Available Datasets\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Harbor Dataset\n      \n      \n        Inspect Task\n      \n      \n        Samples (Low to High)\n      \n      \n        Samples (High to Low)\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nHarbor Dataset\n\n\n\nInspect Task\n\n\n\nDescription\n\n\n\nSamples\n\n\n\n\n\n\n\n\nLiteCoder/LiteCoder-rl\n\n\nlitecoder_rl\n\n\nLiteCoder: terminal-based RL training environments spanning developer workflows, scientific/numeric…\n\n\n602\n\n\n\n\n\n\nMichaelY310/devopsgym\n\n\nmichaely310_devopsgym\n\n\nDevOps-Gym benchmark adapted to Harbor format - 729 tasks across 5 categories: Build, Monitoring, I…\n\n\n728\n\n\n\n\n\n\naarr/aarri-bench\n\n\naarr_aarri_bench\n\n\naarri(act as a real research intern)-bench, for evaluating LLM agents in academic research tasks.\n\n\n82\n\n\n\n\n\n\nabundant/swe-gen-cpp\n\n\nabundant_swe_gen_cpp\n\n\nDataset of C++ SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n999\n\n\n\n\n\n\nabundant/swe-gen-go\n\n\nabundant_swe_gen_go\n\n\nDataset of Go SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nabundant/swe-gen-java\n\n\nabundant_swe_gen_java\n\n\nDataset of Java SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nabundant/swe-gen-js\n\n\nabundant_swe_gen_js\n\n\nDataset of JS/TS SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nabundant/swe-gen-rust\n\n\nabundant_swe_gen_rust\n\n\nDataset of Rust SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nactava-ai/chi-bench\n\n\nactava_ai_chi_bench\n\n\nχ-Bench: long-horizon, policy-rich U.S. healthcare workflow agent benchmark spanning provider prior…\n\n\n78\n\n\n\n\n\n\nadyen/dabstep\n\n\nadyen_dabstep\n\n\nDABstep: real-world data analysis tasks from Adyen’s workloads requiring multi-step reasoning by LL…\n\n\n450\n\n\n\n\n\n\nagentic-labs/erp-bench\n\n\nagentic_labs_erp_bench\n\n\nERP-Bench is the Odoo 19 benchmark used in the Anchor paper, “Preventing Artifact Drift in Agent Be…\n\n\n300\n\n\n\n\n\n\nagentscope-ai/pawbench\n\n\nagentscope_ai_pawbench\n\n\nPawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use,…\n\n\n150\n\n\n\n\n\n\nai-forever/harness-bench-fast\n\n\nai_forever_harness_bench_fast\n\n\nSelf-contained file-operation agent benchmark.\n\n\n231\n\n\n\n\n\n\naider/aider-polyglot\n\n\naider_polyglot\n\n\nAider’s polyglot coding benchmark: Exercism exercises across C++, Go, Java, JavaScript, Python, and…\n\n\n225\n\n\n\n\n\n\naime/aime\n\n\naime\n\n\nProblems from the American Invitational Mathematics Examination (AIME), a 3-hour high-school compet…\n\n\n60\n\n\n\n\n\n\nalgotune/algotune\n\n\nalgotune\n\n\nAlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that match…\n\n\n154\n\n\n\n\n\n\napple/mmau\n\n\napple_mmau\n\n\nMMAU (Massive Multitask Agent Understanding): Apple’s holistic agent benchmark covering tool-use, D…\n\n\n1000\n\n\n\n\n\n\narcprize/arc-agi-2\n\n\narcprize_arc_agi_2\n\n\nARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but…\n\n\n167\n\n\n\n\n\n\nbenchflow/skillsbench\n\n\nbenchflow_skillsbench\n\n\nSkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folde…\n\n\n87\n\n\n\n\n\n\nbigcode/bigcodebench-hard-complete\n\n\nbigcode_bigcodebench_hard_complete\n\n\nBigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun…\n\n\n145\n\n\n\n\n\n\nbigcode/humanevalfix\n\n\nbigcode_humanevalfix\n\n\nHumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo…\n\n\n164\n\n\n\n\n\n\nbinary-audit/binary-audit\n\n\nbinary_audit\n\n\nBinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engin…\n\n\n46\n\n\n\n\n\n\ncais/swebenchpro\n\n\ncais_swebenchpro\n\n\nSWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks,…\n\n\n731\n\n\n\n\n\n\ncamel-ai/seta-env\n\n\ncamel_ai_seta_env\n\n\nSETA (Scaling Environments for Terminal Agents): CAMEL-AI’s verifiable terminal-agent tasks spannin…\n\n\n1000\n\n\n\n\n\n\ncmu/refav\n\n\ncmu_refav\n\n\nAutonomous-vehicle scenario mining via VLM.\n\n\n1000\n\n\n\n\n\n\ncodepde/codepde\n\n\ncodepde\n\n\nCodePDE: framing partial-differential-equation solving as a code-generation task to benchmark LLMs…\n\n\n5\n\n\n\n\n\n\ncrustbench/crustbench\n\n\ncrustbench\n\n\nCRUST-Bench: real-world C repositories paired with hand-written safe-Rust interfaces and tests, ben…\n\n\n100\n\n\n\n\n\n\ndatacurve/deep-swe\n\n\ndatacurve_deep_swe\n\n\nDeepSWE: Measuring frontier coding agents on original, long-horizon engineering tasks.\n\n\n113\n\n\n\n\n\n\ndbt-labs/ade-bench\n\n\ndbt_labs_ade_bench\n\n\nAnalytics Data Engineer Bench: dbt and SQL data-engineering tasks across DuckDB and Snowflake backe…\n\n\n48\n\n\n\n\n\n\ndeveval/deveval\n\n\ndeveval\n\n\nDevEval: manually-annotated code-generation samples from real-world Python repositories, aligned to…\n\n\n63\n\n\n\n\n\n\nevoeval/evoeval\n\n\nevoeval\n\n\nEvoEval: evolving suite that mutates HumanEval problems along several axes (difficulty, creative, s…\n\n\n100\n\n\n\n\n\n\nfactory-ai/legacy-bench\n\n\nfactory_ai_legacy_bench\n\n\nLegacy-Bench public sample tasks for evaluating AI coding agents on legacy software engineering tas…\n\n\n10\n\n\n\n\n\n\nfeaturebench/featurebench\n\n\nfeaturebench\n\n\nFeatureBench: agentic coding on end-to-end feature-development tasks derived from open-source repos…\n\n\n200\n\n\n\n\n\n\nfeaturebench/featurebench-lite\n\n\nfeaturebench_lite\n\n\nLightweight subset of FeatureBench for cheaper evaluation while preserving model rankings.\n\n\n30\n\n\n\n\n\n\nfeaturebench/featurebench-lite-modal\n\n\nfeaturebench_lite_modal\n\n\nFeatureBench-Lite executed on Modal’s cloud sandbox runner.\n\n\n30\n\n\n\n\n\n\nfeaturebench/featurebench-modal\n\n\nfeaturebench_modal\n\n\nFeatureBench’s full task suite executed on Modal’s cloud sandbox runner.\n\n\n200\n\n\n\n\n\n\nfuturehouse/bixbench\n\n\nfuturehouse_bixbench\n\n\nBixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM age…\n\n\n205\n\n\n\n\n\n\nfuturehouse/bixbench-cli\n\n\nfuturehouse_bixbench_cli\n\n\nCLI variant of BixBench: agents solve the same bioinformatics analysis tasks via a command-line / s…\n\n\n205\n\n\n\n\n\n\nfuturehouse/labbench\n\n\nfuturehouse_labbench\n\n\nLAB-Bench (Language Agent Biology Benchmark): questions across 8 categories (literature QA, databas…\n\n\n181\n\n\n\n\n\n\ngabeorlanski/slopcodebench\n\n\ngabeorlanski_slopcodebench\n\n\nSlopCodeBench multi-checkpoint coding benchmark tasks converted for Harbor.\n\n\n36\n\n\n\n\n\n\ngaia/gaia\n\n\ngaia\n\n\nGAIA: real-world questions across three difficulty levels evaluating general AI assistants on reaso…\n\n\n165\n\n\n\n\n\n\ngnucleus-ai/cad-bench\n\n\ngnucleus_ai_cad_bench\n\n\ngNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks.\n\n\n100\n\n\n\n\n\n\ngorilla/bfcl\n\n\ngorilla_bfcl\n\n\nBerkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Pyt…\n\n\n1000\n\n\n\n\n\n\ngorilla/bfcl_parity\n\n\ngorilla_bfcl_parity\n\n\nStratified parity subset of BFCL validating that Harbor’s adapter matches the upstream implementati…\n\n\n123\n\n\n\n\n\n\ngpqa-diamond/gpqa-diamond\n\n\ngpqa_diamond\n\n\nGPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch…\n\n\n198\n\n\n\n\n\n\ngrafana/o11y-bench\n\n\ngrafana_o11y_bench\n\n\no11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo…\n\n\n63\n\n\n\n\n\n\ngrandsmile/unicode\n\n\ngrandsmile_unicode\n\n\nUniCode: competitive-programming problems systematically augmented into novel variations to probe g…\n\n\n399\n\n\n\n\n\n\nharveyai/lab\n\n\nharveyai_lab\n\n\nHarvey LAB - open-source benchmark for evaluating agents on real legal work.\n\n\n1000\n\n\n\n\n\n\nineqmath/ineqmath\n\n\nineqmath\n\n\nIneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou…\n\n\n100\n\n\n\n\n\n\nivanleo/agent-search\n\n\nivanleo_agent_search\n\n\nAgent answers Gemini API questions by querying an indexed documentation database.\n\n\n20\n\n\n\n\n\n\nkgmon/deepsearchqa\n\n\nkgmon_deepsearchqa\n\n\nDeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research…\n\n\n900\n\n\n\n\n\n\nkumo/kumo-1\n\n\nkumo_1\n\n\nKUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic…\n\n\n1000\n\n\n\n\n\n\nkumo/kumo-easy\n\n\nkumo_easy\n\n\nKUMO (easy split): easier-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark a…\n\n\n1000\n\n\n\n\n\n\nkumo/kumo-hard\n\n\nkumo_hard\n\n\nKUMO (hard split): hard-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark acr…\n\n\n250\n\n\n\n\n\n\nkumo/kumo-parity\n\n\nkumo_parity\n\n\nKUMO (parity split): subset of the KUMO procedural-reasoning benchmark used for parity / regression…\n\n\n212\n\n\n\n\n\n\nlawbench/lawbench\n\n\nlawbench\n\n\nLawBench: tasks evaluating LLMs on Chinese-law knowledge — legal entity recognition, reading compre…\n\n\n1000\n\n\n\n\n\n\nlcb/longswebench-32k\n\n\nlcb_longswebench_32k\n\n\nLongCodeBench (LCB) LongSWE-Bench tasks — 32k context window bucket.\n\n\n3\n\n\n\n\n\n\nlica-world/gdb\n\n\nlica_world_gdb\n\n\nGraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infograp…\n\n\n1000\n\n\n\n\n\n\nlivecodebench/livecodebench\n\n\nlivecodebench\n\n\nLiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, a…\n\n\n100\n\n\n\n\n\n\nmaxbittker/runebench\n\n\nmaxbittker_runebench\n\n\nBenchmark suite for evaluating AI agents on RuneScape gameplay tasks.\n\n\n32\n\n\n\n\n\n\nmeta/mlgym-bench\n\n\nmeta_mlgym_bench\n\n\nMLGym-Bench: Meta’s framework and benchmark for AI research agents covering CV, NLP, RL, and game-t…\n\n\n12\n\n\n\n\n\n\nminnesotanlp/aar\n\n\nminnesotanlp_aar\n\n\nThe Amazing Agent Race (AAR): 1400 multi-step scavenger-hunt puzzles for evaluating LLM agents on t…\n\n\n1000\n\n\n\n\n\n\nmmtb/multimedia-terminalbench\n\n\nmmtb_multimedia_terminalbench\n\n\nMultiMedia-TerminalBench (MMTB): a benchmark of 105 realistic multimedia-file tasks in persistent t…\n\n\n105\n\n\n\n\n\n\nnvats/codeskills-bench\n\n\nnvats_codeskills_bench\n\n\nA small set of real-life programming tasks: bug fixes, merge-conflict resolution, dependency cleanu…\n\n\n23\n\n\n\n\n\n\nopenai/mmmlu\n\n\nopenai_mmmlu\n\n\nMMMLU (Multilingual MMLU): OpenAI’s professional-human-translation of the MMLU test set into 14 lan…\n\n\n150\n\n\n\n\n\n\nopenai/simpleqa\n\n\nopenai_simpleqa\n\n\nSimpleQA: short, fact-seeking questions adversarially collected against GPT-4 to measure short-form…\n\n\n1000\n\n\n\n\n\n\nopenai/swe-lancer-diamond-all\n\n\nopenai_swe_lancer_diamond_all\n\n\nSWE-Lancer Diamond (full): public split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance so…\n\n\n463\n\n\n\n\n\n\nopenai/swe-lancer-diamond-ic\n\n\nopenai_swe_lancer_diamond_ic\n\n\nSWE-Lancer Diamond (IC): individual-contributor split of OpenAI’s SWE-Lancer benchmark — real Upwor…\n\n\n198\n\n\n\n\n\n\nopenai/swe-lancer-diamond-manager\n\n\nopenai_swe_lancer_diamond_manager\n\n\nA benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in…\n\n\n265\n\n\n\n\n\n\norinlabs/horizon-public\n\n\norinlabs_horizon_public\n\n\nHorizon: public example subset of a learning benchmark for extremely long-horizon agents — the agen…\n\n\n3\n\n\n\n\n\n\npgcodellm/rebench-v2-test\n\n\npgcodellm_rebench_v2_test\n\n\nSWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui…\n\n\n20\n\n\n\n\n\n\nqcircuitbench/qcircuitbench\n\n\nqcircuitbench\n\n\nQCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const…\n\n\n28\n\n\n\n\n\n\nquesma/compilebench\n\n\nquesma_compilebench\n\n\nCompileBench: real-world build/compile tasks (curl, GNU coreutils, jq, etc.) ranging from easy buil…\n\n\n15\n\n\n\n\n\n\nquesma/otel-bench\n\n\nquesma_otel_bench\n\n\nAI-agent benchmark for OpenTelemetry instrumentation tasks across multiple programming languages.\n\n\n26\n\n\n\n\n\n\nquixbugs/quixbugs\n\n\nquixbugs\n\n\nQuixBugs: small classic-algorithm programs (Python and Java) each containing a one-line bug, used t…\n\n\n80\n\n\n\n\n\n\nreasoning-gym/reasoning-gym-easy\n\n\nreasoning_gym_easy\n\n\nReasoning Gym (easy split): procedurally-generated, algorithmically-verifiable reasoning tasks (alg…\n\n\n288\n\n\n\n\n\n\nreasoning-gym/reasoning-gym-hard\n\n\nreasoning_gym_hard\n\n\nReasoning Gym (hard split): procedurally-generated, algorithmically-verifiable reasoning tasks at h…\n\n\n288\n\n\n\n\n\n\nreplicationbench/replicationbench\n\n\nreplicationbench\n\n\nReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce impleme…\n\n\n90\n\n\n\n\n\n\nrexbench/rexbench\n\n\nrexbench\n\n\nRExBench - 2 tasks (cogs, othello) evaluating AI agents’ ability to extend existing AI research thr…\n\n\n2\n\n\n\n\n\n\nsatbench/satbench\n\n\nsatbench\n\n\nSATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable diffi…\n\n\n1000\n\n\n\n\n\n\nscale-ai/hil-bench\n\n\nscale_ai_hil_bench\n\n\nHiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with crit…\n\n\n600\n\n\n\n\n\n\nscale-ai/swe-atlas-qna\n\n\nscale_ai_swe_atlas_qna\n\n\nSWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding…\n\n\n124\n\n\n\n\n\n\nscale-ai/swe-atlas-rf\n\n\nscale_ai_swe_atlas_rf\n\n\nSWE-Atlas - Refactoring – A benchmark of refactoring tasks for coding agents.\n\n\n70\n\n\n\n\n\n\nscale-ai/swe-atlas-tw\n\n\nscale_ai_swe_atlas_tw\n\n\nSWE-Atlas - Test Writing – A benchmark of comprehensive test writing problems for coding agents. C…\n\n\n90\n\n\n\n\n\n\nscale-ai/swe-bench-pro\n\n\nscale_ai_swe_bench_pro\n\n\nSWE-Bench-Pro: long-horizon enterprise software engineering tasks.\n\n\n731\n\n\n\n\n\n\nscienceagentbench/scienceagentbench\n\n\nscienceagentbench\n\n\nScienceAgentBench: data-driven scientific discovery via Python programs across 4 disciplines.\n\n\n102\n\n\n\n\n\n\nsierra-research/tau3-bench\n\n\nsierra_research_tau3_bench\n\n\nThird generation of τ-bench, extending the original with knowledge and voice. A simulation framewor…\n\n\n375\n\n\n\n\n\n\nsldbench/sldbench\n\n\nsldbench\n\n\nSLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments w…\n\n\n8\n\n\n\n\n\n\nstanford/medagentbench\n\n\nstanford_medagentbench\n\n\nMedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benc…\n\n\n300\n\n\n\n\n\n\nstrongreject/strongreject\n\n\nstrongreject\n\n\nStrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks…\n\n\n150\n\n\n\n\n\n\nswe-bench/swe-bench-verified\n\n\nswe_bench_verified\n\n\nSWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs…\n\n\n500\n\n\n\n\n\n\nswe-bench/swe-smith\n\n\nswe_bench_swe_smith\n\n\nSWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any…\n\n\n100\n\n\n\n\n\n\nswt-bench/swt-bench-verified\n\n\nswt_bench_verified\n\n\nSWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing u…\n\n\n433\n\n\n\n\n\n\ntencent/autocodebench\n\n\ntencent_autocodebench\n\n\nMultilingual automated code generation benchmark evaluating LLMs across diverse programming tasks a…\n\n\n200\n\n\n\n\n\n\ntermigen/termigen-environments\n\n\ntermigen_environments\n\n\nTermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11…\n\n\n1000\n\n\n\n\n\n\nterminal-bench-pro/terminal-bench-pro\n\n\nterminal_bench_pro\n\n\nTerminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientifi…\n\n\n200\n\n\n\n\n\n\nterminal-bench/terminal-bench-2\n\n\nterminal_bench_2\n\n\nTerminal-Bench v2: benchmark for testing AI agents in real terminal environments — from compiling c…\n\n\n89\n\n\n\n\n\n\nterminal-bench/terminal-bench-2-1\n\n\nterminal_bench_2_1\n\n\nTerminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ…\n\n\n89\n\n\n\n\n\n\ntheagentcompany/theagentcompany\n\n\ntheagentcompany\n\n\nAn agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and R…\n\n\n174\n\n\n\n\n\n\nthetalab/vector-edit-gym\n\n\nthetalab_vector_edit_gym\n\n\n106 hand-authored SVG editing tasks across four difficulty tiers (easy / medium / hard / very_hard)…\n\n\n106\n\n\n\n\n\n\nusaco/usaco\n\n\nusaco\n\n\nUSACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality u…\n\n\n304\n\n\n\n\n\n\nvals/financeagent\n\n\nvals_financeagent\n\n\nVals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (re…\n\n\n50\n\n\n\n\n\n\nvmax/vmax-tasks\n\n\nvmax_tasks\n\n\nCode-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).\n\n\n1000\n\n\n\n\n\n\nwebgen-bench/webgen-bench\n\n\nwebgen_bench\n\n\nWebGen-Bench: evaluating LLMs on generating interactive and functional websites from scratch.\n\n\n101\n\n\n\n\n\n\nxlang/ds-1000\n\n\nxlang_ds_1000\n\n\nDS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow,…\n\n\n1000\n\n\n\n\n\n\nyanagiorigami/frontier-cs\n\n\nyanagiorigami_frontier_cs\n\n\nFrontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial sco…\n\n\n172\n\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Getting Started",
       "Registry"
