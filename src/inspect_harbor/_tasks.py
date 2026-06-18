@@ -1470,37 +1470,6 @@ def grandsmile_unicode(
 
 
 @task
-def harbor_rewardhackbench(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is labelled for harness-level cheating, task-level reward hacking, and refusals.
-
-    Slug: harbor/rewardhackbench
-    Latest digest: sha256:0dd16e1029495cba180809b7ecfbae375089881b11ff11e369bfbbf3c72a2fd8
-    """
-    return _harbor_base(
-        package_name="harbor/rewardhackbench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def harveyai_lab(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2170,6 +2139,37 @@ def openai_swe_lancer_diamond_manager(
     """
     return _harbor_base(
         package_name="openai/swe-lancer-diamond-manager",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def orinlabs_horizon_public(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.
+
+    Slug: orinlabs/horizon-public
+    Latest digest: sha256:38204787d8cd258d35e620e639c4418e4805141f22dc752b5e09431d0a3dd552
+    """
+    return _harbor_base(
+        package_name="orinlabs/horizon-public",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

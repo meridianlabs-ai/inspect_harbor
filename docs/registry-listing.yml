@@ -457,15 +457,6 @@
   version: latest
   categories:
   - Coding
-- title: harbor/rewardhackbench
-  path: registry/harbor_rewardhackbench.html
-  desc: 'RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is labelled for harness-level cheating, task-level reward hacking, and refusals.'
-  desc_trunc: 'RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is…'
-  task_function: harbor_rewardhackbench
-  samples: 846
-  version: latest
-  categories:
-  - Safeguards
 - title: harveyai/lab
   path: registry/harveyai_lab.html
   desc: Harvey LAB - open-source benchmark for evaluating agents on real legal work.
@@ -678,6 +669,15 @@
   categories:
   - Coding
   - Professional
+- title: orinlabs/horizon-public
+  path: registry/orinlabs_horizon_public.html
+  desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
+  desc_trunc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agen…'
+  task_function: orinlabs_horizon_public
+  samples: 3
+  version: latest
+  categories:
+  - Assistants
 - title: pgcodellm/rebench-v2-test
   path: registry/pgcodellm_rebench_v2_test.html
   desc: 'SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-built images for reproducible execution.'

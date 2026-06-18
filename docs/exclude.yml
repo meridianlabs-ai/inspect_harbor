@@ -17,3 +17,7 @@
 # train/eval splits); not a published benchmark and not a real org. The
 # canonical vmax dataset is kept as vmax/vmax-tasks.
 - vmax-modal/*
+# Verbatim duplicate of orinlabs/horizon-public (identical 3-task public
+# example set, same sample ids); keep the canonical name matching the
+# orinlabs/horizon repo and "Horizon" brand.
+- orinlabs/horizon-1-public
