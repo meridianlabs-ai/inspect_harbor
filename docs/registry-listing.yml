@@ -669,20 +669,15 @@
   categories:
   - Coding
   - Professional
-- title: orinlabs/horizon-1-public
-  path: registry/orinlabs_horizon_1_public.html
-  desc: 'Horizon-1 sample set: continual-learning eval tasks.'
-  desc_trunc: 'Horizon-1 sample set: continual-learning eval tasks.'
-  task_function: orinlabs_horizon_1_public
-  samples: 3
-  version: latest
 - title: orinlabs/horizon-public
   path: registry/orinlabs_horizon_public.html
-  desc: 'Horizon sample set: continual-learning eval tasks.'
-  desc_trunc: 'Horizon sample set: continual-learning eval tasks.'
+  desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
+  desc_trunc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agen…'
   task_function: orinlabs_horizon_public
   samples: 3
   version: latest
+  categories:
+  - Assistants
 - title: pgcodellm/rebench-v2-test
   path: registry/pgcodellm_rebench_v2_test.html
   desc: 'SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-built images for reproducible execution.'

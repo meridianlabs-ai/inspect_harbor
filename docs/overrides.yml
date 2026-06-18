@@ -620,11 +620,12 @@ openai/swe-lancer-diamond-manager:
   desc: 'A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Manager variant: picking between technical implementation proposals.'
   title: SWE-Lancer Diamond (Manager)
 
-orinlabs/horizon-1-public:
-  categories: []
-
 orinlabs/horizon-public:
-  categories: []
+  categories:
+  - Assistants
+  repo: https://github.com/orinlabs/horizon
+  desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
+  title: Horizon
 
 pgcodellm/rebench-v2-test:
   categories:

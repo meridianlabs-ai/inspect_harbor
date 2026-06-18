@@ -2152,37 +2152,6 @@ def openai_swe_lancer_diamond_manager(
 
 
 @task
-def orinlabs_horizon_1_public(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Horizon-1 sample set: continual-learning eval tasks
-
-    Slug: orinlabs/horizon-1-public
-    Latest digest: sha256:287020956d173bf2478bd7fab1aa479eaf6e4912e75bb4d363a21efabb42f37a
-    """
-    return _harbor_base(
-        package_name="orinlabs/horizon-1-public",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def orinlabs_horizon_public(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2194,7 +2163,7 @@ def orinlabs_horizon_public(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Horizon sample set: continual-learning eval tasks
+    r"""Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.
 
     Slug: orinlabs/horizon-public
     Latest digest: sha256:38204787d8cd258d35e620e639c4418e4805141f22dc752b5e09431d0a3dd552
