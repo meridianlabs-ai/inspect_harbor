@@ -436,12 +436,6 @@ grandsmile/unicode:
   desc: 'UniCode: competitive-programming problems systematically augmented into novel variations to probe genuine code reasoning rather than memorized solutions, scored against an oracle-verified solvable subset.'
   title: UniCode
 
-harbor/rewardhackbench:
-  categories:
-  - Safeguards
-  title: RewardHackBench
-  desc: 'RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is labelled for harness-level cheating, task-level reward hacking, and refusals.'
-
 harveyai/lab:
   categories:
   - Law
@@ -625,6 +619,12 @@ openai/swe-lancer-diamond-manager:
   repo: https://github.com/openai/SWELancer-Benchmark
   desc: 'A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Manager variant: picking between technical implementation proposals.'
   title: SWE-Lancer Diamond (Manager)
+
+orinlabs/horizon-1-public:
+  categories: []
+
+orinlabs/horizon-public:
+  categories: []
 
 pgcodellm/rebench-v2-test:
   categories:
