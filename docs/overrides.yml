@@ -453,6 +453,12 @@ ineqmath/ineqmath:
   function_name: ineqmath
   title: IneqMath
 
+islo-labs/reward-hack-bench:
+  categories: []
+
+islo-labs/reward-hack-bench-control:
+  categories: []
+
 ivanleo/agent-search:
   categories:
   - Coding
@@ -889,6 +895,15 @@ thetalab/vector-edit-gym:
   - Coding
   - Multimodal
   title: Vector Edit Gym
+
+tinycomputerai/bun-server-bench:
+  categories: []
+
+tmax/TMax-15K-Harbor:
+  categories: []
+
+tmax/TMax-15K-Harbor-trial:
+  categories: []
 
 usaco/usaco:
   categories:

@@ -477,6 +477,20 @@
   categories:
   - Mathematics
   - Reasoning
+- title: islo-labs/reward-hack-bench
+  path: registry/islo_labs_reward_hack_bench.html
+  desc: 'Reward-hacking benchmark: SWE-bench + CyBench tasks with injected solution-retrieval cheat prompts, scored by a fairness LLM judge. Reward = solved without cheating.'
+  desc_trunc: 'Reward-hacking benchmark: SWE-bench + CyBench tasks with injected solution-retrieval cheat prompts,…'
+  task_function: islo_labs_reward_hack_bench
+  samples: 8
+  version: latest
+- title: islo-labs/reward-hack-bench-control
+  path: registry/islo_labs_reward_hack_bench_control.html
+  desc: 'Baseline/control companion to reward-hack-bench: the same 8 SWE-bench + CyBench tasks with NO cheat prompt, still scored by the fairness judge. Also packages these CyBench/GlacierCTF tasks as Harbor tasks.'
+  desc_trunc: 'Baseline/control companion to reward-hack-bench: the same 8 SWE-bench + CyBench tasks with NO cheat…'
+  task_function: islo_labs_reward_hack_bench_control
+  samples: 8
+  version: latest
 - title: ivanleo/agent-search
   path: registry/ivanleo_agent_search.html
   desc: Agent answers Gemini API questions by querying an indexed documentation database.
@@ -966,6 +980,27 @@
   categories:
   - Coding
   - Multimodal
+- title: tinycomputerai/bun-server-bench
+  path: registry/tinycomputerai_bun_server_bench.html
+  desc: 'bun-server-bench: a correctness benchmark of 50 production-shaped Bun server engineering tasks for evaluating AI coding agents.'
+  desc_trunc: 'bun-server-bench: a correctness benchmark of 50 production-shaped Bun server engineering tasks for…'
+  task_function: tinycomputerai_bun_server_bench
+  samples: 50
+  version: latest
+- title: tmax/TMax-15K-Harbor
+  path: registry/tmax_tmax_15k_harbor.html
+  desc: '15k compositional terminal-agent tasks: legacy 10k (self-contained) + v2 5k (intricate, multimodal fixtures). Programmatic verifier per task.'
+  desc_trunc: '15k compositional terminal-agent tasks: legacy 10k (self-contained) + v2 5k (intricate, multimodal…'
+  task_function: tmax_tmax_15k_harbor
+  samples: 1000
+  version: latest
+- title: tmax/TMax-15K-Harbor-trial
+  path: registry/tmax_tmax_15k_harbor_trial.html
+  desc: 'Trial subset (12 tasks) of TMax-15K-Harbor: compositional terminal-agent tasks (legacy + v2 intricate w/ multimodal fixtures).'
+  desc_trunc: 'Trial subset (12 tasks) of TMax-15K-Harbor: compositional terminal-agent tasks (legacy + v2 intrica…'
+  task_function: tmax_tmax_15k_harbor_trial
+  samples: 12
+  version: latest
 - title: usaco/usaco
   path: registry/usaco.html
   desc: 'USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality unit tests, reference code, and official analyses for ad-hoc algorithmic reasoning.'
