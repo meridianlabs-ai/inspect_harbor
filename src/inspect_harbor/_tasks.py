@@ -3212,68 +3212,6 @@ def tinycomputerai_bun_server_bench(
 
 
 @task
-def tmax_tmax_15k_harbor(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""15k compositional terminal-agent tasks: legacy 10k (self-contained) + v2 5k (intricate, multimodal fixtures). Programmatic verifier per task.
-
-    Slug: tmax/TMax-15K-Harbor
-    Latest digest: sha256:5c6ede990b3d0746fd2ea43ce154dbda23fda120a5ee3f2b0bc33a8d492fb329
-    """
-    return _harbor_base(
-        package_name="tmax/TMax-15K-Harbor",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def tmax_tmax_15k_harbor_trial(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Trial subset (12 tasks) of TMax-15K-Harbor: compositional terminal-agent tasks (legacy + v2 intricate w/ multimodal fixtures).
-
-    Slug: tmax/TMax-15K-Harbor-trial
-    Latest digest: sha256:bbec452ed3b5064cb8400d9f7b6c3a6e2bda657d1d2506be19dec3b5895ef37f
-    """
-    return _harbor_base(
-        package_name="tmax/TMax-15K-Harbor-trial",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def usaco(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
