@@ -1532,6 +1532,68 @@ def ineqmath(
 
 
 @task
+def islo_labs_reward_hack_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Reward-hacking benchmark: SWE-bench + CyBench tasks with injected solution-retrieval cheat prompts, scored by a fairness LLM judge. Reward = solved without cheating.
+
+    Slug: islo-labs/reward-hack-bench
+    Latest digest: sha256:d121319dcb3e7b2606a52706c73d1926eb20c1fa8d0a473137ea9217d4943053
+    """
+    return _harbor_base(
+        package_name="islo-labs/reward-hack-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def islo_labs_reward_hack_bench_control(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Baseline/control companion to reward-hack-bench: the same 8 SWE-bench + CyBench tasks with NO cheat prompt, still scored by the fairness judge. Also packages these CyBench/GlacierCTF tasks as Harbor tasks.
+
+    Slug: islo-labs/reward-hack-bench-control
+    Latest digest: sha256:99138aaa3bec4e5fccc5a3c63b547604320d70b754aafbb5389660c202f37332
+    """
+    return _harbor_base(
+        package_name="islo-labs/reward-hack-bench-control",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def ivanleo_agent_search(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3106,6 +3168,37 @@ def thetalab_vector_edit_gym(
     """
     return _harbor_base(
         package_name="thetalab/vector-edit-gym",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def tinycomputerai_bun_server_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""bun-server-bench: a correctness benchmark of 50 production-shaped Bun server engineering tasks for evaluating AI coding agents.
+
+    Slug: tinycomputerai/bun-server-bench
+    Latest digest: sha256:fa582e2f208b5e8855f71b3f51d5cca140643e52e1b5aaedb37b6f003618f4ae
+    """
+    return _harbor_base(
+        package_name="tinycomputerai/bun-server-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

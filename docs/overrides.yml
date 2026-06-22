@@ -453,6 +453,18 @@ ineqmath/ineqmath:
   function_name: ineqmath
   title: IneqMath
 
+islo-labs/reward-hack-bench:
+  categories:
+  - Safeguards
+  repo: https://github.com/islo-labs/reward-hack-bench
+  title: Reward-Hack-Bench
+
+islo-labs/reward-hack-bench-control:
+  categories:
+  - Safeguards
+  repo: https://github.com/islo-labs/reward-hack-bench
+  title: Reward-Hack-Bench (Control)
+
 ivanleo/agent-search:
   categories:
   - Coding
@@ -889,6 +901,11 @@ thetalab/vector-edit-gym:
   - Coding
   - Multimodal
   title: Vector Edit Gym
+
+tinycomputerai/bun-server-bench:
+  categories:
+  - Coding
+  repo: https://github.com/tinycomputerai/bun-server-bench
 
 usaco/usaco:
   categories:

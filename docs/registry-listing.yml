@@ -477,6 +477,24 @@
   categories:
   - Mathematics
   - Reasoning
+- title: islo-labs/reward-hack-bench
+  path: registry/islo_labs_reward_hack_bench.html
+  desc: 'Reward-hacking benchmark: SWE-bench + CyBench tasks with injected solution-retrieval cheat prompts, scored by a fairness LLM judge. Reward = solved without cheating.'
+  desc_trunc: 'Reward-hacking benchmark: SWE-bench + CyBench tasks with injected solution-retrieval cheat prompts,…'
+  task_function: islo_labs_reward_hack_bench
+  samples: 8
+  version: latest
+  categories:
+  - Safeguards
+- title: islo-labs/reward-hack-bench-control
+  path: registry/islo_labs_reward_hack_bench_control.html
+  desc: 'Baseline/control companion to reward-hack-bench: the same 8 SWE-bench + CyBench tasks with NO cheat prompt, still scored by the fairness judge. Also packages these CyBench/GlacierCTF tasks as Harbor tasks.'
+  desc_trunc: 'Baseline/control companion to reward-hack-bench: the same 8 SWE-bench + CyBench tasks with NO cheat…'
+  task_function: islo_labs_reward_hack_bench_control
+  samples: 8
+  version: latest
+  categories:
+  - Safeguards
 - title: ivanleo/agent-search
   path: registry/ivanleo_agent_search.html
   desc: Agent answers Gemini API questions by querying an indexed documentation database.
@@ -966,6 +984,15 @@
   categories:
   - Coding
   - Multimodal
+- title: tinycomputerai/bun-server-bench
+  path: registry/tinycomputerai_bun_server_bench.html
+  desc: 'bun-server-bench: a correctness benchmark of 50 production-shaped Bun server engineering tasks for evaluating AI coding agents.'
+  desc_trunc: 'bun-server-bench: a correctness benchmark of 50 production-shaped Bun server engineering tasks for…'
+  task_function: tinycomputerai_bun_server_bench
+  samples: 50
+  version: latest
+  categories:
+  - Coding
 - title: usaco/usaco
   path: registry/usaco.html
   desc: 'USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality unit tests, reference code, and official analyses for ad-hoc algorithmic reasoning.'

@@ -21,3 +21,7 @@
 # example set, same sample ids); keep the canonical name matching the
 # orinlabs/horizon repo and "Horizon" brand.
 - orinlabs/horizon-1-public
+# Individual's (handle-named) project with no public benchmark repo, no
+# paper, and no external footprint; all the user's repos are forks of other
+# projects. Includes a -trial upload-test subset. Not a published benchmark.
+- tmax/*
