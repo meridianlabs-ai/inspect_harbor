@@ -632,6 +632,9 @@ openai/swe-lancer-diamond-manager:
   desc: 'A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Manager variant: picking between technical implementation proposals.'
   title: SWE-Lancer Diamond (Manager)
 
+orca-bench/ORCA-bench:
+  categories: []
+
 orinlabs/horizon-public:
   categories:
   - Assistants
@@ -828,6 +831,9 @@ swe-bench/swe-smith:
   repo: https://github.com/SWE-bench/SWE-smith
   desc: 'SWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any Python repository, plus released task instances and agent trajectories.'
   title: SWE-smith
+
+swe-rebench/swe-rebench-leaderboard:
+  categories: []
 
 swt-bench/swt-bench-verified:
   categories:

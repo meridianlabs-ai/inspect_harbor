@@ -687,6 +687,13 @@
   categories:
   - Coding
   - Professional
+- title: orca-bench/ORCA-bench
+  path: registry/orca_bench_orca_bench.html
+  desc: An agent benchmark for root cause analysis.
+  desc_trunc: An agent benchmark for root cause analysis.
+  task_function: orca_bench_orca_bench
+  samples: 1000
+  version: latest
 - title: orinlabs/horizon-public
   path: registry/orinlabs_horizon_public.html
   desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
@@ -907,6 +914,13 @@
   version: latest
   categories:
   - Coding
+- title: swe-rebench/swe-rebench-leaderboard
+  path: registry/swe_rebench_swe_rebench_leaderboard.html
+  desc: 'SWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-built Docker images. Continuously updated monthly splits.'
+  desc_trunc: 'SWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-bu…'
+  task_function: swe_rebench_swe_rebench_leaderboard
+  samples: 860
+  version: latest
 - title: swt-bench/swt-bench-verified
   path: registry/swt_bench_verified.html
   desc: 'SWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing unit tests for real GitHub issues — tests must fail on buggy code and pass after the fix.'
