@@ -70,8 +70,11 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [gpqa-diamond/gpqa-diamond](registry/gpqa_diamond.html.md) | gpqa_diamond | GPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch… | 198 |
 | [grafana/o11y-bench](registry/grafana_o11y_bench.html.md) | grafana_o11y_bench | o11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo… | 63 |
 | [grandsmile/unicode](registry/grandsmile_unicode.html.md) | grandsmile_unicode | UniCode: competitive-programming problems systematically augmented into novel variations to probe g… | 399 |
+| [harbor-index/harbor-index-1.0](registry/harbor_index_harbor_index_1_0.html.md) | harbor_index_harbor_index_1_0 | Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000… | 82 |
 | [harveyai/lab](registry/harveyai_lab.html.md) | harveyai_lab | Harvey LAB - open-source benchmark for evaluating agents on real legal work. | 1000 |
 | [ineqmath/ineqmath](registry/ineqmath.html.md) | ineqmath | IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou… | 100 |
+| [islo-labs/reward-hack-bench](registry/islo_labs_reward_hack_bench.html.md) | islo_labs_reward_hack_bench | Reward-hacking benchmark: SWE-bench + CyBench tasks with injected solution-retrieval cheat prompts,… | 8 |
+| [islo-labs/reward-hack-bench-control](registry/islo_labs_reward_hack_bench_control.html.md) | islo_labs_reward_hack_bench_control | Baseline/control companion to reward-hack-bench: the same 8 SWE-bench + CyBench tasks with NO cheat… | 8 |
 | [ivanleo/agent-search](registry/ivanleo_agent_search.html.md) | ivanleo_agent_search | Agent answers Gemini API questions by querying an indexed documentation database. | 20 |
 | [kgmon/deepsearchqa](registry/kgmon_deepsearchqa.html.md) | kgmon_deepsearchqa | DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research… | 900 |
 | [kumo/kumo-1](registry/kumo_1.html.md) | kumo_1 | KUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic… | 1000 |
@@ -92,6 +95,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [openai/swe-lancer-diamond-all](registry/openai_swe_lancer_diamond_all.html.md) | openai_swe_lancer_diamond_all | SWE-Lancer Diamond (full): public split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance so… | 463 |
 | [openai/swe-lancer-diamond-ic](registry/openai_swe_lancer_diamond_ic.html.md) | openai_swe_lancer_diamond_ic | SWE-Lancer Diamond (IC): individual-contributor split of OpenAI’s SWE-Lancer benchmark — real Upwor… | 198 |
 | [openai/swe-lancer-diamond-manager](registry/openai_swe_lancer_diamond_manager.html.md) | openai_swe_lancer_diamond_manager | A benchmark of freelance software engineering tasks from Upwork, valued at \$1 million USD total in… | 265 |
+| [orca-bench/ORCA-bench](registry/orca_bench_orca_bench.html.md) | orca_bench_orca_bench | Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing me… | 1000 |
 | [orinlabs/horizon-public](registry/orinlabs_horizon_public.html.md) | orinlabs_horizon_public | Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agen… | 3 |
 | [pgcodellm/rebench-v2-test](registry/pgcodellm_rebench_v2_test.html.md) | pgcodellm_rebench_v2_test | SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui… | 20 |
 | [qcircuitbench/qcircuitbench](registry/qcircuitbench.html.md) | qcircuitbench | QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const… | 28 |
@@ -115,6 +119,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [strongreject/strongreject](registry/strongreject.html.md) | strongreject | StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks… | 150 |
 | [swe-bench/swe-bench-verified](registry/swe_bench_verified.html.md) | swe_bench_verified | SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs… | 500 |
 | [swe-bench/swe-smith](registry/swe_bench_swe_smith.html.md) | swe_bench_swe_smith | SWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any… | 100 |
+| [swe-rebench/swe-rebench-leaderboard](registry/swe_rebench_swe_rebench_leaderboard.html.md) | swe_rebench_swe_rebench_leaderboard | SWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-bu… | 860 |
 | [swt-bench/swt-bench-verified](registry/swt_bench_verified.html.md) | swt_bench_verified | SWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing u… | 433 |
 | [tencent/autocodebench](registry/tencent_autocodebench.html.md) | tencent_autocodebench | Multilingual automated code generation benchmark evaluating LLMs across diverse programming tasks a… | 200 |
 | [termigen/termigen-environments](registry/termigen_environments.html.md) | termigen_environments | TermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11… | 1000 |
@@ -123,6 +128,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [terminal-bench/terminal-bench-2-1](registry/terminal_bench_2_1.html.md) | terminal_bench_2_1 | Terminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ… | 89 |
 | [theagentcompany/theagentcompany](registry/theagentcompany.html.md) | theagentcompany | An agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and R… | 174 |
 | [thetalab/vector-edit-gym](registry/thetalab_vector_edit_gym.html.md) | thetalab_vector_edit_gym | 106 hand-authored SVG editing tasks across four difficulty tiers (easy / medium / hard / very_hard)… | 106 |
+| [tinycomputerai/bun-server-bench](registry/tinycomputerai_bun_server_bench.html.md) | tinycomputerai_bun_server_bench | bun-server-bench: a correctness benchmark of 50 production-shaped Bun server engineering tasks for… | 50 |
 | [usaco/usaco](registry/usaco.html.md) | usaco | USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality u… | 304 |
 | [vals/financeagent](registry/vals_financeagent.html.md) | vals_financeagent | Vals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (re… | 50 |
 | [vmax/vmax-tasks](registry/vmax_tasks.html.md) | vmax_tasks | Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux). | 1000 |
