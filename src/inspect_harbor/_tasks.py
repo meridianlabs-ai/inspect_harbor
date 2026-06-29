@@ -27,7 +27,7 @@ def litecoder_rl(
     r"""LiteCoder: terminal-based RL training environments spanning developer workflows, scientific/numerical computing, and games.
 
     Slug: LiteCoder/LiteCoder-rl
-    Latest digest: sha256:24d9797435e0cb765e18d46dacf72344d32e2f804f75682d365d68a5f3d4dc6a
+    Latest digest: sha256:f94f00b167519ae0d96efc990e383ce1793f5e707374165735bc512879878913
     """
     return _harbor_base(
         package_name="LiteCoder/LiteCoder-rl",
@@ -1470,6 +1470,37 @@ def grandsmile_unicode(
 
 
 @task
+def harbor_index_harbor_index_1_0(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000 candidate tasks through repeated model runs, automated broken-task identification, human audits, and reward hacking supervision.
+
+    Slug: harbor-index/harbor-index-1.0
+    Latest digest: sha256:9d4514cb93f6fafd9cf8ff352c784495ab675176c7f09671db523bd19b663584
+    """
+    return _harbor_base(
+        package_name="harbor-index/harbor-index-1.0",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def harveyai_lab(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2214,6 +2245,37 @@ def openai_swe_lancer_diamond_manager(
 
 
 @task
+def orca_bench_orca_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing metrics, logs, traces, and source code to identify the root cause of production incidents.
+
+    Slug: orca-bench/ORCA-bench
+    Latest digest: sha256:fcd966f953a9fffd5b852767eee86ece9673d4e66b68aa9081700ba502c2adc6
+    """
+    return _harbor_base(
+        package_name="orca-bench/ORCA-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def orinlabs_horizon_public(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2920,6 +2982,37 @@ def swe_bench_swe_smith(
     """
     return _harbor_base(
         package_name="swe-bench/swe-smith",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def swe_rebench_swe_rebench_leaderboard(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""SWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-built Docker images. Continuously updated monthly splits.
+
+    Slug: swe-rebench/swe-rebench-leaderboard
+    Latest digest: sha256:ebe7444e313a0d8db94fa541139826eaebe2b0abcd4900c6f73e750494910dca
+    """
+    return _harbor_base(
+        package_name="swe-rebench/swe-rebench-leaderboard",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

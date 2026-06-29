@@ -457,6 +457,16 @@
   version: latest
   categories:
   - Coding
+- title: harbor-index/harbor-index-1.0
+  path: registry/harbor_index_harbor_index_1_0.html
+  desc: Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000 candidate tasks through repeated model runs, automated broken-task identification, human audits, and reward hacking supervision.
+  desc_trunc: Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000…
+  task_function: harbor_index_harbor_index_1_0
+  samples: 82
+  version: latest
+  categories:
+  - Assistants
+  - Reasoning
 - title: harveyai/lab
   path: registry/harveyai_lab.html
   desc: Harvey LAB - open-source benchmark for evaluating agents on real legal work.
@@ -687,6 +697,16 @@
   categories:
   - Coding
   - Professional
+- title: orca-bench/ORCA-bench
+  path: registry/orca_bench_orca_bench.html
+  desc: Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing metrics, logs, traces, and source code to identify the root cause of production incidents.
+  desc_trunc: Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing me…
+  task_function: orca_bench_orca_bench
+  samples: 1000
+  version: latest
+  categories:
+  - Coding
+  - Professional
 - title: orinlabs/horizon-public
   path: registry/orinlabs_horizon_public.html
   desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
@@ -904,6 +924,15 @@
   desc_trunc: 'SWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any…'
   task_function: swe_bench_swe_smith
   samples: 100
+  version: latest
+  categories:
+  - Coding
+- title: swe-rebench/swe-rebench-leaderboard
+  path: registry/swe_rebench_swe_rebench_leaderboard.html
+  desc: 'SWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-built Docker images. Continuously updated monthly splits.'
+  desc_trunc: 'SWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-bu…'
+  task_function: swe_rebench_swe_rebench_leaderboard
+  samples: 860
   version: latest
   categories:
   - Coding

@@ -436,6 +436,12 @@ grandsmile/unicode:
   desc: 'UniCode: competitive-programming problems systematically augmented into novel variations to probe genuine code reasoning rather than memorized solutions, scored against an oracle-verified solvable subset.'
   title: UniCode
 
+harbor-index/harbor-index-1.0:
+  categories:
+  - Assistants
+  - Reasoning
+  title: Harbor Index 1.0
+
 harveyai/lab:
   categories:
   - Law
@@ -631,6 +637,14 @@ openai/swe-lancer-diamond-manager:
   repo: https://github.com/openai/SWELancer-Benchmark
   desc: 'A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Manager variant: picking between technical implementation proposals.'
   title: SWE-Lancer Diamond (Manager)
+
+orca-bench/ORCA-bench:
+  categories:
+  - Coding
+  - Professional
+  title: ORCA-bench
+  repo: https://orca-bench.github.io
+  desc: Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing metrics, logs, traces, and source code to identify the root cause of production incidents.
 
 orinlabs/horizon-public:
   categories:
@@ -828,6 +842,13 @@ swe-bench/swe-smith:
   repo: https://github.com/SWE-bench/SWE-smith
   desc: 'SWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any Python repository, plus released task instances and agent trajectories.'
   title: SWE-smith
+
+swe-rebench/swe-rebench-leaderboard:
+  categories:
+  - Coding
+  title: SWE-rebench Leaderboard
+  arxiv: https://arxiv.org/abs/2505.20411
+  repo: https://huggingface.co/datasets/nebius/SWE-rebench-leaderboard
 
 swt-bench/swt-bench-verified:
   categories:
