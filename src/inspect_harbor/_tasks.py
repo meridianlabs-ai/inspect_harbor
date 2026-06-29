@@ -1470,6 +1470,37 @@ def grandsmile_unicode(
 
 
 @task
+def harbor_index_harbor_index_1_0(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000 candidate tasks through repeated model runs, automated broken-task identification, human audits, and reward hacking supervision.
+
+    Slug: harbor-index/harbor-index-1.0
+    Latest digest: sha256:9d4514cb93f6fafd9cf8ff352c784495ab675176c7f09671db523bd19b663584
+    """
+    return _harbor_base(
+        package_name="harbor-index/harbor-index-1.0",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def harveyai_lab(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2225,7 +2256,7 @@ def orca_bench_orca_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""An agent benchmark for root cause analysis
+    r"""Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing metrics, logs, traces, and source code to identify the root cause of production incidents.
 
     Slug: orca-bench/ORCA-bench
     Latest digest: sha256:fcd966f953a9fffd5b852767eee86ece9673d4e66b68aa9081700ba502c2adc6

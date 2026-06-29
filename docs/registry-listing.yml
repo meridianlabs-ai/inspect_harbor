@@ -457,6 +457,16 @@
   version: latest
   categories:
   - Coding
+- title: harbor-index/harbor-index-1.0
+  path: registry/harbor_index_harbor_index_1_0.html
+  desc: Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000 candidate tasks through repeated model runs, automated broken-task identification, human audits, and reward hacking supervision.
+  desc_trunc: Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000…
+  task_function: harbor_index_harbor_index_1_0
+  samples: 82
+  version: latest
+  categories:
+  - Assistants
+  - Reasoning
 - title: harveyai/lab
   path: registry/harveyai_lab.html
   desc: Harvey LAB - open-source benchmark for evaluating agents on real legal work.
@@ -689,11 +699,14 @@
   - Professional
 - title: orca-bench/ORCA-bench
   path: registry/orca_bench_orca_bench.html
-  desc: An agent benchmark for root cause analysis.
-  desc_trunc: An agent benchmark for root cause analysis.
+  desc: Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing metrics, logs, traces, and source code to identify the root cause of production incidents.
+  desc_trunc: Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing me…
   task_function: orca_bench_orca_bench
   samples: 1000
   version: latest
+  categories:
+  - Coding
+  - Professional
 - title: orinlabs/horizon-public
   path: registry/orinlabs_horizon_public.html
   desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
@@ -921,6 +934,8 @@
   task_function: swe_rebench_swe_rebench_leaderboard
   samples: 860
   version: latest
+  categories:
+  - Coding
 - title: swt-bench/swt-bench-verified
   path: registry/swt_bench_verified.html
   desc: 'SWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing unit tests for real GitHub issues — tests must fail on buggy code and pass after the fix.'
