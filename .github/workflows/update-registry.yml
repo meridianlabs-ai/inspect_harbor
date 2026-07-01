@@ -108,11 +108,8 @@ jobs:
 
       # Hand the PR to the dev agent (claude.yml) to fill in the empty stubs.
       # Only when new datasets were auto-stubbed — no stubs, no triage, no cost.
-      # Posted with RELEASE_PLEASE_TOKEN (a user PAT) so the comment both
-      # triggers claude.yml and passes claude-code-action's write-access actor
-      # gate; the default GITHUB_TOKEN would do neither. The agent fills
-      # docs/overrides.yml per the skill, pushes to this branch, and posts
-      # @review. A human still reviews + merges + publishes docs.
+      # The agent fills docs/overrides.yml per the skill, pushes to this branch,
+      # and posts @review. A human still reviews + merges + publishes docs.
       - name: Ask Claude to triage new stubs
         if: steps.git-check.outputs.changed == 'true' && steps.generate.outputs.stubbed != ''
         env:
