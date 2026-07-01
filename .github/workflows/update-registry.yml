@@ -61,6 +61,7 @@ jobs:
           git diff --exit-code src/inspect_harbor/_tasks.py docs/registry-listing.yml docs/overrides.yml || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request
+        id: cpr
         if: steps.git-check.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
@@ -104,3 +105,49 @@ jobs:
           labels: |
             automated
             dependencies
+
+      # Hand the PR to the dev agent (claude.yml) to fill in the empty stubs.
+      # Only when new datasets were auto-stubbed — no stubs, no triage, no cost.
+      # Posted with RELEASE_PLEASE_TOKEN (a user PAT) so the comment both
+      # triggers claude.yml and passes claude-code-action's write-access actor
+      # gate; the default GITHUB_TOKEN would do neither. The agent fills
+      # docs/overrides.yml per the skill, pushes to this branch, and posts
+      # @review. A human still reviews + merges + publishes docs.
+      - name: Ask Claude to triage new stubs
+        if: steps.git-check.outputs.changed == 'true' && steps.generate.outputs.stubbed != ''
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ steps.cpr.outputs.pull-request-number }}
+          # Scraped dataset slugs. Injected into the body via literal bash
+          # substitution below (never shell-expanded), so a slug can't inject
+          # commands even though the scraper regex already excludes shell metachars.
+          STUBBED: ${{ steps.generate.outputs.stubbed }}
+        run: |
+          set -euo pipefail
+          if [ -z "${PR_NUMBER:-}" ]; then
+            echo "No PR number from create-pull-request; nothing to trigger."
+            exit 0
+          fi
+          # Static template with a placeholder; the quoted heredoc means nothing
+          # here is expanded by the shell.
+          template="$(cat <<'EOF'
+          @claude please triage this nightly Harbor registry-update PR.
+
+          Read and follow `.claude/skills/nightly-pr-triage/SKILL.md`, **steps 1–7 only** — do NOT merge or publish docs (those stay manual, done by a human).
+
+          Newly-stubbed datasets needing categories:
+          ```
+          __STUBBED__
+          ```
+
+          Notes for this remote run:
+          - Fill in `categories` (and `title`/`repo`/`arxiv`/`desc` as the skill directs) for each real benchmark.
+          - Exclude or dedupe ONLY high-confidence junk. When uncertain whether something is a real benchmark or a duplicate, LEAVE it as an empty stub and note the uncertainty rather than guessing — `validate-overrides` will stay red on any leftover stub, which correctly blocks merge until a human resolves it.
+          - Run validate + generate + `make check` + pytest, then push to this branch.
+          - When done, post a short summary comment (what you filled; what you left and why), then post `@review` as a separate comment.
+          EOF
+          )"
+          # Literal replacement (no command/pattern re-evaluation of $STUBBED).
+          body="${template/__STUBBED__/$STUBBED}"
+          gh pr comment "$PR_NUMBER" --repo "$REPO" --body "$body"

@@ -1,0 +1,37 @@
+# Reviewer (@review) — thin stub over the shared Meridian reviewer workflow in
+# meridianlabs-ai/agents. Read-only persona (contents: read — it cannot push),
+# separate from the dev agent in claude.yml.
+#
+# ON-DEMAND ONLY: no auto-review-on-open (the `pull_request` trigger is
+# deliberately omitted), so human PRs are not auto-reviewed and the empty
+# nightly PR isn't reviewed before it's filled. Trigger it by commenting
+# @review on any PR. The nightly-triage dev agent posts @review itself once it
+# has filled the PR, which drives the review for that flow.
+#
+# Requires the Claude GitHub App installed on this repo. Auth is Workload
+# Identity Federation — no secret needed, but `id-token: write` is required.
+
+name: Review
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  review:
+    if: >
+      github.event.issue.pull_request != null &&
+      contains(github.event.comment.body, '@review')
+    uses: meridianlabs-ai/agents/.github/workflows/claude-review.yml@main
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+      id-token: write
+      actions: read
+    with:
+      # The nightly dev agent posts @review as claude[bot]; honor that bot's
+      # trigger comment (default rejects all bot-authored events). A claude[bot]
+      # comment is a GitHub App event, not the suppressed GITHUB_TOKEN, so it
+      # does fire this workflow; allowed_bots lifts the action's actor guard.
+      allowed_bots: "claude[bot]"

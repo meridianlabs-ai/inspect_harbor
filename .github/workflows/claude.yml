@@ -1,0 +1,57 @@
+# Dev agent (@claude) — thin stub over the shared Meridian workflow in
+# meridianlabs-ai/agents. Mention @claude in an issue or PR comment (or add the
+# `claude` label to an issue) and Claude edits/pushes on a branch. Config lives
+# in the reusable workflow; this stub only wires triggers + a settings override.
+#
+# Requires the Claude GitHub App installed on this repo (org-wide install
+# covers it). Auth is Workload Identity Federation — no secret needed, but
+# `id-token: write` below is required for the OIDC exchange.
+#
+# Used by the nightly registry-triage flow: update-registry.yml posts an
+# @claude comment on the auto-update PR, and the agent fills docs/overrides.yml
+# per .claude/skills/nightly-pr-triage/SKILL.md, then posts @review.
+
+name: Claude
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  claude:
+    # Cheap gate to skip unrelated events; the action re-checks authoritatively.
+    if: |
+      contains(github.event.comment.body, '@claude') ||
+      contains(github.event.review.body, '@claude') ||
+      contains(github.event.issue.body, '@claude') ||
+      contains(github.event.issue.title, '@claude') ||
+      github.event.label.name == 'claude'
+    uses: meridianlabs-ai/agents/.github/workflows/claude.yml@main
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    with:
+      # Reusable default allow-list PLUS the research tools the triage skill
+      # needs: WebSearch/WebFetch (benchmark lookups) and curl (Hugging Face /
+      # GitHub API). Headless runs auto-deny anything not listed, so these must
+      # be explicit. `gh` is already in the default list.
+      settings: >-
+        {"permissions":{"allow":["Read","Edit","Write",
+        "WebSearch","WebFetch",
+        "Bash(pytest:*)","Bash(ruff:*)","Bash(mypy:*)","Bash(pyright:*)","Bash(pip:*)",
+        "Bash(pip3:*)","Bash(uv:*)","Bash(python:*)","Bash(python3:*)",
+        "Bash(gh:*)","Bash(curl:*)",
+        "Bash(git fetch:*)","Bash(git merge:*)","Bash(git rebase:*)",
+        "Bash(git push:*)","Bash(git checkout:*)","Bash(git switch:*)",
+        "Bash(git branch:*)","Bash(git status:*)","Bash(git log:*)",
+        "Bash(git diff:*)","Bash(git show:*)","Bash(git rev-parse:*)",
+        "Bash(git remote:*)"]}}

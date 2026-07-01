@@ -5,7 +5,9 @@ description: Triage the nightly auto-update PR for the Harbor registry — fill 
 
 # Nightly PR triage
 
-A scheduled GitHub Action (`.github/workflows/update-registry.yml`) runs every night, scrapes `hub.harborframework.com/datasets`, regenerates `src/inspect_harbor/_tasks.py` and `docs/registry-listing.yml`, and opens a PR titled `fix: update Harbor registry tasks` on the `update-harbor-tasks` branch. When new datasets appeared upstream, the bot auto-stubs them in `docs/overrides.yml` with `categories: []`. A human (you) needs to fill in real values before merge — `scripts/validate_overrides.py` runs in CI and blocks the merge on empty stubs.
+A scheduled GitHub Action (`.github/workflows/update-registry.yml`) runs every night, scrapes `hub.harborframework.com/datasets`, regenerates `src/inspect_harbor/_tasks.py` and `docs/registry-listing.yml`, and opens a PR titled `fix: update Harbor registry tasks` on the `update-harbor-tasks` branch. When new datasets appeared upstream, the bot auto-stubs them in `docs/overrides.yml` with `categories: []`. Someone then needs to fill in real values before merge — `scripts/validate_overrides.py` runs in CI and blocks the merge on empty stubs.
+
+> **Local vs. remote.** This skill runs two ways. **Locally**, you invoke it in Claude Code. **Remotely**, the nightly workflow posts an `@claude` comment on the PR and the Meridian dev agent (`.github/workflows/claude.yml`) follows this skill on GitHub, pushes the filled overrides to the branch, and posts `@review`. The remote agent **can't ask questions mid-run**, so wherever this skill says to check with a human, the remote agent instead **leaves the item as an empty stub and notes the uncertainty in a PR comment / for the reviewer** rather than guessing — the leftover empty stub keeps CI red, which correctly blocks merge until a human resolves it. Steps 1–7 are the triage; the **merge and step 8 (docs publish) are always human** — the remote agent stops after pushing and posting `@review`.
 
 ## Steps
 
@@ -55,7 +57,7 @@ Not every auto-stubbed slug is a real benchmark worth listing. Before researchin
   ```
   `type=User` (a person) with no matching benchmark repo is a strong exclude signal; `type=Organization` (or a User whose repo *is* the canonical benchmark) is a keep signal. A slug whose org doesn't resolve at all (`404`) and reads like a dev artifact is junk.
 
-When in doubt about whether something is a real benchmark vs. junk, ask the user before excluding.
+When in doubt about whether something is a real benchmark vs. junk, don't guess: **leave it as an empty stub and flag the uncertainty** — ask the user when running locally; note it in a PR comment / for `@review` when running remotely. The empty stub keeps `validate_overrides.py` red, which correctly blocks the merge until a human resolves it.
 
 **Dedupe copies published under multiple orgs.** The same benchmark sometimes appears under several org slugs (verbatim re-uploads). Keep the copy from the **most credible / original author** — the benchmark's actual authors, or the org that owns the upstream GitHub repo — and exclude the rest. Confirm they're really the same before dropping one:
 ```bash

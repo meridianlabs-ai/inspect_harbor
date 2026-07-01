@@ -1,0 +1,27 @@
+name: Claude agent environment
+description: >-
+  Provision the project so Claude Code agents (dev + reviewer) can actually run
+  the verify loop — uv/pytest/ruff/pyright and the triage scripts
+  (validate_overrides.py, generate_tasks.py) — instead of falling back to static
+  checks. Invoked automatically by the reusable agent workflows in
+  meridianlabs-ai/agents when this action is present. Mirrors the Build CI
+  setup so the uv cache is shared, not duplicated.
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.12"
+    - name: Install uv
+      uses: astral-sh/setup-uv@v8.1.0
+    - name: Install dependencies
+      shell: bash
+      run: uv sync
+    # Put the uv-managed project venv on PATH so the agent's allow-listed bare
+    # `pytest`/`ruff`/`pyright` resolve (without this they aren't on PATH and the
+    # verify loop is blocked). Plain run step (no post phase).
+    - name: Put the project venv on PATH for the agent
+      shell: bash
+      run: echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
