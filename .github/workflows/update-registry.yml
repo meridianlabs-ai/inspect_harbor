@@ -107,18 +107,12 @@ jobs:
             dependencies
 
       # Hand the PR to the dev agent (claude.yml) to fill in the empty stubs.
-      # Only when new datasets were auto-stubbed — no stubs, no triage, no cost.
-      # The agent fills docs/overrides.yml per the skill, pushes to this branch,
-      # and posts @review. A human still reviews + merges + publishes docs.
       - name: Ask Claude to triage new stubs
         if: steps.git-check.outputs.changed == 'true' && steps.generate.outputs.stubbed != ''
         env:
           GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
           REPO: ${{ github.repository }}
           PR_NUMBER: ${{ steps.cpr.outputs.pull-request-number }}
-          # Scraped dataset slugs. Injected into the body via literal bash
-          # substitution below (never shell-expanded), so a slug can't inject
-          # commands even though the scraper regex already excludes shell metachars.
           STUBBED: ${{ steps.generate.outputs.stubbed }}
         run: |
           set -euo pipefail
@@ -138,11 +132,7 @@ jobs:
           __STUBBED__
           ```
 
-          Notes for this remote run:
-          - Fill in `categories` (and `title`/`repo`/`arxiv`/`desc` as the skill directs) for each real benchmark.
-          - Exclude or dedupe ONLY high-confidence junk. When uncertain whether something is a real benchmark or a duplicate, LEAVE it as an empty stub and note the uncertainty rather than guessing — `validate-overrides` will stay red on any leftover stub, which correctly blocks merge until a human resolves it.
-          - Run validate + generate + `make check` + pytest, then push to this branch.
-          - When done, post a short summary comment (what you filled; what you left and why), then post `@review` as a separate comment.
+          When done, post a short summary comment (what you filled; what you left and why), then post `@review` as a separate comment.
           EOF
           )"
           # Literal replacement (no command/pattern re-evaluation of $STUBBED).
