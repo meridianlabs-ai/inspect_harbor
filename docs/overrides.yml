@@ -961,6 +961,9 @@ webgen-bench/webgen-bench:
   function_name: webgen_bench
   title: WebGen-Bench
 
+xlang-ai/osworld-verified:
+  categories: []
+
 xlang/ds-1000:
   categories:
   - Coding

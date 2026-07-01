@@ -1069,6 +1069,13 @@
   version: latest
   categories:
   - Coding
+- title: xlang-ai/osworld-verified
+  path: registry/xlang_ai_osworld_verified.html
+  desc: 'OSWorld-Verified Harbor adaptation: 361 Ubuntu desktop-control tasks from OSWorld, excluding the 8 Google Drive/login credential-backed tasks.'
+  desc_trunc: 'OSWorld-Verified Harbor adaptation: 361 Ubuntu desktop-control tasks from OSWorld, excluding the 8…'
+  task_function: xlang_ai_osworld_verified
+  samples: 361
+  version: latest
 - title: yanagiorigami/frontier-cs
   path: registry/yanagiorigami_frontier_cs.html
   desc: 'Frontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial scoring via go-judge.'
