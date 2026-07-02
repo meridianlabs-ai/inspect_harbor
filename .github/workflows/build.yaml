@@ -35,8 +35,11 @@ jobs:
         run: uv run ruff format --check .
 
   validate-overrides:
-    # Blocks PRs that add a new Harbor dataset without a filled-in entry in
-    # docs/overrides.yml. Also catches invalid categories and registry drift.
+    # Blocks PRs whose committed docs/overrides.yml is broken: empty/invalid
+    # categories or a bad function_name. Upstream registry drift (a new hub
+    # slug not yet stubbed) is a non-fatal warning so it can't block unrelated
+    # PRs; the nightly cron stubs new datasets, and the empty-categories gate
+    # then catches them on the nightly triage PR.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
