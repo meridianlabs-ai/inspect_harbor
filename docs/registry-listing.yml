@@ -1076,6 +1076,9 @@
   task_function: xlang_ai_osworld_verified
   samples: 361
   version: latest
+  categories:
+  - Assistants
+  - Multimodal
 - title: yanagiorigami/frontier-cs
   path: registry/yanagiorigami_frontier_cs.html
   desc: 'Frontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial scoring via go-judge.'
