@@ -961,6 +961,14 @@ webgen-bench/webgen-bench:
   function_name: webgen_bench
   title: WebGen-Bench
 
+xlang-ai/osworld-verified:
+  categories:
+  - Assistants
+  - Multimodal
+  title: OSWorld-Verified
+  repo: https://github.com/xlang-ai/OSWorld
+  arxiv: https://arxiv.org/abs/2404.07972
+
 xlang/ds-1000:
   categories:
   - Coding

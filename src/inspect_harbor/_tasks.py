@@ -3460,6 +3460,37 @@ def xlang_ds_1000(
 
 
 @task
+def xlang_ai_osworld_verified(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""OSWorld-Verified Harbor adaptation: 361 Ubuntu desktop-control tasks from OSWorld, excluding the 8 Google Drive/login credential-backed tasks.
+
+    Slug: xlang-ai/osworld-verified
+    Latest digest: sha256:1402d7ce0c95876f51e3e532a4a4663b1d535db6a3afc22815e9272cef822a7f
+    """
+    return _harbor_base(
+        package_name="xlang-ai/osworld-verified",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def yanagiorigami_frontier_cs(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
