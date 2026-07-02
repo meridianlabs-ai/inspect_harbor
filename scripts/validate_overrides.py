@@ -1,25 +1,35 @@
 #!/usr/bin/env python3
 """Validate docs/overrides.yml against the Harbor registry.
 
-Runs as a required CI check on every PR (see .github/workflows/build.yaml).
-The goal is to prevent an overrides file that is syntactically valid YAML
-but semantically broken, with four failure modes we care about:
+Runs as a CI check on every PR (see .github/workflows/build.yaml). The goal
+is to catch an overrides file that is valid YAML but semantically broken.
 
-    1. A registry dataset has no entry in overrides.yml. Usually the
-       nightly cron auto-stubbed it with `categories: []` and a reviewer
-       forgot to fill it in.
+Hard failures (exit non-zero) all validate the *committed* overrides.yml and
+need no network:
 
-    2. An entry has empty/missing/invalid `categories`. Same cause.
+    1. An entry has empty/missing/invalid `categories`. Usually the nightly
+       cron auto-stubbed a new dataset with `categories: []` and it wasn't
+       filled in — this is what gates the nightly triage PR.
 
-    3. An entry uses a category not in the fixed vocabulary. Usually a
-       typo or a new category that inspect_ai hasn't added to its
-       CATEGORY_VOCAB.
+    2. An entry uses a category not in the fixed vocabulary. Usually a typo
+       or a new category that inspect_ai hasn't added to its CATEGORY_VOCAB.
 
-    4. An entry sets `function_name` to a value that isn't a valid
-       Python identifier — would crash the generator at decorate time.
+    3. An entry sets `function_name` to a value that isn't a valid Python
+       identifier — would crash the generator at decorate time.
 
-When any of these fire the script exits non-zero with a bulleted summary
-the reviewer can act on. When all pass, prints a one-line OK summary.
+Non-fatal warnings (surfaced, but exit zero) reflect *upstream* drift rather
+than a problem with this PR, so they must not block unrelated PRs:
+
+    - A registered hub slug has no entry in overrides.yml yet. The nightly
+      cron's generate_tasks.py run auto-stubs new datasets into overrides.yml
+      (which then trips failure 1 until triaged), so hard-failing here too
+      would only block unrelated PRs whenever a dataset lands upstream.
+
+    - An override entry has no matching registered slug (renamed upstream, or
+      regen not yet run).
+
+When a hard failure fires the script exits non-zero with a bulleted summary;
+otherwise it prints any warnings and a one-line OK summary.
 """
 
 from __future__ import annotations
@@ -117,16 +127,6 @@ def main() -> None:
 
     errors: list[str] = []
 
-    if missing_overrides:
-        lines = [
-            f"{len(missing_overrides)} registered slug(s) have no entry in "
-            f"docs/overrides.yml:",
-            *(f"  - {n}" for n in missing_overrides),
-            "  Fix: run `uv run python scripts/generate_tasks.py` to auto-stub, "
-            "then fill in the `categories:` field.",
-        ]
-        errors.append("\n".join(lines))
-
     if empty_categories:
         lines = [
             f"{len(empty_categories)} override entr(ies) have empty or missing "
@@ -156,6 +156,21 @@ def main() -> None:
             ),
         ]
         errors.append("\n".join(lines))
+
+    if missing_overrides:
+        print(
+            f"\nwarning: {len(missing_overrides)} registered hub slug(s) have "
+            f"no entry in docs/overrides.yml yet (new upstream dataset(s) — the "
+            f"nightly cron will auto-stub them; not a failure for this PR):",
+            file=sys.stderr,
+        )
+        for n in missing_overrides:
+            print(f"  - {n}", file=sys.stderr)
+        print(
+            "  To stub now: run `uv run python scripts/generate_tasks.py`, "
+            "then fill in the `categories:` field.",
+            file=sys.stderr,
+        )
 
     if orphan_overrides:
         print(

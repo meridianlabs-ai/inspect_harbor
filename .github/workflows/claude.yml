@@ -1,0 +1,46 @@
+# Dev agent (@claude) — thin stub over the shared Meridian workflow in
+# meridianlabs-ai/agents. Mention @claude in an issue or PR comment (or add the
+# `claude` label to an issue) and Claude edits/pushes on a branch.
+
+name: Claude
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  claude:
+    if: |
+      contains(github.event.comment.body, '@claude') ||
+      contains(github.event.review.body, '@claude') ||
+      contains(github.event.issue.body, '@claude') ||
+      contains(github.event.issue.title, '@claude') ||
+      github.event.label.name == 'claude'
+    uses: meridianlabs-ai/agents/.github/workflows/claude.yml@main
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    with:
+      # Reusable default allow-list PLUS the research tools the triage skill
+      # needs: WebSearch/WebFetch (benchmark lookups) and curl (Hugging Face /
+      # GitHub API).
+      settings: >-
+        {"permissions":{"allow":["Read","Edit","Write",
+        "WebSearch","WebFetch",
+        "Bash(pytest:*)","Bash(ruff:*)","Bash(mypy:*)","Bash(pyright:*)","Bash(pip:*)",
+        "Bash(pip3:*)","Bash(uv:*)","Bash(python:*)","Bash(python3:*)",
+        "Bash(gh:*)","Bash(curl:*)",
+        "Bash(git fetch:*)","Bash(git merge:*)","Bash(git rebase:*)",
+        "Bash(git push:*)","Bash(git checkout:*)","Bash(git switch:*)",
+        "Bash(git branch:*)","Bash(git status:*)","Bash(git log:*)",
+        "Bash(git diff:*)","Bash(git show:*)","Bash(git rev-parse:*)",
+        "Bash(git remote:*)"]}}
