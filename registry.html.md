@@ -133,6 +133,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [vals/financeagent](registry/vals_financeagent.html.md) | vals_financeagent | Vals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (re… | 50 |
 | [vmax/vmax-tasks](registry/vmax_tasks.html.md) | vmax_tasks | Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux). | 1000 |
 | [webgen-bench/webgen-bench](registry/webgen_bench.html.md) | webgen_bench | WebGen-Bench: evaluating LLMs on generating interactive and functional websites from scratch. | 101 |
+| [xlang-ai/osworld-verified](registry/xlang_ai_osworld_verified.html.md) | xlang_ai_osworld_verified | OSWorld-Verified Harbor adaptation: 361 Ubuntu desktop-control tasks from OSWorld, excluding the 8… | 361 |
 | [xlang/ds-1000](registry/xlang_ds_1000.html.md) | xlang_ds_1000 | DS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow,… | 1000 |
 | [yanagiorigami/frontier-cs](registry/yanagiorigami_frontier_cs.html.md) | yanagiorigami_frontier_cs | Frontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial sco… | 172 |
 

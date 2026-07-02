@@ -1140,552 +1140,88 @@
     "text": "Dataset information\n\n\n\nHarbor registry\ncamel-ai/seta-env\n\n\nInspect task\ncamel_ai_seta_env\n\n\nLatest digest\nsha256:7eb7c39f99127d7bad9e5534e89a00c590bf0091f785fdd24d4015bd3727896e\n\n\nSamples\n1000\n\n\nSource\nhttps://github.com/camel-ai/seta-env\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
   },
   {
-    "objectID": "registry/terminal_bench_2_1.html",
-    "href": "registry/terminal_bench_2_1.html",
-    "title": "terminal-bench/terminal-bench-2-1",
+    "objectID": "registry/kumo_1.html",
+    "href": "registry/kumo_1.html",
+    "title": "kumo/kumo-1",
     "section": "",
     "text": "← Back to Registry"
   },
   {
-    "objectID": "registry/terminal_bench_2_1.html#run-this-task",
-    "href": "registry/terminal_bench_2_1.html#run-this-task",
-    "title": "terminal-bench/terminal-bench-2-1",
+    "objectID": "registry/kumo_1.html#run-this-task",
+    "href": "registry/kumo_1.html#run-this-task",
+    "title": "kumo/kumo-1",
     "section": "Run this task",
-    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/terminal_bench_2_1 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import terminal_bench_2_1\n\neval(terminal_bench_2_1(), model=\"openai/gpt-5\")"
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/kumo_1 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import kumo_1\n\neval(kumo_1(), model=\"openai/gpt-5\")"
   },
   {
-    "objectID": "registry/terminal_bench_2_1.html#dataset-information",
-    "href": "registry/terminal_bench_2_1.html#dataset-information",
-    "title": "terminal-bench/terminal-bench-2-1",
+    "objectID": "registry/kumo_1.html#dataset-information",
+    "href": "registry/kumo_1.html#dataset-information",
+    "title": "kumo/kumo-1",
     "section": "Dataset information",
-    "text": "Dataset information\n\n\n\nHarbor registry\nterminal-bench/terminal-bench-2-1\n\n\nInspect task\nterminal_bench_2_1\n\n\nLatest digest\nsha256:7d7bdc1cbedad549fc1140404bd4dc45e5fd0ea7c4186773687d177ad3a0699a\n\n\nSamples\n89\n\n\nPaper\narxiv\n\n\nSource\nhttps://github.com/laude-institute/terminal-bench\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+    "text": "Dataset information\n\n\n\nHarbor registry\nkumo/kumo-1\n\n\nInspect task\nkumo_1\n\n\nLatest digest\nsha256:a70e4f6c1a7cca8977db77461c8d341fb8dc481c857a48e28bc2b4ddcfa9e0ef\n\n\nSamples\n1000\n\n\nPaper\narxiv\n\n\nSource\nhttps://github.com/linhaowei1/kumo\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
   },
   {
-    "objectID": "registry/scale_ai_swe_atlas_tw.html",
-    "href": "registry/scale_ai_swe_atlas_tw.html",
-    "title": "scale-ai/swe-atlas-tw",
+    "objectID": "registry/codepde.html",
+    "href": "registry/codepde.html",
+    "title": "codepde/codepde",
     "section": "",
     "text": "← Back to Registry"
   },
   {
-    "objectID": "registry/scale_ai_swe_atlas_tw.html#run-this-task",
-    "href": "registry/scale_ai_swe_atlas_tw.html#run-this-task",
-    "title": "scale-ai/swe-atlas-tw",
+    "objectID": "registry/codepde.html#run-this-task",
+    "href": "registry/codepde.html#run-this-task",
+    "title": "codepde/codepde",
     "section": "Run this task",
-    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/scale_ai_swe_atlas_tw --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import scale_ai_swe_atlas_tw\n\neval(scale_ai_swe_atlas_tw(), model=\"openai/gpt-5\")"
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/codepde --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import codepde\n\neval(codepde(), model=\"openai/gpt-5\")"
   },
   {
-    "objectID": "registry/scale_ai_swe_atlas_tw.html#dataset-information",
-    "href": "registry/scale_ai_swe_atlas_tw.html#dataset-information",
-    "title": "scale-ai/swe-atlas-tw",
+    "objectID": "registry/codepde.html#dataset-information",
+    "href": "registry/codepde.html#dataset-information",
+    "title": "codepde/codepde",
     "section": "Dataset information",
-    "text": "Dataset information\n\n\n\nHarbor registry\nscale-ai/swe-atlas-tw\n\n\nInspect task\nscale_ai_swe_atlas_tw\n\n\nLatest digest\nsha256:1fe41edad7c1cc96925f100be0d314804cc45f55a9a5b7c8583354f4bca30b44\n\n\nSamples\n90\n\n\nSource\nhttps://github.com/scaleapi/SWE-Atlas\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+    "text": "Dataset information\n\n\n\nHarbor registry\ncodepde/codepde\n\n\nInspect task\ncodepde\n\n\nLatest digest\nsha256:1fa8a96627aaf64d6879bcca7a71884159c4198500ace010bfbe434cf5e7d227\n\n\nSamples\n5\n\n\nPaper\narxiv\n\n\nSource\nhttps://github.com/LithiumDA/CodePDE\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
   },
   {
-    "objectID": "registry/factory_ai_legacy_bench.html",
-    "href": "registry/factory_ai_legacy_bench.html",
-    "title": "factory-ai/legacy-bench",
+    "objectID": "registry/adyen_dabstep.html",
+    "href": "registry/adyen_dabstep.html",
+    "title": "adyen/dabstep",
     "section": "",
     "text": "← Back to Registry"
   },
   {
-    "objectID": "registry/factory_ai_legacy_bench.html#run-this-task",
-    "href": "registry/factory_ai_legacy_bench.html#run-this-task",
-    "title": "factory-ai/legacy-bench",
+    "objectID": "registry/adyen_dabstep.html#run-this-task",
+    "href": "registry/adyen_dabstep.html#run-this-task",
+    "title": "adyen/dabstep",
     "section": "Run this task",
-    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/factory_ai_legacy_bench --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import factory_ai_legacy_bench\n\neval(factory_ai_legacy_bench(), model=\"openai/gpt-5\")"
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/adyen_dabstep --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import adyen_dabstep\n\neval(adyen_dabstep(), model=\"openai/gpt-5\")"
   },
   {
-    "objectID": "registry/factory_ai_legacy_bench.html#dataset-information",
-    "href": "registry/factory_ai_legacy_bench.html#dataset-information",
-    "title": "factory-ai/legacy-bench",
+    "objectID": "registry/adyen_dabstep.html#dataset-information",
+    "href": "registry/adyen_dabstep.html#dataset-information",
+    "title": "adyen/dabstep",
     "section": "Dataset information",
-    "text": "Dataset information\n\n\n\nHarbor registry\nfactory-ai/legacy-bench\n\n\nInspect task\nfactory_ai_legacy_bench\n\n\nLatest digest\nsha256:0a3cca4cca8cd6f96abcfe4f627afafa75d6e5ca5b173b6429321418d6e373a5\n\n\nSamples\n10\n\n\nSource\nhttps://factory.ai/news/legacy-bench\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+    "text": "Dataset information\n\n\n\nHarbor registry\nadyen/dabstep\n\n\nInspect task\nadyen_dabstep\n\n\nLatest digest\nsha256:0edf62c0bdf7003b1d1f934f1547df1c051877e076d5b6f6a2d99caf8b6432b3\n\n\nSamples\n450\n\n\nPaper\narxiv\n\n\nSource\nhttps://huggingface.co/datasets/adyen/DABstep\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
   },
   {
-    "objectID": "registry/sldbench.html",
-    "href": "registry/sldbench.html",
-    "title": "sldbench/sldbench",
+    "objectID": "registry/pgcodellm_rebench_v2_test.html",
+    "href": "registry/pgcodellm_rebench_v2_test.html",
+    "title": "pgcodellm/rebench-v2-test",
     "section": "",
     "text": "← Back to Registry"
   },
   {
-    "objectID": "registry/sldbench.html#run-this-task",
-    "href": "registry/sldbench.html#run-this-task",
-    "title": "sldbench/sldbench",
+    "objectID": "registry/pgcodellm_rebench_v2_test.html#run-this-task",
+    "href": "registry/pgcodellm_rebench_v2_test.html#run-this-task",
+    "title": "pgcodellm/rebench-v2-test",
     "section": "Run this task",
-    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/sldbench --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import sldbench\n\neval(sldbench(), model=\"openai/gpt-5\")"
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/pgcodellm_rebench_v2_test --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import pgcodellm_rebench_v2_test\n\neval(pgcodellm_rebench_v2_test(), model=\"openai/gpt-5\")"
   },
   {
-    "objectID": "registry/sldbench.html#dataset-information",
-    "href": "registry/sldbench.html#dataset-information",
-    "title": "sldbench/sldbench",
+    "objectID": "registry/pgcodellm_rebench_v2_test.html#dataset-information",
+    "href": "registry/pgcodellm_rebench_v2_test.html#dataset-information",
+    "title": "pgcodellm/rebench-v2-test",
     "section": "Dataset information",
-    "text": "Dataset information\n\n\n\nHarbor registry\nsldbench/sldbench\n\n\nInspect task\nsldbench\n\n\nLatest digest\nsha256:369ce8a4825cae7cfb75ef0f5886f3081f072123fd37630f6d6aeef8dec46089\n\n\nSamples\n8\n\n\nPaper\narxiv\n\n\nSource\nhttps://github.com/linhaowei1/SLD\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
-  },
-  {
-    "objectID": "parameters.html",
-    "href": "parameters.html",
-    "title": "Task Parameters",
-    "section": "",
-    "text": "Task functions (like aider_polyglot(), terminal_bench_2(), etc.) accept the following parameters:",
-    "crumbs": [
-      "Getting Started",
-      "Using Harbor",
-      "Task Parameters"
-    ]
-  },
-  {
-    "objectID": "parameters.html#example",
-    "href": "parameters.html#example",
-    "title": "Task Parameters",
-    "section": "Example",
-    "text": "Example\nHere’s an example showing how to use multiple parameters together:\nCLI:\ninspect eval inspect_harbor/terminal_bench_2 \\\n  -T n_tasks=5 \\\n  -T overwrite_cache=true \\\n  -T override_memory_mb=8192 \\\n  --model anthropic/claude-sonnet-4-5\nPython API:\nfrom inspect_ai import eval\nfrom inspect_harbor import terminal_bench_2\n\neval(\n    terminal_bench_2(\n        n_tasks=5,\n        overwrite_cache=True,\n        override_memory_mb=8192,\n    ),\n    model=\"anthropic/claude-sonnet-4-5\"\n)\nThis example:\n\nLimits to 5 tasks using n_tasks.\nForces a fresh download with overwrite_cache.\nAllocates 8GB of memory.",
-    "crumbs": [
-      "Getting Started",
-      "Using Harbor",
-      "Task Parameters"
-    ]
-  },
-  {
-    "objectID": "CHANGELOG.html",
-    "href": "CHANGELOG.html",
-    "title": "Changelog",
-    "section": "",
-    "text": "update Harbor registry tasks (#102) (ed03ca3)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section",
-    "href": "CHANGELOG.html#section",
-    "title": "Changelog",
-    "section": "",
-    "text": "update Harbor registry tasks (#102) (ed03ca3)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-1",
-    "href": "CHANGELOG.html#section-1",
-    "title": "Changelog",
-    "section": "0.5.12 (2026-06-22)",
-    "text": "0.5.12 (2026-06-22)\n\nBug Fixes\n\nupdate Harbor registry tasks (#100) (63f0939)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-2",
-    "href": "CHANGELOG.html#section-2",
-    "title": "Changelog",
-    "section": "0.5.11 (2026-06-18)",
-    "text": "0.5.11 (2026-06-18)\n\nBug Fixes\n\nupdate Harbor registry tasks (#98) (a19a048)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-3",
-    "href": "CHANGELOG.html#section-3",
-    "title": "Changelog",
-    "section": "0.5.10 (2026-06-17)",
-    "text": "0.5.10 (2026-06-17)\n\nBug Fixes\n\nupdate Harbor registry tasks (#96) (1ecadcc)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-4",
-    "href": "CHANGELOG.html#section-4",
-    "title": "Changelog",
-    "section": "0.5.9 (2026-06-15)",
-    "text": "0.5.9 (2026-06-15)\n\nBug Fixes\n\nupdate Harbor registry tasks (#94) (1376705)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-5",
-    "href": "CHANGELOG.html#section-5",
-    "title": "Changelog",
-    "section": "0.5.8 (2026-06-12)",
-    "text": "0.5.8 (2026-06-12)\n\nBug Fixes\n\nupdate Harbor registry tasks (#92) (779bd58)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-6",
-    "href": "CHANGELOG.html#section-6",
-    "title": "Changelog",
-    "section": "0.5.7 (2026-06-08)",
-    "text": "0.5.7 (2026-06-08)\n\nBug Fixes\n\nupdate Harbor registry tasks (#89) (bd47cb4)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-7",
-    "href": "CHANGELOG.html#section-7",
-    "title": "Changelog",
-    "section": "0.5.6 (2026-06-03)",
-    "text": "0.5.6 (2026-06-03)\n\nBug Fixes\n\nconverters: correct network isolation + resolve task env vars (#87) (d06950d)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-8",
-    "href": "CHANGELOG.html#section-8",
-    "title": "Changelog",
-    "section": "0.5.5 (2026-06-01)",
-    "text": "0.5.5 (2026-06-01)\n\nBug Fixes\n\nupdate Harbor registry tasks (#84) (61192ad)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-9",
-    "href": "CHANGELOG.html#section-9",
-    "title": "Changelog",
-    "section": "0.5.4 (2026-05-20)",
-    "text": "0.5.4 (2026-05-20)\n\nBug Fixes\n\nstable docker image tags so repeat eval runs reuse the cached image (#82) (749ba78)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-10",
-    "href": "CHANGELOG.html#section-10",
-    "title": "Changelog",
-    "section": "0.5.3 (2026-05-18)",
-    "text": "0.5.3 (2026-05-18)\n\nBug Fixes\n\nupdate Harbor registry tasks (#79) (3c3c9f8)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-11",
-    "href": "CHANGELOG.html#section-11",
-    "title": "Changelog",
-    "section": "0.5.2 (2026-05-12)",
-    "text": "0.5.2 (2026-05-12)\n\nBug Fixes\n\nupdate Harbor registry tasks (#76) (660d5ca)\n\n\n\nDocumentation\n\nadd post-merge publish step to nightly-pr-triage skill (#78) (fc9ad48)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-12",
-    "href": "CHANGELOG.html#section-12",
-    "title": "Changelog",
-    "section": "0.5.1 (2026-05-08)",
-    "text": "0.5.1 (2026-05-08)\n\nBug Fixes\n\nadd title to overrides (#73) (cd5c1dc)\nsplit description into desc + desc_trunc in registry-listing.yml (#71) (0154d4a)\nupdate Harbor registry tasks (#74) (4a399d1)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-13",
-    "href": "CHANGELOG.html#section-13",
-    "title": "Changelog",
-    "section": "0.5.0 (2026-05-07)",
-    "text": "0.5.0 (2026-05-07)\n\nFeatures\n\nmigrate to Harbor 0.6 with self-service registry (#69) (7838993)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-14",
-    "href": "CHANGELOG.html#section-14",
-    "title": "Changelog",
-    "section": "0.4.18 (2026-04-27)",
-    "text": "0.4.18 (2026-04-27)\n\nBug Fixes\n\nupdate Harbor registry tasks (#67) (f7e8364)\n\n\n\nDocumentation\n\nsearchable registry listing + per-benchmark landing pages (#65) (ccbda21)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-15",
-    "href": "CHANGELOG.html#section-15",
-    "title": "Changelog",
-    "section": "0.4.17 (2026-04-21)",
-    "text": "0.4.17 (2026-04-21)\n\nBug Fixes\n\nembed Harbor URL in each task’s docstring (#64) (b76d374)\nrestore registry tracker and repoint docs URLs to new Harbor site (#61) (cc00228)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-16",
-    "href": "CHANGELOG.html#section-16",
-    "title": "Changelog",
-    "section": "0.4.16 (2026-04-08)",
-    "text": "0.4.16 (2026-04-08)\n\nBug Fixes\n\napply resource overrides only to default service (#56) (ea5e86f)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-17",
-    "href": "CHANGELOG.html#section-17",
-    "title": "Changelog",
-    "section": "0.4.15 (2026-04-01)",
-    "text": "0.4.15 (2026-04-01)\n\nBug Fixes\n\npin harbor&lt;0.3.0 and bump inspect-ai&gt;=0.3.201 (#52) (0cb0a46)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-18",
-    "href": "CHANGELOG.html#section-18",
-    "title": "Changelog",
-    "section": "0.4.14 (2026-03-30)",
-    "text": "0.4.14 (2026-03-30)\n\nBug Fixes\n\nupdate Harbor registry tasks (#50) (5f49ac9)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-19",
-    "href": "CHANGELOG.html#section-19",
-    "title": "Changelog",
-    "section": "0.4.13 (2026-03-25)",
-    "text": "0.4.13 (2026-03-25)\n\nBug Fixes\n\npin litellm&lt;1.82.7 to block compromised versions (#48) (5e7328b)\nupdate Harbor registry tasks (#47) (10752d5)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-20",
-    "href": "CHANGELOG.html#section-20",
-    "title": "Changelog",
-    "section": "0.4.12 (2026-03-24)",
-    "text": "0.4.12 (2026-03-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#45) (dc25090)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-21",
-    "href": "CHANGELOG.html#section-21",
-    "title": "Changelog",
-    "section": "0.4.11 (2026-03-18)",
-    "text": "0.4.11 (2026-03-18)\n\nBug Fixes\n\nenforce network mode & handle variable expansion (#43) (3858da2)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-22",
-    "href": "CHANGELOG.html#section-22",
-    "title": "Changelog",
-    "section": "0.4.10 (2026-03-16)",
-    "text": "0.4.10 (2026-03-16)\n\nBug Fixes\n\nenforce allow_internet network mode in compose-file path (#42) (14bdc24)\nupdate Harbor registry tasks (#40) (290c0ca)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-23",
-    "href": "CHANGELOG.html#section-23",
-    "title": "Changelog",
-    "section": "0.4.9 (2026-03-11)",
-    "text": "0.4.9 (2026-03-11)\n\nBug Fixes\n\nupdate Harbor registry tasks (#38) (47dd23f)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-24",
-    "href": "CHANGELOG.html#section-24",
-    "title": "Changelog",
-    "section": "0.4.8 (2026-03-05)",
-    "text": "0.4.8 (2026-03-05)\n\nBug Fixes\n\nupdate Harbor registry tasks (#36) (ec31a18)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-25",
-    "href": "CHANGELOG.html#section-25",
-    "title": "Changelog",
-    "section": "0.4.7 (2026-03-03)",
-    "text": "0.4.7 (2026-03-03)\n\nBug Fixes\n\nupdate Harbor registry tasks (#34) (e810779)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-26",
-    "href": "CHANGELOG.html#section-26",
-    "title": "Changelog",
-    "section": "0.4.6 (2026-03-02)",
-    "text": "0.4.6 (2026-03-02)\n\nBug Fixes\n\nupdate Harbor registry tasks (#32) (fd04b4a)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-27",
-    "href": "CHANGELOG.html#section-27",
-    "title": "Changelog",
-    "section": "0.4.5 (2026-02-24)",
-    "text": "0.4.5 (2026-02-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#29) (9252db7)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-28",
-    "href": "CHANGELOG.html#section-28",
-    "title": "Changelog",
-    "section": "0.4.4 (2026-02-23)",
-    "text": "0.4.4 (2026-02-23)\n\nBug Fixes\n\nupdate Harbor registry tasks (#27) (663915c)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-29",
-    "href": "CHANGELOG.html#section-29",
-    "title": "Changelog",
-    "section": "0.4.3 (2026-02-18)",
-    "text": "0.4.3 (2026-02-18)\n\nBug Fixes\n\nUpdate Harbor Registry Tasks (#25) (7c8e394)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-30",
-    "href": "CHANGELOG.html#section-30",
-    "title": "Changelog",
-    "section": "0.4.2 (2026-02-14)",
-    "text": "0.4.2 (2026-02-14)\n\nDocumentation\n\nadd credits section to README (#22) (2621ac7)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-31",
-    "href": "CHANGELOG.html#section-31",
-    "title": "Changelog",
-    "section": "0.4.1 (2026-02-12)",
-    "text": "0.4.1 (2026-02-12)\n\nDocumentation\n\nimprove REGISTRY.md table formatting and highlight featured datasets (#20) (8d995aa)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-32",
-    "href": "CHANGELOG.html#section-32",
-    "title": "Changelog",
-    "section": "0.4.0 (2026-02-12)",
-    "text": "0.4.0 (2026-02-12)\n\nFeatures\n\nadd autogenerated REGISTRY.md with dataset catalog (#19) (f643583)\nadd static task generation from Harbor registry (#14) (801fcb4)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to update-registry workflow (#16) (3cd9ebc)\nremove timestamp from generated tasks (#18) (08ffc96)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-33",
-    "href": "CHANGELOG.html#section-33",
-    "title": "Changelog",
-    "section": "0.3.0 (2026-02-11)",
-    "text": "0.3.0 (2026-02-11)\n\nFeatures\n\nadd resource override parameters to harbor() task (#11) (e765c4c)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-34",
-    "href": "CHANGELOG.html#section-34",
-    "title": "Changelog",
-    "section": "0.2.0 (2026-02-10)",
-    "text": "0.2.0 (2026-02-10)\n\nFeatures\n\nsimplify harbor() API by removing solver parameter (#7) (37ef434)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to release workflow (#8) (f99615c)"
-  },
-  {
-    "objectID": "CHANGELOG.html#section-35",
-    "href": "CHANGELOG.html#section-35",
-    "title": "Changelog",
-    "section": "0.1.0 (2026-02-10)",
-    "text": "0.1.0 (2026-02-10)\n\nFeatures\n\nInitial release of inspect_harbor\nInspect AI interface to Harbor tasks\nSupport for Harbor task execution and evaluation\nIntegration with Inspect AI evaluation registry\n\n\n\nDocumentation\n\nAdd comprehensive README with usage examples\nAdd project documentation and setup instructions\n\n\n\nMiscellaneous\n\nSet up CI/CD with GitHub Actions\nAdd test suite with pytest\nConfigure code quality tools (ruff, pyright)\nAdd pre-commit hooks"
-  },
-  {
-    "objectID": "registry.html",
-    "href": "registry.html",
-    "title": "Registry",
-    "section": "",
-    "text": "All Harbor datasets available as Inspect tasks. Use the search box to filter by name or description, the category chips to filter by topic, and the column headers to sort. Click a dataset’s name to open its details page.",
-    "crumbs": [
-      "Getting Started",
-      "Registry"
-    ]
-  },
-  {
-    "objectID": "registry.html#usage",
-    "href": "registry.html#usage",
-    "title": "Registry",
-    "section": "Usage",
-    "text": "Usage\nCLI:\ninspect eval inspect_harbor/aider_polyglot --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import aider_polyglot\n\neval(aider_polyglot(), model=\"openai/gpt-5\")",
-    "crumbs": [
-      "Getting Started",
-      "Registry"
-    ]
-  },
-  {
-    "objectID": "registry.html#available-datasets",
-    "href": "registry.html#available-datasets",
-    "title": "Registry",
-    "section": "Available Datasets",
-    "text": "Available Datasets\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Harbor Dataset\n      \n      \n        Inspect Task\n      \n      \n        Samples (Low to High)\n      \n      \n        Samples (High to Low)\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nHarbor Dataset\n\n\n\nInspect Task\n\n\n\nDescription\n\n\n\nSamples\n\n\n\n\n\n\n\n\nLiteCoder/LiteCoder-rl\n\n\nlitecoder_rl\n\n\nLiteCoder: terminal-based RL training environments spanning developer workflows, scientific/numeric…\n\n\n602\n\n\n\n\n\n\nMichaelY310/devopsgym\n\n\nmichaely310_devopsgym\n\n\nDevOps-Gym benchmark adapted to Harbor format - 729 tasks across 5 categories: Build, Monitoring, I…\n\n\n728\n\n\n\n\n\n\naarr/aarri-bench\n\n\naarr_aarri_bench\n\n\naarri(act as a real research intern)-bench, for evaluating LLM agents in academic research tasks.\n\n\n82\n\n\n\n\n\n\nabundant/swe-gen-cpp\n\n\nabundant_swe_gen_cpp\n\n\nDataset of C++ SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n999\n\n\n\n\n\n\nabundant/swe-gen-go\n\n\nabundant_swe_gen_go\n\n\nDataset of Go SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nabundant/swe-gen-java\n\n\nabundant_swe_gen_java\n\n\nDataset of Java SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nabundant/swe-gen-js\n\n\nabundant_swe_gen_js\n\n\nDataset of JS/TS SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nabundant/swe-gen-rust\n\n\nabundant_swe_gen_rust\n\n\nDataset of Rust SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nactava-ai/chi-bench\n\n\nactava_ai_chi_bench\n\n\nχ-Bench: long-horizon, policy-rich U.S. healthcare workflow agent benchmark spanning provider prior…\n\n\n78\n\n\n\n\n\n\nadyen/dabstep\n\n\nadyen_dabstep\n\n\nDABstep: real-world data analysis tasks from Adyen’s workloads requiring multi-step reasoning by LL…\n\n\n450\n\n\n\n\n\n\nagentic-labs/erp-bench\n\n\nagentic_labs_erp_bench\n\n\nERP-Bench is the Odoo 19 benchmark used in the Anchor paper, “Preventing Artifact Drift in Agent Be…\n\n\n300\n\n\n\n\n\n\nagentscope-ai/pawbench\n\n\nagentscope_ai_pawbench\n\n\nPawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use,…\n\n\n150\n\n\n\n\n\n\nai-forever/harness-bench-fast\n\n\nai_forever_harness_bench_fast\n\n\nSelf-contained file-operation agent benchmark.\n\n\n231\n\n\n\n\n\n\naider/aider-polyglot\n\n\naider_polyglot\n\n\nAider’s polyglot coding benchmark: Exercism exercises across C++, Go, Java, JavaScript, Python, and…\n\n\n225\n\n\n\n\n\n\naime/aime\n\n\naime\n\n\nProblems from the American Invitational Mathematics Examination (AIME), a 3-hour high-school compet…\n\n\n60\n\n\n\n\n\n\nalgotune/algotune\n\n\nalgotune\n\n\nAlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that match…\n\n\n154\n\n\n\n\n\n\napple/mmau\n\n\napple_mmau\n\n\nMMAU (Massive Multitask Agent Understanding): Apple’s holistic agent benchmark covering tool-use, D…\n\n\n1000\n\n\n\n\n\n\narcprize/arc-agi-2\n\n\narcprize_arc_agi_2\n\n\nARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but…\n\n\n167\n\n\n\n\n\n\nbenchflow/skillsbench\n\n\nbenchflow_skillsbench\n\n\nSkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folde…\n\n\n87\n\n\n\n\n\n\nbigcode/bigcodebench-hard-complete\n\n\nbigcode_bigcodebench_hard_complete\n\n\nBigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun…\n\n\n145\n\n\n\n\n\n\nbigcode/humanevalfix\n\n\nbigcode_humanevalfix\n\n\nHumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo…\n\n\n164\n\n\n\n\n\n\nbinary-audit/binary-audit\n\n\nbinary_audit\n\n\nBinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engin…\n\n\n46\n\n\n\n\n\n\ncais/swebenchpro\n\n\ncais_swebenchpro\n\n\nSWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks,…\n\n\n731\n\n\n\n\n\n\ncamel-ai/seta-env\n\n\ncamel_ai_seta_env\n\n\nSETA (Scaling Environments for Terminal Agents): CAMEL-AI’s verifiable terminal-agent tasks spannin…\n\n\n1000\n\n\n\n\n\n\ncmu/refav\n\n\ncmu_refav\n\n\nAutonomous-vehicle scenario mining via VLM.\n\n\n1000\n\n\n\n\n\n\ncodepde/codepde\n\n\ncodepde\n\n\nCodePDE: framing partial-differential-equation solving as a code-generation task to benchmark LLMs…\n\n\n5\n\n\n\n\n\n\ncrustbench/crustbench\n\n\ncrustbench\n\n\nCRUST-Bench: real-world C repositories paired with hand-written safe-Rust interfaces and tests, ben…\n\n\n100\n\n\n\n\n\n\ndatacurve/deep-swe\n\n\ndatacurve_deep_swe\n\n\nDeepSWE: Measuring frontier coding agents on original, long-horizon engineering tasks.\n\n\n113\n\n\n\n\n\n\ndbt-labs/ade-bench\n\n\ndbt_labs_ade_bench\n\n\nAnalytics Data Engineer Bench: dbt and SQL data-engineering tasks across DuckDB and Snowflake backe…\n\n\n48\n\n\n\n\n\n\ndeveval/deveval\n\n\ndeveval\n\n\nDevEval: manually-annotated code-generation samples from real-world Python repositories, aligned to…\n\n\n63\n\n\n\n\n\n\nevoeval/evoeval\n\n\nevoeval\n\n\nEvoEval: evolving suite that mutates HumanEval problems along several axes (difficulty, creative, s…\n\n\n100\n\n\n\n\n\n\nfactory-ai/legacy-bench\n\n\nfactory_ai_legacy_bench\n\n\nLegacy-Bench public sample tasks for evaluating AI coding agents on legacy software engineering tas…\n\n\n10\n\n\n\n\n\n\nfeaturebench/featurebench\n\n\nfeaturebench\n\n\nFeatureBench: agentic coding on end-to-end feature-development tasks derived from open-source repos…\n\n\n200\n\n\n\n\n\n\nfeaturebench/featurebench-lite\n\n\nfeaturebench_lite\n\n\nLightweight subset of FeatureBench for cheaper evaluation while preserving model rankings.\n\n\n30\n\n\n\n\n\n\nfeaturebench/featurebench-lite-modal\n\n\nfeaturebench_lite_modal\n\n\nFeatureBench-Lite executed on Modal’s cloud sandbox runner.\n\n\n30\n\n\n\n\n\n\nfeaturebench/featurebench-modal\n\n\nfeaturebench_modal\n\n\nFeatureBench’s full task suite executed on Modal’s cloud sandbox runner.\n\n\n200\n\n\n\n\n\n\nfuturehouse/bixbench\n\n\nfuturehouse_bixbench\n\n\nBixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM age…\n\n\n205\n\n\n\n\n\n\nfuturehouse/bixbench-cli\n\n\nfuturehouse_bixbench_cli\n\n\nCLI variant of BixBench: agents solve the same bioinformatics analysis tasks via a command-line / s…\n\n\n205\n\n\n\n\n\n\nfuturehouse/labbench\n\n\nfuturehouse_labbench\n\n\nLAB-Bench (Language Agent Biology Benchmark): questions across 8 categories (literature QA, databas…\n\n\n181\n\n\n\n\n\n\ngabeorlanski/slopcodebench\n\n\ngabeorlanski_slopcodebench\n\n\nSlopCodeBench multi-checkpoint coding benchmark tasks converted for Harbor.\n\n\n36\n\n\n\n\n\n\ngaia/gaia\n\n\ngaia\n\n\nGAIA: real-world questions across three difficulty levels evaluating general AI assistants on reaso…\n\n\n165\n\n\n\n\n\n\ngnucleus-ai/cad-bench\n\n\ngnucleus_ai_cad_bench\n\n\ngNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks.\n\n\n100\n\n\n\n\n\n\ngorilla/bfcl\n\n\ngorilla_bfcl\n\n\nBerkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Pyt…\n\n\n1000\n\n\n\n\n\n\ngorilla/bfcl_parity\n\n\ngorilla_bfcl_parity\n\n\nStratified parity subset of BFCL validating that Harbor’s adapter matches the upstream implementati…\n\n\n123\n\n\n\n\n\n\ngpqa-diamond/gpqa-diamond\n\n\ngpqa_diamond\n\n\nGPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch…\n\n\n198\n\n\n\n\n\n\ngrafana/o11y-bench\n\n\ngrafana_o11y_bench\n\n\no11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo…\n\n\n63\n\n\n\n\n\n\ngrandsmile/unicode\n\n\ngrandsmile_unicode\n\n\nUniCode: competitive-programming problems systematically augmented into novel variations to probe g…\n\n\n399\n\n\n\n\n\n\nharbor-index/harbor-index-1.0\n\n\nharbor_index_harbor_index_1_0\n\n\nHarbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000…\n\n\n82\n\n\n\n\n\n\nharveyai/lab\n\n\nharveyai_lab\n\n\nHarvey LAB - open-source benchmark for evaluating agents on real legal work.\n\n\n1000\n\n\n\n\n\n\nineqmath/ineqmath\n\n\nineqmath\n\n\nIneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou…\n\n\n100\n\n\n\n\n\n\nislo-labs/reward-hack-bench\n\n\nislo_labs_reward_hack_bench\n\n\nReward-hacking benchmark: SWE-bench + CyBench tasks with injected solution-retrieval cheat prompts,…\n\n\n8\n\n\n\n\n\n\nislo-labs/reward-hack-bench-control\n\n\nislo_labs_reward_hack_bench_control\n\n\nBaseline/control companion to reward-hack-bench: the same 8 SWE-bench + CyBench tasks with NO cheat…\n\n\n8\n\n\n\n\n\n\nivanleo/agent-search\n\n\nivanleo_agent_search\n\n\nAgent answers Gemini API questions by querying an indexed documentation database.\n\n\n20\n\n\n\n\n\n\nkgmon/deepsearchqa\n\n\nkgmon_deepsearchqa\n\n\nDeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research…\n\n\n900\n\n\n\n\n\n\nkumo/kumo-1\n\n\nkumo_1\n\n\nKUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic…\n\n\n1000\n\n\n\n\n\n\nkumo/kumo-easy\n\n\nkumo_easy\n\n\nKUMO (easy split): easier-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark a…\n\n\n1000\n\n\n\n\n\n\nkumo/kumo-hard\n\n\nkumo_hard\n\n\nKUMO (hard split): hard-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark acr…\n\n\n250\n\n\n\n\n\n\nkumo/kumo-parity\n\n\nkumo_parity\n\n\nKUMO (parity split): subset of the KUMO procedural-reasoning benchmark used for parity / regression…\n\n\n212\n\n\n\n\n\n\nlawbench/lawbench\n\n\nlawbench\n\n\nLawBench: tasks evaluating LLMs on Chinese-law knowledge — legal entity recognition, reading compre…\n\n\n1000\n\n\n\n\n\n\nlcb/longswebench-32k\n\n\nlcb_longswebench_32k\n\n\nLongCodeBench (LCB) LongSWE-Bench tasks — 32k context window bucket.\n\n\n3\n\n\n\n\n\n\nlica-world/gdb\n\n\nlica_world_gdb\n\n\nGraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infograp…\n\n\n1000\n\n\n\n\n\n\nlivecodebench/livecodebench\n\n\nlivecodebench\n\n\nLiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, a…\n\n\n100\n\n\n\n\n\n\nmaxbittker/runebench\n\n\nmaxbittker_runebench\n\n\nBenchmark suite for evaluating AI agents on RuneScape gameplay tasks.\n\n\n32\n\n\n\n\n\n\nmeta/mlgym-bench\n\n\nmeta_mlgym_bench\n\n\nMLGym-Bench: Meta’s framework and benchmark for AI research agents covering CV, NLP, RL, and game-t…\n\n\n12\n\n\n\n\n\n\nminnesotanlp/aar\n\n\nminnesotanlp_aar\n\n\nThe Amazing Agent Race (AAR): 1400 multi-step scavenger-hunt puzzles for evaluating LLM agents on t…\n\n\n1000\n\n\n\n\n\n\nmmtb/multimedia-terminalbench\n\n\nmmtb_multimedia_terminalbench\n\n\nMultiMedia-TerminalBench (MMTB): a benchmark of 105 realistic multimedia-file tasks in persistent t…\n\n\n105\n\n\n\n\n\n\nnvats/codeskills-bench\n\n\nnvats_codeskills_bench\n\n\nA small set of real-life programming tasks: bug fixes, merge-conflict resolution, dependency cleanu…\n\n\n23\n\n\n\n\n\n\nopenai/mmmlu\n\n\nopenai_mmmlu\n\n\nMMMLU (Multilingual MMLU): OpenAI’s professional-human-translation of the MMLU test set into 14 lan…\n\n\n150\n\n\n\n\n\n\nopenai/simpleqa\n\n\nopenai_simpleqa\n\n\nSimpleQA: short, fact-seeking questions adversarially collected against GPT-4 to measure short-form…\n\n\n1000\n\n\n\n\n\n\nopenai/swe-lancer-diamond-all\n\n\nopenai_swe_lancer_diamond_all\n\n\nSWE-Lancer Diamond (full): public split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance so…\n\n\n463\n\n\n\n\n\n\nopenai/swe-lancer-diamond-ic\n\n\nopenai_swe_lancer_diamond_ic\n\n\nSWE-Lancer Diamond (IC): individual-contributor split of OpenAI’s SWE-Lancer benchmark — real Upwor…\n\n\n198\n\n\n\n\n\n\nopenai/swe-lancer-diamond-manager\n\n\nopenai_swe_lancer_diamond_manager\n\n\nA benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in…\n\n\n265\n\n\n\n\n\n\norca-bench/ORCA-bench\n\n\norca_bench_orca_bench\n\n\nAgents perform on-call root cause analysis on a live instrumented microservice system, analyzing me…\n\n\n1000\n\n\n\n\n\n\norinlabs/horizon-public\n\n\norinlabs_horizon_public\n\n\nHorizon: public example subset of a learning benchmark for extremely long-horizon agents — the agen…\n\n\n3\n\n\n\n\n\n\npgcodellm/rebench-v2-test\n\n\npgcodellm_rebench_v2_test\n\n\nSWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui…\n\n\n20\n\n\n\n\n\n\nqcircuitbench/qcircuitbench\n\n\nqcircuitbench\n\n\nQCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const…\n\n\n28\n\n\n\n\n\n\nquesma/compilebench\n\n\nquesma_compilebench\n\n\nCompileBench: real-world build/compile tasks (curl, GNU coreutils, jq, etc.) ranging from easy buil…\n\n\n15\n\n\n\n\n\n\nquesma/otel-bench\n\n\nquesma_otel_bench\n\n\nAI-agent benchmark for OpenTelemetry instrumentation tasks across multiple programming languages.\n\n\n26\n\n\n\n\n\n\nquixbugs/quixbugs\n\n\nquixbugs\n\n\nQuixBugs: small classic-algorithm programs (Python and Java) each containing a one-line bug, used t…\n\n\n80\n\n\n\n\n\n\nreasoning-gym/reasoning-gym-easy\n\n\nreasoning_gym_easy\n\n\nReasoning Gym (easy split): procedurally-generated, algorithmically-verifiable reasoning tasks (alg…\n\n\n288\n\n\n\n\n\n\nreasoning-gym/reasoning-gym-hard\n\n\nreasoning_gym_hard\n\n\nReasoning Gym (hard split): procedurally-generated, algorithmically-verifiable reasoning tasks at h…\n\n\n288\n\n\n\n\n\n\nreplicationbench/replicationbench\n\n\nreplicationbench\n\n\nReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce impleme…\n\n\n90\n\n\n\n\n\n\nrexbench/rexbench\n\n\nrexbench\n\n\nRExBench - 2 tasks (cogs, othello) evaluating AI agents’ ability to extend existing AI research thr…\n\n\n2\n\n\n\n\n\n\nsatbench/satbench\n\n\nsatbench\n\n\nSATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable diffi…\n\n\n1000\n\n\n\n\n\n\nscale-ai/hil-bench\n\n\nscale_ai_hil_bench\n\n\nHiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with crit…\n\n\n600\n\n\n\n\n\n\nscale-ai/swe-atlas-qna\n\n\nscale_ai_swe_atlas_qna\n\n\nSWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding…\n\n\n124\n\n\n\n\n\n\nscale-ai/swe-atlas-rf\n\n\nscale_ai_swe_atlas_rf\n\n\nSWE-Atlas - Refactoring – A benchmark of refactoring tasks for coding agents.\n\n\n70\n\n\n\n\n\n\nscale-ai/swe-atlas-tw\n\n\nscale_ai_swe_atlas_tw\n\n\nSWE-Atlas - Test Writing – A benchmark of comprehensive test writing problems for coding agents. C…\n\n\n90\n\n\n\n\n\n\nscale-ai/swe-bench-pro\n\n\nscale_ai_swe_bench_pro\n\n\nSWE-Bench-Pro: long-horizon enterprise software engineering tasks.\n\n\n731\n\n\n\n\n\n\nscienceagentbench/scienceagentbench\n\n\nscienceagentbench\n\n\nScienceAgentBench: data-driven scientific discovery via Python programs across 4 disciplines.\n\n\n102\n\n\n\n\n\n\nsierra-research/tau3-bench\n\n\nsierra_research_tau3_bench\n\n\nThird generation of τ-bench, extending the original with knowledge and voice. A simulation framewor…\n\n\n375\n\n\n\n\n\n\nsldbench/sldbench\n\n\nsldbench\n\n\nSLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments w…\n\n\n8\n\n\n\n\n\n\nstanford/medagentbench\n\n\nstanford_medagentbench\n\n\nMedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benc…\n\n\n300\n\n\n\n\n\n\nstrongreject/strongreject\n\n\nstrongreject\n\n\nStrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks…\n\n\n150\n\n\n\n\n\n\nswe-bench/swe-bench-verified\n\n\nswe_bench_verified\n\n\nSWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs…\n\n\n500\n\n\n\n\n\n\nswe-bench/swe-smith\n\n\nswe_bench_swe_smith\n\n\nSWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any…\n\n\n100\n\n\n\n\n\n\nswe-rebench/swe-rebench-leaderboard\n\n\nswe_rebench_swe_rebench_leaderboard\n\n\nSWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-bu…\n\n\n860\n\n\n\n\n\n\nswt-bench/swt-bench-verified\n\n\nswt_bench_verified\n\n\nSWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing u…\n\n\n433\n\n\n\n\n\n\ntencent/autocodebench\n\n\ntencent_autocodebench\n\n\nMultilingual automated code generation benchmark evaluating LLMs across diverse programming tasks a…\n\n\n200\n\n\n\n\n\n\ntermigen/termigen-environments\n\n\ntermigen_environments\n\n\nTermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11…\n\n\n1000\n\n\n\n\n\n\nterminal-bench-pro/terminal-bench-pro\n\n\nterminal_bench_pro\n\n\nTerminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientifi…\n\n\n200\n\n\n\n\n\n\nterminal-bench/terminal-bench-2\n\n\nterminal_bench_2\n\n\nTerminal-Bench v2: benchmark for testing AI agents in real terminal environments — from compiling c…\n\n\n89\n\n\n\n\n\n\nterminal-bench/terminal-bench-2-1\n\n\nterminal_bench_2_1\n\n\nTerminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ…\n\n\n89\n\n\n\n\n\n\ntheagentcompany/theagentcompany\n\n\ntheagentcompany\n\n\nAn agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and R…\n\n\n174\n\n\n\n\n\n\nthetalab/vector-edit-gym\n\n\nthetalab_vector_edit_gym\n\n\n106 hand-authored SVG editing tasks across four difficulty tiers (easy / medium / hard / very_hard)…\n\n\n106\n\n\n\n\n\n\ntinycomputerai/bun-server-bench\n\n\ntinycomputerai_bun_server_bench\n\n\nbun-server-bench: a correctness benchmark of 50 production-shaped Bun server engineering tasks for…\n\n\n50\n\n\n\n\n\n\nusaco/usaco\n\n\nusaco\n\n\nUSACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality u…\n\n\n304\n\n\n\n\n\n\nvals/financeagent\n\n\nvals_financeagent\n\n\nVals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (re…\n\n\n50\n\n\n\n\n\n\nvmax/vmax-tasks\n\n\nvmax_tasks\n\n\nCode-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).\n\n\n1000\n\n\n\n\n\n\nwebgen-bench/webgen-bench\n\n\nwebgen_bench\n\n\nWebGen-Bench: evaluating LLMs on generating interactive and functional websites from scratch.\n\n\n101\n\n\n\n\n\n\nxlang/ds-1000\n\n\nxlang_ds_1000\n\n\nDS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow,…\n\n\n1000\n\n\n\n\n\n\nyanagiorigami/frontier-cs\n\n\nyanagiorigami_frontier_cs\n\n\nFrontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial sco…\n\n\n172\n\n\n\n\n\n\nNo matching items",
-    "crumbs": [
-      "Getting Started",
-      "Registry"
-    ]
-  },
-  {
-    "objectID": "tasks.html",
-    "href": "tasks.html",
-    "title": "Task Format",
-    "section": "",
-    "text": "Harbor is a framework for building, evaluating, and optimizing agents and models in containerized environments. A Harbor task is a self-contained evaluation unit that includes an instruction, execution environment, scoring criteria, and optionally a reference solution.\nFor comprehensive details about Harbor tasks, see the Harbor documentation.",
-    "crumbs": [
-      "Getting Started",
-      "Using Harbor",
-      "Task Format"
-    ]
-  },
-  {
-    "objectID": "tasks.html#what-is-a-harbor-task",
-    "href": "tasks.html#what-is-a-harbor-task",
-    "title": "Task Format",
-    "section": "",
-    "text": "Harbor is a framework for building, evaluating, and optimizing agents and models in containerized environments. A Harbor task is a self-contained evaluation unit that includes an instruction, execution environment, scoring criteria, and optionally a reference solution.\nFor comprehensive details about Harbor tasks, see the Harbor documentation.",
-    "crumbs": [
-      "Getting Started",
-      "Using Harbor",
-      "Task Format"
-    ]
-  },
-  {
-    "objectID": "tasks.html#harbor-task-file-structure",
-    "href": "tasks.html#harbor-task-file-structure",
-    "title": "Task Format",
-    "section": "Harbor Task File Structure",
-    "text": "Harbor Task File Structure\nA typical Harbor task directory contains the following components:\n\nmy_task/\n├── instruction.md             # Task instructions/prompt shown to the agent\n├── task.toml                  # Metadata, timeouts, resource specs, env vars\n├── environment/               # Environment setup - Dockerfile or docker-compose.yaml\n│   └── Dockerfile             # Docker environment spec (varies by sandbox provider)\n├── solution/                  # (Optional) Reference solution for sanity checking\n│   ├── solve.sh / solve.bat   # Executable solution script used by Oracle solver\n│   └── ...                    # Supporting solution files and dependencies\n└── tests/                     # Verification and scoring\n    ├── test.sh / test.bat     # Test script executed by verifier\n    └── ...                    # Outputs reward.txt or reward.json to /logs/verifier/\n\n.bat script variants are used when the task targets Windows (controlled by [environment].os); Linux tasks use .sh.",
-    "crumbs": [
-      "Getting Started",
-      "Using Harbor",
-      "Task Format"
-    ]
-  },
-  {
-    "objectID": "tasks.html#harbor-to-inspect-mapping",
-    "href": "tasks.html#harbor-to-inspect-mapping",
-    "title": "Task Format",
-    "section": "Harbor to Inspect Mapping",
-    "text": "Harbor to Inspect Mapping\nInspect Harbor bridges Harbor tasks to the Inspect AI evaluation framework using the following mappings:\n\n\n\nHarbor Concept\nInspect Concept\nDescription\n\n\n\n\nHarbor Task\nSample\nA single evaluation instance with instructions and environment\n\n\nHarbor Dataset\nTask\nA collection of related evaluation instances\n\n\ninstruction.md\nSample.input\nThe prompt/instructions given to the agent\n\n\nenvironment/\nSandboxEnvironmentSpec\nDocker/environment configuration for isolated execution\n\n\ntests/test.sh / test.bat\nScorer (harbor_scorer)\nTest script executed by the scorer to produce reward/metrics\n\n\nsolution/solve.sh / solve.bat\nSolver (oracle)\nReference solution script executed by the Oracle solver for sanity checking\n\n\ntask.toml[task]\nSample.metadata\nTask name, description, authors, keywords\n\n\ntask.toml[metadata]\nSample.metadata\nArbitrary custom fields (difficulty, category, tags)\n\n\ntask.toml[verifier]\nScorer timeout/env vars\nTimeout, env vars, and user for verifier execution\n\n\ntask.toml[agent]\nAgent solver env vars/user\nEnvironment variables and user for agent execution. Agent timeout_sec is ignored.\n\n\ntask.toml[solution]\nOracle solver env vars\nEnvironment variables to set when running the solution script\n\n\ntask.toml[environment]\nSandboxEnvironmentSpec.config\nDocker image, target OS (linux/windows), resource specs (CPU, memory, storage, GPU, internet), MCP servers, healthchecks. Overwrites resource limits in environment/docker-compose.yaml.\n\n\n\n\nUnsupported task.toml Features\nLoading a task that declares any of the below either raises or warns:\n\n\n\n\n\n\n\nField\nBehavior\n\n\n\n\n[[steps]] + multi_step_reward_strategy (multi-step tasks)\nraise\n\n\n[environment].os = \"windows\"\nraise\n\n\n[environment].healthcheck\nwarn (agent may run before services ready)\n\n\n[environment].mcp_servers\nwarn (not exposed to agent)\n\n\n[environment].skills_dir\nwarn (not copied to agent skills dir)\n\n\n\n[environment].build_timeout_sec, storage_mb, workdir, and config.source / config.artifacts are ignored.",
-    "crumbs": [
-      "Getting Started",
-      "Using Harbor",
-      "Task Format"
-    ]
-  },
-  {
-    "objectID": "tasks.html#llm-judges-in-verification",
-    "href": "tasks.html#llm-judges-in-verification",
-    "title": "Task Format",
-    "section": "LLM Judges in Verification",
-    "text": "LLM Judges in Verification\nSome Harbor tasks use LLM judges for verification (e.g. evaluating open-ended responses or code quality). These tasks specify the model in their task.toml:\n[verifier.env]\nMODEL_NAME = \"claude-haiku-4-5\"\nANTHROPIC_API_KEY = \"${ANTHROPIC_API_KEY}\"\nThe verifier script (tests/test.sh or test.bat) uses these environment variables to call the LLM. Make sure to set the appropriate API key (e.g. ANTHROPIC_API_KEY) when running tasks with LLM judges.",
-    "crumbs": [
-      "Getting Started",
-      "Using Harbor",
-      "Task Format"
-    ]
-  },
-  {
-    "objectID": "agents.html",
-    "href": "agents.html",
-    "title": "Agents and Solvers",
-    "section": "",
-    "text": "Solvers are the execution components in Inspect AI. They can run agent scaffolds (like ReAct), execute solution scripts (like the Oracle solver), perform prompt engineering, and more. Both solvers and agents can be used to solve Harbor tasks.",
-    "crumbs": [
-      "Getting Started",
-      "Using Harbor",
-      "Agents and Solvers"
-    ]
-  },
-  {
-    "objectID": "agents.html#default-agent",
-    "href": "agents.html#default-agent",
-    "title": "Agents and Solvers",
-    "section": "Default Agent",
-    "text": "Default Agent\nWhen no agent or solver is specified, Inspect Harbor provides a default agent scaffold for your model:\n\nAgent Type: ReAct agent.\nTools: bash(timeout=300), python(timeout=300), update_plan().\nCompaction: CompactionEdit() for context window management.\n\nThis default configuration is suitable for most Harbor tasks that require command execution and file manipulation.",
-    "crumbs": [
-      "Getting Started",
-      "Using Harbor",
-      "Agents and Solvers"
-    ]
-  },
-  {
-    "objectID": "agents.html#custom-agents",
-    "href": "agents.html#custom-agents",
-    "title": "Agents and Solvers",
-    "section": "Custom Agents",
-    "text": "Custom Agents\nYou can provide your own agent or solver implementation using the --solver flag.\nUsing a custom agent:\ninspect eval inspect_harbor/terminal_bench_2 \\\n  --solver path/to/custom/agent.py@custom_agent \\\n  --model openai/gpt-5\nUsing the Inspect SWE agent framework:\nFirst install the required package:\npip install inspect-swe\nCLI:\ninspect eval inspect_harbor/terminal_bench_2 \\\n  --solver inspect_swe/claude_code \\\n  --model anthropic/claude-sonnet-4-5\nPython API:\nfrom inspect_ai import eval\nfrom inspect_harbor import terminal_bench_2\nfrom inspect_swe import claude_code\n\neval(\n    terminal_bench_2(),\n    solver=claude_code(),\n    model=\"anthropic/claude-sonnet-4-5\"\n)\nFor more details:\n\nAgents documentation\nSolvers documentation\nInspect SWE documentation",
-    "crumbs": [
-      "Getting Started",
-      "Using Harbor",
-      "Agents and Solvers"
-    ]
-  },
-  {
-    "objectID": "agents.html#oracle-solver",
-    "href": "agents.html#oracle-solver",
-    "title": "Agents and Solvers",
-    "section": "Oracle Solver",
-    "text": "Oracle Solver\nThe oracle() solver is useful for verifying that a dataset is correctly configured and solvable. It executes the task’s reference solution (solution/solve.sh or solve.bat) instead of using a model.\nCLI:\ninspect eval inspect_harbor/aider_polyglot \\\n  --solver inspect_harbor/oracle\nPython API:\nfrom inspect_ai import eval\nfrom inspect_harbor import aider_polyglot, oracle\n\neval(aider_polyglot(), solver=oracle())",
-    "crumbs": [
-      "Getting Started",
-      "Using Harbor",
-      "Agents and Solvers"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Inspect Harbor",
-    "section": "",
-    "text": "Harbor is a framework for building, evaluating, and optimizing AI agents in containerized environments. Inspect Harbor provides an interface to run Harbor tasks using Inspect AI.",
-    "crumbs": [
-      "Getting Started"
-    ]
-  },
-  {
-    "objectID": "index.html#installation",
-    "href": "index.html#installation",
-    "title": "Inspect Harbor",
-    "section": "Installation",
-    "text": "Installation\nInstall from PyPI:\npip install inspect-harbor\nOr with uv:\nuv add inspect-harbor",
-    "crumbs": [
-      "Getting Started"
-    ]
-  },
-  {
-    "objectID": "index.html#prerequisites",
-    "href": "index.html#prerequisites",
-    "title": "Inspect Harbor",
-    "section": "Prerequisites",
-    "text": "Prerequisites\nBefore running Harbor tasks, ensure you have:\n\nPython 3.12 or higher – required by inspect_harbor.\nDocker installed and running – required for execution when using Docker sandbox (default).\nModel API keys – set appropriate environment variables (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY).",
-    "crumbs": [
-      "Getting Started"
-    ]
-  },
-  {
-    "objectID": "index.html#quick-start",
-    "href": "index.html#quick-start",
-    "title": "Inspect Harbor",
-    "section": "Quick Start",
-    "text": "Quick Start\nThe fastest way to get started is to run a dataset from the Harbor registry.\nCLI:\n# Run Aider's Polyglot coding benchmark\ninspect eval inspect_harbor/aider_polyglot --model openai/gpt-5-mini\n\n# Run Terminal-Bench 2.0\ninspect eval inspect_harbor/terminal_bench_2 --model openai/gpt-5\nPython API:\nfrom inspect_ai import eval\nfrom inspect_harbor import aider_polyglot, terminal_bench_2\n\n# Run Aider's Polyglot coding benchmark\neval(aider_polyglot(), model=\"openai/gpt-5-mini\")\n\n# Run Terminal-Bench 2.0\neval(terminal_bench_2(), model=\"openai/gpt-5\")\n\nWhat this does\n\nLoads the dataset from the Harbor registry.\nDownloads and caches all tasks in the dataset.\nSolves the tasks with the default ReAct agent scaffold.\nExecutes in a Docker sandbox environment.\nStores results in ./logs.\n\nSee the Registry for the full list of available datasets, and the Using Harbor guides for more detail on datasets, task parameters, agents, and advanced features.",
-    "crumbs": [
-      "Getting Started"
-    ]
+    "text": "Dataset information\n\n\n\nHarbor registry\npgcodellm/rebench-v2-test\n\n\nInspect task\npgcodellm_rebench_v2_test\n\n\nLatest digest\nsha256:69488f0f1f51c1fed4ca5271b92b63b96deb4b0f2252d8654285a8fea173deb0\n\n\nSamples\n20\n\n\nPaper\narxiv\n\n\nSource\nhttps://github.com/SWE-rebench/SWE-rebench-V2\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
   },
   {
     "objectID": "advanced.html",
@@ -1772,88 +1308,580 @@
     ]
   },
   {
-    "objectID": "registry/pgcodellm_rebench_v2_test.html",
-    "href": "registry/pgcodellm_rebench_v2_test.html",
-    "title": "pgcodellm/rebench-v2-test",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Inspect Harbor",
+    "section": "",
+    "text": "Harbor is a framework for building, evaluating, and optimizing AI agents in containerized environments. Inspect Harbor provides an interface to run Harbor tasks using Inspect AI.",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "Inspect Harbor",
+    "section": "Installation",
+    "text": "Installation\nInstall from PyPI:\npip install inspect-harbor\nOr with uv:\nuv add inspect-harbor",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "Inspect Harbor",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nBefore running Harbor tasks, ensure you have:\n\nPython 3.12 or higher – required by inspect_harbor.\nDocker installed and running – required for execution when using Docker sandbox (default).\nModel API keys – set appropriate environment variables (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY).",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "index.html#quick-start",
+    "href": "index.html#quick-start",
+    "title": "Inspect Harbor",
+    "section": "Quick Start",
+    "text": "Quick Start\nThe fastest way to get started is to run a dataset from the Harbor registry.\nCLI:\n# Run Aider's Polyglot coding benchmark\ninspect eval inspect_harbor/aider_polyglot --model openai/gpt-5-mini\n\n# Run Terminal-Bench 2.0\ninspect eval inspect_harbor/terminal_bench_2 --model openai/gpt-5\nPython API:\nfrom inspect_ai import eval\nfrom inspect_harbor import aider_polyglot, terminal_bench_2\n\n# Run Aider's Polyglot coding benchmark\neval(aider_polyglot(), model=\"openai/gpt-5-mini\")\n\n# Run Terminal-Bench 2.0\neval(terminal_bench_2(), model=\"openai/gpt-5\")\n\nWhat this does\n\nLoads the dataset from the Harbor registry.\nDownloads and caches all tasks in the dataset.\nSolves the tasks with the default ReAct agent scaffold.\nExecutes in a Docker sandbox environment.\nStores results in ./logs.\n\nSee the Registry for the full list of available datasets, and the Using Harbor guides for more detail on datasets, task parameters, agents, and advanced features.",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "agents.html",
+    "href": "agents.html",
+    "title": "Agents and Solvers",
+    "section": "",
+    "text": "Solvers are the execution components in Inspect AI. They can run agent scaffolds (like ReAct), execute solution scripts (like the Oracle solver), perform prompt engineering, and more. Both solvers and agents can be used to solve Harbor tasks.",
+    "crumbs": [
+      "Getting Started",
+      "Using Harbor",
+      "Agents and Solvers"
+    ]
+  },
+  {
+    "objectID": "agents.html#default-agent",
+    "href": "agents.html#default-agent",
+    "title": "Agents and Solvers",
+    "section": "Default Agent",
+    "text": "Default Agent\nWhen no agent or solver is specified, Inspect Harbor provides a default agent scaffold for your model:\n\nAgent Type: ReAct agent.\nTools: bash(timeout=300), python(timeout=300), update_plan().\nCompaction: CompactionEdit() for context window management.\n\nThis default configuration is suitable for most Harbor tasks that require command execution and file manipulation.",
+    "crumbs": [
+      "Getting Started",
+      "Using Harbor",
+      "Agents and Solvers"
+    ]
+  },
+  {
+    "objectID": "agents.html#custom-agents",
+    "href": "agents.html#custom-agents",
+    "title": "Agents and Solvers",
+    "section": "Custom Agents",
+    "text": "Custom Agents\nYou can provide your own agent or solver implementation using the --solver flag.\nUsing a custom agent:\ninspect eval inspect_harbor/terminal_bench_2 \\\n  --solver path/to/custom/agent.py@custom_agent \\\n  --model openai/gpt-5\nUsing the Inspect SWE agent framework:\nFirst install the required package:\npip install inspect-swe\nCLI:\ninspect eval inspect_harbor/terminal_bench_2 \\\n  --solver inspect_swe/claude_code \\\n  --model anthropic/claude-sonnet-4-5\nPython API:\nfrom inspect_ai import eval\nfrom inspect_harbor import terminal_bench_2\nfrom inspect_swe import claude_code\n\neval(\n    terminal_bench_2(),\n    solver=claude_code(),\n    model=\"anthropic/claude-sonnet-4-5\"\n)\nFor more details:\n\nAgents documentation\nSolvers documentation\nInspect SWE documentation",
+    "crumbs": [
+      "Getting Started",
+      "Using Harbor",
+      "Agents and Solvers"
+    ]
+  },
+  {
+    "objectID": "agents.html#oracle-solver",
+    "href": "agents.html#oracle-solver",
+    "title": "Agents and Solvers",
+    "section": "Oracle Solver",
+    "text": "Oracle Solver\nThe oracle() solver is useful for verifying that a dataset is correctly configured and solvable. It executes the task’s reference solution (solution/solve.sh or solve.bat) instead of using a model.\nCLI:\ninspect eval inspect_harbor/aider_polyglot \\\n  --solver inspect_harbor/oracle\nPython API:\nfrom inspect_ai import eval\nfrom inspect_harbor import aider_polyglot, oracle\n\neval(aider_polyglot(), solver=oracle())",
+    "crumbs": [
+      "Getting Started",
+      "Using Harbor",
+      "Agents and Solvers"
+    ]
+  },
+  {
+    "objectID": "tasks.html",
+    "href": "tasks.html",
+    "title": "Task Format",
+    "section": "",
+    "text": "Harbor is a framework for building, evaluating, and optimizing agents and models in containerized environments. A Harbor task is a self-contained evaluation unit that includes an instruction, execution environment, scoring criteria, and optionally a reference solution.\nFor comprehensive details about Harbor tasks, see the Harbor documentation.",
+    "crumbs": [
+      "Getting Started",
+      "Using Harbor",
+      "Task Format"
+    ]
+  },
+  {
+    "objectID": "tasks.html#what-is-a-harbor-task",
+    "href": "tasks.html#what-is-a-harbor-task",
+    "title": "Task Format",
+    "section": "",
+    "text": "Harbor is a framework for building, evaluating, and optimizing agents and models in containerized environments. A Harbor task is a self-contained evaluation unit that includes an instruction, execution environment, scoring criteria, and optionally a reference solution.\nFor comprehensive details about Harbor tasks, see the Harbor documentation.",
+    "crumbs": [
+      "Getting Started",
+      "Using Harbor",
+      "Task Format"
+    ]
+  },
+  {
+    "objectID": "tasks.html#harbor-task-file-structure",
+    "href": "tasks.html#harbor-task-file-structure",
+    "title": "Task Format",
+    "section": "Harbor Task File Structure",
+    "text": "Harbor Task File Structure\nA typical Harbor task directory contains the following components:\n\nmy_task/\n├── instruction.md             # Task instructions/prompt shown to the agent\n├── task.toml                  # Metadata, timeouts, resource specs, env vars\n├── environment/               # Environment setup - Dockerfile or docker-compose.yaml\n│   └── Dockerfile             # Docker environment spec (varies by sandbox provider)\n├── solution/                  # (Optional) Reference solution for sanity checking\n│   ├── solve.sh / solve.bat   # Executable solution script used by Oracle solver\n│   └── ...                    # Supporting solution files and dependencies\n└── tests/                     # Verification and scoring\n    ├── test.sh / test.bat     # Test script executed by verifier\n    └── ...                    # Outputs reward.txt or reward.json to /logs/verifier/\n\n.bat script variants are used when the task targets Windows (controlled by [environment].os); Linux tasks use .sh.",
+    "crumbs": [
+      "Getting Started",
+      "Using Harbor",
+      "Task Format"
+    ]
+  },
+  {
+    "objectID": "tasks.html#harbor-to-inspect-mapping",
+    "href": "tasks.html#harbor-to-inspect-mapping",
+    "title": "Task Format",
+    "section": "Harbor to Inspect Mapping",
+    "text": "Harbor to Inspect Mapping\nInspect Harbor bridges Harbor tasks to the Inspect AI evaluation framework using the following mappings:\n\n\n\nHarbor Concept\nInspect Concept\nDescription\n\n\n\n\nHarbor Task\nSample\nA single evaluation instance with instructions and environment\n\n\nHarbor Dataset\nTask\nA collection of related evaluation instances\n\n\ninstruction.md\nSample.input\nThe prompt/instructions given to the agent\n\n\nenvironment/\nSandboxEnvironmentSpec\nDocker/environment configuration for isolated execution\n\n\ntests/test.sh / test.bat\nScorer (harbor_scorer)\nTest script executed by the scorer to produce reward/metrics\n\n\nsolution/solve.sh / solve.bat\nSolver (oracle)\nReference solution script executed by the Oracle solver for sanity checking\n\n\ntask.toml[task]\nSample.metadata\nTask name, description, authors, keywords\n\n\ntask.toml[metadata]\nSample.metadata\nArbitrary custom fields (difficulty, category, tags)\n\n\ntask.toml[verifier]\nScorer timeout/env vars\nTimeout, env vars, and user for verifier execution\n\n\ntask.toml[agent]\nAgent solver env vars/user\nEnvironment variables and user for agent execution. Agent timeout_sec is ignored.\n\n\ntask.toml[solution]\nOracle solver env vars\nEnvironment variables to set when running the solution script\n\n\ntask.toml[environment]\nSandboxEnvironmentSpec.config\nDocker image, target OS (linux/windows), resource specs (CPU, memory, storage, GPU, internet), MCP servers, healthchecks. Overwrites resource limits in environment/docker-compose.yaml.\n\n\n\n\nUnsupported task.toml Features\nLoading a task that declares any of the below either raises or warns:\n\n\n\n\n\n\n\nField\nBehavior\n\n\n\n\n[[steps]] + multi_step_reward_strategy (multi-step tasks)\nraise\n\n\n[environment].os = \"windows\"\nraise\n\n\n[environment].healthcheck\nwarn (agent may run before services ready)\n\n\n[environment].mcp_servers\nwarn (not exposed to agent)\n\n\n[environment].skills_dir\nwarn (not copied to agent skills dir)\n\n\n\n[environment].build_timeout_sec, storage_mb, workdir, and config.source / config.artifacts are ignored.",
+    "crumbs": [
+      "Getting Started",
+      "Using Harbor",
+      "Task Format"
+    ]
+  },
+  {
+    "objectID": "tasks.html#llm-judges-in-verification",
+    "href": "tasks.html#llm-judges-in-verification",
+    "title": "Task Format",
+    "section": "LLM Judges in Verification",
+    "text": "LLM Judges in Verification\nSome Harbor tasks use LLM judges for verification (e.g. evaluating open-ended responses or code quality). These tasks specify the model in their task.toml:\n[verifier.env]\nMODEL_NAME = \"claude-haiku-4-5\"\nANTHROPIC_API_KEY = \"${ANTHROPIC_API_KEY}\"\nThe verifier script (tests/test.sh or test.bat) uses these environment variables to call the LLM. Make sure to set the appropriate API key (e.g. ANTHROPIC_API_KEY) when running tasks with LLM judges.",
+    "crumbs": [
+      "Getting Started",
+      "Using Harbor",
+      "Task Format"
+    ]
+  },
+  {
+    "objectID": "registry.html",
+    "href": "registry.html",
+    "title": "Registry",
+    "section": "",
+    "text": "All Harbor datasets available as Inspect tasks. Use the search box to filter by name or description, the category chips to filter by topic, and the column headers to sort. Click a dataset’s name to open its details page.",
+    "crumbs": [
+      "Getting Started",
+      "Registry"
+    ]
+  },
+  {
+    "objectID": "registry.html#usage",
+    "href": "registry.html#usage",
+    "title": "Registry",
+    "section": "Usage",
+    "text": "Usage\nCLI:\ninspect eval inspect_harbor/aider_polyglot --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import aider_polyglot\n\neval(aider_polyglot(), model=\"openai/gpt-5\")",
+    "crumbs": [
+      "Getting Started",
+      "Registry"
+    ]
+  },
+  {
+    "objectID": "registry.html#available-datasets",
+    "href": "registry.html#available-datasets",
+    "title": "Registry",
+    "section": "Available Datasets",
+    "text": "Available Datasets\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Harbor Dataset\n      \n      \n        Inspect Task\n      \n      \n        Samples (Low to High)\n      \n      \n        Samples (High to Low)\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nHarbor Dataset\n\n\n\nInspect Task\n\n\n\nDescription\n\n\n\nSamples\n\n\n\n\n\n\n\n\nLiteCoder/LiteCoder-rl\n\n\nlitecoder_rl\n\n\nLiteCoder: terminal-based RL training environments spanning developer workflows, scientific/numeric…\n\n\n602\n\n\n\n\n\n\nMichaelY310/devopsgym\n\n\nmichaely310_devopsgym\n\n\nDevOps-Gym benchmark adapted to Harbor format - 729 tasks across 5 categories: Build, Monitoring, I…\n\n\n728\n\n\n\n\n\n\naarr/aarri-bench\n\n\naarr_aarri_bench\n\n\naarri(act as a real research intern)-bench, for evaluating LLM agents in academic research tasks.\n\n\n82\n\n\n\n\n\n\nabundant/swe-gen-cpp\n\n\nabundant_swe_gen_cpp\n\n\nDataset of C++ SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n999\n\n\n\n\n\n\nabundant/swe-gen-go\n\n\nabundant_swe_gen_go\n\n\nDataset of Go SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nabundant/swe-gen-java\n\n\nabundant_swe_gen_java\n\n\nDataset of Java SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nabundant/swe-gen-js\n\n\nabundant_swe_gen_js\n\n\nDataset of JS/TS SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nabundant/swe-gen-rust\n\n\nabundant_swe_gen_rust\n\n\nDataset of Rust SWE tasks. Generated by abundant-ai/SWE-gen tool.\n\n\n1000\n\n\n\n\n\n\nactava-ai/chi-bench\n\n\nactava_ai_chi_bench\n\n\nχ-Bench: long-horizon, policy-rich U.S. healthcare workflow agent benchmark spanning provider prior…\n\n\n78\n\n\n\n\n\n\nadyen/dabstep\n\n\nadyen_dabstep\n\n\nDABstep: real-world data analysis tasks from Adyen’s workloads requiring multi-step reasoning by LL…\n\n\n450\n\n\n\n\n\n\nagentic-labs/erp-bench\n\n\nagentic_labs_erp_bench\n\n\nERP-Bench is the Odoo 19 benchmark used in the Anchor paper, “Preventing Artifact Drift in Agent Be…\n\n\n300\n\n\n\n\n\n\nagentscope-ai/pawbench\n\n\nagentscope_ai_pawbench\n\n\nPawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use,…\n\n\n150\n\n\n\n\n\n\nai-forever/harness-bench-fast\n\n\nai_forever_harness_bench_fast\n\n\nSelf-contained file-operation agent benchmark.\n\n\n231\n\n\n\n\n\n\naider/aider-polyglot\n\n\naider_polyglot\n\n\nAider’s polyglot coding benchmark: Exercism exercises across C++, Go, Java, JavaScript, Python, and…\n\n\n225\n\n\n\n\n\n\naime/aime\n\n\naime\n\n\nProblems from the American Invitational Mathematics Examination (AIME), a 3-hour high-school compet…\n\n\n60\n\n\n\n\n\n\nalgotune/algotune\n\n\nalgotune\n\n\nAlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that match…\n\n\n154\n\n\n\n\n\n\napple/mmau\n\n\napple_mmau\n\n\nMMAU (Massive Multitask Agent Understanding): Apple’s holistic agent benchmark covering tool-use, D…\n\n\n1000\n\n\n\n\n\n\narcprize/arc-agi-2\n\n\narcprize_arc_agi_2\n\n\nARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but…\n\n\n167\n\n\n\n\n\n\nbenchflow/skillsbench\n\n\nbenchflow_skillsbench\n\n\nSkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folde…\n\n\n87\n\n\n\n\n\n\nbigcode/bigcodebench-hard-complete\n\n\nbigcode_bigcodebench_hard_complete\n\n\nBigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun…\n\n\n145\n\n\n\n\n\n\nbigcode/humanevalfix\n\n\nbigcode_humanevalfix\n\n\nHumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo…\n\n\n164\n\n\n\n\n\n\nbinary-audit/binary-audit\n\n\nbinary_audit\n\n\nBinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engin…\n\n\n46\n\n\n\n\n\n\ncais/swebenchpro\n\n\ncais_swebenchpro\n\n\nSWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks,…\n\n\n731\n\n\n\n\n\n\ncamel-ai/seta-env\n\n\ncamel_ai_seta_env\n\n\nSETA (Scaling Environments for Terminal Agents): CAMEL-AI’s verifiable terminal-agent tasks spannin…\n\n\n1000\n\n\n\n\n\n\ncmu/refav\n\n\ncmu_refav\n\n\nAutonomous-vehicle scenario mining via VLM.\n\n\n1000\n\n\n\n\n\n\ncodepde/codepde\n\n\ncodepde\n\n\nCodePDE: framing partial-differential-equation solving as a code-generation task to benchmark LLMs…\n\n\n5\n\n\n\n\n\n\ncrustbench/crustbench\n\n\ncrustbench\n\n\nCRUST-Bench: real-world C repositories paired with hand-written safe-Rust interfaces and tests, ben…\n\n\n100\n\n\n\n\n\n\ndatacurve/deep-swe\n\n\ndatacurve_deep_swe\n\n\nDeepSWE: Measuring frontier coding agents on original, long-horizon engineering tasks.\n\n\n113\n\n\n\n\n\n\ndbt-labs/ade-bench\n\n\ndbt_labs_ade_bench\n\n\nAnalytics Data Engineer Bench: dbt and SQL data-engineering tasks across DuckDB and Snowflake backe…\n\n\n48\n\n\n\n\n\n\ndeveval/deveval\n\n\ndeveval\n\n\nDevEval: manually-annotated code-generation samples from real-world Python repositories, aligned to…\n\n\n63\n\n\n\n\n\n\nevoeval/evoeval\n\n\nevoeval\n\n\nEvoEval: evolving suite that mutates HumanEval problems along several axes (difficulty, creative, s…\n\n\n100\n\n\n\n\n\n\nfactory-ai/legacy-bench\n\n\nfactory_ai_legacy_bench\n\n\nLegacy-Bench public sample tasks for evaluating AI coding agents on legacy software engineering tas…\n\n\n10\n\n\n\n\n\n\nfeaturebench/featurebench\n\n\nfeaturebench\n\n\nFeatureBench: agentic coding on end-to-end feature-development tasks derived from open-source repos…\n\n\n200\n\n\n\n\n\n\nfeaturebench/featurebench-lite\n\n\nfeaturebench_lite\n\n\nLightweight subset of FeatureBench for cheaper evaluation while preserving model rankings.\n\n\n30\n\n\n\n\n\n\nfeaturebench/featurebench-lite-modal\n\n\nfeaturebench_lite_modal\n\n\nFeatureBench-Lite executed on Modal’s cloud sandbox runner.\n\n\n30\n\n\n\n\n\n\nfeaturebench/featurebench-modal\n\n\nfeaturebench_modal\n\n\nFeatureBench’s full task suite executed on Modal’s cloud sandbox runner.\n\n\n200\n\n\n\n\n\n\nfuturehouse/bixbench\n\n\nfuturehouse_bixbench\n\n\nBixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM age…\n\n\n205\n\n\n\n\n\n\nfuturehouse/bixbench-cli\n\n\nfuturehouse_bixbench_cli\n\n\nCLI variant of BixBench: agents solve the same bioinformatics analysis tasks via a command-line / s…\n\n\n205\n\n\n\n\n\n\nfuturehouse/labbench\n\n\nfuturehouse_labbench\n\n\nLAB-Bench (Language Agent Biology Benchmark): questions across 8 categories (literature QA, databas…\n\n\n181\n\n\n\n\n\n\ngabeorlanski/slopcodebench\n\n\ngabeorlanski_slopcodebench\n\n\nSlopCodeBench multi-checkpoint coding benchmark tasks converted for Harbor.\n\n\n36\n\n\n\n\n\n\ngaia/gaia\n\n\ngaia\n\n\nGAIA: real-world questions across three difficulty levels evaluating general AI assistants on reaso…\n\n\n165\n\n\n\n\n\n\ngnucleus-ai/cad-bench\n\n\ngnucleus_ai_cad_bench\n\n\ngNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks.\n\n\n100\n\n\n\n\n\n\ngorilla/bfcl\n\n\ngorilla_bfcl\n\n\nBerkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Pyt…\n\n\n1000\n\n\n\n\n\n\ngorilla/bfcl_parity\n\n\ngorilla_bfcl_parity\n\n\nStratified parity subset of BFCL validating that Harbor’s adapter matches the upstream implementati…\n\n\n123\n\n\n\n\n\n\ngpqa-diamond/gpqa-diamond\n\n\ngpqa_diamond\n\n\nGPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch…\n\n\n198\n\n\n\n\n\n\ngrafana/o11y-bench\n\n\ngrafana_o11y_bench\n\n\no11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo…\n\n\n63\n\n\n\n\n\n\ngrandsmile/unicode\n\n\ngrandsmile_unicode\n\n\nUniCode: competitive-programming problems systematically augmented into novel variations to probe g…\n\n\n399\n\n\n\n\n\n\nharbor-index/harbor-index-1.0\n\n\nharbor_index_harbor_index_1_0\n\n\nHarbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000…\n\n\n82\n\n\n\n\n\n\nharveyai/lab\n\n\nharveyai_lab\n\n\nHarvey LAB - open-source benchmark for evaluating agents on real legal work.\n\n\n1000\n\n\n\n\n\n\nineqmath/ineqmath\n\n\nineqmath\n\n\nIneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou…\n\n\n100\n\n\n\n\n\n\nislo-labs/reward-hack-bench\n\n\nislo_labs_reward_hack_bench\n\n\nReward-hacking benchmark: SWE-bench + CyBench tasks with injected solution-retrieval cheat prompts,…\n\n\n8\n\n\n\n\n\n\nislo-labs/reward-hack-bench-control\n\n\nislo_labs_reward_hack_bench_control\n\n\nBaseline/control companion to reward-hack-bench: the same 8 SWE-bench + CyBench tasks with NO cheat…\n\n\n8\n\n\n\n\n\n\nivanleo/agent-search\n\n\nivanleo_agent_search\n\n\nAgent answers Gemini API questions by querying an indexed documentation database.\n\n\n20\n\n\n\n\n\n\nkgmon/deepsearchqa\n\n\nkgmon_deepsearchqa\n\n\nDeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research…\n\n\n900\n\n\n\n\n\n\nkumo/kumo-1\n\n\nkumo_1\n\n\nKUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic…\n\n\n1000\n\n\n\n\n\n\nkumo/kumo-easy\n\n\nkumo_easy\n\n\nKUMO (easy split): easier-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark a…\n\n\n1000\n\n\n\n\n\n\nkumo/kumo-hard\n\n\nkumo_hard\n\n\nKUMO (hard split): hard-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark acr…\n\n\n250\n\n\n\n\n\n\nkumo/kumo-parity\n\n\nkumo_parity\n\n\nKUMO (parity split): subset of the KUMO procedural-reasoning benchmark used for parity / regression…\n\n\n212\n\n\n\n\n\n\nlawbench/lawbench\n\n\nlawbench\n\n\nLawBench: tasks evaluating LLMs on Chinese-law knowledge — legal entity recognition, reading compre…\n\n\n1000\n\n\n\n\n\n\nlcb/longswebench-32k\n\n\nlcb_longswebench_32k\n\n\nLongCodeBench (LCB) LongSWE-Bench tasks — 32k context window bucket.\n\n\n3\n\n\n\n\n\n\nlica-world/gdb\n\n\nlica_world_gdb\n\n\nGraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infograp…\n\n\n1000\n\n\n\n\n\n\nlivecodebench/livecodebench\n\n\nlivecodebench\n\n\nLiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, a…\n\n\n100\n\n\n\n\n\n\nmaxbittker/runebench\n\n\nmaxbittker_runebench\n\n\nBenchmark suite for evaluating AI agents on RuneScape gameplay tasks.\n\n\n32\n\n\n\n\n\n\nmeta/mlgym-bench\n\n\nmeta_mlgym_bench\n\n\nMLGym-Bench: Meta’s framework and benchmark for AI research agents covering CV, NLP, RL, and game-t…\n\n\n12\n\n\n\n\n\n\nminnesotanlp/aar\n\n\nminnesotanlp_aar\n\n\nThe Amazing Agent Race (AAR): 1400 multi-step scavenger-hunt puzzles for evaluating LLM agents on t…\n\n\n1000\n\n\n\n\n\n\nmmtb/multimedia-terminalbench\n\n\nmmtb_multimedia_terminalbench\n\n\nMultiMedia-TerminalBench (MMTB): a benchmark of 105 realistic multimedia-file tasks in persistent t…\n\n\n105\n\n\n\n\n\n\nnvats/codeskills-bench\n\n\nnvats_codeskills_bench\n\n\nA small set of real-life programming tasks: bug fixes, merge-conflict resolution, dependency cleanu…\n\n\n23\n\n\n\n\n\n\nopenai/mmmlu\n\n\nopenai_mmmlu\n\n\nMMMLU (Multilingual MMLU): OpenAI’s professional-human-translation of the MMLU test set into 14 lan…\n\n\n150\n\n\n\n\n\n\nopenai/simpleqa\n\n\nopenai_simpleqa\n\n\nSimpleQA: short, fact-seeking questions adversarially collected against GPT-4 to measure short-form…\n\n\n1000\n\n\n\n\n\n\nopenai/swe-lancer-diamond-all\n\n\nopenai_swe_lancer_diamond_all\n\n\nSWE-Lancer Diamond (full): public split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance so…\n\n\n463\n\n\n\n\n\n\nopenai/swe-lancer-diamond-ic\n\n\nopenai_swe_lancer_diamond_ic\n\n\nSWE-Lancer Diamond (IC): individual-contributor split of OpenAI’s SWE-Lancer benchmark — real Upwor…\n\n\n198\n\n\n\n\n\n\nopenai/swe-lancer-diamond-manager\n\n\nopenai_swe_lancer_diamond_manager\n\n\nA benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in…\n\n\n265\n\n\n\n\n\n\norca-bench/ORCA-bench\n\n\norca_bench_orca_bench\n\n\nAgents perform on-call root cause analysis on a live instrumented microservice system, analyzing me…\n\n\n1000\n\n\n\n\n\n\norinlabs/horizon-public\n\n\norinlabs_horizon_public\n\n\nHorizon: public example subset of a learning benchmark for extremely long-horizon agents — the agen…\n\n\n3\n\n\n\n\n\n\npgcodellm/rebench-v2-test\n\n\npgcodellm_rebench_v2_test\n\n\nSWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui…\n\n\n20\n\n\n\n\n\n\nqcircuitbench/qcircuitbench\n\n\nqcircuitbench\n\n\nQCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const…\n\n\n28\n\n\n\n\n\n\nquesma/compilebench\n\n\nquesma_compilebench\n\n\nCompileBench: real-world build/compile tasks (curl, GNU coreutils, jq, etc.) ranging from easy buil…\n\n\n15\n\n\n\n\n\n\nquesma/otel-bench\n\n\nquesma_otel_bench\n\n\nAI-agent benchmark for OpenTelemetry instrumentation tasks across multiple programming languages.\n\n\n26\n\n\n\n\n\n\nquixbugs/quixbugs\n\n\nquixbugs\n\n\nQuixBugs: small classic-algorithm programs (Python and Java) each containing a one-line bug, used t…\n\n\n80\n\n\n\n\n\n\nreasoning-gym/reasoning-gym-easy\n\n\nreasoning_gym_easy\n\n\nReasoning Gym (easy split): procedurally-generated, algorithmically-verifiable reasoning tasks (alg…\n\n\n288\n\n\n\n\n\n\nreasoning-gym/reasoning-gym-hard\n\n\nreasoning_gym_hard\n\n\nReasoning Gym (hard split): procedurally-generated, algorithmically-verifiable reasoning tasks at h…\n\n\n288\n\n\n\n\n\n\nreplicationbench/replicationbench\n\n\nreplicationbench\n\n\nReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce impleme…\n\n\n90\n\n\n\n\n\n\nrexbench/rexbench\n\n\nrexbench\n\n\nRExBench - 2 tasks (cogs, othello) evaluating AI agents’ ability to extend existing AI research thr…\n\n\n2\n\n\n\n\n\n\nsatbench/satbench\n\n\nsatbench\n\n\nSATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable diffi…\n\n\n1000\n\n\n\n\n\n\nscale-ai/hil-bench\n\n\nscale_ai_hil_bench\n\n\nHiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with crit…\n\n\n600\n\n\n\n\n\n\nscale-ai/swe-atlas-qna\n\n\nscale_ai_swe_atlas_qna\n\n\nSWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding…\n\n\n124\n\n\n\n\n\n\nscale-ai/swe-atlas-rf\n\n\nscale_ai_swe_atlas_rf\n\n\nSWE-Atlas - Refactoring – A benchmark of refactoring tasks for coding agents.\n\n\n70\n\n\n\n\n\n\nscale-ai/swe-atlas-tw\n\n\nscale_ai_swe_atlas_tw\n\n\nSWE-Atlas - Test Writing – A benchmark of comprehensive test writing problems for coding agents. C…\n\n\n90\n\n\n\n\n\n\nscale-ai/swe-bench-pro\n\n\nscale_ai_swe_bench_pro\n\n\nSWE-Bench-Pro: long-horizon enterprise software engineering tasks.\n\n\n731\n\n\n\n\n\n\nscienceagentbench/scienceagentbench\n\n\nscienceagentbench\n\n\nScienceAgentBench: data-driven scientific discovery via Python programs across 4 disciplines.\n\n\n102\n\n\n\n\n\n\nsierra-research/tau3-bench\n\n\nsierra_research_tau3_bench\n\n\nThird generation of τ-bench, extending the original with knowledge and voice. A simulation framewor…\n\n\n375\n\n\n\n\n\n\nsldbench/sldbench\n\n\nsldbench\n\n\nSLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments w…\n\n\n8\n\n\n\n\n\n\nstanford/medagentbench\n\n\nstanford_medagentbench\n\n\nMedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benc…\n\n\n300\n\n\n\n\n\n\nstrongreject/strongreject\n\n\nstrongreject\n\n\nStrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks…\n\n\n150\n\n\n\n\n\n\nswe-bench/swe-bench-verified\n\n\nswe_bench_verified\n\n\nSWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs…\n\n\n500\n\n\n\n\n\n\nswe-bench/swe-smith\n\n\nswe_bench_swe_smith\n\n\nSWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any…\n\n\n100\n\n\n\n\n\n\nswe-rebench/swe-rebench-leaderboard\n\n\nswe_rebench_swe_rebench_leaderboard\n\n\nSWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-bu…\n\n\n860\n\n\n\n\n\n\nswt-bench/swt-bench-verified\n\n\nswt_bench_verified\n\n\nSWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing u…\n\n\n433\n\n\n\n\n\n\ntencent/autocodebench\n\n\ntencent_autocodebench\n\n\nMultilingual automated code generation benchmark evaluating LLMs across diverse programming tasks a…\n\n\n200\n\n\n\n\n\n\ntermigen/termigen-environments\n\n\ntermigen_environments\n\n\nTermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11…\n\n\n1000\n\n\n\n\n\n\nterminal-bench-pro/terminal-bench-pro\n\n\nterminal_bench_pro\n\n\nTerminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientifi…\n\n\n200\n\n\n\n\n\n\nterminal-bench/terminal-bench-2\n\n\nterminal_bench_2\n\n\nTerminal-Bench v2: benchmark for testing AI agents in real terminal environments — from compiling c…\n\n\n89\n\n\n\n\n\n\nterminal-bench/terminal-bench-2-1\n\n\nterminal_bench_2_1\n\n\nTerminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ…\n\n\n89\n\n\n\n\n\n\ntheagentcompany/theagentcompany\n\n\ntheagentcompany\n\n\nAn agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and R…\n\n\n174\n\n\n\n\n\n\nthetalab/vector-edit-gym\n\n\nthetalab_vector_edit_gym\n\n\n106 hand-authored SVG editing tasks across four difficulty tiers (easy / medium / hard / very_hard)…\n\n\n106\n\n\n\n\n\n\ntinycomputerai/bun-server-bench\n\n\ntinycomputerai_bun_server_bench\n\n\nbun-server-bench: a correctness benchmark of 50 production-shaped Bun server engineering tasks for…\n\n\n50\n\n\n\n\n\n\nusaco/usaco\n\n\nusaco\n\n\nUSACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality u…\n\n\n304\n\n\n\n\n\n\nvals/financeagent\n\n\nvals_financeagent\n\n\nVals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (re…\n\n\n50\n\n\n\n\n\n\nvmax/vmax-tasks\n\n\nvmax_tasks\n\n\nCode-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).\n\n\n1000\n\n\n\n\n\n\nwebgen-bench/webgen-bench\n\n\nwebgen_bench\n\n\nWebGen-Bench: evaluating LLMs on generating interactive and functional websites from scratch.\n\n\n101\n\n\n\n\n\n\nxlang-ai/osworld-verified\n\n\nxlang_ai_osworld_verified\n\n\nOSWorld-Verified Harbor adaptation: 361 Ubuntu desktop-control tasks from OSWorld, excluding the 8…\n\n\n361\n\n\n\n\n\n\nxlang/ds-1000\n\n\nxlang_ds_1000\n\n\nDS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow,…\n\n\n1000\n\n\n\n\n\n\nyanagiorigami/frontier-cs\n\n\nyanagiorigami_frontier_cs\n\n\nFrontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial sco…\n\n\n172\n\n\n\n\n\n\nNo matching items",
+    "crumbs": [
+      "Getting Started",
+      "Registry"
+    ]
+  },
+  {
+    "objectID": "CHANGELOG.html",
+    "href": "CHANGELOG.html",
+    "title": "Changelog",
+    "section": "",
+    "text": "update Harbor registry tasks (#104) (4f45606)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section",
+    "href": "CHANGELOG.html#section",
+    "title": "Changelog",
+    "section": "",
+    "text": "update Harbor registry tasks (#104) (4f45606)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-1",
+    "href": "CHANGELOG.html#section-1",
+    "title": "Changelog",
+    "section": "0.5.13 (2026-06-29)",
+    "text": "0.5.13 (2026-06-29)\n\nBug Fixes\n\nupdate Harbor registry tasks (#102) (ed03ca3)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-2",
+    "href": "CHANGELOG.html#section-2",
+    "title": "Changelog",
+    "section": "0.5.12 (2026-06-22)",
+    "text": "0.5.12 (2026-06-22)\n\nBug Fixes\n\nupdate Harbor registry tasks (#100) (63f0939)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-3",
+    "href": "CHANGELOG.html#section-3",
+    "title": "Changelog",
+    "section": "0.5.11 (2026-06-18)",
+    "text": "0.5.11 (2026-06-18)\n\nBug Fixes\n\nupdate Harbor registry tasks (#98) (a19a048)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-4",
+    "href": "CHANGELOG.html#section-4",
+    "title": "Changelog",
+    "section": "0.5.10 (2026-06-17)",
+    "text": "0.5.10 (2026-06-17)\n\nBug Fixes\n\nupdate Harbor registry tasks (#96) (1ecadcc)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-5",
+    "href": "CHANGELOG.html#section-5",
+    "title": "Changelog",
+    "section": "0.5.9 (2026-06-15)",
+    "text": "0.5.9 (2026-06-15)\n\nBug Fixes\n\nupdate Harbor registry tasks (#94) (1376705)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-6",
+    "href": "CHANGELOG.html#section-6",
+    "title": "Changelog",
+    "section": "0.5.8 (2026-06-12)",
+    "text": "0.5.8 (2026-06-12)\n\nBug Fixes\n\nupdate Harbor registry tasks (#92) (779bd58)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-7",
+    "href": "CHANGELOG.html#section-7",
+    "title": "Changelog",
+    "section": "0.5.7 (2026-06-08)",
+    "text": "0.5.7 (2026-06-08)\n\nBug Fixes\n\nupdate Harbor registry tasks (#89) (bd47cb4)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-8",
+    "href": "CHANGELOG.html#section-8",
+    "title": "Changelog",
+    "section": "0.5.6 (2026-06-03)",
+    "text": "0.5.6 (2026-06-03)\n\nBug Fixes\n\nconverters: correct network isolation + resolve task env vars (#87) (d06950d)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-9",
+    "href": "CHANGELOG.html#section-9",
+    "title": "Changelog",
+    "section": "0.5.5 (2026-06-01)",
+    "text": "0.5.5 (2026-06-01)\n\nBug Fixes\n\nupdate Harbor registry tasks (#84) (61192ad)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-10",
+    "href": "CHANGELOG.html#section-10",
+    "title": "Changelog",
+    "section": "0.5.4 (2026-05-20)",
+    "text": "0.5.4 (2026-05-20)\n\nBug Fixes\n\nstable docker image tags so repeat eval runs reuse the cached image (#82) (749ba78)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-11",
+    "href": "CHANGELOG.html#section-11",
+    "title": "Changelog",
+    "section": "0.5.3 (2026-05-18)",
+    "text": "0.5.3 (2026-05-18)\n\nBug Fixes\n\nupdate Harbor registry tasks (#79) (3c3c9f8)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-12",
+    "href": "CHANGELOG.html#section-12",
+    "title": "Changelog",
+    "section": "0.5.2 (2026-05-12)",
+    "text": "0.5.2 (2026-05-12)\n\nBug Fixes\n\nupdate Harbor registry tasks (#76) (660d5ca)\n\n\n\nDocumentation\n\nadd post-merge publish step to nightly-pr-triage skill (#78) (fc9ad48)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-13",
+    "href": "CHANGELOG.html#section-13",
+    "title": "Changelog",
+    "section": "0.5.1 (2026-05-08)",
+    "text": "0.5.1 (2026-05-08)\n\nBug Fixes\n\nadd title to overrides (#73) (cd5c1dc)\nsplit description into desc + desc_trunc in registry-listing.yml (#71) (0154d4a)\nupdate Harbor registry tasks (#74) (4a399d1)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-14",
+    "href": "CHANGELOG.html#section-14",
+    "title": "Changelog",
+    "section": "0.5.0 (2026-05-07)",
+    "text": "0.5.0 (2026-05-07)\n\nFeatures\n\nmigrate to Harbor 0.6 with self-service registry (#69) (7838993)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-15",
+    "href": "CHANGELOG.html#section-15",
+    "title": "Changelog",
+    "section": "0.4.18 (2026-04-27)",
+    "text": "0.4.18 (2026-04-27)\n\nBug Fixes\n\nupdate Harbor registry tasks (#67) (f7e8364)\n\n\n\nDocumentation\n\nsearchable registry listing + per-benchmark landing pages (#65) (ccbda21)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-16",
+    "href": "CHANGELOG.html#section-16",
+    "title": "Changelog",
+    "section": "0.4.17 (2026-04-21)",
+    "text": "0.4.17 (2026-04-21)\n\nBug Fixes\n\nembed Harbor URL in each task’s docstring (#64) (b76d374)\nrestore registry tracker and repoint docs URLs to new Harbor site (#61) (cc00228)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-17",
+    "href": "CHANGELOG.html#section-17",
+    "title": "Changelog",
+    "section": "0.4.16 (2026-04-08)",
+    "text": "0.4.16 (2026-04-08)\n\nBug Fixes\n\napply resource overrides only to default service (#56) (ea5e86f)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-18",
+    "href": "CHANGELOG.html#section-18",
+    "title": "Changelog",
+    "section": "0.4.15 (2026-04-01)",
+    "text": "0.4.15 (2026-04-01)\n\nBug Fixes\n\npin harbor&lt;0.3.0 and bump inspect-ai&gt;=0.3.201 (#52) (0cb0a46)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-19",
+    "href": "CHANGELOG.html#section-19",
+    "title": "Changelog",
+    "section": "0.4.14 (2026-03-30)",
+    "text": "0.4.14 (2026-03-30)\n\nBug Fixes\n\nupdate Harbor registry tasks (#50) (5f49ac9)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-20",
+    "href": "CHANGELOG.html#section-20",
+    "title": "Changelog",
+    "section": "0.4.13 (2026-03-25)",
+    "text": "0.4.13 (2026-03-25)\n\nBug Fixes\n\npin litellm&lt;1.82.7 to block compromised versions (#48) (5e7328b)\nupdate Harbor registry tasks (#47) (10752d5)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-21",
+    "href": "CHANGELOG.html#section-21",
+    "title": "Changelog",
+    "section": "0.4.12 (2026-03-24)",
+    "text": "0.4.12 (2026-03-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#45) (dc25090)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-22",
+    "href": "CHANGELOG.html#section-22",
+    "title": "Changelog",
+    "section": "0.4.11 (2026-03-18)",
+    "text": "0.4.11 (2026-03-18)\n\nBug Fixes\n\nenforce network mode & handle variable expansion (#43) (3858da2)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-23",
+    "href": "CHANGELOG.html#section-23",
+    "title": "Changelog",
+    "section": "0.4.10 (2026-03-16)",
+    "text": "0.4.10 (2026-03-16)\n\nBug Fixes\n\nenforce allow_internet network mode in compose-file path (#42) (14bdc24)\nupdate Harbor registry tasks (#40) (290c0ca)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-24",
+    "href": "CHANGELOG.html#section-24",
+    "title": "Changelog",
+    "section": "0.4.9 (2026-03-11)",
+    "text": "0.4.9 (2026-03-11)\n\nBug Fixes\n\nupdate Harbor registry tasks (#38) (47dd23f)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-25",
+    "href": "CHANGELOG.html#section-25",
+    "title": "Changelog",
+    "section": "0.4.8 (2026-03-05)",
+    "text": "0.4.8 (2026-03-05)\n\nBug Fixes\n\nupdate Harbor registry tasks (#36) (ec31a18)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-26",
+    "href": "CHANGELOG.html#section-26",
+    "title": "Changelog",
+    "section": "0.4.7 (2026-03-03)",
+    "text": "0.4.7 (2026-03-03)\n\nBug Fixes\n\nupdate Harbor registry tasks (#34) (e810779)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-27",
+    "href": "CHANGELOG.html#section-27",
+    "title": "Changelog",
+    "section": "0.4.6 (2026-03-02)",
+    "text": "0.4.6 (2026-03-02)\n\nBug Fixes\n\nupdate Harbor registry tasks (#32) (fd04b4a)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-28",
+    "href": "CHANGELOG.html#section-28",
+    "title": "Changelog",
+    "section": "0.4.5 (2026-02-24)",
+    "text": "0.4.5 (2026-02-24)\n\nBug Fixes\n\nupdate Harbor registry tasks (#29) (9252db7)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-29",
+    "href": "CHANGELOG.html#section-29",
+    "title": "Changelog",
+    "section": "0.4.4 (2026-02-23)",
+    "text": "0.4.4 (2026-02-23)\n\nBug Fixes\n\nupdate Harbor registry tasks (#27) (663915c)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-30",
+    "href": "CHANGELOG.html#section-30",
+    "title": "Changelog",
+    "section": "0.4.3 (2026-02-18)",
+    "text": "0.4.3 (2026-02-18)\n\nBug Fixes\n\nUpdate Harbor Registry Tasks (#25) (7c8e394)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-31",
+    "href": "CHANGELOG.html#section-31",
+    "title": "Changelog",
+    "section": "0.4.2 (2026-02-14)",
+    "text": "0.4.2 (2026-02-14)\n\nDocumentation\n\nadd credits section to README (#22) (2621ac7)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-32",
+    "href": "CHANGELOG.html#section-32",
+    "title": "Changelog",
+    "section": "0.4.1 (2026-02-12)",
+    "text": "0.4.1 (2026-02-12)\n\nDocumentation\n\nimprove REGISTRY.md table formatting and highlight featured datasets (#20) (8d995aa)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-33",
+    "href": "CHANGELOG.html#section-33",
+    "title": "Changelog",
+    "section": "0.4.0 (2026-02-12)",
+    "text": "0.4.0 (2026-02-12)\n\nFeatures\n\nadd autogenerated REGISTRY.md with dataset catalog (#19) (f643583)\nadd static task generation from Harbor registry (#14) (801fcb4)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to update-registry workflow (#16) (3cd9ebc)\nremove timestamp from generated tasks (#18) (08ffc96)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-34",
+    "href": "CHANGELOG.html#section-34",
+    "title": "Changelog",
+    "section": "0.3.0 (2026-02-11)",
+    "text": "0.3.0 (2026-02-11)\n\nFeatures\n\nadd resource override parameters to harbor() task (#11) (e765c4c)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-35",
+    "href": "CHANGELOG.html#section-35",
+    "title": "Changelog",
+    "section": "0.2.0 (2026-02-10)",
+    "text": "0.2.0 (2026-02-10)\n\nFeatures\n\nsimplify harbor() API by removing solver parameter (#7) (37ef434)\n\n\n\nBug Fixes\n\nadd RELEASE_PLEASE_TOKEN to release workflow (#8) (f99615c)"
+  },
+  {
+    "objectID": "CHANGELOG.html#section-36",
+    "href": "CHANGELOG.html#section-36",
+    "title": "Changelog",
+    "section": "0.1.0 (2026-02-10)",
+    "text": "0.1.0 (2026-02-10)\n\nFeatures\n\nInitial release of inspect_harbor\nInspect AI interface to Harbor tasks\nSupport for Harbor task execution and evaluation\nIntegration with Inspect AI evaluation registry\n\n\n\nDocumentation\n\nAdd comprehensive README with usage examples\nAdd project documentation and setup instructions\n\n\n\nMiscellaneous\n\nSet up CI/CD with GitHub Actions\nAdd test suite with pytest\nConfigure code quality tools (ruff, pyright)\nAdd pre-commit hooks"
+  },
+  {
+    "objectID": "parameters.html",
+    "href": "parameters.html",
+    "title": "Task Parameters",
+    "section": "",
+    "text": "Task functions (like aider_polyglot(), terminal_bench_2(), etc.) accept the following parameters:",
+    "crumbs": [
+      "Getting Started",
+      "Using Harbor",
+      "Task Parameters"
+    ]
+  },
+  {
+    "objectID": "parameters.html#example",
+    "href": "parameters.html#example",
+    "title": "Task Parameters",
+    "section": "Example",
+    "text": "Example\nHere’s an example showing how to use multiple parameters together:\nCLI:\ninspect eval inspect_harbor/terminal_bench_2 \\\n  -T n_tasks=5 \\\n  -T overwrite_cache=true \\\n  -T override_memory_mb=8192 \\\n  --model anthropic/claude-sonnet-4-5\nPython API:\nfrom inspect_ai import eval\nfrom inspect_harbor import terminal_bench_2\n\neval(\n    terminal_bench_2(\n        n_tasks=5,\n        overwrite_cache=True,\n        override_memory_mb=8192,\n    ),\n    model=\"anthropic/claude-sonnet-4-5\"\n)\nThis example:\n\nLimits to 5 tasks using n_tasks.\nForces a fresh download with overwrite_cache.\nAllocates 8GB of memory.",
+    "crumbs": [
+      "Getting Started",
+      "Using Harbor",
+      "Task Parameters"
+    ]
+  },
+  {
+    "objectID": "registry/sldbench.html",
+    "href": "registry/sldbench.html",
+    "title": "sldbench/sldbench",
     "section": "",
     "text": "← Back to Registry"
   },
   {
-    "objectID": "registry/pgcodellm_rebench_v2_test.html#run-this-task",
-    "href": "registry/pgcodellm_rebench_v2_test.html#run-this-task",
-    "title": "pgcodellm/rebench-v2-test",
+    "objectID": "registry/sldbench.html#run-this-task",
+    "href": "registry/sldbench.html#run-this-task",
+    "title": "sldbench/sldbench",
     "section": "Run this task",
-    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/pgcodellm_rebench_v2_test --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import pgcodellm_rebench_v2_test\n\neval(pgcodellm_rebench_v2_test(), model=\"openai/gpt-5\")"
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/sldbench --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import sldbench\n\neval(sldbench(), model=\"openai/gpt-5\")"
   },
   {
-    "objectID": "registry/pgcodellm_rebench_v2_test.html#dataset-information",
-    "href": "registry/pgcodellm_rebench_v2_test.html#dataset-information",
-    "title": "pgcodellm/rebench-v2-test",
+    "objectID": "registry/sldbench.html#dataset-information",
+    "href": "registry/sldbench.html#dataset-information",
+    "title": "sldbench/sldbench",
     "section": "Dataset information",
-    "text": "Dataset information\n\n\n\nHarbor registry\npgcodellm/rebench-v2-test\n\n\nInspect task\npgcodellm_rebench_v2_test\n\n\nLatest digest\nsha256:69488f0f1f51c1fed4ca5271b92b63b96deb4b0f2252d8654285a8fea173deb0\n\n\nSamples\n20\n\n\nPaper\narxiv\n\n\nSource\nhttps://github.com/SWE-rebench/SWE-rebench-V2\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+    "text": "Dataset information\n\n\n\nHarbor registry\nsldbench/sldbench\n\n\nInspect task\nsldbench\n\n\nLatest digest\nsha256:369ce8a4825cae7cfb75ef0f5886f3081f072123fd37630f6d6aeef8dec46089\n\n\nSamples\n8\n\n\nPaper\narxiv\n\n\nSource\nhttps://github.com/linhaowei1/SLD\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
   },
   {
-    "objectID": "registry/adyen_dabstep.html",
-    "href": "registry/adyen_dabstep.html",
-    "title": "adyen/dabstep",
+    "objectID": "registry/factory_ai_legacy_bench.html",
+    "href": "registry/factory_ai_legacy_bench.html",
+    "title": "factory-ai/legacy-bench",
     "section": "",
     "text": "← Back to Registry"
   },
   {
-    "objectID": "registry/adyen_dabstep.html#run-this-task",
-    "href": "registry/adyen_dabstep.html#run-this-task",
-    "title": "adyen/dabstep",
+    "objectID": "registry/factory_ai_legacy_bench.html#run-this-task",
+    "href": "registry/factory_ai_legacy_bench.html#run-this-task",
+    "title": "factory-ai/legacy-bench",
     "section": "Run this task",
-    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/adyen_dabstep --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import adyen_dabstep\n\neval(adyen_dabstep(), model=\"openai/gpt-5\")"
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/factory_ai_legacy_bench --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import factory_ai_legacy_bench\n\neval(factory_ai_legacy_bench(), model=\"openai/gpt-5\")"
   },
   {
-    "objectID": "registry/adyen_dabstep.html#dataset-information",
-    "href": "registry/adyen_dabstep.html#dataset-information",
-    "title": "adyen/dabstep",
+    "objectID": "registry/factory_ai_legacy_bench.html#dataset-information",
+    "href": "registry/factory_ai_legacy_bench.html#dataset-information",
+    "title": "factory-ai/legacy-bench",
     "section": "Dataset information",
-    "text": "Dataset information\n\n\n\nHarbor registry\nadyen/dabstep\n\n\nInspect task\nadyen_dabstep\n\n\nLatest digest\nsha256:0edf62c0bdf7003b1d1f934f1547df1c051877e076d5b6f6a2d99caf8b6432b3\n\n\nSamples\n450\n\n\nPaper\narxiv\n\n\nSource\nhttps://huggingface.co/datasets/adyen/DABstep\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+    "text": "Dataset information\n\n\n\nHarbor registry\nfactory-ai/legacy-bench\n\n\nInspect task\nfactory_ai_legacy_bench\n\n\nLatest digest\nsha256:0a3cca4cca8cd6f96abcfe4f627afafa75d6e5ca5b173b6429321418d6e373a5\n\n\nSamples\n10\n\n\nSource\nhttps://factory.ai/news/legacy-bench\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
   },
   {
-    "objectID": "registry/codepde.html",
-    "href": "registry/codepde.html",
-    "title": "codepde/codepde",
+    "objectID": "registry/scale_ai_swe_atlas_tw.html",
+    "href": "registry/scale_ai_swe_atlas_tw.html",
+    "title": "scale-ai/swe-atlas-tw",
     "section": "",
     "text": "← Back to Registry"
   },
   {
-    "objectID": "registry/codepde.html#run-this-task",
-    "href": "registry/codepde.html#run-this-task",
-    "title": "codepde/codepde",
+    "objectID": "registry/scale_ai_swe_atlas_tw.html#run-this-task",
+    "href": "registry/scale_ai_swe_atlas_tw.html#run-this-task",
+    "title": "scale-ai/swe-atlas-tw",
     "section": "Run this task",
-    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/codepde --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import codepde\n\neval(codepde(), model=\"openai/gpt-5\")"
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/scale_ai_swe_atlas_tw --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import scale_ai_swe_atlas_tw\n\neval(scale_ai_swe_atlas_tw(), model=\"openai/gpt-5\")"
   },
   {
-    "objectID": "registry/codepde.html#dataset-information",
-    "href": "registry/codepde.html#dataset-information",
-    "title": "codepde/codepde",
+    "objectID": "registry/scale_ai_swe_atlas_tw.html#dataset-information",
+    "href": "registry/scale_ai_swe_atlas_tw.html#dataset-information",
+    "title": "scale-ai/swe-atlas-tw",
     "section": "Dataset information",
-    "text": "Dataset information\n\n\n\nHarbor registry\ncodepde/codepde\n\n\nInspect task\ncodepde\n\n\nLatest digest\nsha256:1fa8a96627aaf64d6879bcca7a71884159c4198500ace010bfbe434cf5e7d227\n\n\nSamples\n5\n\n\nPaper\narxiv\n\n\nSource\nhttps://github.com/LithiumDA/CodePDE\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+    "text": "Dataset information\n\n\n\nHarbor registry\nscale-ai/swe-atlas-tw\n\n\nInspect task\nscale_ai_swe_atlas_tw\n\n\nLatest digest\nsha256:1fe41edad7c1cc96925f100be0d314804cc45f55a9a5b7c8583354f4bca30b44\n\n\nSamples\n90\n\n\nSource\nhttps://github.com/scaleapi/SWE-Atlas\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
   },
   {
-    "objectID": "registry/kumo_1.html",
-    "href": "registry/kumo_1.html",
-    "title": "kumo/kumo-1",
+    "objectID": "registry/terminal_bench_2_1.html",
+    "href": "registry/terminal_bench_2_1.html",
+    "title": "terminal-bench/terminal-bench-2-1",
     "section": "",
     "text": "← Back to Registry"
   },
   {
-    "objectID": "registry/kumo_1.html#run-this-task",
-    "href": "registry/kumo_1.html#run-this-task",
-    "title": "kumo/kumo-1",
+    "objectID": "registry/terminal_bench_2_1.html#run-this-task",
+    "href": "registry/terminal_bench_2_1.html#run-this-task",
+    "title": "terminal-bench/terminal-bench-2-1",
     "section": "Run this task",
-    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/kumo_1 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import kumo_1\n\neval(kumo_1(), model=\"openai/gpt-5\")"
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/terminal_bench_2_1 --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import terminal_bench_2_1\n\neval(terminal_bench_2_1(), model=\"openai/gpt-5\")"
   },
   {
-    "objectID": "registry/kumo_1.html#dataset-information",
-    "href": "registry/kumo_1.html#dataset-information",
-    "title": "kumo/kumo-1",
+    "objectID": "registry/terminal_bench_2_1.html#dataset-information",
+    "href": "registry/terminal_bench_2_1.html#dataset-information",
+    "title": "terminal-bench/terminal-bench-2-1",
     "section": "Dataset information",
-    "text": "Dataset information\n\n\n\nHarbor registry\nkumo/kumo-1\n\n\nInspect task\nkumo_1\n\n\nLatest digest\nsha256:a70e4f6c1a7cca8977db77461c8d341fb8dc481c857a48e28bc2b4ddcfa9e0ef\n\n\nSamples\n1000\n\n\nPaper\narxiv\n\n\nSource\nhttps://github.com/linhaowei1/kumo\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+    "text": "Dataset information\n\n\n\nHarbor registry\nterminal-bench/terminal-bench-2-1\n\n\nInspect task\nterminal_bench_2_1\n\n\nLatest digest\nsha256:7d7bdc1cbedad549fc1140404bd4dc45e5fd0ea7c4186773687d177ad3a0699a\n\n\nSamples\n89\n\n\nPaper\narxiv\n\n\nSource\nhttps://github.com/laude-institute/terminal-bench\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
+  },
+  {
+    "objectID": "registry/xlang_ai_osworld_verified.html",
+    "href": "registry/xlang_ai_osworld_verified.html",
+    "title": "xlang-ai/osworld-verified",
+    "section": "",
+    "text": "← Back to Registry"
+  },
+  {
+    "objectID": "registry/xlang_ai_osworld_verified.html#run-this-task",
+    "href": "registry/xlang_ai_osworld_verified.html#run-this-task",
+    "title": "xlang-ai/osworld-verified",
+    "section": "Run this task",
+    "text": "Run this task\nCLI:\ninspect eval inspect_harbor/xlang_ai_osworld_verified --model openai/gpt-5\nPython:\nfrom inspect_ai import eval\nfrom inspect_harbor import xlang_ai_osworld_verified\n\neval(xlang_ai_osworld_verified(), model=\"openai/gpt-5\")"
+  },
+  {
+    "objectID": "registry/xlang_ai_osworld_verified.html#dataset-information",
+    "href": "registry/xlang_ai_osworld_verified.html#dataset-information",
+    "title": "xlang-ai/osworld-verified",
+    "section": "Dataset information",
+    "text": "Dataset information\n\n\n\nHarbor registry\nxlang-ai/osworld-verified\n\n\nInspect task\nxlang_ai_osworld_verified\n\n\nLatest digest\nsha256:1402d7ce0c95876f51e3e532a4a4663b1d535db6a3afc22815e9272cef822a7f\n\n\nSamples\n361\n\n\nPaper\narxiv\n\n\nSource\nhttps://github.com/xlang-ai/OSWorld\n\n\n\nSee Task Parameters for the parameter set shared across all Harbor tasks."
   },
   {
     "objectID": "registry/islo_labs_reward_hack_bench_control.html",

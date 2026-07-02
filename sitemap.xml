@@ -213,39 +213,23 @@
     <lastmod>2026-05-07T14:55:36.154Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/terminal_bench_2_1.html</loc>
-    <lastmod>2026-05-07T14:55:36.160Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/kumo_1.html</loc>
+    <lastmod>2026-05-07T14:55:36.156Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/scale_ai_swe_atlas_tw.html</loc>
-    <lastmod>2026-06-01T10:53:25.562Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/factory_ai_legacy_bench.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/codepde.html</loc>
     <lastmod>2026-05-07T14:55:36.155Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/sldbench.html</loc>
-    <lastmod>2026-05-07T14:55:36.159Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/adyen_dabstep.html</loc>
+    <lastmod>2026-05-07T14:55:36.154Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/parameters.html</loc>
-    <lastmod>2026-05-08T14:18:26.950Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/pgcodellm_rebench_v2_test.html</loc>
+    <lastmod>2026-05-07T14:55:36.158Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/CHANGELOG.html</loc>
-    <lastmod>2026-06-29T11:07:42.129Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry.html</loc>
-    <lastmod>2026-05-08T14:18:26.950Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/tasks.html</loc>
-    <lastmod>2026-05-08T14:18:26.950Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/agents.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/advanced.html</loc>
     <lastmod>2026-05-08T14:18:26.949Z</lastmod>
   </url>
   <url>
@@ -253,24 +237,44 @@
     <lastmod>2026-05-08T14:18:26.949Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/advanced.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/agents.html</loc>
     <lastmod>2026-05-08T14:18:26.949Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/pgcodellm_rebench_v2_test.html</loc>
-    <lastmod>2026-05-07T14:55:36.158Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/tasks.html</loc>
+    <lastmod>2026-05-08T14:18:26.950Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/adyen_dabstep.html</loc>
-    <lastmod>2026-05-07T14:55:36.154Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry.html</loc>
+    <lastmod>2026-05-08T14:18:26.950Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/codepde.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/CHANGELOG.html</loc>
+    <lastmod>2026-07-02T12:07:59.292Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/parameters.html</loc>
+    <lastmod>2026-05-08T14:18:26.950Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/sldbench.html</loc>
+    <lastmod>2026-05-07T14:55:36.159Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/factory_ai_legacy_bench.html</loc>
     <lastmod>2026-05-07T14:55:36.155Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/kumo_1.html</loc>
-    <lastmod>2026-05-07T14:55:36.156Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/scale_ai_swe_atlas_tw.html</loc>
+    <lastmod>2026-06-01T10:53:25.562Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/terminal_bench_2_1.html</loc>
+    <lastmod>2026-05-07T14:55:36.160Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/xlang_ai_osworld_verified.html</loc>
+    <lastmod>2026-07-02T12:08:15.686Z</lastmod>
   </url>
   <url>
     <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/islo_labs_reward_hack_bench_control.html</loc>
