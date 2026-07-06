@@ -2882,7 +2882,7 @@ def snorkel_ai_senior_swe_bench_v2026_06(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Senior SWE-Bench (v2026.06) public dataset
+    r"""Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production repositories — building features from PM-style instructions and investigating bugs from runtime evidence, judged for correctness and code taste (50-task public split).
 
     Slug: snorkel-ai/senior-swe-bench-v2026.06
     Latest digest: sha256:58348968a3e850cfca1ea3f274384db4e771572ef0926206b9e5ed0851b5d453

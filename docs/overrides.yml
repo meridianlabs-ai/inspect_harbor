@@ -808,7 +808,11 @@ sldbench/sldbench:
   title: SLDBench
 
 snorkel-ai/senior-swe-bench-v2026.06:
-  categories: []
+  categories:
+  - Coding
+  title: Senior SWE-Bench (v2026.06)
+  repo: https://github.com/snorkel-ai/senior-swe-bench-v2026.06
+  desc: 'Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production repositories — building features from PM-style instructions and investigating bugs from runtime evidence, judged for correctness and code taste (50-task public split).'
 
 stanford/medagentbench:
   categories:
