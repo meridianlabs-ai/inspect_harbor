@@ -2871,6 +2871,37 @@ def sldbench(
 
 
 @task
+def snorkel_ai_senior_swe_bench_v2026_06(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Senior SWE-Bench (v2026.06) public dataset
+
+    Slug: snorkel-ai/senior-swe-bench-v2026.06
+    Latest digest: sha256:58348968a3e850cfca1ea3f274384db4e771572ef0926206b9e5ed0851b5d453
+    """
+    return _harbor_base(
+        package_name="snorkel-ai/senior-swe-bench-v2026.06",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def stanford_medagentbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,

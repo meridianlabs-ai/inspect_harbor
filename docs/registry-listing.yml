@@ -889,6 +889,13 @@
   - Science
   - Reasoning
   - Mathematics
+- title: snorkel-ai/senior-swe-bench-v2026.06
+  path: registry/snorkel_ai_senior_swe_bench_v2026_06.html
+  desc: Senior SWE-Bench (v2026.06) public dataset.
+  desc_trunc: Senior SWE-Bench (v2026.06) public dataset.
+  task_function: snorkel_ai_senior_swe_bench_v2026_06
+  samples: 50
+  version: latest
 - title: stanford/medagentbench
   path: registry/stanford_medagentbench.html
   desc: 'MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benchmarking LLM agents on medical decision-making, planning, and execution.'
