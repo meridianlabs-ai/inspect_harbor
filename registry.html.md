@@ -115,6 +115,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [scienceagentbench/scienceagentbench](registry/scienceagentbench.html.md) | scienceagentbench | ScienceAgentBench: data-driven scientific discovery via Python programs across 4 disciplines. | 102 |
 | [sierra-research/tau3-bench](registry/sierra_research_tau3_bench.html.md) | sierra_research_tau3_bench | Third generation of τ-bench, extending the original with knowledge and voice. A simulation framewor… | 375 |
 | [sldbench/sldbench](registry/sldbench.html.md) | sldbench | SLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments w… | 8 |
+| [snorkel-ai/senior-swe-bench-v2026.06](registry/snorkel_ai_senior_swe_bench_v2026_06.html.md) | snorkel_ai_senior_swe_bench_v2026_06 | Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production reposito… | 50 |
 | [stanford/medagentbench](registry/stanford_medagentbench.html.md) | stanford_medagentbench | MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benc… | 300 |
 | [strongreject/strongreject](registry/strongreject.html.md) | strongreject | StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks… | 150 |
 | [swe-bench/swe-bench-verified](registry/swe_bench_verified.html.md) | swe_bench_verified | SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs… | 500 |
