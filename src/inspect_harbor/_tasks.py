@@ -1470,7 +1470,7 @@ def grandsmile_unicode(
 
 
 @task
-def harbor_index_harbor_index_1_0(
+def harbor_index_1_0(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -2245,7 +2245,7 @@ def openai_swe_lancer_diamond_manager(
 
 
 @task
-def orca_bench_orca_bench(
+def orca_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -2885,7 +2885,7 @@ def snorkel_ai_senior_swe_bench_v2026_06(
     r"""Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production repositories — building features from PM-style instructions and investigating bugs from runtime evidence, judged for correctness and code taste (50-task public split).
 
     Slug: snorkel-ai/senior-swe-bench-v2026.06
-    Latest digest: sha256:58348968a3e850cfca1ea3f274384db4e771572ef0926206b9e5ed0851b5d453
+    Latest digest: sha256:fc17418edc347f6bd9d952c100932930093ed919c404cbfe75712ebac7489b17
     """
     return _harbor_base(
         package_name="snorkel-ai/senior-swe-bench-v2026.06",
@@ -2964,37 +2964,6 @@ def strongreject(
 
 
 @task
-def svgap_svgap_reset_release(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Can RTL agents pass simulation while violating reset-release structure? Eight SystemVerilog tasks measure the gap.
-
-    Slug: svgap/svgap-reset-release
-    Latest digest: sha256:b8d75dc0bf83293875cd6e2dd82e81ff98738da83e35a0be0fc0fb330ca42eb2
-    """
-    return _harbor_base(
-        package_name="svgap/svgap-reset-release",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def swe_bench_verified(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3057,7 +3026,7 @@ def swe_bench_swe_smith(
 
 
 @task
-def swe_rebench_swe_rebench_leaderboard(
+def swe_rebench_leaderboard(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
