@@ -441,6 +441,7 @@ harbor-index/harbor-index-1.0:
   - Assistants
   - Reasoning
   title: Harbor Index 1.0
+  function_name: harbor_index_1_0
 
 harveyai/lab:
   categories:
@@ -645,6 +646,7 @@ orca-bench/ORCA-bench:
   title: ORCA-bench
   repo: https://orca-bench.github.io
   desc: Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing metrics, logs, traces, and source code to identify the root cause of production incidents.
+  function_name: orca_bench
 
 orinlabs/horizon-public:
   categories:
@@ -856,6 +858,7 @@ swe-rebench/swe-rebench-leaderboard:
   title: SWE-rebench Leaderboard
   arxiv: https://arxiv.org/abs/2505.20411
   repo: https://huggingface.co/datasets/nebius/SWE-rebench-leaderboard
+  function_name: swe_rebench_leaderboard
 
 swt-bench/swt-bench-verified:
   categories:

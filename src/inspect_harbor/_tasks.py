@@ -1470,7 +1470,7 @@ def grandsmile_unicode(
 
 
 @task
-def harbor_index_harbor_index_1_0(
+def harbor_index_1_0(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -2245,7 +2245,7 @@ def openai_swe_lancer_diamond_manager(
 
 
 @task
-def orca_bench_orca_bench(
+def orca_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -2885,7 +2885,7 @@ def snorkel_ai_senior_swe_bench_v2026_06(
     r"""Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production repositories — building features from PM-style instructions and investigating bugs from runtime evidence, judged for correctness and code taste (50-task public split).
 
     Slug: snorkel-ai/senior-swe-bench-v2026.06
-    Latest digest: sha256:58348968a3e850cfca1ea3f274384db4e771572ef0926206b9e5ed0851b5d453
+    Latest digest: sha256:fc17418edc347f6bd9d952c100932930093ed919c404cbfe75712ebac7489b17
     """
     return _harbor_base(
         package_name="snorkel-ai/senior-swe-bench-v2026.06",
@@ -3026,7 +3026,7 @@ def swe_bench_swe_smith(
 
 
 @task
-def swe_rebench_swe_rebench_leaderboard(
+def swe_rebench_leaderboard(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,

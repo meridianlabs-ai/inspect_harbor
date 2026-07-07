@@ -458,10 +458,10 @@
   categories:
   - Coding
 - title: harbor-index/harbor-index-1.0
-  path: registry/harbor_index_harbor_index_1_0.html
+  path: registry/harbor_index_1_0.html
   desc: Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000 candidate tasks through repeated model runs, automated broken-task identification, human audits, and reward hacking supervision.
   desc_trunc: Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000…
-  task_function: harbor_index_harbor_index_1_0
+  task_function: harbor_index_1_0
   samples: 82
   version: latest
   categories:
@@ -698,10 +698,10 @@
   - Coding
   - Professional
 - title: orca-bench/ORCA-bench
-  path: registry/orca_bench_orca_bench.html
+  path: registry/orca_bench.html
   desc: Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing metrics, logs, traces, and source code to identify the root cause of production incidents.
   desc_trunc: Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing me…
-  task_function: orca_bench_orca_bench
+  task_function: orca_bench
   samples: 1000
   version: latest
   categories:
@@ -937,10 +937,10 @@
   categories:
   - Coding
 - title: swe-rebench/swe-rebench-leaderboard
-  path: registry/swe_rebench_swe_rebench_leaderboard.html
+  path: registry/swe_rebench_leaderboard.html
   desc: 'SWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-built Docker images. Continuously updated monthly splits.'
   desc_trunc: 'SWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-bu…'
-  task_function: swe_rebench_swe_rebench_leaderboard
+  task_function: swe_rebench_leaderboard
   samples: 860
   version: latest
   categories:

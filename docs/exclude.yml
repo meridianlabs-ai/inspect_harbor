@@ -25,3 +25,7 @@
 # paper, and no external footprint; all the user's repos are forks of other
 # projects. Includes a -trial upload-test subset. Not a published benchmark.
 - tmax/*
+# No public provenance: the GitHub user/org `svgap` doesn't exist, there is
+# no paper or repo, and the hub page carries no author metadata (8-sample
+# SystemVerilog reset-release micro-benchmark). Not a published benchmark.
+- svgap/*
