@@ -17,20 +17,24 @@
     <lastmod>2026-05-07T14:55:36.159Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/lawbench.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/gnucleus_ai_cad_bench.html</loc>
+    <lastmod>2026-05-18T12:59:51.753Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/minnesotanlp_aar.html</loc>
     <lastmod>2026-05-07T14:55:36.157Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/reasoning_gym_easy.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/abundant_swe_gen_js.html</loc>
+    <lastmod>2026-05-07T14:55:36.153Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/aider_polyglot.html</loc>
+    <lastmod>2026-05-07T14:55:36.154Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/satbench.html</loc>
     <lastmod>2026-05-07T14:55:36.158Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/aime.html</loc>
-    <lastmod>2026-05-07T14:55:36.154Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/cais_swebenchpro.html</loc>
-    <lastmod>2026-05-07T14:55:36.154Z</lastmod>
   </url>
   <url>
     <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/scale_ai_swe_bench_pro.html</loc>
@@ -85,36 +89,32 @@
     <lastmod>2026-05-07T14:55:36.155Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/futurehouse_bixbench.html</loc>
-    <lastmod>2026-05-07T14:55:36.155Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/actava_ai_chi_bench.html</loc>
+    <lastmod>2026-06-01T11:04:42.968Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/ineqmath.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/agentscope_ai_pawbench.html</loc>
+    <lastmod>2026-06-12T11:13:41.216Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/reasoning_gym_hard.html</loc>
+    <lastmod>2026-05-07T14:55:36.158Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/bigcode_bigcodebench_hard_complete.html</loc>
+    <lastmod>2026-05-07T14:55:36.154Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/sierra_research_tau3_bench.html</loc>
+    <lastmod>2026-05-07T14:55:36.159Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/gorilla_bfcl.html</loc>
     <lastmod>2026-05-07T14:55:36.156Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/usaco.html</loc>
-    <lastmod>2026-05-07T14:55:36.160Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/rexbench.html</loc>
-    <lastmod>2026-05-07T14:55:36.158Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/xlang_ds_1000.html</loc>
-    <lastmod>2026-05-07T14:55:36.160Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/gabeorlanski_slopcodebench.html</loc>
-    <lastmod>2026-05-18T12:59:51.752Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/openai_swe_lancer_diamond_manager.html</loc>
-    <lastmod>2026-05-07T14:55:36.158Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/datacurve_deep_swe.html</loc>
-    <lastmod>2026-06-01T10:52:48.931Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/futurehouse_bixbench_cli.html</loc>
+    <lastmod>2026-05-07T14:55:36.156Z</lastmod>
   </url>
   <url>
     <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/arcprize_arc_agi_2.html</loc>
@@ -122,7 +122,7 @@
   </url>
   <url>
     <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/snorkel_ai_senior_swe_bench_v2026_06.html</loc>
-    <lastmod>2026-07-06T10:38:30.113Z</lastmod>
+    <lastmod>2026-07-07T11:19:01.262Z</lastmod>
   </url>
   <url>
     <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/lcb_longswebench_32k.html</loc>
@@ -141,52 +141,52 @@
     <lastmod>2026-05-07T14:55:36.153Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/apple_mmau.html</loc>
-    <lastmod>2026-05-07T14:55:36.154Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/abundant_swe_gen_cpp.html</loc>
-    <lastmod>2026-05-07T14:55:36.153Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/evoeval.html</loc>
-    <lastmod>2026-05-07T14:55:36.155Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/futurehouse_labbench.html</loc>
-    <lastmod>2026-05-07T14:55:36.156Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/stanford_medagentbench.html</loc>
-    <lastmod>2026-05-07T14:55:36.159Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/quesma_compilebench.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/replicationbench.html</loc>
     <lastmod>2026-05-07T14:55:36.158Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/islo_labs_reward_hack_bench.html</loc>
-    <lastmod>2026-06-22T11:21:28.959Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/quesma_otel_bench.html</loc>
+    <lastmod>2026-05-07T14:55:36.158Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/grandsmile_unicode.html</loc>
-    <lastmod>2026-06-15T11:21:34.662Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/openai_swe_lancer_diamond_all.html</loc>
+    <lastmod>2026-05-07T14:55:36.158Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/scienceagentbench.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/openai_mmmlu.html</loc>
+    <lastmod>2026-05-07T14:55:36.157Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/swe_bench_swe_smith.html</loc>
     <lastmod>2026-05-07T14:55:36.159Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/abundant_swe_gen_java.html</loc>
-    <lastmod>2026-05-07T14:55:36.153Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/abundant_swe_gen_rust.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/cmu_refav.html</loc>
     <lastmod>2026-05-07T14:55:36.154Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/harbor_index_harbor_index_1_0.html</loc>
-    <lastmod>2026-06-29T10:41:30.290Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/kumo_easy.html</loc>
+    <lastmod>2026-05-07T14:55:36.156Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/aarr_aarri_bench.html</loc>
+    <lastmod>2026-06-01T10:52:48.929Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/ai_forever_harness_bench_fast.html</loc>
+    <lastmod>2026-06-01T10:52:48.930Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/kumo_parity.html</loc>
+    <lastmod>2026-05-07T14:55:36.157Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/openai_swe_lancer_diamond_ic.html</loc>
+    <lastmod>2026-06-12T11:20:10.377Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/kumo_hard.html</loc>
+    <lastmod>2026-05-07T14:55:36.157Z</lastmod>
   </url>
   <url>
     <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/featurebench.html</loc>
@@ -238,7 +238,7 @@
   </url>
   <url>
     <loc>https://meridianlabs-ai.github.io/inspect_harbor/CHANGELOG.html</loc>
-    <lastmod>2026-07-06T10:38:13.785Z</lastmod>
+    <lastmod>2026-07-07T11:18:44.981Z</lastmod>
   </url>
   <url>
     <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry.html</loc>
@@ -305,52 +305,52 @@
     <lastmod>2026-05-07T14:55:36.160Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/kumo_hard.html</loc>
-    <lastmod>2026-05-07T14:55:36.157Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/openai_swe_lancer_diamond_ic.html</loc>
-    <lastmod>2026-06-12T11:20:10.377Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/kumo_parity.html</loc>
-    <lastmod>2026-05-07T14:55:36.157Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/ai_forever_harness_bench_fast.html</loc>
-    <lastmod>2026-06-01T10:52:48.930Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/aarr_aarri_bench.html</loc>
-    <lastmod>2026-06-01T10:52:48.929Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/kumo_easy.html</loc>
-    <lastmod>2026-05-07T14:55:36.156Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/cmu_refav.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/abundant_swe_gen_rust.html</loc>
     <lastmod>2026-05-07T14:55:36.154Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/swe_bench_swe_smith.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/abundant_swe_gen_java.html</loc>
+    <lastmod>2026-05-07T14:55:36.153Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/scienceagentbench.html</loc>
     <lastmod>2026-05-07T14:55:36.159Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/openai_mmmlu.html</loc>
-    <lastmod>2026-05-07T14:55:36.157Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/grandsmile_unicode.html</loc>
+    <lastmod>2026-06-15T11:21:34.662Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/openai_swe_lancer_diamond_all.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/islo_labs_reward_hack_bench.html</loc>
+    <lastmod>2026-06-22T11:21:28.959Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/quesma_compilebench.html</loc>
     <lastmod>2026-05-07T14:55:36.158Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/quesma_otel_bench.html</loc>
-    <lastmod>2026-05-07T14:55:36.158Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/stanford_medagentbench.html</loc>
+    <lastmod>2026-05-07T14:55:36.159Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/replicationbench.html</loc>
-    <lastmod>2026-05-07T14:55:36.158Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/futurehouse_labbench.html</loc>
+    <lastmod>2026-05-07T14:55:36.156Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/evoeval.html</loc>
+    <lastmod>2026-05-07T14:55:36.155Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/abundant_swe_gen_cpp.html</loc>
+    <lastmod>2026-05-07T14:55:36.153Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/apple_mmau.html</loc>
+    <lastmod>2026-05-07T14:55:36.154Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/orca_bench.html</loc>
+    <lastmod>2026-07-07T11:19:01.259Z</lastmod>
   </url>
   <url>
     <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/lica_world_gdb.html</loc>
@@ -373,40 +373,36 @@
     <lastmod>2026-05-07T14:55:36.159Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/orca_bench_orca_bench.html</loc>
-    <lastmod>2026-06-29T10:41:30.291Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/datacurve_deep_swe.html</loc>
+    <lastmod>2026-06-01T10:52:48.931Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/futurehouse_bixbench_cli.html</loc>
-    <lastmod>2026-05-07T14:55:36.156Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/gorilla_bfcl.html</loc>
-    <lastmod>2026-05-07T14:55:36.156Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/sierra_research_tau3_bench.html</loc>
-    <lastmod>2026-05-07T14:55:36.159Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/bigcode_bigcodebench_hard_complete.html</loc>
-    <lastmod>2026-05-07T14:55:36.154Z</lastmod>
-  </url>
-  <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/reasoning_gym_hard.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/openai_swe_lancer_diamond_manager.html</loc>
     <lastmod>2026-05-07T14:55:36.158Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/agentscope_ai_pawbench.html</loc>
-    <lastmod>2026-06-12T11:13:41.216Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/gabeorlanski_slopcodebench.html</loc>
+    <lastmod>2026-05-18T12:59:51.752Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/actava_ai_chi_bench.html</loc>
-    <lastmod>2026-06-01T11:04:42.968Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/xlang_ds_1000.html</loc>
+    <lastmod>2026-05-07T14:55:36.160Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/swe_rebench_swe_rebench_leaderboard.html</loc>
-    <lastmod>2026-06-29T10:41:30.292Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/rexbench.html</loc>
+    <lastmod>2026-05-07T14:55:36.158Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/usaco.html</loc>
+    <lastmod>2026-05-07T14:55:36.160Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/ineqmath.html</loc>
+    <lastmod>2026-05-07T14:55:36.156Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/futurehouse_bixbench.html</loc>
+    <lastmod>2026-05-07T14:55:36.155Z</lastmod>
   </url>
   <url>
     <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/harveyai_lab.html</loc>
@@ -457,24 +453,28 @@
     <lastmod>2026-05-07T14:55:36.154Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/satbench.html</loc>
-    <lastmod>2026-05-07T14:55:36.158Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/swe_rebench_leaderboard.html</loc>
+    <lastmod>2026-07-07T11:19:01.262Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/aider_polyglot.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/cais_swebenchpro.html</loc>
     <lastmod>2026-05-07T14:55:36.154Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/abundant_swe_gen_js.html</loc>
-    <lastmod>2026-05-07T14:55:36.153Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/aime.html</loc>
+    <lastmod>2026-05-07T14:55:36.154Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/minnesotanlp_aar.html</loc>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/reasoning_gym_easy.html</loc>
+    <lastmod>2026-05-07T14:55:36.158Z</lastmod>
+  </url>
+  <url>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/lawbench.html</loc>
     <lastmod>2026-05-07T14:55:36.157Z</lastmod>
   </url>
   <url>
-    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/gnucleus_ai_cad_bench.html</loc>
-    <lastmod>2026-05-18T12:59:51.753Z</lastmod>
+    <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/harbor_index_1_0.html</loc>
+    <lastmod>2026-07-07T11:19:01.257Z</lastmod>
   </url>
   <url>
     <loc>https://meridianlabs-ai.github.io/inspect_harbor/registry/litecoder_rl.html</loc>

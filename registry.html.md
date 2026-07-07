@@ -70,7 +70,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [gpqa-diamond/gpqa-diamond](registry/gpqa_diamond.html.md) | gpqa_diamond | GPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch… | 198 |
 | [grafana/o11y-bench](registry/grafana_o11y_bench.html.md) | grafana_o11y_bench | o11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo… | 63 |
 | [grandsmile/unicode](registry/grandsmile_unicode.html.md) | grandsmile_unicode | UniCode: competitive-programming problems systematically augmented into novel variations to probe g… | 399 |
-| [harbor-index/harbor-index-1.0](registry/harbor_index_harbor_index_1_0.html.md) | harbor_index_harbor_index_1_0 | Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000… | 82 |
+| [harbor-index/harbor-index-1.0](registry/harbor_index_1_0.html.md) | harbor_index_1_0 | Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000… | 82 |
 | [harveyai/lab](registry/harveyai_lab.html.md) | harveyai_lab | Harvey LAB - open-source benchmark for evaluating agents on real legal work. | 1000 |
 | [ineqmath/ineqmath](registry/ineqmath.html.md) | ineqmath | IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou… | 100 |
 | [islo-labs/reward-hack-bench](registry/islo_labs_reward_hack_bench.html.md) | islo_labs_reward_hack_bench | Reward-hacking benchmark: SWE-bench + CyBench tasks with injected solution-retrieval cheat prompts,… | 8 |
@@ -95,7 +95,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [openai/swe-lancer-diamond-all](registry/openai_swe_lancer_diamond_all.html.md) | openai_swe_lancer_diamond_all | SWE-Lancer Diamond (full): public split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance so… | 463 |
 | [openai/swe-lancer-diamond-ic](registry/openai_swe_lancer_diamond_ic.html.md) | openai_swe_lancer_diamond_ic | SWE-Lancer Diamond (IC): individual-contributor split of OpenAI’s SWE-Lancer benchmark — real Upwor… | 198 |
 | [openai/swe-lancer-diamond-manager](registry/openai_swe_lancer_diamond_manager.html.md) | openai_swe_lancer_diamond_manager | A benchmark of freelance software engineering tasks from Upwork, valued at \$1 million USD total in… | 265 |
-| [orca-bench/ORCA-bench](registry/orca_bench_orca_bench.html.md) | orca_bench_orca_bench | Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing me… | 1000 |
+| [orca-bench/ORCA-bench](registry/orca_bench.html.md) | orca_bench | Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing me… | 1000 |
 | [orinlabs/horizon-public](registry/orinlabs_horizon_public.html.md) | orinlabs_horizon_public | Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agen… | 3 |
 | [pgcodellm/rebench-v2-test](registry/pgcodellm_rebench_v2_test.html.md) | pgcodellm_rebench_v2_test | SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui… | 20 |
 | [qcircuitbench/qcircuitbench](registry/qcircuitbench.html.md) | qcircuitbench | QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const… | 28 |
@@ -120,7 +120,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [strongreject/strongreject](registry/strongreject.html.md) | strongreject | StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks… | 150 |
 | [swe-bench/swe-bench-verified](registry/swe_bench_verified.html.md) | swe_bench_verified | SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs… | 500 |
 | [swe-bench/swe-smith](registry/swe_bench_swe_smith.html.md) | swe_bench_swe_smith | SWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any… | 100 |
-| [swe-rebench/swe-rebench-leaderboard](registry/swe_rebench_swe_rebench_leaderboard.html.md) | swe_rebench_swe_rebench_leaderboard | SWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-bu… | 860 |
+| [swe-rebench/swe-rebench-leaderboard](registry/swe_rebench_leaderboard.html.md) | swe_rebench_leaderboard | SWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-bu… | 860 |
 | [swt-bench/swt-bench-verified](registry/swt_bench_verified.html.md) | swt_bench_verified | SWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing u… | 433 |
 | [tencent/autocodebench](registry/tencent_autocodebench.html.md) | tencent_autocodebench | Multilingual automated code generation benchmark evaluating LLMs across diverse programming tasks a… | 200 |
 | [termigen/termigen-environments](registry/termigen_environments.html.md) | termigen_environments | TermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11… | 1000 |
