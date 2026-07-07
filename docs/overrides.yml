@@ -834,7 +834,10 @@ strongreject/strongreject:
   title: StrongREJECT
 
 svgap/svgap-reset-release:
-  categories: []
+  categories:
+  - Coding
+  - Professional
+  title: SVGap (Reset-Release)
 
 swe-bench/swe-bench-verified:
   categories:

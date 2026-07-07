@@ -925,6 +925,9 @@
   task_function: svgap_svgap_reset_release
   samples: 8
   version: latest
+  categories:
+  - Coding
+  - Professional
 - title: swe-bench/swe-bench-verified
   path: registry/swe_bench_verified.html
   desc: 'SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs confirmed each real GitHub issue is solvable given the available repository context.'
