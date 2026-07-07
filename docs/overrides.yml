@@ -833,6 +833,9 @@ strongreject/strongreject:
   function_name: strongreject
   title: StrongREJECT
 
+svgap/svgap-reset-release:
+  categories: []
+
 swe-bench/swe-bench-verified:
   categories:
   - Coding

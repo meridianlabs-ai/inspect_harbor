@@ -918,6 +918,13 @@
   version: latest
   categories:
   - Safeguards
+- title: svgap/svgap-reset-release
+  path: registry/svgap_svgap_reset_release.html
+  desc: Can RTL agents pass simulation while violating reset-release structure? Eight SystemVerilog tasks measure the gap.
+  desc_trunc: Can RTL agents pass simulation while violating reset-release structure? Eight SystemVerilog tasks m…
+  task_function: svgap_svgap_reset_release
+  samples: 8
+  version: latest
 - title: swe-bench/swe-bench-verified
   path: registry/swe_bench_verified.html
   desc: 'SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs confirmed each real GitHub issue is solvable given the available repository context.'

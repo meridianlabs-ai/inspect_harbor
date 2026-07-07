@@ -2964,6 +2964,37 @@ def strongreject(
 
 
 @task
+def svgap_svgap_reset_release(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Can RTL agents pass simulation while violating reset-release structure? Eight SystemVerilog tasks measure the gap.
+
+    Slug: svgap/svgap-reset-release
+    Latest digest: sha256:b8d75dc0bf83293875cd6e2dd82e81ff98738da83e35a0be0fc0fb330ca42eb2
+    """
+    return _harbor_base(
+        package_name="svgap/svgap-reset-release",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def swe_bench_verified(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
