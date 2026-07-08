@@ -81,6 +81,13 @@
   version: latest
   categories:
   - Coding
+- title: abundant/swe-marathon
+  path: registry/abundant_swe_marathon.html
+  desc: Ultra long-horizon software engineering tasks from SWE-Marathon.
+  desc_trunc: Ultra long-horizon software engineering tasks from SWE-Marathon.
+  task_function: abundant_swe_marathon
+  samples: 20
+  version: latest
 - title: actava-ai/chi-bench
   path: registry/actava_ai_chi_bench.html
   desc: 'χ-Bench: long-horizon, policy-rich U.S. healthcare workflow agent benchmark spanning provider prior-authorization, payer utilization management, and care management (78 hub tasks).'

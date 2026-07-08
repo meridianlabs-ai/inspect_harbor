@@ -261,6 +261,37 @@ def abundant_swe_gen_rust(
 
 
 @task
+def abundant_swe_marathon(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Ultra long-horizon software engineering tasks from SWE-Marathon.
+
+    Slug: abundant/swe-marathon
+    Latest digest: sha256:862b01dc3c8d3bf5b8016ea68181c3963d62588ab03b928e5c6646cfce4e7b3f
+    """
+    return _harbor_base(
+        package_name="abundant/swe-marathon",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def actava_ai_chi_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
