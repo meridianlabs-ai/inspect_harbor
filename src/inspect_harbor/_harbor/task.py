@@ -6,7 +6,7 @@ from collections import Counter
 from pathlib import Path
 
 from harbor.models.job.config import DatasetConfig
-from harbor.models.task.paths import TaskPaths
+from harbor.models.task.config import NetworkMode
 from harbor.models.task.task import Task as HarborTask
 from harbor.models.trial.config import TaskConfig
 from harbor.tasks.client import TaskClient
@@ -174,7 +174,7 @@ def load_harbor_tasks(
                 n_tasks,
                 disable_verification,
             )
-        return _build_harbor_tasks(task_paths)
+        return _build_harbor_tasks(task_paths, disable_verification)
 
     if task_specified:
         raise ValueError("Task configuration with task_git_url requires path parameter")
@@ -195,7 +195,7 @@ def load_harbor_tasks(
             n_tasks,
             overwrite_cache,
         )
-        return _build_harbor_tasks(task_paths)
+        return _build_harbor_tasks(task_paths, disable_verification)
 
     if package_name is not None:
         task_paths = _load_from_package(
@@ -206,7 +206,7 @@ def load_harbor_tasks(
             n_tasks,
             overwrite_cache,
         )
-        return _build_harbor_tasks(task_paths)
+        return _build_harbor_tasks(task_paths, disable_verification)
 
     raise ValueError(
         "Must specify either path, task parameters, dataset parameters, or package parameters"
@@ -224,15 +224,21 @@ def _disambiguate_sample_ids(harbor_tasks: list[HarborTask]) -> list[str]:
     ]
 
 
-def _build_harbor_tasks(task_paths: list[Path]) -> list[HarborTask]:
+def _build_harbor_tasks(
+    task_paths: list[Path], disable_verification: bool = False
+) -> list[HarborTask]:
     """Construct ``HarborTask`` objects, validating unsupported task.toml shapes."""
-    harbor_tasks = [HarborTask(task_dir=p) for p in task_paths]
+    harbor_tasks = [
+        HarborTask(task_dir=p, disable_verification=disable_verification)
+        for p in task_paths
+    ]
 
     multi_step: list[str] = []
     windows: list[str] = []
     healthcheck: list[str] = []
     mcp_servers: list[str] = []
     skills_dir: list[str] = []
+    allowlist: list[str] = []
 
     for t in harbor_tasks:
         if t.has_steps:
@@ -246,6 +252,8 @@ def _build_harbor_tasks(task_paths: list[Path]) -> list[HarborTask]:
             mcp_servers.append(t.name)
         if env.skills_dir is not None:
             skills_dir.append(t.name)
+        if env.network_mode == NetworkMode.ALLOWLIST:
+            allowlist.append(t.name)
 
     blocking: list[str] = []
     if multi_step:
@@ -267,6 +275,11 @@ def _build_harbor_tasks(task_paths: list[Path]) -> list[HarborTask]:
         degraded.append(f"`[environment].mcp_servers`: {mcp_servers}")
     if skills_dir:
         degraded.append(f"`[environment].skills_dir`: {skills_dir}")
+    if allowlist:
+        degraded.append(
+            "`[environment].network_mode = 'allowlist'` (egress allowlist cannot "
+            f"be enforced in a plain compose project; treated as 'public'): {allowlist}"
+        )
     if degraded:
         warnings.warn(
             "task.toml fields declared but not wired up by inspect_harbor "
@@ -310,9 +323,8 @@ def _load_local_path(
     disable_verification: bool,
 ) -> list[Path]:
     """Load from a local path - either a single task or a dataset directory."""
-    harbor_task_paths = TaskPaths(path)
-    is_task: bool = harbor_task_paths.is_valid(
-        disable_verification=disable_verification
+    is_task: bool = HarborTask.is_valid_dir(
+        path, disable_verification=disable_verification
     )
 
     if is_task:

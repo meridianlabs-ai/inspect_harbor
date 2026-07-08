@@ -6,7 +6,7 @@ from unittest.mock import Mock, mock_open, patch
 
 import pytest
 import yaml
-from harbor.models.task.config import AgentConfig, VerifierConfig
+from harbor.models.task.config import AgentConfig, EnvironmentConfig, VerifierConfig
 from inspect_ai.dataset import Sample
 from inspect_ai.util import ComposeBuild, ComposeConfig, SandboxEnvironmentSpec
 from inspect_ai.util._sandbox.compose import ComposeDeviceReservation
@@ -31,7 +31,7 @@ def test_harbor_to_compose_config_with_existing_compose_yaml():
     mock_env_config.memory_mb = 4096
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_task.config.environment = mock_env_config
 
     # Mock docker-compose.yaml content (without version field as ComposeConfig doesn't accept it)
@@ -60,7 +60,7 @@ services:
         assert service.cpus == 2.0
         # 6GB minimum is applied (config has 4096m which is below minimum)
         assert service.mem_limit == "6144m"
-        # No network_mode in compose file + allow_internet=True -> left unset
+        # No network_mode in compose file + network_mode="public" -> left unset
         assert service.network_mode is None
 
 
@@ -78,7 +78,7 @@ def test_harbor_to_compose_config_with_dockerfile():
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = None
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -132,7 +132,7 @@ def test_harbor_to_compose_config_dockerfile_image_tag_is_deterministic():
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 6144
     mock_env_config.docker_image = None
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -177,7 +177,7 @@ def test_harbor_to_compose_config_dockerfile_path_injects_task_env(
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = None
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -211,7 +211,7 @@ def test_harbor_to_compose_config_dockerfile_path_missing_env_var_raises(
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = None
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -237,7 +237,7 @@ def test_harbor_to_compose_config_with_prebuilt_image():
     mock_env_config.cpus = 1.5
     mock_env_config.memory_mb = 3072
     mock_env_config.docker_image = "my-custom-image:latest"
-    mock_env_config.allow_internet = False
+    mock_env_config.network_mode = "no-network"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -271,7 +271,7 @@ def test_harbor_to_compose_config_custom_resource_limits():
     mock_env_config.cpus = 4.0
     mock_env_config.memory_mb = 8192
     mock_env_config.docker_image = "ubuntu:latest"
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -284,39 +284,79 @@ def test_harbor_to_compose_config_custom_resource_limits():
         assert service.mem_limit == "8192m"
 
 
-def test_harbor_to_compose_config_harbor_defaults():
-    """Test Harbor's schema defaults are passed through.
+def test_harbor_to_compose_config_omitted_resources_use_harbor_defaults():
+    """Omitted resource fields fall back to Harbor's historical defaults.
 
-    Harbor defaults (cpus=1, memory_mb=2048) flow into the compose
-    config, with our 6GB memory minimum enforced on top.
+    Harbor >=0.17 leaves ``cpus``/``memory_mb``/``gpus`` as ``None`` when
+    task.toml omits them (defaults are resolved in the provider). We coalesce
+    to cpus=1, memory_mb=2048 (then the 6GB minimum), gpus=0 instead of
+    crashing on ``None``. Uses a real ``EnvironmentConfig`` so the test tracks
+    the actual schema.
     """
     mock_task = Mock()
+    mock_task.name = "omitted-resources-task"
     mock_paths = Mock()
     mock_paths.environment_dir = Path("/task/environment")
     mock_task.paths = mock_paths
 
-    mock_env_config = Mock()
-    mock_env_config.env = {}
-    # EnvironmentConfig defaults: cpus=1, memory_mb=2048, gpus=0.
-    mock_env_config.cpus = 1
-    mock_env_config.memory_mb = 2048
-    mock_env_config.docker_image = "ubuntu:latest"
-    mock_env_config.allow_internet = True
-    mock_env_config.gpus = 0
-    mock_env_config.gpu_types = None
-    mock_task.config.environment = mock_env_config
+    env_config = EnvironmentConfig(docker_image="ubuntu:latest")
+    assert env_config.cpus is None
+    assert env_config.memory_mb is None
+    assert env_config.gpus is None
+    mock_task.config.environment = env_config
 
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
 
         service = result.services["default"]
         assert service.cpus == 1.0
-        # 2048 < 6144 minimum -> bumped to 6144m.
+        # 2048 default < 6144 minimum -> bumped to 6144m.
         assert service.mem_limit == "6144m"
+        # gpus default 0 -> no GPU deploy config.
+        assert service.deploy is None
+        # network_mode default is 'public' -> bridge.
+        assert service.network_mode == "bridge"
+
+
+def test_harbor_to_compose_config_omitted_resources_compose_yaml_expansion():
+    """The compose-yaml branch also survives omitted resource fields.
+
+    ``_expand_compose_vars`` must be fed the coalesced values so ``${CPUS}``
+    and ``${MEMORY}`` expand from the defaults instead of crashing on None.
+    """
+    mock_task = Mock()
+    mock_task.name = "omitted-resources-task"
+    mock_paths = Mock()
+    mock_paths.environment_dir = Path("/task/environment")
+    mock_task.paths = mock_paths
+    mock_task.config.environment = EnvironmentConfig()
+    mock_task.config.verifier.env = {}
+
+    compose_yaml_content = """
+services:
+  default:
+    image: python:3.11
+    environment:
+      CPU_COUNT: "${CPUS}"
+      MEM: "${MEMORY}"
+"""
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=compose_yaml_content)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    service = result.services["default"]
+    assert service.cpus == 1.0
+    assert service.mem_limit == "6144m"
+    # ${CPUS}/${MEMORY} expanded from the coalesced defaults (post 6GB floor).
+    assert service.environment == {"CPU_COUNT": "1", "MEM": "6144M"}
 
 
 def test_harbor_to_compose_config_compose_yaml_no_internet_overrides_network_mode():
-    """Test that allow_internet=False forces network_mode=none even when compose file sets it."""
+    """Test that network_mode='no-network' forces network_mode=none even when compose file sets it."""
     mock_task = Mock()
     mock_paths = Mock()
     mock_paths.environment_dir = Path("/task/environment")
@@ -328,7 +368,7 @@ def test_harbor_to_compose_config_compose_yaml_no_internet_overrides_network_mod
     mock_env_config.memory_mb = 2048
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
-    mock_env_config.allow_internet = False
+    mock_env_config.network_mode = "no-network"
     mock_task.config.environment = mock_env_config
 
     compose_yaml_content = """
@@ -351,7 +391,7 @@ services:
 
 
 def test_harbor_to_compose_config_compose_yaml_preserves_custom_network_mode():
-    """Test that compose file's network_mode is preserved when allow_internet=True."""
+    """Test that compose file's network_mode is preserved when network_mode='public'."""
     mock_task = Mock()
     mock_paths = Mock()
     mock_paths.environment_dir = Path("/task/environment")
@@ -363,7 +403,7 @@ def test_harbor_to_compose_config_compose_yaml_preserves_custom_network_mode():
     mock_env_config.memory_mb = 2048
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_task.config.environment = mock_env_config
 
     compose_yaml_content = """
@@ -386,10 +426,10 @@ services:
 
 
 def test_harbor_to_compose_config_compose_yaml_no_network_mode_left_unset():
-    """Test that compose file without network_mode is left unset when allow_internet=True.
+    """Test that compose file without network_mode is left unset when network_mode='public'.
 
     This preserves Docker Compose's default project network with inter-service DNS,
-    matching Harbor's behavior of not touching network_mode when allow_internet=True.
+    matching Harbor's behavior of not touching network_mode when the network is allowed.
     """
     mock_task = Mock()
     mock_paths = Mock()
@@ -402,7 +442,7 @@ def test_harbor_to_compose_config_compose_yaml_no_network_mode_left_unset():
     mock_env_config.memory_mb = 2048
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_task.config.environment = mock_env_config
 
     compose_yaml_content = """
@@ -423,58 +463,8 @@ services:
         assert service.network_mode is None
 
 
-def test_harbor_to_compose_config_network_mode_with_internet():
-    """Test network mode (bridge vs none) based on allow_internet setting."""
-    # Test with internet allowed
-    mock_task = Mock()
-    mock_paths = Mock()
-    mock_paths.environment_dir = Path("/task/environment")
-    mock_task.paths = mock_paths
-
-    mock_env_config = Mock()
-    mock_env_config.env = {}
-    mock_env_config.cpus = 1
-    mock_env_config.memory_mb = 2048
-    mock_env_config.docker_image = "ubuntu:latest"
-    mock_env_config.allow_internet = True
-    mock_env_config.gpus = 0
-    mock_env_config.gpu_types = None
-    mock_task.config.environment = mock_env_config
-
-    with patch("pathlib.Path.exists", return_value=False):
-        result = harbor_to_compose_config(mock_task)
-        assert result.services["default"].network_mode == "bridge"
-
-
-def test_harbor_to_compose_config_network_mode_without_internet():
-    """Test network mode is 'none' when internet is not allowed."""
-    # Test with internet not allowed
-    mock_task = Mock()
-    mock_paths = Mock()
-    mock_paths.environment_dir = Path("/task/environment")
-    mock_task.paths = mock_paths
-
-    mock_env_config = Mock()
-    mock_env_config.env = {}
-    mock_env_config.cpus = 1
-    mock_env_config.memory_mb = 2048
-    mock_env_config.docker_image = "ubuntu:latest"
-    mock_env_config.allow_internet = False
-    mock_env_config.gpus = 0
-    mock_env_config.gpu_types = None
-    mock_task.config.environment = mock_env_config
-
-    with patch("pathlib.Path.exists", return_value=False):
-        result = harbor_to_compose_config(mock_task)
-        assert result.services["default"].network_mode == "none"
-
-
 def test_harbor_to_compose_config_network_mode_field_no_network():
-    """Harbor >= 0.13 ``network_mode='no-network'`` isolates services.
-
-    The legacy ``allow_internet`` is cleared to ``None`` by harbor's
-    validators, so the Dockerfile branch must read ``network_mode``.
-    """
+    """``network_mode='no-network'`` isolates services (Dockerfile branch)."""
     mock_task = Mock()
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/task/environment")
@@ -484,8 +474,6 @@ def test_harbor_to_compose_config_network_mode_field_no_network():
     mock_env_config.cpus = 1
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "ubuntu:latest"
-    # Harbor 0.13 clears the legacy boolean and sets the enum value.
-    mock_env_config.allow_internet = None
     mock_env_config.network_mode = "no-network"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
@@ -500,9 +488,10 @@ def test_harbor_to_compose_config_network_mode_field_no_network():
 def test_harbor_to_compose_config_network_mode_field_allows_network(
     network_mode: str,
 ):
-    """Harbor >= 0.13 ``public``/``allowlist`` allow the network (bridge).
+    """``public``/``allowlist`` allow the network (bridge).
 
-    ``allowlist`` is treated like ``public`` for now (binary network model).
+    ``allowlist`` is treated like ``public`` (binary network model); the
+    loader emits a degraded-fidelity warning for it separately.
     """
     mock_task = Mock()
     mock_task.paths = Mock()
@@ -513,8 +502,35 @@ def test_harbor_to_compose_config_network_mode_field_allows_network(
     mock_env_config.cpus = 1
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "ubuntu:latest"
-    mock_env_config.allow_internet = None
     mock_env_config.network_mode = network_mode
+    mock_env_config.gpus = 0
+    mock_env_config.gpu_types = None
+    mock_task.config.environment = mock_env_config
+
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_to_compose_config(mock_task)
+        assert result.services["default"].network_mode == "bridge"
+
+
+def test_harbor_to_compose_config_deprecated_allow_internet_ignored():
+    """The deprecated ``allow_internet`` boolean is no longer honored.
+
+    Harbor >=0.13 never migrates it to ``network_mode`` (its validator only
+    warns), so an old-style ``allow_internet = false`` task.toml falls back
+    to ``network_mode``'s default (``public``) — i.e. network access.
+    """
+    mock_task = Mock()
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/task/environment")
+
+    mock_env_config = Mock()
+    mock_env_config.env = {}
+    mock_env_config.cpus = 1
+    mock_env_config.memory_mb = 2048
+    mock_env_config.docker_image = "ubuntu:latest"
+    # Harbor keeps the deprecated boolean as-is and leaves the enum default.
+    mock_env_config.allow_internet = False
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -547,9 +563,8 @@ def test_compose_yaml_explicit_networks_not_clobbered_by_network_mode():
 
     Reproduces the kumo/* failure where docker compose rejected the project
     with "service X declares mutually exclusive network_mode and networks".
-    The task uses the deprecated ``allow_internet`` (migrated to
-    ``network_mode='public'``) so isolation isn't even requested, yet the old
-    code read the always-None ``allow_internet`` and forced ``none``.
+    ``network_mode='public'`` means isolation isn't even requested, so no
+    ``network_mode`` may be forced onto services with explicit ``networks:``.
     """
     mock_task = Mock()
     mock_task.name = "kumo-style-task"
@@ -561,8 +576,6 @@ def test_compose_yaml_explicit_networks_not_clobbered_by_network_mode():
     mock_task.config.environment.gpus = 0
     mock_task.config.environment.gpu_types = None
     mock_task.config.environment.env = {}
-    # harbor >= 0.13 state: legacy field cleared, enum says network allowed.
-    mock_task.config.environment.allow_internet = None
     mock_task.config.environment.network_mode = "public"
     mock_task.config.verifier.env = {}
 
@@ -596,7 +609,6 @@ def test_compose_yaml_no_network_leaves_explicit_networks_alone():
     mock_task.config.environment.gpus = 0
     mock_task.config.environment.gpu_types = None
     mock_task.config.environment.env = {}
-    mock_task.config.environment.allow_internet = None
     mock_task.config.environment.network_mode = "no-network"
     mock_task.config.verifier.env = {}
 
@@ -617,8 +629,7 @@ def test_compose_yaml_no_network_still_isolates_services_without_networks():
 
     The isolation path must not regress for the common multi-service case.
     """
-    mock_task = _make_multi_service_task(allow_internet=None)
-    mock_task.config.environment.network_mode = "no-network"
+    mock_task = _make_multi_service_task(network_mode="no-network")
 
     with (
         patch("pathlib.Path.exists") as mock_exists,
@@ -652,7 +663,7 @@ def test_harbor_task_to_sample_metadata_preserved():
     mock_env_config.cpus = 2.0
     mock_env_config.memory_mb = 4096
     mock_env_config.docker_image = "python:3.11"
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -702,7 +713,7 @@ def test_harbor_task_to_sample_sandbox_spec():
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "ubuntu:latest"
-    mock_env_config.allow_internet = False
+    mock_env_config.network_mode = "no-network"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -745,7 +756,7 @@ def test_harbor_to_compose_config_with_gpu_settings():
     mock_env_config.cpus = 2.0
     mock_env_config.memory_mb = 4096
     mock_env_config.docker_image = "nvidia/cuda:12.0-base"
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 2
     mock_env_config.gpu_types = ["H100", "A100"]
     mock_task.config.environment = mock_env_config
@@ -785,7 +796,7 @@ def test_harbor_to_compose_config_without_gpus():
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "ubuntu:latest"
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -811,7 +822,7 @@ def test_harbor_to_compose_config_with_gpus_no_types():
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "tensorflow/tensorflow:latest-gpu"
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 1
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -885,7 +896,7 @@ def test_harbor_task_to_sample_with_verifier_env():
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "python:3.11"
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -934,7 +945,7 @@ def test_harbor_task_to_sample_without_verifier_env():
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "python:3.11"
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -976,7 +987,7 @@ def test_harbor_task_to_sample_with_package_info():
     mock_env_config.cpus = 1
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "python:3.11"
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -1067,7 +1078,7 @@ def test_harbor_task_to_sample_user_fields(
     mock_env_config.cpus = 1
     mock_env_config.memory_mb = 2048
     mock_env_config.docker_image = "python:3.11"
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config
@@ -1107,7 +1118,7 @@ def mock_harbor_task():
     mock_env_config.cpus = 2
     mock_env_config.memory_mb = 4096
     mock_env_config.docker_image = "ubuntu:latest"
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 1
     mock_env_config.gpu_types = ["H100"]
     mock_task.config.environment = mock_env_config
@@ -1221,7 +1232,7 @@ def _make_multi_service_task(
     memory_mb: int = 8192,
     gpus: int = 0,
     gpu_types: list[str] | None = None,
-    allow_internet: bool | None = True,
+    network_mode: str = "public",
 ) -> Mock:
     mock_task = Mock()
     mock_task.name = "multi-svc-task"
@@ -1232,7 +1243,7 @@ def _make_multi_service_task(
     mock_task.config.environment.memory_mb = memory_mb
     mock_task.config.environment.gpus = gpus
     mock_task.config.environment.gpu_types = gpu_types
-    mock_task.config.environment.allow_internet = allow_internet
+    mock_task.config.environment.network_mode = network_mode
     mock_task.config.verifier.env = {}
     mock_task.config.environment.env = {}
     return mock_task
@@ -1294,7 +1305,7 @@ def test_multi_service_gpu_only_on_default_service():
 
 def test_multi_service_network_isolation_all_services():
     """Network isolation applies to all services, not just default."""
-    mock_task = _make_multi_service_task(allow_internet=False)
+    mock_task = _make_multi_service_task(network_mode="no-network")
 
     with (
         patch("pathlib.Path.exists") as mock_exists,
@@ -1598,7 +1609,7 @@ services:
     mock_task.config.environment.memory_mb = 8192
     mock_task.config.environment.gpus = 0
     mock_task.config.environment.gpu_types = None
-    mock_task.config.environment.allow_internet = True
+    mock_task.config.environment.network_mode = "public"
     mock_task.config.environment.env = {}
     mock_task.config.verifier.env = {}
 
@@ -1648,7 +1659,7 @@ services:
     mock_task.config.environment.memory_mb = 6144
     mock_task.config.environment.gpus = 0
     mock_task.config.environment.gpu_types = None
-    mock_task.config.environment.allow_internet = True
+    mock_task.config.environment.network_mode = "public"
     mock_task.config.environment.env = {}
     mock_task.config.verifier.env = {}
 
@@ -1696,7 +1707,7 @@ services:
     mock_task.config.environment.memory_mb = 6144
     mock_task.config.environment.gpus = 0
     mock_task.config.environment.gpu_types = None
-    mock_task.config.environment.allow_internet = True
+    mock_task.config.environment.network_mode = "public"
     mock_task.config.environment.env = {}
     mock_task.config.verifier.env = {}
 
@@ -1731,7 +1742,7 @@ def test_harbor_to_compose_config_memory_minimum(
     mock_env_config.cpus = 2
     mock_env_config.memory_mb = config_memory_mb
     mock_env_config.docker_image = "ubuntu:latest"
-    mock_env_config.allow_internet = True
+    mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_task.config.environment = mock_env_config

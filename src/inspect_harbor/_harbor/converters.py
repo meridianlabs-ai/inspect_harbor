@@ -6,6 +6,7 @@ from typing import Any
 
 import yaml
 from harbor.environments.docker.docker import _sanitize_docker_image_name
+from harbor.models.task.config import EnvironmentConfig, NetworkMode
 from harbor.models.task.task import Task as HarborTask
 from harbor.models.trial.paths import EnvironmentPaths
 from inspect_ai.dataset import Sample
@@ -13,7 +14,6 @@ from inspect_ai.util import (
     ComposeBuild,
     ComposeConfig,
     ComposeService,
-    SandboxEnvironmentConfigType,
     SandboxEnvironmentSpec,
 )
 from inspect_ai.util._sandbox.compose import (
@@ -25,7 +25,12 @@ from inspect_ai.util._sandbox.compose import (
 
 from inspect_harbor._harbor.sandbox_utils import resolve_env_vars
 
-_NETWORK_MODE_NO_NETWORK = "no-network"  # harbor's NetworkMode.NO_NETWORK value
+# Harbor >=0.17 leaves [environment] resource fields as None when task.toml
+# omits them and resolves defaults in the provider. These mirror Harbor's
+# historical defaults (cpus=1, memory_mb=2048, gpus=0).
+_DEFAULT_CPUS = 1
+_DEFAULT_MEMORY_MB = 2048
+_DEFAULT_GPUS = 0
 
 
 def harbor_to_compose_config(
@@ -50,19 +55,25 @@ def harbor_to_compose_config(
     dockerfile_path = env_dir / "Dockerfile"
     env_config = harbor_task.config.environment
 
-    # Extract resource configuration from Harbor config, applying overrides
-    cpus = float(override_cpus) if override_cpus is not None else float(env_config.cpus)
+    # Extract resource configuration from Harbor config, applying overrides.
+    # Fields omitted in task.toml are None; fall back to Harbor's defaults.
+    config_cpus = env_config.cpus if env_config.cpus is not None else _DEFAULT_CPUS
+    cpus = float(override_cpus) if override_cpus is not None else float(config_cpus)
 
     # Harbor's default of 2048 MB (2 GB) is too restrictive for modern agents.
     # Enforce a minimum of 6144 MB (6 GB) unless explicitly overridden.
     MIN_MEMORY_MB = 6144  # 6 GB
+    config_memory_mb = (
+        env_config.memory_mb if env_config.memory_mb is not None else _DEFAULT_MEMORY_MB
+    )
     memory_mb = (
         override_memory_mb
         if override_memory_mb is not None
-        else max(env_config.memory_mb, MIN_MEMORY_MB)
+        else max(config_memory_mb, MIN_MEMORY_MB)
     )
 
-    gpus = override_gpus if override_gpus is not None else env_config.gpus
+    config_gpus = env_config.gpus if env_config.gpus is not None else _DEFAULT_GPUS
+    gpus = override_gpus if override_gpus is not None else config_gpus
     gpu_deploy = _create_gpu_deploy_config(gpus, env_config.gpu_types)
 
     # Use existing docker-compose.yaml if present
@@ -303,18 +314,14 @@ def _expand_compose_vars(
     return re.sub(r"\$\{([^}]+)}", _replace, raw_yaml)
 
 
-def _is_no_network(env_config: SandboxEnvironmentConfigType) -> bool:
+def _is_no_network(env_config: EnvironmentConfig) -> bool:
     """Whether an environment should run with no network access.
 
-    Harbor's network-policy field changed across releases:
-    * harbor <0.13 exposes a boolean ``allow_internet``.
-    * harbor >=0.13 migrated to a three-valued ``network_mode`` enum.
+    Only ``no-network`` isolates the environment. ``allowlist`` cannot be
+    enforced in a plain compose project (that's Harbor's egress sidecar), so
+    it is treated like ``public``; the loader warns about the degraded
+    fidelity. The deprecated ``allow_internet`` boolean is not honored —
+    Harbor itself only warns on it and never migrates it to ``network_mode``.
     """
-    # TODO: Drop the legacy ``allow_internet`` fallback and read ``network_mode``
-    # only once we can require harbor >=0.13.
-    allow_internet = getattr(env_config, "allow_internet", None)
-    if allow_internet is not None:
-        return not allow_internet
-
     network_mode = getattr(env_config, "network_mode", None)
-    return getattr(network_mode, "value", network_mode) == _NETWORK_MODE_NO_NETWORK
+    return getattr(network_mode, "value", network_mode) == NetworkMode.NO_NETWORK
