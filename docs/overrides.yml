@@ -116,7 +116,11 @@ abundant/swe-gen-rust:
   title: SWE-gen (Rust)
 
 abundant/swe-marathon:
-  categories: []
+  categories:
+  - Coding
+  title: SWE-Marathon
+  repo: https://github.com/abundant-ai/swe-marathon
+  arxiv: https://arxiv.org/abs/2606.07682
 
 actava-ai/chi-bench:
   categories:

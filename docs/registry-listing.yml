@@ -88,6 +88,8 @@
   task_function: abundant_swe_marathon
   samples: 20
   version: latest
+  categories:
+  - Coding
 - title: actava-ai/chi-bench
   path: registry/actava_ai_chi_bench.html
   desc: 'χ-Bench: long-horizon, policy-rich U.S. healthcare workflow agent benchmark spanning provider prior-authorization, payer utilization management, and care management (78 hub tasks).'
