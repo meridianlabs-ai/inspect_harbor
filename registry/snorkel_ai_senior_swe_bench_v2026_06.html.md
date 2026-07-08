@@ -25,7 +25,7 @@ eval(snorkel_ai_senior_swe_bench_v2026_06(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [snorkel-ai/senior-swe-bench-v2026.06](https://hub.harborframework.com/datasets/snorkel-ai/senior-swe-bench-v2026.06/latest) |
 | Inspect task | `snorkel_ai_senior_swe_bench_v2026_06` |
-| Latest digest | sha256:fc17418edc347f6bd9d952c100932930093ed919c404cbfe75712ebac7489b17 |
+| Latest digest | sha256:fdfbce8953be56c009a773140adccc53e24f92d8682e1bf8b2f785506a51f15d |
 | Samples | 50 |
 | Source | <https://github.com/snorkel-ai/senior-swe-bench-v2026.06> |
 
