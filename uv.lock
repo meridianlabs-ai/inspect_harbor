@@ -1365,7 +1365,7 @@ doc = [
 
 [package.metadata]
 requires-dist = [
-    { name = "harbor", specifier = ">=0.17.1" },
+    { name = "harbor", specifier = ">=0.17.1,<0.18" },
     { name = "inspect-ai", specifier = ">=0.3.225" },
     { name = "pyyaml" },
 ]

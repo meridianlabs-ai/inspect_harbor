@@ -26,8 +26,9 @@ from inspect_ai.util._sandbox.compose import (
 from inspect_harbor._harbor.sandbox_utils import resolve_env_vars
 
 # Harbor >=0.17 leaves [environment] resource fields as None when task.toml
-# omits them and resolves defaults in the provider. These mirror Harbor's
-# historical defaults (cpus=1, memory_mb=2048, gpus=0).
+# omits them and applies no resource limit in its providers. We instead
+# coalesce to Harbor's pre-0.17 schema defaults (cpus=1, memory_mb=2048,
+# gpus=0) to preserve inspect_harbor's existing behavior.
 _DEFAULT_CPUS = 1
 _DEFAULT_MEMORY_MB = 2048
 _DEFAULT_GPUS = 0
@@ -323,5 +324,4 @@ def _is_no_network(env_config: EnvironmentConfig) -> bool:
     fidelity. The deprecated ``allow_internet`` boolean is not honored —
     Harbor itself only warns on it and never migrates it to ``network_mode``.
     """
-    network_mode = getattr(env_config, "network_mode", None)
-    return getattr(network_mode, "value", network_mode) == NetworkMode.NO_NETWORK
+    return env_config.network_mode == NetworkMode.NO_NETWORK

@@ -19,6 +19,7 @@ def _make_harbor_task_mock(
     has_steps: bool = False,
     os: str = "linux",
     network_mode: str = "public",
+    allow_internet: bool | None = None,
 ) -> Mock:
     """Create a Mock HarborTask wired up for ``_build_harbor_tasks``'s validator.
 
@@ -36,6 +37,7 @@ def _make_harbor_task_mock(
     m.config.environment.mcp_servers = []
     m.config.environment.skills_dir = None
     m.config.environment.network_mode = network_mode
+    m.config.environment.allow_internet = allow_internet
     return m
 
 
@@ -238,6 +240,32 @@ def test_build_harbor_tasks_warns_on_allowlist_network_mode():
             result = load_harbor_tasks(path="/some/allowlist/task")
 
         # The task still loads (treated as 'public').
+        assert len(result) == 1
+
+
+def test_build_harbor_tasks_warns_on_legacy_allow_internet_false():
+    """Deprecated ``allow_internet = false`` loads with a degraded-fidelity warning.
+
+    Harbor never migrates the deprecated boolean to ``network_mode``, so a
+    task that requested isolation the old way now runs WITH network access;
+    the loader must not let that happen silently.
+    """
+    with (
+        patch("inspect_harbor._harbor.task._load_local_path") as mock_load_local,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        task_path = Path("/some/legacy/task")
+        mock_load_local.return_value = [task_path]
+        mock_harbor_task.return_value = _make_harbor_task_mock(
+            name="legacy-task", task_dir=task_path, allow_internet=False
+        )
+
+        with pytest.warns(
+            UserWarning, match=r"allow_internet = false.*\['legacy-task'\]"
+        ):
+            result = load_harbor_tasks(path="/some/legacy/task")
+
+        # The task still loads (runs with network access).
         assert len(result) == 1
 
 

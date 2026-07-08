@@ -239,6 +239,7 @@ def _build_harbor_tasks(
     mcp_servers: list[str] = []
     skills_dir: list[str] = []
     allowlist: list[str] = []
+    legacy_no_internet: list[str] = []
 
     for t in harbor_tasks:
         if t.has_steps:
@@ -254,6 +255,13 @@ def _build_harbor_tasks(
             skills_dir.append(t.name)
         if env.network_mode == NetworkMode.ALLOWLIST:
             allowlist.append(t.name)
+        # Harbor's validator only warns on the deprecated allow_internet
+        # boolean (a DeprecationWarning that Python hides by default) and
+        # never migrates it to network_mode, so a task that requested
+        # isolation the old way would otherwise silently run with network
+        # access.
+        if env.allow_internet is False and env.network_mode == NetworkMode.PUBLIC:
+            legacy_no_internet.append(t.name)
 
     blocking: list[str] = []
     if multi_step:
@@ -279,6 +287,12 @@ def _build_harbor_tasks(
         degraded.append(
             "`[environment].network_mode = 'allowlist'` (egress allowlist cannot "
             f"be enforced in a plain compose project; treated as 'public'): {allowlist}"
+        )
+    if legacy_no_internet:
+        degraded.append(
+            "deprecated `allow_internet = false` (ignored; task runs WITH "
+            "network access — use `[environment].network_mode = 'no-network'` "
+            f"instead): {legacy_no_internet}"
         )
     if degraded:
         warnings.warn(
