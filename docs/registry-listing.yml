@@ -167,6 +167,13 @@
   version: latest
   categories:
   - Coding
+- title: android-bench/android-bench
+  path: registry/android_bench_android_bench.html
+  desc: A dataset of 100 Android software engineering tasks derived from real-world repositories.
+  desc_trunc: A dataset of 100 Android software engineering tasks derived from real-world repositories.
+  task_function: android_bench_android_bench
+  samples: 100
+  version: latest
 - title: apple/mmau
   path: registry/apple_mmau.html
   desc: 'MMAU (Massive Multitask Agent Understanding): Apple''s holistic agent benchmark covering tool-use, DAG QA, data science/ML coding, contest programming, and mathematics.'
@@ -702,16 +709,6 @@
   desc_trunc: A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in…
   task_function: openai_swe_lancer_diamond_manager
   samples: 265
-  version: latest
-  categories:
-  - Coding
-  - Professional
-- title: orca-bench/ORCA-bench
-  path: registry/orca_bench.html
-  desc: Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing metrics, logs, traces, and source code to identify the root cause of production incidents.
-  desc_trunc: Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing me…
-  task_function: orca_bench
-  samples: 1000
   version: latest
   categories:
   - Coding

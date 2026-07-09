@@ -185,6 +185,9 @@ algotune/algotune:
   function_name: algotune
   title: AlgoTune
 
+android-bench/android-bench:
+  categories: []
+
 apple/mmau:
   categories:
   - Assistants
@@ -645,15 +648,6 @@ openai/swe-lancer-diamond-manager:
   repo: https://github.com/openai/SWELancer-Benchmark
   desc: 'A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Manager variant: picking between technical implementation proposals.'
   title: SWE-Lancer Diamond (Manager)
-
-orca-bench/ORCA-bench:
-  categories:
-  - Coding
-  - Professional
-  title: ORCA-bench
-  repo: https://orca-bench.github.io
-  desc: Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing metrics, logs, traces, and source code to identify the root cause of production incidents.
-  function_name: orca_bench
 
 orinlabs/horizon-public:
   categories:
