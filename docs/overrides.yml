@@ -186,7 +186,10 @@ algotune/algotune:
   title: AlgoTune
 
 android-bench/android-bench:
-  categories: []
+  categories:
+  - Coding
+  title: Android Bench
+  repo: https://github.com/android-bench/android-bench
 
 apple/mmau:
   categories:
