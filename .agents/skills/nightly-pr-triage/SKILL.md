@@ -79,6 +79,7 @@ For each slug you're keeping, gather:
 | Field | Where to find it |
 |---|---|
 | `categories` | Required. Pick 1–2 from the vocabulary in `docs/overrides.yml`'s header (`Coding`, `Reasoning`, `Law`, `Multimodal`, …). See "Category picking" below. |
+| `function_name` | **Required whenever the auto-derived function name stutters** (org repeated in the name, e.g. `android_bench_android_bench`). See "Function-name dedup" below. Otherwise omit. |
 | `title` | Canonical branding. Strongly suggested when the auto-derived form (just the slug suffix) is wrong-cased or non-obvious. |
 | `repo` | Canonical upstream GitHub URL. Almost always exists for benchmarks. |
 | `arxiv` | Paper URL if the benchmark has one. Many don't (especially newer ones). |
@@ -116,6 +117,14 @@ Use a secondary category when the benchmark spans clear domains (e.g. `MichaelY3
 - Hyphens stay; spaces are for words: `SWE-bench Verified`, `DevOps-Gym`, `Terminal-Bench v2`.
 - Greek/Unicode is fine if it's the project's own form: `τ³-bench` for `sierra-research/tau3-bench`.
 - Skip the override when the leaf slug is already a clean display name (e.g. `runebench`, `vmax-tasks`).
+
+**Function-name dedup:**
+
+The generator derives the Python task function from the full slug (`org/name` → `org_name`), so a slug whose name repeats its org produces a stuttering identifier: `android-bench/android-bench` → `android_bench_android_bench`, `swe_bench/swe-bench-verified` → `swe_bench_swe_bench_verified`. **Whenever the auto-derived name contains this org/name duplication, always add a `function_name` override that collapses it** (`android_bench`, `swe_bench_verified`) — the function name is what users type (`inspect eval inspect_harbor/<function_name>`) and it names the generated docs page, so the stutter is pure noise. Rules:
+
+- Dedup only the repeated org prefix; keep the rest of the name intact (`swe_bench_verified`, not `verified`).
+- Before applying, check the deduped name doesn't collide with an existing function: `grep -n "^def <name>(" src/inspect_harbor/_tasks.py`. On a collision, keep the auto-derived name and flag it for the reviewer instead.
+- Regenerating in step 6 propagates the rename into `src/inspect_harbor/_tasks.py`, `docs/registry-listing.yml` (`task_function` + page path), and the per-benchmark `.qmd` page — never hand-edit those.
 
 **Writing descriptions:**
 

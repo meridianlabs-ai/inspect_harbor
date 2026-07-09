@@ -540,7 +540,7 @@ def algotune(
 
 
 @task
-def android_bench_android_bench(
+def android_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -2605,8 +2605,8 @@ def rexbench(
     Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors.
     Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.
 
-    Slug: rexbench/rexbench
-    Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
+        Slug: rexbench/rexbench
+        Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
     """
     return _harbor_base(
         package_name="rexbench/rexbench",

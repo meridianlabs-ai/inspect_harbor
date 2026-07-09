@@ -190,6 +190,7 @@ android-bench/android-bench:
   - Coding
   title: Android Bench
   repo: https://github.com/android-bench/android-bench
+  function_name: android_bench
 
 apple/mmau:
   categories:

@@ -168,10 +168,10 @@
   categories:
   - Coding
 - title: android-bench/android-bench
-  path: registry/android_bench_android_bench.html
+  path: registry/android_bench.html
   desc: A dataset of 100 Android software engineering tasks derived from real-world repositories.
   desc_trunc: A dataset of 100 Android software engineering tasks derived from real-world repositories.
-  task_function: android_bench_android_bench
+  task_function: android_bench
   samples: 100
   version: latest
   categories:
