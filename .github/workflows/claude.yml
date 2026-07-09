@@ -1,6 +1,10 @@
 # Dev agent (@claude) — thin stub over the shared Meridian workflow in
 # meridianlabs-ai/agents. Mention @claude in an issue or PR comment (or add the
 # `claude` label to an issue) and Claude edits/pushes on a branch.
+#
+# The second job (@auto) reuses the SAME dev workflow but is the autonomous
+# kickoff: an `@auto` mention or `auto` label makes the agent open/adopt a PR,
+# carry the `auto` label onto it, and hand off to the loop in claude-auto.yml.
 
 name: Claude
 
@@ -23,6 +27,11 @@ jobs:
       contains(github.event.issue.title, '@claude') ||
       github.event.label.name == 'claude'
     uses: meridianlabs-ai/agents/.github/workflows/claude.yml@main
+    # MARVIN_TOKEN (machine-account PAT, org secret) so agent-opened PRs trigger
+    # CI and @review. Passed explicitly, not via `secrets: inherit`. Absent ->
+    # empty: the agent still runs, just with issue-triggered PR creation degraded.
+    secrets:
+      MARVIN_TOKEN: ${{ secrets.MARVIN_TOKEN }}
     permissions:
       contents: write
       pull-requests: write
@@ -43,4 +52,45 @@ jobs:
         "Bash(git push:*)","Bash(git checkout:*)","Bash(git switch:*)",
         "Bash(git branch:*)","Bash(git status:*)","Bash(git log:*)",
         "Bash(git diff:*)","Bash(git show:*)","Bash(git rev-parse:*)",
-        "Bash(git remote:*)"]}}
+        "Bash(git remote:*)",
+        "Bash(git add:*)","Bash(git commit:*)","Bash(git config:*)"]}}
+
+  # @auto kickoff — same reusable dev workflow, distinct trigger. An `@auto`
+  # mention or `auto` label drives an issue/PR autonomously: the agent opens (or
+  # adopts) a PR, propagates the `auto` label so the loop in claude-auto.yml
+  # engages, and runs to a human handoff. trigger_phrase/label_trigger are
+  # single-valued, so `auto` needs its own invocation. Needs MARVIN_TOKEN — the
+  # PR must be authored by the machine account to trigger CI and @review.
+  claude-auto:
+    if: |
+      contains(github.event.comment.body, '@auto') ||
+      contains(github.event.review.body, '@auto') ||
+      contains(github.event.issue.body, '@auto') ||
+      contains(github.event.issue.title, '@auto') ||
+      github.event.label.name == 'auto'
+    uses: meridianlabs-ai/agents/.github/workflows/claude.yml@main
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    secrets:
+      MARVIN_TOKEN: ${{ secrets.MARVIN_TOKEN }}
+    with:
+      trigger_phrase: "@auto"
+      label_trigger: "auto"
+      # Same allow-list as the @claude job above (reusable default + the triage
+      # skill's research tools); kept in sync so the autonomous run has parity.
+      settings: >-
+        {"permissions":{"allow":["Read","Edit","Write",
+        "WebSearch","WebFetch",
+        "Bash(pytest:*)","Bash(ruff:*)","Bash(mypy:*)","Bash(pyright:*)","Bash(pip:*)",
+        "Bash(pip3:*)","Bash(uv:*)","Bash(python:*)","Bash(python3:*)",
+        "Bash(gh:*)","Bash(curl:*)",
+        "Bash(git fetch:*)","Bash(git merge:*)","Bash(git rebase:*)",
+        "Bash(git push:*)","Bash(git checkout:*)","Bash(git switch:*)",
+        "Bash(git branch:*)","Bash(git status:*)","Bash(git log:*)",
+        "Bash(git diff:*)","Bash(git show:*)","Bash(git rev-parse:*)",
+        "Bash(git remote:*)",
+        "Bash(git add:*)","Bash(git commit:*)","Bash(git config:*)"]}}
