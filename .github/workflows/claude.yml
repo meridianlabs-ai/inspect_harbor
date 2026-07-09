@@ -27,6 +27,11 @@ jobs:
       contains(github.event.issue.title, '@claude') ||
       github.event.label.name == 'claude'
     uses: meridianlabs-ai/agents/.github/workflows/claude.yml@main
+    # MARVIN_TOKEN (machine-account PAT, org secret) so agent-opened PRs trigger
+    # CI and @review. Passed explicitly, not via `secrets: inherit`. Absent ->
+    # empty: the agent still runs, just with issue-triggered PR creation degraded.
+    secrets:
+      MARVIN_TOKEN: ${{ secrets.MARVIN_TOKEN }}
     permissions:
       contents: write
       pull-requests: write
@@ -47,7 +52,8 @@ jobs:
         "Bash(git push:*)","Bash(git checkout:*)","Bash(git switch:*)",
         "Bash(git branch:*)","Bash(git status:*)","Bash(git log:*)",
         "Bash(git diff:*)","Bash(git show:*)","Bash(git rev-parse:*)",
-        "Bash(git remote:*)"]}}
+        "Bash(git remote:*)",
+        "Bash(git add:*)","Bash(git commit:*)","Bash(git config:*)"]}}
 
   # @auto kickoff — same reusable dev workflow, distinct trigger. An `@auto`
   # mention or `auto` label drives an issue/PR autonomously: the agent opens (or
@@ -74,8 +80,8 @@ jobs:
     with:
       trigger_phrase: "@auto"
       label_trigger: "auto"
-      # Same research tools as @claude above, plus git add/commit/config — the
-      # autonomous run commits its own fixes (the one-shot @claude flow does not).
+      # Same allow-list as the @claude job above (reusable default + the triage
+      # skill's research tools); kept in sync so the autonomous run has parity.
       settings: >-
         {"permissions":{"allow":["Read","Edit","Write",
         "WebSearch","WebFetch",
