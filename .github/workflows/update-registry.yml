@@ -132,6 +132,8 @@ jobs:
           __STUBBED__
           ```
 
+          If any of these slugs produces a stuttering auto-derived task function name (org repeated in the name, e.g. `android-bench/android-bench` → `android_bench_android_bench`), follow the "Function-name dedup" instructions in step 4 of the skill and add a `function_name` override that collapses the duplication.
+
           When done, post a short summary comment (what you filled; what you left and why), then post `@review` as a separate comment.
           EOF
           )"

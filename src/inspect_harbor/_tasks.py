@@ -540,6 +540,37 @@ def algotune(
 
 
 @task
+def android_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""A dataset of 100 Android software engineering tasks derived from real-world repositories.
+
+    Slug: android-bench/android-bench
+    Latest digest: sha256:6f1cc5002e53265c243f3d08940faea1d38c05a0e22a91a841ac9937aeb3416c
+    """
+    return _harbor_base(
+        package_name="android-bench/android-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def apple_mmau(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2276,37 +2307,6 @@ def openai_swe_lancer_diamond_manager(
 
 
 @task
-def orca_bench(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing metrics, logs, traces, and source code to identify the root cause of production incidents.
-
-    Slug: orca-bench/ORCA-bench
-    Latest digest: sha256:fcd966f953a9fffd5b852767eee86ece9673d4e66b68aa9081700ba502c2adc6
-    """
-    return _harbor_base(
-        package_name="orca-bench/ORCA-bench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def orinlabs_horizon_public(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2605,8 +2605,8 @@ def rexbench(
     Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors.
     Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.
 
-    Slug: rexbench/rexbench
-    Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
+        Slug: rexbench/rexbench
+        Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
     """
     return _harbor_base(
         package_name="rexbench/rexbench",
@@ -2916,7 +2916,7 @@ def snorkel_ai_senior_swe_bench_v2026_06(
     r"""Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production repositories — building features from PM-style instructions and investigating bugs from runtime evidence, judged for correctness and code taste (50-task public split).
 
     Slug: snorkel-ai/senior-swe-bench-v2026.06
-    Latest digest: sha256:fc17418edc347f6bd9d952c100932930093ed919c404cbfe75712ebac7489b17
+    Latest digest: sha256:fdfbce8953be56c009a773140adccc53e24f92d8682e1bf8b2f785506a51f15d
     """
     return _harbor_base(
         package_name="snorkel-ai/senior-swe-bench-v2026.06",
