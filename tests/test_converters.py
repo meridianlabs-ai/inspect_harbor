@@ -290,14 +290,13 @@ def test_harbor_to_compose_config_custom_resource_limits():
         assert service.mem_limit == "8192m"
 
 
-def test_harbor_to_compose_config_omitted_resources_use_harbor_defaults():
-    """Omitted resource fields fall back to Harbor's historical defaults.
+def test_harbor_to_compose_config_omitted_resources_impose_no_limits():
+    """Omitted resource fields impose no limit, mirroring Harbor >=0.17.
 
     Harbor >=0.17 leaves ``cpus``/``memory_mb``/``gpus`` as ``None`` when
-    task.toml omits them (defaults are resolved in the provider). We coalesce
-    to cpus=1, memory_mb=2048 (then the 6GB minimum), gpus=0 instead of
-    crashing on ``None``. Uses a real ``EnvironmentConfig`` so the test tracks
-    the actual schema.
+    task.toml omits them and applies no limit in its docker provider. We do
+    the same: no ``cpus``, no ``mem_limit``, and no GPU ``deploy`` on the
+    service. Uses a real ``EnvironmentConfig`` so the test tracks the schema.
     """
     mock_task = Mock()
     mock_task.name = "omitted-resources-task"
@@ -315,20 +314,20 @@ def test_harbor_to_compose_config_omitted_resources_use_harbor_defaults():
         result = harbor_to_compose_config(mock_task)
 
         service = result.services["default"]
-        assert service.cpus == 1.0
-        # 2048 default < 6144 minimum -> bumped to 6144m.
-        assert service.mem_limit == "6144m"
-        # gpus default 0 -> no GPU deploy config.
+        # Omitted -> no imposed limit (unlimited), not a baked-in default.
+        assert service.cpus is None
+        assert service.mem_limit is None
         assert service.deploy is None
         # network_mode default is 'public' -> bridge.
         assert service.network_mode == "bridge"
 
 
-def test_harbor_to_compose_config_omitted_resources_compose_yaml_expansion():
-    """The compose-yaml branch also survives omitted resource fields.
+def test_harbor_to_compose_config_omitted_resources_compose_yaml_defaults():
+    """Omitted resources: ``${CPUS}``/``${MEMORY}`` use the compose file's defaults.
 
-    ``_expand_compose_vars`` must be fed the coalesced values so ``${CPUS}``
-    and ``${MEMORY}`` expand from the defaults instead of crashing on None.
+    No limit is imposed on the service, and — mirroring Harbor — an unset
+    resource leaves the env var unset (rather than crashing on None), so a
+    ``${CPUS:-N}`` reference falls back to its own default.
     """
     mock_task = Mock()
     mock_task.name = "omitted-resources-task"
@@ -343,8 +342,8 @@ services:
   default:
     image: python:3.11
     environment:
-      CPU_COUNT: "${CPUS}"
-      MEM: "${MEMORY}"
+      CPU_COUNT: "${CPUS:-4}"
+      MEM: "${MEMORY:-2G}"
 """
 
     with (
@@ -355,10 +354,11 @@ services:
         result = harbor_to_compose_config(mock_task)
 
     service = result.services["default"]
-    assert service.cpus == 1.0
-    assert service.mem_limit == "6144m"
-    # ${CPUS}/${MEMORY} expanded from the coalesced defaults (post 6GB floor).
-    assert service.environment == {"CPU_COUNT": "1", "MEM": "6144M"}
+    # No imposed cpu/memory limit when the task omits them.
+    assert service.cpus is None
+    assert service.mem_limit is None
+    # ${CPUS}/${MEMORY} unset -> compose file's own :-default is used.
+    assert service.environment == {"CPU_COUNT": "4", "MEM": "2G"}
 
 
 def test_harbor_to_compose_config_compose_yaml_no_internet_overrides_network_mode():

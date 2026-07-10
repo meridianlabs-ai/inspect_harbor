@@ -470,12 +470,12 @@ def test_harbor_task_integration():
     assert sample.metadata["task_name"] == "harbor-test/simple-task"
     assert "test_path" in sample.metadata
 
-    # The fixture omits cpus/memory_mb/gpus (None in harbor >=0.17): defaults
-    # are coalesced (cpus=1, memory 2048 -> 6GB floor, no GPU deploy).
+    # The fixture omits cpus/memory_mb/gpus (None in harbor >=0.17): we impose
+    # no limit for omitted fields (no cpus, no mem_limit, no GPU deploy).
     assert sample.sandbox is not None
     service = sample.sandbox.config.services["default"]
-    assert service.cpus == 1.0
-    assert service.mem_limit == "6144m"
+    assert service.cpus is None
+    assert service.mem_limit is None
     assert service.deploy is None
     # network_mode = "no-network" in the fixture isolates the service.
     assert service.network_mode == "none"

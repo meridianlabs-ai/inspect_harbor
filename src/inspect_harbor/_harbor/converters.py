@@ -25,14 +25,6 @@ from inspect_ai.util._sandbox.compose import (
 
 from inspect_harbor._harbor.sandbox_utils import resolve_env_vars
 
-# Harbor >=0.17 leaves [environment] resource fields as None when task.toml
-# omits them and applies no resource limit in its providers. We instead
-# coalesce to Harbor's pre-0.17 schema defaults (cpus=1, memory_mb=2048,
-# gpus=0) to preserve inspect_harbor's existing behavior.
-_DEFAULT_CPUS = 1
-_DEFAULT_MEMORY_MB = 2048
-_DEFAULT_GPUS = 0
-
 
 def harbor_to_compose_config(
     harbor_task: HarborTask,
@@ -56,25 +48,31 @@ def harbor_to_compose_config(
     dockerfile_path = env_dir / "Dockerfile"
     env_config = harbor_task.config.environment
 
-    # Extract resource configuration from Harbor config, applying overrides.
-    # Fields omitted in task.toml are None; fall back to Harbor's defaults.
-    config_cpus = env_config.cpus if env_config.cpus is not None else _DEFAULT_CPUS
-    cpus = float(override_cpus) if override_cpus is not None else float(config_cpus)
+    # Resource limits. Harbor >=0.17 leaves omitted [environment] fields as
+    # None and imposes no limit (its docker provider passes None straight
+    # through to compose). We mirror that: an omitted field means "no limit",
+    # not a baked-in default. Explicit task values and overrides are honored.
+    if override_cpus is not None:
+        cpus: float | None = float(override_cpus)
+    elif env_config.cpus is not None:
+        cpus = float(env_config.cpus)
+    else:
+        cpus = None
 
-    # Harbor's default of 2048 MB (2 GB) is too restrictive for modern agents.
-    # Enforce a minimum of 6144 MB (6 GB) unless explicitly overridden.
+    # Memory is the one exception: enforce a 6 GB floor so an explicitly low
+    # task value can't starve modern agent scaffolds (e.g. inspect_swe). The
+    # floor only raises an explicit value that is too low; an omitted value
+    # stays None (unlimited, hence trivially >= 6 GB), and an explicit
+    # override wins outright (the escape hatch to go below the floor).
     MIN_MEMORY_MB = 6144  # 6 GB
-    config_memory_mb = (
-        env_config.memory_mb if env_config.memory_mb is not None else _DEFAULT_MEMORY_MB
-    )
-    memory_mb = (
-        override_memory_mb
-        if override_memory_mb is not None
-        else max(config_memory_mb, MIN_MEMORY_MB)
-    )
+    if override_memory_mb is not None:
+        memory_mb: int | None = override_memory_mb
+    elif env_config.memory_mb is not None:
+        memory_mb = max(env_config.memory_mb, MIN_MEMORY_MB)
+    else:
+        memory_mb = None
 
-    config_gpus = env_config.gpus if env_config.gpus is not None else _DEFAULT_GPUS
-    gpus = override_gpus if override_gpus is not None else config_gpus
+    gpus = override_gpus if override_gpus is not None else env_config.gpus
     gpu_deploy = _create_gpu_deploy_config(gpus, env_config.gpu_types)
 
     # Use existing docker-compose.yaml if present
@@ -88,8 +86,12 @@ def harbor_to_compose_config(
 
         if compose_config.services:
             _, default_service = _find_default_service(compose_config)
-            default_service.cpus = cpus
-            default_service.mem_limit = f"{memory_mb}m"
+            # Only impose a limit when we have one; leave the compose file's
+            # own value untouched when the task omits the field (unlimited).
+            if cpus is not None:
+                default_service.cpus = cpus
+            if memory_mb is not None:
+                default_service.mem_limit = f"{memory_mb}m"
             if gpu_deploy:
                 default_service.deploy = gpu_deploy
 
@@ -130,7 +132,7 @@ def harbor_to_compose_config(
                 else None
             ),
             cpus=cpus,
-            mem_limit=f"{memory_mb}m",
+            mem_limit=f"{memory_mb}m" if memory_mb is not None else None,
             command="tail -f /dev/null",
             init=True,
             network_mode="none" if _is_no_network(env_config) else "bridge",
@@ -222,19 +224,19 @@ def _find_default_service(config: ComposeConfig) -> tuple[str, ComposeService]:
 
 
 def _create_gpu_deploy_config(
-    gpus: int, gpu_types: list[str] | None
+    gpus: int | None, gpu_types: list[str] | None
 ) -> ComposeDeploy | None:
     """Create GPU deployment configuration for ComposeService.
 
     Args:
-        gpus: Number of GPUs to reserve (0 means no GPUs).
+        gpus: Number of GPUs to reserve (None or 0 means no GPUs).
         gpu_types: List of acceptable GPU types (e.g., ['H100', 'A100']).
                    Stored in device options for informational purposes.
 
     Returns:
-        ComposeDeploy configuration with GPU reservations, or None if gpus=0.
+        ComposeDeploy configuration with GPU reservations, or None if no GPUs.
     """
-    if gpus <= 0:
+    if gpus is None or gpus <= 0:
         return None
 
     device_options = {}
@@ -258,8 +260,8 @@ def _create_gpu_deploy_config(
 def _expand_compose_vars(
     raw_yaml: str,
     harbor_task: HarborTask,
-    cpus: float,
-    memory_mb: int,
+    cpus: float | None,
+    memory_mb: int | None,
 ) -> str:
     """Expand ``${VAR}`` and ``${VAR:-default}`` references in a Harbor docker-compose.yaml.
 
@@ -279,8 +281,6 @@ def _expand_compose_vars(
         # Mirror Harbor's own ``hb__<task.name>`` + ``_sanitize_docker_image_name``
         # so package tasks (org/name) produce the same image name Harbor would.
         "MAIN_IMAGE_NAME": _sanitize_docker_image_name(f"hb__{harbor_task.name}"),
-        "CPUS": str(int(cpus)),
-        "MEMORY": f"{memory_mb}M",
         "HOST_VERIFIER_LOGS_PATH": str(paths.verifier_dir),
         "HOST_AGENT_LOGS_PATH": str(paths.agent_dir),
         "HOST_ARTIFACTS_PATH": str(paths.artifacts_dir),
@@ -288,6 +288,14 @@ def _expand_compose_vars(
         "ENV_AGENT_LOGS_PATH": str(paths.agent_dir),
         "ENV_ARTIFACTS_PATH": str(paths.artifacts_dir),
     }
+    # Only expose CPUS/MEMORY when a concrete limit exists. When the task omits
+    # the field (unlimited), leave the ``${CPUS}``/``${MEMORY}`` refs to the
+    # compose file's own ``:-default`` fallback — mirroring Harbor, which
+    # leaves these env vars unset (ComposeInfraEnvVars dumps exclude_none).
+    if cpus is not None:
+        var_map["CPUS"] = str(int(cpus))
+    if memory_mb is not None:
+        var_map["MEMORY"] = f"{memory_mb}M"
 
     verifier_env = harbor_task.config.verifier.env
     if "TEST_DIR" in verifier_env:
