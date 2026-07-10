@@ -66,7 +66,6 @@ services:
         assert service.cpus == 2.0
         # 6GB minimum is applied (config has 4096m which is below minimum)
         assert service.mem_limit == "6144m"
-        # No network_mode in compose file + network_mode="public" -> left unset
         assert service.network_mode is None
 
 
@@ -314,11 +313,9 @@ def test_harbor_to_compose_config_omitted_resources_impose_no_limits():
         result = harbor_to_compose_config(mock_task)
 
         service = result.services["default"]
-        # Omitted -> no imposed limit (unlimited), not a baked-in default.
         assert service.cpus is None
         assert service.mem_limit is None
         assert service.deploy is None
-        # network_mode default is 'public' -> bridge.
         assert service.network_mode == "bridge"
 
 
@@ -354,10 +351,8 @@ services:
         result = harbor_to_compose_config(mock_task)
 
     service = result.services["default"]
-    # No imposed cpu/memory limit when the task omits them.
     assert service.cpus is None
     assert service.mem_limit is None
-    # ${CPUS}/${MEMORY} unset -> compose file's own :-default is used.
     assert service.environment == {"CPU_COUNT": "4", "MEM": "2G"}
 
 
@@ -530,7 +525,6 @@ def test_harbor_to_compose_config_deprecated_allow_internet_isolated():
         config = TaskConfig.model_validate_toml(
             '[environment]\ndocker_image = "ubuntu:latest"\nallow_internet = false\n'
         )
-    # Harbor migrated the deprecated boolean; the enum, not the boolean, drives us.
     assert config.environment.network_mode == NetworkMode.NO_NETWORK
     assert config.environment.allow_internet is None
 

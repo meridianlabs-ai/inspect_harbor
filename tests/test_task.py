@@ -237,7 +237,6 @@ def test_build_harbor_tasks_warns_on_allowlist_network_mode():
         with pytest.warns(UserWarning, match=r"allowlist.*\['allowlist-task'\]"):
             result = load_harbor_tasks(path="/some/allowlist/task")
 
-        # The task still loads (treated as 'public').
         assert len(result) == 1
 
 
@@ -470,14 +469,11 @@ def test_harbor_task_integration():
     assert sample.metadata["task_name"] == "harbor-test/simple-task"
     assert "test_path" in sample.metadata
 
-    # The fixture omits cpus/memory_mb/gpus (None in harbor >=0.17): we impose
-    # no limit for omitted fields (no cpus, no mem_limit, no GPU deploy).
     assert sample.sandbox is not None
     service = sample.sandbox.config.services["default"]
     assert service.cpus is None
     assert service.mem_limit is None
     assert service.deploy is None
-    # network_mode = "no-network" in the fixture isolates the service.
     assert service.network_mode == "none"
 
 
