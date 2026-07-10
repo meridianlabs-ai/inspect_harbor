@@ -57,6 +57,13 @@
 #   desc:          override the auto-derived description        (optional)
 #   featured:      boolean                                      (optional)
 
+Enterprise-Bench/l1-l2-bench:
+  categories:
+  - Assistants
+  - Professional
+  title: Enterprise-Bench (L1-L2)
+  desc: 'Enterprise-Bench (L1-L2): DevRev''s enterprise agent benchmark — answering L1/L2 support-tier questions (ticket SLAs, triage, customer-account data) over fragmented enterprise systems.'
+
 LiteCoder/LiteCoder-rl:
   categories:
   - Coding
