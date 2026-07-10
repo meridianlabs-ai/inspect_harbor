@@ -1,5 +1,16 @@
 # changelog – Inspect Harbor
 
+## [0.6.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.17...v0.6.0) (2026-07-10)
+
+### Features
+
+- upgrade to harbor 0.17.1 ([\#113](https://github.com/meridianlabs-ai/inspect_harbor/issues/113)) ([b8cc099](https://github.com/meridianlabs-ai/inspect_harbor/commit/b8cc09909acace47e7770df6cb72134a73328de6))
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#115](https://github.com/meridianlabs-ai/inspect_harbor/issues/115)) ([78542ff](https://github.com/meridianlabs-ai/inspect_harbor/commit/78542fff0a10b7f4bd920167dfe249088e2e82ab))
+- update Harbor registry tasks ([\#117](https://github.com/meridianlabs-ai/inspect_harbor/issues/117)) ([e8ca6db](https://github.com/meridianlabs-ai/inspect_harbor/commit/e8ca6db286194d0095a4388972cb16e54d581e1f))
+
 ## [0.5.17](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.16...v0.5.17) (2026-07-08)
 
 ### Bug Fixes

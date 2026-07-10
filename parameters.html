@@ -379,6 +379,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 <blockquote class="blockquote">
+<p><strong>Resource limits:</strong> When <code>task.toml</code> omits a resource field, inspect_harbor imposes <strong>no limit</strong> on it (no CPU cap, no GPU reservation, and — subject to the memory floor below — no memory cap), matching Harbor ≥0.17’s own behavior. Explicit <code>task.toml</code> values are honored as-is, and <code>override_cpus</code>/<code>override_memory_mb</code>/<code>override_gpus</code> take precedence over both. The one exception is memory: inspect_harbor enforces a <strong>6 GB floor</strong> so an explicitly low <code>memory_mb</code> can’t starve agent scaffolds — an explicit value below 6 GB is raised to 6 GB (an omitted value stays unlimited, which trivially satisfies the floor). Use <code>override_memory_mb</code> to set a value below the floor.</p>
+</blockquote>
+<blockquote class="blockquote">
 <p><strong>Multi-service compose &amp; DinD providers:</strong> Resource overrides are applied only to the <strong>default service</strong> (selected by <code>x-default: true</code>, or a service named “default”/“main”, or the first service). Sidecar services run without explicit resource limits, within the sandbox’s total capacity. For DinD-based sandbox providers (e.g.&nbsp;Daytona) that aggregate per-service resources to size the VM, you can control sandbox-level resources directly via the provider’s compose extension (e.g.&nbsp;<code>x-daytona: { resources: { cpu: 4, memory: 8 } }</code>) in your <code>docker-compose.yaml</code>. See the <a href="https://github.com/meridianlabs-ai/inspect_sandboxes">Daytona sandbox provider docs</a> for details.</p>
 </blockquote>
 <section id="example" class="level2">

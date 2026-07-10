@@ -23,7 +23,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 
 | Harbor Dataset | Inspect Task | Description | Samples |
 |----|----|----|----|
-| [Enterprise-Bench/l1-l2-bench](registry/enterprise_bench_l1_l2_bench.html.md) | enterprise_bench_l1_l2_bench | Enterprise Agent Benchmark. | 14 |
+| [Enterprise-Bench/l1-l2-bench](registry/enterprise_bench_l1_l2_bench.html.md) | enterprise_bench_l1_l2_bench | Enterprise-Bench (L1-L2): DevRev’s enterprise agent benchmark — answering L1/L2 support-tier questi… | 14 |
 | [LiteCoder/LiteCoder-rl](registry/litecoder_rl.html.md) | litecoder_rl | LiteCoder: terminal-based RL training environments spanning developer workflows, scientific/numeric… | 602 |
 | [MichaelY310/devopsgym](registry/michaely310_devopsgym.html.md) | michaely310_devopsgym | DevOps-Gym benchmark adapted to Harbor format - 729 tasks across 5 categories: Build, Monitoring, I… | 728 |
 | [aarr/aarri-bench](registry/aarr_aarri_bench.html.md) | aarr_aarri_bench | aarri(act as a real research intern)-bench, for evaluating LLM agents in academic research tasks. | 82 |
@@ -41,6 +41,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [aider/aider-polyglot](registry/aider_polyglot.html.md) | aider_polyglot | Aider’s polyglot coding benchmark: Exercism exercises across C++, Go, Java, JavaScript, Python, and… | 225 |
 | [aime/aime](registry/aime.html.md) | aime | Problems from the American Invitational Mathematics Examination (AIME), a 3-hour high-school compet… | 60 |
 | [algotune/algotune](registry/algotune.html.md) | algotune | AlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that match… | 154 |
+| [android-bench/android-bench](registry/android_bench.html.md) | android_bench | A dataset of 100 Android software engineering tasks derived from real-world repositories. | 100 |
 | [apple/mmau](registry/apple_mmau.html.md) | apple_mmau | MMAU (Massive Multitask Agent Understanding): Apple’s holistic agent benchmark covering tool-use, D… | 1000 |
 | [arcprize/arc-agi-2](registry/arcprize_arc_agi_2.html.md) | arcprize_arc_agi_2 | ARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but… | 167 |
 | [benchflow/skillsbench](registry/benchflow_skillsbench.html.md) | benchflow_skillsbench | SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folde… | 87 |
@@ -97,7 +98,6 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [openai/swe-lancer-diamond-all](registry/openai_swe_lancer_diamond_all.html.md) | openai_swe_lancer_diamond_all | SWE-Lancer Diamond (full): public split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance so… | 463 |
 | [openai/swe-lancer-diamond-ic](registry/openai_swe_lancer_diamond_ic.html.md) | openai_swe_lancer_diamond_ic | SWE-Lancer Diamond (IC): individual-contributor split of OpenAI’s SWE-Lancer benchmark — real Upwor… | 198 |
 | [openai/swe-lancer-diamond-manager](registry/openai_swe_lancer_diamond_manager.html.md) | openai_swe_lancer_diamond_manager | A benchmark of freelance software engineering tasks from Upwork, valued at \$1 million USD total in… | 265 |
-| [orca-bench/ORCA-bench](registry/orca_bench.html.md) | orca_bench | Agents perform on-call root cause analysis on a live instrumented microservice system, analyzing me… | 1000 |
 | [orinlabs/horizon-public](registry/orinlabs_horizon_public.html.md) | orinlabs_horizon_public | Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agen… | 3 |
 | [pgcodellm/rebench-v2-test](registry/pgcodellm_rebench_v2_test.html.md) | pgcodellm_rebench_v2_test | SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui… | 20 |
 | [qcircuitbench/qcircuitbench](registry/qcircuitbench.html.md) | qcircuitbench | QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const… | 28 |
