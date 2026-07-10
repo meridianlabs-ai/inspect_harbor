@@ -6,6 +6,7 @@ from typing import Any
 
 import yaml
 from harbor.environments.docker.docker import _sanitize_docker_image_name
+from harbor.models.task.config import EnvironmentConfig, NetworkMode
 from harbor.models.task.task import Task as HarborTask
 from harbor.models.trial.paths import EnvironmentPaths
 from inspect_ai.dataset import Sample
@@ -13,7 +14,6 @@ from inspect_ai.util import (
     ComposeBuild,
     ComposeConfig,
     ComposeService,
-    SandboxEnvironmentConfigType,
     SandboxEnvironmentSpec,
 )
 from inspect_ai.util._sandbox.compose import (
@@ -24,8 +24,6 @@ from inspect_ai.util._sandbox.compose import (
 )
 
 from inspect_harbor._harbor.sandbox_utils import resolve_env_vars
-
-_NETWORK_MODE_NO_NETWORK = "no-network"  # harbor's NetworkMode.NO_NETWORK value
 
 
 def harbor_to_compose_config(
@@ -50,17 +48,20 @@ def harbor_to_compose_config(
     dockerfile_path = env_dir / "Dockerfile"
     env_config = harbor_task.config.environment
 
-    # Extract resource configuration from Harbor config, applying overrides
-    cpus = float(override_cpus) if override_cpus is not None else float(env_config.cpus)
+    if override_cpus is not None:
+        cpus: float | None = float(override_cpus)
+    elif env_config.cpus is not None:
+        cpus = float(env_config.cpus)
+    else:
+        cpus = None
 
-    # Harbor's default of 2048 MB (2 GB) is too restrictive for modern agents.
-    # Enforce a minimum of 6144 MB (6 GB) unless explicitly overridden.
     MIN_MEMORY_MB = 6144  # 6 GB
-    memory_mb = (
-        override_memory_mb
-        if override_memory_mb is not None
-        else max(env_config.memory_mb, MIN_MEMORY_MB)
-    )
+    if override_memory_mb is not None:
+        memory_mb: int | None = override_memory_mb
+    elif env_config.memory_mb is not None:
+        memory_mb = max(env_config.memory_mb, MIN_MEMORY_MB)
+    else:
+        memory_mb = None
 
     gpus = override_gpus if override_gpus is not None else env_config.gpus
     gpu_deploy = _create_gpu_deploy_config(gpus, env_config.gpu_types)
@@ -76,8 +77,10 @@ def harbor_to_compose_config(
 
         if compose_config.services:
             _, default_service = _find_default_service(compose_config)
-            default_service.cpus = cpus
-            default_service.mem_limit = f"{memory_mb}m"
+            if cpus is not None:
+                default_service.cpus = cpus
+            if memory_mb is not None:
+                default_service.mem_limit = f"{memory_mb}m"
             if gpu_deploy:
                 default_service.deploy = gpu_deploy
 
@@ -118,7 +121,7 @@ def harbor_to_compose_config(
                 else None
             ),
             cpus=cpus,
-            mem_limit=f"{memory_mb}m",
+            mem_limit=f"{memory_mb}m" if memory_mb is not None else None,
             command="tail -f /dev/null",
             init=True,
             network_mode="none" if _is_no_network(env_config) else "bridge",
@@ -210,19 +213,19 @@ def _find_default_service(config: ComposeConfig) -> tuple[str, ComposeService]:
 
 
 def _create_gpu_deploy_config(
-    gpus: int, gpu_types: list[str] | None
+    gpus: int | None, gpu_types: list[str] | None
 ) -> ComposeDeploy | None:
     """Create GPU deployment configuration for ComposeService.
 
     Args:
-        gpus: Number of GPUs to reserve (0 means no GPUs).
+        gpus: Number of GPUs to reserve (None or 0 means no GPUs).
         gpu_types: List of acceptable GPU types (e.g., ['H100', 'A100']).
                    Stored in device options for informational purposes.
 
     Returns:
-        ComposeDeploy configuration with GPU reservations, or None if gpus=0.
+        ComposeDeploy configuration with GPU reservations, or None if no GPUs.
     """
-    if gpus <= 0:
+    if gpus is None or gpus <= 0:
         return None
 
     device_options = {}
@@ -246,8 +249,8 @@ def _create_gpu_deploy_config(
 def _expand_compose_vars(
     raw_yaml: str,
     harbor_task: HarborTask,
-    cpus: float,
-    memory_mb: int,
+    cpus: float | None,
+    memory_mb: int | None,
 ) -> str:
     """Expand ``${VAR}`` and ``${VAR:-default}`` references in a Harbor docker-compose.yaml.
 
@@ -267,8 +270,6 @@ def _expand_compose_vars(
         # Mirror Harbor's own ``hb__<task.name>`` + ``_sanitize_docker_image_name``
         # so package tasks (org/name) produce the same image name Harbor would.
         "MAIN_IMAGE_NAME": _sanitize_docker_image_name(f"hb__{harbor_task.name}"),
-        "CPUS": str(int(cpus)),
-        "MEMORY": f"{memory_mb}M",
         "HOST_VERIFIER_LOGS_PATH": str(paths.verifier_dir),
         "HOST_AGENT_LOGS_PATH": str(paths.agent_dir),
         "HOST_ARTIFACTS_PATH": str(paths.artifacts_dir),
@@ -276,6 +277,10 @@ def _expand_compose_vars(
         "ENV_AGENT_LOGS_PATH": str(paths.agent_dir),
         "ENV_ARTIFACTS_PATH": str(paths.artifacts_dir),
     }
+    if cpus is not None:
+        var_map["CPUS"] = str(int(cpus))
+    if memory_mb is not None:
+        var_map["MEMORY"] = f"{memory_mb}M"
 
     verifier_env = harbor_task.config.verifier.env
     if "TEST_DIR" in verifier_env:
@@ -303,18 +308,15 @@ def _expand_compose_vars(
     return re.sub(r"\$\{([^}]+)}", _replace, raw_yaml)
 
 
-def _is_no_network(env_config: SandboxEnvironmentConfigType) -> bool:
+def _is_no_network(env_config: EnvironmentConfig) -> bool:
     """Whether an environment should run with no network access.
 
-    Harbor's network-policy field changed across releases:
-    * harbor <0.13 exposes a boolean ``allow_internet``.
-    * harbor >=0.13 migrated to a three-valued ``network_mode`` enum.
+    Only ``no-network`` isolates the environment. ``allowlist`` cannot be
+    enforced in a plain compose project (that's Harbor's egress sidecar), so
+    it is treated like ``public``; the loader warns about the degraded
+    fidelity. The deprecated ``allow_internet = false`` needs no special
+    handling here: Harbor's ``TaskConfig`` validator migrates it to
+    ``network_mode = no-network`` (and clears the boolean), so a legacy task
+    is isolated through the ``network_mode`` check below.
     """
-    # TODO: Drop the legacy ``allow_internet`` fallback and read ``network_mode``
-    # only once we can require harbor >=0.13.
-    allow_internet = getattr(env_config, "allow_internet", None)
-    if allow_internet is not None:
-        return not allow_internet
-
-    network_mode = getattr(env_config, "network_mode", None)
-    return getattr(network_mode, "value", network_mode) == _NETWORK_MODE_NO_NETWORK
+    return env_config.network_mode == NetworkMode.NO_NETWORK

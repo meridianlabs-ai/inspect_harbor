@@ -2,11 +2,10 @@
 name = "harbor-test/simple-task"
 description = "A simple test task for integration testing"
 
+# resource fields intentionally omitted to exercise the no-limit path
 [environment]
 docker_image = "python:3.11-slim"
-cpus = 1.0
-memory_mb = 1024
-allow_internet = false
+network_mode = "no-network"
 
 [verifier]
 timeout_sec = 60

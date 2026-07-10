@@ -18,6 +18,7 @@ def _make_harbor_task_mock(
     task_dir: Path | None = None,
     has_steps: bool = False,
     os: str = "linux",
+    network_mode: str = "public",
 ) -> Mock:
     """Create a Mock HarborTask wired up for ``_build_harbor_tasks``'s validator.
 
@@ -34,6 +35,7 @@ def _make_harbor_task_mock(
     m.config.environment.healthcheck = None
     m.config.environment.mcp_servers = []
     m.config.environment.skills_dir = None
+    m.config.environment.network_mode = network_mode
     return m
 
 
@@ -63,7 +65,9 @@ def test_load_local_single_task():
             None,  # n_tasks
             False,  # disable_verification
         )
-        mock_harbor_task.assert_called_once_with(task_dir=task_path)
+        mock_harbor_task.assert_called_once_with(
+            task_dir=task_path, disable_verification=False
+        )
 
 
 def test_load_git_task():
@@ -95,7 +99,9 @@ def test_load_git_task():
             "abc123",
             False,  # overwrite_cache default
         )
-        mock_harbor_task.assert_called_once_with(task_dir=task_path)
+        mock_harbor_task.assert_called_once_with(
+            task_dir=task_path, disable_verification=False
+        )
 
 
 def test_load_local_dataset():
@@ -190,6 +196,50 @@ def test_build_harbor_tasks_blocks_unsupported_features(
             load_harbor_tasks(path="/some/blocking/task")
 
 
+def test_load_local_task_disable_verification_threaded_to_constructor():
+    """``disable_verification=True`` reaches the ``HarborTask`` constructor.
+
+    Harbor >=0.17 validates tests in ``Task.__init__`` by default, so a task
+    that passed ``is_valid_dir(disable_verification=True)`` would still raise
+    on construction unless the flag is threaded through.
+    """
+    with (
+        patch("inspect_harbor._harbor.task._load_local_path") as mock_load_local,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        task_path = Path("/local/path/to/task")
+        mock_load_local.return_value = [task_path]
+        mock_harbor_task.return_value = _make_harbor_task_mock(task_dir=task_path)
+
+        load_harbor_tasks(path="/local/path/to/task", disable_verification=True)
+
+        mock_harbor_task.assert_called_once_with(
+            task_dir=task_path, disable_verification=True
+        )
+
+
+def test_build_harbor_tasks_warns_on_allowlist_network_mode():
+    """``network_mode = 'allowlist'`` loads with a degraded-fidelity warning.
+
+    A plain compose project cannot enforce an egress allowlist (that's
+    Harbor's sidecar), so the task runs with full network access instead.
+    """
+    with (
+        patch("inspect_harbor._harbor.task._load_local_path") as mock_load_local,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        task_path = Path("/some/allowlist/task")
+        mock_load_local.return_value = [task_path]
+        mock_harbor_task.return_value = _make_harbor_task_mock(
+            name="allowlist-task", task_dir=task_path, network_mode="allowlist"
+        )
+
+        with pytest.warns(UserWarning, match=r"allowlist.*\['allowlist-task'\]"):
+            result = load_harbor_tasks(path="/some/allowlist/task")
+
+        assert len(result) == 1
+
+
 def test_load_from_registry():
     """Test loading tasks from a registry dataset."""
     with (
@@ -218,7 +268,9 @@ def test_load_from_registry():
             5,  # n_tasks
             False,  # overwrite_cache default
         )
-        mock_harbor_task.assert_called_once_with(task_dir=task_path)
+        mock_harbor_task.assert_called_once_with(
+            task_dir=task_path, disable_verification=False
+        )
 
 
 def test_load_git_task_with_overwrite_cache():
@@ -416,6 +468,13 @@ def test_harbor_task_integration():
     assert sample.metadata is not None
     assert sample.metadata["task_name"] == "harbor-test/simple-task"
     assert "test_path" in sample.metadata
+
+    assert sample.sandbox is not None
+    service = sample.sandbox.config.services["default"]
+    assert service.cpus is None
+    assert service.mem_limit is None
+    assert service.deploy is None
+    assert service.network_mode == "none"
 
 
 def test_disambiguate_sample_ids_no_collisions():
