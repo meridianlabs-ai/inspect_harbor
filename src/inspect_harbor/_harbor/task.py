@@ -253,13 +253,9 @@ def _build_harbor_tasks(
         if env.skills_dir is not None:
             skills_dir.append(t.name)
         # We can't enforce an egress allowlist, so flag it as degraded below.
-        # Harbor enforces it with an involved setup we don't reproduce: a
-        # `gost` transparent-proxy sidecar container (cap NET_ADMIN/NET_RAW)
-        # whose network namespace every task service joins, with nftables
-        # redirecting all TCP egress into the proxy, which then allows only
-        # connections whose TLS SNI / HTTP host matches `allowed_hosts`. That
+        # Harbor enforces it with an involved setup we don't reproduce, and it
         # can't be expressed through inspect_ai's ComposeConfig (its
-        # ComposeService model rejects cap_add/sysctls), and inspect_ai has no
+        # ComposeService model rejects cap_add/sysctls); inspect_ai has no
         # native egress-allowlist primitive — only network_mode none/bridge/
         # host. See https://github.com/meridianlabs-ai/inspect_harbor/issues/118.
         if env.network_mode == NetworkMode.ALLOWLIST:

@@ -48,10 +48,6 @@ def harbor_to_compose_config(
     dockerfile_path = env_dir / "Dockerfile"
     env_config = harbor_task.config.environment
 
-    # Resource limits. Harbor >=0.17 leaves omitted [environment] fields as
-    # None and imposes no limit (its docker provider passes None straight
-    # through to compose). We mirror that: an omitted field means "no limit",
-    # not a baked-in default. Explicit task values and overrides are honored.
     if override_cpus is not None:
         cpus: float | None = float(override_cpus)
     elif env_config.cpus is not None:
@@ -59,11 +55,6 @@ def harbor_to_compose_config(
     else:
         cpus = None
 
-    # Memory is the one exception: enforce a 6 GB floor so an explicitly low
-    # task value can't starve modern agent scaffolds (e.g. inspect_swe). The
-    # floor only raises an explicit value that is too low; an omitted value
-    # stays None (unlimited, hence trivially >= 6 GB), and an explicit
-    # override wins outright (the escape hatch to go below the floor).
     MIN_MEMORY_MB = 6144  # 6 GB
     if override_memory_mb is not None:
         memory_mb: int | None = override_memory_mb
@@ -86,8 +77,6 @@ def harbor_to_compose_config(
 
         if compose_config.services:
             _, default_service = _find_default_service(compose_config)
-            # Only impose a limit when we have one; leave the compose file's
-            # own value untouched when the task omits the field (unlimited).
             if cpus is not None:
                 default_service.cpus = cpus
             if memory_mb is not None:
@@ -288,10 +277,6 @@ def _expand_compose_vars(
         "ENV_AGENT_LOGS_PATH": str(paths.agent_dir),
         "ENV_ARTIFACTS_PATH": str(paths.artifacts_dir),
     }
-    # Only expose CPUS/MEMORY when a concrete limit exists. When the task omits
-    # the field (unlimited), leave the ``${CPUS}``/``${MEMORY}`` refs to the
-    # compose file's own ``:-default`` fallback — mirroring Harbor, which
-    # leaves these env vars unset (ComposeInfraEnvVars dumps exclude_none).
     if cpus is not None:
         var_map["CPUS"] = str(int(cpus))
     if memory_mb is not None:
