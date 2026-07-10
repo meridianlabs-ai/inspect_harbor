@@ -6,7 +6,13 @@ from unittest.mock import Mock, mock_open, patch
 
 import pytest
 import yaml
-from harbor.models.task.config import AgentConfig, EnvironmentConfig, VerifierConfig
+from harbor.models.task.config import (
+    AgentConfig,
+    EnvironmentConfig,
+    NetworkMode,
+    TaskConfig,
+    VerifierConfig,
+)
 from inspect_ai.dataset import Sample
 from inspect_ai.util import ComposeBuild, ComposeConfig, SandboxEnvironmentSpec
 from inspect_ai.util._sandbox.compose import ComposeDeviceReservation
@@ -520,8 +526,6 @@ def test_harbor_to_compose_config_deprecated_allow_internet_isolated():
     handling is needed on our side. Uses a real ``TaskConfig`` (not a Mock) to
     exercise that migration end to end.
     """
-    from harbor.models.task.config import NetworkMode, TaskConfig
-
     with pytest.warns(DeprecationWarning, match="allow_internet"):
         config = TaskConfig.model_validate_toml(
             '[environment]\ndocker_image = "ubuntu:latest"\nallow_internet = false\n'
