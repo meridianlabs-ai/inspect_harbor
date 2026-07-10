@@ -3,7 +3,8 @@ name = "harbor-test/simple-task"
 description = "A simple test task for integration testing"
 
 # cpus / memory_mb / gpus intentionally omitted: harbor >=0.17 leaves them as
-# None so the integration tests exercise our default-coalescing path.
+# None so the integration tests exercise our no-limit path (no imposed cpus /
+# mem_limit / GPU deploy).
 [environment]
 docker_image = "python:3.11-slim"
 network_mode = "no-network"
