@@ -13,6 +13,37 @@ from inspect_harbor._harbor.task import harbor as _harbor_base
 
 
 @task
+def enterprise_bench_l1_l2_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Enterprise Agent Benchmark
+
+    Slug: Enterprise-Bench/l1-l2-bench
+    Latest digest: sha256:2e4e4cc423c5636d6d767e30ceb3f831bb0c83178f0387f0452077b36f49ee93
+    """
+    return _harbor_base(
+        package_name="Enterprise-Bench/l1-l2-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def litecoder_rl(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2605,8 +2636,8 @@ def rexbench(
     Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors.
     Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.
 
-        Slug: rexbench/rexbench
-        Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
+    Slug: rexbench/rexbench
+    Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
     """
     return _harbor_base(
         package_name="rexbench/rexbench",

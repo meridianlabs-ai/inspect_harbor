@@ -57,6 +57,9 @@
 #   desc:          override the auto-derived description        (optional)
 #   featured:      boolean                                      (optional)
 
+Enterprise-Bench/l1-l2-bench:
+  categories: []
+
 LiteCoder/LiteCoder-rl:
   categories:
   - Coding

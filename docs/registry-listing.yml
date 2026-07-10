@@ -6,6 +6,13 @@
 #   PackageDatasetClient.get_dataset_metadata for each slug.
 # Categories: docs/overrides.yml (hand-maintained; see file header).
 
+- title: Enterprise-Bench/l1-l2-bench
+  path: registry/enterprise_bench_l1_l2_bench.html
+  desc: Enterprise Agent Benchmark.
+  desc_trunc: Enterprise Agent Benchmark.
+  task_function: enterprise_bench_l1_l2_bench
+  samples: 14
+  version: latest
 - title: LiteCoder/LiteCoder-rl
   path: registry/litecoder_rl.html
   desc: 'LiteCoder: terminal-based RL training environments spanning developer workflows, scientific/numerical computing, and games.'
