@@ -512,32 +512,32 @@ def test_harbor_to_compose_config_network_mode_field_allows_network(
         assert result.services["default"].network_mode == "bridge"
 
 
-def test_harbor_to_compose_config_deprecated_allow_internet_ignored():
-    """The deprecated ``allow_internet`` boolean is no longer honored.
+def test_harbor_to_compose_config_deprecated_allow_internet_isolated():
+    """A legacy ``allow_internet = false`` task.toml ends up network-isolated.
 
-    Harbor >=0.13 never migrates it to ``network_mode`` (its validator only
-    warns), so an old-style ``allow_internet = false`` task.toml falls back
-    to ``network_mode``'s default (``public``) — i.e. network access.
+    Harbor's ``TaskConfig`` validator migrates the deprecated boolean to
+    ``network_mode = no-network`` (and clears the boolean), so no special
+    handling is needed on our side. Uses a real ``TaskConfig`` (not a Mock) to
+    exercise that migration end to end.
     """
+    from harbor.models.task.config import NetworkMode, TaskConfig
+
+    config = TaskConfig.model_validate_toml(
+        '[environment]\ndocker_image = "ubuntu:latest"\nallow_internet = false\n'
+    )
+    # Harbor migrated the deprecated boolean; the enum, not the boolean, drives us.
+    assert config.environment.network_mode == NetworkMode.NO_NETWORK
+    assert config.environment.allow_internet is None
+
     mock_task = Mock()
+    mock_task.name = "legacy-task"
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/task/environment")
-
-    mock_env_config = Mock()
-    mock_env_config.env = {}
-    mock_env_config.cpus = 1
-    mock_env_config.memory_mb = 2048
-    mock_env_config.docker_image = "ubuntu:latest"
-    # Harbor keeps the deprecated boolean as-is and leaves the enum default.
-    mock_env_config.allow_internet = False
-    mock_env_config.network_mode = "public"
-    mock_env_config.gpus = 0
-    mock_env_config.gpu_types = None
-    mock_task.config.environment = mock_env_config
+    mock_task.config.environment = config.environment
 
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
-        assert result.services["default"].network_mode == "bridge"
+        assert result.services["default"].network_mode == "none"
 
 
 # A kumo-style compose: per-service ``networks:`` plus a top-level network.

@@ -321,7 +321,9 @@ def _is_no_network(env_config: EnvironmentConfig) -> bool:
     Only ``no-network`` isolates the environment. ``allowlist`` cannot be
     enforced in a plain compose project (that's Harbor's egress sidecar), so
     it is treated like ``public``; the loader warns about the degraded
-    fidelity. The deprecated ``allow_internet`` boolean is not honored —
-    Harbor itself only warns on it and never migrates it to ``network_mode``.
+    fidelity. The deprecated ``allow_internet = false`` needs no special
+    handling here: Harbor's ``TaskConfig`` validator migrates it to
+    ``network_mode = no-network`` (and clears the boolean), so a legacy task
+    is isolated through the ``network_mode`` check below.
     """
     return env_config.network_mode == NetworkMode.NO_NETWORK
