@@ -522,9 +522,10 @@ def test_harbor_to_compose_config_deprecated_allow_internet_isolated():
     """
     from harbor.models.task.config import NetworkMode, TaskConfig
 
-    config = TaskConfig.model_validate_toml(
-        '[environment]\ndocker_image = "ubuntu:latest"\nallow_internet = false\n'
-    )
+    with pytest.warns(DeprecationWarning, match="allow_internet"):
+        config = TaskConfig.model_validate_toml(
+            '[environment]\ndocker_image = "ubuntu:latest"\nallow_internet = false\n'
+        )
     # Harbor migrated the deprecated boolean; the enum, not the boolean, drives us.
     assert config.environment.network_mode == NetworkMode.NO_NETWORK
     assert config.environment.allow_internet is None
