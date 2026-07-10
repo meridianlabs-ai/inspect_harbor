@@ -5,29 +5,25 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-  pull-requests: write
-  id-token: write
-
 jobs:
   release-please:
-    runs-on: ubuntu-latest
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
-    steps:
-      - uses: googleapis/release-please-action@v4
-        id: release
-        with:
-          release-type: python
-          config-file: .release-please-config.json
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: meridianlabs-ai/actions/.github/workflows/release-please-python.yml@v1
+    with:
+      approvers: "alexandraabbas jjallaire dragonstyle"
+    secrets: inherit
 
+  # Publish stays in-repo (PyPI trusted publishing can't run from a cross-repo
+  # reusable workflow; keeping it here leaves the trusted-publisher config for
+  # workflow release.yaml unchanged).
   publish:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required for OIDC/trusted publishing
     environment:
       name: pypi
       url: https://pypi.org/p/inspect-harbor
