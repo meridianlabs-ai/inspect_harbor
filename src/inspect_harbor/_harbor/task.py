@@ -225,7 +225,7 @@ def _disambiguate_sample_ids(harbor_tasks: list[HarborTask]) -> list[str]:
 
 
 def _build_harbor_tasks(
-    task_paths: list[Path], disable_verification: bool = False
+    task_paths: list[Path], disable_verification: bool
 ) -> list[HarborTask]:
     """Construct ``HarborTask`` objects, validating unsupported task.toml shapes."""
     harbor_tasks = [
