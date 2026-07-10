@@ -24,7 +24,7 @@ def enterprise_bench_l1_l2_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Enterprise Agent Benchmark
+    r"""Enterprise-Bench (L1-L2): DevRev's enterprise agent benchmark — answering L1/L2 support-tier questions (ticket SLAs, triage, customer-account data) over fragmented enterprise systems.
 
     Slug: Enterprise-Bench/l1-l2-bench
     Latest digest: sha256:2e4e4cc423c5636d6d767e30ceb3f831bb0c83178f0387f0452077b36f49ee93
