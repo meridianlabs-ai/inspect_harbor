@@ -208,6 +208,13 @@
   categories:
   - Reasoning
   - Multimodal
+- title: aryaniyaps/lamina-bench
+  path: registry/aryaniyaps_lamina_bench.html
+  desc: 'LaminaBench v1: SkillsBench-paired product implementation benchmark (10 tasks, control + treatment arms).'
+  desc_trunc: 'LaminaBench v1: SkillsBench-paired product implementation benchmark (10 tasks, control + treatment…'
+  task_function: aryaniyaps_lamina_bench
+  samples: 20
+  version: latest
 - title: benchflow/skillsbench
   path: registry/benchflow_skillsbench.html
   desc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folders of instructions, scripts, and resources) to complete specialized workflows spanning science, engineering, and professional domains.'
@@ -258,7 +265,7 @@
   desc: 'SETA (Scaling Environments for Terminal Agents): CAMEL-AI''s verifiable terminal-agent tasks spanning software engineering, sysadmin, and DevOps for evaluating and RL-training agents.'
   desc_trunc: 'SETA (Scaling Environments for Terminal Agents): CAMEL-AI''s verifiable terminal-agent tasks spannin…'
   task_function: camel_ai_seta_env
-  samples: 1000
+  samples: 1376
   version: latest
   categories:
   - Coding
@@ -267,7 +274,7 @@
   desc: Autonomous-vehicle scenario mining via VLM.
   desc_trunc: Autonomous-vehicle scenario mining via VLM.
   task_function: cmu_refav
-  samples: 1000
+  samples: 1500
   version: latest
   categories:
   - Multimodal
@@ -440,7 +447,7 @@
   desc: 'Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Python, Java, JavaScript, and REST APIs.'
   desc_trunc: 'Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Pyt…'
   task_function: gorilla_bfcl
-  samples: 1000
+  samples: 3641
   version: latest
   categories:
   - Assistants
@@ -485,6 +492,13 @@
   version: latest
   categories:
   - Coding
+- title: harbor-index/harbor-index
+  path: registry/harbor_index_harbor_index.html
+  desc: 'Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision 1.1).'
+  desc_trunc: 'Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision…'
+  task_function: harbor_index_harbor_index
+  samples: 80
+  version: latest
 - title: harbor-index/harbor-index-1.0
   path: registry/harbor_index_1_0.html
   desc: Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000 candidate tasks through repeated model runs, automated broken-task identification, human audits, and reward hacking supervision.
@@ -500,7 +514,7 @@
   desc: Harvey LAB - open-source benchmark for evaluating agents on real legal work.
   desc_trunc: Harvey LAB - open-source benchmark for evaluating agents on real legal work.
   task_function: harveyai_lab
-  samples: 1000
+  samples: 1251
   version: latest
   categories:
   - Law
@@ -559,7 +573,7 @@
   desc: 'KUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic engines across 100 open-ended domains.'
   desc_trunc: 'KUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic…'
   task_function: kumo_1
-  samples: 1000
+  samples: 5300
   version: latest
   categories:
   - Reasoning
@@ -568,7 +582,7 @@
   desc: 'KUMO (easy split): easier-difficulty procedurally-generated reasoning tasks from KUMO''s benchmark across 100 domains.'
   desc_trunc: 'KUMO (easy split): easier-difficulty procedurally-generated reasoning tasks from KUMO''s benchmark a…'
   task_function: kumo_easy
-  samples: 1000
+  samples: 5050
   version: latest
   categories:
   - Reasoning
@@ -615,7 +629,7 @@
   desc: 'GraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infographics, template design, and animation.'
   desc_trunc: 'GraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infograp…'
   task_function: lica_world_gdb
-  samples: 1000
+  samples: 33786
   version: latest
   categories:
   - Multimodal
@@ -654,7 +668,7 @@
   desc: 'The Amazing Agent Race (AAR): 1400 multi-step scavenger-hunt puzzles for evaluating LLM agents on tool use, web navigation, and arithmetic reasoning. Includes linear (800) and DAG (600) variants across 4 difficulty levels.'
   desc_trunc: 'The Amazing Agent Race (AAR): 1400 multi-step scavenger-hunt puzzles for evaluating LLM agents on t…'
   task_function: minnesotanlp_aar
-  samples: 1000
+  samples: 1400
   version: latest
   categories:
   - Reasoning
@@ -693,7 +707,7 @@
   desc: 'SimpleQA: short, fact-seeking questions adversarially collected against GPT-4 to measure short-form factuality and calibration of frontier LLMs.'
   desc_trunc: 'SimpleQA: short, fact-seeking questions adversarially collected against GPT-4 to measure short-form…'
   task_function: openai_simpleqa
-  samples: 1000
+  samples: 4326
   version: latest
   categories:
   - Knowledge
@@ -824,7 +838,7 @@
   desc: 'SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable difficulty, validated through both LLM and SAT-solver consistency checks.'
   desc_trunc: 'SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable diffi…'
   task_function: satbench
-  samples: 1000
+  samples: 2100
   version: latest
   categories:
   - Reasoning
@@ -986,7 +1000,7 @@
   desc: 'TermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11 categories, generated by an end-to-end multi-agent synthesis pipeline.'
   desc_trunc: 'TermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11…'
   task_function: termigen_environments
-  samples: 1000
+  samples: 3566
   version: latest
   categories:
   - Coding
@@ -1074,7 +1088,7 @@
   desc: Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).
   desc_trunc: Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).
   task_function: vmax_tasks
-  samples: 1000
+  samples: 1043
   version: latest
   categories:
   - Coding

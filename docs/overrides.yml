@@ -220,6 +220,9 @@ arcprize/arc-agi-2:
   title: ARC-AGI-2
   featured: true
 
+aryaniyaps/lamina-bench:
+  categories: []
+
 benchflow/skillsbench:
   categories:
   - Assistants
@@ -456,6 +459,9 @@ grandsmile/unicode:
   repo: https://github.com/grandsmile/UniCode
   desc: 'UniCode: competitive-programming problems systematically augmented into novel variations to probe genuine code reasoning rather than memorized solutions, scored against an oracle-verified solvable subset.'
   title: UniCode
+
+harbor-index/harbor-index:
+  categories: []
 
 harbor-index/harbor-index-1.0:
   categories:
