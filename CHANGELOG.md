@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.6.0...v0.6.1) (2026-07-13)
+
+
+### Bug Fixes
+
+* update Harbor registry tasks ([#120](https://github.com/meridianlabs-ai/inspect_harbor/issues/120)) ([448d207](https://github.com/meridianlabs-ai/inspect_harbor/commit/448d2076094585c2fe679881f77e5eac44e28405))
+
 ## [0.6.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.5.17...v0.6.0) (2026-07-10)
 
 
