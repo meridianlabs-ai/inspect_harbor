@@ -26,6 +26,6 @@ eval(vmax_tasks(), model="openai/gpt-5")
 | Harbor registry | [vmax/vmax-tasks](https://hub.harborframework.com/datasets/vmax/vmax-tasks/latest) |
 | Inspect task | `vmax_tasks` |
 | Latest digest | sha256:b5978ffe255299f8d5729499e7ebd81d3a173cb013d35a901a98c808eab3b3b3 |
-| Samples | 1000 |
+| Samples | 1043 |
 
 See [Task Parameters](../parameters.html.md) for the parameter set shared across all Harbor tasks.

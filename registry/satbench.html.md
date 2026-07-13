@@ -26,7 +26,7 @@ eval(satbench(), model="openai/gpt-5")
 | Harbor registry | [satbench/satbench](https://hub.harborframework.com/datasets/satbench/satbench/latest) |
 | Inspect task | `satbench` |
 | Latest digest | sha256:4b921bb49ebe0513a784783eeac9561e9d216339de1e4cb20c43018dd0502a1e |
-| Samples | 1000 |
+| Samples | 2100 |
 | Paper | [arxiv](https://arxiv.org/abs/2505.14615) |
 | Source | <https://github.com/Anjiang-Wei/SATBench> |
 

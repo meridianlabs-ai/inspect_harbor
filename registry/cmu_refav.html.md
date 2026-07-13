@@ -26,7 +26,7 @@ eval(cmu_refav(), model="openai/gpt-5")
 | Harbor registry | [cmu/refav](https://hub.harborframework.com/datasets/cmu/refav/latest) |
 | Inspect task | `cmu_refav` |
 | Latest digest | sha256:57c93f1c2f6bda2b015cec8286380cbd33860c6d1d9407f1d17dd656c0b926e0 |
-| Samples | 1000 |
+| Samples | 1500 |
 | Paper | [arxiv](https://arxiv.org/abs/2505.20981) |
 | Source | <https://github.com/CainanD/RefAV> |
 

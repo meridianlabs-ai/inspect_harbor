@@ -26,7 +26,7 @@ eval(lica_world_gdb(), model="openai/gpt-5")
 | Harbor registry | [lica-world/gdb](https://hub.harborframework.com/datasets/lica-world/gdb/latest) |
 | Inspect task | `lica_world_gdb` |
 | Latest digest | sha256:bd7a447e5db63f97de0a215d3cce01b87fe17fc7ea0a56cd9c29ad502b5b24fa |
-| Samples | 1000 |
+| Samples | 33786 |
 | Paper | [arxiv](https://arxiv.org/abs/2604.04192) |
 | Source | <https://github.com/purvanshi-lica/lica-bench> |
 

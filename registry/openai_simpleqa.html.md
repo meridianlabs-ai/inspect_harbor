@@ -26,7 +26,7 @@ eval(openai_simpleqa(), model="openai/gpt-5")
 | Harbor registry | [openai/simpleqa](https://hub.harborframework.com/datasets/openai/simpleqa/latest) |
 | Inspect task | `openai_simpleqa` |
 | Latest digest | sha256:22f25921ded881aca13cf5d18b8d3bbc91e2b9bf44d17108292dcc40fcb5f0d4 |
-| Samples | 1000 |
+| Samples | 4326 |
 | Paper | [arxiv](https://arxiv.org/abs/2411.04368) |
 | Source | <https://github.com/openai/simple-evals> |
 

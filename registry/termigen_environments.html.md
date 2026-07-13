@@ -26,7 +26,7 @@ eval(termigen_environments(), model="openai/gpt-5")
 | Harbor registry | [termigen/termigen-environments](https://hub.harborframework.com/datasets/termigen/termigen-environments/latest) |
 | Inspect task | `termigen_environments` |
 | Latest digest | sha256:492c3b4c051b304b3887ca4a94a3081094c177b1227f0a609123da236359d5f0 |
-| Samples | 1000 |
+| Samples | 3566 |
 | Paper | [arxiv](https://arxiv.org/abs/2602.07274) |
 | Source | <https://github.com/ucsb-mlsec/terminal-bench-env> |
 

@@ -26,7 +26,7 @@ eval(minnesotanlp_aar(), model="openai/gpt-5")
 | Harbor registry | [minnesotanlp/aar](https://hub.harborframework.com/datasets/minnesotanlp/aar/latest) |
 | Inspect task | `minnesotanlp_aar` |
 | Latest digest | sha256:d93938542f547046aa37d7c62f8ef0e4ec690cc18860615d72ef03e142bb5403 |
-| Samples | 1000 |
+| Samples | 1400 |
 | Paper | [arxiv](https://arxiv.org/abs/2604.10261) |
 | Source | <https://github.com/minnesotanlp/the-amazing-agent-race> |
 

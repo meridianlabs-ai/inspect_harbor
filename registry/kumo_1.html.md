@@ -26,7 +26,7 @@ eval(kumo_1(), model="openai/gpt-5")
 | Harbor registry | [kumo/kumo-1](https://hub.harborframework.com/datasets/kumo/kumo-1/latest) |
 | Inspect task | `kumo_1` |
 | Latest digest | sha256:a70e4f6c1a7cca8977db77461c8d341fb8dc481c857a48e28bc2b4ddcfa9e0ef |
-| Samples | 1000 |
+| Samples | 5300 |
 | Paper | [arxiv](https://arxiv.org/abs/2504.02810) |
 | Source | <https://github.com/linhaowei1/kumo> |
 
