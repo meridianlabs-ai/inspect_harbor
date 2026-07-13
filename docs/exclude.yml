@@ -29,3 +29,7 @@
 # no paper or repo, and the hub page carries no author metadata (8-sample
 # SystemVerilog reset-release micro-benchmark). Not a published benchmark.
 - svgap/*
+# Individual's (User, not org) A/B experiment pairing SkillsBench control and
+# treatment arms (10 tasks / 20 samples); no lamina-bench repo exists on
+# GitHub and no paper or external footprint. Not a published benchmark.
+- aryaniyaps/*

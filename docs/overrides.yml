@@ -457,6 +457,13 @@ grandsmile/unicode:
   desc: 'UniCode: competitive-programming problems systematically augmented into novel variations to probe genuine code reasoning rather than memorized solutions, scored against an oracle-verified solvable subset.'
   title: UniCode
 
+harbor-index/harbor-index:
+  categories:
+  - Assistants
+  - Reasoning
+  title: Harbor Index
+  function_name: harbor_index
+
 harbor-index/harbor-index-1.0:
   categories:
   - Assistants

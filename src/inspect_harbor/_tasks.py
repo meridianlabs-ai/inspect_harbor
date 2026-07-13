@@ -1563,6 +1563,37 @@ def grandsmile_unicode(
 
 
 @task
+def harbor_index(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision 1.1).
+
+    Slug: harbor-index/harbor-index
+    Latest digest: sha256:d306c1a459c6adb28068db28a855d003c216c76eb5d515ca9b8283dd1dbd36c7
+    """
+    return _harbor_base(
+        package_name="harbor-index/harbor-index",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def harbor_index_1_0(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
