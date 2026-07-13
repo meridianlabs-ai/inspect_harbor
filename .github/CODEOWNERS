@@ -1,0 +1,9 @@
+# Code owners for release-gating.
+#
+# Only the release PR touches these files (Release Please maintains them), so
+# requiring code-owner review on them gates *release* PRs to the owners below
+# without affecting normal feature PRs. Pair with the branch ruleset's
+# "Require review from Code Owners".
+
+/CHANGELOG.md                    @alexandraabbas @jjallaire @dragonstyle
+/.release-please-manifest.json   @alexandraabbas @jjallaire @dragonstyle
