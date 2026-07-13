@@ -208,13 +208,6 @@
   categories:
   - Reasoning
   - Multimodal
-- title: aryaniyaps/lamina-bench
-  path: registry/aryaniyaps_lamina_bench.html
-  desc: 'LaminaBench v1: SkillsBench-paired product implementation benchmark (10 tasks, control + treatment arms).'
-  desc_trunc: 'LaminaBench v1: SkillsBench-paired product implementation benchmark (10 tasks, control + treatment…'
-  task_function: aryaniyaps_lamina_bench
-  samples: 20
-  version: latest
 - title: benchflow/skillsbench
   path: registry/benchflow_skillsbench.html
   desc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folders of instructions, scripts, and resources) to complete specialized workflows spanning science, engineering, and professional domains.'
@@ -493,12 +486,15 @@
   categories:
   - Coding
 - title: harbor-index/harbor-index
-  path: registry/harbor_index_harbor_index.html
+  path: registry/harbor_index.html
   desc: 'Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision 1.1).'
   desc_trunc: 'Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision…'
-  task_function: harbor_index_harbor_index
+  task_function: harbor_index
   samples: 80
   version: latest
+  categories:
+  - Assistants
+  - Reasoning
 - title: harbor-index/harbor-index-1.0
   path: registry/harbor_index_1_0.html
   desc: Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000 candidate tasks through repeated model runs, automated broken-task identification, human audits, and reward hacking supervision.

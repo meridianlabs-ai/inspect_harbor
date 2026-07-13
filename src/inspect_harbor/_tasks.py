@@ -664,37 +664,6 @@ def arcprize_arc_agi_2(
 
 
 @task
-def aryaniyaps_lamina_bench(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""LaminaBench v1: SkillsBench-paired product implementation benchmark (10 tasks, control + treatment arms)
-
-    Slug: aryaniyaps/lamina-bench
-    Latest digest: sha256:fd0c4d69f1742da3328fe59278524df811ebdc944d37ad2585602e1764c85958
-    """
-    return _harbor_base(
-        package_name="aryaniyaps/lamina-bench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def benchflow_skillsbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1594,7 +1563,7 @@ def grandsmile_unicode(
 
 
 @task
-def harbor_index_harbor_index(
+def harbor_index(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,

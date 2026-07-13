@@ -220,9 +220,6 @@ arcprize/arc-agi-2:
   title: ARC-AGI-2
   featured: true
 
-aryaniyaps/lamina-bench:
-  categories: []
-
 benchflow/skillsbench:
   categories:
   - Assistants
@@ -461,7 +458,11 @@ grandsmile/unicode:
   title: UniCode
 
 harbor-index/harbor-index:
-  categories: []
+  categories:
+  - Assistants
+  - Reasoning
+  title: Harbor Index
+  function_name: harbor_index
 
 harbor-index/harbor-index-1.0:
   categories:
