@@ -27,7 +27,7 @@ def enterprise_bench_l1_l2_bench(
     r"""Enterprise-Bench (L1-L2): DevRev's enterprise agent benchmark — answering L1/L2 support-tier questions (ticket SLAs, triage, customer-account data) over fragmented enterprise systems.
 
     Slug: Enterprise-Bench/l1-l2-bench
-    Latest digest: sha256:2e4e4cc423c5636d6d767e30ceb3f831bb0c83178f0387f0452077b36f49ee93
+    Latest digest: sha256:9a32367dd69321635b518dcd2befab16d50fdda623139e92025a81e6492659ec
     """
     return _harbor_base(
         package_name="Enterprise-Bench/l1-l2-bench",
@@ -124,6 +124,37 @@ def aarr_aarri_bench(
     """
     return _harbor_base(
         package_name="aarr/aarri-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def abhishek203_task_aw(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""IT support mock-provider tasks (a-1, a-2, a-3, a-4, a-8)
+
+    Slug: abhishek203/task-aw
+    Latest digest: sha256:859248e86fb397605b06cbc53d89642eb1c160eec4aecd2d0a1778ba42b7f53f
+    """
+    return _harbor_base(
+        package_name="abhishek203/task-aw",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -1574,10 +1605,10 @@ def harbor_index(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision 1.1).
+    r"""Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision 1.2).
 
     Slug: harbor-index/harbor-index
-    Latest digest: sha256:d306c1a459c6adb28068db28a855d003c216c76eb5d515ca9b8283dd1dbd36c7
+    Latest digest: sha256:45f546a3b68abba79a5cbf756c7058cc4884358bd78e510f4cc7342766837acc
     """
     return _harbor_base(
         package_name="harbor-index/harbor-index",
