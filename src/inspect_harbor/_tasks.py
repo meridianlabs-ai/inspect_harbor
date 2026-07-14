@@ -27,7 +27,7 @@ def enterprise_bench_l1_l2_bench(
     r"""Enterprise-Bench (L1-L2): DevRev's enterprise agent benchmark — answering L1/L2 support-tier questions (ticket SLAs, triage, customer-account data) over fragmented enterprise systems.
 
     Slug: Enterprise-Bench/l1-l2-bench
-    Latest digest: sha256:2e4e4cc423c5636d6d767e30ceb3f831bb0c83178f0387f0452077b36f49ee93
+    Latest digest: sha256:9a32367dd69321635b518dcd2befab16d50fdda623139e92025a81e6492659ec
     """
     return _harbor_base(
         package_name="Enterprise-Bench/l1-l2-bench",
@@ -1574,10 +1574,10 @@ def harbor_index(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision 1.1).
+    r"""Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision 1.2).
 
     Slug: harbor-index/harbor-index
-    Latest digest: sha256:d306c1a459c6adb28068db28a855d003c216c76eb5d515ca9b8283dd1dbd36c7
+    Latest digest: sha256:45f546a3b68abba79a5cbf756c7058cc4884358bd78e510f4cc7342766837acc
     """
     return _harbor_base(
         package_name="harbor-index/harbor-index",

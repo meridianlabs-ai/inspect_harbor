@@ -487,7 +487,7 @@
   - Coding
 - title: harbor-index/harbor-index
   path: registry/harbor_index.html
-  desc: 'Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision 1.1).'
+  desc: 'Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision 1.2).'
   desc_trunc: 'Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision…'
   task_function: harbor_index
   samples: 80

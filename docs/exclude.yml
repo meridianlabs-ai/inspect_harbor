@@ -33,3 +33,8 @@
 # treatment arms (10 tasks / 20 samples); no lamina-bench repo exists on
 # GitHub and no paper or external footprint. Not a published benchmark.
 - aryaniyaps/*
+# Individual's (User, not org) experimental IT-support mock-provider agent
+# tasks (5 samples with gappy ids a-1..a-4, a-8; fake ServiceNow/Okta APIs);
+# no task-aw repo exists on GitHub and no paper or external footprint. Not a
+# published benchmark.
+- abhishek203/*
