@@ -87,9 +87,6 @@ aarr/aarri-bench:
   - Assistants
   title: AARRI-Bench
 
-abhishek203/task-aw:
-  categories: []
-
 abundant/swe-gen-cpp:
   categories:
   - Coding

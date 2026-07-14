@@ -137,37 +137,6 @@ def aarr_aarri_bench(
 
 
 @task
-def abhishek203_task_aw(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""IT support mock-provider tasks (a-1, a-2, a-3, a-4, a-8)
-
-    Slug: abhishek203/task-aw
-    Latest digest: sha256:859248e86fb397605b06cbc53d89642eb1c160eec4aecd2d0a1778ba42b7f53f
-    """
-    return _harbor_base(
-        package_name="abhishek203/task-aw",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def abundant_swe_gen_cpp(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
