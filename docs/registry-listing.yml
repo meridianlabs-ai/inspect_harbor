@@ -175,6 +175,9 @@
   task_function: ale_rsi_post_training
   samples: 5
   version: latest
+  categories:
+  - Coding
+  - Science
 - title: algotune/algotune
   path: registry/algotune.html
   desc: 'AlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that matches reference output but runs faster than existing implementations.'
@@ -216,12 +219,15 @@
   - Reasoning
   - Multimodal
 - title: atm-bench/atm-bench-hard-sgm
-  path: registry/atm_bench_atm_bench_hard_sgm.html
-  desc: ATM-Bench-Hard SGM Harbor tasks.
-  desc_trunc: ATM-Bench-Hard SGM Harbor tasks.
-  task_function: atm_bench_atm_bench_hard_sgm
+  path: registry/atm_bench_hard_sgm.html
+  desc: 'ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided memory (SGM) files distilled from ~4 years of a user''s images, videos, and emails.'
+  desc_trunc: 'ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided m…'
+  task_function: atm_bench_hard_sgm
   samples: 31
   version: latest
+  categories:
+  - Assistants
+  - Reasoning
 - title: benchflow/skillsbench
   path: registry/benchflow_skillsbench.html
   desc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folders of instructions, scripts, and resources) to complete specialized workflows spanning science, engineering, and professional domains.'
@@ -767,13 +773,6 @@
   version: latest
   categories:
   - Coding
-- title: punitarani/harvey-labs
-  path: registry/punitarani_harvey_labs.html
-  desc: 'Harvey Labs: 1,760 legal-drafting tasks (LAB) across 26 practice areas, graded with Harbor rewardkit (LLM-judge, OpenRouter default, 111,826 binary criteria).'
-  desc_trunc: 'Harvey Labs: 1,760 legal-drafting tasks (LAB) across 26 practice areas, graded with Harbor rewardki…'
-  task_function: punitarani_harvey_labs
-  samples: 1760
-  version: latest
 - title: qcircuitbench/qcircuitbench
   path: registry/qcircuitbench.html
   desc: 'QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle construction, algorithm design, and random circuits with automatic verification.'
@@ -994,13 +993,6 @@
   version: latest
   categories:
   - Coding
-- title: swesimbench/SWESimBench
-  path: registry/swesimbench_swesimbench.html
-  desc: 'SWESimBench eval (v2): noprofile user-simulation held-out turns (~1520 tasks).'
-  desc_trunc: 'SWESimBench eval (v2): noprofile user-simulation held-out turns (~1520 tasks).'
-  task_function: swesimbench_swesimbench
-  samples: 1520
-  version: latest
 - title: swt-bench/swt-bench-verified
   path: registry/swt_bench_verified.html
   desc: 'SWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing unit tests for real GitHub issues — tests must fail on buggy code and pass after the fix.'

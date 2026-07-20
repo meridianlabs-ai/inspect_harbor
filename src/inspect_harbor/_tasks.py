@@ -695,7 +695,7 @@ def arcprize_arc_agi_2(
 
 
 @task
-def atm_bench_atm_bench_hard_sgm(
+def atm_bench_hard_sgm(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -706,7 +706,7 @@ def atm_bench_atm_bench_hard_sgm(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""ATM-Bench-Hard SGM Harbor tasks
+    r"""ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided memory (SGM) files distilled from ~4 years of a user's images, videos, and emails.
 
     Slug: atm-bench/atm-bench-hard-sgm
     Latest digest: sha256:745358f9028fc12c5bb83ddb9d401e43791d0383e61a70b9f83d0d927af2d821
@@ -2493,37 +2493,6 @@ def pgcodellm_rebench_v2_test(
 
 
 @task
-def punitarani_harvey_labs(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Harvey Labs: 1,760 legal-drafting tasks (LAB) across 26 practice areas, graded with Harbor rewardkit (LLM-judge, OpenRouter default, 111,826 binary criteria).
-
-    Slug: punitarani/harvey-labs
-    Latest digest: sha256:a5ffde4541a825f3917c35e81b48b5ff79145502386881f03c1af6c6d3aeab9f
-    """
-    return _harbor_base(
-        package_name="punitarani/harvey-labs",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def qcircuitbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3230,37 +3199,6 @@ def swe_rebench_leaderboard(
     """
     return _harbor_base(
         package_name="swe-rebench/swe-rebench-leaderboard",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def swesimbench_swesimbench(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""SWESimBench eval (v2): noprofile user-simulation held-out turns (~1520 tasks).
-
-    Slug: swesimbench/SWESimBench
-    Latest digest: sha256:7dc55b1a88bce838cebf8ceb1901d49236804e1a59c63a8debda0d09c9a4581d
-    """
-    return _harbor_base(
-        package_name="swesimbench/SWESimBench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

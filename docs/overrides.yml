@@ -184,7 +184,10 @@ aime/aime:
   title: AIME
 
 ale/rsi-post-training:
-  categories: []
+  categories:
+  - Coding
+  - Science
+  title: ALE RSI Post-Training
 
 algotune/algotune:
   categories:
@@ -224,7 +227,14 @@ arcprize/arc-agi-2:
   featured: true
 
 atm-bench/atm-bench-hard-sgm:
-  categories: []
+  categories:
+  - Assistants
+  - Reasoning
+  arxiv: https://arxiv.org/abs/2603.01990
+  repo: https://github.com/JingbiaoMei/ATM-Bench
+  desc: 'ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided memory (SGM) files distilled from ~4 years of a user''s images, videos, and emails.'
+  function_name: atm_bench_hard_sgm
+  title: ATM-Bench-Hard (SGM)
 
 benchflow/skillsbench:
   categories:
@@ -688,9 +698,6 @@ pgcodellm/rebench-v2-test:
   desc: 'SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-built images for reproducible execution.'
   title: SWE-rebench V2
 
-punitarani/harvey-labs:
-  categories: []
-
 qcircuitbench/qcircuitbench:
   categories:
   - Science
@@ -887,9 +894,6 @@ swe-rebench/swe-rebench-leaderboard:
   arxiv: https://arxiv.org/abs/2505.20411
   repo: https://huggingface.co/datasets/nebius/SWE-rebench-leaderboard
   function_name: swe_rebench_leaderboard
-
-swesimbench/SWESimBench:
-  categories: []
 
 swt-bench/swt-bench-verified:
   categories:
