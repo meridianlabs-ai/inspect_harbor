@@ -183,6 +183,9 @@ aime/aime:
   function_name: aime
   title: AIME
 
+ale/rsi-post-training:
+  categories: []
+
 algotune/algotune:
   categories:
   - Coding
@@ -219,6 +222,9 @@ arcprize/arc-agi-2:
   desc: 'ARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but state-of-the-art models still struggle.'
   title: ARC-AGI-2
   featured: true
+
+atm-bench/atm-bench-hard-sgm:
+  categories: []
 
 benchflow/skillsbench:
   categories:
@@ -682,6 +688,9 @@ pgcodellm/rebench-v2-test:
   desc: 'SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-built images for reproducible execution.'
   title: SWE-rebench V2
 
+punitarani/harvey-labs:
+  categories: []
+
 qcircuitbench/qcircuitbench:
   categories:
   - Science
@@ -879,6 +888,9 @@ swe-rebench/swe-rebench-leaderboard:
   repo: https://huggingface.co/datasets/nebius/SWE-rebench-leaderboard
   function_name: swe_rebench_leaderboard
 
+swesimbench/SWESimBench:
+  categories: []
+
 swt-bench/swt-bench-verified:
   categories:
   - Coding
@@ -965,6 +977,9 @@ usaco/usaco:
   desc: 'USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality unit tests, reference code, and official analyses for ad-hoc algorithmic reasoning.'
   function_name: usaco
   title: USACO
+
+userbench/UserBench:
+  categories: []
 
 vals/financeagent:
   categories:
