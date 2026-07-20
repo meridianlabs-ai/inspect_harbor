@@ -3522,7 +3522,7 @@ def usaco(
 
 
 @task
-def userbench_userbench(
+def userbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,

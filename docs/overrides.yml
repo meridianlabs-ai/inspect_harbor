@@ -984,6 +984,7 @@ usaco/usaco:
 
 userbench/UserBench:
   categories: []
+  function_name: userbench
 
 vals/financeagent:
   categories:

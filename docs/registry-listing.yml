@@ -1089,10 +1089,10 @@
   categories:
   - Coding
 - title: userbench/UserBench
-  path: registry/userbench_userbench.html
+  path: registry/userbench.html
   desc: 'UserBench eval (v2): noprofile user-simulation held-out turns (~1520 tasks). Formerly developed as SWESimBench v2.'
   desc_trunc: 'UserBench eval (v2): noprofile user-simulation held-out turns (~1520 tasks). Formerly developed as…'
-  task_function: userbench_userbench
+  task_function: userbench
   samples: 1520
   version: latest
 - title: vals/financeagent
