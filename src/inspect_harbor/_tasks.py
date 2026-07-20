@@ -27,7 +27,7 @@ def enterprise_bench_l1_l2_bench(
     r"""Enterprise-Bench (L1-L2): DevRev's enterprise agent benchmark — answering L1/L2 support-tier questions (ticket SLAs, triage, customer-account data) over fragmented enterprise systems.
 
     Slug: Enterprise-Bench/l1-l2-bench
-    Latest digest: sha256:9a32367dd69321635b518dcd2befab16d50fdda623139e92025a81e6492659ec
+    Latest digest: sha256:834e40f54800287c913cebc9fa8e8273292940436168a56c1c5c72ff8a687e8d
     """
     return _harbor_base(
         package_name="Enterprise-Bench/l1-l2-bench",
@@ -540,6 +540,37 @@ def aime(
 
 
 @task
+def ale_rsi_post_training(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ALE RSI post-training benchmark tasks for evaluating agent capabilities in research-level post-training workflows
+
+    Slug: ale/rsi-post-training
+    Latest digest: sha256:206d8bfff7b849cd08ea5e50edea019daf392f2e334257386854a7473a632f41
+    """
+    return _harbor_base(
+        package_name="ale/rsi-post-training",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def algotune(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -651,6 +682,37 @@ def arcprize_arc_agi_2(
     """
     return _harbor_base(
         package_name="arcprize/arc-agi-2",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def atm_bench_hard_sgm(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided memory (SGM) files distilled from ~4 years of a user's images, videos, and emails.
+
+    Slug: atm-bench/atm-bench-hard-sgm
+    Latest digest: sha256:745358f9028fc12c5bb83ddb9d401e43791d0383e61a70b9f83d0d927af2d821
+    """
+    return _harbor_base(
+        package_name="atm-bench/atm-bench-hard-sgm",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -1574,10 +1636,10 @@ def harbor_index(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision 1.2).
+    r"""Harbor Index: 80 agentic tasks spanning software engineering, science, and tool use (revision 1.3).
 
     Slug: harbor-index/harbor-index
-    Latest digest: sha256:45f546a3b68abba79a5cbf756c7058cc4884358bd78e510f4cc7342766837acc
+    Latest digest: sha256:fdb3554453d29f96bfe87ddf36e6770f6ceadd375e8189c62718ef2f215bbbad
     """
     return _harbor_base(
         package_name="harbor-index/harbor-index",
@@ -3447,6 +3509,68 @@ def usaco(
     """
     return _harbor_base(
         package_name="usaco/usaco",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def userbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""UserBench eval: 620 noprofile next-message tasks across 62 developers (exactly 10 shortest-history points per developer with ≥10 eval points).
+
+    Slug: userbench/UserBench
+    Latest digest: sha256:b37b5035bb3444f3ca3af8ee0a37084c621b18fc55ad2b5c6fcf031066894fa9
+    """
+    return _harbor_base(
+        package_name="userbench/UserBench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def userbench_train400(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""UserBench train400 twin: same 620 held tasks as UserBench@v2 plus leak-safe /sim/train/ with 400 human-turns (sqrt two-stage) per developer.
+
+    Slug: userbench/UserBench-train400
+    Latest digest: sha256:b4d19cf9e2835a8a1d3d5a98bf373094ba1470b2ae98fcb3dff9e4f9d077007a
+    """
+    return _harbor_base(
+        package_name="userbench/UserBench-train400",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

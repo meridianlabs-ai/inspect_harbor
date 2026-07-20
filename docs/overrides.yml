@@ -183,6 +183,12 @@ aime/aime:
   function_name: aime
   title: AIME
 
+ale/rsi-post-training:
+  categories:
+  - Coding
+  - Science
+  title: ALE RSI Post-Training
+
 algotune/algotune:
   categories:
   - Coding
@@ -219,6 +225,16 @@ arcprize/arc-agi-2:
   desc: 'ARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but state-of-the-art models still struggle.'
   title: ARC-AGI-2
   featured: true
+
+atm-bench/atm-bench-hard-sgm:
+  categories:
+  - Assistants
+  - Reasoning
+  arxiv: https://arxiv.org/abs/2603.01990
+  repo: https://github.com/JingbiaoMei/ATM-Bench
+  desc: 'ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided memory (SGM) files distilled from ~4 years of a user''s images, videos, and emails.'
+  function_name: atm_bench_hard_sgm
+  title: ATM-Bench-Hard (SGM)
 
 benchflow/skillsbench:
   categories:
@@ -965,6 +981,20 @@ usaco/usaco:
   desc: 'USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality unit tests, reference code, and official analyses for ad-hoc algorithmic reasoning.'
   function_name: usaco
   title: USACO
+
+userbench/UserBench:
+  categories:
+  - Assistants
+  - Coding
+  function_name: userbench
+  title: UserBench (SWE user simulation)
+
+userbench/UserBench-train400:
+  categories:
+  - Assistants
+  - Coding
+  function_name: userbench_train400
+  title: UserBench (SWE user simulation, train400)
 
 vals/financeagent:
   categories:

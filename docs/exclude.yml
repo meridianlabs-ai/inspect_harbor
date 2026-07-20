@@ -38,3 +38,18 @@
 # no task-aw repo exists on GitHub and no paper or external footprint. Not a
 # published benchmark.
 - abhishek203/*
+# Timestamped terminal-bench CI/upload-test scratch orgs (e.g.
+# tbench-up4-a-up4_1784108341_146593/up4-dataset); dev artifacts, not
+# benchmarks. The underscore before the slash keeps this from matching a
+# hypothetical legitimate tbench-* org.
+- tbench-*_*/*
+# Re-upload of Harvey LAB by an individual (User, not org) from a fork of
+# harveyai/harvey-labs: all 1,251 task ids of the canonical harveyai/lab are
+# a strict subset of its 1,760 (extra "scenario" variants, non-canonical
+# rewardkit/OpenRouter grading). Keep the author org's harveyai/lab.
+- punitarani/harvey-labs
+# Verbatim duplicate of userbench/UserBench (identical 1,520 inputs AND
+# sample ids) under the project's superseded name — the UserBench desc says
+# "Formerly developed as SWESimBench v2". userbench/UserBench is kept
+# (categorized in overrides.yml); this stale-name copy goes regardless.
+- swesimbench/SWESimBench

@@ -168,6 +168,16 @@
   version: latest
   categories:
   - Mathematics
+- title: ale/rsi-post-training
+  path: registry/ale_rsi_post_training.html
+  desc: ALE RSI post-training benchmark tasks for evaluating agent capabilities in research-level post-training workflows.
+  desc_trunc: ALE RSI post-training benchmark tasks for evaluating agent capabilities in research-level post-trai…
+  task_function: ale_rsi_post_training
+  samples: 5
+  version: latest
+  categories:
+  - Coding
+  - Science
 - title: algotune/algotune
   path: registry/algotune.html
   desc: 'AlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that matches reference output but runs faster than existing implementations.'
@@ -208,6 +218,16 @@
   categories:
   - Reasoning
   - Multimodal
+- title: atm-bench/atm-bench-hard-sgm
+  path: registry/atm_bench_hard_sgm.html
+  desc: 'ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided memory (SGM) files distilled from ~4 years of a user''s images, videos, and emails.'
+  desc_trunc: 'ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided m…'
+  task_function: atm_bench_hard_sgm
+  samples: 31
+  version: latest
+  categories:
+  - Assistants
+  - Reasoning
 - title: benchflow/skillsbench
   path: registry/benchflow_skillsbench.html
   desc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folders of instructions, scripts, and resources) to complete specialized workflows spanning science, engineering, and professional domains.'
@@ -487,8 +507,8 @@
   - Coding
 - title: harbor-index/harbor-index
   path: registry/harbor_index.html
-  desc: 'Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision 1.2).'
-  desc_trunc: 'Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision…'
+  desc: 'Harbor Index: 80 agentic tasks spanning software engineering, science, and tool use (revision 1.3).'
+  desc_trunc: 'Harbor Index: 80 agentic tasks spanning software engineering, science, and tool use (revision 1.3).'
   task_function: harbor_index
   samples: 80
   version: latest
@@ -1067,6 +1087,26 @@
   samples: 304
   version: latest
   categories:
+  - Coding
+- title: userbench/UserBench
+  path: registry/userbench.html
+  desc: 'UserBench eval: 620 noprofile next-message tasks across 62 developers (exactly 10 shortest-history points per developer with ≥10 eval points).'
+  desc_trunc: 'UserBench eval: 620 noprofile next-message tasks across 62 developers (exactly 10 shortest-history…'
+  task_function: userbench
+  samples: 620
+  version: latest
+  categories:
+  - Assistants
+  - Coding
+- title: userbench/UserBench-train400
+  path: registry/userbench_train400.html
+  desc: 'UserBench train400 twin: same 620 held tasks as UserBench@v2 plus leak-safe /sim/train/ with 400 human-turns (sqrt two-stage) per developer.'
+  desc_trunc: 'UserBench train400 twin: same 620 held tasks as UserBench@v2 plus leak-safe /sim/train/ with 400 hu…'
+  task_function: userbench_train400
+  samples: 620
+  version: latest
+  categories:
+  - Assistants
   - Coding
 - title: vals/financeagent
   path: registry/vals_financeagent.html
