@@ -3533,13 +3533,44 @@ def userbench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""UserBench eval (v2): noprofile user-simulation held-out turns (~1520 tasks). Formerly developed as SWESimBench v2.
+    r"""UserBench eval: 620 noprofile next-message tasks across 62 developers (exactly 10 shortest-history points per developer with ≥10 eval points).
 
     Slug: userbench/UserBench
-    Latest digest: sha256:f6125049e4932a9401c9dece81ddb0ce1329e19d0dd68552222d3e84be257ea7
+    Latest digest: sha256:b37b5035bb3444f3ca3af8ee0a37084c621b18fc55ad2b5c6fcf031066894fa9
     """
     return _harbor_base(
         package_name="userbench/UserBench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def userbench_train400(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""UserBench train400 twin: same 620 held tasks as UserBench@v2 plus leak-safe /sim/train/ with 400 human-turns (sqrt two-stage) per developer.
+
+    Slug: userbench/UserBench-train400
+    Latest digest: sha256:b4d19cf9e2835a8a1d3d5a98bf373094ba1470b2ae98fcb3dff9e4f9d077007a
+    """
+    return _harbor_base(
+        package_name="userbench/UserBench-train400",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

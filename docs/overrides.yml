@@ -983,8 +983,18 @@ usaco/usaco:
   title: USACO
 
 userbench/UserBench:
-  categories: []
+  categories:
+  - Assistants
+  - Coding
   function_name: userbench
+  title: UserBench (SWE user simulation)
+
+userbench/UserBench-train400:
+  categories:
+  - Assistants
+  - Coding
+  function_name: userbench_train400
+  title: UserBench (SWE user simulation, train400)
 
 vals/financeagent:
   categories:

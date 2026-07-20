@@ -1090,11 +1090,24 @@
   - Coding
 - title: userbench/UserBench
   path: registry/userbench.html
-  desc: 'UserBench eval (v2): noprofile user-simulation held-out turns (~1520 tasks). Formerly developed as SWESimBench v2.'
-  desc_trunc: 'UserBench eval (v2): noprofile user-simulation held-out turns (~1520 tasks). Formerly developed as…'
+  desc: 'UserBench eval: 620 noprofile next-message tasks across 62 developers (exactly 10 shortest-history points per developer with ≥10 eval points).'
+  desc_trunc: 'UserBench eval: 620 noprofile next-message tasks across 62 developers (exactly 10 shortest-history…'
   task_function: userbench
-  samples: 1520
+  samples: 620
   version: latest
+  categories:
+  - Assistants
+  - Coding
+- title: userbench/UserBench-train400
+  path: registry/userbench_train400.html
+  desc: 'UserBench train400 twin: same 620 held tasks as UserBench@v2 plus leak-safe /sim/train/ with 400 human-turns (sqrt two-stage) per developer.'
+  desc_trunc: 'UserBench train400 twin: same 620 held tasks as UserBench@v2 plus leak-safe /sim/train/ with 400 hu…'
+  task_function: userbench_train400
+  samples: 620
+  version: latest
+  categories:
+  - Assistants
+  - Coding
 - title: vals/financeagent
   path: registry/vals_financeagent.html
   desc: 'Vals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (retrieval, market research, projections) with EDGAR/SEC search tools for evaluating financial agents.'

@@ -50,6 +50,6 @@
 - punitarani/harvey-labs
 # Verbatim duplicate of userbench/UserBench (identical 1,520 inputs AND
 # sample ids) under the project's superseded name — the UserBench desc says
-# "Formerly developed as SWESimBench v2". Whether userbench/UserBench itself
-# is kept is a separate (human) call; this stale-name copy goes regardless.
+# "Formerly developed as SWESimBench v2". userbench/UserBench is kept
+# (categorized in overrides.yml); this stale-name copy goes regardless.
 - swesimbench/SWESimBench
