@@ -952,7 +952,13 @@ terminal-bench/terminal-bench-2-1:
   title: Terminal-Bench v2.1
 
 terminal-bench/terminal-bench-3:
-  categories: []
+  categories:
+  - Coding
+  - Assistants
+  arxiv: https://arxiv.org/abs/2601.11868
+  repo: https://github.com/harbor-framework/terminal-bench-3
+  function_name: terminal_bench_3
+  title: Terminal-Bench 3
 
 theagentcompany/theagentcompany:
   categories:

@@ -1041,12 +1041,15 @@
   - Coding
   - Assistants
 - title: terminal-bench/terminal-bench-3
-  path: registry/terminal_bench_terminal_bench_3.html
+  path: registry/terminal_bench_3.html
   desc: Terminal-Bench 3.0 is the third benchmark for measuring agents' abilities to complete tasks using a terminal.
   desc_trunc: Terminal-Bench 3.0 is the third benchmark for measuring agents' abilities to complete tasks using a…
-  task_function: terminal_bench_terminal_bench_3
+  task_function: terminal_bench_3
   samples: 75
   version: latest
+  categories:
+  - Coding
+  - Assistants
 - title: terminal-bench-pro/terminal-bench-pro
   path: registry/terminal_bench_pro.html
   desc: 'Terminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientific computing, SWE, ML, and security — extending Terminal-Bench with harder real-world scenarios.'

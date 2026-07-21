@@ -3367,7 +3367,7 @@ def terminal_bench_2_1(
 
 
 @task
-def terminal_bench_terminal_bench_3(
+def terminal_bench_3(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
