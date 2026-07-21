@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Enterprise-Bench (L1-L2): DevRev’s enterprise agent benchmark — answering L1/L2 support-tier questions (ticket SLAs, triage, customer-account data) over fragmented enterprise systems.">
+<meta name="description" content="ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided memory (SGM) files distilled from ~4 years of a user’s images, videos, and emails.">
 
-<title>Enterprise-Bench/l1-l2-bench – Inspect Harbor</title>
+<title>atm-bench/atm-bench-hard-sgm – Inspect Harbor</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -205,16 +205,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Enterprise-Bench/l1-l2-bench</h1>
+<h1 class="title">atm-bench/atm-bench-hard-sgm</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Assistants</div>
-    <div class="quarto-category">Professional</div>
+    <div class="quarto-category">Reasoning</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    <p>Enterprise-Bench (L1-L2): DevRev’s enterprise agent benchmark — answering L1/L2 support-tier questions (ticket SLAs, triage, customer-account data) over fragmented enterprise systems.</p>
+    <p>ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided memory (SGM) files distilled from ~4 years of a user’s images, videos, and emails.</p>
   </div>
 </div>
 
@@ -235,12 +235,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="run-this-task" class="level2">
 <h2 class="anchored" data-anchor-id="run-this-task">Run this task</h2>
 <p><strong>CLI:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/enterprise_bench_l1_l2_bench <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/atm_bench_hard_sgm <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Python:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_ai <span class="im">import</span> <span class="bu">eval</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> enterprise_bench_l1_l2_bench</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> atm_bench_hard_sgm</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(enterprise_bench_l1_l2_bench(), model<span class="op">=</span><span class="st">"openai/gpt-5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(atm_bench_hard_sgm(), model<span class="op">=</span><span class="st">"openai/gpt-5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="dataset-information" class="level2">
 <h2 class="anchored" data-anchor-id="dataset-information">Dataset information</h2>
@@ -248,19 +248,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>Harbor registry</td>
-<td><a href="https://hub.harborframework.com/datasets/Enterprise-Bench/l1-l2-bench/latest">Enterprise-Bench/l1-l2-bench</a></td>
+<td><a href="https://hub.harborframework.com/datasets/atm-bench/atm-bench-hard-sgm/latest">atm-bench/atm-bench-hard-sgm</a></td>
 </tr>
 <tr class="even">
 <td>Inspect task</td>
-<td><code>enterprise_bench_l1_l2_bench</code></td>
+<td><code>atm_bench_hard_sgm</code></td>
 </tr>
 <tr class="odd">
 <td>Latest digest</td>
-<td>sha256:834e40f54800287c913cebc9fa8e8273292940436168a56c1c5c72ff8a687e8d</td>
+<td>sha256:745358f9028fc12c5bb83ddb9d401e43791d0383e61a70b9f83d0d927af2d821</td>
 </tr>
 <tr class="even">
 <td>Samples</td>
-<td>14</td>
+<td>31</td>
+</tr>
+<tr class="odd">
+<td>Paper</td>
+<td><a href="https://arxiv.org/abs/2603.01990">arxiv</a></td>
+</tr>
+<tr class="even">
+<td>Source</td>
+<td><a href="https://github.com/JingbiaoMei/ATM-Bench">https://github.com/JingbiaoMei/ATM-Bench</a></td>
 </tr>
 </tbody>
 </table>

@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Enterprise-Bench (L1-L2): DevRev’s enterprise agent benchmark — answering L1/L2 support-tier questions (ticket SLAs, triage, customer-account data) over fragmented enterprise systems.">
+<meta name="description" content="UserBench eval: 620 next-message tasks across 62 developers. Composer 2.5 classifies gold and predicted messages into multi-label acts; reward is set Jaccard/IoU.">
 
-<title>Enterprise-Bench/l1-l2-bench – Inspect Harbor</title>
+<title>userbench/UserBench – Inspect Harbor</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -205,16 +205,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Enterprise-Bench/l1-l2-bench</h1>
+<h1 class="title">userbench/UserBench</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Assistants</div>
-    <div class="quarto-category">Professional</div>
+    <div class="quarto-category">Coding</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    <p>Enterprise-Bench (L1-L2): DevRev’s enterprise agent benchmark — answering L1/L2 support-tier questions (ticket SLAs, triage, customer-account data) over fragmented enterprise systems.</p>
+    <p>UserBench eval: 620 next-message tasks across 62 developers. Composer 2.5 classifies gold and predicted messages into multi-label acts; reward is set Jaccard/IoU.</p>
   </div>
 </div>
 
@@ -235,12 +235,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="run-this-task" class="level2">
 <h2 class="anchored" data-anchor-id="run-this-task">Run this task</h2>
 <p><strong>CLI:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/enterprise_bench_l1_l2_bench <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/userbench <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Python:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_ai <span class="im">import</span> <span class="bu">eval</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> enterprise_bench_l1_l2_bench</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> userbench</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(enterprise_bench_l1_l2_bench(), model<span class="op">=</span><span class="st">"openai/gpt-5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(userbench(), model<span class="op">=</span><span class="st">"openai/gpt-5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="dataset-information" class="level2">
 <h2 class="anchored" data-anchor-id="dataset-information">Dataset information</h2>
@@ -248,19 +248,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>Harbor registry</td>
-<td><a href="https://hub.harborframework.com/datasets/Enterprise-Bench/l1-l2-bench/latest">Enterprise-Bench/l1-l2-bench</a></td>
+<td><a href="https://hub.harborframework.com/datasets/userbench/UserBench/latest">userbench/UserBench</a></td>
 </tr>
 <tr class="even">
 <td>Inspect task</td>
-<td><code>enterprise_bench_l1_l2_bench</code></td>
+<td><code>userbench</code></td>
 </tr>
 <tr class="odd">
 <td>Latest digest</td>
-<td>sha256:834e40f54800287c913cebc9fa8e8273292940436168a56c1c5c72ff8a687e8d</td>
+<td>sha256:5ae6956f943da5d0781cf835cd8025a0411160321bb048f12c77bde7aac46bda</td>
 </tr>
 <tr class="even">
 <td>Samples</td>
-<td>14</td>
+<td>620</td>
 </tr>
 </tbody>
 </table>

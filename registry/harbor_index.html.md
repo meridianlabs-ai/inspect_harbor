@@ -25,7 +25,7 @@ eval(harbor_index(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [harbor-index/harbor-index](https://hub.harborframework.com/datasets/harbor-index/harbor-index/latest) |
 | Inspect task | `harbor_index` |
-| Latest digest | sha256:45f546a3b68abba79a5cbf756c7058cc4884358bd78e510f4cc7342766837acc |
+| Latest digest | sha256:fdb3554453d29f96bfe87ddf36e6770f6ceadd375e8189c62718ef2f215bbbad |
 | Samples | 80 |
 
 See [Task Parameters](../parameters.html.md) for the parameter set shared across all Harbor tasks.

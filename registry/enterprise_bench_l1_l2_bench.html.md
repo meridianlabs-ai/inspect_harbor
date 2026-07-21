@@ -25,7 +25,7 @@ eval(enterprise_bench_l1_l2_bench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [Enterprise-Bench/l1-l2-bench](https://hub.harborframework.com/datasets/Enterprise-Bench/l1-l2-bench/latest) |
 | Inspect task | `enterprise_bench_l1_l2_bench` |
-| Latest digest | sha256:9a32367dd69321635b518dcd2befab16d50fdda623139e92025a81e6492659ec |
+| Latest digest | sha256:834e40f54800287c913cebc9fa8e8273292940436168a56c1c5c72ff8a687e8d |
 | Samples | 14 |
 
 See [Task Parameters](../parameters.html.md) for the parameter set shared across all Harbor tasks.

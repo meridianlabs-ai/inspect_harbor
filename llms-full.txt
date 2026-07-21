@@ -344,7 +344,7 @@ For advanced use cases, you can use the generic `harbor()` interface directly. T
 
 Harbor task loader for Inspect AI.
 
-[Source](https://github.com/meridianlabs-ai/inspect_harbor/blob/ed9ca5fab728a70544867a61e51bd234caf84af4/src/inspect_harbor/_harbor/task.py#L23)
+[Source](https://github.com/meridianlabs-ai/inspect_harbor/blob/da5c11083fa5f4b3baa514e907690553b577bffa/src/inspect_harbor/_harbor/task.py#L23)
 
 ``` python
 @task
@@ -571,10 +571,12 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [ai-forever/harness-bench-fast](registry/ai_forever_harness_bench_fast.html.md) | ai_forever_harness_bench_fast | Self-contained file-operation agent benchmark. | 231 |
 | [aider/aider-polyglot](registry/aider_polyglot.html.md) | aider_polyglot | Aider’s polyglot coding benchmark: Exercism exercises across C++, Go, Java, JavaScript, Python, and… | 225 |
 | [aime/aime](registry/aime.html.md) | aime | Problems from the American Invitational Mathematics Examination (AIME), a 3-hour high-school compet… | 60 |
+| [ale/rsi-post-training](registry/ale_rsi_post_training.html.md) | ale_rsi_post_training | ALE RSI post-training benchmark tasks for evaluating agent capabilities in research-level post-trai… | 6 |
 | [algotune/algotune](registry/algotune.html.md) | algotune | AlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that match… | 154 |
 | [android-bench/android-bench](registry/android_bench.html.md) | android_bench | A dataset of 100 Android software engineering tasks derived from real-world repositories. | 100 |
 | [apple/mmau](registry/apple_mmau.html.md) | apple_mmau | MMAU (Massive Multitask Agent Understanding): Apple’s holistic agent benchmark covering tool-use, D… | 1000 |
 | [arcprize/arc-agi-2](registry/arcprize_arc_agi_2.html.md) | arcprize_arc_agi_2 | ARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but… | 167 |
+| [atm-bench/atm-bench-hard-sgm](registry/atm_bench_hard_sgm.html.md) | atm_bench_hard_sgm | ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided m… | 31 |
 | [benchflow/skillsbench](registry/benchflow_skillsbench.html.md) | benchflow_skillsbench | SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folde… | 87 |
 | [bigcode/bigcodebench-hard-complete](registry/bigcode_bigcodebench_hard_complete.html.md) | bigcode_bigcodebench_hard_complete | BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun… | 145 |
 | [bigcode/humanevalfix](registry/bigcode_humanevalfix.html.md) | bigcode_humanevalfix | HumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo… | 164 |
@@ -604,10 +606,11 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [gpqa-diamond/gpqa-diamond](registry/gpqa_diamond.html.md) | gpqa_diamond | GPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch… | 198 |
 | [grafana/o11y-bench](registry/grafana_o11y_bench.html.md) | grafana_o11y_bench | o11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo… | 63 |
 | [grandsmile/unicode](registry/grandsmile_unicode.html.md) | grandsmile_unicode | UniCode: competitive-programming problems systematically augmented into novel variations to probe g… | 399 |
-| [harbor-index/harbor-index](registry/harbor_index.html.md) | harbor_index | Harbor Index: 80 agentic software-engineering and science tasks with executable verifiers (revision… | 80 |
+| [harbor-index/harbor-index](registry/harbor_index.html.md) | harbor_index | Harbor Index: 80 agentic tasks spanning software engineering, science, and tool use (revision 1.3). | 80 |
 | [harbor-index/harbor-index-1.0](registry/harbor_index_1_0.html.md) | harbor_index_1_0 | Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000… | 82 |
 | [harveyai/lab](registry/harveyai_lab.html.md) | harveyai_lab | Harvey LAB - open-source benchmark for evaluating agents on real legal work. | 1251 |
 | [ineqmath/ineqmath](registry/ineqmath.html.md) | ineqmath | IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou… | 100 |
+| [infra-bench/infra-bench-v1](registry/infra_bench_infra_bench_v1.html.md) | infra_bench_infra_bench_v1 | 20 AI-infra engineering tasks on AMD MI35X (5 categories: model deployment, profiling, kernel imple… | 20 |
 | [islo-labs/reward-hack-bench](registry/islo_labs_reward_hack_bench.html.md) | islo_labs_reward_hack_bench | Reward-hacking benchmark: SWE-bench + CyBench tasks with injected solution-retrieval cheat prompts,… | 8 |
 | [islo-labs/reward-hack-bench-control](registry/islo_labs_reward_hack_bench_control.html.md) | islo_labs_reward_hack_bench_control | Baseline/control companion to reward-hack-bench: the same 8 SWE-bench + CyBench tasks with NO cheat… | 8 |
 | [ivanleo/agent-search](registry/ivanleo_agent_search.html.md) | ivanleo_agent_search | Agent answers Gemini API questions by querying an indexed documentation database. | 20 |
@@ -661,10 +664,13 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [terminal-bench-pro/terminal-bench-pro](registry/terminal_bench_pro.html.md) | terminal_bench_pro | Terminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientifi… | 200 |
 | [terminal-bench/terminal-bench-2](registry/terminal_bench_2.html.md) | terminal_bench_2 | Terminal-Bench v2: benchmark for testing AI agents in real terminal environments — from compiling c… | 89 |
 | [terminal-bench/terminal-bench-2-1](registry/terminal_bench_2_1.html.md) | terminal_bench_2_1 | Terminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ… | 89 |
+| [terminal-bench/terminal-bench-3](registry/terminal_bench_3.html.md) | terminal_bench_3 | Terminal-Bench 3.0 is the third benchmark for measuring agents’ abilities to complete tasks using a… | 75 |
 | [theagentcompany/theagentcompany](registry/theagentcompany.html.md) | theagentcompany | An agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and R… | 174 |
 | [thetalab/vector-edit-gym](registry/thetalab_vector_edit_gym.html.md) | thetalab_vector_edit_gym | 106 hand-authored SVG editing tasks across four difficulty tiers (easy / medium / hard / very_hard)… | 106 |
 | [tinycomputerai/bun-server-bench](registry/tinycomputerai_bun_server_bench.html.md) | tinycomputerai_bun_server_bench | bun-server-bench: a correctness benchmark of 50 production-shaped Bun server engineering tasks for… | 50 |
 | [usaco/usaco](registry/usaco.html.md) | usaco | USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality u… | 304 |
+| [userbench/UserBench](registry/userbench.html.md) | userbench | UserBench eval: 620 next-message tasks across 62 developers. Composer 2.5 classifies gold and predi… | 620 |
+| [userbench/UserBench-train400](registry/userbench_train400.html.md) | userbench_train400 | UserBench train400 twin: the same 620 held tasks plus 400 leak-safe prior turns per developer. Comp… | 620 |
 | [vals/financeagent](registry/vals_financeagent.html.md) | vals_financeagent | Vals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (re… | 50 |
 | [vmax/vmax-tasks](registry/vmax_tasks.html.md) | vmax_tasks | Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux). | 1043 |
 | [webgen-bench/webgen-bench](registry/webgen_bench.html.md) | webgen_bench | WebGen-Bench: evaluating LLMs on generating interactive and functional websites from scratch. | 101 |
