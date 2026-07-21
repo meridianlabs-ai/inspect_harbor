@@ -951,6 +951,9 @@ terminal-bench/terminal-bench-2-1:
   function_name: terminal_bench_2_1
   title: Terminal-Bench v2.1
 
+terminal-bench/terminal-bench-3:
+  categories: []
+
 theagentcompany/theagentcompany:
   categories:
   - Professional
