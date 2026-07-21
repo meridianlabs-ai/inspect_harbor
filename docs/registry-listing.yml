@@ -173,7 +173,7 @@
   desc: ALE RSI post-training benchmark tasks for evaluating agent capabilities in research-level post-training workflows.
   desc_trunc: ALE RSI post-training benchmark tasks for evaluating agent capabilities in research-level post-trai…
   task_function: ale_rsi_post_training
-  samples: 5
+  samples: 6
   version: latest
   categories:
   - Coding
@@ -1036,6 +1036,16 @@
   desc_trunc: 'Terminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ…'
   task_function: terminal_bench_2_1
   samples: 89
+  version: latest
+  categories:
+  - Coding
+  - Assistants
+- title: terminal-bench/terminal-bench-3
+  path: registry/terminal_bench_3.html
+  desc: Terminal-Bench 3.0 is the third benchmark for measuring agents' abilities to complete tasks using a terminal.
+  desc_trunc: Terminal-Bench 3.0 is the third benchmark for measuring agents' abilities to complete tasks using a…
+  task_function: terminal_bench_3
+  samples: 75
   version: latest
   categories:
   - Coding

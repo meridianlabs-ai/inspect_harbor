@@ -554,7 +554,7 @@ def ale_rsi_post_training(
     r"""ALE RSI post-training benchmark tasks for evaluating agent capabilities in research-level post-training workflows
 
     Slug: ale/rsi-post-training
-    Latest digest: sha256:206d8bfff7b849cd08ea5e50edea019daf392f2e334257386854a7473a632f41
+    Latest digest: sha256:8f9485dd374141adf8bf8f6475eb6d107a59351ce585674586fb3175222bce4c
     """
     return _harbor_base(
         package_name="ale/rsi-post-training",
@@ -3354,6 +3354,37 @@ def terminal_bench_2_1(
     """
     return _harbor_base(
         package_name="terminal-bench/terminal-bench-2-1",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def terminal_bench_3(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Terminal-Bench 3.0 is the third benchmark for measuring agents' abilities to complete tasks using a terminal.
+
+    Slug: terminal-bench/terminal-bench-3
+    Latest digest: sha256:88433fbcecd1a3f81f7a71bff4cc76c394d0edbefb7e028f90d4109b639fefba
+    """
+    return _harbor_base(
+        package_name="terminal-bench/terminal-bench-3",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
