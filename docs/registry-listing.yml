@@ -393,6 +393,13 @@
   version: latest
   categories:
   - Coding
+- title: frontier-bench/frontier-bench
+  path: registry/frontier_bench_frontier_bench.html
+  desc: 'Frontier-Bench: a digest-pinned suite of hard agentic terminal tasks.'
+  desc_trunc: 'Frontier-Bench: a digest-pinned suite of hard agentic terminal tasks.'
+  task_function: frontier_bench_frontier_bench
+  samples: 74
+  version: latest
 - title: futurehouse/bixbench
   path: registry/futurehouse_bixbench.html
   desc: 'BixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM agents'' ability to author multi-step Jupyter notebooks for biological data analysis.'
@@ -545,6 +552,13 @@
   categories:
   - Mathematics
   - Reasoning
+- title: infra-bench/infra-bench-v1
+  path: registry/infra_bench_infra_bench_v1.html
+  desc: '20 AI-infra engineering tasks on AMD MI35X (5 categories: model deployment, profiling, kernel implementation, kernel tuning, debug triage).'
+  desc_trunc: '20 AI-infra engineering tasks on AMD MI35X (5 categories: model deployment, profiling, kernel imple…'
+  task_function: infra_bench_infra_bench_v1
+  samples: 20
+  version: latest
 - title: islo-labs/reward-hack-bench
   path: registry/islo_labs_reward_hack_bench.html
   desc: 'Reward-hacking benchmark: SWE-bench + CyBench tasks with injected solution-retrieval cheat prompts, scored by a fairness LLM judge. Reward = solved without cheating.'
@@ -1100,8 +1114,8 @@
   - Coding
 - title: userbench/UserBench
   path: registry/userbench.html
-  desc: 'UserBench eval: 620 noprofile next-message tasks across 62 developers (exactly 10 shortest-history points per developer with ≥10 eval points).'
-  desc_trunc: 'UserBench eval: 620 noprofile next-message tasks across 62 developers (exactly 10 shortest-history…'
+  desc: 'UserBench eval: 620 next-message tasks across 62 developers. Composer 2.5 classifies gold and predicted messages into multi-label acts; reward is set Jaccard/IoU.'
+  desc_trunc: 'UserBench eval: 620 next-message tasks across 62 developers. Composer 2.5 classifies gold and predi…'
   task_function: userbench
   samples: 620
   version: latest
@@ -1110,8 +1124,8 @@
   - Coding
 - title: userbench/UserBench-train400
   path: registry/userbench_train400.html
-  desc: 'UserBench train400 twin: same 620 held tasks as UserBench@v2 plus leak-safe /sim/train/ with 400 human-turns (sqrt two-stage) per developer.'
-  desc_trunc: 'UserBench train400 twin: same 620 held tasks as UserBench@v2 plus leak-safe /sim/train/ with 400 hu…'
+  desc: 'UserBench train400 twin: the same 620 held tasks plus 400 leak-safe prior turns per developer. Composer 2.5 multi-label acts score by set Jaccard/IoU.'
+  desc_trunc: 'UserBench train400 twin: the same 620 held tasks plus 400 leak-safe prior turns per developer. Comp…'
   task_function: userbench_train400
   samples: 620
   version: latest

@@ -1284,6 +1284,37 @@ def featurebench_modal(
 
 
 @task
+def frontier_bench_frontier_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Frontier-Bench: a digest-pinned suite of hard agentic terminal tasks.
+
+    Slug: frontier-bench/frontier-bench
+    Latest digest: sha256:97fd2ba3aabdda16823a1a8ea695a3875e50e800caa60b450686deedc7171763
+    """
+    return _harbor_base(
+        package_name="frontier-bench/frontier-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def futurehouse_bixbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1736,6 +1767,37 @@ def ineqmath(
     """
     return _harbor_base(
         package_name="ineqmath/ineqmath",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def infra_bench_infra_bench_v1(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""20 AI-infra engineering tasks on AMD MI35X (5 categories: model deployment, profiling, kernel implementation, kernel tuning, debug triage)
+
+    Slug: infra-bench/infra-bench-v1
+    Latest digest: sha256:ee4dab2ad2279aaf0bc52c2736083844e9555ef86236e8ee7867bd0ba7afde87
+    """
+    return _harbor_base(
+        package_name="infra-bench/infra-bench-v1",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -3564,10 +3626,10 @@ def userbench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""UserBench eval: 620 noprofile next-message tasks across 62 developers (exactly 10 shortest-history points per developer with ≥10 eval points).
+    r"""UserBench eval: 620 next-message tasks across 62 developers. Composer 2.5 classifies gold and predicted messages into multi-label acts; reward is set Jaccard/IoU.
 
     Slug: userbench/UserBench
-    Latest digest: sha256:b37b5035bb3444f3ca3af8ee0a37084c621b18fc55ad2b5c6fcf031066894fa9
+    Latest digest: sha256:5ae6956f943da5d0781cf835cd8025a0411160321bb048f12c77bde7aac46bda
     """
     return _harbor_base(
         package_name="userbench/UserBench",
@@ -3595,10 +3657,10 @@ def userbench_train400(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""UserBench train400 twin: same 620 held tasks as UserBench@v2 plus leak-safe /sim/train/ with 400 human-turns (sqrt two-stage) per developer.
+    r"""UserBench train400 twin: the same 620 held tasks plus 400 leak-safe prior turns per developer. Composer 2.5 multi-label acts score by set Jaccard/IoU.
 
     Slug: userbench/UserBench-train400
-    Latest digest: sha256:b4d19cf9e2835a8a1d3d5a98bf373094ba1470b2ae98fcb3dff9e4f9d077007a
+    Latest digest: sha256:ed4a2f13efe35bec348b5da764c9ccb290443a9d42d622f055eb701dc5c0d2ab
     """
     return _harbor_base(
         package_name="userbench/UserBench-train400",

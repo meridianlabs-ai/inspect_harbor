@@ -378,6 +378,9 @@ featurebench/featurebench-modal:
   function_name: featurebench_modal
   title: FeatureBench (Modal)
 
+frontier-bench/frontier-bench:
+  categories: []
+
 futurehouse/bixbench:
   categories:
   - Science
@@ -503,6 +506,9 @@ ineqmath/ineqmath:
   desc: 'IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bound-estimation and relation-prediction subtasks with stepwise judging.'
   function_name: ineqmath
   title: IneqMath
+
+infra-bench/infra-bench-v1:
+  categories: []
 
 islo-labs/reward-hack-bench:
   categories:
