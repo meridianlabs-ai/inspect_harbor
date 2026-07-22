@@ -1284,7 +1284,7 @@ def featurebench_modal(
 
 
 @task
-def frontier_bench_frontier_bench(
+def frontier_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -1780,7 +1780,7 @@ def ineqmath(
 
 
 @task
-def infra_bench_infra_bench_v1(
+def infra_bench_v1(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,

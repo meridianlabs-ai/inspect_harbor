@@ -379,7 +379,12 @@ featurebench/featurebench-modal:
   title: FeatureBench (Modal)
 
 frontier-bench/frontier-bench:
-  categories: []
+  categories:
+  - Coding
+  - Assistants
+  repo: https://github.com/harbor-framework/frontier-bench
+  function_name: frontier_bench
+  title: Frontier-Bench
 
 futurehouse/bixbench:
   categories:
@@ -508,7 +513,12 @@ ineqmath/ineqmath:
   title: IneqMath
 
 infra-bench/infra-bench-v1:
-  categories: []
+  categories:
+  - Coding
+  - Professional
+  repo: https://github.com/sammysun0711/InfraBench
+  function_name: infra_bench_v1
+  title: InfraBench v1
 
 islo-labs/reward-hack-bench:
   categories:
