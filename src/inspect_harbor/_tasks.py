@@ -1295,10 +1295,10 @@ def frontier_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Frontier-Bench: a digest-pinned suite of hard agentic terminal tasks.
+    r"""The frontier is wide and dynamic. Frontier-Bench measures general agent capabilities on a diverse set of difficult tasks.
 
     Slug: frontier-bench/frontier-bench
-    Latest digest: sha256:97fd2ba3aabdda16823a1a8ea695a3875e50e800caa60b450686deedc7171763
+    Latest digest: sha256:63f363a191f0a0429fd1c5b318080616bab839473ce27e39f44868d327b03a89
     """
     return _harbor_base(
         package_name="frontier-bench/frontier-bench",
@@ -2796,6 +2796,37 @@ def rexbench(
     """
     return _harbor_base(
         package_name="rexbench/rexbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def rsi_index_post_training(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ALE RSI post-training benchmark tasks for evaluating agent capabilities in research-level post-training workflows
+
+    Slug: rsi-index/post-training
+    Latest digest: sha256:46e29b6a00e487dbf4ab88c40c1a525941df5f3d7ce6956b42c35d5432031bfb
+    """
+    return _harbor_base(
+        package_name="rsi-index/post-training",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

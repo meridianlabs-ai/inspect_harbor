@@ -784,6 +784,9 @@ rexbench/rexbench:
   function_name: rexbench
   title: RExBench
 
+rsi-index/post-training:
+  categories: []
+
 satbench/satbench:
   categories:
   - Reasoning
