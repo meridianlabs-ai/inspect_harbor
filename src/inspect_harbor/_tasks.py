@@ -1295,10 +1295,10 @@ def frontier_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Frontier-Bench: a digest-pinned suite of hard agentic terminal tasks.
+    r"""The frontier is wide and dynamic. Frontier-Bench measures general agent capabilities on a diverse set of difficult tasks.
 
     Slug: frontier-bench/frontier-bench
-    Latest digest: sha256:97fd2ba3aabdda16823a1a8ea695a3875e50e800caa60b450686deedc7171763
+    Latest digest: sha256:63f363a191f0a0429fd1c5b318080616bab839473ce27e39f44868d327b03a89
     """
     return _harbor_base(
         package_name="frontier-bench/frontier-bench",

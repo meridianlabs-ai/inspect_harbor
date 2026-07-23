@@ -395,8 +395,8 @@
   - Coding
 - title: frontier-bench/frontier-bench
   path: registry/frontier_bench.html
-  desc: 'Frontier-Bench: a digest-pinned suite of hard agentic terminal tasks.'
-  desc_trunc: 'Frontier-Bench: a digest-pinned suite of hard agentic terminal tasks.'
+  desc: The frontier is wide and dynamic. Frontier-Bench measures general agent capabilities on a diverse set of difficult tasks.
+  desc_trunc: The frontier is wide and dynamic. Frontier-Bench measures general agent capabilities on a diverse s…
   task_function: frontier_bench
   samples: 74
   version: latest
