@@ -53,3 +53,9 @@
 # "Formerly developed as SWESimBench v2". userbench/UserBench is kept
 # (categorized in overrides.yml); this stale-name copy goes regardless.
 - swesimbench/SWESimBench
+# 1-task subset re-upload of ale/rsi-post-training by the same publisher two
+# days later (identical input to ale/olmo3-7b-zero-rl-acc, same verbatim
+# desc); the rsi-index GitHub org has no public repos. Keep the complete
+# 6-task ale/rsi-post-training. Revisit if rsi-index becomes the canonical
+# home of the ALE RSI benchmark.
+- rsi-index/post-training
