@@ -2809,6 +2809,37 @@ def rexbench(
 
 
 @task
+def rounakbende10_rh_swe_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Red Hat SWE-bench - 357 verified tasks from 25 RH ecosystem repos
+
+    Slug: rounakbende10/rh-swe-bench
+    Latest digest: sha256:35fa496a85a348f06ee47ef69e8899c573ecceb0a1d3c5102482928492267667
+    """
+    return _harbor_base(
+        package_name="rounakbende10/rh-swe-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def satbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,

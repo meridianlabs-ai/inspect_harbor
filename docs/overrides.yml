@@ -784,6 +784,12 @@ rexbench/rexbench:
   function_name: rexbench
   title: RExBench
 
+rounakbende10/rh-swe-bench:
+  categories:
+  - Coding
+  title: RH SWE-bench
+  repo: https://github.com/rounakbende10/rh-swe-bench
+
 satbench/satbench:
   categories:
   - Reasoning
