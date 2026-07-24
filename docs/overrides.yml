@@ -785,7 +785,10 @@ rexbench/rexbench:
   title: RExBench
 
 rounakbende10/rh-swe-bench:
-  categories: []
+  categories:
+  - Coding
+  title: RH SWE-bench
+  repo: https://github.com/rounakbende10/rh-swe-bench
 
 satbench/satbench:
   categories:

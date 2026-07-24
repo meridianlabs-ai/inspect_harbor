@@ -876,6 +876,8 @@
   task_function: rounakbende10_rh_swe_bench
   samples: 357
   version: latest
+  categories:
+  - Coding
 - title: satbench/satbench
   path: registry/satbench.html
   desc: 'SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable difficulty, validated through both LLM and SAT-solver consistency checks.'
