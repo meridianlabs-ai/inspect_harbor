@@ -60,11 +60,22 @@ Loading a task that declares any of the below either raises or warns:
 |---|---|
 | `[[steps]]` + `multi_step_reward_strategy` (multi-step tasks) | **raise** |
 | `[environment].os = "windows"` | **raise** |
-| `[environment].healthcheck` | warn (agent may run before services ready) |
 | `[environment].mcp_servers` | warn (not exposed to agent) |
 | `[environment].skills_dir` | warn (not copied to agent skills dir) |
 
 `[environment].build_timeout_sec`, `storage_mb`, `workdir`, and `config.source` / `config.artifacts` are ignored.
+
+### Healthchecks
+
+`[environment].healthcheck` maps onto the `healthcheck` of the default compose
+service: `command` becomes a `CMD-SHELL` test and the `*_sec` fields become
+compose durations. Inspect brings the environment up with `docker compose up
+--wait`, so the agent only starts once the check passes — matching Harbor,
+which polls the same command before agent setup.
+
+If a task ships a `docker-compose.yaml` that already declares a healthcheck on
+the default service, that one is kept (a service has only one healthcheck) and
+the `task.toml` healthcheck is ignored with a warning.
 
 ## LLM Judges in Verification
 
