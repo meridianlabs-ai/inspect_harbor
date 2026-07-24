@@ -869,6 +869,13 @@
   version: latest
   categories:
   - Coding
+- title: rounakbende10/rh-swe-bench
+  path: registry/rounakbende10_rh_swe_bench.html
+  desc: Red Hat SWE-bench - 357 verified tasks from 25 RH ecosystem repos.
+  desc_trunc: Red Hat SWE-bench - 357 verified tasks from 25 RH ecosystem repos.
+  task_function: rounakbende10_rh_swe_bench
+  samples: 357
+  version: latest
 - title: satbench/satbench
   path: registry/satbench.html
   desc: 'SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable difficulty, validated through both LLM and SAT-solver consistency checks.'
