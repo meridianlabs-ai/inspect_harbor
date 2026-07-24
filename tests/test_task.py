@@ -1,10 +1,12 @@
 """Tests for Harbor task."""
 
+import warnings
 from pathlib import Path
 from typing import Any
 from unittest.mock import Mock, patch
 
 import pytest
+from harbor.models.task.config import HealthcheckConfig
 from harbor.models.task.task import Task as HarborTask
 from inspect_harbor._harbor.task import (
     _disambiguate_sample_ids,
@@ -236,6 +238,31 @@ def test_build_harbor_tasks_warns_on_allowlist_network_mode():
 
         with pytest.warns(UserWarning, match=r"allowlist.*\['allowlist-task'\]"):
             result = load_harbor_tasks(path="/some/allowlist/task")
+
+        assert len(result) == 1
+
+
+def test_build_harbor_tasks_does_not_warn_on_healthcheck():
+    """``[environment].healthcheck`` is wired into the compose service now.
+
+    It used to be reported as degraded fidelity; the converter maps it onto the
+    default service's healthcheck, so loading must be warning-free.
+    """
+    with (
+        patch("inspect_harbor._harbor.task._load_local_path") as mock_load_local,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        task_path = Path("/some/healthcheck/task")
+        mock_load_local.return_value = [task_path]
+        task_mock = _make_harbor_task_mock(name="healthcheck-task", task_dir=task_path)
+        task_mock.config.environment.healthcheck = HealthcheckConfig(
+            command="test -f /ready"
+        )
+        mock_harbor_task.return_value = task_mock
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", UserWarning)
+            result = load_harbor_tasks(path="/some/healthcheck/task")
 
         assert len(result) == 1
 

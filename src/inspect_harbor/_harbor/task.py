@@ -235,7 +235,6 @@ def _build_harbor_tasks(
 
     multi_step: list[str] = []
     windows: list[str] = []
-    healthcheck: list[str] = []
     mcp_servers: list[str] = []
     skills_dir: list[str] = []
     allowlist: list[str] = []
@@ -246,8 +245,6 @@ def _build_harbor_tasks(
         env = t.config.environment
         if str(getattr(env.os, "value", env.os)).lower() == "windows":
             windows.append(t.name)
-        if env.healthcheck is not None:
-            healthcheck.append(t.name)
         if env.mcp_servers:
             mcp_servers.append(t.name)
         if env.skills_dir is not None:
@@ -275,8 +272,6 @@ def _build_harbor_tasks(
         )
 
     degraded: list[str] = []
-    if healthcheck:
-        degraded.append(f"`[environment].healthcheck`: {healthcheck}")
     if mcp_servers:
         degraded.append(f"`[environment].mcp_servers`: {mcp_servers}")
     if skills_dir:

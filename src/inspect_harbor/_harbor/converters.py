@@ -2,11 +2,16 @@
 
 import os
 import re
+import warnings
 from typing import Any
 
 import yaml
 from harbor.environments.docker.docker import _sanitize_docker_image_name
-from harbor.models.task.config import EnvironmentConfig, NetworkMode
+from harbor.models.task.config import (
+    EnvironmentConfig,
+    HealthcheckConfig,
+    NetworkMode,
+)
 from harbor.models.task.task import Task as HarborTask
 from harbor.models.trial.paths import EnvironmentPaths
 from inspect_ai.dataset import Sample
@@ -19,6 +24,7 @@ from inspect_ai.util import (
 from inspect_ai.util._sandbox.compose import (
     ComposeDeploy,
     ComposeDeviceReservation,
+    ComposeHealthcheck,
     ComposeResourceConfig,
     ComposeResourceReservations,
 )
@@ -83,6 +89,23 @@ def harbor_to_compose_config(
                 default_service.mem_limit = f"{memory_mb}m"
             if gpu_deploy:
                 default_service.deploy = gpu_deploy
+            if env_config.healthcheck is not None:
+                if default_service.healthcheck is None:
+                    default_service.healthcheck = _harbor_healthcheck_to_compose(
+                        env_config.healthcheck
+                    )
+                else:
+                    # A compose service can only carry one healthcheck, and the
+                    # one the task ships is the more specific declaration.
+                    warnings.warn(
+                        f"'{harbor_task.name}' declares both "
+                        "`[environment].healthcheck` in task.toml and a "
+                        "healthcheck on the default service of its "
+                        "docker-compose.yaml; keeping the compose healthcheck "
+                        "and ignoring the task.toml one.",
+                        UserWarning,
+                        stacklevel=2,
+                    )
 
             # Network isolation applies to all services.
             if _is_no_network(env_config):
@@ -127,6 +150,11 @@ def harbor_to_compose_config(
             network_mode="none" if _is_no_network(env_config) else "bridge",
             deploy=gpu_deploy,
             environment=resolved_env,
+            healthcheck=(
+                _harbor_healthcheck_to_compose(env_config.healthcheck)
+                if env_config.healthcheck is not None
+                else None
+            ),
         )
 
         return ComposeConfig(services={"default": service})
@@ -210,6 +238,50 @@ def _find_default_service(config: ComposeConfig) -> tuple[str, ComposeService]:
             return candidate, config.services[candidate]
     name = next(iter(config.services))
     return name, config.services[name]
+
+
+def _harbor_healthcheck_to_compose(
+    healthcheck: HealthcheckConfig,
+) -> ComposeHealthcheck:
+    """Map a Harbor ``[environment].healthcheck`` onto a compose healthcheck.
+
+    Harbor polls the command itself before agent setup, explicitly mirroring
+    Docker's HEALTHCHECK semantics, so the fields map one-to-one. Inspect
+    brings the environment up with ``docker compose up --wait``, which gates
+    readiness on the healthcheck — so the agent no longer starts before the
+    services it depends on are ready.
+
+    Harbor's ``command`` is a shell command string, hence ``CMD-SHELL``.
+    """
+    return ComposeHealthcheck(
+        test=["CMD-SHELL", healthcheck.command],
+        interval=_compose_duration(healthcheck.interval_sec),
+        timeout=_compose_duration(healthcheck.timeout_sec),
+        start_period=_compose_duration(healthcheck.start_period_sec),
+        # ``start_interval`` only applies within the start period (in Docker and
+        # in Harbor's own loop), so omit it when there is no start period —
+        # it would be inert and it needs Docker Engine 25+.
+        start_interval=(
+            _compose_duration(healthcheck.start_interval_sec)
+            if healthcheck.start_period_sec > 0
+            else None
+        ),
+        retries=healthcheck.retries,
+    )
+
+
+def _compose_duration(seconds: float) -> str:
+    r"""Render a Harbor ``*_sec`` float as a compose duration string.
+
+    Emits whole units only: Inspect's compose duration parser matches
+    ``(\d+)([a-z]+)``, so a fractional string like ``"5.5s"`` would silently
+    parse as ``5s`` (and ``"5.0s"`` as ``0s``, since ``5`` isn't followed by a
+    unit), skewing the ``up --wait`` timeout.
+    """
+    milliseconds = round(seconds * 1000)
+    if milliseconds % 1000 == 0:
+        return f"{milliseconds // 1000}s"
+    return f"{milliseconds}ms"
 
 
 def _create_gpu_deploy_config(
