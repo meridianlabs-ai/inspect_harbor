@@ -1667,10 +1667,10 @@ def harbor_index(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Harbor Index: 80 agentic tasks spanning software engineering, science, and tool use (revision 1.3).
+    r"""Harbor Index: 80 agentic evaluation tasks spanning SWE, security, science, math, and optimization (revision 1.4).
 
     Slug: harbor-index/harbor-index
-    Latest digest: sha256:fdb3554453d29f96bfe87ddf36e6770f6ceadd375e8189c62718ef2f215bbbad
+    Latest digest: sha256:74af9ee31f50d8dac213e67ebaeeddc6bb0e4470a28968f84766916e09fe13dd
     """
     return _harbor_base(
         package_name="harbor-index/harbor-index",
@@ -1736,6 +1736,37 @@ def harveyai_lab(
     """
     return _harbor_base(
         package_name="harveyai/lab",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def swe_rebench_07_2026(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""111 hard SWE-rebench leaderboard tasks from the July 2026 snapshot across Go, Java, Python, Rust, and TypeScript
+
+    Slug: ibragim-badertdinov/swe-rebench-07-2026
+    Latest digest: sha256:e2e357045bf03e4900d2506c36562f6eaff7acd37f63780600967ea3aecdcd79
+    """
+    return _harbor_base(
+        package_name="ibragim-badertdinov/swe-rebench-07-2026",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -2823,7 +2854,7 @@ def rounakbende10_rh_swe_bench(
     r"""Red Hat SWE-bench - 357 verified tasks from 25 RH ecosystem repos
 
     Slug: rounakbende10/rh-swe-bench
-    Latest digest: sha256:35fa496a85a348f06ee47ef69e8899c573ecceb0a1d3c5102482928492267667
+    Latest digest: sha256:4e73020a541ceb977c9a79658fb8cc95a03d055c51fce0788c4141882b8bfffe
     """
     return _harbor_base(
         package_name="rounakbende10/rh-swe-bench",

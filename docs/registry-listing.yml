@@ -517,8 +517,8 @@
   - Coding
 - title: harbor-index/harbor-index
   path: registry/harbor_index.html
-  desc: 'Harbor Index: 80 agentic tasks spanning software engineering, science, and tool use (revision 1.3).'
-  desc_trunc: 'Harbor Index: 80 agentic tasks spanning software engineering, science, and tool use (revision 1.3).'
+  desc: 'Harbor Index: 80 agentic evaluation tasks spanning SWE, security, science, math, and optimization (revision 1.4).'
+  desc_trunc: 'Harbor Index: 80 agentic evaluation tasks spanning SWE, security, science, math, and optimization (…'
   task_function: harbor_index
   samples: 80
   version: latest
@@ -545,6 +545,15 @@
   categories:
   - Law
   - Professional
+- title: ibragim-badertdinov/swe-rebench-07-2026
+  path: registry/swe_rebench_07_2026.html
+  desc: 111 hard SWE-rebench leaderboard tasks from the July 2026 snapshot across Go, Java, Python, Rust, and TypeScript.
+  desc_trunc: 111 hard SWE-rebench leaderboard tasks from the July 2026 snapshot across Go, Java, Python, Rust, a…
+  task_function: swe_rebench_07_2026
+  samples: 111
+  version: latest
+  categories:
+  - Coding
 - title: ineqmath/ineqmath
   path: registry/ineqmath.html
   desc: 'IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bound-estimation and relation-prediction subtasks with stepwise judging.'

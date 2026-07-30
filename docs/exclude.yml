@@ -59,3 +59,16 @@
 # 6-task ale/rsi-post-training. Revisit if rsi-index becomes the canonical
 # home of the ALE RSI benchmark.
 - rsi-index/post-training
+# The Lamina "Headless Product Design skill" A/B experiment again (same
+# project already excluded as aryaniyaps/*): 12 samples = 4 toy apps x 3
+# arms (direct/plan/lamina) with dev-*-v3 scratch task ids. The lamina
+# GitHub org has 0 public repos and there is no paper or external
+# footprint. The tasks are also multi-step task.toml, which inspect_harbor
+# can't load (NotImplementedError). Revisit if Lamina publishes a real
+# benchmark repo/paper and multi-step tasks become supported.
+- lamina/*
+# Individual's (User, not org) dev pilot of the same Lamina experiment —
+# identical 12 task ids to lamina/product-bench, slug references a working
+# issue number ("lb6-dev-pilot-issue18"), and the desc itself says
+# "Development-only; not confirmatory". Not a published benchmark.
+- shiv-eshwar/*
