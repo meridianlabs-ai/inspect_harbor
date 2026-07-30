@@ -508,6 +508,7 @@ ibragim-badertdinov/swe-rebench-07-2026:
   title: SWE-rebench (July 2026)
   repo: https://huggingface.co/datasets/nebius/SWE-rebench-leaderboard
   arxiv: https://arxiv.org/abs/2505.20411
+  function_name: swe_rebench_07_2026
 
 ineqmath/ineqmath:
   categories:

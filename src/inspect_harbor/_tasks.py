@@ -1749,7 +1749,7 @@ def harveyai_lab(
 
 
 @task
-def ibragim_badertdinov_swe_rebench_07_2026(
+def swe_rebench_07_2026(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,

@@ -546,10 +546,10 @@
   - Law
   - Professional
 - title: ibragim-badertdinov/swe-rebench-07-2026
-  path: registry/ibragim_badertdinov_swe_rebench_07_2026.html
+  path: registry/swe_rebench_07_2026.html
   desc: 111 hard SWE-rebench leaderboard tasks from the July 2026 snapshot across Go, Java, Python, Rust, and TypeScript.
   desc_trunc: 111 hard SWE-rebench leaderboard tasks from the July 2026 snapshot across Go, Java, Python, Rust, a…
-  task_function: ibragim_badertdinov_swe_rebench_07_2026
+  task_function: swe_rebench_07_2026
   samples: 111
   version: latest
   categories:
