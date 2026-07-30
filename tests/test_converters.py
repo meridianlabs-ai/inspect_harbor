@@ -9,6 +9,7 @@ import yaml
 from harbor.models.task.config import (
     AgentConfig,
     EnvironmentConfig,
+    HealthcheckConfig,
     NetworkMode,
     TaskConfig,
     VerifierConfig,
@@ -37,6 +38,7 @@ def test_harbor_to_compose_config_with_existing_compose_yaml():
     mock_env_config.memory_mb = 4096
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_env_config.network_mode = "public"
     mock_task.config.environment = mock_env_config
 
@@ -86,6 +88,7 @@ def test_harbor_to_compose_config_with_dockerfile():
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     def exists_side_effect(self: Path) -> bool:
@@ -140,6 +143,7 @@ def test_harbor_to_compose_config_dockerfile_image_tag_is_deterministic():
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     def exists_side_effect(self: Path) -> bool:
@@ -185,6 +189,7 @@ def test_harbor_to_compose_config_dockerfile_path_injects_task_env(
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     def exists_side_effect(self: Path) -> bool:
@@ -219,6 +224,7 @@ def test_harbor_to_compose_config_dockerfile_path_missing_env_var_raises(
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     def exists_side_effect(self: Path) -> bool:
@@ -245,6 +251,7 @@ def test_harbor_to_compose_config_with_prebuilt_image():
     mock_env_config.network_mode = "no-network"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -279,6 +286,7 @@ def test_harbor_to_compose_config_custom_resource_limits():
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -369,6 +377,7 @@ def test_harbor_to_compose_config_compose_yaml_no_internet_overrides_network_mod
     mock_env_config.memory_mb = 2048
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_env_config.network_mode = "no-network"
     mock_task.config.environment = mock_env_config
 
@@ -404,6 +413,7 @@ def test_harbor_to_compose_config_compose_yaml_preserves_custom_network_mode():
     mock_env_config.memory_mb = 2048
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_env_config.network_mode = "public"
     mock_task.config.environment = mock_env_config
 
@@ -443,6 +453,7 @@ def test_harbor_to_compose_config_compose_yaml_no_network_mode_left_unset():
     mock_env_config.memory_mb = 2048
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_env_config.network_mode = "public"
     mock_task.config.environment = mock_env_config
 
@@ -478,6 +489,7 @@ def test_harbor_to_compose_config_network_mode_field_no_network():
     mock_env_config.network_mode = "no-network"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -506,6 +518,7 @@ def test_harbor_to_compose_config_network_mode_field_allows_network(
     mock_env_config.network_mode = network_mode
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -574,6 +587,7 @@ def test_compose_yaml_explicit_networks_not_clobbered_by_network_mode():
     mock_task.config.environment.memory_mb = 8192
     mock_task.config.environment.gpus = 0
     mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.healthcheck = None
     mock_task.config.environment.env = {}
     mock_task.config.environment.network_mode = "public"
     mock_task.config.verifier.env = {}
@@ -607,6 +621,7 @@ def test_compose_yaml_no_network_leaves_explicit_networks_alone():
     mock_task.config.environment.memory_mb = 8192
     mock_task.config.environment.gpus = 0
     mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.healthcheck = None
     mock_task.config.environment.env = {}
     mock_task.config.environment.network_mode = "no-network"
     mock_task.config.verifier.env = {}
@@ -665,6 +680,7 @@ def test_harbor_task_to_sample_metadata_preserved():
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     mock_verifier_config = Mock()
@@ -715,6 +731,7 @@ def test_harbor_task_to_sample_sandbox_spec():
     mock_env_config.network_mode = "no-network"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     mock_verifier_config = Mock()
@@ -758,6 +775,7 @@ def test_harbor_to_compose_config_with_gpu_settings():
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 2
     mock_env_config.gpu_types = ["H100", "A100"]
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -798,6 +816,7 @@ def test_harbor_to_compose_config_without_gpus():
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -824,6 +843,7 @@ def test_harbor_to_compose_config_with_gpus_no_types():
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 1
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -868,6 +888,7 @@ services:
     mock_task.config.environment.memory_mb = 2048
     mock_task.config.environment.gpus = 0
     mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.healthcheck = None
     mock_task.config.environment.docker_image = None
 
     with pytest.raises(yaml.YAMLError):
@@ -898,6 +919,7 @@ def test_harbor_task_to_sample_with_verifier_env():
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     # Mock verifier config with env vars
@@ -947,6 +969,7 @@ def test_harbor_task_to_sample_without_verifier_env():
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     # Mock verifier config without env vars (Harbor's default empty-dict).
@@ -989,6 +1012,7 @@ def test_harbor_task_to_sample_with_package_info():
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     mock_task.config.verifier = Mock(timeout_sec=60, env={}, user=None)
@@ -1080,6 +1104,7 @@ def test_harbor_task_to_sample_user_fields(
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     mock_task.config.verifier = verifier_config
@@ -1120,6 +1145,7 @@ def mock_harbor_task():
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 1
     mock_env_config.gpu_types = ["H100"]
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     mock_verifier_config = Mock()
@@ -1242,6 +1268,7 @@ def _make_multi_service_task(
     mock_task.config.environment.memory_mb = memory_mb
     mock_task.config.environment.gpus = gpus
     mock_task.config.environment.gpu_types = gpu_types
+    mock_task.config.environment.healthcheck = None
     mock_task.config.environment.network_mode = network_mode
     mock_task.config.verifier.env = {}
     mock_task.config.environment.env = {}
@@ -1608,6 +1635,7 @@ services:
     mock_task.config.environment.memory_mb = 8192
     mock_task.config.environment.gpus = 0
     mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.healthcheck = None
     mock_task.config.environment.network_mode = "public"
     mock_task.config.environment.env = {}
     mock_task.config.verifier.env = {}
@@ -1658,6 +1686,7 @@ services:
     mock_task.config.environment.memory_mb = 6144
     mock_task.config.environment.gpus = 0
     mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.healthcheck = None
     mock_task.config.environment.network_mode = "public"
     mock_task.config.environment.env = {}
     mock_task.config.verifier.env = {}
@@ -1706,6 +1735,7 @@ services:
     mock_task.config.environment.memory_mb = 6144
     mock_task.config.environment.gpus = 0
     mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.healthcheck = None
     mock_task.config.environment.network_mode = "public"
     mock_task.config.environment.env = {}
     mock_task.config.verifier.env = {}
@@ -1744,6 +1774,7 @@ def test_harbor_to_compose_config_memory_minimum(
     mock_env_config.network_mode = "public"
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
+    mock_env_config.healthcheck = None
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -1751,3 +1782,161 @@ def test_harbor_to_compose_config_memory_minimum(
 
         service = result.services["default"]
         assert service.mem_limit == expected_memory
+
+
+def _make_healthcheck_task(
+    healthcheck: HealthcheckConfig | None,
+    name: str = "healthcheck-task",
+) -> Mock:
+    """A task mock whose ``[environment]`` carries only a healthcheck."""
+    mock_task = Mock()
+    mock_task.name = name
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = Path("/task/environment")
+    mock_task.config.environment = Mock()
+    mock_task.config.environment.env = {}
+    mock_task.config.environment.cpus = None
+    mock_task.config.environment.memory_mb = None
+    mock_task.config.environment.docker_image = "ubuntu:latest"
+    mock_task.config.environment.gpus = 0
+    mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.network_mode = "public"
+    mock_task.config.environment.healthcheck = healthcheck
+    mock_task.config.verifier.env = {}
+    return mock_task
+
+
+def test_healthcheck_mapped_on_programmatic_service():
+    """A task.toml healthcheck lands on the generated default service."""
+    mock_task = _make_healthcheck_task(
+        HealthcheckConfig(
+            command="curl -f http://localhost:8080/health",
+            interval_sec=2.0,
+            timeout_sec=10.0,
+            start_period_sec=30.0,
+            start_interval_sec=1.0,
+            retries=5,
+        )
+    )
+
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_to_compose_config(mock_task)
+
+    healthcheck = result.services["default"].healthcheck
+    assert healthcheck is not None
+    assert healthcheck.test == ["CMD-SHELL", "curl -f http://localhost:8080/health"]
+    assert healthcheck.interval == "2s"
+    assert healthcheck.timeout == "10s"
+    assert healthcheck.start_period == "30s"
+    assert healthcheck.start_interval == "1s"
+    assert healthcheck.retries == 5
+
+
+def test_healthcheck_absent_leaves_service_without_one():
+    """No task.toml healthcheck means no compose healthcheck."""
+    mock_task = _make_healthcheck_task(None)
+
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_to_compose_config(mock_task)
+
+    assert result.services["default"].healthcheck is None
+
+
+def test_healthcheck_defaults_omit_inert_start_interval():
+    """``start_interval`` is dropped when there is no start period.
+
+    Docker only uses it within the start period (as does Harbor's own loop),
+    and it requires Docker Engine 25+.
+    """
+    mock_task = _make_healthcheck_task(HealthcheckConfig(command="test -f /ready"))
+
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_to_compose_config(mock_task)
+
+    healthcheck = result.services["default"].healthcheck
+    assert healthcheck is not None
+    # Harbor's HealthcheckConfig defaults.
+    assert healthcheck.interval == "5s"
+    assert healthcheck.timeout == "30s"
+    assert healthcheck.start_period == "0s"
+    assert healthcheck.start_interval is None
+    assert healthcheck.retries == 3
+
+
+def test_healthcheck_fractional_seconds_render_as_whole_milliseconds():
+    """Fractional seconds become ``ms``: Inspect's duration parser is integer-only.
+
+    ``"1.5s"`` would parse as ``1s`` and ``"2.0s"`` as ``0s``, skewing the
+    ``compose up --wait`` timeout Inspect derives from the healthcheck.
+    """
+    mock_task = _make_healthcheck_task(
+        HealthcheckConfig(
+            command="test -f /ready",
+            interval_sec=1.5,
+            timeout_sec=0.25,
+            start_period_sec=2.0,
+            start_interval_sec=0.5,
+        )
+    )
+
+    with patch("pathlib.Path.exists", return_value=False):
+        result = harbor_to_compose_config(mock_task)
+
+    healthcheck = result.services["default"].healthcheck
+    assert healthcheck is not None
+    assert healthcheck.interval == "1500ms"
+    assert healthcheck.timeout == "250ms"
+    assert healthcheck.start_period == "2s"
+    assert healthcheck.start_interval == "500ms"
+
+
+def test_healthcheck_mapped_on_compose_yaml_default_service():
+    """A task.toml healthcheck reaches the default service of a task's own compose."""
+    mock_task = _make_healthcheck_task(HealthcheckConfig(command="test -f /ready"))
+    compose_yaml = """
+services:
+  main:
+    image: python:3.11
+    x-default: true
+  helper:
+    image: redis:7
+"""
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=compose_yaml)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    healthcheck = result.services["main"].healthcheck
+    assert healthcheck is not None
+    assert healthcheck.test == ["CMD-SHELL", "test -f /ready"]
+    # Sidecars keep their own (absent) healthcheck.
+    assert result.services["helper"].healthcheck is None
+
+
+def test_healthcheck_does_not_overwrite_one_declared_in_compose_yaml():
+    """A compose-declared healthcheck wins, and the conflict is warned about."""
+    mock_task = _make_healthcheck_task(HealthcheckConfig(command="test -f /ready"))
+    compose_yaml = """
+services:
+  default:
+    image: python:3.11
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      retries: 7
+"""
+
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=compose_yaml)),
+    ):
+        mock_exists.side_effect = lambda: True
+        with pytest.warns(UserWarning, match="healthcheck-task"):
+            result = harbor_to_compose_config(mock_task)
+
+    healthcheck = result.services["default"].healthcheck
+    assert healthcheck is not None
+    assert healthcheck.test == ["CMD", "pg_isready"]
+    assert healthcheck.retries == 7
