@@ -552,6 +552,8 @@
   task_function: ibragim_badertdinov_swe_rebench_07_2026
   samples: 111
   version: latest
+  categories:
+  - Coding
 - title: ineqmath/ineqmath
   path: registry/ineqmath.html
   desc: 'IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bound-estimation and relation-prediction subtasks with stepwise judging.'
@@ -647,13 +649,6 @@
   version: latest
   categories:
   - Reasoning
-- title: lamina/product-bench
-  path: registry/lamina_product_bench.html
-  desc: Product Bench — 3-arm public benchmark (direct / plan / lamina). Thin-slice greenfield product coding with a RewardKit LLM judge. Median of 3 full reruns using Cursor CLI + Composer 2.5.
-  desc_trunc: Product Bench — 3-arm public benchmark (direct / plan / lamina). Thin-slice greenfield product codi…
-  task_function: lamina_product_bench
-  samples: 12
-  version: latest
 - title: lawbench/lawbench
   path: registry/lawbench.html
   desc: 'LawBench: tasks evaluating LLMs on Chinese-law knowledge — legal entity recognition, reading comprehension, criminal-damage calculation, legal consulting — plus an abstention-rate metric.'
@@ -958,13 +953,6 @@
   - Science
   - Coding
   - Reasoning
-- title: shiv-eshwar/lb6-dev-pilot-issue18-rewardkit
-  path: registry/shiv_eshwar_lb6_dev_pilot_issue18_rewardkit.html
-  desc: Lamina Product Coding Pilot — 3-arm (direct / plan / lamina). Small product apps, LLM-judge on product code, median of 3 seeds. Development-only; not confirmatory LaminaBench-6.
-  desc_trunc: Lamina Product Coding Pilot — 3-arm (direct / plan / lamina). Small product apps, LLM-judge on prod…
-  task_function: shiv_eshwar_lb6_dev_pilot_issue18_rewardkit
-  samples: 12
-  version: latest
 - title: sierra-research/tau3-bench
   path: registry/sierra_research_tau3_bench.html
   desc: Third generation of τ-bench, extending the original with knowledge and voice. A simulation framework for evaluating customer service agents across airline, retail, telecom, and banking knowledge domains.

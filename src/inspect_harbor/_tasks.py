@@ -2090,37 +2090,6 @@ def kumo_parity(
 
 
 @task
-def lamina_product_bench(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Product Bench — 3-arm public benchmark (direct / plan / lamina). Thin-slice greenfield product coding with a RewardKit LLM judge. Median of 3 full reruns using Cursor CLI + Composer 2.5.
-
-    Slug: lamina/product-bench
-    Latest digest: sha256:e95382c6f1f9f605cfd451838696a762b3a382c194135911338be4a1c70757aa
-    """
-    return _harbor_base(
-        package_name="lamina/product-bench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def lawbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3106,37 +3075,6 @@ def scienceagentbench(
     """
     return _harbor_base(
         package_name="scienceagentbench/scienceagentbench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def shiv_eshwar_lb6_dev_pilot_issue18_rewardkit(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Lamina Product Coding Pilot — 3-arm (direct / plan / lamina). Small product apps, LLM-judge on product code, median of 3 seeds. Development-only; not confirmatory LaminaBench-6.
-
-    Slug: shiv-eshwar/lb6-dev-pilot-issue18-rewardkit
-    Latest digest: sha256:8da16c9f65faf6038931e6f11c0314ec3a80ce0b05c38cf48ec8e9e2ec13d622
-    """
-    return _harbor_base(
-        package_name="shiv-eshwar/lb6-dev-pilot-issue18-rewardkit",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
