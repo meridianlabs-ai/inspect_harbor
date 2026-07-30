@@ -1,5 +1,17 @@
 # changelog – Inspect Harbor
 
+## [0.7.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.6.4...v0.7.0) (2026-07-30)
+
+### Features
+
+- map task.toml healthcheck to the compose service healthcheck ([\#139](https://github.com/meridianlabs-ai/inspect_harbor/issues/139)) ([65cf775](https://github.com/meridianlabs-ai/inspect_harbor/commit/65cf7759b9decf4849a17f3e14a98af8e5fc0cf1))
+
+### Bug Fixes
+
+- update Harbor registry tasks ([\#136](https://github.com/meridianlabs-ai/inspect_harbor/issues/136)) ([1ee0baf](https://github.com/meridianlabs-ai/inspect_harbor/commit/1ee0bafcbdf9a85584667cfdc8cbabe0077fccfc))
+- update Harbor registry tasks ([\#138](https://github.com/meridianlabs-ai/inspect_harbor/issues/138)) ([0c49b4c](https://github.com/meridianlabs-ai/inspect_harbor/commit/0c49b4c43d45e7acd9dd417551309c4dc23e4c0c))
+- update Harbor registry tasks ([\#140](https://github.com/meridianlabs-ai/inspect_harbor/issues/140)) ([65ce83d](https://github.com/meridianlabs-ai/inspect_harbor/commit/65ce83d06e1beeaaa09eeb1c3cfcb967130796c3))
+
 ## [0.6.4](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.6.3...v0.6.4) (2026-07-22)
 
 ### Bug Fixes

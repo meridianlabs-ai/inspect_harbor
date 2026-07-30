@@ -25,7 +25,7 @@ eval(frontier_bench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [frontier-bench/frontier-bench](https://hub.harborframework.com/datasets/frontier-bench/frontier-bench/latest) |
 | Inspect task | `frontier_bench` |
-| Latest digest | sha256:97fd2ba3aabdda16823a1a8ea695a3875e50e800caa60b450686deedc7171763 |
+| Latest digest | sha256:63f363a191f0a0429fd1c5b318080616bab839473ce27e39f44868d327b03a89 |
 | Samples | 74 |
 | Source | <https://github.com/harbor-framework/frontier-bench> |
 

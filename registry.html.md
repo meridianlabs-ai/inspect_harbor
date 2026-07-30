@@ -54,6 +54,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [camel-ai/seta-env](registry/camel_ai_seta_env.html.md) | camel_ai_seta_env | SETA (Scaling Environments for Terminal Agents): CAMEL-AI’s verifiable terminal-agent tasks spannin… | 1376 |
 | [cmu/refav](registry/cmu_refav.html.md) | cmu_refav | Autonomous-vehicle scenario mining via VLM. | 1500 |
 | [codepde/codepde](registry/codepde.html.md) | codepde | CodePDE: framing partial-differential-equation solving as a code-generation task to benchmark LLMs… | 5 |
+| [cohere/terminal_bench_aai](registry/cohere_terminal_bench_aai.html.md) | cohere_terminal_bench_aai | AAII Terminal-Bench Hard: 44 hard tasks from terminal-bench v1 (terminal-bench-core==0.1.1), used w… | 44 |
 | [crustbench/crustbench](registry/crustbench.html.md) | crustbench | CRUST-Bench: real-world C repositories paired with hand-written safe-Rust interfaces and tests, ben… | 100 |
 | [datacurve/deep-swe](registry/datacurve_deep_swe.html.md) | datacurve_deep_swe | DeepSWE: Measuring frontier coding agents on original, long-horizon engineering tasks. | 113 |
 | [dbt-labs/ade-bench](registry/dbt_labs_ade_bench.html.md) | dbt_labs_ade_bench | Analytics Data Engineer Bench: dbt and SQL data-engineering tasks across DuckDB and Snowflake backe… | 48 |
@@ -64,7 +65,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [featurebench/featurebench-lite](registry/featurebench_lite.html.md) | featurebench_lite | Lightweight subset of FeatureBench for cheaper evaluation while preserving model rankings. | 30 |
 | [featurebench/featurebench-lite-modal](registry/featurebench_lite_modal.html.md) | featurebench_lite_modal | FeatureBench-Lite executed on Modal’s cloud sandbox runner. | 30 |
 | [featurebench/featurebench-modal](registry/featurebench_modal.html.md) | featurebench_modal | FeatureBench’s full task suite executed on Modal’s cloud sandbox runner. | 200 |
-| [frontier-bench/frontier-bench](registry/frontier_bench.html.md) | frontier_bench | Frontier-Bench: a digest-pinned suite of hard agentic terminal tasks. | 74 |
+| [frontier-bench/frontier-bench](registry/frontier_bench.html.md) | frontier_bench | The frontier is wide and dynamic. Frontier-Bench measures general agent capabilities on a diverse s… | 74 |
 | [futurehouse/bixbench](registry/futurehouse_bixbench.html.md) | futurehouse_bixbench | BixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM age… | 205 |
 | [futurehouse/bixbench-cli](registry/futurehouse_bixbench_cli.html.md) | futurehouse_bixbench_cli | CLI variant of BixBench: agents solve the same bioinformatics analysis tasks via a command-line / s… | 205 |
 | [futurehouse/labbench](registry/futurehouse_labbench.html.md) | futurehouse_labbench | LAB-Bench (Language Agent Biology Benchmark): questions across 8 categories (literature QA, databas… | 181 |
@@ -76,9 +77,10 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [gpqa-diamond/gpqa-diamond](registry/gpqa_diamond.html.md) | gpqa_diamond | GPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch… | 198 |
 | [grafana/o11y-bench](registry/grafana_o11y_bench.html.md) | grafana_o11y_bench | o11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo… | 63 |
 | [grandsmile/unicode](registry/grandsmile_unicode.html.md) | grandsmile_unicode | UniCode: competitive-programming problems systematically augmented into novel variations to probe g… | 399 |
-| [harbor-index/harbor-index](registry/harbor_index.html.md) | harbor_index | Harbor Index: 80 agentic tasks spanning software engineering, science, and tool use (revision 1.3). | 80 |
+| [harbor-index/harbor-index](registry/harbor_index.html.md) | harbor_index | Harbor Index: 80 agentic evaluation tasks spanning SWE, security, science, math, and optimization (… | 80 |
 | [harbor-index/harbor-index-1.0](registry/harbor_index_1_0.html.md) | harbor_index_1_0 | Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000… | 82 |
 | [harveyai/lab](registry/harveyai_lab.html.md) | harveyai_lab | Harvey LAB - open-source benchmark for evaluating agents on real legal work. | 1251 |
+| [ibragim-badertdinov/swe-rebench-07-2026](registry/swe_rebench_07_2026.html.md) | swe_rebench_07_2026 | 111 hard SWE-rebench leaderboard tasks from the July 2026 snapshot across Go, Java, Python, Rust, a… | 111 |
 | [ineqmath/ineqmath](registry/ineqmath.html.md) | ineqmath | IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bou… | 100 |
 | [infra-bench/infra-bench-v1](registry/infra_bench_v1.html.md) | infra_bench_v1 | 20 AI-infra engineering tasks on AMD MI35X (5 categories: model deployment, profiling, kernel imple… | 20 |
 | [islo-labs/reward-hack-bench](registry/islo_labs_reward_hack_bench.html.md) | islo_labs_reward_hack_bench | Reward-hacking benchmark: SWE-bench + CyBench tasks with injected solution-retrieval cheat prompts,… | 8 |
@@ -113,7 +115,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [reasoning-gym/reasoning-gym-hard](registry/reasoning_gym_hard.html.md) | reasoning_gym_hard | Reasoning Gym (hard split): procedurally-generated, algorithmically-verifiable reasoning tasks at h… | 288 |
 | [replicationbench/replicationbench](registry/replicationbench.html.md) | replicationbench | ReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce impleme… | 90 |
 | [rexbench/rexbench](registry/rexbench.html.md) | rexbench | RExBench - 2 tasks (cogs, othello) evaluating AI agents’ ability to extend existing AI research thr… | 2 |
-| [rsi-index/post-training](registry/rsi_index_post_training.html.md) | rsi_index_post_training | ALE RSI post-training benchmark tasks for evaluating agent capabilities in research-level post-trai… | 1 |
+| [rounakbende10/rh-swe-bench](registry/rounakbende10_rh_swe_bench.html.md) | rounakbende10_rh_swe_bench | Red Hat SWE-bench - 357 verified tasks from 25 RH ecosystem repos. | 357 |
 | [satbench/satbench](registry/satbench.html.md) | satbench | SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable diffi… | 2100 |
 | [scale-ai/hil-bench](registry/scale_ai_hil_bench.html.md) | scale_ai_hil_bench | HiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with crit… | 600 |
 | [scale-ai/swe-atlas-qna](registry/scale_ai_swe_atlas_qna.html.md) | scale_ai_swe_atlas_qna | SWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding… | 124 |

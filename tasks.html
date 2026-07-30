@@ -271,6 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#harbor-to-inspect-mapping" id="toc-harbor-to-inspect-mapping" class="nav-link" data-scroll-target="#harbor-to-inspect-mapping">Harbor to Inspect Mapping</a>
   <ul class="collapse">
   <li><a href="#unsupported-task.toml-features" id="toc-unsupported-task.toml-features" class="nav-link" data-scroll-target="#unsupported-task.toml-features">Unsupported <code>task.toml</code> Features</a></li>
+  <li><a href="#healthchecks" id="toc-healthchecks" class="nav-link" data-scroll-target="#healthchecks">Healthchecks</a></li>
   </ul></li>
   <li><a href="#llm-judges-in-verification" id="toc-llm-judges-in-verification" class="nav-link" data-scroll-target="#llm-judges-in-verification">LLM Judges in Verification</a></li>
   </ul>
@@ -419,20 +420,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><strong>raise</strong></td>
 </tr>
 <tr class="odd">
-<td><code>[environment].healthcheck</code></td>
-<td>warn (agent may run before services ready)</td>
-</tr>
-<tr class="even">
 <td><code>[environment].mcp_servers</code></td>
 <td>warn (not exposed to agent)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>[environment].skills_dir</code></td>
 <td>warn (not copied to agent skills dir)</td>
 </tr>
 </tbody>
 </table>
 <p><code>[environment].build_timeout_sec</code>, <code>storage_mb</code>, <code>workdir</code>, and <code>config.source</code> / <code>config.artifacts</code> are ignored.</p>
+</section>
+<section id="healthchecks" class="level3">
+<h3 class="anchored" data-anchor-id="healthchecks">Healthchecks</h3>
+<p><code>[environment].healthcheck</code> maps onto the <code>healthcheck</code> of the default compose service: <code>command</code> becomes a <code>CMD-SHELL</code> test and the <code>*_sec</code> fields become compose durations. Inspect brings the environment up with <code>docker compose up --wait</code>, so the agent only starts once the check passes, as it does under Harbor. Two differences are worth knowing about:</p>
+<ul>
+<li>If a task ships a <code>docker-compose.yaml</code> that already declares a healthcheck on the default service, that one is kept and the <code>task.toml</code> healthcheck is not enforced (a compose service carries only one healthcheck, whereas Harbor gates readiness on both). Loading such a task warns.</li>
+<li>Inspect sizes its <code>compose up --wait</code> timeout as <code>retries * (interval + timeout)</code>, which does not include <code>start_period_sec</code>. A task whose grace period is longer than that product can therefore be cut short at startup, even while Docker still considers the container starting — with Harbor’s defaults, a <code>start_period_sec</code> above 105s. Harbor itself runs <code>up --wait</code> untimed and only then polls the healthcheck, so it has no such ceiling.</li>
+</ul>
 </section>
 </section>
 <section id="llm-judges-in-verification" class="level2">
