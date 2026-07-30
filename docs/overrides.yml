@@ -502,6 +502,9 @@ harveyai/lab:
   repo: https://github.com/harveyai/harvey-labs
   title: Harvey LAB
 
+ibragim-badertdinov/swe-rebench-07-2026:
+  categories: []
+
 ineqmath/ineqmath:
   categories:
   - Mathematics
@@ -582,6 +585,9 @@ kumo/kumo-parity:
   desc: 'KUMO (parity split): subset of the KUMO procedural-reasoning benchmark used for parity / regression checks against the upstream evaluation.'
   function_name: kumo_parity
   title: KUMO (parity)
+
+lamina/product-bench:
+  categories: []
 
 lawbench/lawbench:
   categories:
@@ -844,6 +850,9 @@ scienceagentbench/scienceagentbench:
   desc: 'ScienceAgentBench: data-driven scientific discovery via Python programs across 4 disciplines.'
   function_name: scienceagentbench
   title: ScienceAgentBench
+
+shiv-eshwar/lb6-dev-pilot-issue18-rewardkit:
+  categories: []
 
 sierra-research/tau3-bench:
   categories:
