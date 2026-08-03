@@ -228,6 +228,15 @@
   categories:
   - Assistants
   - Reasoning
+- title: bencalvert04/programbench
+  path: registry/bencalvert04_programbench.html
+  desc: 'ProgramBench cleanroom reconstruction tasks: reimplementing real-world CLI tools from popular open-source repos.'
+  desc_trunc: 'ProgramBench cleanroom reconstruction tasks: reimplementing real-world CLI tools from popular open-…'
+  task_function: bencalvert04_programbench
+  samples: 200
+  version: latest
+  categories:
+  - Coding
 - title: benchflow/skillsbench
   path: registry/benchflow_skillsbench.html
   desc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folders of instructions, scripts, and resources) to complete specialized workflows spanning science, engineering, and professional domains.'
@@ -303,6 +312,16 @@
   - Science
   - Physics
   - Coding
+- title: cohere/terminal_bench_aai
+  path: registry/cohere_terminal_bench_aai.html
+  desc: 'AAII Terminal-Bench Hard: 44 hard tasks from terminal-bench v1 (terminal-bench-core==0.1.1), used with the Terminus-2 agent.'
+  desc_trunc: 'AAII Terminal-Bench Hard: 44 hard tasks from terminal-bench v1 (terminal-bench-core==0.1.1), used w…'
+  task_function: cohere_terminal_bench_aai
+  samples: 44
+  version: latest
+  categories:
+  - Coding
+  - Assistants
 - title: crustbench/crustbench
   path: registry/crustbench.html
   desc: 'CRUST-Bench: real-world C repositories paired with hand-written safe-Rust interfaces and tests, benchmarking LLMs on C-to-safe-Rust transpilation.'
@@ -981,6 +1000,15 @@
   desc_trunc: 'Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production reposito…'
   task_function: snorkel_ai_senior_swe_bench_v2026_06
   samples: 50
+  version: latest
+  categories:
+  - Coding
+- title: snowflake-labs/dbt-bench
+  path: registry/snowflake_labs_dbt_bench.html
+  desc: 'Agentic dbt data-engineering benchmark: 103 real-world dbt tasks (analytics, dimensional modeling, incremental models, bug-fixes, snapshots) runnable hermetically on DuckDB or against Snowflake via DB_TYPE. A 30-task balanced fast subset for cost-bounded / CI runs is listed in configs/fast-30.txt.'
+  desc_trunc: 'Agentic dbt data-engineering benchmark: 103 real-world dbt tasks (analytics, dimensional modeling,…'
+  task_function: snowflake_labs_dbt_bench
+  samples: 103
   version: latest
   categories:
   - Coding

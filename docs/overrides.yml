@@ -236,6 +236,13 @@ atm-bench/atm-bench-hard-sgm:
   function_name: atm_bench_hard_sgm
   title: ATM-Bench-Hard (SGM)
 
+bencalvert04/programbench:
+  categories:
+  - Coding
+  arxiv: https://arxiv.org/abs/2605.03546
+  repo: https://github.com/facebookresearch/ProgramBench
+  title: ProgramBench
+
 benchflow/skillsbench:
   categories:
   - Assistants
@@ -300,6 +307,14 @@ codepde/codepde:
   desc: 'CodePDE: framing partial-differential-equation solving as a code-generation task to benchmark LLMs on producing correct, efficient PDE solvers.'
   function_name: codepde
   title: CodePDE
+
+cohere/terminal_bench_aai:
+  categories:
+  - Coding
+  - Assistants
+  arxiv: https://arxiv.org/abs/2601.11868
+  repo: https://github.com/harbor-framework/terminal-bench
+  title: Terminal-Bench Hard
 
 crustbench/crustbench:
   categories:
@@ -881,6 +896,12 @@ snorkel-ai/senior-swe-bench-v2026.06:
   repo: https://github.com/snorkel-ai/senior-swe-bench-v2026.06
   desc: 'Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production repositories — building features from PM-style instructions and investigating bugs from runtime evidence, judged for correctness and code taste (50-task public split).'
 
+snowflake-labs/dbt-bench:
+  categories:
+  - Coding
+  repo: https://github.com/Snowflake-Labs/dbt-bench
+  title: dbt-bench
+
 stanford/medagentbench:
   categories:
   - Professional
@@ -966,7 +987,7 @@ terminal-bench/terminal-bench-2:
   - Coding
   - Assistants
   arxiv: https://arxiv.org/abs/2601.11868
-  repo: https://github.com/laude-institute/terminal-bench
+  repo: https://github.com/harbor-framework/terminal-bench
   desc: 'Terminal-Bench v2: benchmark for testing AI agents in real terminal environments — from compiling code to training models and setting up servers.'
   function_name: terminal_bench_2
   title: Terminal-Bench v2
@@ -976,7 +997,7 @@ terminal-bench/terminal-bench-2-1:
   - Coding
   - Assistants
   arxiv: https://arxiv.org/abs/2601.11868
-  repo: https://github.com/laude-institute/terminal-bench
+  repo: https://github.com/harbor-framework/terminal-bench
   desc: 'Terminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environments — from compiling code to training models and setting up servers.'
   function_name: terminal_bench_2_1
   title: Terminal-Bench v2.1
