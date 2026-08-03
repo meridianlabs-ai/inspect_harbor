@@ -235,6 +235,8 @@
   task_function: bencalvert04_programbench
   samples: 200
   version: latest
+  categories:
+  - Coding
 - title: benchflow/skillsbench
   path: registry/benchflow_skillsbench.html
   desc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folders of instructions, scripts, and resources) to complete specialized workflows spanning science, engineering, and professional domains.'
@@ -317,6 +319,9 @@
   task_function: cohere_terminal_bench_aai
   samples: 44
   version: latest
+  categories:
+  - Coding
+  - Assistants
 - title: crustbench/crustbench
   path: registry/crustbench.html
   desc: 'CRUST-Bench: real-world C repositories paired with hand-written safe-Rust interfaces and tests, benchmarking LLMs on C-to-safe-Rust transpilation.'
@@ -1005,6 +1010,8 @@
   task_function: snowflake_labs_dbt_bench
   samples: 103
   version: latest
+  categories:
+  - Coding
 - title: stanford/medagentbench
   path: registry/stanford_medagentbench.html
   desc: 'MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benchmarking LLM agents on medical decision-making, planning, and execution.'
