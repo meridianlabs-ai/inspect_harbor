@@ -236,6 +236,9 @@ atm-bench/atm-bench-hard-sgm:
   function_name: atm_bench_hard_sgm
   title: ATM-Bench-Hard (SGM)
 
+bencalvert04/programbench:
+  categories: []
+
 benchflow/skillsbench:
   categories:
   - Assistants
@@ -300,6 +303,9 @@ codepde/codepde:
   desc: 'CodePDE: framing partial-differential-equation solving as a code-generation task to benchmark LLMs on producing correct, efficient PDE solvers.'
   function_name: codepde
   title: CodePDE
+
+cohere/terminal_bench_aai:
+  categories: []
 
 crustbench/crustbench:
   categories:
@@ -880,6 +886,9 @@ snorkel-ai/senior-swe-bench-v2026.06:
   title: Senior SWE-Bench (v2026.06)
   repo: https://github.com/snorkel-ai/senior-swe-bench-v2026.06
   desc: 'Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production repositories — building features from PM-style instructions and investigating bugs from runtime evidence, judged for correctness and code taste (50-task public split).'
+
+snowflake-labs/dbt-bench:
+  categories: []
 
 stanford/medagentbench:
   categories:

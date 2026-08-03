@@ -306,7 +306,7 @@ def abundant_swe_marathon(
     r"""Ultra long-horizon software engineering tasks from SWE-Marathon.
 
     Slug: abundant/swe-marathon
-    Latest digest: sha256:862b01dc3c8d3bf5b8016ea68181c3963d62588ab03b928e5c6646cfce4e7b3f
+    Latest digest: sha256:9b351bf9bd305e6fd8bfdba9120e42551d027bf173b81ea790e8df2f21d7a624
     """
     return _harbor_base(
         package_name="abundant/swe-marathon",
@@ -726,6 +726,37 @@ def atm_bench_hard_sgm(
 
 
 @task
+def bencalvert04_programbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ProgramBench cleanroom reconstruction tasks: reimplementing real-world CLI tools from popular open-source repos.
+
+    Slug: bencalvert04/programbench
+    Latest digest: sha256:753a712740549277584134c44e36934ab135463b7b51e243390ce304f5dda5da
+    """
+    return _harbor_base(
+        package_name="bencalvert04/programbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def benchflow_skillsbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -961,6 +992,37 @@ def codepde(
     """
     return _harbor_base(
         package_name="codepde/codepde",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def cohere_terminal_bench_aai(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""AAII Terminal-Bench Hard: 44 hard tasks from terminal-bench v1 (terminal-bench-core==0.1.1), used with the Terminus-2 agent.
+
+    Slug: cohere/terminal_bench_aai
+    Latest digest: sha256:d8908945101bb9a713690ac46539d13ca7d44658637f2650a857470926c191b9
+    """
+    return _harbor_base(
+        package_name="cohere/terminal_bench_aai",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -2854,7 +2916,7 @@ def rounakbende10_rh_swe_bench(
     r"""Red Hat SWE-bench - 357 verified tasks from 25 RH ecosystem repos
 
     Slug: rounakbende10/rh-swe-bench
-    Latest digest: sha256:4e73020a541ceb977c9a79658fb8cc95a03d055c51fce0788c4141882b8bfffe
+    Latest digest: sha256:2912e953dd598963a5e7bb54f5fa6524baac1a073f1debd2bf1d6e1fad990d66
     """
     return _harbor_base(
         package_name="rounakbende10/rh-swe-bench",
@@ -3168,6 +3230,37 @@ def snorkel_ai_senior_swe_bench_v2026_06(
     """
     return _harbor_base(
         package_name="snorkel-ai/senior-swe-bench-v2026.06",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def snowflake_labs_dbt_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Agentic dbt data-engineering benchmark: 103 real-world dbt tasks (analytics, dimensional modeling, incremental models, bug-fixes, snapshots) runnable hermetically on DuckDB or against Snowflake via DB_TYPE. A 30-task balanced fast subset for cost-bounded / CI runs is listed in configs/fast-30.txt.
+
+    Slug: snowflake-labs/dbt-bench
+    Latest digest: sha256:4b5932ee20c4b0b5a0241b5b184c1d9d8e9658bda0d1cb2389e8e941046e8e0a
+    """
+    return _harbor_base(
+        package_name="snowflake-labs/dbt-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
