@@ -430,7 +430,7 @@ def agentscope_ai_pawbench(
     r"""PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use, reasoning, safety, and multimodal capabilities.
 
     Slug: agentscope-ai/pawbench
-    Latest digest: sha256:a4197a2fe40bf045abad4ea2ab1037bf9c8bdfab01c378fdcc2b40242f5d63dd
+    Latest digest: sha256:b4e0ac2e4d5614fd46735f3ece1fb98207e02ea5818b07f9d5545f97fdde2bfe
     """
     return _harbor_base(
         package_name="agentscope-ai/pawbench",
@@ -2586,6 +2586,37 @@ def openai_swe_lancer_diamond_manager(
 
 
 @task
+def orca_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).
+
+    Slug: orca-bench/orca-bench
+    Latest digest: sha256:1ef729757d4974ffe4e835d541c601f957975edf8c93ef02eec97e26d3069b93
+    """
+    return _harbor_base(
+        package_name="orca-bench/orca-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def orinlabs_horizon_public(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2821,6 +2852,37 @@ def reasoning_gym_hard(
     """
     return _harbor_base(
         package_name="reasoning-gym/reasoning-gym-hard",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def red_hat_ai_haiku_hard(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operator-framework, coreos) — 177 instances filtered to those Claude Haiku failed to solve.
+
+    Slug: red-hat-ai/haiku-hard
+    Latest digest: sha256:b24383f875f3d1ecad10aa8e8249d40fdb594fffffa3c842cf2cb0d96325a4e6
+    """
+    return _harbor_base(
+        package_name="red-hat-ai/haiku-hard",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -3243,7 +3305,7 @@ def snorkel_ai_senior_swe_bench_v2026_06(
 
 
 @task
-def snowflake_labs_dbt_bench(
+def snowflake_labs_data_eng_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -3256,11 +3318,11 @@ def snowflake_labs_dbt_bench(
 ) -> Task:
     r"""Agentic dbt data-engineering benchmark: 103 real-world dbt tasks (analytics, dimensional modeling, incremental models, bug-fixes, snapshots) runnable hermetically on DuckDB or against Snowflake via DB_TYPE. A 30-task balanced fast subset for cost-bounded / CI runs is listed in configs/fast-30.txt.
 
-    Slug: snowflake-labs/dbt-bench
-    Latest digest: sha256:4b5932ee20c4b0b5a0241b5b184c1d9d8e9658bda0d1cb2389e8e941046e8e0a
+    Slug: snowflake-labs/data-eng-bench
+    Latest digest: sha256:de31878dba7e5a9aad85dc8276820b0a20ab593aed46ff93dfbbbdb6007ec995
     """
     return _harbor_base(
-        package_name="snowflake-labs/dbt-bench",
+        package_name="snowflake-labs/data-eng-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

@@ -803,6 +803,16 @@
   categories:
   - Coding
   - Professional
+- title: orca-bench/orca-bench
+  path: registry/orca_bench.html
+  desc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).'
+  desc_trunc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrume…'
+  task_function: orca_bench
+  samples: 755
+  version: latest
+  categories:
+  - Coding
+  - Professional
 - title: orinlabs/horizon-public
   path: registry/orinlabs_horizon_public.html
   desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
@@ -877,6 +887,15 @@
   version: latest
   categories:
   - Reasoning
+- title: red-hat-ai/haiku-hard
+  path: registry/red_hat_ai_haiku_hard.html
+  desc: Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operator-framework, coreos) — 177 instances filtered to those Claude Haiku failed to solve.
+  desc_trunc: Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operato…
+  task_function: red_hat_ai_haiku_hard
+  samples: 177
+  version: latest
+  categories:
+  - Coding
 - title: replicationbench/replicationbench
   path: registry/replicationbench.html
   desc: 'ReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce implementation, methodology, and core findings of expert-validated papers, scored on result accuracy.'
@@ -1003,11 +1022,11 @@
   version: latest
   categories:
   - Coding
-- title: snowflake-labs/dbt-bench
-  path: registry/snowflake_labs_dbt_bench.html
+- title: snowflake-labs/data-eng-bench
+  path: registry/snowflake_labs_data_eng_bench.html
   desc: 'Agentic dbt data-engineering benchmark: 103 real-world dbt tasks (analytics, dimensional modeling, incremental models, bug-fixes, snapshots) runnable hermetically on DuckDB or against Snowflake via DB_TYPE. A 30-task balanced fast subset for cost-bounded / CI runs is listed in configs/fast-30.txt.'
   desc_trunc: 'Agentic dbt data-engineering benchmark: 103 real-world dbt tasks (analytics, dimensional modeling,…'
-  task_function: snowflake_labs_dbt_bench
+  task_function: snowflake_labs_data_eng_bench
   samples: 103
   version: latest
   categories:

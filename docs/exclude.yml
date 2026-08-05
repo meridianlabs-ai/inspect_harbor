@@ -72,3 +72,12 @@
 # issue number ("lb6-dev-pilot-issue18"), and the desc itself says
 # "Development-only; not confirmatory". Not a published benchmark.
 - shiv-eshwar/*
+# Individual's (User, not org) 2-sample compute-markets experiment matching
+# their "the-compute-bazaar" repo ("tinkering with compute markets"); no
+# benchmark repo, paper, or external footprint. Not a published benchmark.
+- gustofied/*
+# Individual's (User, not org) Kubernetes-sandbox ports of benchmarks we
+# already list canonically (arc-agi-2-k8s → arcprize/arc-agi-2, dbt-labs-k8s
+# → dbt-labs/ade-bench); the descs say "adapted for Kubernetes sandbox
+# execution". Derivative infra re-uploads, not new benchmarks.
+- titouanlne/*

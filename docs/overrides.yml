@@ -722,6 +722,16 @@ openai/swe-lancer-diamond-manager:
   desc: 'A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Manager variant: picking between technical implementation proposals.'
   title: SWE-Lancer Diamond (Manager)
 
+orca-bench/orca-bench:
+  categories:
+  - Coding
+  - Professional
+  function_name: orca_bench
+  repo: https://github.com/orca-bench/ORCA-bench
+  arxiv: https://arxiv.org/abs/2607.28545
+  desc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).'
+  title: ORCA-bench
+
 orinlabs/horizon-public:
   categories:
   - Assistants
@@ -788,6 +798,12 @@ reasoning-gym/reasoning-gym-hard:
   desc: 'Reasoning Gym (hard split): procedurally-generated, algorithmically-verifiable reasoning tasks at harder difficulty across 90+ task families.'
   function_name: reasoning_gym_hard
   title: Reasoning Gym (hard)
+
+red-hat-ai/haiku-hard:
+  categories:
+  - Coding
+  desc: Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operator-framework, coreos) — 177 instances filtered to those Claude Haiku failed to solve.
+  title: Haiku-Hard
 
 replicationbench/replicationbench:
   categories:
@@ -896,11 +912,10 @@ snorkel-ai/senior-swe-bench-v2026.06:
   repo: https://github.com/snorkel-ai/senior-swe-bench-v2026.06
   desc: 'Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production repositories — building features from PM-style instructions and investigating bugs from runtime evidence, judged for correctness and code taste (50-task public split).'
 
-snowflake-labs/dbt-bench:
+snowflake-labs/data-eng-bench:
   categories:
   - Coding
-  repo: https://github.com/Snowflake-Labs/dbt-bench
-  title: dbt-bench
+  repo: https://github.com/Snowflake-Labs/data-eng-bench
 
 stanford/medagentbench:
   categories:
