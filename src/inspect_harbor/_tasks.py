@@ -430,7 +430,7 @@ def agentscope_ai_pawbench(
     r"""PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use, reasoning, safety, and multimodal capabilities.
 
     Slug: agentscope-ai/pawbench
-    Latest digest: sha256:d2849f918a072575eeee13c79818c727f87776dac8bdc8d9c1ec084bc6bcab56
+    Latest digest: sha256:b4e0ac2e4d5614fd46735f3ece1fb98207e02ea5818b07f9d5545f97fdde2bfe
     """
     return _harbor_base(
         package_name="agentscope-ai/pawbench",
@@ -1718,37 +1718,6 @@ def grandsmile_unicode(
 
 
 @task
-def gustofied_compute_bazaar_bench(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Task-based evaluations for agents working in compute markets.
-
-    Slug: gustofied/compute-bazaar-bench
-    Latest digest: sha256:cd42c9b34b8b14b6298e87fb7bd477cd7401b9ed3ff5235bfbedcceb2a7642a1
-    """
-    return _harbor_base(
-        package_name="gustofied/compute-bazaar-bench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def harbor_index(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2617,7 +2586,7 @@ def openai_swe_lancer_diamond_manager(
 
 
 @task
-def orca_bench_orca_bench(
+def orca_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -2628,7 +2597,7 @@ def orca_bench_orca_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""An agent benchmark for root cause analysis — public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard). For the results on all 1,079 tasks, please see https://arxiv.org/abs/2607.28545.
+    r"""ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).
 
     Slug: orca-bench/orca-bench
     Latest digest: sha256:1ef729757d4974ffe4e835d541c601f957975edf8c93ef02eec97e26d3069b93
@@ -3819,68 +3788,6 @@ def tinycomputerai_bun_server_bench(
     """
     return _harbor_base(
         package_name="tinycomputerai/bun-server-bench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def titouanlne_arc_agi_2_k8s(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""ARC-AGI-2 tasks adapted for Kubernetes sandbox execution via a shared pre-built Docker Hub image
-
-    Slug: titouanlne/arc-agi-2-k8s
-    Latest digest: sha256:bf2b0e28459d5354635332ade9fb3eee64ed6dd06eba06437e62716c3e94a86b
-    """
-    return _harbor_base(
-        package_name="titouanlne/arc-agi-2-k8s",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def titouanlne_dbt_labs_k8s(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""dbt-labs ADE-bench tasks adapted for Kubernetes sandbox execution via pre-built Docker Hub images
-
-    Slug: titouanlne/dbt-labs-k8s
-    Latest digest: sha256:6f2aa7a8909852e08ec94d02e8854ec63eae80cddc07e6a1f41e59fa5b81802a
-    """
-    return _harbor_base(
-        package_name="titouanlne/dbt-labs-k8s",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

@@ -534,13 +534,6 @@
   version: latest
   categories:
   - Coding
-- title: gustofied/compute-bazaar-bench
-  path: registry/gustofied_compute_bazaar_bench.html
-  desc: Task-based evaluations for agents working in compute markets.
-  desc_trunc: Task-based evaluations for agents working in compute markets.
-  task_function: gustofied_compute_bazaar_bench
-  samples: 2
-  version: latest
 - title: harbor-index/harbor-index
   path: registry/harbor_index.html
   desc: 'Harbor Index: 80 agentic evaluation tasks spanning SWE, security, science, math, and optimization (revision 1.4).'
@@ -811,12 +804,15 @@
   - Coding
   - Professional
 - title: orca-bench/orca-bench
-  path: registry/orca_bench_orca_bench.html
-  desc: An agent benchmark for root cause analysis — public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard). For the results on all 1,079 tasks, please see.
-  desc_trunc: An agent benchmark for root cause analysis — public split of 755 tasks across 77 incidents (245 eas…
-  task_function: orca_bench_orca_bench
+  path: registry/orca_bench.html
+  desc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).'
+  desc_trunc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrume…'
+  task_function: orca_bench
   samples: 755
   version: latest
+  categories:
+  - Coding
+  - Professional
 - title: orinlabs/horizon-public
   path: registry/orinlabs_horizon_public.html
   desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
@@ -1031,6 +1027,8 @@
   task_function: snowflake_labs_data_eng_bench
   samples: 103
   version: latest
+  categories:
+  - Coding
 - title: stanford/medagentbench
   path: registry/stanford_medagentbench.html
   desc: 'MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benchmarking LLM agents on medical decision-making, planning, and execution.'
@@ -1174,20 +1172,6 @@
   version: latest
   categories:
   - Coding
-- title: titouanlne/arc-agi-2-k8s
-  path: registry/titouanlne_arc_agi_2_k8s.html
-  desc: ARC-AGI-2 tasks adapted for Kubernetes sandbox execution via a shared pre-built Docker Hub image.
-  desc_trunc: ARC-AGI-2 tasks adapted for Kubernetes sandbox execution via a shared pre-built Docker Hub image.
-  task_function: titouanlne_arc_agi_2_k8s
-  samples: 167
-  version: latest
-- title: titouanlne/dbt-labs-k8s
-  path: registry/titouanlne_dbt_labs_k8s.html
-  desc: dbt-labs ADE-bench tasks adapted for Kubernetes sandbox execution via pre-built Docker Hub images.
-  desc_trunc: dbt-labs ADE-bench tasks adapted for Kubernetes sandbox execution via pre-built Docker Hub images.
-  task_function: titouanlne_dbt_labs_k8s
-  samples: 48
-  version: latest
 - title: usaco/usaco
   path: registry/usaco.html
   desc: 'USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality unit tests, reference code, and official analyses for ad-hoc algorithmic reasoning.'

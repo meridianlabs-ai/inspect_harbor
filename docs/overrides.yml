@@ -496,9 +496,6 @@ grandsmile/unicode:
   desc: 'UniCode: competitive-programming problems systematically augmented into novel variations to probe genuine code reasoning rather than memorized solutions, scored against an oracle-verified solvable subset.'
   title: UniCode
 
-gustofied/compute-bazaar-bench:
-  categories: []
-
 harbor-index/harbor-index:
   categories:
   - Assistants
@@ -726,7 +723,14 @@ openai/swe-lancer-diamond-manager:
   title: SWE-Lancer Diamond (Manager)
 
 orca-bench/orca-bench:
-  categories: []
+  categories:
+  - Coding
+  - Professional
+  function_name: orca_bench
+  repo: https://github.com/orca-bench/ORCA-bench
+  arxiv: https://arxiv.org/abs/2607.28545
+  desc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).'
+  title: ORCA-bench
 
 orinlabs/horizon-public:
   categories:
@@ -906,7 +910,9 @@ snorkel-ai/senior-swe-bench-v2026.06:
   desc: 'Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production repositories — building features from PM-style instructions and investigating bugs from runtime evidence, judged for correctness and code taste (50-task public split).'
 
 snowflake-labs/data-eng-bench:
-  categories: []
+  categories:
+  - Coding
+  repo: https://github.com/Snowflake-Labs/data-eng-bench
 
 stanford/medagentbench:
   categories:
@@ -1038,12 +1044,6 @@ tinycomputerai/bun-server-bench:
   categories:
   - Coding
   repo: https://github.com/tinycomputerai/bun-server-bench
-
-titouanlne/arc-agi-2-k8s:
-  categories: []
-
-titouanlne/dbt-labs-k8s:
-  categories: []
 
 usaco/usaco:
   categories:
