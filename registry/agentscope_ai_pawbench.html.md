@@ -25,7 +25,7 @@ eval(agentscope_ai_pawbench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [agentscope-ai/pawbench](https://hub.harborframework.com/datasets/agentscope-ai/pawbench/latest) |
 | Inspect task | `agentscope_ai_pawbench` |
-| Latest digest | sha256:a4197a2fe40bf045abad4ea2ab1037bf9c8bdfab01c378fdcc2b40242f5d63dd |
+| Latest digest | sha256:b4e0ac2e4d5614fd46735f3ece1fb98207e02ea5818b07f9d5545f97fdde2bfe |
 | Samples | 150 |
 | Source | <https://github.com/agentscope-ai/PawBench> |
 

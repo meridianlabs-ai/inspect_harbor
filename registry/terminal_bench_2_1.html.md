@@ -28,6 +28,6 @@ eval(terminal_bench_2_1(), model="openai/gpt-5")
 | Latest digest | sha256:7d7bdc1cbedad549fc1140404bd4dc45e5fd0ea7c4186773687d177ad3a0699a |
 | Samples | 89 |
 | Paper | [arxiv](https://arxiv.org/abs/2601.11868) |
-| Source | <https://github.com/laude-institute/terminal-bench> |
+| Source | <https://github.com/harbor-framework/terminal-bench> |
 
 See [Task Parameters](../parameters.html.md) for the parameter set shared across all Harbor tasks.

@@ -1,4 +1,4 @@
-# orca-bench/ORCA-bench – Inspect Harbor
+# orca-bench/orca-bench – Inspect Harbor
 
 [← Back to Registry](../registry.html.md)
 
@@ -23,10 +23,11 @@ eval(orca_bench(), model="openai/gpt-5")
 
 |  |  |
 |----|----|
-| Harbor registry | [orca-bench/ORCA-bench](https://hub.harborframework.com/datasets/orca-bench/ORCA-bench/latest) |
+| Harbor registry | [orca-bench/orca-bench](https://hub.harborframework.com/datasets/orca-bench/orca-bench/latest) |
 | Inspect task | `orca_bench` |
-| Latest digest | sha256:fcd966f953a9fffd5b852767eee86ece9673d4e66b68aa9081700ba502c2adc6 |
-| Samples | 1000 |
-| Source | <https://orca-bench.github.io> |
+| Latest digest | sha256:1ef729757d4974ffe4e835d541c601f957975edf8c93ef02eec97e26d3069b93 |
+| Samples | 755 |
+| Paper | [arxiv](https://arxiv.org/abs/2607.28545) |
+| Source | <https://github.com/orca-bench/ORCA-bench> |
 
 See [Task Parameters](../parameters.html.md) for the parameter set shared across all Harbor tasks.

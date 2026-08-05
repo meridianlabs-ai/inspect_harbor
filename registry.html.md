@@ -46,6 +46,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [apple/mmau](registry/apple_mmau.html.md) | apple_mmau | MMAU (Massive Multitask Agent Understanding): Apple’s holistic agent benchmark covering tool-use, D… | 1000 |
 | [arcprize/arc-agi-2](registry/arcprize_arc_agi_2.html.md) | arcprize_arc_agi_2 | ARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but… | 167 |
 | [atm-bench/atm-bench-hard-sgm](registry/atm_bench_hard_sgm.html.md) | atm_bench_hard_sgm | ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided m… | 31 |
+| [bencalvert04/programbench](registry/bencalvert04_programbench.html.md) | bencalvert04_programbench | ProgramBench cleanroom reconstruction tasks: reimplementing real-world CLI tools from popular open-… | 200 |
 | [benchflow/skillsbench](registry/benchflow_skillsbench.html.md) | benchflow_skillsbench | SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folde… | 87 |
 | [bigcode/bigcodebench-hard-complete](registry/bigcode_bigcodebench_hard_complete.html.md) | bigcode_bigcodebench_hard_complete | BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun… | 145 |
 | [bigcode/humanevalfix](registry/bigcode_humanevalfix.html.md) | bigcode_humanevalfix | HumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo… | 164 |
@@ -105,6 +106,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [openai/swe-lancer-diamond-all](registry/openai_swe_lancer_diamond_all.html.md) | openai_swe_lancer_diamond_all | SWE-Lancer Diamond (full): public split of OpenAI’s SWE-Lancer benchmark — real Upwork freelance so… | 463 |
 | [openai/swe-lancer-diamond-ic](registry/openai_swe_lancer_diamond_ic.html.md) | openai_swe_lancer_diamond_ic | SWE-Lancer Diamond (IC): individual-contributor split of OpenAI’s SWE-Lancer benchmark — real Upwor… | 198 |
 | [openai/swe-lancer-diamond-manager](registry/openai_swe_lancer_diamond_manager.html.md) | openai_swe_lancer_diamond_manager | A benchmark of freelance software engineering tasks from Upwork, valued at \$1 million USD total in… | 265 |
+| [orca-bench/orca-bench](registry/orca_bench.html.md) | orca_bench | ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrume… | 755 |
 | [orinlabs/horizon-public](registry/orinlabs_horizon_public.html.md) | orinlabs_horizon_public | Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agen… | 3 |
 | [pgcodellm/rebench-v2-test](registry/pgcodellm_rebench_v2_test.html.md) | pgcodellm_rebench_v2_test | SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui… | 20 |
 | [qcircuitbench/qcircuitbench](registry/qcircuitbench.html.md) | qcircuitbench | QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const… | 28 |
@@ -113,6 +115,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [quixbugs/quixbugs](registry/quixbugs.html.md) | quixbugs | QuixBugs: small classic-algorithm programs (Python and Java) each containing a one-line bug, used t… | 80 |
 | [reasoning-gym/reasoning-gym-easy](registry/reasoning_gym_easy.html.md) | reasoning_gym_easy | Reasoning Gym (easy split): procedurally-generated, algorithmically-verifiable reasoning tasks (alg… | 288 |
 | [reasoning-gym/reasoning-gym-hard](registry/reasoning_gym_hard.html.md) | reasoning_gym_hard | Reasoning Gym (hard split): procedurally-generated, algorithmically-verifiable reasoning tasks at h… | 288 |
+| [red-hat-ai/haiku-hard](registry/red_hat_ai_haiku_hard.html.md) | red_hat_ai_haiku_hard | Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operato… | 177 |
 | [replicationbench/replicationbench](registry/replicationbench.html.md) | replicationbench | ReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce impleme… | 90 |
 | [rexbench/rexbench](registry/rexbench.html.md) | rexbench | RExBench - 2 tasks (cogs, othello) evaluating AI agents’ ability to extend existing AI research thr… | 2 |
 | [rounakbende10/rh-swe-bench](registry/rounakbende10_rh_swe_bench.html.md) | rounakbende10_rh_swe_bench | Red Hat SWE-bench - 357 verified tasks from 25 RH ecosystem repos. | 357 |
@@ -126,6 +129,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [sierra-research/tau3-bench](registry/sierra_research_tau3_bench.html.md) | sierra_research_tau3_bench | Third generation of τ-bench, extending the original with knowledge and voice. A simulation framewor… | 375 |
 | [sldbench/sldbench](registry/sldbench.html.md) | sldbench | SLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments w… | 8 |
 | [snorkel-ai/senior-swe-bench-v2026.06](registry/snorkel_ai_senior_swe_bench_v2026_06.html.md) | snorkel_ai_senior_swe_bench_v2026_06 | Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production reposito… | 50 |
+| [snowflake-labs/data-eng-bench](registry/snowflake_labs_data_eng_bench.html.md) | snowflake_labs_data_eng_bench | Agentic dbt data-engineering benchmark: 103 real-world dbt tasks (analytics, dimensional modeling,… | 103 |
 | [stanford/medagentbench](registry/stanford_medagentbench.html.md) | stanford_medagentbench | MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benc… | 300 |
 | [strongreject/strongreject](registry/strongreject.html.md) | strongreject | StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks… | 150 |
 | [swe-bench/swe-bench-verified](registry/swe_bench_verified.html.md) | swe_bench_verified | SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs… | 500 |

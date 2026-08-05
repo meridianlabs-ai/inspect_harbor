@@ -27,5 +27,7 @@ eval(cohere_terminal_bench_aai(), model="openai/gpt-5")
 | Inspect task | `cohere_terminal_bench_aai` |
 | Latest digest | sha256:d8908945101bb9a713690ac46539d13ca7d44658637f2650a857470926c191b9 |
 | Samples | 44 |
+| Paper | [arxiv](https://arxiv.org/abs/2601.11868) |
+| Source | <https://github.com/harbor-framework/terminal-bench> |
 
 See [Task Parameters](../parameters.html.md) for the parameter set shared across all Harbor tasks.
