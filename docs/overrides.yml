@@ -800,7 +800,10 @@ reasoning-gym/reasoning-gym-hard:
   title: Reasoning Gym (hard)
 
 red-hat-ai/haiku-hard:
-  categories: []
+  categories:
+  - Coding
+  desc: Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operator-framework, coreos) — 177 instances filtered to those Claude Haiku failed to solve.
+  title: Haiku-Hard
 
 replicationbench/replicationbench:
   categories:

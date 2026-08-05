@@ -2876,7 +2876,7 @@ def red_hat_ai_haiku_hard(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""178 Go instances that Claude Haiku failed to solve
+    r"""Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operator-framework, coreos) — 177 instances filtered to those Claude Haiku failed to solve.
 
     Slug: red-hat-ai/haiku-hard
     Latest digest: sha256:b24383f875f3d1ecad10aa8e8249d40fdb594fffffa3c842cf2cb0d96325a4e6

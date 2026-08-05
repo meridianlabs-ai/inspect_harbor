@@ -889,11 +889,13 @@
   - Reasoning
 - title: red-hat-ai/haiku-hard
   path: registry/red_hat_ai_haiku_hard.html
-  desc: 178 Go instances that Claude Haiku failed to solve.
-  desc_trunc: 178 Go instances that Claude Haiku failed to solve.
+  desc: Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operator-framework, coreos) — 177 instances filtered to those Claude Haiku failed to solve.
+  desc_trunc: Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operato…
   task_function: red_hat_ai_haiku_hard
   samples: 177
   version: latest
+  categories:
+  - Coding
 - title: replicationbench/replicationbench
   path: registry/replicationbench.html
   desc: 'ReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce implementation, methodology, and core findings of expert-validated papers, scored on result accuracy.'
