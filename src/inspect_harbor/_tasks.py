@@ -430,7 +430,7 @@ def agentscope_ai_pawbench(
     r"""PawBench: A comprehensive agent benchmark with 150 tasks covering coding, data analysis, tool use, reasoning, safety, and multimodal capabilities.
 
     Slug: agentscope-ai/pawbench
-    Latest digest: sha256:a4197a2fe40bf045abad4ea2ab1037bf9c8bdfab01c378fdcc2b40242f5d63dd
+    Latest digest: sha256:d2849f918a072575eeee13c79818c727f87776dac8bdc8d9c1ec084bc6bcab56
     """
     return _harbor_base(
         package_name="agentscope-ai/pawbench",
@@ -1718,6 +1718,37 @@ def grandsmile_unicode(
 
 
 @task
+def gustofied_compute_bazaar_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Task-based evaluations for agents working in compute markets.
+
+    Slug: gustofied/compute-bazaar-bench
+    Latest digest: sha256:cd42c9b34b8b14b6298e87fb7bd477cd7401b9ed3ff5235bfbedcceb2a7642a1
+    """
+    return _harbor_base(
+        package_name="gustofied/compute-bazaar-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def harbor_index(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2586,6 +2617,37 @@ def openai_swe_lancer_diamond_manager(
 
 
 @task
+def orca_bench_orca_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""An agent benchmark for root cause analysis — public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard). For the results on all 1,079 tasks, please see https://arxiv.org/abs/2607.28545.
+
+    Slug: orca-bench/orca-bench
+    Latest digest: sha256:1ef729757d4974ffe4e835d541c601f957975edf8c93ef02eec97e26d3069b93
+    """
+    return _harbor_base(
+        package_name="orca-bench/orca-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def orinlabs_horizon_public(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2821,6 +2883,37 @@ def reasoning_gym_hard(
     """
     return _harbor_base(
         package_name="reasoning-gym/reasoning-gym-hard",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def red_hat_ai_haiku_hard(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""178 Go instances that Claude Haiku failed to solve
+
+    Slug: red-hat-ai/haiku-hard
+    Latest digest: sha256:b24383f875f3d1ecad10aa8e8249d40fdb594fffffa3c842cf2cb0d96325a4e6
+    """
+    return _harbor_base(
+        package_name="red-hat-ai/haiku-hard",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -3243,7 +3336,7 @@ def snorkel_ai_senior_swe_bench_v2026_06(
 
 
 @task
-def snowflake_labs_dbt_bench(
+def snowflake_labs_data_eng_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -3256,11 +3349,11 @@ def snowflake_labs_dbt_bench(
 ) -> Task:
     r"""Agentic dbt data-engineering benchmark: 103 real-world dbt tasks (analytics, dimensional modeling, incremental models, bug-fixes, snapshots) runnable hermetically on DuckDB or against Snowflake via DB_TYPE. A 30-task balanced fast subset for cost-bounded / CI runs is listed in configs/fast-30.txt.
 
-    Slug: snowflake-labs/dbt-bench
-    Latest digest: sha256:4b5932ee20c4b0b5a0241b5b184c1d9d8e9658bda0d1cb2389e8e941046e8e0a
+    Slug: snowflake-labs/data-eng-bench
+    Latest digest: sha256:de31878dba7e5a9aad85dc8276820b0a20ab593aed46ff93dfbbbdb6007ec995
     """
     return _harbor_base(
-        package_name="snowflake-labs/dbt-bench",
+        package_name="snowflake-labs/data-eng-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -3726,6 +3819,68 @@ def tinycomputerai_bun_server_bench(
     """
     return _harbor_base(
         package_name="tinycomputerai/bun-server-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def titouanlne_arc_agi_2_k8s(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ARC-AGI-2 tasks adapted for Kubernetes sandbox execution via a shared pre-built Docker Hub image
+
+    Slug: titouanlne/arc-agi-2-k8s
+    Latest digest: sha256:bf2b0e28459d5354635332ade9fb3eee64ed6dd06eba06437e62716c3e94a86b
+    """
+    return _harbor_base(
+        package_name="titouanlne/arc-agi-2-k8s",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def titouanlne_dbt_labs_k8s(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""dbt-labs ADE-bench tasks adapted for Kubernetes sandbox execution via pre-built Docker Hub images
+
+    Slug: titouanlne/dbt-labs-k8s
+    Latest digest: sha256:6f2aa7a8909852e08ec94d02e8854ec63eae80cddc07e6a1f41e59fa5b81802a
+    """
+    return _harbor_base(
+        package_name="titouanlne/dbt-labs-k8s",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

@@ -534,6 +534,13 @@
   version: latest
   categories:
   - Coding
+- title: gustofied/compute-bazaar-bench
+  path: registry/gustofied_compute_bazaar_bench.html
+  desc: Task-based evaluations for agents working in compute markets.
+  desc_trunc: Task-based evaluations for agents working in compute markets.
+  task_function: gustofied_compute_bazaar_bench
+  samples: 2
+  version: latest
 - title: harbor-index/harbor-index
   path: registry/harbor_index.html
   desc: 'Harbor Index: 80 agentic evaluation tasks spanning SWE, security, science, math, and optimization (revision 1.4).'
@@ -803,6 +810,13 @@
   categories:
   - Coding
   - Professional
+- title: orca-bench/orca-bench
+  path: registry/orca_bench_orca_bench.html
+  desc: An agent benchmark for root cause analysis — public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard). For the results on all 1,079 tasks, please see.
+  desc_trunc: An agent benchmark for root cause analysis — public split of 755 tasks across 77 incidents (245 eas…
+  task_function: orca_bench_orca_bench
+  samples: 755
+  version: latest
 - title: orinlabs/horizon-public
   path: registry/orinlabs_horizon_public.html
   desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
@@ -877,6 +891,13 @@
   version: latest
   categories:
   - Reasoning
+- title: red-hat-ai/haiku-hard
+  path: registry/red_hat_ai_haiku_hard.html
+  desc: 178 Go instances that Claude Haiku failed to solve.
+  desc_trunc: 178 Go instances that Claude Haiku failed to solve.
+  task_function: red_hat_ai_haiku_hard
+  samples: 177
+  version: latest
 - title: replicationbench/replicationbench
   path: registry/replicationbench.html
   desc: 'ReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce implementation, methodology, and core findings of expert-validated papers, scored on result accuracy.'
@@ -1003,15 +1024,13 @@
   version: latest
   categories:
   - Coding
-- title: snowflake-labs/dbt-bench
-  path: registry/snowflake_labs_dbt_bench.html
+- title: snowflake-labs/data-eng-bench
+  path: registry/snowflake_labs_data_eng_bench.html
   desc: 'Agentic dbt data-engineering benchmark: 103 real-world dbt tasks (analytics, dimensional modeling, incremental models, bug-fixes, snapshots) runnable hermetically on DuckDB or against Snowflake via DB_TYPE. A 30-task balanced fast subset for cost-bounded / CI runs is listed in configs/fast-30.txt.'
   desc_trunc: 'Agentic dbt data-engineering benchmark: 103 real-world dbt tasks (analytics, dimensional modeling,…'
-  task_function: snowflake_labs_dbt_bench
+  task_function: snowflake_labs_data_eng_bench
   samples: 103
   version: latest
-  categories:
-  - Coding
 - title: stanford/medagentbench
   path: registry/stanford_medagentbench.html
   desc: 'MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benchmarking LLM agents on medical decision-making, planning, and execution.'
@@ -1155,6 +1174,20 @@
   version: latest
   categories:
   - Coding
+- title: titouanlne/arc-agi-2-k8s
+  path: registry/titouanlne_arc_agi_2_k8s.html
+  desc: ARC-AGI-2 tasks adapted for Kubernetes sandbox execution via a shared pre-built Docker Hub image.
+  desc_trunc: ARC-AGI-2 tasks adapted for Kubernetes sandbox execution via a shared pre-built Docker Hub image.
+  task_function: titouanlne_arc_agi_2_k8s
+  samples: 167
+  version: latest
+- title: titouanlne/dbt-labs-k8s
+  path: registry/titouanlne_dbt_labs_k8s.html
+  desc: dbt-labs ADE-bench tasks adapted for Kubernetes sandbox execution via pre-built Docker Hub images.
+  desc_trunc: dbt-labs ADE-bench tasks adapted for Kubernetes sandbox execution via pre-built Docker Hub images.
+  task_function: titouanlne_dbt_labs_k8s
+  samples: 48
+  version: latest
 - title: usaco/usaco
   path: registry/usaco.html
   desc: 'USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality unit tests, reference code, and official analyses for ad-hoc algorithmic reasoning.'

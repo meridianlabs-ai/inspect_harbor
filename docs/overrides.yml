@@ -496,6 +496,9 @@ grandsmile/unicode:
   desc: 'UniCode: competitive-programming problems systematically augmented into novel variations to probe genuine code reasoning rather than memorized solutions, scored against an oracle-verified solvable subset.'
   title: UniCode
 
+gustofied/compute-bazaar-bench:
+  categories: []
+
 harbor-index/harbor-index:
   categories:
   - Assistants
@@ -722,6 +725,9 @@ openai/swe-lancer-diamond-manager:
   desc: 'A benchmark of freelance software engineering tasks from Upwork, valued at $1 million USD total in real-world payouts. Manager variant: picking between technical implementation proposals.'
   title: SWE-Lancer Diamond (Manager)
 
+orca-bench/orca-bench:
+  categories: []
+
 orinlabs/horizon-public:
   categories:
   - Assistants
@@ -788,6 +794,9 @@ reasoning-gym/reasoning-gym-hard:
   desc: 'Reasoning Gym (hard split): procedurally-generated, algorithmically-verifiable reasoning tasks at harder difficulty across 90+ task families.'
   function_name: reasoning_gym_hard
   title: Reasoning Gym (hard)
+
+red-hat-ai/haiku-hard:
+  categories: []
 
 replicationbench/replicationbench:
   categories:
@@ -896,11 +905,8 @@ snorkel-ai/senior-swe-bench-v2026.06:
   repo: https://github.com/snorkel-ai/senior-swe-bench-v2026.06
   desc: 'Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production repositories — building features from PM-style instructions and investigating bugs from runtime evidence, judged for correctness and code taste (50-task public split).'
 
-snowflake-labs/dbt-bench:
-  categories:
-  - Coding
-  repo: https://github.com/Snowflake-Labs/dbt-bench
-  title: dbt-bench
+snowflake-labs/data-eng-bench:
+  categories: []
 
 stanford/medagentbench:
   categories:
@@ -1032,6 +1038,12 @@ tinycomputerai/bun-server-bench:
   categories:
   - Coding
   repo: https://github.com/tinycomputerai/bun-server-bench
+
+titouanlne/arc-agi-2-k8s:
+  categories: []
+
+titouanlne/dbt-labs-k8s:
+  categories: []
 
 usaco/usaco:
   categories:
