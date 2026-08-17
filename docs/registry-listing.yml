@@ -340,6 +340,13 @@
   version: latest
   categories:
   - Coding
+- title: datacurve/deep-swe-1-1
+  path: registry/datacurve_deep_swe_1_1.html
+  desc: 'DeepSWE: Measuring frontier coding agents on original, long-horizon engineering tasks.'
+  desc_trunc: 'DeepSWE: Measuring frontier coding agents on original, long-horizon engineering tasks.'
+  task_function: datacurve_deep_swe_1_1
+  samples: 113
+  version: latest
 - title: dbt-labs/ade-bench
   path: registry/dbt_labs_ade_bench.html
   desc: 'Analytics Data Engineer Bench: dbt and SQL data-engineering tasks across DuckDB and Snowflake backends.'
@@ -412,16 +419,6 @@
   version: latest
   categories:
   - Coding
-- title: frontier-bench/frontier-bench
-  path: registry/frontier_bench.html
-  desc: The frontier is wide and dynamic. Frontier-Bench measures general agent capabilities on a diverse set of difficult tasks.
-  desc_trunc: The frontier is wide and dynamic. Frontier-Bench measures general agent capabilities on a diverse s…
-  task_function: frontier_bench
-  samples: 74
-  version: latest
-  categories:
-  - Coding
-  - Assistants
 - title: futurehouse/bixbench
   path: registry/futurehouse_bixbench.html
   desc: 'BixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM agents'' ability to author multi-step Jupyter notebooks for biological data analysis.'
@@ -564,6 +561,13 @@
   categories:
   - Law
   - Professional
+- title: hwe-bench/hwe-bench
+  path: registry/hwe_bench_hwe_bench.html
+  desc: 'HWE-bench evaluates LLM agents on engineering-simulation tasks: the agent drives a real solver and is scored on whether the number it reports lands inside a defensible tolerance band, by a deterministic verifier rather than an LLM judge. This CAE edition covers combustion, battery, CFD and 2.5D packaging.'
+  desc_trunc: 'HWE-bench evaluates LLM agents on engineering-simulation tasks: the agent drives a real solver and…'
+  task_function: hwe_bench_hwe_bench
+  samples: 77
+  version: latest
 - title: ibragim-badertdinov/swe-rebench-07-2026
   path: registry/swe_rebench_07_2026.html
   desc: 111 hard SWE-rebench leaderboard tasks from the July 2026 snapshot across Go, Java, Python, Rust, and TypeScript.
@@ -611,6 +615,34 @@
   version: latest
   categories:
   - Safeguards
+- title: itmo-autods/fdata-exit-case
+  path: registry/itmo_autods_fdata_exit_case.html
+  desc: F-DATA Fugaku exit-state case (SciData 2025).
+  desc_trunc: F-DATA Fugaku exit-state case (SciData 2025).
+  task_function: itmo_autods_fdata_exit_case
+  samples: 1
+  version: latest
+- title: itmo-autods/maize-yield-case
+  path: registry/itmo_autods_maize_yield_case.html
+  desc: Maize grain-yield case (G2F G3 2023).
+  desc_trunc: Maize grain-yield case (G2F G3 2023).
+  task_function: itmo_autods_maize_yield_case
+  samples: 1
+  version: latest
+- title: itmo-autods/openpoly-tg-case
+  path: registry/itmo_autods_openpoly_tg_case.html
+  desc: Polymer Tg OpenPoly case (CJPS 2025).
+  desc_trunc: Polymer Tg OpenPoly case (CJPS 2025).
+  task_function: itmo_autods_openpoly_tg_case
+  samples: 1
+  version: latest
+- title: itmo-autods/scientific-cases
+  path: registry/itmo_autods_scientific_cases.html
+  desc: 'AutoDS scientific ML cases: maize yield (G3 2023), polymer Tg (OpenPoly 2025), Fugaku HPC exit-state (F-DATA 2025) — train/test split + author baseline in each task.'
+  desc_trunc: 'AutoDS scientific ML cases: maize yield (G3 2023), polymer Tg (OpenPoly 2025), Fugaku HPC exit-stat…'
+  task_function: itmo_autods_scientific_cases
+  samples: 3
+  version: latest
 - title: ivanleo/agent-search
   path: registry/ivanleo_agent_search.html
   desc: Agent answers Gemini API questions by querying an indexed documentation database.
@@ -707,6 +739,13 @@
   version: latest
   categories:
   - Coding
+- title: luosuu/SWE-kokkos-bench
+  path: registry/luosuu_swe_kokkos_bench.html
+  desc: 100 verified SWE-bench-style coding tasks from the Kokkos ecosystem.
+  desc_trunc: 100 verified SWE-bench-style coding tasks from the Kokkos ecosystem.
+  task_function: luosuu_swe_kokkos_bench
+  samples: 100
+  version: latest
 - title: maxbittker/runebench
   path: registry/maxbittker_runebench.html
   desc: Benchmark suite for evaluating AI agents on RuneScape gameplay tasks.
@@ -747,6 +786,20 @@
   categories:
   - Coding
   - Multimodal
+- title: nanoswe/swe-bench-verified
+  path: registry/nanoswe_swe_bench_verified.html
+  desc: 'SWE-bench Verified as used for nanoswe evals: 17 of the 500 instances are dropped because they do not run on our internal cluster, leaving a fixed 483-instance subset. Tasks are the standard SWE-bench Verified instances (not re-hosted); full agent trajectories are attached to the leaderboard entries.'
+  desc_trunc: 'SWE-bench Verified as used for nanoswe evals: 17 of the 500 instances are dropped because they do n…'
+  task_function: nanoswe_swe_bench_verified
+  samples: 1
+  version: latest
+- title: nl2repobench/nl2repobench
+  path: registry/nl2repobench_nl2repobench.html
+  desc: ''
+  desc_trunc: ''
+  task_function: nl2repobench_nl2repobench
+  samples: 104
+  version: latest
 - title: nvats/codeskills-bench
   path: registry/nvats_codeskills_bench.html
   desc: 'A small set of real-life programming tasks: bug fixes, merge-conflict resolution, dependency cleanup, API migration, and performance regressions across compact Python repositories.'
@@ -756,6 +809,13 @@
   version: latest
   categories:
   - Coding
+- title: open-design/open-design
+  path: registry/open_design_open_design.html
+  desc: Open Design Benchmark — AI agent evaluation on design-asset generation tasks (landing pages, dashboards, mobile onboarding, PPT reports, text layouts, incremental patches, multi-format export).
+  desc_trunc: Open Design Benchmark — AI agent evaluation on design-asset generation tasks (landing pages, dashbo…
+  task_function: open_design_open_design
+  samples: 7
+  version: latest
 - title: openai/mmmlu
   path: registry/openai_mmmlu.html
   desc: 'MMMLU (Multilingual MMLU): OpenAI''s professional-human-translation of the MMLU test set into 14 languages for multilingual knowledge and reasoning evaluation.'
@@ -831,6 +891,27 @@
   version: latest
   categories:
   - Coding
+- title: polyvorlabs/cyberdefense-bench
+  path: registry/polyvorlabs_cyberdefense_bench.html
+  desc: A 100-task Harbor benchmark for evaluating agentic cybersecurity defense and hardening loops against local simulated attack probes.
+  desc_trunc: A 100-task Harbor benchmark for evaluating agentic cybersecurity defense and hardening loops agains…
+  task_function: polyvorlabs_cyberdefense_bench
+  samples: 100
+  version: latest
+- title: polyvorlabs/klyrune-bench
+  path: registry/polyvorlabs_klyrune_bench.html
+  desc: A lightweight 100-task Harbor dataset for measuring Klyrune and other agentic CLI coding loops.
+  desc_trunc: A lightweight 100-task Harbor dataset for measuring Klyrune and other agentic CLI coding loops.
+  task_function: polyvorlabs_klyrune_bench
+  samples: 100
+  version: latest
+- title: polyvorlabs/revbench
+  path: registry/polyvorlabs_revbench.html
+  desc: A Harbor benchmark of local Reverse Engineering CTF challenges where agents must recover exact flags from supplied artifacts.
+  desc_trunc: A Harbor benchmark of local Reverse Engineering CTF challenges where agents must recover exact flag…
+  task_function: polyvorlabs_revbench
+  samples: 22
+  version: latest
 - title: qcircuitbench/qcircuitbench
   path: registry/qcircuitbench.html
   desc: 'QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle construction, algorithm design, and random circuits with automatic verification.'
@@ -887,12 +968,19 @@
   version: latest
   categories:
   - Reasoning
+- title: red-hat-ai/SWE-benchify-hard
+  path: registry/red_hat_ai_swe_benchify_hard.html
+  desc: ''
+  desc_trunc: ''
+  task_function: red_hat_ai_swe_benchify_hard
+  samples: 284
+  version: latest
 - title: red-hat-ai/haiku-hard
   path: registry/red_hat_ai_haiku_hard.html
   desc: Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operator-framework, coreos) — 177 instances filtered to those Claude Haiku failed to solve.
   desc_trunc: Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operato…
   task_function: red_hat_ai_haiku_hard
-  samples: 177
+  samples: 178
   version: latest
   categories:
   - Coding
@@ -1105,6 +1193,13 @@
   version: latest
   categories:
   - Coding
+- title: terminal-bench/terminal-bench
+  path: registry/terminal_bench_terminal_bench.html
+  desc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
+  desc_trunc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
+  task_function: terminal_bench_terminal_bench
+  samples: 74
+  version: latest
 - title: terminal-bench/terminal-bench-2
   path: registry/terminal_bench_2.html
   desc: 'Terminal-Bench v2: benchmark for testing AI agents in real terminal environments — from compiling code to training models and setting up servers.'
@@ -1121,16 +1216,6 @@
   desc_trunc: 'Terminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ…'
   task_function: terminal_bench_2_1
   samples: 89
-  version: latest
-  categories:
-  - Coding
-  - Assistants
-- title: terminal-bench/terminal-bench-3
-  path: registry/terminal_bench_3.html
-  desc: Terminal-Bench 3.0 is the third benchmark for measuring agents' abilities to complete tasks using a terminal.
-  desc_trunc: Terminal-Bench 3.0 is the third benchmark for measuring agents' abilities to complete tasks using a…
-  task_function: terminal_bench_3
-  samples: 75
   version: latest
   categories:
   - Coding

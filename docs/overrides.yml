@@ -331,6 +331,9 @@ datacurve/deep-swe:
   repo: https://github.com/datacurve-ai/deep-swe
   title: DeepSWE
 
+datacurve/deep-swe-1-1:
+  categories: []
+
 dbt-labs/ade-bench:
   categories:
   - Coding
@@ -392,14 +395,6 @@ featurebench/featurebench-modal:
   desc: FeatureBench's full task suite executed on Modal's cloud sandbox runner.
   function_name: featurebench_modal
   title: FeatureBench (Modal)
-
-frontier-bench/frontier-bench:
-  categories:
-  - Coding
-  - Assistants
-  repo: https://github.com/harbor-framework/frontier-bench
-  function_name: frontier_bench
-  title: Frontier-Bench
 
 futurehouse/bixbench:
   categories:
@@ -517,6 +512,9 @@ harveyai/lab:
   repo: https://github.com/harveyai/harvey-labs
   title: Harvey LAB
 
+hwe-bench/hwe-bench:
+  categories: []
+
 ibragim-badertdinov/swe-rebench-07-2026:
   categories:
   - Coding
@@ -554,6 +552,18 @@ islo-labs/reward-hack-bench-control:
   - Safeguards
   repo: https://github.com/islo-labs/reward-hack-bench
   title: Reward-Hack-Bench (Control)
+
+itmo-autods/fdata-exit-case:
+  categories: []
+
+itmo-autods/maize-yield-case:
+  categories: []
+
+itmo-autods/openpoly-tg-case:
+  categories: []
+
+itmo-autods/scientific-cases:
+  categories: []
 
 ivanleo/agent-search:
   categories:
@@ -642,6 +652,9 @@ livecodebench/livecodebench:
   function_name: livecodebench
   title: LiveCodeBench
 
+luosuu/SWE-kokkos-bench:
+  categories: []
+
 maxbittker/runebench:
   categories:
   - Reasoning
@@ -674,11 +687,20 @@ mmtb/multimedia-terminalbench:
   repo: https://github.com/mm-tbench/multimedia-terminal-bench
   title: MultiMedia-TerminalBench
 
+nanoswe/swe-bench-verified:
+  categories: []
+
+nl2repobench/nl2repobench:
+  categories: []
+
 nvats/codeskills-bench:
   categories:
   - Coding
   repo: https://github.com/namanvats/codeskills-bench
   title: CodeSkills-Bench
+
+open-design/open-design:
+  categories: []
 
 openai/mmmlu:
   categories:
@@ -747,6 +769,15 @@ pgcodellm/rebench-v2-test:
   desc: 'SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-built images for reproducible execution.'
   title: SWE-rebench V2
 
+polyvorlabs/cyberdefense-bench:
+  categories: []
+
+polyvorlabs/klyrune-bench:
+  categories: []
+
+polyvorlabs/revbench:
+  categories: []
+
 qcircuitbench/qcircuitbench:
   categories:
   - Science
@@ -798,6 +829,9 @@ reasoning-gym/reasoning-gym-hard:
   desc: 'Reasoning Gym (hard split): procedurally-generated, algorithmically-verifiable reasoning tasks at harder difficulty across 90+ task families.'
   function_name: reasoning_gym_hard
   title: Reasoning Gym (hard)
+
+red-hat-ai/SWE-benchify-hard:
+  categories: []
 
 red-hat-ai/haiku-hard:
   categories:
@@ -997,6 +1031,9 @@ terminal-bench-pro/terminal-bench-pro:
   title: Terminal-Bench Pro
   featured: true
 
+terminal-bench/terminal-bench:
+  categories: []
+
 terminal-bench/terminal-bench-2:
   categories:
   - Coding
@@ -1016,15 +1053,6 @@ terminal-bench/terminal-bench-2-1:
   desc: 'Terminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environments — from compiling code to training models and setting up servers.'
   function_name: terminal_bench_2_1
   title: Terminal-Bench v2.1
-
-terminal-bench/terminal-bench-3:
-  categories:
-  - Coding
-  - Assistants
-  arxiv: https://arxiv.org/abs/2601.11868
-  repo: https://github.com/harbor-framework/terminal-bench-3
-  function_name: terminal_bench_3
-  title: Terminal-Bench 3
 
 theagentcompany/theagentcompany:
   categories:
