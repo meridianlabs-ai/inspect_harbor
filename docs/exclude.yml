@@ -81,3 +81,40 @@
 # → dbt-labs/ade-bench); the descs say "adapted for Kubernetes sandbox
 # execution". Derivative infra re-uploads, not new benchmarks.
 - titouanlne/*
+# Individual's (User "Nanotek", 0 repos) leaderboard doc for their personal
+# models: the package holds a single sample whose input says "This is a
+# documentation placeholder, not a runnable benchmark task." The underlying
+# tasks are the standard SWE-bench Verified instances, already listed
+# canonically as swe-bench/swe-bench-verified.
+- nanoswe/*
+# Internal test zoo for "Klyrune", Polyvor Labs' unreleased agentic CLI tool.
+# Three uploads so far, none a published benchmark: klyrune-bench (100
+# trivial synthetic tasks — echo an exact string to answer.txt, one-function
+# fixes like rgb_to_hex/safe_int; excluded 2026-08-12), cyberdefense-bench
+# (50 templated single-function "patch <func> to be safe" micro-tasks for
+# Klyrune's blue-team loop), and revbench (22 third-party CTF challenges —
+# LKSN{} flag format, external challenge authors credited in the prompts —
+# repackaged with no provenance or licensing). The org's only related repo
+# (Polyvor-Labs/Klyrune-Benchmarks, 0 stars) holds AutoCodeBench leaderboard
+# results for Klyrune, not these benchmarks; Klyrune itself is still
+# unreleased. Revisit if Klyrune ships publicly with real benchmark repos.
+- polyvorlabs/*
+# 1-sample per-case slices of itmo-autods/scientific-cases (verified: the
+# aggregate's three sample inputs are byte-identical to the three singles).
+# Whatever is decided about the parent scientific-cases dataset, listing
+# the single-sample slices separately adds only noise.
+- itmo-autods/fdata-exit-case
+- itmo-autods/maize-yield-case
+- itmo-autods/openpoly-tg-case
+# Feature smoke-test suite for the Open Design tool (nexu-io/open-design, the
+# open-source "Claude Design alternative"), not a published benchmark: 7 tasks,
+# one per tool feature category (landing page, dashboard, mobile onboarding,
+# text layout, PPT report, multi-format export, incremental patch) — the
+# landing-page task even asks for a page "for a brand called Nexu". Uploaded
+# by hub user chenai313 (GitHub account created 2026-07-28, 0 repos, no
+# verifiable nexu-io affiliation); no benchmark repo anywhere in the nexu-io
+# org, no paper, no announcement, zero search footprint for an "Open Design
+# Benchmark". The hub org name is also unrelated to GitHub's open-design org
+# (an FPGA/electronics group). Exact slug, not org-wide: revisit if nexu-io
+# ships a real, publicly documented benchmark under this name.
+- open-design/open-design
