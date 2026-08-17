@@ -28,7 +28,7 @@
     "href": "datasets.html#known-issues",
     "title": "Datasets",
     "section": "Known Issues",
-    "text": "Known Issues\nThese are upstream issues we’ve encountered while integrating Harbor datasets. Each of these tasks is currently unrunnable as-is:\n\n\n\nDataset\nIssue\nStatus\n\n\n\n\nxlang/ds-1000\nMultiple configuration issues preventing execution (pull access denied for ds1000)\nharbor-datasets#103\n\n\ncohere/terminal_bench_aai\ncohere_terminal_bench_aai() raises a ValidationError at construction: two tasks (install-windows-3.11, install-windows-xp) use compose keys (restart, stdin_open, tty) that inspect-ai doesn’t accept yet, and one bad task blocks the whole function\ninspect_ai#4727",
+    "text": "Known Issues\nThese are upstream issues we’ve encountered while integrating Harbor datasets. Each of these tasks is currently unrunnable as-is:\n\n\n\nDataset\nIssue\nStatus\n\n\n\n\nxlang/ds-1000\nMultiple configuration issues preventing execution (pull access denied for ds1000)\nharbor-datasets#103",
     "crumbs": [
       "Getting Started",
       "Using Harbor",
