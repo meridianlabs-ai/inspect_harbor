@@ -627,6 +627,8 @@
   task_function: itmo_autods_scientific_cases
   samples: 3
   version: latest
+  categories:
+  - Science
 - title: ivanleo/agent-search
   path: registry/ivanleo_agent_search.html
   desc: Agent answers Gemini API questions by querying an indexed documentation database.

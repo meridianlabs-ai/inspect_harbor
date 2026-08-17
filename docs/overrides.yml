@@ -563,7 +563,8 @@ islo-labs/reward-hack-bench-control:
   title: Reward-Hack-Bench (Control)
 
 itmo-autods/scientific-cases:
-  categories: []
+  categories:
+  - Science
 
 ivanleo/agent-search:
   categories:
