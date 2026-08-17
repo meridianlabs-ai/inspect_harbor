@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="A dataset of 100 Android software engineering tasks derived from real-world repositories.">
+<meta name="description" content="HWE-bench evaluates LLM agents on engineering-simulation tasks: the agent drives a real solver and is scored on whether the number it reports lands inside a defensible tolerance band, by a deterministic verifier rather than an LLM judge. This CAE edition covers combustion, battery, CFD and 2.5D packaging.">
 
-<title>android-bench/android-bench – Inspect Harbor</title>
+<title>hwe-bench/hwe-bench – Inspect Harbor</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -205,15 +205,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">android-bench/android-bench</h1>
+<h1 class="title">hwe-bench/hwe-bench</h1>
   <div class="quarto-categories">
+    <div class="quarto-category">Science</div>
     <div class="quarto-category">Coding</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    <p>A dataset of 100 Android software engineering tasks derived from real-world repositories.</p>
+    <p>HWE-bench evaluates LLM agents on engineering-simulation tasks: the agent drives a real solver and is scored on whether the number it reports lands inside a defensible tolerance band, by a deterministic verifier rather than an LLM judge. This CAE edition covers combustion, battery, CFD and 2.5D packaging.</p>
   </div>
 </div>
 
@@ -234,12 +235,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="run-this-task" class="level2">
 <h2 class="anchored" data-anchor-id="run-this-task">Run this task</h2>
 <p><strong>CLI:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/android_bench <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/hwe_bench <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Python:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_ai <span class="im">import</span> <span class="bu">eval</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> android_bench</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> hwe_bench</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(android_bench(), model<span class="op">=</span><span class="st">"openai/gpt-5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(hwe_bench(), model<span class="op">=</span><span class="st">"openai/gpt-5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="dataset-information" class="level2">
 <h2 class="anchored" data-anchor-id="dataset-information">Dataset information</h2>
@@ -247,23 +248,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>Harbor registry</td>
-<td><a href="https://hub.harborframework.com/datasets/android-bench/android-bench/latest">android-bench/android-bench</a></td>
+<td><a href="https://hub.harborframework.com/datasets/hwe-bench/hwe-bench/latest">hwe-bench/hwe-bench</a></td>
 </tr>
 <tr class="even">
 <td>Inspect task</td>
-<td><code>android_bench</code></td>
+<td><code>hwe_bench</code></td>
 </tr>
 <tr class="odd">
 <td>Latest digest</td>
-<td>sha256:e9c64ac5470aa2323be3f8391a831c4cb7392317d2e921c08422b46851067dd5</td>
+<td>sha256:c65139ef5b04e1951e0896b42c10ea24e8aa2a7fd28ab76c12b3944b9bea9abc</td>
 </tr>
 <tr class="even">
 <td>Samples</td>
-<td>100</td>
+<td>77</td>
 </tr>
 <tr class="odd">
 <td>Source</td>
-<td><a href="https://github.com/android-bench/android-bench">https://github.com/android-bench/android-bench</a></td>
+<td><a href="https://github.com/svd-ai-lab/hwe-bench">https://github.com/svd-ai-lab/hwe-bench</a></td>
 </tr>
 </tbody>
 </table>

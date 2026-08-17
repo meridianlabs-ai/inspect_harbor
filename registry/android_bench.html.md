@@ -25,7 +25,7 @@ eval(android_bench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [android-bench/android-bench](https://hub.harborframework.com/datasets/android-bench/android-bench/latest) |
 | Inspect task | `android_bench` |
-| Latest digest | sha256:6f1cc5002e53265c243f3d08940faea1d38c05a0e22a91a841ac9937aeb3416c |
+| Latest digest | sha256:e9c64ac5470aa2323be3f8391a831c4cb7392317d2e921c08422b46851067dd5 |
 | Samples | 100 |
 | Source | <https://github.com/android-bench/android-bench> |
 

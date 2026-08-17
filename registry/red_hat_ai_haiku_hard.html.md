@@ -25,7 +25,7 @@ eval(red_hat_ai_haiku_hard(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [red-hat-ai/haiku-hard](https://hub.harborframework.com/datasets/red-hat-ai/haiku-hard/latest) |
 | Inspect task | `red_hat_ai_haiku_hard` |
-| Latest digest | sha256:b24383f875f3d1ecad10aa8e8249d40fdb594fffffa3c842cf2cb0d96325a4e6 |
-| Samples | 177 |
+| Latest digest | sha256:c3da0b96edb7f215aa7c82a9aa7492c1d8ca3dfac4887567d42251f62080dd0f |
+| Samples | 178 |
 
 See [Task Parameters](../parameters.html.md) for the parameter set shared across all Harbor tasks.
