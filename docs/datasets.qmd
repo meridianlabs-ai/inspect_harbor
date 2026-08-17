@@ -47,7 +47,6 @@ These are upstream issues we've encountered while integrating Harbor datasets. E
 | Dataset | Issue | Status |
 |---------|-------|--------|
 | `xlang/ds-1000` | Multiple configuration issues preventing execution (`pull access denied for ds1000`) | [harbor-datasets#103](https://github.com/laude-institute/harbor-datasets/issues/103) |
-| `cohere/terminal_bench_aai` | `cohere_terminal_bench_aai()` raises a `ValidationError` at construction: two tasks (`install-windows-3.11`, `install-windows-xp`) use compose keys (`restart`, `stdin_open`, `tty`) that inspect-ai doesn't accept yet, and one bad task blocks the whole function | [inspect_ai#4727](https://github.com/UKGovernmentBEIS/inspect_ai/pull/4727) |
 
 ## Volume mount limitations
 
