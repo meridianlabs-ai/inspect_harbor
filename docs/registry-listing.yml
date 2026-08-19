@@ -937,7 +937,7 @@
   desc: Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operator-framework, coreos), filtered to instances Claude Haiku failed to solve.
   desc_trunc: Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operato…
   task_function: red_hat_ai_haiku_hard
-  samples: 178
+  samples: 138
   version: latest
   categories:
   - Coding

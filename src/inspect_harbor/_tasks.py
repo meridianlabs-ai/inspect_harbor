@@ -3034,7 +3034,7 @@ def red_hat_ai_haiku_hard(
     r"""Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operator-framework, coreos), filtered to instances Claude Haiku failed to solve.
 
     Slug: red-hat-ai/haiku-hard
-    Latest digest: sha256:c3da0b96edb7f215aa7c82a9aa7492c1d8ca3dfac4887567d42251f62080dd0f
+    Latest digest: sha256:ac5293f67b0debc77dd07d37c1f06a1cfaf42d857e34e158c6745045dfee5b52
     """
     return _harbor_base(
         package_name="red-hat-ai/haiku-hard",
