@@ -102,6 +102,16 @@ def harbor_scorer(
                     user=step.get("user") or state.metadata.get("agent_user"),
                 )
 
+        # When verifier.environment_mode is "separate", Harbor runs the
+        # verifier in a fresh container at the base commit.  We share a
+        # single container, so reset the repo after collecting artifacts.
+        base_commit = harbor_config.get("metadata", {}).get("base_commit_hash")
+        if collect_steps and base_commit:
+            await sandbox().exec(
+                ["bash", "-c", f"cd /app && git checkout -f {base_commit} && git clean -fd"],
+                timeout=60,
+            )
+
         verifier_env_raw = state.metadata.get("verifier_env", {})
         resolved_user_env = (
             resolve_env_vars(verifier_env_raw) if verifier_env_raw else {}
