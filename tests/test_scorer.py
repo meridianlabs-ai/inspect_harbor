@@ -1017,12 +1017,13 @@ async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
 
 @pytest.mark.asyncio
 async def test_harbor_scorer_runs_verifier_collect(tmp_path: Path) -> None:
-    """Verifier.collect commands run after log dirs are created but before tests."""
+    """Verifier.collect commands run after log dirs, then repo resets to base commit."""
     tests_dir = tmp_path / "tests"
     tests_dir.mkdir()
     test_script = tests_dir / "test.sh"
     test_script.write_text("#!/bin/bash\necho 'test'")
 
+    base_commit = "abc123"
     mock_state = Mock(spec=TaskState)
     mock_state.metadata = {
         "tests_dir": str(tests_dir),
@@ -1030,6 +1031,7 @@ async def test_harbor_scorer_runs_verifier_collect(tmp_path: Path) -> None:
         "verifier_timeout_sec": 60,
         "agent_user": "agent",
         "harbor_config": {
+            "metadata": {"base_commit_hash": base_commit},
             "verifier": {
                 "collect": [
                     {
@@ -1074,7 +1076,12 @@ async def test_harbor_scorer_runs_verifier_collect(tmp_path: Path) -> None:
         "-c",
         "git diff HEAD > /logs/artifacts/model.patch",
     ]
-    assert exec_calls[3] == ["bash", "-l", "/tests/test.sh"]
+    assert exec_calls[3] == [
+        "bash",
+        "-c",
+        f"cd /app && git checkout -f {base_commit} && git clean -fd",
+    ]
+    assert exec_calls[4] == ["bash", "-l", "/tests/test.sh"]
 
 
 @pytest.mark.asyncio
