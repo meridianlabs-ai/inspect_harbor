@@ -227,7 +227,7 @@ def _disambiguate_sample_ids(harbor_tasks: list[HarborTask]) -> list[str]:
 def _build_harbor_tasks(
     task_paths: list[Path], disable_verification: bool
 ) -> list[HarborTask]:
-    """Construct ``HarborTask`` objects, validating unsupported task.toml shapes."""
+    """Construct ``HarborTask`` objects, validating unsupported task shapes."""
     harbor_tasks = [
         HarborTask(task_dir=p, disable_verification=disable_verification)
         for p in task_paths
@@ -235,6 +235,7 @@ def _build_harbor_tasks(
 
     multi_step: list[str] = []
     windows: list[str] = []
+    prior_context: list[str] = []
     mcp_servers: list[str] = []
     skills_dir: list[str] = []
     allowlist: list[str] = []
@@ -242,6 +243,14 @@ def _build_harbor_tasks(
     for t in harbor_tasks:
         if t.has_steps:
             multi_step.append(t.name)
+        # Harbor 0.22+ tasks can ship prior agent context as an ATIF
+        # trajectory.json beside instruction.md; Harbor seeds the agent's
+        # session with it before the run (and fails fast when the agent
+        # can't load it). We can't seed the react agent's session, and
+        # running without the context the instruction assumes would
+        # produce misleading scores.
+        if (t.task_dir / "trajectory.json").exists():
+            prior_context.append(t.name)
         env = t.config.environment
         if str(getattr(env.os, "value", env.os)).lower() == "windows":
             windows.append(t.name)
@@ -265,9 +274,13 @@ def _build_harbor_tasks(
         blocking.append(
             f"Windows containers (`[environment].os = 'windows'`): {windows}"
         )
+    if prior_context:
+        blocking.append(
+            f"Prior-context tasks (trajectory.json beside instruction.md): {prior_context}"
+        )
     if blocking:
         raise NotImplementedError(
-            "task.toml features not yet supported by inspect_harbor:\n  - "
+            "Harbor task features not yet supported by inspect_harbor:\n  - "
             + "\n  - ".join(blocking)
         )
 

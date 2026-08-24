@@ -198,6 +198,30 @@ def test_build_harbor_tasks_blocks_unsupported_features(
             load_harbor_tasks(path="/some/blocking/task")
 
 
+def test_build_harbor_tasks_blocks_task_shipping_trajectory(tmp_path: Path) -> None:
+    """Tasks shipping prior context as ``trajectory.json`` raise ``NotImplementedError``.
+
+    Harbor 0.22+ seeds the agent's session with a task's ATIF trajectory
+    before the run (failing fast when the agent can't load it). We can't seed
+    the react agent, and running without the context the instruction assumes
+    would produce misleading scores.
+    """
+    (tmp_path / "trajectory.json").write_text("{}")
+    with (
+        patch("inspect_harbor._harbor.task._load_local_path") as mock_load_local,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        mock_load_local.return_value = [tmp_path]
+        mock_harbor_task.return_value = _make_harbor_task_mock(
+            name="trajectory-task", task_dir=tmp_path
+        )
+
+        with pytest.raises(
+            NotImplementedError, match=r"trajectory\.json.*\['trajectory-task'\]"
+        ):
+            load_harbor_tasks(path=str(tmp_path))
+
+
 def test_load_local_task_disable_verification_threaded_to_constructor():
     """``disable_verification=True`` reaches the ``HarborTask`` constructor.
 
