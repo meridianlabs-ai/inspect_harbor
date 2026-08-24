@@ -8,7 +8,7 @@ For advanced use cases, you can use the generic `harbor()` interface directly. T
 
 Harbor task loader for Inspect AI.
 
-[Source](https://github.com/meridianlabs-ai/inspect_harbor/blob/41d1e7a57ce249bb0a7abb3f40c9fb326d0b28c5/src/inspect_harbor/_harbor/task.py#L23)
+[Source](https://github.com/meridianlabs-ai/inspect_harbor/blob/5660f94d1827e41772dc8f9a5a69b3a0b5a65e77/src/inspect_harbor/_harbor/task.py#L23)
 
 ``` python
 @task
