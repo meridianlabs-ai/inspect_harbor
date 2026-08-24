@@ -137,9 +137,6 @@ actava-ai/chi-bench:
   title: χ-Bench
   desc: 'χ-Bench: long-horizon, policy-rich U.S. healthcare workflow agent benchmark spanning provider prior-authorization, payer utilization management, and care management (78 hub tasks).'
 
-adameubanks/rating-generation-consistency:
-  categories: []
-
 adyen/dabstep:
   categories:
   - Professional
@@ -403,12 +400,6 @@ featurebench/featurebench-modal:
   function_name: featurebench_modal
   title: FeatureBench (Modal)
 
-frontis/agent-obs-core:
-  categories: []
-
-frontis/generated-basic-production-traces:
-  categories: []
-
 futurehouse/bixbench:
   categories:
   - Science
@@ -464,7 +455,11 @@ gnucleus-ai/cad-bench:
   repo: https://www.gnucleus.ai/cad-bench
 
 google-deepmind/terminal-bench-science:
-  categories: []
+  categories:
+  - Science
+  - Coding
+  repo: https://github.com/harbor-framework/terminal-bench-science
+  title: Terminal-Bench-Science
 
 gorilla/bfcl:
   categories:
@@ -508,7 +503,12 @@ grandsmile/unicode:
   title: UniCode
 
 hack-verifiable-environments/hv-terminal-bench-2-1:
-  categories: []
+  categories:
+  - Safeguards
+  - Coding
+  arxiv: https://arxiv.org/abs/2605.20744
+  repo: https://github.com/MajoRoth/hack-verifiable-environments
+  title: Hack-Verifiable Terminal Bench 2.1
 
 harbor-index/harbor-index:
   categories:
@@ -1122,7 +1122,11 @@ vals/financeagent:
   title: Vals Finance Agent
 
 vibrantlabsai/itsm-bench:
-  categories: []
+  categories:
+  - Assistants
+  - Professional
+  repo: https://github.com/vibrantlabsai/Enterprise-Worlds
+  title: ITSMBench (Enterprise-Worlds)
 
 vmax/vmax-tasks:
   categories:

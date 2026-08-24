@@ -110,13 +110,6 @@
   categories:
   - Medicine
   - Professional
-- title: adameubanks/rating-generation-consistency
-  path: registry/adameubanks_rating_generation_consistency.html
-  desc: 'Generate a short post for a target stance, then re-rate it on the same scale. Neutral topics only. Scales: [-1,1], [0,10], [1,5]. Reward is max(0, 1 - |norm(target) - norm(rating)|).'
-  desc_trunc: Generate a short post for a target stance, then re-rate it on the same scale. Neutral topics only…
-  task_function: adameubanks_rating_generation_consistency
-  samples: 45
-  version: latest
 - title: adyen/dabstep
   path: registry/adyen_dabstep.html
   desc: 'DABstep: real-world data analysis tasks from Adyen''s workloads requiring multi-step reasoning by LLM agents.'
@@ -428,20 +421,6 @@
   version: latest
   categories:
   - Coding
-- title: frontis/agent-obs-core
-  path: registry/frontis_agent_obs_core.html
-  desc: 'Three source-backed agent reliability tasks: fallback honesty and a paired integrity/control evaluation.'
-  desc_trunc: 'Three source-backed agent reliability tasks: fallback honesty and a paired integrity/control evalua…'
-  task_function: frontis_agent_obs_core
-  samples: 3
-  version: latest
-- title: frontis/generated-basic-production-traces
-  path: registry/frontis_generated_basic_production_traces.html
-  desc: Basic runnable replay Tasks mechanically generated from Frontis production Historical Trials.
-  desc_trunc: Basic runnable replay Tasks mechanically generated from Frontis production Historical Trials.
-  task_function: frontis_generated_basic_production_traces
-  samples: 57
-  version: latest
 - title: futurehouse/bixbench
   path: registry/futurehouse_bixbench.html
   desc: 'BixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM agents'' ability to author multi-step Jupyter notebooks for biological data analysis.'
@@ -511,6 +490,9 @@
   task_function: google_deepmind_terminal_bench_science
   samples: 52
   version: latest
+  categories:
+  - Science
+  - Coding
 - title: gorilla/bfcl
   path: registry/gorilla_bfcl.html
   desc: 'Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Python, Java, JavaScript, and REST APIs.'
@@ -568,6 +550,9 @@
   task_function: hack_verifiable_environments_hv_terminal_bench_2_1
   samples: 89
   version: latest
+  categories:
+  - Safeguards
+  - Coding
 - title: harbor-index/harbor-index
   path: registry/harbor_index.html
   desc: 'Harbor Index: 80 agentic evaluation tasks spanning SWE, security, science, math, and optimization (revision 1.4).'
@@ -1292,6 +1277,9 @@
   task_function: vibrantlabsai_itsm_bench
   samples: 53
   version: latest
+  categories:
+  - Assistants
+  - Professional
 - title: vmax/vmax-tasks
   path: registry/vmax_tasks.html
   desc: Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).

@@ -354,37 +354,6 @@ def actava_ai_chi_bench(
 
 
 @task
-def adameubanks_rating_generation_consistency(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Generate a short post for a target stance, then re-rate it on the same scale. Neutral topics only. Scales: [-1,1], [0,10], [1,5]. Reward is max(0, 1 - |norm(target) - norm(rating)|).
-
-    Slug: adameubanks/rating-generation-consistency
-    Latest digest: sha256:a158b86d216f467af89bb2fd149c7606c169c65896f5bb92c7e1810dfad84d7d
-    """
-    return _harbor_base(
-        package_name="adameubanks/rating-generation-consistency",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def adyen_dabstep(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1395,68 +1364,6 @@ def featurebench_modal(
     """
     return _harbor_base(
         package_name="featurebench/featurebench-modal",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def frontis_agent_obs_core(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Three source-backed agent reliability tasks: fallback honesty and a paired integrity/control evaluation.
-
-    Slug: frontis/agent-obs-core
-    Latest digest: sha256:289ab23cc35406714bff7a804ed5d5161eb744a3b7719da0a57af7c3e5f41179
-    """
-    return _harbor_base(
-        package_name="frontis/agent-obs-core",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def frontis_generated_basic_production_traces(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Basic runnable replay Tasks mechanically generated from Frontis production Historical Trials.
-
-    Slug: frontis/generated-basic-production-traces
-    Latest digest: sha256:4382bf298aa0893ef0683cb38a27e59d1ad8ca66bb1f0e02160fa618b0a6a730
-    """
-    return _harbor_base(
-        package_name="frontis/generated-basic-production-traces",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
