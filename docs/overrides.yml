@@ -454,6 +454,13 @@ gnucleus-ai/cad-bench:
   title: CAD-Bench
   repo: https://www.gnucleus.ai/cad-bench
 
+google-deepmind/terminal-bench-science:
+  categories:
+  - Science
+  - Coding
+  repo: https://github.com/harbor-framework/terminal-bench-science
+  title: Terminal-Bench-Science
+
 gorilla/bfcl:
   categories:
   - Assistants
@@ -494,6 +501,14 @@ grandsmile/unicode:
   repo: https://github.com/grandsmile/UniCode
   desc: 'UniCode: competitive-programming problems systematically augmented into novel variations to probe genuine code reasoning rather than memorized solutions, scored against an oracle-verified solvable subset.'
   title: UniCode
+
+hack-verifiable-environments/hv-terminal-bench-2-1:
+  categories:
+  - Safeguards
+  - Coding
+  arxiv: https://arxiv.org/abs/2605.20744
+  repo: https://github.com/MajoRoth/hack-verifiable-environments
+  title: Hack-Verifiable Terminal Bench 2.1
 
 harbor-index/harbor-index:
   categories:
@@ -764,14 +779,6 @@ orinlabs/horizon-public:
   repo: https://github.com/orinlabs/horizon
   desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
   title: Horizon
-
-pgcodellm/rebench-v2-test:
-  categories:
-  - Coding
-  arxiv: https://arxiv.org/abs/2602.23866
-  repo: https://github.com/SWE-rebench/SWE-rebench-V2
-  desc: 'SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-built images for reproducible execution.'
-  title: SWE-rebench V2
 
 qcircuitbench/qcircuitbench:
   categories:
@@ -1113,6 +1120,13 @@ vals/financeagent:
   repo: https://github.com/vals-ai/finance-agent
   desc: 'Vals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (retrieval, market research, projections) with EDGAR/SEC search tools for evaluating financial agents.'
   title: Vals Finance Agent
+
+vibrantlabsai/itsm-bench:
+  categories:
+  - Assistants
+  - Professional
+  repo: https://github.com/vibrantlabsai/Enterprise-Worlds
+  title: ITSMBench (Enterprise-Worlds)
 
 vmax/vmax-tasks:
   categories:

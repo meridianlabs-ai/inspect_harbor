@@ -118,3 +118,22 @@
 # (an FPGA/electronics group). Exact slug, not org-wide: revisit if nexu-io
 # ships a real, publicly documented benchmark under this name.
 - open-design/open-design
+# Internal dev artifacts of Frontis, an agent-observability product, with no
+# public provenance: the frontis GitHub org has existed since 2018 with zero
+# public repos and no verifiable affiliation; no benchmark repo, paper, or
+# announcement exists anywhere. agent-obs-core is 3 samples with internal
+# test ids (B02/B08/B08b) and working-version churn ("minor environment
+# update from v3.1.1"); generated-basic-production-traces self-describes as
+# "mechanically generated from Frontis production Historical Trials" ("MVP
+# Harbor Dataset") — a replay-pipeline artifact, not a benchmark. Revisit if
+# Frontis publishes a real benchmark repo/paper.
+- frontis/*
+# Individual's (User, bio "i have no idea what i am doing") personal
+# self-consistency experiment, not a published benchmark:
+# rating-generation-consistency's 45 tasks = 3 whimsical "neutral topics"
+# (toilet-paper orientation, hot-dog-sandwich classification, restaurant
+# etiquette) x 3 rating scales x 5 target stances. No repo, paper, or
+# announcement anywhere; the account's only Harbor-related repo is a personal
+# mirror of standard Harbor datasets that doesn't contain this one. Revisit
+# if it is ever published as a real benchmark.
+- adameubanks/*

@@ -483,6 +483,16 @@
   categories:
   - Coding
   - Professional
+- title: google-deepmind/terminal-bench-science
+  path: registry/google_deepmind_terminal_bench_science.html
+  desc: 'Terminal-Bench Science: 52 expert-level scientific research tasks, flattened from harbor-framework/terminal-bench-science commit 8d2935da4468687477d714e1dd97d5c07688c9b4.'
+  desc_trunc: 'Terminal-Bench Science: 52 expert-level scientific research tasks, flattened from harbor-framework/…'
+  task_function: google_deepmind_terminal_bench_science
+  samples: 52
+  version: latest
+  categories:
+  - Science
+  - Coding
 - title: gorilla/bfcl
   path: registry/gorilla_bfcl.html
   desc: 'Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Python, Java, JavaScript, and REST APIs.'
@@ -532,6 +542,16 @@
   samples: 399
   version: latest
   categories:
+  - Coding
+- title: hack-verifiable-environments/hv-terminal-bench-2-1
+  path: registry/hack_verifiable_environments_hv_terminal_bench_2_1.html
+  desc: Hack-verifiable version of terminal-bench-2-1. Each task includes hidden solution and test files; inotifywait detects whether agents access them instead of solving legitimately.
+  desc_trunc: Hack-verifiable version of terminal-bench-2-1. Each task includes hidden solution and test files; i…
+  task_function: hack_verifiable_environments_hv_terminal_bench_2_1
+  samples: 89
+  version: latest
+  categories:
+  - Safeguards
   - Coding
 - title: harbor-index/harbor-index
   path: registry/harbor_index.html
@@ -858,15 +878,6 @@
   version: latest
   categories:
   - Assistants
-- title: pgcodellm/rebench-v2-test
-  path: registry/pgcodellm_rebench_v2_test.html
-  desc: 'SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-built images for reproducible execution.'
-  desc_trunc: 'SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-bui…'
-  task_function: pgcodellm_rebench_v2_test
-  samples: 20
-  version: latest
-  categories:
-  - Coding
 - title: qcircuitbench/qcircuitbench
   path: registry/qcircuitbench.html
   desc: 'QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle construction, algorithm design, and random circuits with automatic verification.'
@@ -1259,6 +1270,16 @@
   - Professional
   - Finance
   - Assistants
+- title: vibrantlabsai/itsm-bench
+  path: registry/vibrantlabsai_itsm_bench.html
+  desc: 'ITSMBench: enterprise ITSM agent tasks graded on database state.'
+  desc_trunc: 'ITSMBench: enterprise ITSM agent tasks graded on database state.'
+  task_function: vibrantlabsai_itsm_bench
+  samples: 53
+  version: latest
+  categories:
+  - Assistants
+  - Professional
 - title: vmax/vmax-tasks
   path: registry/vmax_tasks.html
   desc: Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).
