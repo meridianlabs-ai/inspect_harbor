@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.7.4](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.7.3...v0.7.4) (2026-08-24)
+
+
+### Bug Fixes
+
+* require inspect-ai &gt;=0.3.259 (compose restart/stdin_open/tty support) ([#150](https://github.com/meridianlabs-ai/inspect_harbor/issues/150)) ([41d1e7a](https://github.com/meridianlabs-ai/inspect_harbor/commit/41d1e7a57ce249bb0a7abb3f40c9fb326d0b28c5))
+* support harbor 0.21 and 0.22 ([#156](https://github.com/meridianlabs-ai/inspect_harbor/issues/156)) ([0db8871](https://github.com/meridianlabs-ai/inspect_harbor/commit/0db88713dc87b9ed7c04243c559853825e3df2c6))
+* update Harbor registry tasks ([#152](https://github.com/meridianlabs-ai/inspect_harbor/issues/152)) ([93798e5](https://github.com/meridianlabs-ai/inspect_harbor/commit/93798e5943788803102c114c75e955860ffdc901))
+* update Harbor registry tasks ([#153](https://github.com/meridianlabs-ai/inspect_harbor/issues/153)) ([5660f94](https://github.com/meridianlabs-ai/inspect_harbor/commit/5660f94d1827e41772dc8f9a5a69b3a0b5a65e77))
+
 ## [0.7.3](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.7.2...v0.7.3) (2026-08-17)
 
 
