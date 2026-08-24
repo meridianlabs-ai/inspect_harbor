@@ -354,6 +354,37 @@ def actava_ai_chi_bench(
 
 
 @task
+def adameubanks_rating_generation_consistency(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Generate a short post for a target stance, then re-rate it on the same scale. Neutral topics only. Scales: [-1,1], [0,10], [1,5]. Reward is max(0, 1 - |norm(target) - norm(rating)|).
+
+    Slug: adameubanks/rating-generation-consistency
+    Latest digest: sha256:a158b86d216f467af89bb2fd149c7606c169c65896f5bb92c7e1810dfad84d7d
+    """
+    return _harbor_base(
+        package_name="adameubanks/rating-generation-consistency",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def adyen_dabstep(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1377,6 +1408,68 @@ def featurebench_modal(
 
 
 @task
+def frontis_agent_obs_core(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Three source-backed agent reliability tasks: fallback honesty and a paired integrity/control evaluation.
+
+    Slug: frontis/agent-obs-core
+    Latest digest: sha256:289ab23cc35406714bff7a804ed5d5161eb744a3b7719da0a57af7c3e5f41179
+    """
+    return _harbor_base(
+        package_name="frontis/agent-obs-core",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def frontis_generated_basic_production_traces(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Basic runnable replay Tasks mechanically generated from Frontis production Historical Trials.
+
+    Slug: frontis/generated-basic-production-traces
+    Latest digest: sha256:4382bf298aa0893ef0683cb38a27e59d1ad8ca66bb1f0e02160fa618b0a6a730
+    """
+    return _harbor_base(
+        package_name="frontis/generated-basic-production-traces",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def futurehouse_bixbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1563,6 +1656,37 @@ def gnucleus_ai_cad_bench(
 
 
 @task
+def google_deepmind_terminal_bench_science(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Terminal-Bench Science: 52 expert-level scientific research tasks, flattened from harbor-framework/terminal-bench-science commit 8d2935da4468687477d714e1dd97d5c07688c9b4.
+
+    Slug: google-deepmind/terminal-bench-science
+    Latest digest: sha256:4fa7a9af5ecaa4c0c942d4284d32a37d747629c0b288fba796a2c4436b1e965f
+    """
+    return _harbor_base(
+        package_name="google-deepmind/terminal-bench-science",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def gorilla_bfcl(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1705,6 +1829,37 @@ def grandsmile_unicode(
     """
     return _harbor_base(
         package_name="grandsmile/unicode",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def hack_verifiable_environments_hv_terminal_bench_2_1(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Hack-verifiable version of terminal-bench-2-1. Each task includes hidden solution and test files; inotifywait detects whether agents access them instead of solving legitimately.
+
+    Slug: hack-verifiable-environments/hv-terminal-bench-2-1
+    Latest digest: sha256:f77c76cd022b0aec434bc755ac1cfd8da650237c72047f189747fa10e33f6907
+    """
+    return _harbor_base(
+        package_name="hack-verifiable-environments/hv-terminal-bench-2-1",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -2772,37 +2927,6 @@ def orinlabs_horizon_public(
 
 
 @task
-def pgcodellm_rebench_v2_test(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""SWE-rebench V2: language-agnostic dataset of executable SWE tasks across 20 languages, with pre-built images for reproducible execution.
-
-    Slug: pgcodellm/rebench-v2-test
-    Latest digest: sha256:69488f0f1f51c1fed4ca5271b92b63b96deb4b0f2252d8654285a8fea173deb0
-    """
-    return _harbor_base(
-        package_name="pgcodellm/rebench-v2-test",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def qcircuitbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3133,7 +3257,7 @@ def rounakbende10_rh_swe_bench(
     r"""Red Hat SWE-bench - 357 verified tasks from 25 RH ecosystem repos
 
     Slug: rounakbende10/rh-swe-bench
-    Latest digest: sha256:2912e953dd598963a5e7bb54f5fa6524baac1a073f1debd2bf1d6e1fad990d66
+    Latest digest: sha256:c0a3c223a96b0536e69a4b382c731f425285538f9bbc10972a203613aa4ffad2
     """
     return _harbor_base(
         package_name="rounakbende10/rh-swe-bench",
@@ -4067,6 +4191,37 @@ def vals_financeagent(
     """
     return _harbor_base(
         package_name="vals/financeagent",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def vibrantlabsai_itsm_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ITSMBench: enterprise ITSM agent tasks graded on database state
+
+    Slug: vibrantlabsai/itsm-bench
+    Latest digest: sha256:401272f2e121cdfed9212683f838d0fd77a750f575e97598664578be09905174
+    """
+    return _harbor_base(
+        package_name="vibrantlabsai/itsm-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
