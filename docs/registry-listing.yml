@@ -273,6 +273,36 @@
   version: latest
   categories:
   - Cybersecurity
+- title: blobfishai/devopsbench-100
+  path: registry/blobfishai_devopsbench_100.html
+  desc: 100 deterministic long-horizon DevOps/SRE agent tasks over an executable NovaCart world with 32-67 call reference trajectories and state-diff vcode verifiers.
+  desc_trunc: 100 deterministic long-horizon DevOps/SRE agent tasks over an executable NovaCart world with 32-67…
+  task_function: blobfishai_devopsbench_100
+  samples: 100
+  version: latest
+  categories:
+  - Coding
+  - Professional
+- title: blobfishai/domainbench-24
+  path: registry/blobfishai_domainbench_24.html
+  desc: 24 deeply realistic stateful MCP tasks across six enterprise domains.
+  desc_trunc: 24 deeply realistic stateful MCP tasks across six enterprise domains.
+  task_function: blobfishai_domainbench_24
+  samples: 24
+  version: latest
+  categories:
+  - Assistants
+  - Professional
+- title: blobfishai/factorybench-100
+  path: registry/blobfishai_factorybench_100.html
+  desc: 100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading.
+  desc_trunc: 100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading.
+  task_function: blobfishai_factorybench_100
+  samples: 100
+  version: latest
+  categories:
+  - Assistants
+  - Professional
 - title: cais/swebenchpro
   path: registry/cais_swebenchpro.html
   desc: SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks, Python/JS/TS/Go.
@@ -659,6 +689,16 @@
   categories:
   - Coding
   - Assistants
+- title: josancamon19/physician-bench
+  path: registry/josancamon19_physician_bench.html
+  desc: Harbor packaging of the 100 Apache-2.0 HealthRex PhysicianBench tasks. Runtime requires separately authorized access to the fhir-full:v1 EHR image from Stanford Redivis.
+  desc_trunc: Harbor packaging of the 100 Apache-2.0 HealthRex PhysicianBench tasks. Runtime requires separately…
+  task_function: josancamon19_physician_bench
+  samples: 100
+  version: latest
+  categories:
+  - Medicine
+  - Professional
 - title: kgmon/deepsearchqa
   path: registry/kgmon_deepsearchqa.html
   desc: DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research agents on difficult multi-step information-seeking tasks.
@@ -1166,7 +1206,7 @@
   desc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
   desc_trunc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
   task_function: terminal_bench
-  samples: 74
+  samples: 66
   version: latest
   categories:
   - Coding

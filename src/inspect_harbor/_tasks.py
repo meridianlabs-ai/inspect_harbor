@@ -881,6 +881,99 @@ def binary_audit(
 
 
 @task
+def blobfishai_devopsbench_100(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""100 deterministic long-horizon DevOps/SRE agent tasks over an executable NovaCart world with 32-67 call reference trajectories and state-diff vcode verifiers.
+
+    Slug: blobfishai/devopsbench-100
+    Latest digest: sha256:1efd654cd3248d225964702c8b4c6f7c9f3909a557b7a9c64eee91642e12efce
+    """
+    return _harbor_base(
+        package_name="blobfishai/devopsbench-100",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def blobfishai_domainbench_24(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""24 deeply realistic stateful MCP tasks across six enterprise domains
+
+    Slug: blobfishai/domainbench-24
+    Latest digest: sha256:c3f89005c548148c27dc4fe9836eb8a65571788ca8a5567ff6208405cc730078
+    """
+    return _harbor_base(
+        package_name="blobfishai/domainbench-24",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def blobfishai_factorybench_100(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading
+
+    Slug: blobfishai/factorybench-100
+    Latest digest: sha256:bca3817fd59796be8ba350900f0efd9538c086a22033d27d0f06c3275208fed9
+    """
+    return _harbor_base(
+        package_name="blobfishai/factorybench-100",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def cais_swebenchpro(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2121,6 +2214,37 @@ def ivanleo_agent_search(
 
 
 @task
+def josancamon19_physician_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Harbor packaging of the 100 Apache-2.0 HealthRex PhysicianBench tasks. Runtime requires separately authorized access to the fhir-full:v1 EHR image from Stanford Redivis.
+
+    Slug: josancamon19/physician-bench
+    Latest digest: sha256:665cad8a072424b2e0c02d2f0b5dbe8e9e53dcce82bb5b7ae2215553c673cf01
+    """
+    return _harbor_base(
+        package_name="josancamon19/physician-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def kgmon_deepsearchqa(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2414,7 +2538,7 @@ def luosuu_swe_kokkos_bench(
     r"""100 verified SWE-bench-style coding tasks from the Kokkos ecosystem
 
     Slug: luosuu/SWE-kokkos-bench
-    Latest digest: sha256:06ec838d37e2c05499b298648fb0e5ad1e231213472016e7b1298c4c6d7d3649
+    Latest digest: sha256:a6e1e95fad48ad9ddf49a6e7d4605f2ff5e38f2f6b5aa6bf8fa4288a2385bef2
     """
     return _harbor_base(
         package_name="luosuu/SWE-kokkos-bench",
@@ -3784,7 +3908,7 @@ def terminal_bench(
     r"""Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
 
     Slug: terminal-bench/terminal-bench
-    Latest digest: sha256:a32a61879ea94eb9dc16fa1fbeb398759f0c07ca633d9d1f6aec760207036da3
+    Latest digest: sha256:39d9f44b40420cde8fdcc087579c0d72a7e14fa3656d603c3f0d22fb35e27732
     """
     return _harbor_base(
         package_name="terminal-bench/terminal-bench",

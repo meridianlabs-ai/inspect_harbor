@@ -137,3 +137,38 @@
 # mirror of standard Harbor datasets that doesn't contain this one. Revisit
 # if it is ever published as a real benchmark.
 - adameubanks/*
+# Verbatim duplicate of dbt-labs/ade-bench (identical 48 task inputs) by an
+# individual (User, not org), self-described as "ADE-Bench adapted to run
+# with Inspect Harbor on K8s" — the same derivative infra re-upload class as
+# titouanlne/*. Keep the canonical author org's dbt-labs/ade-bench.
+- tomseimandi/ade-bench
+# Personal staging/test uploads by a Terminal-Bench core maintainer (User,
+# not org), both carrying the canonical Terminal-Bench desc verbatim:
+# tb-test is a 1-sample upload test; tb4-preview ("TB4" preview, 66 tasks)
+# doesn't load (build.no_cache rejected by inspect_ai's ComposeConfig).
+# Canonical releases live under terminal-bench/. Revisit if a real personal
+# benchmark appears under this account.
+- ryanmarten/*
+# TEMPORARILY excluded (would otherwise be kept): four legitimate-looking
+# Blobfish AI benchmarks that fail to load because inspect_ai's ComposeConfig
+# rejects docker-compose long-form volume mounts
+# (services.main.volumes.0: Input should be a valid string). Re-include and
+# categorize once inspect_ai supports them (fix proposed upstream):
+# counselbench-100 ~[Law, Professional], litigation ~[Law, Professional],
+# salesbench-100 ~[Assistants, Professional], ledgerbench-100 ~[Finance,
+# Professional] (source repo blobfishai/finance-world). When re-including,
+# also check whether counselbench-100 duplicates litigation (both 100
+# long-horizon legal-agent tasks) before listing both.
+- blobfishai/counselbench-100
+- blobfishai/ledgerbench-100
+- blobfishai/litigation
+- blobfishai/salesbench-100
+# TEMPORARILY excluded (would otherwise be kept): canonical org upload of the
+# living Terminal-Bench-Science benchmark (70 tasks,
+# https://github.com/harbor-framework/terminal-bench-science) — distinct from
+# the google-deepmind/terminal-bench-science 52-task pinned snapshot, which
+# stays listed. Fails to load: inspect_ai's ComposeConfig rejects pids_limit.
+# Re-include once supported (fix proposed upstream) with overrides:
+# categories ~[Science, Coding], function_name: terminal_bench_science (dedup,
+# no collision), title: Terminal-Bench-Science, repo above.
+- terminal-bench-science/terminal-bench-science
