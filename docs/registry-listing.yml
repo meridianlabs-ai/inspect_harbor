@@ -273,6 +273,55 @@
   version: latest
   categories:
   - Cybersecurity
+- title: blobfishai/counselbench-100
+  path: registry/blobfishai_counselbench_100.html
+  desc: 100 high-level legal-agent tasks with 97-asset multi-provider evidence rooms, distinct deep trajectories, and native causal state verification.
+  desc_trunc: 100 high-level legal-agent tasks with 97-asset multi-provider evidence rooms, distinct deep traject…
+  task_function: blobfishai_counselbench_100
+  samples: 100
+  version: latest
+- title: blobfishai/devopsbench-100
+  path: registry/blobfishai_devopsbench_100.html
+  desc: 100 deterministic long-horizon DevOps/SRE agent tasks over an executable NovaCart world with 32-67 call reference trajectories and state-diff vcode verifiers.
+  desc_trunc: 100 deterministic long-horizon DevOps/SRE agent tasks over an executable NovaCart world with 32-67…
+  task_function: blobfishai_devopsbench_100
+  samples: 100
+  version: latest
+- title: blobfishai/domainbench-24
+  path: registry/blobfishai_domainbench_24.html
+  desc: 24 deeply realistic stateful MCP tasks across six enterprise domains.
+  desc_trunc: 24 deeply realistic stateful MCP tasks across six enterprise domains.
+  task_function: blobfishai_domainbench_24
+  samples: 24
+  version: latest
+- title: blobfishai/factorybench-100
+  path: registry/blobfishai_factorybench_100.html
+  desc: 100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading.
+  desc_trunc: 100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading.
+  task_function: blobfishai_factorybench_100
+  samples: 100
+  version: latest
+- title: blobfishai/ledgerbench-100
+  path: registry/blobfishai_ledgerbench_100.html
+  desc: '100 causal corporate-finance workflows over a closed ERP sandbox: provider-shaped MCP tools, distributed evidence, exact state transitions, and no LLM judge.'
+  desc_trunc: '100 causal corporate-finance workflows over a closed ERP sandbox: provider-shaped MCP tools, distri…'
+  task_function: blobfishai_ledgerbench_100
+  samples: 100
+  version: latest
+- title: blobfishai/litigation
+  path: registry/blobfishai_litigation.html
+  desc: Executable litigation environments for agent training and evaluation. 100 long-horizon tasks, a median of 108 verified tool-calling steps each, worked across eight systems of record (Clio Manage, iManage Work, CM/ECF, Google Calendar, Docusign, Relativity, CourtListener and nine litigation sub-systems). Graded by deterministic state-diff and trace assertions — no LLM judge on the reward path.
+  desc_trunc: Executable litigation environments for agent training and evaluation. 100 long-horizon tasks, a med…
+  task_function: blobfishai_litigation
+  samples: 100
+  version: latest
+- title: blobfishai/salesbench-100
+  path: registry/blobfishai_salesbench_100.html
+  desc: 100 high-level sales operations requests with evidence-determined multi-system trajectories.
+  desc_trunc: 100 high-level sales operations requests with evidence-determined multi-system trajectories.
+  task_function: blobfishai_salesbench_100
+  samples: 100
+  version: latest
 - title: cais/swebenchpro
   path: registry/cais_swebenchpro.html
   desc: SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks, Python/JS/TS/Go.
@@ -659,6 +708,13 @@
   categories:
   - Coding
   - Assistants
+- title: josancamon19/physician-bench
+  path: registry/josancamon19_physician_bench.html
+  desc: Harbor packaging of the 100 Apache-2.0 HealthRex PhysicianBench tasks. Runtime requires separately authorized access to the fhir-full:v1 EHR image from Stanford Redivis.
+  desc_trunc: Harbor packaging of the 100 Apache-2.0 HealthRex PhysicianBench tasks. Runtime requires separately…
+  task_function: josancamon19_physician_bench
+  samples: 100
+  version: latest
 - title: kgmon/deepsearchqa
   path: registry/kgmon_deepsearchqa.html
   desc: DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research agents on difficult multi-step information-seeking tasks.
@@ -981,6 +1037,20 @@
   version: latest
   categories:
   - Coding
+- title: ryanmarten/tb-test
+  path: registry/ryanmarten_tb_test.html
+  desc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
+  desc_trunc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
+  task_function: ryanmarten_tb_test
+  samples: 1
+  version: latest
+- title: ryanmarten/tb4-preview
+  path: registry/ryanmarten_tb4_preview.html
+  desc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
+  desc_trunc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
+  task_function: ryanmarten_tb4_preview
+  samples: 66
+  version: latest
 - title: satbench/satbench
   path: registry/satbench.html
   desc: 'SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable difficulty, validated through both LLM and SAT-solver consistency checks.'
@@ -1166,7 +1236,7 @@
   desc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
   desc_trunc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
   task_function: terminal_bench
-  samples: 74
+  samples: 66
   version: latest
   categories:
   - Coding
@@ -1200,6 +1270,13 @@
   version: latest
   categories:
   - Coding
+- title: terminal-bench-science/terminal-bench-science
+  path: registry/terminal_bench_science_terminal_bench_science.html
+  desc: A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathematical, and engineering sciences.
+  desc_trunc: A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathem…
+  task_function: terminal_bench_science_terminal_bench_science
+  samples: 70
+  version: latest
 - title: theagentcompany/theagentcompany
   path: registry/theagentcompany.html
   desc: An agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and RocketChat services, evaluating LLM agents on real-world professional work.
@@ -1230,6 +1307,13 @@
   version: latest
   categories:
   - Coding
+- title: tomseimandi/ade-bench
+  path: registry/tomseimandi_ade_bench.html
+  desc: ADE-Bench adapted to run with Inspect Harbor on K8s.
+  desc_trunc: ADE-Bench adapted to run with Inspect Harbor on K8s.
+  task_function: tomseimandi_ade_bench
+  samples: 48
+  version: latest
 - title: usaco/usaco
   path: registry/usaco.html
   desc: 'USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality unit tests, reference code, and official analyses for ad-hoc algorithmic reasoning.'

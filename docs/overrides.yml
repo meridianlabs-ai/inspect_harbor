@@ -274,6 +274,27 @@ binary-audit/binary-audit:
   function_name: binary_audit
   title: BinaryAudit
 
+blobfishai/counselbench-100:
+  categories: []
+
+blobfishai/devopsbench-100:
+  categories: []
+
+blobfishai/domainbench-24:
+  categories: []
+
+blobfishai/factorybench-100:
+  categories: []
+
+blobfishai/ledgerbench-100:
+  categories: []
+
+blobfishai/litigation:
+  categories: []
+
+blobfishai/salesbench-100:
+  categories: []
+
 cais/swebenchpro:
   categories:
   - Coding
@@ -587,6 +608,9 @@ ivanleo/agent-search:
   - Assistants
   desc: Agent answers Gemini API questions by querying an indexed documentation database.
 
+josancamon19/physician-bench:
+  categories: []
+
 kgmon/deepsearchqa:
   categories:
   - Knowledge
@@ -869,6 +893,12 @@ rounakbende10/rh-swe-bench:
   title: RH SWE-bench
   repo: https://github.com/rounakbende10/rh-swe-bench
 
+ryanmarten/tb-test:
+  categories: []
+
+ryanmarten/tb4-preview:
+  categories: []
+
 satbench/satbench:
   categories:
   - Reasoning
@@ -1037,6 +1067,9 @@ terminal-bench-pro/terminal-bench-pro:
   title: Terminal-Bench Pro
   featured: true
 
+terminal-bench-science/terminal-bench-science:
+  categories: []
+
 terminal-bench/terminal-bench:
   categories:
   - Coding
@@ -1087,6 +1120,9 @@ tinycomputerai/bun-server-bench:
   categories:
   - Coding
   repo: https://github.com/tinycomputerai/bun-server-bench
+
+tomseimandi/ade-bench:
+  categories: []
 
 usaco/usaco:
   categories:
