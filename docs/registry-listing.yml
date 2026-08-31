@@ -273,13 +273,6 @@
   version: latest
   categories:
   - Cybersecurity
-- title: blobfishai/counselbench-100
-  path: registry/blobfishai_counselbench_100.html
-  desc: 100 high-level legal-agent tasks with 97-asset multi-provider evidence rooms, distinct deep trajectories, and native causal state verification.
-  desc_trunc: 100 high-level legal-agent tasks with 97-asset multi-provider evidence rooms, distinct deep traject…
-  task_function: blobfishai_counselbench_100
-  samples: 100
-  version: latest
 - title: blobfishai/devopsbench-100
   path: registry/blobfishai_devopsbench_100.html
   desc: 100 deterministic long-horizon DevOps/SRE agent tasks over an executable NovaCart world with 32-67 call reference trajectories and state-diff vcode verifiers.
@@ -310,27 +303,6 @@
   categories:
   - Assistants
   - Professional
-- title: blobfishai/ledgerbench-100
-  path: registry/blobfishai_ledgerbench_100.html
-  desc: '100 causal corporate-finance workflows over a closed ERP sandbox: provider-shaped MCP tools, distributed evidence, exact state transitions, and no LLM judge.'
-  desc_trunc: '100 causal corporate-finance workflows over a closed ERP sandbox: provider-shaped MCP tools, distri…'
-  task_function: blobfishai_ledgerbench_100
-  samples: 100
-  version: latest
-- title: blobfishai/litigation
-  path: registry/blobfishai_litigation.html
-  desc: Executable litigation environments for agent training and evaluation. 100 long-horizon tasks, a median of 108 verified tool-calling steps each, worked across eight systems of record (Clio Manage, iManage Work, CM/ECF, Google Calendar, Docusign, Relativity, CourtListener and nine litigation sub-systems). Graded by deterministic state-diff and trace assertions — no LLM judge on the reward path.
-  desc_trunc: Executable litigation environments for agent training and evaluation. 100 long-horizon tasks, a med…
-  task_function: blobfishai_litigation
-  samples: 100
-  version: latest
-- title: blobfishai/salesbench-100
-  path: registry/blobfishai_salesbench_100.html
-  desc: 100 high-level sales operations requests with evidence-determined multi-system trajectories.
-  desc_trunc: 100 high-level sales operations requests with evidence-determined multi-system trajectories.
-  task_function: blobfishai_salesbench_100
-  samples: 100
-  version: latest
 - title: cais/swebenchpro
   path: registry/cais_swebenchpro.html
   desc: SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks, Python/JS/TS/Go.
@@ -1268,13 +1240,6 @@
   version: latest
   categories:
   - Coding
-- title: terminal-bench-science/terminal-bench-science
-  path: registry/terminal_bench_science.html
-  desc: A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathematical, and engineering sciences.
-  desc_trunc: A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathem…
-  task_function: terminal_bench_science
-  samples: 70
-  version: latest
 - title: theagentcompany/theagentcompany
   path: registry/theagentcompany.html
   desc: An agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and RocketChat services, evaluating LLM agents on real-world professional work.

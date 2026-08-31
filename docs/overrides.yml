@@ -274,9 +274,6 @@ binary-audit/binary-audit:
   function_name: binary_audit
   title: BinaryAudit
 
-blobfishai/counselbench-100:
-  categories: []
-
 blobfishai/devopsbench-100:
   categories:
   - Coding
@@ -296,15 +293,6 @@ blobfishai/factorybench-100:
   - Professional
   title: FactoryBench-100
   repo: https://github.com/blobfishai/factory-agent-simulation
-
-blobfishai/ledgerbench-100:
-  categories: []
-
-blobfishai/litigation:
-  categories: []
-
-blobfishai/salesbench-100:
-  categories: []
 
 cais/swebenchpro:
   categories:
@@ -491,7 +479,7 @@ google-deepmind/terminal-bench-science:
   - Science
   - Coding
   repo: https://github.com/harbor-framework/terminal-bench-science
-  title: Terminal-Bench-Science
+  title: GDM-Terminal-Bench-Science
 
 gorilla/bfcl:
   categories:
@@ -1076,12 +1064,6 @@ terminal-bench-pro/terminal-bench-pro:
   function_name: terminal_bench_pro
   title: Terminal-Bench Pro
   featured: true
-
-terminal-bench-science/terminal-bench-science:
-  categories: []
-  function_name: terminal_bench_science
-  title: Terminal-Bench-Science
-  repo: https://github.com/harbor-framework/terminal-bench-science
 
 terminal-bench/terminal-bench:
   categories:

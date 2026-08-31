@@ -881,37 +881,6 @@ def binary_audit(
 
 
 @task
-def blobfishai_counselbench_100(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""100 high-level legal-agent tasks with 97-asset multi-provider evidence rooms, distinct deep trajectories, and native causal state verification.
-
-    Slug: blobfishai/counselbench-100
-    Latest digest: sha256:0e2b7e78bbde84c1691ad016f7b2344e5570b98b5545a33ef783a0687e60b6e8
-    """
-    return _harbor_base(
-        package_name="blobfishai/counselbench-100",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def blobfishai_devopsbench_100(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -926,7 +895,7 @@ def blobfishai_devopsbench_100(
     r"""100 deterministic long-horizon DevOps/SRE agent tasks over an executable NovaCart world with 32-67 call reference trajectories and state-diff vcode verifiers.
 
     Slug: blobfishai/devopsbench-100
-    Latest digest: sha256:1e2c1afe4ce49717a2ad2bda0cc0cbfa9bcc4fab3d2d96a93507be88f3571614
+    Latest digest: sha256:1efd654cd3248d225964702c8b4c6f7c9f3909a557b7a9c64eee91642e12efce
     """
     return _harbor_base(
         package_name="blobfishai/devopsbench-100",
@@ -988,103 +957,10 @@ def blobfishai_factorybench_100(
     r"""100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading
 
     Slug: blobfishai/factorybench-100
-    Latest digest: sha256:f77fcb2c0b8e4ba9a64a7656baeb6928b4efbb16a760a698506efb86340ffe72
+    Latest digest: sha256:bca3817fd59796be8ba350900f0efd9538c086a22033d27d0f06c3275208fed9
     """
     return _harbor_base(
         package_name="blobfishai/factorybench-100",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def blobfishai_ledgerbench_100(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""100 causal corporate-finance workflows over a closed ERP sandbox: provider-shaped MCP tools, distributed evidence, exact state transitions, and no LLM judge.
-
-    Slug: blobfishai/ledgerbench-100
-    Latest digest: sha256:5e685691b3032c91489b8098947a08faabe9da131f6140c2ac54e1ac0092f693
-    """
-    return _harbor_base(
-        package_name="blobfishai/ledgerbench-100",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def blobfishai_litigation(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Executable litigation environments for agent training and evaluation. 100 long-horizon tasks, a median of 108 verified tool-calling steps each, worked across eight systems of record (Clio Manage, iManage Work, CM/ECF, Google Calendar, Docusign, Relativity, CourtListener and nine litigation sub-systems). Graded by deterministic state-diff and trace assertions — no LLM judge on the reward path.
-
-    Slug: blobfishai/litigation
-    Latest digest: sha256:53d0cd3433b743c42671d10ef1b4de874c447b4994020f702cb5a31e7bf1ba0c
-    """
-    return _harbor_base(
-        package_name="blobfishai/litigation",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def blobfishai_salesbench_100(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""100 high-level sales operations requests with evidence-determined multi-system trajectories.
-
-    Slug: blobfishai/salesbench-100
-    Latest digest: sha256:1aafe58cb4a5578a8f5f2931f175e834dae8b83d7cf65b6a96e9e6dacaf59623
-    """
-    return _harbor_base(
-        package_name="blobfishai/salesbench-100",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -2662,7 +2538,7 @@ def luosuu_swe_kokkos_bench(
     r"""100 verified SWE-bench-style coding tasks from the Kokkos ecosystem
 
     Slug: luosuu/SWE-kokkos-bench
-    Latest digest: sha256:4313f853a5bca4eeee18ece6928d5cb2c87403f9ab7be992f87d602e683bf2c5
+    Latest digest: sha256:a6e1e95fad48ad9ddf49a6e7d4605f2ff5e38f2f6b5aa6bf8fa4288a2385bef2
     """
     return _harbor_base(
         package_name="luosuu/SWE-kokkos-bench",
@@ -4129,37 +4005,6 @@ def terminal_bench_pro(
     """
     return _harbor_base(
         package_name="terminal-bench-pro/terminal-bench-pro",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def terminal_bench_science(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathematical, and engineering sciences.
-
-    Slug: terminal-bench-science/terminal-bench-science
-    Latest digest: sha256:91531bf50016a7c64f6cc60794a17c64c6b2c14858a8ae0de39ca16f2abd611a
-    """
-    return _harbor_base(
-        package_name="terminal-bench-science/terminal-bench-science",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
