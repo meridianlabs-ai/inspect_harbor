@@ -3429,68 +3429,6 @@ def rounakbende10_rh_swe_bench(
 
 
 @task
-def ryanmarten_tb_test(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
-
-    Slug: ryanmarten/tb-test
-    Latest digest: sha256:08f1953059ee4071a21a79297190026a55d6f035c6dca58eb93ad14e1a3a1119
-    """
-    return _harbor_base(
-        package_name="ryanmarten/tb-test",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def ryanmarten_tb4_preview(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
-
-    Slug: ryanmarten/tb4-preview
-    Latest digest: sha256:83eaa67687df96f53b801a0fa6773b0b82876372c5926d80b6be30957b8422a0
-    """
-    return _harbor_base(
-        package_name="ryanmarten/tb4-preview",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def satbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -4204,7 +4142,7 @@ def terminal_bench_pro(
 
 
 @task
-def terminal_bench_science_terminal_bench_science(
+def terminal_bench_science(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -4315,37 +4253,6 @@ def tinycomputerai_bun_server_bench(
     """
     return _harbor_base(
         package_name="tinycomputerai/bun-server-bench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def tomseimandi_ade_bench(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""ADE-Bench adapted to run with Inspect Harbor on K8s
-
-    Slug: tomseimandi/ade-bench
-    Latest digest: sha256:f3e5003605edc18603e1b5f71cb7a15f6749a413e8acc78ac0c8b3b49a561d06
-    """
-    return _harbor_base(
-        package_name="tomseimandi/ade-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

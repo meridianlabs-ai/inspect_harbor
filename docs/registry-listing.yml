@@ -287,6 +287,9 @@
   task_function: blobfishai_devopsbench_100
   samples: 100
   version: latest
+  categories:
+  - Coding
+  - Professional
 - title: blobfishai/domainbench-24
   path: registry/blobfishai_domainbench_24.html
   desc: 24 deeply realistic stateful MCP tasks across six enterprise domains.
@@ -294,6 +297,9 @@
   task_function: blobfishai_domainbench_24
   samples: 24
   version: latest
+  categories:
+  - Assistants
+  - Professional
 - title: blobfishai/factorybench-100
   path: registry/blobfishai_factorybench_100.html
   desc: 100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading.
@@ -301,6 +307,9 @@
   task_function: blobfishai_factorybench_100
   samples: 100
   version: latest
+  categories:
+  - Assistants
+  - Professional
 - title: blobfishai/ledgerbench-100
   path: registry/blobfishai_ledgerbench_100.html
   desc: '100 causal corporate-finance workflows over a closed ERP sandbox: provider-shaped MCP tools, distributed evidence, exact state transitions, and no LLM judge.'
@@ -715,6 +724,9 @@
   task_function: josancamon19_physician_bench
   samples: 100
   version: latest
+  categories:
+  - Medicine
+  - Professional
 - title: kgmon/deepsearchqa
   path: registry/kgmon_deepsearchqa.html
   desc: DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research agents on difficult multi-step information-seeking tasks.
@@ -1037,20 +1049,6 @@
   version: latest
   categories:
   - Coding
-- title: ryanmarten/tb-test
-  path: registry/ryanmarten_tb_test.html
-  desc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
-  desc_trunc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
-  task_function: ryanmarten_tb_test
-  samples: 1
-  version: latest
-- title: ryanmarten/tb4-preview
-  path: registry/ryanmarten_tb4_preview.html
-  desc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
-  desc_trunc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
-  task_function: ryanmarten_tb4_preview
-  samples: 66
-  version: latest
 - title: satbench/satbench
   path: registry/satbench.html
   desc: 'SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable difficulty, validated through both LLM and SAT-solver consistency checks.'
@@ -1271,10 +1269,10 @@
   categories:
   - Coding
 - title: terminal-bench-science/terminal-bench-science
-  path: registry/terminal_bench_science_terminal_bench_science.html
+  path: registry/terminal_bench_science.html
   desc: A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathematical, and engineering sciences.
   desc_trunc: A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathem…
-  task_function: terminal_bench_science_terminal_bench_science
+  task_function: terminal_bench_science
   samples: 70
   version: latest
 - title: theagentcompany/theagentcompany
@@ -1307,13 +1305,6 @@
   version: latest
   categories:
   - Coding
-- title: tomseimandi/ade-bench
-  path: registry/tomseimandi_ade_bench.html
-  desc: ADE-Bench adapted to run with Inspect Harbor on K8s.
-  desc_trunc: ADE-Bench adapted to run with Inspect Harbor on K8s.
-  task_function: tomseimandi_ade_bench
-  samples: 48
-  version: latest
 - title: usaco/usaco
   path: registry/usaco.html
   desc: 'USACO: USA Computing Olympiad problems across bronze/silver/gold/platinum tiers with high-quality unit tests, reference code, and official analyses for ad-hoc algorithmic reasoning.'

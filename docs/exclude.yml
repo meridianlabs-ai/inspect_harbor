@@ -137,3 +137,15 @@
 # mirror of standard Harbor datasets that doesn't contain this one. Revisit
 # if it is ever published as a real benchmark.
 - adameubanks/*
+# Verbatim duplicate of dbt-labs/ade-bench (identical 48 task inputs) by an
+# individual (User, not org), self-described as "ADE-Bench adapted to run
+# with Inspect Harbor on K8s" — the same derivative infra re-upload class as
+# titouanlne/*. Keep the canonical author org's dbt-labs/ade-bench.
+- tomseimandi/ade-bench
+# Personal staging/test uploads by a Terminal-Bench core maintainer (User,
+# not org), both carrying the canonical Terminal-Bench desc verbatim:
+# tb-test is a 1-sample upload test; tb4-preview ("TB4" preview, 66 tasks)
+# doesn't load (build.no_cache rejected by inspect_ai's ComposeConfig).
+# Canonical releases live under terminal-bench/. Revisit if a real personal
+# benchmark appears under this account.
+- ryanmarten/*

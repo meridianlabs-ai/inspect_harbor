@@ -278,13 +278,24 @@ blobfishai/counselbench-100:
   categories: []
 
 blobfishai/devopsbench-100:
-  categories: []
+  categories:
+  - Coding
+  - Professional
+  title: DevOpsBench-100
+  repo: https://github.com/blobfishai/software-devops
 
 blobfishai/domainbench-24:
-  categories: []
+  categories:
+  - Assistants
+  - Professional
+  title: DomainBench-24
 
 blobfishai/factorybench-100:
-  categories: []
+  categories:
+  - Assistants
+  - Professional
+  title: FactoryBench-100
+  repo: https://github.com/blobfishai/factory-agent-simulation
 
 blobfishai/ledgerbench-100:
   categories: []
@@ -609,7 +620,12 @@ ivanleo/agent-search:
   desc: Agent answers Gemini API questions by querying an indexed documentation database.
 
 josancamon19/physician-bench:
-  categories: []
+  categories:
+  - Medicine
+  - Professional
+  title: PhysicianBench
+  repo: https://github.com/HealthRex/PhysicianBench
+  arxiv: https://arxiv.org/abs/2605.02240
 
 kgmon/deepsearchqa:
   categories:
@@ -893,12 +909,6 @@ rounakbende10/rh-swe-bench:
   title: RH SWE-bench
   repo: https://github.com/rounakbende10/rh-swe-bench
 
-ryanmarten/tb-test:
-  categories: []
-
-ryanmarten/tb4-preview:
-  categories: []
-
 satbench/satbench:
   categories:
   - Reasoning
@@ -1069,6 +1079,9 @@ terminal-bench-pro/terminal-bench-pro:
 
 terminal-bench-science/terminal-bench-science:
   categories: []
+  function_name: terminal_bench_science
+  title: Terminal-Bench-Science
+  repo: https://github.com/harbor-framework/terminal-bench-science
 
 terminal-bench/terminal-bench:
   categories:
@@ -1120,9 +1133,6 @@ tinycomputerai/bun-server-bench:
   categories:
   - Coding
   repo: https://github.com/tinycomputerai/bun-server-bench
-
-tomseimandi/ade-bench:
-  categories: []
 
 usaco/usaco:
   categories:
