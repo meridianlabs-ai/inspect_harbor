@@ -51,6 +51,9 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [bigcode/bigcodebench-hard-complete](registry/bigcode_bigcodebench_hard_complete.html.md) | bigcode_bigcodebench_hard_complete | BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun… | 145 |
 | [bigcode/humanevalfix](registry/bigcode_humanevalfix.html.md) | bigcode_humanevalfix | HumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo… | 164 |
 | [binary-audit/binary-audit](registry/binary_audit.html.md) | binary_audit | BinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engin… | 46 |
+| [blobfishai/devopsbench-100](registry/blobfishai_devopsbench_100.html.md) | blobfishai_devopsbench_100 | 100 deterministic long-horizon DevOps/SRE agent tasks over an executable NovaCart world with 32-67… | 100 |
+| [blobfishai/domainbench-24](registry/blobfishai_domainbench_24.html.md) | blobfishai_domainbench_24 | 24 deeply realistic stateful MCP tasks across six enterprise domains. | 24 |
+| [blobfishai/factorybench-100](registry/blobfishai_factorybench_100.html.md) | blobfishai_factorybench_100 | 100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading. | 100 |
 | [cais/swebenchpro](registry/cais_swebenchpro.html.md) | cais_swebenchpro | SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks,… | 731 |
 | [camel-ai/seta-env](registry/camel_ai_seta_env.html.md) | camel_ai_seta_env | SETA (Scaling Environments for Terminal Agents): CAMEL-AI’s verifiable terminal-agent tasks spannin… | 1376 |
 | [cmu/refav](registry/cmu_refav.html.md) | cmu_refav | Autonomous-vehicle scenario mining via VLM. | 1500 |
@@ -91,6 +94,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [islo-labs/reward-hack-bench-control](registry/islo_labs_reward_hack_bench_control.html.md) | islo_labs_reward_hack_bench_control | Baseline/control companion to reward-hack-bench: the same 8 SWE-bench + CyBench tasks with NO cheat… | 8 |
 | [itmo-autods/scientific-cases](registry/itmo_autods_scientific_cases.html.md) | itmo_autods_scientific_cases | AutoDS scientific ML cases: maize yield (G3 2023), polymer Tg (OpenPoly 2025), Fugaku HPC exit-stat… | 3 |
 | [ivanleo/agent-search](registry/ivanleo_agent_search.html.md) | ivanleo_agent_search | Agent answers Gemini API questions by querying an indexed documentation database. | 20 |
+| [josancamon19/physician-bench](registry/josancamon19_physician_bench.html.md) | josancamon19_physician_bench | Harbor packaging of the 100 Apache-2.0 HealthRex PhysicianBench tasks. Runtime requires separately… | 100 |
 | [kgmon/deepsearchqa](registry/kgmon_deepsearchqa.html.md) | kgmon_deepsearchqa | DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research… | 900 |
 | [kumo/kumo-1](registry/kumo_1.html.md) | kumo_1 | KUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic… | 5300 |
 | [kumo/kumo-easy](registry/kumo_easy.html.md) | kumo_easy | KUMO (easy split): easier-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark a… | 5050 |
@@ -145,7 +149,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [tencent/autocodebench](registry/tencent_autocodebench.html.md) | tencent_autocodebench | Multilingual automated code generation benchmark evaluating LLMs across diverse programming tasks a… | 200 |
 | [termigen/termigen-environments](registry/termigen_environments.html.md) | termigen_environments | TermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11… | 3566 |
 | [terminal-bench-pro/terminal-bench-pro](registry/terminal_bench_pro.html.md) | terminal_bench_pro | Terminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientifi… | 200 |
-| [terminal-bench/terminal-bench](registry/terminal_bench.html.md) | terminal_bench | Terminal-Bench is a benchmark for measuring agents’ abilities to complete tasks using a terminal. | 74 |
+| [terminal-bench/terminal-bench](registry/terminal_bench.html.md) | terminal_bench | Terminal-Bench is a benchmark for measuring agents’ abilities to complete tasks using a terminal. | 66 |
 | [terminal-bench/terminal-bench-2](registry/terminal_bench_2.html.md) | terminal_bench_2 | Terminal-Bench v2: benchmark for testing AI agents in real terminal environments — from compiling c… | 89 |
 | [terminal-bench/terminal-bench-2-1](registry/terminal_bench_2_1.html.md) | terminal_bench_2_1 | Terminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ… | 89 |
 | [theagentcompany/theagentcompany](registry/theagentcompany.html.md) | theagentcompany | An agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and R… | 174 |

@@ -25,8 +25,8 @@ eval(terminal_bench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [terminal-bench/terminal-bench](https://hub.harborframework.com/datasets/terminal-bench/terminal-bench/latest) |
 | Inspect task | `terminal_bench` |
-| Latest digest | sha256:a32a61879ea94eb9dc16fa1fbeb398759f0c07ca633d9d1f6aec760207036da3 |
-| Samples | 74 |
+| Latest digest | sha256:39d9f44b40420cde8fdcc087579c0d72a7e14fa3656d603c3f0d22fb35e27732 |
+| Samples | 66 |
 | Paper | [arxiv](https://arxiv.org/abs/2601.11868) |
 | Source | <https://github.com/harbor-framework/terminal-bench> |
 

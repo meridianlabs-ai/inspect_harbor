@@ -25,7 +25,7 @@ eval(vibrantlabsai_itsm_bench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [vibrantlabsai/itsm-bench](https://hub.harborframework.com/datasets/vibrantlabsai/itsm-bench/latest) |
 | Inspect task | `vibrantlabsai_itsm_bench` |
-| Latest digest | sha256:401272f2e121cdfed9212683f838d0fd77a750f575e97598664578be09905174 |
+| Latest digest | sha256:b26edd5cb47cfe17f2db4b4cbe4bbba98307dc1aba1358e73f4171b342717620 |
 | Samples | 53 |
 | Source | <https://github.com/vibrantlabsai/Enterprise-Worlds> |
 
