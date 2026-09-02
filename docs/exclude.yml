@@ -172,3 +172,10 @@
 # categories ~[Science, Coding], function_name: terminal_bench_science (dedup,
 # no collision), title: Terminal-Bench-Science, repo above.
 - terminal-bench-science/terminal-bench-science
+# TEMPORARILY excluded (would otherwise be kept): 87 CTF tasks curated from
+# the AlibabaCTF competition series by the Alibaba-AAIG org (a real
+# Organization) — fails to load because inspect_ai's ComposeConfig rejects
+# the `cgroup` service key (one task uses it). Re-include once supported
+# (fix proposed upstream in inspect_ai PR #5139) with overrides:
+# categories ~[Cybersecurity], title: AlibabaCTF.
+- alibaba-aaig/alibaba-ctf

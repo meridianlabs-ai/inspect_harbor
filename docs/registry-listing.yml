@@ -187,13 +187,6 @@
   version: latest
   categories:
   - Coding
-- title: alibaba-aaig/alibaba-ctf
-  path: registry/alibaba_aaig_alibaba_ctf.html
-  desc: A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) for evaluating agents on offensive security work.
-  desc_trunc: A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) f…
-  task_function: alibaba_aaig_alibaba_ctf
-  samples: 87
-  version: latest
 - title: android-bench/android-bench
   path: registry/android_bench.html
   desc: A dataset of 100 Android software engineering tasks derived from real-world repositories.
@@ -287,6 +280,9 @@
   task_function: blobfishai_dealbench_100_suite
   samples: 100
   version: latest
+  categories:
+  - Finance
+  - Professional
 - title: blobfishai/devopsbench-100
   path: registry/blobfishai_devopsbench_100.html
   desc: 100 deterministic long-horizon DevOps/SRE agent tasks over an executable NovaCart world with 32-67 call reference trajectories and state-diff vcode verifiers.
@@ -314,6 +310,9 @@
   task_function: blobfishai_erpbench_100_suite
   samples: 100
   version: latest
+  categories:
+  - Finance
+  - Professional
 - title: blobfishai/factorybench-100
   path: registry/blobfishai_factorybench_100.html
   desc: 100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading.
@@ -324,6 +323,13 @@
   categories:
   - Assistants
   - Professional
+- title: blobfishai/hubbench
+  path: registry/blobfishai_hubbench.html
+  desc: 'HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub professional-domain cluster — 96 stateful multi-system employee-decision tasks over isolated SQLite worlds (HubScore, no LLM judge).'
+  desc_trunc: 'HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub prof…'
+  task_function: blobfishai_hubbench
+  samples: 96
+  version: latest
 - title: cais/swebenchpro
   path: registry/cais_swebenchpro.html
   desc: SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks, Python/JS/TS/Go.
@@ -787,6 +793,13 @@
   version: latest
   categories:
   - Coding
+- title: lica-world/gdb
+  path: registry/lica_world_gdb.html
+  desc: Full GraphicDesignBench (GDB) benchmark converted to Harbor tasks.
+  desc_trunc: Full GraphicDesignBench (GDB) benchmark converted to Harbor tasks.
+  task_function: lica_world_gdb
+  samples: 33786
+  version: latest
 - title: livecodebench/livecodebench
   path: registry/livecodebench.html
   desc: 'LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, and Codeforces, supporting code generation, self-repair, execution, and test-output prediction.'
@@ -920,6 +933,13 @@
   categories:
   - Coding
   - Professional
+- title: orca-bench/orca-bench-verified
+  path: registry/orca_bench_orca_bench_verified.html
+  desc: An agent benchmark for root cause analysis — verified split of 40 tasks across 40 incidents (10 easy, 15 medium, 15 hard). For the results on all 1,079 tasks, please see.
+  desc_trunc: An agent benchmark for root cause analysis — verified split of 40 tasks across 40 incidents (10 eas…
+  task_function: orca_bench_orca_bench_verified
+  samples: 40
+  version: latest
 - title: orinlabs/horizon-public
   path: registry/orinlabs_horizon_public.html
   desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'

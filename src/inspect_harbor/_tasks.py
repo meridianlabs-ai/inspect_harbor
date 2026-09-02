@@ -602,37 +602,6 @@ def algotune(
 
 
 @task
-def alibaba_aaig_alibaba_ctf(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) for evaluating agents on offensive security work.
-
-    Slug: alibaba-aaig/alibaba-ctf
-    Latest digest: sha256:9d50ae96f650f75d66a797a9a0ebfab8f5456edac8cc790d416b03356c032f16
-    """
-    return _harbor_base(
-        package_name="alibaba-aaig/alibaba-ctf",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def android_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1054,6 +1023,37 @@ def blobfishai_factorybench_100(
     """
     return _harbor_base(
         package_name="blobfishai/factorybench-100",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def blobfishai_hubbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub professional-domain cluster — 96 stateful multi-system employee-decision tasks over isolated SQLite worlds (HubScore, no LLM judge)
+
+    Slug: blobfishai/hubbench
+    Latest digest: sha256:ebd5ad39e289e7c75ab861da303d6a9b859abba556546490831acb85f4e1b041
+    """
+    return _harbor_base(
+        package_name="blobfishai/hubbench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -2555,6 +2555,37 @@ def lcb_longswebench_32k(
 
 
 @task
+def lica_world_gdb(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Full GraphicDesignBench (GDB) benchmark converted to Harbor tasks.
+
+    Slug: lica-world/gdb
+    Latest digest: sha256:bd7a447e5db63f97de0a215d3cce01b87fe17fc7ea0a56cd9c29ad502b5b24fa
+    """
+    return _harbor_base(
+        package_name="lica-world/gdb",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def livecodebench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2972,10 +3003,41 @@ def orca_bench(
     r"""ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).
 
     Slug: orca-bench/orca-bench
-    Latest digest: sha256:1ef729757d4974ffe4e835d541c601f957975edf8c93ef02eec97e26d3069b93
+    Latest digest: sha256:3e53f8f8e64b58400549e793b280b59166a0dd64ccb656657c29c9f5f98b02c3
     """
     return _harbor_base(
         package_name="orca-bench/orca-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def orca_bench_orca_bench_verified(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""An agent benchmark for root cause analysis — verified split of 40 tasks across 40 incidents (10 easy, 15 medium, 15 hard). For the results on all 1,079 tasks, please see https://arxiv.org/abs/2607.28545.
+
+    Slug: orca-bench/orca-bench-verified
+    Latest digest: sha256:263a25d01329e4409bc03bfcd9e6d9771d189f6060a4b2db831b5e89783f7162
+    """
+    return _harbor_base(
+        package_name="orca-bench/orca-bench-verified",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

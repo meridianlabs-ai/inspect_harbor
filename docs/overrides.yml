@@ -198,9 +198,6 @@ algotune/algotune:
   function_name: algotune
   title: AlgoTune
 
-alibaba-aaig/alibaba-ctf:
-  categories: []
-
 android-bench/android-bench:
   categories:
   - Coding
@@ -278,7 +275,11 @@ binary-audit/binary-audit:
   title: BinaryAudit
 
 blobfishai/dealbench-100-suite:
-  categories: []
+  categories:
+  - Finance
+  - Professional
+  title: DealBench-100 Suite
+  repo: https://github.com/blobfishai/deal-agent-simulation
 
 blobfishai/devopsbench-100:
   categories:
@@ -294,7 +295,11 @@ blobfishai/domainbench-24:
   title: DomainBench-24
 
 blobfishai/erpbench-100-suite:
-  categories: []
+  categories:
+  - Finance
+  - Professional
+  title: ERPBench-100 Suite
+  repo: https://github.com/blobfishai/erp-agent-simulation
 
 blobfishai/factorybench-100:
   categories:
@@ -302,6 +307,9 @@ blobfishai/factorybench-100:
   - Professional
   title: FactoryBench-100
   repo: https://github.com/blobfishai/factory-agent-simulation
+
+blobfishai/hubbench:
+  categories: []
 
 cais/swebenchpro:
   categories:
@@ -687,6 +695,9 @@ lcb/longswebench-32k:
   repo: https://github.com/Zteefano/long-code-bench
   title: LongSWE-Bench (32k)
 
+lica-world/gdb:
+  categories: []
+
 livecodebench/livecodebench:
   categories:
   - Coding
@@ -800,6 +811,9 @@ orca-bench/orca-bench:
   arxiv: https://arxiv.org/abs/2607.28545
   desc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).'
   title: ORCA-bench
+
+orca-bench/orca-bench-verified:
+  categories: []
 
 orinlabs/horizon-public:
   categories:
