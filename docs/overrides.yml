@@ -309,7 +309,11 @@ blobfishai/factorybench-100:
   repo: https://github.com/blobfishai/factory-agent-simulation
 
 blobfishai/hubbench:
-  categories: []
+  categories:
+  - Assistants
+  - Professional
+  title: HubBench
+  repo: https://github.com/blobfishai/hub-agent-simulation
 
 cais/swebenchpro:
   categories:
@@ -696,7 +700,11 @@ lcb/longswebench-32k:
   title: LongSWE-Bench (32k)
 
 lica-world/gdb:
-  categories: []
+  categories:
+  - Multimodal
+  - Professional
+  title: GraphicDesignBench
+  repo: https://github.com/lica-world/GDB
 
 livecodebench/livecodebench:
   categories:
@@ -811,9 +819,6 @@ orca-bench/orca-bench:
   arxiv: https://arxiv.org/abs/2607.28545
   desc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).'
   title: ORCA-bench
-
-orca-bench/orca-bench-verified:
-  categories: []
 
 orinlabs/horizon-public:
   categories:

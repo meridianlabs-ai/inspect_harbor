@@ -330,6 +330,9 @@
   task_function: blobfishai_hubbench
   samples: 96
   version: latest
+  categories:
+  - Assistants
+  - Professional
 - title: cais/swebenchpro
   path: registry/cais_swebenchpro.html
   desc: SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks, Python/JS/TS/Go.
@@ -800,6 +803,9 @@
   task_function: lica_world_gdb
   samples: 33786
   version: latest
+  categories:
+  - Multimodal
+  - Professional
 - title: livecodebench/livecodebench
   path: registry/livecodebench.html
   desc: 'LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, and Codeforces, supporting code generation, self-repair, execution, and test-output prediction.'
@@ -933,13 +939,6 @@
   categories:
   - Coding
   - Professional
-- title: orca-bench/orca-bench-verified
-  path: registry/orca_bench_orca_bench_verified.html
-  desc: An agent benchmark for root cause analysis — verified split of 40 tasks across 40 incidents (10 easy, 15 medium, 15 hard). For the results on all 1,079 tasks, please see.
-  desc_trunc: An agent benchmark for root cause analysis — verified split of 40 tasks across 40 incidents (10 eas…
-  task_function: orca_bench_orca_bench_verified
-  samples: 40
-  version: latest
 - title: orinlabs/horizon-public
   path: registry/orinlabs_horizon_public.html
   desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'

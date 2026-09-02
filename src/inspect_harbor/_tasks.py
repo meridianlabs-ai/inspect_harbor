@@ -3020,37 +3020,6 @@ def orca_bench(
 
 
 @task
-def orca_bench_orca_bench_verified(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""An agent benchmark for root cause analysis — verified split of 40 tasks across 40 incidents (10 easy, 15 medium, 15 hard). For the results on all 1,079 tasks, please see https://arxiv.org/abs/2607.28545.
-
-    Slug: orca-bench/orca-bench-verified
-    Latest digest: sha256:263a25d01329e4409bc03bfcd9e6d9771d189f6060a4b2db831b5e89783f7162
-    """
-    return _harbor_base(
-        package_name="orca-bench/orca-bench-verified",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def orinlabs_horizon_public(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
