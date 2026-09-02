@@ -274,6 +274,13 @@ binary-audit/binary-audit:
   function_name: binary_audit
   title: BinaryAudit
 
+blobfishai/dealbench-100-suite:
+  categories:
+  - Finance
+  - Professional
+  title: DealBench-100 Suite
+  repo: https://github.com/blobfishai/deal-agent-simulation
+
 blobfishai/devopsbench-100:
   categories:
   - Coding
@@ -287,12 +294,26 @@ blobfishai/domainbench-24:
   - Professional
   title: DomainBench-24
 
+blobfishai/erpbench-100-suite:
+  categories:
+  - Finance
+  - Professional
+  title: ERPBench-100 Suite
+  repo: https://github.com/blobfishai/erp-agent-simulation
+
 blobfishai/factorybench-100:
   categories:
   - Assistants
   - Professional
   title: FactoryBench-100
   repo: https://github.com/blobfishai/factory-agent-simulation
+
+blobfishai/hubbench:
+  categories:
+  - Assistants
+  - Professional
+  title: HubBench
+  repo: https://github.com/blobfishai/hub-agent-simulation
 
 cais/swebenchpro:
   categories:
@@ -682,10 +703,8 @@ lica-world/gdb:
   categories:
   - Multimodal
   - Professional
-  arxiv: https://arxiv.org/abs/2604.04192
-  repo: https://github.com/purvanshi-lica/lica-bench
-  desc: 'GraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infographics, template design, and animation.'
   title: GraphicDesignBench
+  repo: https://github.com/lica-world/GDB
 
 livecodebench/livecodebench:
   categories:

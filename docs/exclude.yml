@@ -172,3 +172,20 @@
 # categories ~[Science, Coding], function_name: terminal_bench_science (dedup,
 # no collision), title: Terminal-Bench-Science, repo above.
 - terminal-bench-science/terminal-bench-science
+# TEMPORARILY excluded (would otherwise be kept): 87 CTF tasks curated from
+# the AlibabaCTF competition series by the Alibaba-AAIG org (a real
+# Organization) — fails to load because inspect_ai's ComposeConfig rejects
+# the `cgroup` service key (one task uses it). Re-include once supported
+# (fix proposed upstream in inspect_ai PR #5139) with overrides:
+# categories ~[Cybersecurity], title: AlibabaCTF.
+- alibaba-aaig/alibaba-ctf
+# TEMPORARILY excluded (would otherwise be kept): the verified 40-task split
+# of ORCA-bench (root-cause analysis of oncall incidents), uploaded by the
+# same canonical org as the listed orca-bench/orca-bench — fails to load
+# because inspect_ai's ComposeConfig rejects `stop_grace_period` (all its
+# compose files use it). Re-include once supported (fix proposed upstream in
+# inspect_ai PR #5139) with overrides mirroring the sibling: categories
+# ~[Coding, Professional], function_name: orca_bench_verified (dedup, no
+# collision), title: ORCA-bench Verified, repo orca-bench/ORCA-bench,
+# arxiv 2607.28545, and a desc override trimming the dangling "please see."
+- orca-bench/orca-bench-verified

@@ -881,6 +881,37 @@ def binary_audit(
 
 
 @task
+def blobfishai_dealbench_100_suite(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""100 executable investment-banking workflows with deterministic DealScore grading
+
+    Slug: blobfishai/dealbench-100-suite
+    Latest digest: sha256:9f8b2d24a04cc39a3bbc75a10ec9eb22ffd406851480b47850799f607b4d74b6
+    """
+    return _harbor_base(
+        package_name="blobfishai/dealbench-100-suite",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def blobfishai_devopsbench_100(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -943,6 +974,37 @@ def blobfishai_domainbench_24(
 
 
 @task
+def blobfishai_erpbench_100_suite(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""100 executable Oracle-Fusion-shaped ERP workflows with deterministic ERPScore grading
+
+    Slug: blobfishai/erpbench-100-suite
+    Latest digest: sha256:26648e276ee6e190c73c343bf93cf77823718c9c565f7d92a330b4ddbe5fdc56
+    """
+    return _harbor_base(
+        package_name="blobfishai/erpbench-100-suite",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def blobfishai_factorybench_100(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -957,10 +1019,41 @@ def blobfishai_factorybench_100(
     r"""100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading
 
     Slug: blobfishai/factorybench-100
-    Latest digest: sha256:bca3817fd59796be8ba350900f0efd9538c086a22033d27d0f06c3275208fed9
+    Latest digest: sha256:9634a8bcb5962f922dbb3941e60f667ca174252fa7506e73e3d034946d3abd62
     """
     return _harbor_base(
         package_name="blobfishai/factorybench-100",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def blobfishai_hubbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub professional-domain cluster — 96 stateful multi-system employee-decision tasks over isolated SQLite worlds (HubScore, no LLM judge)
+
+    Slug: blobfishai/hubbench
+    Latest digest: sha256:ebd5ad39e289e7c75ab861da303d6a9b859abba556546490831acb85f4e1b041
+    """
+    return _harbor_base(
+        package_name="blobfishai/hubbench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -2473,7 +2566,7 @@ def lica_world_gdb(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""GraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infographics, template design, and animation.
+    r"""Full GraphicDesignBench (GDB) benchmark converted to Harbor tasks.
 
     Slug: lica-world/gdb
     Latest digest: sha256:bd7a447e5db63f97de0a215d3cce01b87fe17fc7ea0a56cd9c29ad502b5b24fa
@@ -2538,7 +2631,7 @@ def luosuu_swe_kokkos_bench(
     r"""100 verified SWE-bench-style coding tasks from the Kokkos ecosystem
 
     Slug: luosuu/SWE-kokkos-bench
-    Latest digest: sha256:a6e1e95fad48ad9ddf49a6e7d4605f2ff5e38f2f6b5aa6bf8fa4288a2385bef2
+    Latest digest: sha256:2d2cf7e0ad502943456bc7ea738c297f1c4b1841aff2bc967a1d1c6ab6400d68
     """
     return _harbor_base(
         package_name="luosuu/SWE-kokkos-bench",
@@ -2910,7 +3003,7 @@ def orca_bench(
     r"""ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).
 
     Slug: orca-bench/orca-bench
-    Latest digest: sha256:1ef729757d4974ffe4e835d541c601f957975edf8c93ef02eec97e26d3069b93
+    Latest digest: sha256:3e53f8f8e64b58400549e793b280b59166a0dd64ccb656657c29c9f5f98b02c3
     """
     return _harbor_base(
         package_name="orca-bench/orca-bench",
