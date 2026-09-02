@@ -187,6 +187,13 @@
   version: latest
   categories:
   - Coding
+- title: alibaba-aaig/alibaba-ctf
+  path: registry/alibaba_aaig_alibaba_ctf.html
+  desc: A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) for evaluating agents on offensive security work.
+  desc_trunc: A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) f…
+  task_function: alibaba_aaig_alibaba_ctf
+  samples: 87
+  version: latest
 - title: android-bench/android-bench
   path: registry/android_bench.html
   desc: A dataset of 100 Android software engineering tasks derived from real-world repositories.
@@ -273,6 +280,13 @@
   version: latest
   categories:
   - Cybersecurity
+- title: blobfishai/dealbench-100-suite
+  path: registry/blobfishai_dealbench_100_suite.html
+  desc: 100 executable investment-banking workflows with deterministic DealScore grading.
+  desc_trunc: 100 executable investment-banking workflows with deterministic DealScore grading.
+  task_function: blobfishai_dealbench_100_suite
+  samples: 100
+  version: latest
 - title: blobfishai/devopsbench-100
   path: registry/blobfishai_devopsbench_100.html
   desc: 100 deterministic long-horizon DevOps/SRE agent tasks over an executable NovaCart world with 32-67 call reference trajectories and state-diff vcode verifiers.
@@ -293,6 +307,13 @@
   categories:
   - Assistants
   - Professional
+- title: blobfishai/erpbench-100-suite
+  path: registry/blobfishai_erpbench_100_suite.html
+  desc: 100 executable Oracle-Fusion-shaped ERP workflows with deterministic ERPScore grading.
+  desc_trunc: 100 executable Oracle-Fusion-shaped ERP workflows with deterministic ERPScore grading.
+  task_function: blobfishai_erpbench_100_suite
+  samples: 100
+  version: latest
 - title: blobfishai/factorybench-100
   path: registry/blobfishai_factorybench_100.html
   desc: 100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading.
@@ -766,16 +787,6 @@
   version: latest
   categories:
   - Coding
-- title: lica-world/gdb
-  path: registry/lica_world_gdb.html
-  desc: 'GraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infographics, template design, and animation.'
-  desc_trunc: 'GraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infograp…'
-  task_function: lica_world_gdb
-  samples: 33786
-  version: latest
-  categories:
-  - Multimodal
-  - Professional
 - title: livecodebench/livecodebench
   path: registry/livecodebench.html
   desc: 'LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, and Codeforces, supporting code generation, self-repair, execution, and test-output prediction.'

@@ -602,6 +602,37 @@ def algotune(
 
 
 @task
+def alibaba_aaig_alibaba_ctf(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) for evaluating agents on offensive security work.
+
+    Slug: alibaba-aaig/alibaba-ctf
+    Latest digest: sha256:9d50ae96f650f75d66a797a9a0ebfab8f5456edac8cc790d416b03356c032f16
+    """
+    return _harbor_base(
+        package_name="alibaba-aaig/alibaba-ctf",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def android_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -881,6 +912,37 @@ def binary_audit(
 
 
 @task
+def blobfishai_dealbench_100_suite(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""100 executable investment-banking workflows with deterministic DealScore grading
+
+    Slug: blobfishai/dealbench-100-suite
+    Latest digest: sha256:9f8b2d24a04cc39a3bbc75a10ec9eb22ffd406851480b47850799f607b4d74b6
+    """
+    return _harbor_base(
+        package_name="blobfishai/dealbench-100-suite",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def blobfishai_devopsbench_100(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -943,6 +1005,37 @@ def blobfishai_domainbench_24(
 
 
 @task
+def blobfishai_erpbench_100_suite(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""100 executable Oracle-Fusion-shaped ERP workflows with deterministic ERPScore grading
+
+    Slug: blobfishai/erpbench-100-suite
+    Latest digest: sha256:26648e276ee6e190c73c343bf93cf77823718c9c565f7d92a330b4ddbe5fdc56
+    """
+    return _harbor_base(
+        package_name="blobfishai/erpbench-100-suite",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def blobfishai_factorybench_100(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -957,7 +1050,7 @@ def blobfishai_factorybench_100(
     r"""100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading
 
     Slug: blobfishai/factorybench-100
-    Latest digest: sha256:bca3817fd59796be8ba350900f0efd9538c086a22033d27d0f06c3275208fed9
+    Latest digest: sha256:9634a8bcb5962f922dbb3941e60f667ca174252fa7506e73e3d034946d3abd62
     """
     return _harbor_base(
         package_name="blobfishai/factorybench-100",
@@ -2462,37 +2555,6 @@ def lcb_longswebench_32k(
 
 
 @task
-def lica_world_gdb(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""GraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infographics, template design, and animation.
-
-    Slug: lica-world/gdb
-    Latest digest: sha256:bd7a447e5db63f97de0a215d3cce01b87fe17fc7ea0a56cd9c29ad502b5b24fa
-    """
-    return _harbor_base(
-        package_name="lica-world/gdb",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def livecodebench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2538,7 +2600,7 @@ def luosuu_swe_kokkos_bench(
     r"""100 verified SWE-bench-style coding tasks from the Kokkos ecosystem
 
     Slug: luosuu/SWE-kokkos-bench
-    Latest digest: sha256:a6e1e95fad48ad9ddf49a6e7d4605f2ff5e38f2f6b5aa6bf8fa4288a2385bef2
+    Latest digest: sha256:2d2cf7e0ad502943456bc7ea738c297f1c4b1841aff2bc967a1d1c6ab6400d68
     """
     return _harbor_base(
         package_name="luosuu/SWE-kokkos-bench",

@@ -198,6 +198,9 @@ algotune/algotune:
   function_name: algotune
   title: AlgoTune
 
+alibaba-aaig/alibaba-ctf:
+  categories: []
+
 android-bench/android-bench:
   categories:
   - Coding
@@ -274,6 +277,9 @@ binary-audit/binary-audit:
   function_name: binary_audit
   title: BinaryAudit
 
+blobfishai/dealbench-100-suite:
+  categories: []
+
 blobfishai/devopsbench-100:
   categories:
   - Coding
@@ -286,6 +292,9 @@ blobfishai/domainbench-24:
   - Assistants
   - Professional
   title: DomainBench-24
+
+blobfishai/erpbench-100-suite:
+  categories: []
 
 blobfishai/factorybench-100:
   categories:
@@ -677,15 +686,6 @@ lcb/longswebench-32k:
   arxiv: https://arxiv.org/abs/2505.07897
   repo: https://github.com/Zteefano/long-code-bench
   title: LongSWE-Bench (32k)
-
-lica-world/gdb:
-  categories:
-  - Multimodal
-  - Professional
-  arxiv: https://arxiv.org/abs/2604.04192
-  repo: https://github.com/purvanshi-lica/lica-bench
-  desc: 'GraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infographics, template design, and animation.'
-  title: GraphicDesignBench
 
 livecodebench/livecodebench:
   categories:
