@@ -1016,6 +1016,122 @@ async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
 
 
 @pytest.mark.asyncio
+async def test_harbor_scorer_runs_verifier_collect(tmp_path: Path) -> None:
+    """Verifier.collect commands run after log dirs, then repo resets to base commit."""
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    base_commit = "abc123"
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+        "agent_user": "agent",
+        "harbor_config": {
+            "metadata": {"base_commit_hash": base_commit},
+            "verifier": {
+                "collect": [
+                    {
+                        "command": "git diff HEAD > /logs/artifacts/model.patch",
+                        "timeout_sec": 120,
+                        "user": None,
+                    }
+                ],
+            },
+        },
+    }
+    mock_target = Mock(spec=Target)
+
+    exec_calls: list[list[str]] = []
+
+    async def track_exec(cmd: list[str], **_kwargs: object) -> Mock:
+        exec_calls.append(cmd)
+        result = Mock()
+        result.returncode = 0
+        result.stdout = ""
+        result.stderr = ""
+        return result
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with (
+        patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox",
+            return_value=mock_sandbox,
+        ),
+    ):
+        await harbor_scorer()(mock_state, mock_target)
+
+    assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
+    assert exec_calls[1] == ["mkdir", "-p", "/logs/verifier"]
+    assert exec_calls[2] == [
+        "bash",
+        "-c",
+        "git diff HEAD > /logs/artifacts/model.patch",
+    ]
+    assert exec_calls[3] == [
+        "bash",
+        "-c",
+        f"cd /app && git checkout -f {base_commit} && git clean -fd",
+    ]
+    assert exec_calls[4] == ["bash", "-l", "/tests/test.sh"]
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_skips_empty_collect(tmp_path: Path) -> None:
+    """Empty or missing collect steps don't produce extra exec calls."""
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+        "harbor_config": {"verifier": {"collect": []}},
+    }
+    mock_target = Mock(spec=Target)
+
+    exec_calls: list[list[str]] = []
+
+    async def track_exec(cmd: list[str], **_kwargs: object) -> Mock:
+        exec_calls.append(cmd)
+        result = Mock()
+        result.returncode = 0
+        result.stdout = ""
+        result.stderr = ""
+        return result
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with (
+        patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox",
+            return_value=mock_sandbox,
+        ),
+    ):
+        await harbor_scorer()(mock_state, mock_target)
+
+    # No collect exec — straight from mkdir to test script
+    assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
+    assert exec_calls[1] == ["mkdir", "-p", "/logs/verifier"]
+    assert exec_calls[2] == ["bash", "-l", "/tests/test.sh"]
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "verifier_user,expected_user_kwarg",
     [
