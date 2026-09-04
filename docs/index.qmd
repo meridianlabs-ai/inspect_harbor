@@ -10,14 +10,48 @@ llms-description: Overview, installation, prerequisites, and quick start for Ins
 Install from PyPI:
 
 ```bash
-pip install inspect-harbor
+pip install "inspect-harbor>=0.5"
 ```
 
 Or with uv:
 
 ```bash
-uv add inspect-harbor
+uv add "inspect-harbor>=0.5"
 ```
+
+The `>=0.5` floor is important: version 0.5 introduced the organization-qualified
+Harbor registry used by these docs. Without the floor, a dependency resolver may
+silently select an older release whose task names do not match the examples below.
+
+### OpenAI 3 compatibility
+
+::: {.callout-warning}
+Harbor depends on LiteLLM, which currently declares `openai<3`, while Inspect's
+OpenAI provider requires `openai>=3.1`. The two declared dependency ranges cannot
+be resolved together. This is tracked upstream in [LiteLLM
+#37907](https://github.com/BerriAI/litellm/issues/37907).
+:::
+
+If your uv project uses OpenAI models, add a temporary override for LiteLLM's
+upper bound to the project's existing `pyproject.toml`:
+
+```toml
+[tool.uv]
+override-dependencies = ["openai>=3.1.0"]
+```
+
+Then add both direct dependencies:
+
+```bash
+uv add "inspect-harbor>=0.5" "openai>=3.1.0"
+```
+
+This override is limited to the Inspect Harbor execution path, where Inspect—not
+LiteLLM—runs the model. Do not use the resulting environment for Harbor's own
+LiteLLM-backed model execution; LiteLLM does not yet declare OpenAI 3 support.
+If you do not need OpenAI models, no override is necessary. pip does not offer
+an equivalent persistent override; use a uv-managed environment for this
+temporary OpenAI configuration.
 
 ## Prerequisites
 
