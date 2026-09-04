@@ -25,7 +25,7 @@ eval(luosuu_swe_kokkos_bench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [luosuu/SWE-kokkos-bench](https://hub.harborframework.com/datasets/luosuu/SWE-kokkos-bench/latest) |
 | Inspect task | `luosuu_swe_kokkos_bench` |
-| Latest digest | sha256:a6e1e95fad48ad9ddf49a6e7d4605f2ff5e38f2f6b5aa6bf8fa4288a2385bef2 |
+| Latest digest | sha256:2d2cf7e0ad502943456bc7ea738c297f1c4b1841aff2bc967a1d1c6ab6400d68 |
 | Samples | 100 |
 | Source | <https://github.com/Luosuu/tinker-cookbook/tree/science-rl> |
 

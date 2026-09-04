@@ -51,9 +51,13 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [bigcode/bigcodebench-hard-complete](registry/bigcode_bigcodebench_hard_complete.html.md) | bigcode_bigcodebench_hard_complete | BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun… | 145 |
 | [bigcode/humanevalfix](registry/bigcode_humanevalfix.html.md) | bigcode_humanevalfix | HumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo… | 164 |
 | [binary-audit/binary-audit](registry/binary_audit.html.md) | binary_audit | BinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engin… | 46 |
+| [blobfishai/dealbench-100-suite](registry/blobfishai_dealbench_100_suite.html.md) | blobfishai_dealbench_100_suite | 100 executable investment-banking workflows with deterministic DealScore grading. | 100 |
 | [blobfishai/devopsbench-100](registry/blobfishai_devopsbench_100.html.md) | blobfishai_devopsbench_100 | 100 deterministic long-horizon DevOps/SRE agent tasks over an executable NovaCart world with 32-67… | 100 |
 | [blobfishai/domainbench-24](registry/blobfishai_domainbench_24.html.md) | blobfishai_domainbench_24 | 24 deeply realistic stateful MCP tasks across six enterprise domains. | 24 |
+| [blobfishai/erpbench-100-suite](registry/blobfishai_erpbench_100_suite.html.md) | blobfishai_erpbench_100_suite | 100 executable Oracle-Fusion-shaped ERP workflows with deterministic ERPScore grading. | 100 |
 | [blobfishai/factorybench-100](registry/blobfishai_factorybench_100.html.md) | blobfishai_factorybench_100 | 100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading. | 100 |
+| [blobfishai/hubbench](registry/blobfishai_hubbench.html.md) | blobfishai_hubbench | HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub prof… | 104 |
+| [blobfishai/semikongbench-100](registry/blobfishai_semikongbench_100.html.md) | blobfishai_semikongbench_100 | 100 executable semiconductor exception workflows with deterministic SemiOpsScore grading. | 100 |
 | [cais/swebenchpro](registry/cais_swebenchpro.html.md) | cais_swebenchpro | SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks,… | 731 |
 | [camel-ai/seta-env](registry/camel_ai_seta_env.html.md) | camel_ai_seta_env | SETA (Scaling Environments for Terminal Agents): CAMEL-AI’s verifiable terminal-agent tasks spannin… | 1376 |
 | [cmu/refav](registry/cmu_refav.html.md) | cmu_refav | Autonomous-vehicle scenario mining via VLM. | 1500 |
@@ -75,7 +79,6 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [futurehouse/labbench](registry/futurehouse_labbench.html.md) | futurehouse_labbench | LAB-Bench (Language Agent Biology Benchmark): questions across 8 categories (literature QA, databas… | 181 |
 | [gabeorlanski/slopcodebench](registry/gabeorlanski_slopcodebench.html.md) | gabeorlanski_slopcodebench | SlopCodeBench multi-checkpoint coding benchmark tasks converted for Harbor. | 36 |
 | [gaia/gaia](registry/gaia.html.md) | gaia | GAIA: real-world questions across three difficulty levels evaluating general AI assistants on reaso… | 165 |
-| [gnucleus-ai/cad-bench](registry/gnucleus_ai_cad_bench.html.md) | gnucleus_ai_cad_bench | gNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks. | 100 |
 | [google-deepmind/terminal-bench-science](registry/google_deepmind_terminal_bench_science.html.md) | google_deepmind_terminal_bench_science | Terminal-Bench Science: 52 expert-level scientific research tasks, flattened from harbor-framework/… | 52 |
 | [gorilla/bfcl](registry/gorilla_bfcl.html.md) | gorilla_bfcl | Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Pyt… | 3641 |
 | [gorilla/bfcl_parity](registry/gorilla_bfcl_parity.html.md) | gorilla_bfcl_parity | Stratified parity subset of BFCL validating that Harbor’s adapter matches the upstream implementati… | 123 |
@@ -102,7 +105,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [kumo/kumo-parity](registry/kumo_parity.html.md) | kumo_parity | KUMO (parity split): subset of the KUMO procedural-reasoning benchmark used for parity / regression… | 212 |
 | [lawbench/lawbench](registry/lawbench.html.md) | lawbench | LawBench: tasks evaluating LLMs on Chinese-law knowledge — legal entity recognition, reading compre… | 1000 |
 | [lcb/longswebench-32k](registry/lcb_longswebench_32k.html.md) | lcb_longswebench_32k | LongCodeBench (LCB) LongSWE-Bench tasks — 32k context window bucket. | 3 |
-| [lica-world/gdb](registry/lica_world_gdb.html.md) | lica_world_gdb | GraphicDesignBench (GDB): evaluating AI on graphic design tasks across layout, typography, infograp… | 33786 |
+| [lica-world/gdb](registry/lica_world_gdb.html.md) | lica_world_gdb | Full GraphicDesignBench (GDB) benchmark converted to Harbor tasks. | 33786 |
 | [livecodebench/livecodebench](registry/livecodebench.html.md) | livecodebench | LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, a… | 100 |
 | [luosuu/SWE-kokkos-bench](registry/luosuu_swe_kokkos_bench.html.md) | luosuu_swe_kokkos_bench | 100 verified SWE-bench-style coding tasks from the Kokkos ecosystem. | 100 |
 | [maxbittker/runebench](registry/maxbittker_runebench.html.md) | maxbittker_runebench | Benchmark suite for evaluating AI agents on RuneScape gameplay tasks. | 32 |
@@ -128,7 +131,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [red-hat-ai/haiku-hard](registry/red_hat_ai_haiku_hard.html.md) | red_hat_ai_haiku_hard | Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operato… | 138 |
 | [replicationbench/replicationbench](registry/replicationbench.html.md) | replicationbench | ReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce impleme… | 90 |
 | [rexbench/rexbench](registry/rexbench.html.md) | rexbench | RExBench - 2 tasks (cogs, othello) evaluating AI agents’ ability to extend existing AI research thr… | 2 |
-| [rounakbende10/rh-swe-bench](registry/rounakbende10_rh_swe_bench.html.md) | rounakbende10_rh_swe_bench | Red Hat SWE-bench - 357 verified tasks from 25 RH ecosystem repos. | 357 |
+| [rounakbende10/rh-swe-bench](registry/rounakbende10_rh_swe_bench.html.md) | rounakbende10_rh_swe_bench | Red Hat SWE-bench - 341 verified tasks from 25 RH ecosystem repos. | 341 |
 | [satbench/satbench](registry/satbench.html.md) | satbench | SATBench: logical-reasoning puzzles automatically generated from SAT formulas with adjustable diffi… | 2100 |
 | [scale-ai/hil-bench](registry/scale_ai_hil_bench.html.md) | scale_ai_hil_bench | HiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with crit… | 600 |
 | [scale-ai/swe-atlas-qna](registry/scale_ai_swe_atlas_qna.html.md) | scale_ai_swe_atlas_qna | SWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding… | 124 |

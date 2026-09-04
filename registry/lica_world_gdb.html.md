@@ -27,7 +27,6 @@ eval(lica_world_gdb(), model="openai/gpt-5")
 | Inspect task | `lica_world_gdb` |
 | Latest digest | sha256:bd7a447e5db63f97de0a215d3cce01b87fe17fc7ea0a56cd9c29ad502b5b24fa |
 | Samples | 33786 |
-| Paper | [arxiv](https://arxiv.org/abs/2604.04192) |
-| Source | <https://github.com/purvanshi-lica/lica-bench> |
+| Source | <https://github.com/lica-world/GDB> |
 
 See [Task Parameters](../parameters.html.md) for the parameter set shared across all Harbor tasks.

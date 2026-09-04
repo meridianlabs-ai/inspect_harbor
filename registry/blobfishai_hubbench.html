@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is labelled for harness-level cheating, task-level reward hacking, and refusals.">
+<meta name="description" content="HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub professional-domain cluster — 104 stateful multi-system employee-decision tasks over isolated SQLite worlds (HubScore, no LLM judge).">
 
-<title>harbor/rewardhackbench – Inspect Harbor</title>
+<title>blobfishai/hubbench – Inspect Harbor</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -205,15 +205,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">harbor/rewardhackbench</h1>
+<h1 class="title">blobfishai/hubbench</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">Safeguards</div>
+    <div class="quarto-category">Assistants</div>
+    <div class="quarto-category">Professional</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    <p>RewardHackBench: judge benchmark for detecting reward hacking in agent trajectories — each trace is labelled for harness-level cheating, task-level reward hacking, and refusals.</p>
+    <p>HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub professional-domain cluster — 104 stateful multi-system employee-decision tasks over isolated SQLite worlds (HubScore, no LLM judge).</p>
   </div>
 </div>
 
@@ -234,12 +235,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="run-this-task" class="level2">
 <h2 class="anchored" data-anchor-id="run-this-task">Run this task</h2>
 <p><strong>CLI:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/harbor_rewardhackbench <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/blobfishai_hubbench <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Python:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_ai <span class="im">import</span> <span class="bu">eval</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> harbor_rewardhackbench</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> inspect_harbor <span class="im">import</span> blobfishai_hubbench</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(harbor_rewardhackbench(), model<span class="op">=</span><span class="st">"openai/gpt-5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span>(blobfishai_hubbench(), model<span class="op">=</span><span class="st">"openai/gpt-5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="dataset-information" class="level2">
 <h2 class="anchored" data-anchor-id="dataset-information">Dataset information</h2>
@@ -247,19 +248,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>Harbor registry</td>
-<td><a href="https://hub.harborframework.com/datasets/harbor/rewardhackbench/latest">harbor/rewardhackbench</a></td>
+<td><a href="https://hub.harborframework.com/datasets/blobfishai/hubbench/latest">blobfishai/hubbench</a></td>
 </tr>
 <tr class="even">
 <td>Inspect task</td>
-<td><code>harbor_rewardhackbench</code></td>
+<td><code>blobfishai_hubbench</code></td>
 </tr>
 <tr class="odd">
 <td>Latest digest</td>
-<td>sha256:0dd16e1029495cba180809b7ecfbae375089881b11ff11e369bfbbf3c72a2fd8</td>
+<td>sha256:9d61a3ef494915718a4ab16f2ad64f16e6193c281f3536288b8a95ccd59ece04</td>
 </tr>
 <tr class="even">
 <td>Samples</td>
-<td>846</td>
+<td>104</td>
+</tr>
+<tr class="odd">
+<td>Source</td>
+<td><a href="https://github.com/blobfishai/hub-agent-simulation">https://github.com/blobfishai/hub-agent-simulation</a></td>
 </tr>
 </tbody>
 </table>

@@ -25,7 +25,7 @@ eval(orca_bench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [orca-bench/orca-bench](https://hub.harborframework.com/datasets/orca-bench/orca-bench/latest) |
 | Inspect task | `orca_bench` |
-| Latest digest | sha256:1ef729757d4974ffe4e835d541c601f957975edf8c93ef02eec97e26d3069b93 |
+| Latest digest | sha256:3e53f8f8e64b58400549e793b280b59166a0dd64ccb656657c29c9f5f98b02c3 |
 | Samples | 755 |
 | Paper | [arxiv](https://arxiv.org/abs/2607.28545) |
 | Source | <https://github.com/orca-bench/ORCA-bench> |

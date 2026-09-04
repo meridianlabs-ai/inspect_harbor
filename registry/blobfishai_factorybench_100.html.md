@@ -25,7 +25,7 @@ eval(blobfishai_factorybench_100(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [blobfishai/factorybench-100](https://hub.harborframework.com/datasets/blobfishai/factorybench-100/latest) |
 | Inspect task | `blobfishai_factorybench_100` |
-| Latest digest | sha256:bca3817fd59796be8ba350900f0efd9538c086a22033d27d0f06c3275208fed9 |
+| Latest digest | sha256:9634a8bcb5962f922dbb3941e60f667ca174252fa7506e73e3d034946d3abd62 |
 | Samples | 100 |
 | Source | <https://github.com/blobfishai/factory-agent-simulation> |
 
