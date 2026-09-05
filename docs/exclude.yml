@@ -189,3 +189,9 @@
 # collision), title: ORCA-bench Verified, repo orca-bench/ORCA-bench,
 # arxiv 2607.28545, and a desc override trimming the dangling "please see."
 - orca-bench/orca-bench-verified
+# Individual's (User, not org) 9-task "smoke suite" curated from Terminal-Bench
+# 2.1 to exercise their personal libr-agent desktop-agent harness ("for
+# LibrAgent harness eval"); the desc itself positions it against the already
+# excluded NovitaAI/tb21-* slices. Derivative subset of a benchmark we list
+# canonically (terminal-bench/terminal-bench-2-1), not a new benchmark.
+- fritzprix/*

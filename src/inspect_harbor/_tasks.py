@@ -1594,37 +1594,6 @@ def featurebench_modal(
 
 
 @task
-def fritzprix_libragent_diverse_9(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Stratified 9-task smoke suite from Terminal-Bench 2.1 for LibrAgent harness eval. Difficulty mix: 2 easy / 4 medium / 3 hard across 7 categories (SE, debugging, sysadmin, security, data-science, scientific-computing, data-querying). Disjoint from NovitaAI/tb21-file-recovery. See README for sampling rationale and per-task notes.
-
-    Slug: fritzprix/libragent-diverse-9
-    Latest digest: sha256:1c6ca88bce2eb7fd95ebc9ba946c8168e03137c4b15e68f4e3402c21795460f7
-    """
-    return _harbor_base(
-        package_name="fritzprix/libragent-diverse-9",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def futurehouse_bixbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
