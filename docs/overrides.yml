@@ -315,6 +315,9 @@ blobfishai/hubbench:
   title: HubBench
   repo: https://github.com/blobfishai/hub-agent-simulation
 
+blobfishai/semikongbench-100:
+  categories: []
+
 cais/swebenchpro:
   categories:
   - Coding
@@ -440,6 +443,9 @@ featurebench/featurebench-modal:
   desc: FeatureBench's full task suite executed on Modal's cloud sandbox runner.
   function_name: featurebench_modal
   title: FeatureBench (Modal)
+
+fritzprix/libragent-diverse-9:
+  categories: []
 
 futurehouse/bixbench:
   categories:

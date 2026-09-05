@@ -1047,13 +1047,44 @@ def blobfishai_hubbench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub professional-domain cluster — 96 stateful multi-system employee-decision tasks over isolated SQLite worlds (HubScore, no LLM judge)
+    r"""HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub professional-domain cluster — 104 stateful multi-system employee-decision tasks over isolated SQLite worlds (HubScore, no LLM judge)
 
     Slug: blobfishai/hubbench
-    Latest digest: sha256:ebd5ad39e289e7c75ab861da303d6a9b859abba556546490831acb85f4e1b041
+    Latest digest: sha256:5856ea4f83229e77b238a2acc3714c4d5e45329aed6e564819832a76cb33d5c6
     """
     return _harbor_base(
         package_name="blobfishai/hubbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def blobfishai_semikongbench_100(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""100 executable semiconductor exception workflows with deterministic SemiOpsScore grading
+
+    Slug: blobfishai/semikongbench-100
+    Latest digest: sha256:98ce5f040e311b2555d4eb7d3b4779a69f5ec5ea5d0a9aeae80b487588f2d6ff
+    """
+    return _harbor_base(
+        package_name="blobfishai/semikongbench-100",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -1563,6 +1594,37 @@ def featurebench_modal(
 
 
 @task
+def fritzprix_libragent_diverse_9(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Stratified 9-task smoke suite from Terminal-Bench 2.1 for LibrAgent harness eval. Difficulty mix: 2 easy / 4 medium / 3 hard across 7 categories (SE, debugging, sysadmin, security, data-science, scientific-computing, data-querying). Disjoint from NovitaAI/tb21-file-recovery. See README for sampling rationale and per-task notes.
+
+    Slug: fritzprix/libragent-diverse-9
+    Latest digest: sha256:1c6ca88bce2eb7fd95ebc9ba946c8168e03137c4b15e68f4e3402c21795460f7
+    """
+    return _harbor_base(
+        package_name="fritzprix/libragent-diverse-9",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def futurehouse_bixbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1729,10 +1791,10 @@ def gnucleus_ai_cad_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""gNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks
+    r"""gNucleus AI CAD-generation benchmark -- 100 parametric FreeCAD tasks (Harbor schema 1.2; requires harbor >= 0.13.2)
 
     Slug: gnucleus-ai/cad-bench
-    Latest digest: sha256:22be8aa80fdbf2d9844e73c9d91ee7e01082d70bcf706d347216d0b97bdf862e
+    Latest digest: sha256:ab2e040d0adcfd2779b4f1ad554890cd98b5aa19845e00162933ba165144fe56
     """
     return _harbor_base(
         package_name="gnucleus-ai/cad-bench",
@@ -3378,10 +3440,10 @@ def rounakbende10_rh_swe_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Red Hat SWE-bench - 357 verified tasks from 25 RH ecosystem repos
+    r"""Red Hat SWE-bench - 341 verified tasks from 25 RH ecosystem repos
 
     Slug: rounakbende10/rh-swe-bench
-    Latest digest: sha256:c0a3c223a96b0536e69a4b382c731f425285538f9bbc10972a203613aa4ffad2
+    Latest digest: sha256:8b225cf78dc4438279daa87af90b1d6b56baeed8e32df0712e065a144e011024
     """
     return _harbor_base(
         package_name="rounakbende10/rh-swe-bench",
