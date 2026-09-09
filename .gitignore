@@ -211,7 +211,7 @@ __marimo__/
 
 # Claude Code local settings (but allow shared skills)
 .claude/*
-!.claude/skills/
+!.claude/skills
 
 /.luarc.json
 
