@@ -7,8 +7,3 @@
 - Body lines starting with `<type>:` are parsed as extra changelog entries—don't begin description lines with a conventional-commit prefix unless that's intended
 - Never edit `CHANGELOG.md`, version numbers, or `.release-please-manifest.json`—Release Please owns them
 - See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines
-
-## Repository skills
-
-Shared skills live in `.agents/skills`. `.claude/skills` links to that directory. Use `$nightly-pr-triage` in Codex or `/nightly-pr-triage` in Claude Code.
-The nightly registry workflow reads the Claude compatibility path.
