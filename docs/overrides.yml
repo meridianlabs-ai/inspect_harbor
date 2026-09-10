@@ -274,6 +274,9 @@ binary-audit/binary-audit:
   function_name: binary_audit
   title: BinaryAudit
 
+blobfishai/arc-crm-6:
+  categories: []
+
 blobfishai/dealbench-100-suite:
   categories:
   - Finance
@@ -314,6 +317,9 @@ blobfishai/hubbench:
   - Professional
   title: HubBench
   repo: https://github.com/blobfishai/hub-agent-simulation
+
+blobfishai/semikongbench-100:
+  categories: []
 
 cais/swebenchpro:
   categories:
@@ -440,6 +446,9 @@ featurebench/featurebench-modal:
   desc: FeatureBench's full task suite executed on Modal's cloud sandbox runner.
   function_name: featurebench_modal
   title: FeatureBench (Modal)
+
+fritzprix/libragent-diverse-9:
+  categories: []
 
 futurehouse/bixbench:
   categories:
@@ -727,6 +736,9 @@ maxbittker/runebench:
   - Behavior
   repo: https://github.com/MaxBittker/rs-sdk
 
+mercor/apex-agents-1-1:
+  categories: []
+
 meta/mlgym-bench:
   categories:
   - Coding
@@ -761,6 +773,9 @@ nl2repobench/nl2repobench:
   desc: Agent generates a complete, installable Python library from a single natural-language requirements document, starting from an empty workspace.
   function_name: nl2repobench
   title: NL2Repo-Bench
+
+nlile/registry-history-20260908:
+  categories: []
 
 nvats/codeskills-bench:
   categories:

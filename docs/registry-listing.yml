@@ -273,6 +273,13 @@
   version: latest
   categories:
   - Cybersecurity
+- title: blobfishai/arc-crm-6
+  path: registry/blobfishai_arc_crm_6.html
+  desc: Six independently authored synthetic CRM workflows on one mocked CLI/web/REST/MCP world per episode. Partial Arc-inspired coverage, not source-row reproduction.
+  desc_trunc: Six independently authored synthetic CRM workflows on one mocked CLI/web/REST/MCP world per episode…
+  task_function: blobfishai_arc_crm_6
+  samples: 6
+  version: latest
 - title: blobfishai/dealbench-100-suite
   path: registry/blobfishai_dealbench_100_suite.html
   desc: 100 executable investment-banking workflows with deterministic DealScore grading.
@@ -325,14 +332,21 @@
   - Professional
 - title: blobfishai/hubbench
   path: registry/blobfishai_hubbench.html
-  desc: 'HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub professional-domain cluster — 96 stateful multi-system employee-decision tasks over isolated SQLite worlds (HubScore, no LLM judge).'
+  desc: 'HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub professional-domain cluster — 104 stateful multi-system employee-decision tasks over isolated SQLite worlds (HubScore, no LLM judge).'
   desc_trunc: 'HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub prof…'
   task_function: blobfishai_hubbench
-  samples: 96
+  samples: 104
   version: latest
   categories:
   - Assistants
   - Professional
+- title: blobfishai/semikongbench-100
+  path: registry/blobfishai_semikongbench_100.html
+  desc: 100 executable semiconductor exception workflows with deterministic SemiOpsScore grading.
+  desc_trunc: 100 executable semiconductor exception workflows with deterministic SemiOpsScore grading.
+  task_function: blobfishai_semikongbench_100
+  samples: 100
+  version: latest
 - title: cais/swebenchpro
   path: registry/cais_swebenchpro.html
   desc: SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks, Python/JS/TS/Go.
@@ -481,6 +495,13 @@
   version: latest
   categories:
   - Coding
+- title: fritzprix/libragent-diverse-9
+  path: registry/fritzprix_libragent_diverse_9.html
+  desc: 'Stratified 9-task smoke suite from Terminal-Bench 2.1 for LibrAgent harness eval. Difficulty mix: 2 easy / 4 medium / 3 hard across 7 categories (SE, debugging, sysadmin, security, data-science, scientific-computing, data-querying). Disjoint from NovitaAI/tb21-file-recovery. See README for sampling rationale and per-task notes.'
+  desc_trunc: 'Stratified 9-task smoke suite from Terminal-Bench 2.1 for LibrAgent harness eval. Difficulty mix: 2…'
+  task_function: fritzprix_libragent_diverse_9
+  samples: 9
+  version: latest
 - title: futurehouse/bixbench
   path: registry/futurehouse_bixbench.html
   desc: 'BixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM agents'' ability to author multi-step Jupyter notebooks for biological data analysis.'
@@ -535,8 +556,8 @@
   - Multimodal
 - title: gnucleus-ai/cad-bench
   path: registry/gnucleus_ai_cad_bench.html
-  desc: gNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks.
-  desc_trunc: gNucleus AI CAD-generation benchmark — 100 parametric FreeCAD tasks.
+  desc: gNucleus AI CAD-generation benchmark -- 100 parametric FreeCAD tasks (Harbor schema 1.2; requires harbor >= 0.13.2).
+  desc_trunc: gNucleus AI CAD-generation benchmark -- 100 parametric FreeCAD tasks (Harbor schema 1.2; requires h…
   task_function: gnucleus_ai_cad_bench
   samples: 100
   version: latest
@@ -834,6 +855,13 @@
   categories:
   - Reasoning
   - Behavior
+- title: mercor/apex-agents-1-1
+  path: registry/mercor_apex_agents_1_1.html
+  desc: Long-horizon professional-services benchmark in investment banking, law, and management consulting, written by practicing analysts, consultants, and corporate lawyers. For evaluation only.
+  desc_trunc: Long-horizon professional-services benchmark in investment banking, law, and management consulting,…
+  task_function: mercor_apex_agents_1_1
+  samples: 240
+  version: latest
 - title: meta/mlgym-bench
   path: registry/meta_mlgym_bench.html
   desc: 'MLGym-Bench: Meta''s framework and benchmark for AI research agents covering CV, NLP, RL, and game-theory tasks requiring ideation, implementation, training, and analysis of ML experiments.'
@@ -873,6 +901,13 @@
   version: latest
   categories:
   - Coding
+- title: nlile/registry-history-20260908
+  path: registry/nlile_registry_history_20260908.html
+  desc: Synth Registry immutable dataset history acceptance. One public upstream task, exact pinned membership. Revision two changes the selected task version.
+  desc_trunc: Synth Registry immutable dataset history acceptance. One public upstream task, exact pinned members…
+  task_function: nlile_registry_history_20260908
+  samples: 1
+  version: latest
 - title: nvats/codeskills-bench
   path: registry/nvats_codeskills_bench.html
   desc: 'A small set of real-life programming tasks: bug fixes, merge-conflict resolution, dependency cleanup, API migration, and performance regressions across compact Python repositories.'
@@ -1044,10 +1079,10 @@
   - Coding
 - title: rounakbende10/rh-swe-bench
   path: registry/rounakbende10_rh_swe_bench.html
-  desc: Red Hat SWE-bench - 357 verified tasks from 25 RH ecosystem repos.
-  desc_trunc: Red Hat SWE-bench - 357 verified tasks from 25 RH ecosystem repos.
+  desc: Red Hat SWE-bench - 341 verified tasks from 25 RH ecosystem repos.
+  desc_trunc: Red Hat SWE-bench - 341 verified tasks from 25 RH ecosystem repos.
   task_function: rounakbende10_rh_swe_bench
-  samples: 357
+  samples: 341
   version: latest
   categories:
   - Coding
