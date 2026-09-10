@@ -881,37 +881,6 @@ def binary_audit(
 
 
 @task
-def blobfishai_arc_crm_6(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Six independently authored synthetic CRM workflows on one mocked CLI/web/REST/MCP world per episode. Partial Arc-inspired coverage, not source-row reproduction.
-
-    Slug: blobfishai/arc-crm-6
-    Latest digest: sha256:fc9ca3b80d6a1a3c3e5bd1b975c54f1f3ada21b49668cb5f25e2912d67b69dfa
-    """
-    return _harbor_base(
-        package_name="blobfishai/arc-crm-6",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def blobfishai_dealbench_100_suite(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1612,37 +1581,6 @@ def featurebench_modal(
     """
     return _harbor_base(
         package_name="featurebench/featurebench-modal",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def fritzprix_libragent_diverse_9(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Stratified 9-task smoke suite from Terminal-Bench 2.1 for LibrAgent harness eval. Difficulty mix: 2 easy / 4 medium / 3 hard across 7 categories (SE, debugging, sysadmin, security, data-science, scientific-computing, data-querying). Disjoint from NovitaAI/tb21-file-recovery. See README for sampling rationale and per-task notes.
-
-    Slug: fritzprix/libragent-diverse-9
-    Latest digest: sha256:1c6ca88bce2eb7fd95ebc9ba946c8168e03137c4b15e68f4e3402c21795460f7
-    """
-    return _harbor_base(
-        package_name="fritzprix/libragent-diverse-9",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -2914,37 +2852,6 @@ def nl2repobench(
     """
     return _harbor_base(
         package_name="nl2repobench/nl2repobench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def nlile_registry_history_20260908(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Synth Registry immutable dataset history acceptance. One public upstream task, exact pinned membership. Revision two changes the selected task version.
-
-    Slug: nlile/registry-history-20260908
-    Latest digest: sha256:35bc3cc70cc751d77324d48a85b829aeccb482db68e59f78595b8eb535398c8e
-    """
-    return _harbor_base(
-        package_name="nlile/registry-history-20260908",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
