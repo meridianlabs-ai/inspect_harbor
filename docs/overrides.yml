@@ -315,6 +315,13 @@ blobfishai/hubbench:
   title: HubBench
   repo: https://github.com/blobfishai/hub-agent-simulation
 
+blobfishai/semikongbench-100:
+  categories:
+  - Assistants
+  - Professional
+  title: SemiKongBench-100
+  repo: https://github.com/blobfishai/semiconductor-agent-simulation
+
 cais/swebenchpro:
   categories:
   - Coding
@@ -726,6 +733,14 @@ maxbittker/runebench:
   - Reasoning
   - Behavior
   repo: https://github.com/MaxBittker/rs-sdk
+
+mercor/apex-agents-1-1:
+  categories:
+  - Professional
+  - Assistants
+  title: APEX-Agents 1.1
+  repo: https://github.com/Mercor-Intelligence/apex_loop_truncated_tools_agent
+  arxiv: https://arxiv.org/abs/2601.14242
 
 meta/mlgym-bench:
   categories:

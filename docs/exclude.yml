@@ -189,3 +189,26 @@
 # collision), title: ORCA-bench Verified, repo orca-bench/ORCA-bench,
 # arxiv 2607.28545, and a desc override trimming the dangling "please see."
 - orca-bench/orca-bench-verified
+# TEMPORARILY excluded (would otherwise be kept): six synthetic CRM workflow
+# tasks from the Blobfish AI org (source repo
+# blobfishai/arc-crm-agent-simulation, clean-room worlds inspired by the Arc
+# CRM dataset) — fails to load because inspect_ai's ComposeConfig rejects
+# pids_limit on both the `main` and `world` services (all six tasks use it).
+# Re-include once supported (fix proposed upstream) with overrides:
+# categories ~[Assistants, Professional], title: Blobfish Arc CRM-6, repo
+# above. Small 6-task set with "not a leaderboard" caveats in its README;
+# double-check it is still wanted when re-including.
+- blobfishai/arc-crm-6
+# Individual's (User, not org) 9-task "smoke suite from Terminal-Bench 2.1
+# for LibrAgent harness eval" (LibrAgent is the user's personal desktop-agent
+# project; no libragent benchmark repo exists). A curated subset of
+# terminal-bench/terminal-bench-2-1, which we list canonically — same
+# derivative-subset class as titouanlne/* and ryanmarten/*. It positions
+# itself as "disjoint from NovitaAI/tb21-file-recovery", a slice we already
+# exclude.
+- fritzprix/*
+# Individual's (User, not org) registry-plumbing test artifact: a 1-sample,
+# date-stamped "Synth Registry immutable dataset history acceptance" upload
+# whose single task is the standard harbor/hello-world task verbatim (which
+# we already exclude). Not a benchmark.
+- nlile/*
