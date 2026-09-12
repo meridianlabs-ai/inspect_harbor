@@ -246,6 +246,16 @@
   version: latest
   categories:
   - Assistants
+- title: bespokelabs/autoresearch-exam
+  path: registry/bespokelabs_autoresearch_exam.html
+  desc: AutoResearchExam measures an agent's ability to improve and generalize on open ended machine learning research tasks. The dataset contains 29 tasks across machine learning research.
+  desc_trunc: AutoResearchExam measures an agent's ability to improve and generalize on open ended machine learni…
+  task_function: bespokelabs_autoresearch_exam
+  samples: 29
+  version: latest
+  categories:
+  - Coding
+  - Science
 - title: bigcode/bigcodebench-hard-complete
   path: registry/bigcode_bigcodebench_hard_complete.html
   desc: 'BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse function calls and complex instructions, in completion format.'
@@ -1417,3 +1427,12 @@
   categories:
   - Coding
   - Reasoning
+- title: zenml/zenml-bench
+  path: registry/zenml_bench.html
+  desc: 'ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real ZenML 0.96.4; graded on the state ZenML recorded.'
+  desc_trunc: 'ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real…'
+  task_function: zenml_bench
+  samples: 18
+  version: latest
+  categories:
+  - Coding

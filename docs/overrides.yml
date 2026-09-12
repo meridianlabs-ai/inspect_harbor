@@ -250,6 +250,13 @@ benchflow/skillsbench:
   desc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folders of instructions, scripts, and resources) to complete specialized workflows spanning science, engineering, and professional domains.'
   title: SkillsBench
 
+bespokelabs/autoresearch-exam:
+  categories:
+  - Coding
+  - Science
+  title: AutoResearchExam
+  repo: https://github.com/bespokelabsai/AutoResearchExam
+
 bigcode/bigcodebench-hard-complete:
   categories:
   - Coding
@@ -1227,3 +1234,10 @@ yanagiorigami/frontier-cs:
   arxiv: https://arxiv.org/abs/2512.15699
   repo: https://github.com/FrontierCS/Frontier-CS
   title: Frontier-CS
+
+zenml/zenml-bench:
+  categories:
+  - Coding
+  function_name: zenml_bench
+  title: ZenML Bench
+  repo: https://github.com/zenml-io/zenml-bench

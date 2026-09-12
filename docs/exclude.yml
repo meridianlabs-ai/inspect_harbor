@@ -212,3 +212,16 @@
 # whose single task is the standard harbor/hello-world task verbatim (which
 # we already exclude). Not a benchmark.
 - nlile/*
+# Hypernym Inc.'s A/B experiment artifact, not a benchmark: 8 samples = 4
+# SWE-bench Verified instances (astropy-13398, sphinx-7590, pytest-5787,
+# pytest-6197) x control/treatment arms, where the treatment prompt is the
+# same issue plus a Hypernym-compressed codebase view. The hub page itself
+# frames it as an "artifact replay" whose results "are not comparable to
+# issue-only SWE-bench Verified resolve rates"; the source repo
+# HypernymAI/swebench-experiment (0 stars) is "swebench-verified experiments
+# to validate hypernym compression results". Same class as aryaniyaps/* and
+# lamina/* (control/treatment uploads) and nanoswe/* (SWE-bench Verified
+# instances we already list canonically as swe-bench/swe-bench-verified).
+# Exact slug, not org-wide: Hypernym is a real Organization that could
+# publish a real benchmark later.
+- hypernymai/hypernym-swebench-artifact-replay

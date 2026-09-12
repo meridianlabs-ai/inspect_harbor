@@ -788,6 +788,37 @@ def benchflow_skillsbench(
 
 
 @task
+def bespokelabs_autoresearch_exam(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""AutoResearchExam measures an agent's ability to improve and generalize on open ended machine learning research tasks. The dataset contains 29 tasks across machine learning research.
+
+    Slug: bespokelabs/autoresearch-exam
+    Latest digest: sha256:3f2a6bbc4135e17b5f0df4416ef695fd5b999bd580cb5519f3000453460c31bd
+    """
+    return _harbor_base(
+        package_name="bespokelabs/autoresearch-exam",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def bigcode_bigcodebench_hard_complete(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3411,8 +3442,8 @@ def rexbench(
     Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors.
     Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.
 
-    Slug: rexbench/rexbench
-    Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
+        Slug: rexbench/rexbench
+        Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
     """
     return _harbor_base(
         package_name="rexbench/rexbench",
@@ -4563,6 +4594,37 @@ def yanagiorigami_frontier_cs(
     """
     return _harbor_base(
         package_name="yanagiorigami/frontier-cs",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def zenml_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real ZenML 0.96.4; graded on the state ZenML recorded. https://github.com/zenml-io/zenml-bench
+
+    Slug: zenml/zenml-bench
+    Latest digest: sha256:5b0d64fed74870782a4c03763e8a4821dae3213c67bd470ae42d6fa854e73aa7
+    """
+    return _harbor_base(
+        package_name="zenml/zenml-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
