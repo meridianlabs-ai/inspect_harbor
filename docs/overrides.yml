@@ -250,6 +250,9 @@ benchflow/skillsbench:
   desc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folders of instructions, scripts, and resources) to complete specialized workflows spanning science, engineering, and professional domains.'
   title: SkillsBench
 
+bespokelabs/autoresearch-exam:
+  categories: []
+
 bigcode/bigcodebench-hard-complete:
   categories:
   - Coding
@@ -586,6 +589,9 @@ hwe-bench/hwe-bench:
   repo: https://github.com/svd-ai-lab/hwe-bench
   function_name: hwe_bench
   title: HWE-bench
+
+hypernymai/hypernym-swebench-artifact-replay:
+  categories: []
 
 ibragim-badertdinov/swe-rebench-07-2026:
   categories:
@@ -1227,3 +1233,6 @@ yanagiorigami/frontier-cs:
   arxiv: https://arxiv.org/abs/2512.15699
   repo: https://github.com/FrontierCS/Frontier-CS
   title: Frontier-CS
+
+zenml/zenml-bench:
+  categories: []
