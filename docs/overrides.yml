@@ -251,7 +251,11 @@ benchflow/skillsbench:
   title: SkillsBench
 
 bespokelabs/autoresearch-exam:
-  categories: []
+  categories:
+  - Coding
+  - Science
+  title: AutoResearchExam
+  repo: https://github.com/bespokelabsai/AutoResearchExam
 
 bigcode/bigcodebench-hard-complete:
   categories:
@@ -589,9 +593,6 @@ hwe-bench/hwe-bench:
   repo: https://github.com/svd-ai-lab/hwe-bench
   function_name: hwe_bench
   title: HWE-bench
-
-hypernymai/hypernym-swebench-artifact-replay:
-  categories: []
 
 ibragim-badertdinov/swe-rebench-07-2026:
   categories:
@@ -1235,4 +1236,8 @@ yanagiorigami/frontier-cs:
   title: Frontier-CS
 
 zenml/zenml-bench:
-  categories: []
+  categories:
+  - Coding
+  function_name: zenml_bench
+  title: ZenML Bench
+  repo: https://github.com/zenml-io/zenml-bench

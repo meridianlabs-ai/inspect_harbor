@@ -253,6 +253,9 @@
   task_function: bespokelabs_autoresearch_exam
   samples: 29
   version: latest
+  categories:
+  - Coding
+  - Science
 - title: bigcode/bigcodebench-hard-complete
   path: registry/bigcode_bigcodebench_hard_complete.html
   desc: 'BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse function calls and complex instructions, in completion format.'
@@ -670,13 +673,6 @@
   categories:
   - Science
   - Coding
-- title: hypernymai/hypernym-swebench-artifact-replay
-  path: registry/hypernymai_hypernym_swebench_artifact_replay.html
-  desc: Four paired SWE-bench Verified tasks comparing complete frozen Hypernym prompts with the published control recipe, with separate offline grading and saved-patch replay.
-  desc_trunc: Four paired SWE-bench Verified tasks comparing complete frozen Hypernym prompts with the published…
-  task_function: hypernymai_hypernym_swebench_artifact_replay
-  samples: 8
-  version: latest
 - title: ibragim-badertdinov/swe-rebench-07-2026
   path: registry/swe_rebench_07_2026.html
   desc: 111 hard SWE-rebench leaderboard tasks from the July 2026 snapshot across Go, Java, Python, Rust, and TypeScript.
@@ -1432,9 +1428,11 @@
   - Coding
   - Reasoning
 - title: zenml/zenml-bench
-  path: registry/zenml_zenml_bench.html
+  path: registry/zenml_bench.html
   desc: 'ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real ZenML 0.96.4; graded on the state ZenML recorded.'
   desc_trunc: 'ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real…'
-  task_function: zenml_zenml_bench
+  task_function: zenml_bench
   samples: 18
   version: latest
+  categories:
+  - Coding
