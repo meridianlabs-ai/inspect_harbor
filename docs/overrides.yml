@@ -251,7 +251,11 @@ benchflow/skillsbench:
   title: SkillsBench
 
 bespokelabs/autoresearch-exam:
-  categories: []
+  categories:
+  - Coding
+  - Science
+  title: AutoResearchExam
+  repo: https://github.com/bespokelabsai/AutoResearchExam
 
 bigcode/bigcodebench-hard-complete:
   categories:
@@ -583,9 +587,6 @@ hwe-bench/hwe-bench:
   function_name: hwe_bench
   title: HWE-bench
 
-hypernymai/hypernym-swebench-artifact-replay:
-  categories: []
-
 ibragim-badertdinov/swe-rebench-07-2026:
   categories:
   - Coding
@@ -722,7 +723,12 @@ livecodebench/livecodebench:
   title: LiveCodeBench
 
 long-horizon-terminal-bench/lhtb:
-  categories: []
+  categories:
+  - Coding
+  - Assistants
+  arxiv: https://arxiv.org/abs/2607.08964
+  repo: https://github.com/zli12321/LHTB
+  title: Long-Horizon Terminal-Bench
 
 luosuu/SWE-kokkos-bench:
   categories:
@@ -1207,7 +1213,11 @@ webgen-bench/webgen-bench:
   title: WebGen-Bench
 
 withmartian/clojure-swerebench-v2-validated-51:
-  categories: []
+  categories:
+  - Coding
+  arxiv: https://arxiv.org/abs/2602.23866
+  repo: https://github.com/SWE-rebench/SWE-rebench-V2
+  title: SWE-rebench V2 Clojure (Martian, 51 validated)
 
 xlang-ai/osworld-verified:
   categories:
@@ -1234,4 +1244,8 @@ yanagiorigami/frontier-cs:
   title: Frontier-CS
 
 zenml/zenml-bench:
-  categories: []
+  categories:
+  - Coding
+  function_name: zenml_bench
+  repo: https://github.com/zenml-io/zenml-bench
+  title: ZenML Bench

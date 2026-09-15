@@ -2121,37 +2121,6 @@ def hwe_bench(
 
 
 @task
-def hypernymai_hypernym_swebench_artifact_replay(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Four paired SWE-bench Verified tasks comparing complete frozen Hypernym prompts with the published control recipe, with separate offline grading and saved-patch replay.
-
-    Slug: hypernymai/hypernym-swebench-artifact-replay
-    Latest digest: sha256:15fff76ebee55072e5808f5a34eb6f5a840ffea1d66ee0a414c0727b950c6c25
-    """
-    return _harbor_base(
-        package_name="hypernymai/hypernym-swebench-artifact-replay",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def swe_rebench_07_2026(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -4669,7 +4638,7 @@ def yanagiorigami_frontier_cs(
 
 
 @task
-def zenml_zenml_bench(
+def zenml_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
