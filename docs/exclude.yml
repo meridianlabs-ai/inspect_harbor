@@ -212,3 +212,15 @@
 # whose single task is the standard harbor/hello-world task verbatim (which
 # we already exclude). Not a benchmark.
 - nlile/*
+# Hypernym Inc.'s (a real Organization) prompt-compression A/B experiment,
+# not a benchmark: 8 samples = 4 SWE-bench Verified instances (astropy-13398,
+# sphinx-7590, pytest-5787, pytest-6197) x control/treatment arms, where the
+# treatment prompt adds a Hypernym-compressed codebase view. The hub page
+# itself says results "are not comparable to issue-only SWE-bench Verified
+# resolve rates"; the source repo HypernymAI/swebench-experiment (0 stars)
+# self-describes as "experiments to validate hypernym compression results".
+# Same class as aryaniyaps/*, lamina/* (control/treatment uploads) and
+# nanoswe/* (SWE-bench Verified instances we list canonically as
+# swe-bench/swe-bench-verified). Exact slug, not org-wide: revisit if
+# Hypernym publishes a real benchmark.
+- hypernymai/hypernym-swebench-artifact-replay

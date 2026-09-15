@@ -250,6 +250,13 @@ benchflow/skillsbench:
   desc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folders of instructions, scripts, and resources) to complete specialized workflows spanning science, engineering, and professional domains.'
   title: SkillsBench
 
+bespokelabs/autoresearch-exam:
+  categories:
+  - Coding
+  - Science
+  title: AutoResearchExam
+  repo: https://github.com/bespokelabsai/AutoResearchExam
+
 bigcode/bigcodebench-hard-complete:
   categories:
   - Coding
@@ -502,13 +509,6 @@ gnucleus-ai/cad-bench:
   title: CAD-Bench
   repo: https://www.gnucleus.ai/cad-bench
 
-google-deepmind/terminal-bench-science:
-  categories:
-  - Science
-  - Coding
-  repo: https://github.com/harbor-framework/terminal-bench-science
-  title: GDM-Terminal-Bench-Science
-
 gorilla/bfcl:
   categories:
   - Assistants
@@ -721,6 +721,14 @@ livecodebench/livecodebench:
   desc: 'LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, and Codeforces, supporting code generation, self-repair, execution, and test-output prediction.'
   function_name: livecodebench
   title: LiveCodeBench
+
+long-horizon-terminal-bench/lhtb:
+  categories:
+  - Coding
+  - Assistants
+  arxiv: https://arxiv.org/abs/2607.08964
+  repo: https://github.com/zli12321/LHTB
+  title: Long-Horizon Terminal-Bench
 
 luosuu/SWE-kokkos-bench:
   categories:
@@ -1204,6 +1212,13 @@ webgen-bench/webgen-bench:
   function_name: webgen_bench
   title: WebGen-Bench
 
+withmartian/clojure-swerebench-v2-validated-51:
+  categories:
+  - Coding
+  arxiv: https://arxiv.org/abs/2602.23866
+  repo: https://github.com/SWE-rebench/SWE-rebench-V2
+  title: SWE-rebench V2 Clojure (Martian, 51 validated)
+
 xlang-ai/osworld-verified:
   categories:
   - Assistants
@@ -1227,3 +1242,10 @@ yanagiorigami/frontier-cs:
   arxiv: https://arxiv.org/abs/2512.15699
   repo: https://github.com/FrontierCS/Frontier-CS
   title: Frontier-CS
+
+zenml/zenml-bench:
+  categories:
+  - Coding
+  function_name: zenml_bench
+  repo: https://github.com/zenml-io/zenml-bench
+  title: ZenML Bench
