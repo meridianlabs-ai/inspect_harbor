@@ -788,6 +788,37 @@ def benchflow_skillsbench(
 
 
 @task
+def bespokelabs_autoresearch_exam(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""AutoResearchExam measures an agent's ability to improve and generalize on open ended machine learning research tasks. The dataset contains 29 tasks across machine learning research.
+
+    Slug: bespokelabs/autoresearch-exam
+    Latest digest: sha256:3f2a6bbc4135e17b5f0df4416ef695fd5b999bd580cb5519f3000453460c31bd
+    """
+    return _harbor_base(
+        package_name="bespokelabs/autoresearch-exam",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def bigcode_bigcodebench_hard_complete(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1780,37 +1811,6 @@ def gnucleus_ai_cad_bench(
 
 
 @task
-def google_deepmind_terminal_bench_science(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Terminal-Bench Science: 52 expert-level scientific research tasks, flattened from harbor-framework/terminal-bench-science commit 8d2935da4468687477d714e1dd97d5c07688c9b4.
-
-    Slug: google-deepmind/terminal-bench-science
-    Latest digest: sha256:4fa7a9af5ecaa4c0c942d4284d32a37d747629c0b288fba796a2c4436b1e965f
-    """
-    return _harbor_base(
-        package_name="google-deepmind/terminal-bench-science",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def gorilla_bfcl(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2108,6 +2108,37 @@ def hwe_bench(
     """
     return _harbor_base(
         package_name="hwe-bench/hwe-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def hypernymai_hypernym_swebench_artifact_replay(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Four paired SWE-bench Verified tasks comparing complete frozen Hypernym prompts with the published control recipe, with separate offline grading and saved-patch replay.
+
+    Slug: hypernymai/hypernym-swebench-artifact-replay
+    Latest digest: sha256:15fff76ebee55072e5808f5a34eb6f5a840ffea1d66ee0a414c0727b950c6c25
+    """
+    return _harbor_base(
+        package_name="hypernymai/hypernym-swebench-artifact-replay",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -2635,6 +2666,37 @@ def livecodebench(
     """
     return _harbor_base(
         package_name="livecodebench/livecodebench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def long_horizon_terminal_bench_lhtb(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in a containerized terminal over hundreds of steps. Hidden rebuild-from-artifact verifiers; self-reported progress does not count.
+
+    Slug: long-horizon-terminal-bench/lhtb
+    Latest digest: sha256:5ad11c23718b34c647c756c6a565fbff234982bbb95feda4fb45e8479d8e845d
+    """
+    return _harbor_base(
+        package_name="long-horizon-terminal-bench/lhtb",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -4483,6 +4545,37 @@ def webgen_bench(
 
 
 @task
+def withmartian_clojure_swerebench_v2_validated_51(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""51 Clojure SWE-rebench V2 tasks validated for coding-agent evaluation.
+
+    Slug: withmartian/clojure-swerebench-v2-validated-51
+    Latest digest: sha256:19afdbd2ebc7e7ab49af2a44339c163a6c12cc84fc03b27490ccc4a6bcb71eb8
+    """
+    return _harbor_base(
+        package_name="withmartian/clojure-swerebench-v2-validated-51",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def xlang_ds_1000(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -4563,6 +4656,37 @@ def yanagiorigami_frontier_cs(
     """
     return _harbor_base(
         package_name="yanagiorigami/frontier-cs",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def zenml_zenml_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real ZenML 0.96.4; graded on the state ZenML recorded. https://github.com/zenml-io/zenml-bench
+
+    Slug: zenml/zenml-bench
+    Latest digest: sha256:5b0d64fed74870782a4c03763e8a4821dae3213c67bd470ae42d6fa854e73aa7
+    """
+    return _harbor_base(
+        package_name="zenml/zenml-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
