@@ -1,9 +1,15 @@
-# Auto agent (@auto) — thin stub over the shared Meridian autonomous-loop
-# workflows in meridianlabs-ai/agents. Independent of the dev agent (claude.yml)
-# and reviewer (claude-review.yml). Drives PRs carrying the `auto` label: fixes
-# CI failures and acts on the reviewer's summary comment.
+# Copy to .github/workflows/claude-auto.yml in a Meridian repo to enable the
+# @auto autonomous loop (design/auto-agent.md). Independent of the dev agent
+# (claude.yml) and reviewer (claude-review.yml).
 #
-# Requires the MARVIN_TOKEN org secret scoped to this repo.
+# Requires the machine account's org secrets scoped to this repo (same as
+# claude.yml): MARVIN_APP_CLIENT_ID and MARVIN_APP_PRIVATE_KEY.
+#
+# REQUIRED EDIT: under `workflows:` list THIS repo's CI workflow name(s) — the
+# `name:` field of each CI workflow (not its filename). workflow_run is the only
+# event that reliably fires for GitHub-Actions CI completing (check_suite is
+# suppressed for Actions-created suites), and it must name what it reacts to.
+# Find names with: gh workflow list.
 
 name: Claude Auto
 
@@ -36,7 +42,11 @@ jobs:
       id-token: write
       actions: read
     secrets:
-      MARVIN_TOKEN: ${{ secrets.MARVIN_TOKEN }}
+      MARVIN_APP_CLIENT_ID: ${{ secrets.MARVIN_APP_CLIENT_ID }}
+      MARVIN_APP_PRIVATE_KEY: ${{ secrets.MARVIN_APP_PRIVATE_KEY }}
+      # codex engine (design/codex-engine.md in the agents repo):
+      # consumed only on items labeled engine:codex; optional.
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     with:
       head_branch: ${{ github.event.workflow_run.head_branch }}
       pr_number: ${{ github.event.workflow_run.pull_requests[0].number }}
@@ -59,7 +69,11 @@ jobs:
       id-token: write
       actions: read
     secrets:
-      MARVIN_TOKEN: ${{ secrets.MARVIN_TOKEN }}
+      MARVIN_APP_CLIENT_ID: ${{ secrets.MARVIN_APP_CLIENT_ID }}
+      MARVIN_APP_PRIVATE_KEY: ${{ secrets.MARVIN_APP_PRIVATE_KEY }}
+      # codex engine (design/codex-engine.md in the agents repo):
+      # consumed only on items labeled engine:codex; optional.
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     with:
       pr_number: ${{ github.event.issue.number }}
       comment_author: ${{ github.event.comment.user.login }}
