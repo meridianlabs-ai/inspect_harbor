@@ -246,6 +246,16 @@
   version: latest
   categories:
   - Assistants
+- title: bespokelabs/autoresearch-exam
+  path: registry/bespokelabs_autoresearch_exam.html
+  desc: AutoResearchExam measures an agent's ability to improve and generalize on open ended machine learning research tasks. The dataset contains 29 tasks across machine learning research.
+  desc_trunc: AutoResearchExam measures an agent's ability to improve and generalize on open ended machine learni…
+  task_function: bespokelabs_autoresearch_exam
+  samples: 29
+  version: latest
+  categories:
+  - Coding
+  - Science
 - title: bigcode/bigcodebench-hard-complete
   path: registry/bigcode_bigcodebench_hard_complete.html
   desc: 'BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse function calls and complex instructions, in completion format.'
@@ -339,6 +349,16 @@
   desc_trunc: 100 executable semiconductor exception workflows with deterministic SemiOpsScore grading.
   task_function: blobfishai_semikongbench_100
   samples: 100
+  version: latest
+  categories:
+  - Assistants
+  - Professional
+- title: blobfishai/webbench
+  path: registry/blobfishai_webbench.html
+  desc: 'WebBench: browser-only correlated SaaS work over deterministic populated Blobfish worlds — 137 tasks graded executably against the applications backends (WebScore, no LLM judge).'
+  desc_trunc: 'WebBench: browser-only correlated SaaS work over deterministic populated Blobfish worlds — 137 task…'
+  task_function: blobfishai_webbench
+  samples: 137
   version: latest
   categories:
   - Assistants
@@ -545,24 +565,14 @@
   - Multimodal
 - title: gnucleus-ai/cad-bench
   path: registry/gnucleus_ai_cad_bench.html
-  desc: gNucleus AI CAD-generation benchmark -- 100 parametric FreeCAD tasks (Harbor schema 1.2; requires harbor >= 0.13.2).
-  desc_trunc: gNucleus AI CAD-generation benchmark -- 100 parametric FreeCAD tasks (Harbor schema 1.2; requires h…
+  desc: 'gNucleus AI CAD-generation benchmark v3 -- 100 parametric FreeCAD tasks: 30 text-to-CAD create, 30 create-and-edit, 40 image-to-CAD (Harbor schema 1.3; requires harbor >= 0.20.0).'
+  desc_trunc: 'gNucleus AI CAD-generation benchmark v3 -- 100 parametric FreeCAD tasks: 30 text-to-CAD create, 30…'
   task_function: gnucleus_ai_cad_bench
   samples: 100
   version: latest
   categories:
   - Coding
   - Professional
-- title: google-deepmind/terminal-bench-science
-  path: registry/google_deepmind_terminal_bench_science.html
-  desc: 'Terminal-Bench Science: 52 expert-level scientific research tasks, flattened from harbor-framework/terminal-bench-science commit 8d2935da4468687477d714e1dd97d5c07688c9b4.'
-  desc_trunc: 'Terminal-Bench Science: 52 expert-level scientific research tasks, flattened from harbor-framework/…'
-  task_function: google_deepmind_terminal_bench_science
-  samples: 52
-  version: latest
-  categories:
-  - Science
-  - Coding
 - title: gorilla/bfcl
   path: registry/gorilla_bfcl.html
   desc: 'Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Python, Java, JavaScript, and REST APIs.'
@@ -825,6 +835,16 @@
   version: latest
   categories:
   - Coding
+- title: long-horizon-terminal-bench/lhtb
+  path: registry/long_horizon_terminal_bench_lhtb.html
+  desc: 'Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in a containerized terminal over hundreds of steps. Hidden rebuild-from-artifact verifiers; self-reported progress does not count.'
+  desc_trunc: 'Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in…'
+  task_function: long_horizon_terminal_bench_lhtb
+  samples: 46
+  version: latest
+  categories:
+  - Coding
+  - Assistants
 - title: luosuu/SWE-kokkos-bench
   path: registry/luosuu_swe_kokkos_bench.html
   desc: 100 verified SWE-bench-style coding tasks from the Kokkos ecosystem.
@@ -1148,6 +1168,15 @@
   - Assistants
   - Professional
   - Behavior
+- title: skill2env/skill2env
+  path: registry/skill2env.html
+  desc: 'Skill2Env (NVIDIA): 7,496 RL-ready terminal tasks auto-converted from open-source Agent Skills, each asking the agent to build, extend or repair a software project in a containerized workspace, graded by hidden tests and rubrics.'
+  desc_trunc: 'Skill2Env (NVIDIA): 7,496 RL-ready terminal tasks auto-converted from open-source Agent Skills, eac…'
+  task_function: skill2env
+  samples: 7496
+  version: latest
+  categories:
+  - Coding
 - title: sldbench/sldbench
   path: registry/sldbench.html
   desc: 'SLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments where agents must autonomously fit and extrapolate scaling laws.'
@@ -1388,6 +1417,15 @@
   version: latest
   categories:
   - Coding
+- title: withmartian/clojure-swerebench-v2-validated-51
+  path: registry/withmartian_clojure_swerebench_v2_validated_51.html
+  desc: 51 Clojure SWE-rebench V2 tasks validated for coding-agent evaluation.
+  desc_trunc: 51 Clojure SWE-rebench V2 tasks validated for coding-agent evaluation.
+  task_function: withmartian_clojure_swerebench_v2_validated_51
+  samples: 51
+  version: latest
+  categories:
+  - Coding
 - title: xlang/ds-1000
   path: registry/xlang_ds_1000.html
   desc: 'DS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow, PyTorch, SciPy, Scikit-learn, and Matplotlib, with execution-based grading.'
@@ -1417,3 +1455,12 @@
   categories:
   - Coding
   - Reasoning
+- title: zenml/zenml-bench
+  path: registry/zenml_bench.html
+  desc: 'ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real ZenML 0.96.4; graded on the state ZenML recorded.'
+  desc_trunc: 'ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real…'
+  task_function: zenml_bench
+  samples: 18
+  version: latest
+  categories:
+  - Coding
