@@ -251,7 +251,11 @@ benchflow/skillsbench:
   title: SkillsBench
 
 bespokelabs/autoresearch-exam:
-  categories: []
+  categories:
+  - Coding
+  - Science
+  title: AutoResearchExam
+  repo: https://github.com/bespokelabsai/AutoResearchExam
 
 bigcode/bigcodebench-hard-complete:
   categories:
@@ -326,10 +330,11 @@ blobfishai/semikongbench-100:
   repo: https://github.com/blobfishai/semiconductor-agent-simulation
 
 blobfishai/webbench:
-  categories: []
-
-brando90/vb-generation-one-20260913:
-  categories: []
+  categories:
+  - Assistants
+  - Professional
+  title: Blobfish WebBench
+  repo: https://blobfish.ai/benchmarks/webbench
 
 cais/swebenchpro:
   categories:
@@ -725,7 +730,12 @@ livecodebench/livecodebench:
   title: LiveCodeBench
 
 long-horizon-terminal-bench/lhtb:
-  categories: []
+  categories:
+  - Coding
+  - Assistants
+  title: Long-Horizon Terminal-Bench
+  repo: https://github.com/zli12321/LHTB
+  arxiv: https://arxiv.org/abs/2607.08964
 
 luosuu/SWE-kokkos-bench:
   categories:
@@ -1002,7 +1012,11 @@ sierra-research/tau3-bench:
   title: τ³-bench
 
 skill2env/skill2env:
-  categories: []
+  categories:
+  - Coding
+  function_name: skill2env
+  title: Skill2Env
+  desc: 'Skill2Env (NVIDIA): 7,496 RL-ready terminal tasks auto-converted from open-source Agent Skills, each asking the agent to build, extend or repair a software project in a containerized workspace, graded by hidden tests and rubrics.'
 
 sldbench/sldbench:
   categories:
@@ -1213,7 +1227,11 @@ webgen-bench/webgen-bench:
   title: WebGen-Bench
 
 withmartian/clojure-swerebench-v2-validated-51:
-  categories: []
+  categories:
+  - Coding
+  title: SWE-rebench V2 Clojure (Martian, 51 validated)
+  repo: https://github.com/SWE-rebench/SWE-rebench-V2
+  arxiv: https://arxiv.org/abs/2602.23866
 
 xlang-ai/osworld-verified:
   categories:
@@ -1240,4 +1258,8 @@ yanagiorigami/frontier-cs:
   title: Frontier-CS
 
 zenml/zenml-bench:
-  categories: []
+  categories:
+  - Coding
+  function_name: zenml_bench
+  title: ZenML Bench
+  repo: https://github.com/zenml-io/zenml-bench

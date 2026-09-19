@@ -212,3 +212,10 @@
 # whose single task is the standard harbor/hello-world task verbatim (which
 # we already exclude). Not a benchmark.
 - nlile/*
+# Individual's (User, not org: Brando Miranda, VeriBench first author)
+# date-stamped infrastructure smoke test, not a benchmark: the desc is
+# literally "One private VeriBench generation infrastructure trial;
+# unscored", and the single sample asks the agent to translate a toy
+# add-two-naturals Python function into Lean 4. Narrow glob rather than
+# brando90/* so a real VeriBench release under this account still surfaces.
+- brando90/vb-generation-*

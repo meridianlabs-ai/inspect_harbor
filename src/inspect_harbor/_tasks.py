@@ -1160,37 +1160,6 @@ def blobfishai_webbench(
 
 
 @task
-def brando90_vb_generation_one_20260913(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""One private VeriBench generation infrastructure trial; unscored
-
-    Slug: brando90/vb-generation-one-20260913
-    Latest digest: sha256:7e0533f4181e60e96dabd918fe8920870422530a1148f6c4c9f1678a829f8a41
-    """
-    return _harbor_base(
-        package_name="brando90/vb-generation-one-20260913",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def cais_swebenchpro(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3801,7 +3770,7 @@ def sierra_research_tau3_bench(
 
 
 @task
-def skill2env_skill2env(
+def skill2env(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -3812,7 +3781,7 @@ def skill2env_skill2env(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Terminal Agent dataset converted from OSS Agent Skills and given back to the public.
+    r"""Skill2Env (NVIDIA): 7,496 RL-ready terminal tasks auto-converted from open-source Agent Skills, each asking the agent to build, extend or repair a software project in a containerized workspace, graded by hidden tests and rubrics.
 
     Slug: skill2env/skill2env
     Latest digest: sha256:bef4f739bde8d865af04c04a2cb1c84ecad83b52dd558f4d582dd46c7933666c
@@ -4731,7 +4700,7 @@ def yanagiorigami_frontier_cs(
 
 
 @task
-def zenml_zenml_bench(
+def zenml_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
