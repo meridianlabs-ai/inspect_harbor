@@ -788,6 +788,37 @@ def benchflow_skillsbench(
 
 
 @task
+def bespokelabs_autoresearch_exam(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""AutoResearchExam measures an agent's ability to improve and generalize on open ended machine learning research tasks. The dataset contains 29 tasks across machine learning research.
+
+    Slug: bespokelabs/autoresearch-exam
+    Latest digest: sha256:3f2a6bbc4135e17b5f0df4416ef695fd5b999bd580cb5519f3000453460c31bd
+    """
+    return _harbor_base(
+        package_name="bespokelabs/autoresearch-exam",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def bigcode_bigcodebench_hard_complete(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1085,6 +1116,68 @@ def blobfishai_semikongbench_100(
     """
     return _harbor_base(
         package_name="blobfishai/semikongbench-100",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def blobfishai_webbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""WebBench: browser-only correlated SaaS work over deterministic populated Blobfish worlds — 137 tasks graded executably against the applications backends (WebScore, no LLM judge)
+
+    Slug: blobfishai/webbench
+    Latest digest: sha256:5d4fcf7ff35af7b032eba3d11a3f9d7f794a72dc0aab0e9fc78e47008cbe76a5
+    """
+    return _harbor_base(
+        package_name="blobfishai/webbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def brando90_vb_generation_one_20260913(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""One private VeriBench generation infrastructure trial; unscored
+
+    Slug: brando90/vb-generation-one-20260913
+    Latest digest: sha256:7e0533f4181e60e96dabd918fe8920870422530a1148f6c4c9f1678a829f8a41
+    """
+    return _harbor_base(
+        package_name="brando90/vb-generation-one-20260913",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -1760,44 +1853,13 @@ def gnucleus_ai_cad_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""gNucleus AI CAD-generation benchmark -- 100 parametric FreeCAD tasks (Harbor schema 1.2; requires harbor >= 0.13.2)
+    r"""gNucleus AI CAD-generation benchmark v3 -- 100 parametric FreeCAD tasks: 30 text-to-CAD create, 30 create-and-edit, 40 image-to-CAD (Harbor schema 1.3; requires harbor >= 0.20.0)
 
     Slug: gnucleus-ai/cad-bench
-    Latest digest: sha256:ab2e040d0adcfd2779b4f1ad554890cd98b5aa19845e00162933ba165144fe56
+    Latest digest: sha256:8a786725d3648a76282fc5868df06da3d5e00d603f283573a53430803465d78a
     """
     return _harbor_base(
         package_name="gnucleus-ai/cad-bench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def google_deepmind_terminal_bench_science(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Terminal-Bench Science: 52 expert-level scientific research tasks, flattened from harbor-framework/terminal-bench-science commit 8d2935da4468687477d714e1dd97d5c07688c9b4.
-
-    Slug: google-deepmind/terminal-bench-science
-    Latest digest: sha256:4fa7a9af5ecaa4c0c942d4284d32a37d747629c0b288fba796a2c4436b1e965f
-    """
-    return _harbor_base(
-        package_name="google-deepmind/terminal-bench-science",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -1980,7 +2042,7 @@ def hack_verifiable_environments_hv_terminal_bench_2_1(
     r"""Hack-verifiable version of terminal-bench-2-1. Each task includes hidden solution and test files; inotifywait detects whether agents access them instead of solving legitimately.
 
     Slug: hack-verifiable-environments/hv-terminal-bench-2-1
-    Latest digest: sha256:f77c76cd022b0aec434bc755ac1cfd8da650237c72047f189747fa10e33f6907
+    Latest digest: sha256:fa8ff725f9f36399b02d9871ce319249e5b1df981363a3c0f54afed3e0348794
     """
     return _harbor_base(
         package_name="hack-verifiable-environments/hv-terminal-bench-2-1",
@@ -2648,6 +2710,37 @@ def livecodebench(
 
 
 @task
+def long_horizon_terminal_bench_lhtb(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in a containerized terminal over hundreds of steps. Hidden rebuild-from-artifact verifiers; self-reported progress does not count.
+
+    Slug: long-horizon-terminal-bench/lhtb
+    Latest digest: sha256:5ad11c23718b34c647c756c6a565fbff234982bbb95feda4fb45e8479d8e845d
+    """
+    return _harbor_base(
+        package_name="long-horizon-terminal-bench/lhtb",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def luosuu_swe_kokkos_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2724,7 +2817,7 @@ def mercor_apex_agents_1_1(
     r"""Long-horizon professional-services benchmark in investment banking, law, and management consulting, written by practicing analysts, consultants, and corporate lawyers. For evaluation only.
 
     Slug: mercor/apex-agents-1-1
-    Latest digest: sha256:54b122068fbdd2119928e7c70a017733676571b3fb5a6270846b749a960c039e
+    Latest digest: sha256:fb4139368bf0fb2bd233745273d11d02e70229d18b611d0d854d651d539e79fa
     """
     return _harbor_base(
         package_name="mercor/apex-agents-1-1",
@@ -3708,6 +3801,37 @@ def sierra_research_tau3_bench(
 
 
 @task
+def skill2env_skill2env(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Terminal Agent dataset converted from OSS Agent Skills and given back to the public.
+
+    Slug: skill2env/skill2env
+    Latest digest: sha256:bef4f739bde8d865af04c04a2cb1c84ecad83b52dd558f4d582dd46c7933666c
+    """
+    return _harbor_base(
+        package_name="skill2env/skill2env",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def sldbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -4483,6 +4607,37 @@ def webgen_bench(
 
 
 @task
+def withmartian_clojure_swerebench_v2_validated_51(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""51 Clojure SWE-rebench V2 tasks validated for coding-agent evaluation.
+
+    Slug: withmartian/clojure-swerebench-v2-validated-51
+    Latest digest: sha256:19afdbd2ebc7e7ab49af2a44339c163a6c12cc84fc03b27490ccc4a6bcb71eb8
+    """
+    return _harbor_base(
+        package_name="withmartian/clojure-swerebench-v2-validated-51",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def xlang_ds_1000(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -4563,6 +4718,37 @@ def yanagiorigami_frontier_cs(
     """
     return _harbor_base(
         package_name="yanagiorigami/frontier-cs",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def zenml_zenml_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real ZenML 0.96.4; graded on the state ZenML recorded. https://github.com/zenml-io/zenml-bench
+
+    Slug: zenml/zenml-bench
+    Latest digest: sha256:5b0d64fed74870782a4c03763e8a4821dae3213c67bd470ae42d6fa854e73aa7
+    """
+    return _harbor_base(
+        package_name="zenml/zenml-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
