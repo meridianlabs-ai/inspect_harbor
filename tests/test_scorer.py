@@ -517,15 +517,16 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
             assert result.metadata is None  # reward.txt returns None for reward_dict
 
             # Verify cleanup was called AFTER scoring. Sequence:
-            # mkdir /logs/agent, mkdir /logs/verifier, bash test.sh,
-            # rm /tests, rm /logs/verifier, then unset for each default env
-            # var (currently just TEST_DIR).
+            # mkdir /logs/agent, mkdir /logs/verifier, mkdir /logs/artifacts,
+            # bash test.sh, rm /tests, rm /logs/verifier, then unset for each
+            # default env var (currently just TEST_DIR).
             assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
             assert exec_calls[1] == ["mkdir", "-p", "/logs/verifier"]
-            assert exec_calls[2] == ["bash", "-l", "/tests/test.sh"]
-            assert exec_calls[3] == ["rm", "-rf", "/tests"]
-            assert exec_calls[4] == ["rm", "-rf", "/logs/verifier"]
-            assert ["unset", "TEST_DIR"] in exec_calls[5:]
+            assert exec_calls[2] == ["mkdir", "-p", "/logs/artifacts"]
+            assert exec_calls[3] == ["bash", "-l", "/tests/test.sh"]
+            assert exec_calls[4] == ["rm", "-rf", "/tests"]
+            assert exec_calls[5] == ["rm", "-rf", "/logs/verifier"]
+            assert ["unset", "TEST_DIR"] in exec_calls[6:]
 
 
 @pytest.mark.asyncio
@@ -1001,18 +1002,296 @@ async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
             assert result.value == 1.0
 
             # Verify cleanup was called AFTER scoring. Expected sequence:
-            # mkdir /logs/agent, mkdir /logs/verifier, bash test.sh,
-            # rm /tests, rm /logs/verifier, then unset for each env var
-            # (TEST_DIR default + the two user-supplied).
+            # mkdir /logs/agent, mkdir /logs/verifier, mkdir /logs/artifacts,
+            # bash test.sh, rm /tests, rm /logs/verifier, then unset for each
+            # env var (TEST_DIR default + the two user-supplied).
             assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
             assert exec_calls[1] == ["mkdir", "-p", "/logs/verifier"]
-            assert exec_calls[2] == ["bash", "-l", "/tests/test.sh"]
-            assert exec_calls[3] == ["rm", "-rf", "/tests"]
-            assert exec_calls[4] == ["rm", "-rf", "/logs/verifier"]
+            assert exec_calls[2] == ["mkdir", "-p", "/logs/artifacts"]
+            assert exec_calls[3] == ["bash", "-l", "/tests/test.sh"]
+            assert exec_calls[4] == ["rm", "-rf", "/tests"]
+            assert exec_calls[5] == ["rm", "-rf", "/logs/verifier"]
             # Check cleanup was called for all env vars (user + defaults).
-            env_cleanup_calls = exec_calls[5:]
+            env_cleanup_calls = exec_calls[6:]
             assert ["unset", "OPENAI_API_KEY"] in env_cleanup_calls
             assert ["unset", "MODEL_NAME"] in env_cleanup_calls
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_runs_verifier_collect(tmp_path: Path) -> None:
+    """Separate-mode collect hooks run after log dirs, then repo resets to base."""
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    base_commit = "abc123"
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+        "agent_user": "agent",
+        "harbor_config": {
+            "metadata": {"base_commit_hash": base_commit},
+            "verifier": {
+                "environment_mode": "separate",
+                "collect": [
+                    {
+                        "command": "git diff HEAD > /logs/artifacts/model.patch",
+                        "timeout_sec": 120,
+                        "user": None,
+                    }
+                ],
+            },
+        },
+    }
+    mock_target = Mock(spec=Target)
+
+    exec_calls: list[dict[str, Any]] = []
+
+    async def track_exec(cmd: list[str], **kwargs: Any) -> Mock:
+        exec_calls.append({"cmd": cmd, "kwargs": kwargs})
+        result = Mock()
+        result.returncode = 0
+        result.stdout = ""
+        result.stderr = ""
+        return result
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with (
+        patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox",
+            return_value=mock_sandbox,
+        ),
+    ):
+        await harbor_scorer()(mock_state, mock_target)
+
+    cmds = [call["cmd"] for call in exec_calls]
+    assert cmds[0] == ["mkdir", "-p", "/logs/agent"]
+    assert cmds[1] == ["mkdir", "-p", "/logs/verifier"]
+    assert cmds[2] == ["mkdir", "-p", "/logs/artifacts"]
+    assert exec_calls[3]["cmd"] == [
+        "bash",
+        "-c",
+        "git diff HEAD > /logs/artifacts/model.patch",
+    ]
+    # hook.user is None -> no agent_user fallback, timeout from the hook config
+    assert exec_calls[3]["kwargs"]["user"] is None
+    assert exec_calls[3]["kwargs"]["timeout"] == 120
+    assert exec_calls[4]["cmd"] == [
+        "bash",
+        "-c",
+        f"cd /app && git config --global --add safe.directory '*' && "
+        f"git checkout -f {base_commit} && git clean -fd",
+    ]
+    assert cmds[5] == ["bash", "-l", "/tests/test.sh"]
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_collect_coerces_int_user(tmp_path: Path) -> None:
+    """An integer ``user`` UID from task.toml is coerced to a str for exec."""
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+        "harbor_config": {
+            "verifier": {
+                "collect": [{"command": "echo hi", "user": 1000}],
+            },
+        },
+    }
+    mock_target = Mock(spec=Target)
+
+    exec_calls: list[dict[str, Any]] = []
+
+    async def track_exec(cmd: list[str], **kwargs: Any) -> Mock:
+        exec_calls.append({"cmd": cmd, "kwargs": kwargs})
+        result = Mock()
+        result.returncode = 0
+        result.stdout = ""
+        result.stderr = ""
+        return result
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with (
+        patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox",
+            return_value=mock_sandbox,
+        ),
+    ):
+        await harbor_scorer()(mock_state, mock_target)
+
+    hook_call = next(call for call in exec_calls if call["cmd"][:2] == ["bash", "-c"])
+    assert hook_call["kwargs"]["user"] == "1000"
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_shared_mode_no_reset(tmp_path: Path) -> None:
+    """A shared-mode task with collect + base_commit does not reset the repo."""
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+        "harbor_config": {
+            "metadata": {"base_commit_hash": "abc123"},
+            # No environment_mode / environment -> resolves to "shared".
+            "verifier": {
+                "collect": [{"command": "echo collect"}],
+            },
+        },
+    }
+    mock_target = Mock(spec=Target)
+
+    exec_calls: list[list[str]] = []
+
+    async def track_exec(cmd: list[str], **_kwargs: object) -> Mock:
+        exec_calls.append(cmd)
+        result = Mock()
+        result.returncode = 0
+        result.stdout = ""
+        result.stderr = ""
+        return result
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with (
+        patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox",
+            return_value=mock_sandbox,
+        ),
+    ):
+        await harbor_scorer()(mock_state, mock_target)
+
+    # Collect runs, but no git reset is issued.
+    assert ["bash", "-c", "echo collect"] in exec_calls
+    assert not any("git checkout" in " ".join(cmd) for cmd in exec_calls)
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_skips_non_main_service_collect(tmp_path: Path) -> None:
+    """Collect hooks targeting a sidecar service are skipped (only main is reachable)."""
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+        "harbor_config": {
+            "verifier": {
+                "collect": [
+                    {"command": "pg_dump db", "service": "db"},
+                    {"command": "echo main", "service": "main"},
+                ],
+            },
+        },
+    }
+    mock_target = Mock(spec=Target)
+
+    exec_calls: list[list[str]] = []
+
+    async def track_exec(cmd: list[str], **_kwargs: object) -> Mock:
+        exec_calls.append(cmd)
+        result = Mock()
+        result.returncode = 0
+        result.stdout = ""
+        result.stderr = ""
+        return result
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with (
+        patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox",
+            return_value=mock_sandbox,
+        ),
+    ):
+        await harbor_scorer()(mock_state, mock_target)
+
+    assert ["bash", "-c", "echo main"] in exec_calls
+    assert ["bash", "-c", "pg_dump db"] not in exec_calls
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_skips_empty_collect(tmp_path: Path) -> None:
+    """Empty or missing collect steps don't produce extra exec calls."""
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+        "harbor_config": {"verifier": {"collect": []}},
+    }
+    mock_target = Mock(spec=Target)
+
+    exec_calls: list[list[str]] = []
+
+    async def track_exec(cmd: list[str], **_kwargs: object) -> Mock:
+        exec_calls.append(cmd)
+        result = Mock()
+        result.returncode = 0
+        result.stdout = ""
+        result.stderr = ""
+        return result
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+    mock_sandbox.exec = AsyncMock(side_effect=track_exec)
+    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+
+    with (
+        patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox",
+            return_value=mock_sandbox,
+        ),
+    ):
+        await harbor_scorer()(mock_state, mock_target)
+
+    # No collect exec — straight from mkdir to test script
+    assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
+    assert exec_calls[1] == ["mkdir", "-p", "/logs/verifier"]
+    assert exec_calls[2] == ["mkdir", "-p", "/logs/artifacts"]
+    assert exec_calls[3] == ["bash", "-l", "/tests/test.sh"]
 
 
 @pytest.mark.asyncio
