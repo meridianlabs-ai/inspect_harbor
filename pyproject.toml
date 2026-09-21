@@ -8,10 +8,15 @@ dynamic = ["version"]
 description = "Inspect AI interface to Harbor tasks"
 authors = [{ name = "Meridian Labs" }]
 readme = "README.md"
-# Note: harbor package requires Python >=3.12, so we cannot lower this requirement
 requires-python = ">=3.12"
 license = { text = "MIT License" }
-dependencies = ["inspect-ai>=0.3.264", "harbor>=0.21,<0.23", "pyyaml"]
+dependencies = [
+    "inspect-ai>=0.3.264",
+    "httpx",
+    "pydantic>=2",
+    "pyyaml",
+    "tenacity",
+]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
@@ -69,10 +74,6 @@ add-bounds = "lower"
 default-groups = ["dev", "doc"]
 # Exclude packages published within the last 7 days to protect against supply chain attacks
 exclude-newer = "7 days"
-# LiteLLM (via harbor) still declares openai<3 while Inspect's OpenAI provider
-# needs openai>=3.1; inspect_harbor never imports LiteLLM, so lift the ceiling.
-# Tracked in https://github.com/meridianlabs-ai/inspect_harbor/issues/166.
-override-dependencies = ["openai>=3.1.0"]
 
 [tool.uv.exclude-newer-package]
 inspect-ai = false
