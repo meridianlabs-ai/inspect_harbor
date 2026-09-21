@@ -69,6 +69,10 @@ add-bounds = "lower"
 default-groups = ["dev", "doc"]
 # Exclude packages published within the last 7 days to protect against supply chain attacks
 exclude-newer = "7 days"
+# LiteLLM (via harbor) still declares openai<3 while Inspect's OpenAI provider
+# needs openai>=3.1; inspect_harbor never imports LiteLLM, so lift the ceiling.
+# Tracked in https://github.com/meridianlabs-ai/inspect_harbor/issues/166.
+override-dependencies = ["openai>=3.1.0"]
 
 [tool.uv.exclude-newer-package]
 inspect-ai = false
