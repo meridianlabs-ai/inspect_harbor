@@ -943,6 +943,37 @@ def binary_audit(
 
 
 @task
+def blobfishai_arc_crm_6(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Six independently authored synthetic CRM workflows on one mocked CLI/web/REST/MCP world per episode. Partial Arc-inspired coverage, not source-row reproduction.
+
+    Slug: blobfishai/arc-crm-6
+    Latest digest: sha256:fc9ca3b80d6a1a3c3e5bd1b975c54f1f3ada21b49668cb5f25e2912d67b69dfa
+    """
+    return _harbor_base(
+        package_name="blobfishai/arc-crm-6",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def blobfishai_counselbench_100(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,

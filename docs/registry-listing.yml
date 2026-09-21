@@ -292,6 +292,16 @@
   version: latest
   categories:
   - Cybersecurity
+- title: blobfishai/arc-crm-6
+  path: registry/blobfishai_arc_crm_6.html
+  desc: Six independently authored synthetic CRM workflows on one mocked CLI/web/REST/MCP world per episode. Partial Arc-inspired coverage, not source-row reproduction.
+  desc_trunc: Six independently authored synthetic CRM workflows on one mocked CLI/web/REST/MCP world per episode…
+  task_function: blobfishai_arc_crm_6
+  samples: 6
+  version: latest
+  categories:
+  - Assistants
+  - Professional
 - title: blobfishai/counselbench-100
   path: registry/blobfishai_counselbench_100.html
   desc: 100 high-level legal-agent tasks with 97-asset multi-provider evidence rooms, distinct deep trajectories, and native causal state verification.

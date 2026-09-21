@@ -149,15 +149,6 @@
 # Canonical releases live under terminal-bench/. Revisit if a real personal
 # benchmark appears under this account.
 - ryanmarten/*
-# Six synthetic CRM workflow tasks from the Blobfish AI org (source repo
-# blobfishai/arc-crm-agent-simulation, clean-room worlds inspired by the Arc
-# CRM dataset). Its original blocker, inspect_ai's ComposeConfig rejecting
-# pids_limit, is gone (inspect_ai 0.3.264 accepts it and is now our minimum),
-# so this is now a judgment call: a 6-task set whose README carries "not a
-# leaderboard" caveats. Held pending a human decision; to list it, drop this
-# entry and fill the stub with categories [Assistants, Professional], title
-# Blobfish Arc CRM-6, repo above.
-- blobfishai/arc-crm-6
 # google-deepmind/terminal-bench-science (the 52-task pinned GDM snapshot,
 # listed until 2026-09-21) vanished from the hub listing and the generator
 # dropped its override. Needs no entry; if it returns, fill the stub with

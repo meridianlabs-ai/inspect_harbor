@@ -286,6 +286,13 @@ binary-audit/binary-audit:
   function_name: binary_audit
   title: BinaryAudit
 
+blobfishai/arc-crm-6:
+  categories:
+  - Assistants
+  - Professional
+  title: Blobfish Arc CRM-6
+  repo: https://github.com/blobfishai/arc-crm-agent-simulation
+
 blobfishai/counselbench-100:
   categories:
   - Law
