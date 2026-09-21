@@ -695,99 +695,6 @@ def arcprize_arc_agi_2(
 
 
 @task
-def arcus_labs_tau3_banking(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Sierra v1.0.1 banking; full97; unchanged split-v2 membership.
-
-    Slug: arcus-labs/tau3-banking
-    Latest digest: sha256:45cd4e3ad529275deb7152acf15be213b2b828faa8493bada29a9dcd051d867b
-    """
-    return _harbor_base(
-        package_name="arcus-labs/tau3-banking",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def arcus_labs_tau3_banking_dev(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Sierra v1.0.1 banking; dev30; unchanged split-v2 membership.
-
-    Slug: arcus-labs/tau3-banking-dev
-    Latest digest: sha256:41bb464d9cf559ab0c6bdcab91a3213de8c37642d7a88213e89d206af5b9740c
-    """
-    return _harbor_base(
-        package_name="arcus-labs/tau3-banking-dev",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def arcus_labs_tau3_banking_test(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Sierra v1.0.1 banking; heldout30; unchanged split-v2 membership.
-
-    Slug: arcus-labs/tau3-banking-test
-    Latest digest: sha256:de77ceac7ac037097fa0d4ad6c9714349d15ed5f90092bef4845db93ccb5ba42
-    """
-    return _harbor_base(
-        package_name="arcus-labs/tau3-banking-test",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def atm_bench_hard_sgm(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1240,37 +1147,6 @@ def blobfishai_webbench(
     """
     return _harbor_base(
         package_name="blobfishai/webbench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def brando90_vb_generation_one_20260913(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""One private VeriBench generation infrastructure trial; unscored
-
-    Slug: brando90/vb-generation-one-20260913
-    Latest digest: sha256:7e0533f4181e60e96dabd918fe8920870422530a1148f6c4c9f1678a829f8a41
-    """
-    return _harbor_base(
-        package_name="brando90/vb-generation-one-20260913",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -3299,37 +3175,6 @@ def orca_bench(
 
 
 @task
-def orca_bench_orca_bench_private(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""An agent benchmark for root cause analysis — held-out private (answers removed) split of 324 tasks across 31 incidents (108 easy, 117 medium, 99 hard). For the results on all 1,079 tasks, please see https://arxiv.org/abs/2607.28545.
-
-    Slug: orca-bench/orca-bench-private
-    Latest digest: sha256:ab44e871420e7c32540c36c8c2af5f8cb75bf48e371e3f19791540339dfdac81
-    """
-    return _harbor_base(
-        package_name="orca-bench/orca-bench-private",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def orinlabs_horizon_public(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3956,7 +3801,7 @@ def sierra_research_tau3_bench(
 
 
 @task
-def skill2env_skill2env(
+def skill2env(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -3967,7 +3812,7 @@ def skill2env_skill2env(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Terminal Agent dataset converted from OSS Agent Skills and given back to the public.
+    r"""Skill2Env (NVIDIA): 7,496 terminal tasks auto-converted from open-source Agent Skills — the agent finishes, repairs, or extends a software project in /workspace to satisfy a written contract, graded by hidden tests plus rubrics.
 
     Slug: skill2env/skill2env
     Latest digest: sha256:bef4f739bde8d865af04c04a2cb1c84ecad83b52dd558f4d582dd46c7933666c
@@ -4886,7 +4731,7 @@ def yanagiorigami_frontier_cs(
 
 
 @task
-def zenml_zenml_bench(
+def zenml_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,

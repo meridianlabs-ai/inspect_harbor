@@ -218,27 +218,6 @@
   categories:
   - Reasoning
   - Multimodal
-- title: arcus-labs/tau3-banking
-  path: registry/arcus_labs_tau3_banking.html
-  desc: Sierra v1.0.1 banking; full97; unchanged split-v2 membership.
-  desc_trunc: Sierra v1.0.1 banking; full97; unchanged split-v2 membership.
-  task_function: arcus_labs_tau3_banking
-  samples: 97
-  version: latest
-- title: arcus-labs/tau3-banking-dev
-  path: registry/arcus_labs_tau3_banking_dev.html
-  desc: Sierra v1.0.1 banking; dev30; unchanged split-v2 membership.
-  desc_trunc: Sierra v1.0.1 banking; dev30; unchanged split-v2 membership.
-  task_function: arcus_labs_tau3_banking_dev
-  samples: 30
-  version: latest
-- title: arcus-labs/tau3-banking-test
-  path: registry/arcus_labs_tau3_banking_test.html
-  desc: Sierra v1.0.1 banking; heldout30; unchanged split-v2 membership.
-  desc_trunc: Sierra v1.0.1 banking; heldout30; unchanged split-v2 membership.
-  task_function: arcus_labs_tau3_banking_test
-  samples: 30
-  version: latest
 - title: atm-bench/atm-bench-hard-sgm
   path: registry/atm_bench_hard_sgm.html
   desc: 'ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided memory (SGM) files distilled from ~4 years of a user''s images, videos, and emails.'
@@ -274,6 +253,9 @@
   task_function: bespokelabs_autoresearch_exam
   samples: 29
   version: latest
+  categories:
+  - Coding
+  - Science
 - title: bigcode/bigcodebench-hard-complete
   path: registry/bigcode_bigcodebench_hard_complete.html
   desc: 'BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse function calls and complex instructions, in completion format.'
@@ -378,13 +360,9 @@
   task_function: blobfishai_webbench
   samples: 159
   version: latest
-- title: brando90/vb-generation-one-20260913
-  path: registry/brando90_vb_generation_one_20260913.html
-  desc: One private VeriBench generation infrastructure trial; unscored.
-  desc_trunc: One private VeriBench generation infrastructure trial; unscored.
-  task_function: brando90_vb_generation_one_20260913
-  samples: 1
-  version: latest
+  categories:
+  - Assistants
+  - Professional
 - title: cais/swebenchpro
   path: registry/cais_swebenchpro.html
   desc: SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks, Python/JS/TS/Go.
@@ -662,6 +640,9 @@
   task_function: handshake_ai_atlas_finance
   samples: 100
   version: latest
+  categories:
+  - Finance
+  - Professional
 - title: harbor-index/harbor-index
   path: registry/harbor_index.html
   desc: 'Harbor Index: 80 agentic evaluation tasks spanning SWE, security, science, math, and optimization (revision 1.4).'
@@ -871,6 +852,9 @@
   task_function: long_horizon_terminal_bench_lhtb
   samples: 46
   version: latest
+  categories:
+  - Coding
+  - Assistants
 - title: luosuu/SWE-kokkos-bench
   path: registry/luosuu_swe_kokkos_bench.html
   desc: 100 verified SWE-bench-style coding tasks from the Kokkos ecosystem.
@@ -1005,13 +989,6 @@
   categories:
   - Coding
   - Professional
-- title: orca-bench/orca-bench-private
-  path: registry/orca_bench_orca_bench_private.html
-  desc: An agent benchmark for root cause analysis — held-out private (answers removed) split of 324 tasks across 31 incidents (108 easy, 117 medium, 99 hard). For the results on all 1,079 tasks, please see.
-  desc_trunc: An agent benchmark for root cause analysis — held-out private (answers removed) split of 324 tasks…
-  task_function: orca_bench_orca_bench_private
-  samples: 324
-  version: latest
 - title: orinlabs/horizon-public
   path: registry/orinlabs_horizon_public.html
   desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
@@ -1202,12 +1179,14 @@
   - Professional
   - Behavior
 - title: skill2env/skill2env
-  path: registry/skill2env_skill2env.html
-  desc: Terminal Agent dataset converted from OSS Agent Skills and given back to the public.
-  desc_trunc: Terminal Agent dataset converted from OSS Agent Skills and given back to the public.
-  task_function: skill2env_skill2env
+  path: registry/skill2env.html
+  desc: 'Skill2Env (NVIDIA): 7,496 terminal tasks auto-converted from open-source Agent Skills — the agent finishes, repairs, or extends a software project in /workspace to satisfy a written contract, graded by hidden tests plus rubrics.'
+  desc_trunc: 'Skill2Env (NVIDIA): 7,496 terminal tasks auto-converted from open-source Agent Skills — the agent f…'
+  task_function: skill2env
   samples: 7496
   version: latest
+  categories:
+  - Coding
 - title: sldbench/sldbench
   path: registry/sldbench.html
   desc: 'SLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments where agents must autonomously fit and extrapolate scaling laws.'
@@ -1455,6 +1434,8 @@
   task_function: withmartian_clojure_swerebench_v2_validated_51
   samples: 51
   version: latest
+  categories:
+  - Coding
 - title: xlang/ds-1000
   path: registry/xlang_ds_1000.html
   desc: 'DS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow, PyTorch, SciPy, Scikit-learn, and Matplotlib, with execution-based grading.'
@@ -1485,9 +1466,11 @@
   - Coding
   - Reasoning
 - title: zenml/zenml-bench
-  path: registry/zenml_zenml_bench.html
+  path: registry/zenml_bench.html
   desc: 'ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real ZenML 0.96.4; graded on the state ZenML recorded.'
   desc_trunc: 'ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real…'
-  task_function: zenml_zenml_bench
+  task_function: zenml_bench
   samples: 18
   version: latest
+  categories:
+  - Coding

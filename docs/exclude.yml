@@ -212,3 +212,33 @@
 # whose single task is the standard harbor/hello-world task verbatim (which
 # we already exclude). Not a benchmark.
 - nlile/*
+# Individual's (User: Brando Miranda, VeriBench first author) private
+# infrastructure smoke test, not a benchmark: 1 date-stamped sample
+# (vb-generation-myadd-20260913) asking for a Lean 4 translation of a toy
+# add-two-naturals Python function; the package description itself says
+# "Private single VeriBench Python-to-Lean generation transport trial,
+# unscored." Narrow glob rather than brando90/* so a real VeriBench release
+# under this account would still surface.
+- brando90/vb-generation-*
+# Unscorable by design: the held-out private split of ORCA-bench (324 tasks,
+# "answers removed", hashed -hidden task ids). Its tests/test.sh says the
+# task "ships without tests/expected.json and tests/rubrics/, so there is
+# nothing to score against here; scoring happens out-of-band against a
+# maintainer-side registry" and writes an empty reward.json. It also fails
+# to load for the same stop_grace_period ComposeConfig reason as
+# orca-bench/orca-bench-verified, but unlike that split the compose fix alone
+# would not make it useful. Revisit only if ORCA-bench publishes the answers
+# (then mirror the sibling overrides: function_name orca_bench_private, no
+# collision; title ORCA-bench Private).
+- orca-bench/orca-bench-private
+# Verbatim re-slices of the banking_knowledge domain of sierra-research/
+# tau3-bench, which we list canonically: tau3-banking is the same 97 tasks
+# with identical ids and inputs (task.toml still credits Sierra's authors,
+# keywords tau3-bench/banking_knowledge, sierra_commit fc0055d), and
+# tau3-banking-dev / -test are disjoint 30-task dev/held-out subsets of it.
+# The descs read as internal split bookkeeping ("Sierra v1.0.1 banking;
+# full97; unchanged split-v2 membership") and the Arcus Labs GitHub org (3
+# spec repos, IRG/EIE protocols) has no tau3 or benchmark repo. Same
+# derivative-subset class as titouanlne/* and fritzprix/*. Narrow glob so a
+# real Arcus Labs benchmark would still surface.
+- arcus-labs/tau3-banking*

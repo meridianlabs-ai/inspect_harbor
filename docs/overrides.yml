@@ -226,15 +226,6 @@ arcprize/arc-agi-2:
   title: ARC-AGI-2
   featured: true
 
-arcus-labs/tau3-banking:
-  categories: []
-
-arcus-labs/tau3-banking-dev:
-  categories: []
-
-arcus-labs/tau3-banking-test:
-  categories: []
-
 atm-bench/atm-bench-hard-sgm:
   categories:
   - Assistants
@@ -260,7 +251,11 @@ benchflow/skillsbench:
   title: SkillsBench
 
 bespokelabs/autoresearch-exam:
-  categories: []
+  categories:
+  - Coding
+  - Science
+  title: AutoResearchExam
+  repo: https://github.com/bespokelabsai/AutoResearchExam
 
 bigcode/bigcodebench-hard-complete:
   categories:
@@ -335,10 +330,11 @@ blobfishai/semikongbench-100:
   repo: https://github.com/blobfishai/semiconductor-agent-simulation
 
 blobfishai/webbench:
-  categories: []
-
-brando90/vb-generation-one-20260913:
-  categories: []
+  categories:
+  - Assistants
+  - Professional
+  title: Blobfish WebBench
+  repo: https://blobfish.ai/benchmarks/webbench
 
 cais/swebenchpro:
   categories:
@@ -570,7 +566,11 @@ hack-verifiable-environments/hv-terminal-bench-2-1:
   title: Hack-Verifiable Terminal Bench 2.1
 
 handshake-ai/atlas-finance:
-  categories: []
+  categories:
+  - Finance
+  - Professional
+  title: ATLAS-Finance
+  repo: https://github.com/Handshake-AI-Research/ATLAS-Finance
 
 harbor-index/harbor-index:
   categories:
@@ -737,7 +737,12 @@ livecodebench/livecodebench:
   title: LiveCodeBench
 
 long-horizon-terminal-bench/lhtb:
-  categories: []
+  categories:
+  - Coding
+  - Assistants
+  arxiv: https://arxiv.org/abs/2607.08964
+  repo: https://github.com/zli12321/LHTB
+  title: Long-Horizon Terminal-Bench
 
 luosuu/SWE-kokkos-bench:
   categories:
@@ -851,9 +856,6 @@ orca-bench/orca-bench:
   arxiv: https://arxiv.org/abs/2607.28545
   desc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).'
   title: ORCA-bench
-
-orca-bench/orca-bench-private:
-  categories: []
 
 orinlabs/horizon-public:
   categories:
@@ -1017,7 +1019,11 @@ sierra-research/tau3-bench:
   title: τ³-bench
 
 skill2env/skill2env:
-  categories: []
+  categories:
+  - Coding
+  function_name: skill2env
+  desc: 'Skill2Env (NVIDIA): 7,496 terminal tasks auto-converted from open-source Agent Skills — the agent finishes, repairs, or extends a software project in /workspace to satisfy a written contract, graded by hidden tests plus rubrics.'
+  title: Skill2Env
 
 sldbench/sldbench:
   categories:
@@ -1228,7 +1234,11 @@ webgen-bench/webgen-bench:
   title: WebGen-Bench
 
 withmartian/clojure-swerebench-v2-validated-51:
-  categories: []
+  categories:
+  - Coding
+  arxiv: https://arxiv.org/abs/2602.23866
+  repo: https://github.com/SWE-rebench/SWE-rebench-V2
+  title: SWE-rebench V2 Clojure (Martian, 51 validated)
 
 xlang-ai/osworld-verified:
   categories:
@@ -1255,4 +1265,8 @@ yanagiorigami/frontier-cs:
   title: Frontier-CS
 
 zenml/zenml-bench:
-  categories: []
+  categories:
+  - Coding
+  function_name: zenml_bench
+  repo: https://github.com/zenml-io/zenml-bench
+  title: ZenML Bench
