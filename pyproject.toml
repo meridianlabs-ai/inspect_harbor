@@ -132,7 +132,6 @@ markers = [
 ]
 # Filter deprecation warnings from third-party dependencies
 filterwarnings = [
-    "ignore::pyparsing.PyparsingDeprecationWarning",        # pyiceberg's use of pyparsing (harbor → supabase → storage3 → pyiceberg)
     "ignore::pydantic.PydanticDeprecatedSince212",          # pyiceberg's use of pydantic (harbor → supabase → storage3 → pyiceberg)
     "ignore::DeprecationWarning:harbor.models.task.config", # harbor's deprecated field checks (storage vs storage_mb)
 ]
