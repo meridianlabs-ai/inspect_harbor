@@ -46,6 +46,14 @@ on:
   # comment, which resolves the workflow from the default branch.
   # pull_request:
   #   types: [opened, reopened, ready_for_review]
+  # Nightly registry-update PR only (branch update-harbor-tasks): the triage
+  # agent cannot post `@review` itself (the reusable dev workflow backticks
+  # trigger tokens in agent output and posts the hand-back only on @auto
+  # runs), so the review runs on the machine account's landing push to that
+  # branch. The job `if` scopes it to that branch and pusher; every other PR
+  # stays on demand.
+  pull_request:
+    types: [synchronize]
   issue_comment:
     types: [created]
 
@@ -100,6 +108,10 @@ jobs:
     # workflow. Phase 2's App identity passes the same way and is admitted
     # by the reusable's TRUSTED_LOGINS.
     if: >
+      (github.event_name == 'pull_request' &&
+       github.event.pull_request.head.ref == 'update-harbor-tasks' &&
+       github.event.pull_request.head.repo.full_name == github.repository &&
+       (github.actor == 'meridian-marvin[bot]' || github.actor == 'i-am-marvin')) ||
       (github.event.issue.pull_request != null &&
        (contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association) ||
         github.event.comment.user.type == 'Bot') &&

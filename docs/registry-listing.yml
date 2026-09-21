@@ -187,6 +187,15 @@
   version: latest
   categories:
   - Coding
+- title: alibaba-aaig/alibaba-ctf
+  path: registry/alibaba_aaig_alibaba_ctf.html
+  desc: A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) for evaluating agents on offensive security work.
+  desc_trunc: A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) f…
+  task_function: alibaba_aaig_alibaba_ctf
+  samples: 87
+  version: latest
+  categories:
+  - Cybersecurity
 - title: android-bench/android-bench
   path: registry/android_bench.html
   desc: A dataset of 100 Android software engineering tasks derived from real-world repositories.
@@ -246,6 +255,16 @@
   version: latest
   categories:
   - Assistants
+- title: bespokelabs/autoresearch-exam
+  path: registry/bespokelabs_autoresearch_exam.html
+  desc: AutoResearchExam measures an agent's ability to improve and generalize on open ended machine learning research tasks. The dataset contains 29 tasks across machine learning research.
+  desc_trunc: AutoResearchExam measures an agent's ability to improve and generalize on open ended machine learni…
+  task_function: bespokelabs_autoresearch_exam
+  samples: 29
+  version: latest
+  categories:
+  - Coding
+  - Science
 - title: bigcode/bigcodebench-hard-complete
   path: registry/bigcode_bigcodebench_hard_complete.html
   desc: 'BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse function calls and complex instructions, in completion format.'
@@ -273,6 +292,26 @@
   version: latest
   categories:
   - Cybersecurity
+- title: blobfishai/arc-crm-6
+  path: registry/blobfishai_arc_crm_6.html
+  desc: Six independently authored synthetic CRM workflows on one mocked CLI/web/REST/MCP world per episode. Partial Arc-inspired coverage, not source-row reproduction.
+  desc_trunc: Six independently authored synthetic CRM workflows on one mocked CLI/web/REST/MCP world per episode…
+  task_function: blobfishai_arc_crm_6
+  samples: 6
+  version: latest
+  categories:
+  - Assistants
+  - Professional
+- title: blobfishai/counselbench-100
+  path: registry/blobfishai_counselbench_100.html
+  desc: 100 high-level legal-agent tasks with 97-asset multi-provider evidence rooms, distinct deep trajectories, and native causal state verification.
+  desc_trunc: 100 high-level legal-agent tasks with 97-asset multi-provider evidence rooms, distinct deep traject…
+  task_function: blobfishai_counselbench_100
+  samples: 100
+  version: latest
+  categories:
+  - Law
+  - Professional
 - title: blobfishai/dealbench-100-suite
   path: registry/blobfishai_dealbench_100_suite.html
   desc: 100 executable investment-banking workflows with deterministic DealScore grading.
@@ -333,12 +372,52 @@
   categories:
   - Assistants
   - Professional
+- title: blobfishai/ledgerbench-100
+  path: registry/blobfishai_ledgerbench_100.html
+  desc: '100 causal corporate-finance workflows over a closed ERP sandbox: provider-shaped MCP tools, distributed evidence, exact state transitions, and no LLM judge.'
+  desc_trunc: '100 causal corporate-finance workflows over a closed ERP sandbox: provider-shaped MCP tools, distri…'
+  task_function: blobfishai_ledgerbench_100
+  samples: 100
+  version: latest
+  categories:
+  - Finance
+  - Professional
+- title: blobfishai/litigation
+  path: registry/blobfishai_litigation.html
+  desc: Executable litigation environments for agent training and evaluation. 100 long-horizon tasks, a median of 108 verified tool-calling steps each, worked across eight systems of record (Clio Manage, iManage Work, CM/ECF, Google Calendar, Docusign, Relativity, CourtListener and nine litigation sub-systems). Graded by deterministic state-diff and trace assertions — no LLM judge on the reward path.
+  desc_trunc: Executable litigation environments for agent training and evaluation. 100 long-horizon tasks, a med…
+  task_function: blobfishai_litigation
+  samples: 100
+  version: latest
+  categories:
+  - Law
+  - Professional
+- title: blobfishai/salesbench-100
+  path: registry/blobfishai_salesbench_100.html
+  desc: 100 high-level sales operations requests with evidence-determined multi-system trajectories.
+  desc_trunc: 100 high-level sales operations requests with evidence-determined multi-system trajectories.
+  task_function: blobfishai_salesbench_100
+  samples: 100
+  version: latest
+  categories:
+  - Assistants
+  - Professional
 - title: blobfishai/semikongbench-100
   path: registry/blobfishai_semikongbench_100.html
   desc: 100 executable semiconductor exception workflows with deterministic SemiOpsScore grading.
   desc_trunc: 100 executable semiconductor exception workflows with deterministic SemiOpsScore grading.
   task_function: blobfishai_semikongbench_100
   samples: 100
+  version: latest
+  categories:
+  - Assistants
+  - Professional
+- title: blobfishai/webbench
+  path: registry/blobfishai_webbench.html
+  desc: 'WebBench: browser-only correlated SaaS work over deterministic populated Blobfish worlds — 159 tasks graded executably against the applications backends (WebScore, no LLM judge).'
+  desc_trunc: 'WebBench: browser-only correlated SaaS work over deterministic populated Blobfish worlds — 159 task…'
+  task_function: blobfishai_webbench
+  samples: 159
   version: latest
   categories:
   - Assistants
@@ -545,24 +624,14 @@
   - Multimodal
 - title: gnucleus-ai/cad-bench
   path: registry/gnucleus_ai_cad_bench.html
-  desc: gNucleus AI CAD-generation benchmark -- 100 parametric FreeCAD tasks (Harbor schema 1.2; requires harbor >= 0.13.2).
-  desc_trunc: gNucleus AI CAD-generation benchmark -- 100 parametric FreeCAD tasks (Harbor schema 1.2; requires h…
+  desc: 'gNucleus AI CAD-generation benchmark v3 -- 100 parametric FreeCAD tasks: 30 text-to-CAD create, 30 create-and-edit, 40 image-to-CAD (Harbor schema 1.3; requires harbor >= 0.20.0).'
+  desc_trunc: 'gNucleus AI CAD-generation benchmark v3 -- 100 parametric FreeCAD tasks: 30 text-to-CAD create, 30…'
   task_function: gnucleus_ai_cad_bench
   samples: 100
   version: latest
   categories:
   - Coding
   - Professional
-- title: google-deepmind/terminal-bench-science
-  path: registry/google_deepmind_terminal_bench_science.html
-  desc: 'Terminal-Bench Science: 52 expert-level scientific research tasks, flattened from harbor-framework/terminal-bench-science commit 8d2935da4468687477d714e1dd97d5c07688c9b4.'
-  desc_trunc: 'Terminal-Bench Science: 52 expert-level scientific research tasks, flattened from harbor-framework/…'
-  task_function: google_deepmind_terminal_bench_science
-  samples: 52
-  version: latest
-  categories:
-  - Science
-  - Coding
 - title: gorilla/bfcl
   path: registry/gorilla_bfcl.html
   desc: 'Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Python, Java, JavaScript, and REST APIs.'
@@ -623,6 +692,16 @@
   categories:
   - Safeguards
   - Coding
+- title: handshake-ai/atlas-finance
+  path: registry/handshake_ai_atlas_finance.html
+  desc: 100 expert-level finance tasks in 13 realistic firm environments, served over MCP (Outlook, Slack, Drive, Calendar, OneNote) and graded by an agent-as-judge against weighted, section-gated rubrics.
+  desc_trunc: 100 expert-level finance tasks in 13 realistic firm environments, served over MCP (Outlook, Slack,…
+  task_function: handshake_ai_atlas_finance
+  samples: 100
+  version: latest
+  categories:
+  - Finance
+  - Professional
 - title: harbor-index/harbor-index
   path: registry/harbor_index.html
   desc: 'Harbor Index: 80 agentic evaluation tasks spanning SWE, security, science, math, and optimization (revision 1.4).'
@@ -825,6 +904,16 @@
   version: latest
   categories:
   - Coding
+- title: long-horizon-terminal-bench/lhtb
+  path: registry/long_horizon_terminal_bench.html
+  desc: 'Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in a containerized terminal over hundreds of steps. Hidden rebuild-from-artifact verifiers; self-reported progress does not count.'
+  desc_trunc: 'Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in…'
+  task_function: long_horizon_terminal_bench
+  samples: 46
+  version: latest
+  categories:
+  - Coding
+  - Assistants
 - title: luosuu/SWE-kokkos-bench
   path: registry/luosuu_swe_kokkos_bench.html
   desc: 100 verified SWE-bench-style coding tasks from the Kokkos ecosystem.
@@ -955,6 +1044,16 @@
   desc_trunc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrume…'
   task_function: orca_bench
   samples: 755
+  version: latest
+  categories:
+  - Coding
+  - Professional
+- title: orca-bench/orca-bench-verified
+  path: registry/orca_bench_verified.html
+  desc: 'ORCA-bench Verified: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; verified split of 40 tasks across 40 incidents (10 easy, 15 medium, 15 hard).'
+  desc_trunc: 'ORCA-bench Verified: root-cause analysis of oncall incidents — agents investigate telemetry from an…'
+  task_function: orca_bench_verified
+  samples: 40
   version: latest
   categories:
   - Coding
@@ -1148,6 +1247,15 @@
   - Assistants
   - Professional
   - Behavior
+- title: skill2env/skill2env
+  path: registry/skill2env.html
+  desc: 'Skill2Env (NVIDIA): 7,496 terminal tasks auto-converted from open-source Agent Skills — the agent finishes, repairs, or extends a software project in /workspace to satisfy a written contract, graded by hidden tests plus rubrics.'
+  desc_trunc: 'Skill2Env (NVIDIA): 7,496 terminal tasks auto-converted from open-source Agent Skills — the agent f…'
+  task_function: skill2env
+  samples: 7496
+  version: latest
+  categories:
+  - Coding
 - title: sldbench/sldbench
   path: registry/sldbench.html
   desc: 'SLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments where agents must autonomously fit and extrapolate scaling laws.'
@@ -1290,6 +1398,16 @@
   version: latest
   categories:
   - Coding
+- title: terminal-bench-science/terminal-bench-science
+  path: registry/terminal_bench_science.html
+  desc: A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathematical, and engineering sciences.
+  desc_trunc: A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathem…
+  task_function: terminal_bench_science
+  samples: 70
+  version: latest
+  categories:
+  - Science
+  - Coding
 - title: theagentcompany/theagentcompany
   path: registry/theagentcompany.html
   desc: An agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and RocketChat services, evaluating LLM agents on real-world professional work.
@@ -1417,3 +1535,12 @@
   categories:
   - Coding
   - Reasoning
+- title: zenml/zenml-bench
+  path: registry/zenml_bench.html
+  desc: 'ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real ZenML 0.96.4; graded on the state ZenML recorded.'
+  desc_trunc: 'ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real…'
+  task_function: zenml_bench
+  samples: 18
+  version: latest
+  categories:
+  - Coding

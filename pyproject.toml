@@ -11,7 +11,7 @@ readme = "README.md"
 # Note: harbor package requires Python >=3.12, so we cannot lower this requirement
 requires-python = ">=3.12"
 license = { text = "MIT License" }
-dependencies = ["inspect-ai>=0.3.259", "harbor>=0.21,<0.23", "pyyaml"]
+dependencies = ["inspect-ai>=0.3.264", "harbor>=0.21,<0.23", "pyyaml"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
@@ -37,8 +37,10 @@ dev = [
     "pytest-cov",
     "ruff",
     "types-PyYAML",
-    {include-group = "doc"},
 ]
+# Kept out of `dev` so CI can `uv sync --no-group doc`: quarto-cli ships no
+# wheel and its sdist downloads the Quarto binary from GitHub Releases at
+# build time. Local `uv sync` still installs it via default-groups below.
 doc = [
     "quarto-cli>=1.9.36",
     "jupyter",
@@ -64,7 +66,7 @@ exclude = ["docs/", "tests/"]
 [tool.uv]
 managed = true
 add-bounds = "lower"
-default-groups = ["dev"]
+default-groups = ["dev", "doc"]
 # Exclude packages published within the last 7 days to protect against supply chain attacks
 exclude-newer = "7 days"
 
