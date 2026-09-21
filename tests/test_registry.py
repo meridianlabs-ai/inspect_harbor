@@ -1,140 +1,195 @@
-"""Tests for Harbor registry task discovery and versioning."""
+"""Tests for JSON registry files (``name@version`` datasets)."""
 
-import inspect
-from unittest.mock import Mock, patch
+import json
+import time
+from pathlib import Path, PurePosixPath
 
+import httpx
 import pytest
+from inspect_harbor._harbor.git_tasks import GitTaskSpec
+from inspect_harbor._harbor.registry import (
+    DEFAULT_REGISTRY_URL,
+    load_registry,
+    resolve_registry_dataset,
+    resolve_version,
+)
+
+REGISTRY = [
+    {
+        "name": "aime",
+        "version": "1.0",
+        "description": "AIME problems",
+        "tasks": [
+            {
+                "name": "aime_i-9",
+                "git_url": "https://github.com/org/repo",
+                "git_commit_id": "a" * 40,
+                "path": "tasks/aime_i-9",
+            },
+            {
+                "name": "aime_ii-3",
+                "git_url": "https://github.com/org/repo",
+                "git_commit_id": None,
+                "path": "tasks/aime_ii-3",
+            },
+        ],
+        "metrics": [{"type": "mean", "kwargs": {}}],
+    },
+    {
+        "name": "aime",
+        "version": "2.0",
+        "description": "newer",
+        "tasks": [{"name": "only", "path": "/abs/local/only"}],
+    },
+    {"name": "other", "version": "head", "description": "", "tasks": []},
+]
 
 
-def _get_generated_tasks():
-    """Helper to get only generated task functions (not imports)."""
-    import inspect_harbor._tasks as tasks
+@pytest.fixture(autouse=True)
+def isolated_cache(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
+    """Temp cache dir for the URL cache."""
+    cache = tmp_path / "cache"
+    monkeypatch.setenv("INSPECT_HARBOR_CACHE_DIR", str(cache))
+    return cache
 
-    return [
-        getattr(tasks, name)
-        for name in dir(tasks)
-        if not name.startswith("_")
-        and callable(getattr(tasks, name))
-        and hasattr(getattr(tasks, name), "__module__")
-        and getattr(tasks, name).__module__ == "inspect_harbor._tasks"
+
+@pytest.fixture
+def registry_file(tmp_path: Path) -> Path:
+    """The sample registry written to disk."""
+    p = tmp_path / "registry.json"
+    p.write_text(json.dumps(REGISTRY))
+    return p
+
+
+@pytest.mark.parametrize(
+    "versions,expected",
+    [
+        (["1.0", "head", "2.0"], "head"),
+        (["1.0", "1.10", "1.9"], "1.10"),
+        (["0.1", "0.2.1", "0.2"], "0.2.1"),
+        (["b", "a", "c"], "c"),
+        (["1.0", "zzz"], "1.0"),
+    ],
+)
+def test_resolve_version(versions: list[str], expected: str) -> None:
+    """``head`` wins, then the highest numeric version, then lexical order."""
+    assert resolve_version(versions) == expected
+
+
+def test_resolve_version_empty_raises() -> None:
+    """No versions is an error."""
+    with pytest.raises(ValueError, match="No versions"):
+        resolve_version([])
+
+
+async def test_load_registry_from_path(registry_file: Path) -> None:
+    """A local registry file parses into datasets."""
+    datasets = await load_registry(path=registry_file)
+    assert [(d.name, d.version) for d in datasets] == [
+        ("aime", "1.0"),
+        ("aime", "2.0"),
+        ("other", "head"),
     ]
+    assert datasets[0].tasks[0].git_commit_id == "a" * 40
+    assert datasets[0].tasks[0].path == PurePosixPath("tasks/aime_i-9")
 
 
-def test_has_registered_tasks():
-    """Test that at least some tasks are registered in _registry."""
-    from inspect_harbor import _registry
+async def test_load_registry_from_url_is_cached(isolated_cache: Path) -> None:
+    """The URL body is fetched once and reused within the TTL."""
+    calls = 0
 
-    task_attrs = [name for name in dir(_registry) if not name.startswith("_")]
-    assert len(task_attrs) > 0, "Should have at least some tasks registered"
-    # Should have core functions plus generated tasks
-    assert "harbor" in task_attrs
-    assert "oracle" in task_attrs
+    def handler(request: httpx.Request) -> httpx.Response:
+        nonlocal calls
+        calls += 1
+        assert str(request.url) == "https://example.test/registry.json"
+        return httpx.Response(200, json=REGISTRY)
+
+    client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+    url = "https://example.test/registry.json"
+    first = await load_registry(url=url, client=client)
+    second = await load_registry(url=url, client=client)
+    assert calls == 1
+    assert [d.name for d in first] == [d.name for d in second]
+    cached = list((isolated_cache / "registry").glob("*.json"))
+    assert len(cached) == 1
+
+    # An expired cache file is refetched; ``overwrite`` always refetches.
+    old = time.time() - 48 * 3600
+    import os
+
+    os.utime(cached[0], (old, old))
+    await load_registry(url=url, client=client)
+    assert calls == 2
+    await load_registry(url=url, overwrite=True, client=client)
+    assert calls == 3
 
 
-def test_tasks_are_callable():
-    """Test that generated tasks are callable."""
-    task_funcs = _get_generated_tasks()
-    assert len(task_funcs) > 0, "Should have at least some callable tasks"
-    assert all(callable(f) for f in task_funcs)
+async def test_load_registry_url_error_propagates() -> None:
+    """A failing fetch is an ``HTTPStatusError``."""
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(404)
+
+    client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+    with pytest.raises(httpx.HTTPStatusError):
+        await load_registry(url="https://example.test/missing.json", client=client)
 
 
-def test_tasks_have_task_decorator():
-    """Test that generated tasks have @task decorator."""
-    task_funcs = _get_generated_tasks()
-    # Check tasks have __wrapped__ attribute (sign of @task decorator)
-    for func in task_funcs:
-        assert hasattr(func, "__wrapped__"), (
-            f"{func.__name__} should have @task decorator"
-        )
+async def test_load_registry_requires_one_source() -> None:
+    """Both or neither of ``url`` and ``path`` is an error."""
+    with pytest.raises(ValueError, match="Only one"):
+        await load_registry(url="https://x", path=Path("y"))
 
 
-def test_generated_function_names_are_unique():
-    """Every ``def`` in ``_tasks.py`` resolves to a unique name."""
-    task_funcs = _get_generated_tasks()
-    names = [f.__name__ for f in task_funcs]
-    duplicates = sorted({n for n in names if names.count(n) > 1})
-    assert not duplicates, (
-        f"Duplicate function names in _tasks.py: {duplicates}. "
-        "Disambiguate via `function_name:` in docs/overrides.yml."
+def test_default_registry_url() -> None:
+    """The default is the curated laude-institute registry file."""
+    assert DEFAULT_REGISTRY_URL == (
+        "https://raw.githubusercontent.com/laude-institute/harbor/main/registry.json"
     )
 
 
-def test_import_nonexistent_task_raises():
-    """Test that importing nonexistent task raises ImportError."""
-    with pytest.raises(ImportError, match="cannot import name"):
-        from inspect_harbor import (  # type: ignore[attr-defined]
-            nonexistent_task_xyz_12345,  # noqa: F401  # type: ignore[attr-defined]
-        )
-
-
-def test_task_has_correct_signature():
-    """Test that generated tasks have the expected parameter signature."""
-    task_funcs = _get_generated_tasks()
-    first_task = task_funcs[0]
-
-    # Check signature has expected parameters
-    sig = inspect.signature(first_task)
-    param_names = list(sig.parameters.keys())
-
-    expected_params = [
-        "dataset_task_names",
-        "dataset_exclude_task_names",
-        "n_tasks",
-        "overwrite_cache",
-        "sandbox_env_name",
-        "override_cpus",
-        "override_memory_mb",
-        "override_gpus",
+async def test_resolve_registry_dataset_explicit_version(registry_file: Path) -> None:
+    """``name@version`` returns git specs and local paths in registry order."""
+    entries = await resolve_registry_dataset("aime@1.0", path=registry_file)
+    assert entries == [
+        GitTaskSpec(
+            git_url="https://github.com/org/repo",
+            path=PurePosixPath("tasks/aime_i-9"),
+            git_commit_id="a" * 40,
+        ),
+        GitTaskSpec(
+            git_url="https://github.com/org/repo",
+            path=PurePosixPath("tasks/aime_ii-3"),
+            git_commit_id=None,
+        ),
     ]
 
-    for param in expected_params:
-        assert param in param_names, f"Task should have {param} parameter"
+
+async def test_resolve_registry_dataset_latest_version(registry_file: Path) -> None:
+    """Without a version the highest one is picked."""
+    entries = await resolve_registry_dataset("aime", path=registry_file)
+    assert entries == [Path("/abs/local/only")]
 
 
-def test_package_task_calls_harbor_base_with_package_name_and_ref():
-    """Generated package tasks forward ``package_name``/``package_ref`` to ``_harbor_base``."""
-    package_task = _get_generated_tasks()[0]
-
-    with patch("inspect_harbor._tasks._harbor_base") as mock_harbor:
-        mock_harbor.return_value = Mock()
-
-        package_task(n_tasks=5, overwrite_cache=True)
-
-        mock_harbor.assert_called_once()
-        call_kwargs = mock_harbor.call_args[1]
-
-        assert "package_name" in call_kwargs
-        assert "package_ref" in call_kwargs
-        assert call_kwargs["n_tasks"] == 5
-        assert call_kwargs["overwrite_cache"] is True
+async def test_resolve_registry_dataset_unknown(registry_file: Path) -> None:
+    """Unknown dataset names and versions are reported."""
+    with pytest.raises(ValueError, match="Dataset 'nope' not found"):
+        await resolve_registry_dataset("nope", path=registry_file)
+    with pytest.raises(ValueError, match="Version '9.9' of dataset 'aime' not found"):
+        await resolve_registry_dataset("aime@9.9", path=registry_file)
 
 
-def test_task_parameters_passed_through():
-    """Test that all task parameters are correctly passed to _harbor_base."""
-    task_funcs = _get_generated_tasks()
-    first_task = task_funcs[0]
+async def test_resolve_registry_dataset_uses_default_url(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Without ``url`` or ``path`` the default registry URL is fetched."""
+    seen: list[str] = []
 
-    with patch("inspect_harbor._tasks._harbor_base") as mock_harbor:
-        mock_harbor.return_value = Mock()
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(str(request.url))
+        return httpx.Response(200, json=REGISTRY)
 
-        # Call with all parameters
-        first_task(
-            dataset_task_names=["task1", "task2"],
-            dataset_exclude_task_names=["task3"],
-            n_tasks=10,
-            overwrite_cache=True,
-            sandbox_env_name="podman",
-            override_cpus=8,
-            override_memory_mb=16384,
-            override_gpus=2,
-        )
-
-        call_kwargs = mock_harbor.call_args[1]
-        assert call_kwargs["dataset_task_names"] == ["task1", "task2"]
-        assert call_kwargs["dataset_exclude_task_names"] == ["task3"]
-        assert call_kwargs["n_tasks"] == 10
-        assert call_kwargs["overwrite_cache"] is True
-        assert call_kwargs["sandbox_env_name"] == "podman"
-        assert call_kwargs["override_cpus"] == 8
-        assert call_kwargs["override_memory_mb"] == 16384
-        assert call_kwargs["override_gpus"] == 2
+    client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+    entries = await resolve_registry_dataset("other@head", client=client)
+    assert entries == []
+    assert seen == [DEFAULT_REGISTRY_URL]
