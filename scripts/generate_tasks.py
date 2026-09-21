@@ -3,7 +3,7 @@
 
 We discover every dataset by scraping ``hub.harborframework.com/datasets``
 for ``(org, name)`` slugs, then fetch metadata for each via
-``PackageDatasetClient.get_dataset_metadata``. The website is the only
+``inspect_harbor._harbor.hub.resolve_hub_dataset``. The website is the only
 public enumeration source until Harbor exposes a listing API
 (see https://github.com/harbor-framework/harbor/issues/1580).
 
@@ -29,7 +29,7 @@ from _templates import (
     REGISTRY_YML_HEADER,
     TASKS_TEMPLATE,
 )
-from harbor.registry.client.package import PackageDatasetClient
+from inspect_harbor._harbor.hub import HubClient, resolve_hub_dataset
 
 REGISTRY_SITE_BASE = "https://hub.harborframework.com"
 REGISTRY_SITE_MAX_PAGES = 20
@@ -186,7 +186,7 @@ def filter_excluded(
 
 
 def fetch_package_datasets(slugs: set[tuple[str, str]]) -> list[FetchedDataset]:
-    """Fetch metadata for every scraped slug via ``PackageDatasetClient``.
+    """Fetch metadata for every scraped slug from the Harbor hub.
 
     Per-slug responses are cached under
     ``.cache/harbor-registry/pkg-<org>__<name>.json`` to keep Quarto
@@ -196,7 +196,6 @@ def fetch_package_datasets(slugs: set[tuple[str, str]]) -> list[FetchedDataset]:
     print(f"Fetching metadata for {len(candidates)} package candidate(s)...")
 
     sem = asyncio.Semaphore(PACKAGE_FETCH_CONCURRENCY)
-    pkg_client = PackageDatasetClient()
 
     async def _fetch_one(org: str, name: str) -> FetchedDataset | None:
         slug = f"{org}/{name}"
@@ -207,7 +206,7 @@ def fetch_package_datasets(slugs: set[tuple[str, str]]) -> list[FetchedDataset]:
                 return json.loads(cache_path.read_text())
         async with sem:
             try:
-                meta = await pkg_client.get_dataset_metadata(slug)
+                meta = await resolve_hub_dataset(slug, client=hub_client)
             except Exception as e:
                 print(
                     f"  ⚠ {slug}: {type(e).__name__}: {str(e)[:120]}",
@@ -217,7 +216,7 @@ def fetch_package_datasets(slugs: set[tuple[str, str]]) -> list[FetchedDataset]:
         entry: FetchedDataset = FetchedDataset(
             name=slug,
             description=(meta.description or "").strip(),
-            samples=len(meta.task_ids),
+            samples=len(meta.task_refs),
             version=meta.version or "",
         )
         CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -225,8 +224,16 @@ def fetch_package_datasets(slugs: set[tuple[str, str]]) -> list[FetchedDataset]:
         return entry
 
     async def _fetch_all() -> list[FetchedDataset | None]:
-        return list(await asyncio.gather(*[_fetch_one(o, n) for o, n in candidates]))
+        nonlocal hub_client
+        hub_client = HubClient()
+        try:
+            return list(
+                await asyncio.gather(*[_fetch_one(o, n) for o, n in candidates])
+            )
+        finally:
+            await hub_client.aclose()
 
+    hub_client: HubClient | None = None
     raw = asyncio.run(_fetch_all())
     packages = [r for r in raw if r is not None]
     failed = len(raw) - len(packages)
