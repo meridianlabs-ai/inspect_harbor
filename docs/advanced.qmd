@@ -107,7 +107,10 @@ inspect eval inspect_harbor/harbor \
 
 ## Cache Management
 
-Downloaded tasks are cached locally in `~/.harbor/cache/`. To force a fresh download:
+Downloaded tasks are cached locally in `~/.cache/inspect_harbor/tasks/` (set
+`INSPECT_HARBOR_CACHE_DIR` to relocate it). Hub tasks are stored by content
+digest, so a pinned dataset is downloaded once; tasks loaded from git without
+a pinned commit are refreshed on every run. To force a fresh download:
 
 ```bash
 inspect eval inspect_harbor/aime \
@@ -118,5 +121,13 @@ inspect eval inspect_harbor/aime \
 To manually clear the entire cache:
 
 ```bash
-rm -rf ~/.harbor/cache/
+rm -rf ~/.cache/inspect_harbor/tasks/
 ```
+
+## Hub Download Counts
+
+Like the Harbor CLI, inspect_harbor records a download on
+[hub.harborframework.com](https://hub.harborframework.com) the first time it
+fetches a task version, so dataset authors see how often their work is run.
+The request carries only the task version id and never blocks or fails a
+run. Set `INSPECT_HARBOR_NO_TELEMETRY=1` to turn it off.
