@@ -28,7 +28,9 @@ jobs:
         uses: astral-sh/setup-uv@v8.1.0
 
       - name: Install dependencies
-        run: uv sync
+        # --no-group doc: skips quarto-cli, whose sdist downloads the Quarto
+        # binary from GitHub Releases at build time (flaky, and unused here).
+        run: uv sync --no-group doc
 
       - name: Generate tasks
         id: generate

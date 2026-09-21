@@ -1329,17 +1329,11 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "griffe" },
-    { name = "jupyter" },
-    { name = "markdown" },
-    { name = "panflute" },
     { name = "pre-commit" },
     { name = "pyright" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
     { name = "pytest-cov" },
-    { name = "pyyaml" },
-    { name = "quarto-cli" },
     { name = "ruff" },
     { name = "types-pyyaml" },
 ]
@@ -1361,17 +1355,11 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "griffe", specifier = ">=2" },
-    { name = "jupyter" },
-    { name = "markdown" },
-    { name = "panflute" },
     { name = "pre-commit" },
     { name = "pyright" },
     { name = "pytest" },
     { name = "pytest-asyncio", specifier = ">=1.3.0" },
     { name = "pytest-cov" },
-    { name = "pyyaml" },
-    { name = "quarto-cli", specifier = ">=1.9.36" },
     { name = "ruff" },
     { name = "types-pyyaml" },
 ]
