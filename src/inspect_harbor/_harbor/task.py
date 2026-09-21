@@ -3,13 +3,8 @@
 import hashlib
 import warnings
 from collections import Counter
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
-from harbor.models.job.config import DatasetConfig
-from harbor.models.task.config import NetworkMode
-from harbor.models.task.task import Task as HarborTask
-from harbor.models.trial.config import TaskConfig
-from harbor.tasks.client import TaskClient
 from inspect_ai import Task, task
 from inspect_ai._util._async import run_coroutine
 from inspect_ai.agent import react
@@ -17,7 +12,17 @@ from inspect_ai.model import CompactionEdit
 from inspect_ai.tool import bash, python, update_plan
 
 from inspect_harbor._harbor.converters import harbor_task_to_sample
+from inspect_harbor._harbor.git_tasks import GitTaskSpec, download_git_tasks
+from inspect_harbor._harbor.hub import (
+    HubTaskRef,
+    download_hub_tasks,
+    resolve_hub_dataset,
+)
+from inspect_harbor._harbor.local import filter_task_names, list_local_dataset_tasks
+from inspect_harbor._harbor.models import NetworkMode
+from inspect_harbor._harbor.registry import resolve_registry_dataset
 from inspect_harbor._harbor.scorer import harbor_scorer
+from inspect_harbor._harbor.task_dir import HarborTask
 
 
 @task
@@ -317,16 +322,12 @@ def _load_git_task(
     overwrite_cache: bool,
 ) -> list[Path]:
     """Load a task from a git repository."""
-    task_config = TaskConfig(
-        path=path, git_url=task_git_url, git_commit_id=task_git_commit_id
+    spec = GitTaskSpec(
+        git_url=task_git_url,
+        path=PurePosixPath(path.as_posix()),
+        git_commit_id=task_git_commit_id,
     )
-    task_client = TaskClient()
-    result = run_coroutine(
-        task_client.download_tasks(
-            task_ids=[task_config.get_task_id()], overwrite=overwrite_cache
-        )
-    )
-    return result.paths
+    return run_coroutine(download_git_tasks([spec], overwrite=overwrite_cache))
 
 
 def _load_local_path(
@@ -337,23 +338,15 @@ def _load_local_path(
     disable_verification: bool,
 ) -> list[Path]:
     """Load from a local path - either a single task or a dataset directory."""
-    is_task: bool = HarborTask.is_valid_dir(
-        path, disable_verification=disable_verification
-    )
-
-    if is_task:
+    if HarborTask.is_valid_dir(path, disable_verification=disable_verification):
         return [path]
-
-    dataset_config = DatasetConfig(
-        path=path,
-        task_names=dataset_task_names,
-        exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
+    return list_local_dataset_tasks(
+        path,
+        dataset_task_names,
+        dataset_exclude_task_names,
+        n_tasks,
+        disable_verification,
     )
-    local_configs = run_coroutine(
-        dataset_config.get_task_configs(disable_verification=disable_verification)
-    )
-    return [config.path for config in local_configs if config.path is not None]
 
 
 def _load_from_registry(
@@ -365,23 +358,27 @@ def _load_from_registry(
     n_tasks: int | None,
     overwrite_cache: bool,
 ) -> list[Path]:
-    """Load tasks from a registry dataset."""
-    if "@" in dataset_name_version:
-        name, version = dataset_name_version.split("@", 1)
-    else:
-        name, version = dataset_name_version, None
+    """Load tasks from a ``name@version`` dataset in a JSON registry file."""
 
-    dataset_config = DatasetConfig(
-        name=name,
-        version=version,
-        registry_url=registry_url,
-        registry_path=registry_path,
-        task_names=dataset_task_names,
-        exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite=overwrite_cache,
-    )
-    return _download_dataset(dataset_config, overwrite_cache)
+    async def _resolve_and_download() -> list[Path]:
+        entries = await resolve_registry_dataset(
+            dataset_name_version,
+            url=registry_url,
+            path=registry_path,
+            overwrite=overwrite_cache,
+        )
+        names = [e.name for e in entries]
+        keep = set(
+            filter_task_names(
+                names, dataset_task_names, dataset_exclude_task_names, n_tasks
+            )
+        )
+        entries = [e for e in entries if e.name in keep]
+        git_specs = [e for e in entries if isinstance(e, GitTaskSpec)]
+        git_paths = iter(await download_git_tasks(git_specs, overwrite=overwrite_cache))
+        return [next(git_paths) if isinstance(e, GitTaskSpec) else e for e in entries]
+
+    return run_coroutine(_resolve_and_download())
 
 
 def _load_from_package(
@@ -392,29 +389,17 @@ def _load_from_package(
     n_tasks: int | None,
     overwrite_cache: bool,
 ) -> list[Path]:
-    """Load tasks from a package-based dataset."""
-    dataset_config = DatasetConfig(
-        name=package_name,
-        ref=package_ref,
-        task_names=dataset_task_names,
-        exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite=overwrite_cache,
-    )
-    return _download_dataset(dataset_config, overwrite_cache)
-
-
-def _download_dataset(
-    dataset_config: DatasetConfig, overwrite_cache: bool
-) -> list[Path]:
-    """Resolve a dataset to TaskConfigs, then download to local paths."""
+    """Load tasks from an ``org/name@ref`` dataset on the Harbor hub."""
 
     async def _resolve_and_download() -> list[Path]:
-        task_configs = await dataset_config.get_task_configs()
-        result = await TaskClient().download_tasks(
-            task_ids=[tc.get_task_id() for tc in task_configs],
-            overwrite=overwrite_cache,
+        metadata = await resolve_hub_dataset(f"{package_name}@{package_ref}")
+        names = [t.slug for t in metadata.task_refs]
+        keep = set(
+            filter_task_names(
+                names, dataset_task_names, dataset_exclude_task_names, n_tasks
+            )
         )
-        return result.paths
+        refs: list[HubTaskRef] = [t for t in metadata.task_refs if t.slug in keep]
+        return await download_hub_tasks(refs, overwrite=overwrite_cache)
 
     return run_coroutine(_resolve_and_download())

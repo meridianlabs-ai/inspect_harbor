@@ -6,13 +6,13 @@ from typing import Any
 from unittest.mock import Mock, patch
 
 import pytest
-from harbor.models.task.config import HealthcheckConfig
-from harbor.models.task.task import Task as HarborTask
+from inspect_harbor._harbor.models import HealthcheckConfig
 from inspect_harbor._harbor.task import (
     _disambiguate_sample_ids,
     harbor,
     load_harbor_tasks,
 )
+from inspect_harbor._harbor.task_dir import HarborTask
 
 
 def _make_harbor_task_mock(

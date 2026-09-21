@@ -21,6 +21,9 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 SUPPORTED_SCHEMA_VERSION = "1.4"
 
 ORG_NAME_PATTERN = r"^[a-zA-Z0-9][a-zA-Z0-9._-]*/[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+# Compose service that runs the agent; collect hooks target it by default.
+MAIN_SERVICE_NAME = "main"
+_COMPOSE_SERVICE_NAME_PATTERN = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_.-]*$")
 
 
 def _warn_unknown_keys(section: str, data: dict[str, Any], known: set[str]) -> None:
@@ -200,6 +203,35 @@ class EnvironmentConfig(BaseModel):
         return data
 
 
+class VerifierCollectConfig(BaseModel):
+    """A ``[[verifier.collect]]`` hook: a command run after the agent phase.
+
+    Hooks snapshot runtime state into files before verification. Only hooks
+    targeting the main service can run in inspect_harbor's single sandbox.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    command: str
+    service: str = MAIN_SERVICE_NAME
+    timeout_sec: float = 60.0
+    user: str | int | None = None
+
+    @field_validator("service")
+    @classmethod
+    def _validate_service(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("Collect hook service must not be empty.")
+        if not _COMPOSE_SERVICE_NAME_PATTERN.match(value):
+            raise ValueError(
+                f"Invalid Docker Compose service name: {value!r}. Service names "
+                "must start with an alphanumeric character and contain only "
+                "alphanumeric characters, hyphens, underscores, and dots."
+            )
+        return value
+
+
 class VerifierConfig(BaseModel):
     """The ``[verifier]`` section."""
 
@@ -210,7 +242,7 @@ class VerifierConfig(BaseModel):
     user: str | int | None = None
     environment_mode: VerifierEnvironmentMode | None = None
     environment: EnvironmentConfig | None = None
-    collect: list[dict[str, Any]] = Field(default_factory=list)
+    collect: list[VerifierCollectConfig] = Field(default_factory=list)
     network_mode: NetworkMode | None = None
     allowed_hosts: list[str] | None = None
 

@@ -6,14 +6,6 @@ import warnings
 from typing import Any
 
 import yaml
-from harbor.environments.docker.docker import _sanitize_docker_image_name
-from harbor.models.task.config import (
-    EnvironmentConfig,
-    HealthcheckConfig,
-    NetworkMode,
-)
-from harbor.models.task.task import Task as HarborTask
-from harbor.models.trial.paths import EnvironmentPaths
 from inspect_ai.dataset import Sample
 from inspect_ai.util import (
     ComposeBuild,
@@ -29,7 +21,14 @@ from inspect_ai.util._sandbox.compose import (
     ComposeResourceReservations,
 )
 
+from inspect_harbor._harbor.models import (
+    EnvironmentConfig,
+    HealthcheckConfig,
+    NetworkMode,
+)
+from inspect_harbor._harbor.paths import EnvironmentPaths, sanitize_docker_image_name
 from inspect_harbor._harbor.sandbox_utils import resolve_env_vars
+from inspect_harbor._harbor.task_dir import HarborTask
 
 
 def harbor_to_compose_config(
@@ -117,7 +116,7 @@ def harbor_to_compose_config(
             # Pin a stable `image:` tag make them reusable across runs.
             for svc_name, svc in compose_config.services.items():
                 if svc.build is not None and not svc.image:
-                    svc.image = _sanitize_docker_image_name(
+                    svc.image = sanitize_docker_image_name(
                         f"hb__{harbor_task.name}__{svc_name}"
                     )
 
@@ -135,7 +134,7 @@ def harbor_to_compose_config(
             # with a deterministic name derived from the task.
             image=(
                 env_config.docker_image
-                or _sanitize_docker_image_name(f"hb__{harbor_task.name}")
+                or sanitize_docker_image_name(f"hb__{harbor_task.name}")
             ),
             # Use Dockerfile if it exists and no prebuilt image specified
             build=(
@@ -339,9 +338,9 @@ def _expand_compose_vars(
 
     var_map: dict[str, str] = {
         "CONTEXT_DIR": env_dir,
-        # Mirror Harbor's own ``hb__<task.name>`` + ``_sanitize_docker_image_name``
+        # Mirror Harbor's own ``hb__<task.name>`` + ``sanitize_docker_image_name``
         # so package tasks (org/name) produce the same image name Harbor would.
-        "MAIN_IMAGE_NAME": _sanitize_docker_image_name(f"hb__{harbor_task.name}"),
+        "MAIN_IMAGE_NAME": sanitize_docker_image_name(f"hb__{harbor_task.name}"),
         "HOST_VERIFIER_LOGS_PATH": str(paths.verifier_dir),
         "HOST_AGENT_LOGS_PATH": str(paths.agent_dir),
         "HOST_ARTIFACTS_PATH": str(paths.artifacts_dir),

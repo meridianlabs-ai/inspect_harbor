@@ -6,15 +6,13 @@ import shlex
 from pathlib import Path
 from typing import Any
 
-from harbor.constants import MAIN_SERVICE_NAME
-from harbor.models.task.config import TaskConfig, VerifierEnvironmentMode
-from harbor.models.task.verifier_mode import resolve_task_verifier_mode
-from harbor.models.trial.paths import EnvironmentPaths
 from inspect_ai.scorer import Score, Scorer, Target, accuracy, scorer, stderr
 from inspect_ai.solver import TaskState
 from inspect_ai.util import sandbox
 
 from inspect_harbor._harbor.converters import _user_to_str
+from inspect_harbor._harbor.models import MAIN_SERVICE_NAME, TaskConfig
+from inspect_harbor._harbor.paths import EnvironmentPaths
 from inspect_harbor._harbor.sandbox_utils import (
     cleanup_sandbox_directories,
     cleanup_sandbox_env_vars,
@@ -201,7 +199,7 @@ async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
 
     # Only reset in separate mode; in shared mode Harbor verifies against the
     # agent's environment, so wiping its work would grade the pristine base.
-    if resolve_task_verifier_mode(task_cfg) != VerifierEnvironmentMode.SEPARATE:
+    if not task_cfg.verifier_runs_separately():
         return
 
     base_commit = task_cfg.metadata.get("base_commit_hash")
