@@ -29,9 +29,8 @@ silently select an older release whose task names do not match the examples belo
 Harbor depends on LiteLLM, which currently declares `openai<3`, while Inspect's
 OpenAI provider requires `openai>=3.1`. The two declared dependency ranges cannot
 be resolved together. Inspect Harbor never imports LiteLLM, so installing
-`openai>=3.1` alongside it is safe in practice. This is tracked in
-[inspect_harbor #166](https://github.com/meridianlabs-ai/inspect_harbor/issues/166),
-upstream in [LiteLLM #37907](https://github.com/BerriAI/litellm/issues/37907) and
+`openai>=3.1` alongside it is safe in practice. This is tracked upstream in
+[LiteLLM #37907](https://github.com/BerriAI/litellm/issues/37907) and
 [LiteLLM #40317](https://github.com/BerriAI/litellm/issues/40317), and in
 [Harbor #3340](https://github.com/harbor-framework/harbor/issues/3340), which asks
 for LiteLLM to become an optional Harbor dependency.
@@ -62,10 +61,6 @@ pip install --upgrade "openai>=3.1.0"
 
 The second command prints a dependency-conflict warning for LiteLLM and then
 succeeds. The warning is expected and harmless for Inspect Harbor.
-
-Either environment is only suitable for the Inspect Harbor execution path, where
-Inspect—not LiteLLM—runs the model. Do not use it for Harbor's own LiteLLM-backed
-model execution; LiteLLM does not yet declare OpenAI 3 support.
 
 ## Prerequisites
 
