@@ -226,6 +226,15 @@ arcprize/arc-agi-2:
   title: ARC-AGI-2
   featured: true
 
+arcus-labs/tau3-banking:
+  categories: []
+
+arcus-labs/tau3-banking-dev:
+  categories: []
+
+arcus-labs/tau3-banking-test:
+  categories: []
+
 atm-bench/atm-bench-hard-sgm:
   categories:
   - Assistants
@@ -249,6 +258,9 @@ benchflow/skillsbench:
   repo: https://github.com/benchflow-ai/skillsbench
   desc: 'SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folders of instructions, scripts, and resources) to complete specialized workflows spanning science, engineering, and professional domains.'
   title: SkillsBench
+
+bespokelabs/autoresearch-exam:
+  categories: []
 
 bigcode/bigcodebench-hard-complete:
   categories:
@@ -321,6 +333,12 @@ blobfishai/semikongbench-100:
   - Professional
   title: SemiKongBench-100
   repo: https://github.com/blobfishai/semiconductor-agent-simulation
+
+blobfishai/webbench:
+  categories: []
+
+brando90/vb-generation-one-20260913:
+  categories: []
 
 cais/swebenchpro:
   categories:
@@ -502,13 +520,6 @@ gnucleus-ai/cad-bench:
   title: CAD-Bench
   repo: https://www.gnucleus.ai/cad-bench
 
-google-deepmind/terminal-bench-science:
-  categories:
-  - Science
-  - Coding
-  repo: https://github.com/harbor-framework/terminal-bench-science
-  title: GDM-Terminal-Bench-Science
-
 gorilla/bfcl:
   categories:
   - Assistants
@@ -557,6 +568,9 @@ hack-verifiable-environments/hv-terminal-bench-2-1:
   arxiv: https://arxiv.org/abs/2605.20744
   repo: https://github.com/MajoRoth/hack-verifiable-environments
   title: Hack-Verifiable Terminal Bench 2.1
+
+handshake-ai/atlas-finance:
+  categories: []
 
 harbor-index/harbor-index:
   categories:
@@ -722,6 +736,9 @@ livecodebench/livecodebench:
   function_name: livecodebench
   title: LiveCodeBench
 
+long-horizon-terminal-bench/lhtb:
+  categories: []
+
 luosuu/SWE-kokkos-bench:
   categories:
   - Coding
@@ -834,6 +851,9 @@ orca-bench/orca-bench:
   arxiv: https://arxiv.org/abs/2607.28545
   desc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).'
   title: ORCA-bench
+
+orca-bench/orca-bench-private:
+  categories: []
 
 orinlabs/horizon-public:
   categories:
@@ -995,6 +1015,9 @@ sierra-research/tau3-bench:
   repo: https://github.com/sierra-research/tau2-bench
   desc: Third generation of τ-bench, extending the original with knowledge and voice. A simulation framework for evaluating customer service agents across airline, retail, telecom, and banking knowledge domains.
   title: τ³-bench
+
+skill2env/skill2env:
+  categories: []
 
 sldbench/sldbench:
   categories:
@@ -1204,6 +1227,9 @@ webgen-bench/webgen-bench:
   function_name: webgen_bench
   title: WebGen-Bench
 
+withmartian/clojure-swerebench-v2-validated-51:
+  categories: []
+
 xlang-ai/osworld-verified:
   categories:
   - Assistants
@@ -1227,3 +1253,6 @@ yanagiorigami/frontier-cs:
   arxiv: https://arxiv.org/abs/2512.15699
   repo: https://github.com/FrontierCS/Frontier-CS
   title: Frontier-CS
+
+zenml/zenml-bench:
+  categories: []
