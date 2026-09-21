@@ -187,6 +187,15 @@
   version: latest
   categories:
   - Coding
+- title: alibaba-aaig/alibaba-ctf
+  path: registry/alibaba_aaig_alibaba_ctf.html
+  desc: A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) for evaluating agents on offensive security work.
+  desc_trunc: A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) f…
+  task_function: alibaba_aaig_alibaba_ctf
+  samples: 87
+  version: latest
+  categories:
+  - Cybersecurity
 - title: android-bench/android-bench
   path: registry/android_bench.html
   desc: A dataset of 100 Android software engineering tasks derived from real-world repositories.
@@ -283,6 +292,16 @@
   version: latest
   categories:
   - Cybersecurity
+- title: blobfishai/counselbench-100
+  path: registry/blobfishai_counselbench_100.html
+  desc: 100 high-level legal-agent tasks with 97-asset multi-provider evidence rooms, distinct deep trajectories, and native causal state verification.
+  desc_trunc: 100 high-level legal-agent tasks with 97-asset multi-provider evidence rooms, distinct deep traject…
+  task_function: blobfishai_counselbench_100
+  samples: 100
+  version: latest
+  categories:
+  - Law
+  - Professional
 - title: blobfishai/dealbench-100-suite
   path: registry/blobfishai_dealbench_100_suite.html
   desc: 100 executable investment-banking workflows with deterministic DealScore grading.
@@ -339,6 +358,36 @@
   desc_trunc: 'HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub prof…'
   task_function: blobfishai_hubbench
   samples: 104
+  version: latest
+  categories:
+  - Assistants
+  - Professional
+- title: blobfishai/ledgerbench-100
+  path: registry/blobfishai_ledgerbench_100.html
+  desc: '100 causal corporate-finance workflows over a closed ERP sandbox: provider-shaped MCP tools, distributed evidence, exact state transitions, and no LLM judge.'
+  desc_trunc: '100 causal corporate-finance workflows over a closed ERP sandbox: provider-shaped MCP tools, distri…'
+  task_function: blobfishai_ledgerbench_100
+  samples: 100
+  version: latest
+  categories:
+  - Finance
+  - Professional
+- title: blobfishai/litigation
+  path: registry/blobfishai_litigation.html
+  desc: Executable litigation environments for agent training and evaluation. 100 long-horizon tasks, a median of 108 verified tool-calling steps each, worked across eight systems of record (Clio Manage, iManage Work, CM/ECF, Google Calendar, Docusign, Relativity, CourtListener and nine litigation sub-systems). Graded by deterministic state-diff and trace assertions — no LLM judge on the reward path.
+  desc_trunc: Executable litigation environments for agent training and evaluation. 100 long-horizon tasks, a med…
+  task_function: blobfishai_litigation
+  samples: 100
+  version: latest
+  categories:
+  - Law
+  - Professional
+- title: blobfishai/salesbench-100
+  path: registry/blobfishai_salesbench_100.html
+  desc: 100 high-level sales operations requests with evidence-determined multi-system trajectories.
+  desc_trunc: 100 high-level sales operations requests with evidence-determined multi-system trajectories.
+  task_function: blobfishai_salesbench_100
+  samples: 100
   version: latest
   categories:
   - Assistants
@@ -846,10 +895,10 @@
   categories:
   - Coding
 - title: long-horizon-terminal-bench/lhtb
-  path: registry/long_horizon_terminal_bench_lhtb.html
+  path: registry/long_horizon_terminal_bench.html
   desc: 'Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in a containerized terminal over hundreds of steps. Hidden rebuild-from-artifact verifiers; self-reported progress does not count.'
   desc_trunc: 'Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in…'
-  task_function: long_horizon_terminal_bench_lhtb
+  task_function: long_horizon_terminal_bench
   samples: 46
   version: latest
   categories:
@@ -985,6 +1034,16 @@
   desc_trunc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrume…'
   task_function: orca_bench
   samples: 755
+  version: latest
+  categories:
+  - Coding
+  - Professional
+- title: orca-bench/orca-bench-verified
+  path: registry/orca_bench_verified.html
+  desc: 'ORCA-bench Verified: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; verified split of 40 tasks across 40 incidents (10 easy, 15 medium, 15 hard).'
+  desc_trunc: 'ORCA-bench Verified: root-cause analysis of oncall incidents — agents investigate telemetry from an…'
+  task_function: orca_bench_verified
+  samples: 40
   version: latest
   categories:
   - Coding
@@ -1329,6 +1388,16 @@
   version: latest
   categories:
   - Coding
+- title: terminal-bench-science/terminal-bench-science
+  path: registry/terminal_bench_science.html
+  desc: A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathematical, and engineering sciences.
+  desc_trunc: A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathem…
+  task_function: terminal_bench_science
+  samples: 70
+  version: latest
+  categories:
+  - Science
+  - Coding
 - title: theagentcompany/theagentcompany
   path: registry/theagentcompany.html
   desc: An agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and RocketChat services, evaluating LLM agents on real-world professional work.
@@ -1424,15 +1493,6 @@
   desc_trunc: 'WebGen-Bench: evaluating LLMs on generating interactive and functional websites from scratch.'
   task_function: webgen_bench
   samples: 101
-  version: latest
-  categories:
-  - Coding
-- title: withmartian/clojure-swerebench-v2-validated-51
-  path: registry/withmartian_clojure_swerebench_v2_validated_51.html
-  desc: 51 Clojure SWE-rebench V2 tasks validated for coding-agent evaluation.
-  desc_trunc: 51 Clojure SWE-rebench V2 tasks validated for coding-agent evaluation.
-  task_function: withmartian_clojure_swerebench_v2_validated_51
-  samples: 51
   version: latest
   categories:
   - Coding

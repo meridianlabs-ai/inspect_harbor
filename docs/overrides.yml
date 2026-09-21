@@ -198,6 +198,11 @@ algotune/algotune:
   function_name: algotune
   title: AlgoTune
 
+alibaba-aaig/alibaba-ctf:
+  categories:
+  - Cybersecurity
+  title: AlibabaCTF
+
 android-bench/android-bench:
   categories:
   - Coding
@@ -281,6 +286,12 @@ binary-audit/binary-audit:
   function_name: binary_audit
   title: BinaryAudit
 
+blobfishai/counselbench-100:
+  categories:
+  - Law
+  - Professional
+  title: CounselBench-100
+
 blobfishai/dealbench-100-suite:
   categories:
   - Finance
@@ -321,6 +332,25 @@ blobfishai/hubbench:
   - Professional
   title: HubBench
   repo: https://github.com/blobfishai/hub-agent-simulation
+
+blobfishai/ledgerbench-100:
+  categories:
+  - Finance
+  - Professional
+  title: LedgerBench-100
+  repo: https://github.com/blobfishai/finance-world
+
+blobfishai/litigation:
+  categories:
+  - Law
+  - Professional
+  title: Litigation
+
+blobfishai/salesbench-100:
+  categories:
+  - Assistants
+  - Professional
+  title: SalesBench-100
 
 blobfishai/semikongbench-100:
   categories:
@@ -743,6 +773,7 @@ long-horizon-terminal-bench/lhtb:
   arxiv: https://arxiv.org/abs/2607.08964
   repo: https://github.com/zli12321/LHTB
   title: Long-Horizon Terminal-Bench
+  function_name: long_horizon_terminal_bench
 
 luosuu/SWE-kokkos-bench:
   categories:
@@ -856,6 +887,16 @@ orca-bench/orca-bench:
   arxiv: https://arxiv.org/abs/2607.28545
   desc: 'ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; public split of 755 tasks across 77 incidents (245 easy, 264 medium, 246 hard).'
   title: ORCA-bench
+
+orca-bench/orca-bench-verified:
+  categories:
+  - Coding
+  - Professional
+  function_name: orca_bench_verified
+  title: ORCA-bench Verified
+  repo: https://github.com/orca-bench/ORCA-bench
+  arxiv: https://arxiv.org/abs/2607.28545
+  desc: 'ORCA-bench Verified: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; verified split of 40 tasks across 40 incidents (10 easy, 15 medium, 15 hard).'
 
 orinlabs/horizon-public:
   categories:
@@ -1128,6 +1169,14 @@ terminal-bench-pro/terminal-bench-pro:
   title: Terminal-Bench Pro
   featured: true
 
+terminal-bench-science/terminal-bench-science:
+  categories:
+  - Science
+  - Coding
+  function_name: terminal_bench_science
+  title: Terminal-Bench-Science
+  repo: https://github.com/harbor-framework/terminal-bench-science
+
 terminal-bench/terminal-bench:
   categories:
   - Coding
@@ -1232,13 +1281,6 @@ webgen-bench/webgen-bench:
   repo: https://github.com/mnluzimu/WebGen-Bench
   function_name: webgen_bench
   title: WebGen-Bench
-
-withmartian/clojure-swerebench-v2-validated-51:
-  categories:
-  - Coding
-  arxiv: https://arxiv.org/abs/2602.23866
-  repo: https://github.com/SWE-rebench/SWE-rebench-V2
-  title: SWE-rebench V2 Clojure (Martian, 51 validated)
 
 xlang-ai/osworld-verified:
   categories:

@@ -149,56 +149,21 @@
 # Canonical releases live under terminal-bench/. Revisit if a real personal
 # benchmark appears under this account.
 - ryanmarten/*
-# TEMPORARILY excluded (would otherwise be kept): four legitimate-looking
-# Blobfish AI benchmarks that fail to load because inspect_ai's ComposeConfig
-# rejects docker-compose long-form volume mounts
-# (services.main.volumes.0: Input should be a valid string). Re-include and
-# categorize once inspect_ai supports them (fix proposed upstream):
-# counselbench-100 ~[Law, Professional], litigation ~[Law, Professional],
-# salesbench-100 ~[Assistants, Professional], ledgerbench-100 ~[Finance,
-# Professional] (source repo blobfishai/finance-world). When re-including,
-# also check whether counselbench-100 duplicates litigation (both 100
-# long-horizon legal-agent tasks) before listing both.
-- blobfishai/counselbench-100
-- blobfishai/ledgerbench-100
-- blobfishai/litigation
-- blobfishai/salesbench-100
-# TEMPORARILY excluded (would otherwise be kept): canonical org upload of the
-# living Terminal-Bench-Science benchmark (70 tasks,
-# https://github.com/harbor-framework/terminal-bench-science) — distinct from
-# the google-deepmind/terminal-bench-science 52-task pinned snapshot, which
-# stays listed. Fails to load: inspect_ai's ComposeConfig rejects pids_limit.
-# Re-include once supported (fix proposed upstream) with overrides:
-# categories ~[Science, Coding], function_name: terminal_bench_science (dedup,
-# no collision), title: Terminal-Bench-Science, repo above.
-- terminal-bench-science/terminal-bench-science
-# TEMPORARILY excluded (would otherwise be kept): 87 CTF tasks curated from
-# the AlibabaCTF competition series by the Alibaba-AAIG org (a real
-# Organization) — fails to load because inspect_ai's ComposeConfig rejects
-# the `cgroup` service key (one task uses it). Re-include once supported
-# (fix proposed upstream in inspect_ai PR #5139) with overrides:
-# categories ~[Cybersecurity], title: AlibabaCTF.
-- alibaba-aaig/alibaba-ctf
-# TEMPORARILY excluded (would otherwise be kept): the verified 40-task split
-# of ORCA-bench (root-cause analysis of oncall incidents), uploaded by the
-# same canonical org as the listed orca-bench/orca-bench — fails to load
-# because inspect_ai's ComposeConfig rejects `stop_grace_period` (all its
-# compose files use it). Re-include once supported (fix proposed upstream in
-# inspect_ai PR #5139) with overrides mirroring the sibling: categories
-# ~[Coding, Professional], function_name: orca_bench_verified (dedup, no
-# collision), title: ORCA-bench Verified, repo orca-bench/ORCA-bench,
-# arxiv 2607.28545, and a desc override trimming the dangling "please see."
-- orca-bench/orca-bench-verified
-# TEMPORARILY excluded (would otherwise be kept): six synthetic CRM workflow
-# tasks from the Blobfish AI org (source repo
+# Six synthetic CRM workflow tasks from the Blobfish AI org (source repo
 # blobfishai/arc-crm-agent-simulation, clean-room worlds inspired by the Arc
-# CRM dataset) — fails to load because inspect_ai's ComposeConfig rejects
-# pids_limit on both the `main` and `world` services (all six tasks use it).
-# Re-include once supported (fix proposed upstream) with overrides:
-# categories ~[Assistants, Professional], title: Blobfish Arc CRM-6, repo
-# above. Small 6-task set with "not a leaderboard" caveats in its README;
-# double-check it is still wanted when re-including.
+# CRM dataset). Its original blocker, inspect_ai's ComposeConfig rejecting
+# pids_limit, is gone (inspect_ai 0.3.264 accepts it and is now our minimum),
+# so this is now a judgment call: a 6-task set whose README carries "not a
+# leaderboard" caveats. Held pending a human decision; to list it, drop this
+# entry and fill the stub with categories [Assistants, Professional], title
+# Blobfish Arc CRM-6, repo above.
 - blobfishai/arc-crm-6
+# google-deepmind/terminal-bench-science (the 52-task pinned GDM snapshot,
+# listed until 2026-09-21) vanished from the hub listing and the generator
+# dropped its override. Needs no entry; if it returns, fill the stub with
+# [Science, Coding], title GDM-Terminal-Bench-Science, repo
+# harbor-framework/terminal-bench-science (the canonical org's living copy
+# is listed as terminal_bench_science).
 # Individual's (User, not org) 9-task "smoke suite from Terminal-Bench 2.1
 # for LibrAgent harness eval" (LibrAgent is the user's personal desktop-agent
 # project; no libragent benchmark repo exists). A curated subset of
@@ -242,3 +207,12 @@
 # derivative-subset class as titouanlne/* and fritzprix/*. Narrow glob so a
 # real Arcus Labs benchmark would still surface.
 - arcus-labs/tau3-banking*
+# Curator's count-suffixed working slice of a source we don't otherwise
+# list: the 51 Clojure tasks of nebius/SWE-rebench-V2 (every sample's
+# metadata says source_dataset nebius/SWE-rebench-V2, language clojure,
+# author Martian). No repo, blog post or announcement exists for this slice
+# itself, and the `-validated-51` suffix reads like a working file that a
+# later cut would supersede. Exact slug rather than withmartian/* because
+# Martian is a real Organization (RouterBench, Code Review Benchmark) that
+# could publish a real benchmark later.
+- withmartian/clojure-swerebench-v2-validated-51

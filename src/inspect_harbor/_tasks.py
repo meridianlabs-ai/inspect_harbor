@@ -602,6 +602,37 @@ def algotune(
 
 
 @task
+def alibaba_aaig_alibaba_ctf(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) for evaluating agents on offensive security work.
+
+    Slug: alibaba-aaig/alibaba-ctf
+    Latest digest: sha256:0ed81adec26414f007637259ea77814b8ff5897dfb29b82c5720a542c30d649a
+    """
+    return _harbor_base(
+        package_name="alibaba-aaig/alibaba-ctf",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def android_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -912,6 +943,37 @@ def binary_audit(
 
 
 @task
+def blobfishai_counselbench_100(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""100 high-level legal-agent tasks with 97-asset multi-provider evidence rooms, distinct deep trajectories, and native causal state verification.
+
+    Slug: blobfishai/counselbench-100
+    Latest digest: sha256:0e2b7e78bbde84c1691ad016f7b2344e5570b98b5545a33ef783a0687e60b6e8
+    """
+    return _harbor_base(
+        package_name="blobfishai/counselbench-100",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def blobfishai_dealbench_100_suite(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1085,6 +1147,99 @@ def blobfishai_hubbench(
     """
     return _harbor_base(
         package_name="blobfishai/hubbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def blobfishai_ledgerbench_100(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""100 causal corporate-finance workflows over a closed ERP sandbox: provider-shaped MCP tools, distributed evidence, exact state transitions, and no LLM judge.
+
+    Slug: blobfishai/ledgerbench-100
+    Latest digest: sha256:5e685691b3032c91489b8098947a08faabe9da131f6140c2ac54e1ac0092f693
+    """
+    return _harbor_base(
+        package_name="blobfishai/ledgerbench-100",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def blobfishai_litigation(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Executable litigation environments for agent training and evaluation. 100 long-horizon tasks, a median of 108 verified tool-calling steps each, worked across eight systems of record (Clio Manage, iManage Work, CM/ECF, Google Calendar, Docusign, Relativity, CourtListener and nine litigation sub-systems). Graded by deterministic state-diff and trace assertions — no LLM judge on the reward path.
+
+    Slug: blobfishai/litigation
+    Latest digest: sha256:53d0cd3433b743c42671d10ef1b4de874c447b4994020f702cb5a31e7bf1ba0c
+    """
+    return _harbor_base(
+        package_name="blobfishai/litigation",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def blobfishai_salesbench_100(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""100 high-level sales operations requests with evidence-determined multi-system trajectories.
+
+    Slug: blobfishai/salesbench-100
+    Latest digest: sha256:1aafe58cb4a5578a8f5f2931f175e834dae8b83d7cf65b6a96e9e6dacaf59623
+    """
+    return _harbor_base(
+        package_name="blobfishai/salesbench-100",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -2710,7 +2865,7 @@ def livecodebench(
 
 
 @task
-def long_horizon_terminal_bench_lhtb(
+def long_horizon_terminal_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -3162,6 +3317,37 @@ def orca_bench(
     """
     return _harbor_base(
         package_name="orca-bench/orca-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def orca_bench_verified(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ORCA-bench Verified: root-cause analysis of oncall incidents — agents investigate telemetry from an instrumented microservices system to diagnose each incident; verified split of 40 tasks across 40 incidents (10 easy, 15 medium, 15 hard).
+
+    Slug: orca-bench/orca-bench-verified
+    Latest digest: sha256:263a25d01329e4409bc03bfcd9e6d9771d189f6060a4b2db831b5e89783f7162
+    """
+    return _harbor_base(
+        package_name="orca-bench/orca-bench-verified",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -4297,6 +4483,37 @@ def terminal_bench_pro(
 
 
 @task
+def terminal_bench_science(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathematical, and engineering sciences.
+
+    Slug: terminal-bench-science/terminal-bench-science
+    Latest digest: sha256:91531bf50016a7c64f6cc60794a17c64c6b2c14858a8ae0de39ca16f2abd611a
+    """
+    return _harbor_base(
+        package_name="terminal-bench-science/terminal-bench-science",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def theagentcompany(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -4594,37 +4811,6 @@ def webgen_bench(
     """
     return _harbor_base(
         package_name="webgen-bench/webgen-bench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def withmartian_clojure_swerebench_v2_validated_51(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""51 Clojure SWE-rebench V2 tasks validated for coding-agent evaluation.
-
-    Slug: withmartian/clojure-swerebench-v2-validated-51
-    Latest digest: sha256:19afdbd2ebc7e7ab49af2a44339c163a6c12cc84fc03b27490ccc4a6bcb71eb8
-    """
-    return _harbor_base(
-        package_name="withmartian/clojure-swerebench-v2-validated-51",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
