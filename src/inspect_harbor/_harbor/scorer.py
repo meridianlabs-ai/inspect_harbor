@@ -141,27 +141,16 @@ def harbor_scorer(
 
 
 async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
-    """Run ``[[verifier.collect]]`` hooks and, in separate mode, reset the repo.
+    """Run ``[[verifier.collect]]`` hooks, then reset the repo in separate mode.
 
-    Harbor runs collect hooks in their target service after the agent phase
-    ends and before verification, so artifacts such as a ``model.patch`` exist
-    when the test script runs. As in Harbor, hooks are best-effort: a hook that
-    exits non-zero, times out or fails to start is logged and scoring
-    continues (the verifier then grades without that artifact).
-
-    When the verifier resolves to ``separate`` mode, Harbor then runs it in a
-    fresh container at the base commit. Everything here runs in the agent's
-    container, so after collecting we approximate that by resetting the repo
-    to ``metadata.base_commit_hash`` and removing untracked files. Verifiers
-    written for separate mode depend on this: DeepSWE's grader only resets
-    paths that exist at the base commit before ``git apply model.patch``, so
-    files the agent created would otherwise make the apply fail with
-    "already exists in working directory" (observed with the oracle solver).
-
-    Known limits of the approximation: build-time edits to tracked files (which
-    a fresh verifier image would still have) survive only if the agent
-    committed them, which DeepSWE's instructions require; and a multi-attempt
-    solver sees the reset tree on its next attempt.
+    Mirrors Harbor: hooks run in the main service after the agent phase and are
+    best-effort (failures are logged, scoring continues). In ``separate``
+    verifier mode Harbor then verifies in a fresh container at the base commit;
+    everything here shares the agent's container, so we approximate that with
+    ``git checkout -f <base_commit_hash> && git clean -fd``. Without it, graders
+    such as DeepSWE's fail to apply ``model.patch`` over files the agent created.
+    Limits: build-time edits to tracked files survive only if the agent committed
+    them, and a multi-attempt solver sees the reset tree on its next attempt.
     """
     try:
         task_cfg = TaskConfig.model_validate(harbor_config)
