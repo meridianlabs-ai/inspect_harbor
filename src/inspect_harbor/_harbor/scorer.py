@@ -6,8 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from harbor.constants import MAIN_SERVICE_NAME
-from harbor.models.task.config import TaskConfig, VerifierEnvironmentMode
-from harbor.models.task.verifier_mode import resolve_task_verifier_mode
+from harbor.models.task.config import TaskConfig
 from harbor.models.trial.paths import EnvironmentPaths
 from inspect_ai.scorer import Score, Scorer, Target, accuracy, scorer, stderr
 from inspect_ai.solver import TaskState
@@ -93,12 +92,14 @@ def harbor_scorer(
                 f"Test path {test_path} is not relative to tests directory {tests_dir}"
             ) from e
 
-        # Create Harbor's standard log directories. Harbor bind-mounts and
-        # pre-creates /logs/artifacts, so create it here too since collect
-        # hooks may assume it exists.
+        # Create Harbor's standard log directories. Harbor bind-mounts
+        # /logs/artifacts and chmods it world-writable so collect hooks running
+        # as a non-root user can write there; mirror that here.
         await sandbox().exec(["mkdir", "-p", "/logs/agent"])
         await sandbox().exec(["mkdir", "-p", "/logs/verifier"])
-        await sandbox().exec(["mkdir", "-p", "/logs/artifacts"])
+        await sandbox().exec(
+            ["sh", "-c", "mkdir -p /logs/artifacts && chmod 0777 /logs/artifacts"]
+        )
 
         # Run [[verifier.collect]] hooks to gather artifacts (e.g. model.patch)
         harbor_config = state.metadata.get("harbor_config")
@@ -129,7 +130,7 @@ def harbor_scorer(
             metadata={"reward_dict": reward_dict} if reward_dict else None,
         )
 
-        await cleanup_sandbox_directories("/tests", "/logs/verifier")
+        await cleanup_sandbox_directories("/tests", "/logs/verifier", "/logs/artifacts")
         await cleanup_sandbox_env_vars(list(verifier_env.keys()))
 
         return score_result
@@ -138,24 +139,35 @@ def harbor_scorer(
 
 
 async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
-    """Run ``[[verifier.collect]]`` hooks and, in separate mode, reset the repo.
+    """Run ``[[verifier.collect]]`` hooks in the main compose service.
 
-    Harbor runs collect hooks in their target compose service after the agent
-    phase ends and before verification, then, when the verifier runs in
-    ``separate`` mode, builds the verifier in a fresh container at the base
-    commit. We share a single container, so we run the hooks here and
-    approximate the fresh verifier container by resetting the repo to the base
-    commit. The reset is only an approximation: Harbor's separate verifier may
-    use a different image than the agent container.
+    Harbor runs collect hooks in their target service after the agent phase
+    ends and before verification, so artifacts such as a ``model.patch`` exist
+    when the test script runs. As in Harbor, hooks are best-effort: a hook that
+    exits non-zero, times out or fails to start is logged and scoring
+    continues (the verifier then grades without that artifact).
+
+    Harbor's ``separate`` verifier mode (a fresh verifier container) is not
+    reproduced: everything here runs in the agent's container, so verifiers
+    written for separate mode must reset whatever state they depend on, as
+    DeepSWE's grader does per file. A repo-wide reset to the base commit was
+    deliberately left out: it would discard build-time edits to tracked files
+    (which Harbor's verifier image keeps) and wipe the agent's work between
+    attempts of a multi-attempt solver.
     """
-    task_cfg = TaskConfig.model_validate(harbor_config)
-    collect_steps = task_cfg.verifier.collect
-    if not collect_steps:
+    try:
+        task_cfg = TaskConfig.model_validate(harbor_config)
+    except ValueError as exc:  # pydantic.ValidationError
+        logger.warning(
+            "Skipping verifier.collect hooks: harbor_config failed validation: %s",
+            exc,
+        )
         return
 
-    workdir = task_cfg.environment.workdir or "/app"
+    # None -> the container's WORKDIR, matching Harbor's exec default.
+    workdir = task_cfg.environment.workdir
 
-    for step in collect_steps:
+    for step in task_cfg.verifier.collect:
         # ``sandbox()`` only addresses the default (main) compose service, so
         # hooks targeting a sidecar can't be honored here.
         if step.service != MAIN_SERVICE_NAME:
@@ -168,11 +180,19 @@ async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
 
         # Harbor runs collect hooks as ``hook.user`` (falling back to the
         # container's default user), not the agent user.
-        result = await sandbox().exec(
-            ["bash", "-c", step.command],
-            timeout=int(step.timeout_sec),
-            user=_user_to_str(step.user),
-        )
+        try:
+            result = await sandbox().exec(
+                ["bash", "-c", step.command],
+                timeout=int(step.timeout_sec),
+                user=_user_to_str(step.user),
+                cwd=workdir,
+            )
+        except Exception as exc:
+            # e.g. TimeoutError raised by the sandbox when the hook overruns
+            logger.warning(
+                "verifier.collect hook failed to run (%s): %r", exc, step.command
+            )
+            continue
         if result.returncode != 0:
             logger.warning(
                 "verifier.collect hook exited %d: %r\nstdout:\n%s\nstderr:\n%s",
@@ -181,32 +201,6 @@ async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
                 result.stdout,
                 result.stderr,
             )
-
-    # Only reset in separate mode; in shared mode Harbor verifies against the
-    # agent's environment, so wiping its work would grade the pristine base.
-    if resolve_task_verifier_mode(task_cfg) != VerifierEnvironmentMode.SEPARATE:
-        return
-
-    base_commit = task_cfg.metadata.get("base_commit_hash")
-    if not base_commit:
-        return
-
-    # The agent may have committed as a non-root user, so mark the repo safe to
-    # avoid git's "dubious ownership" error when resetting as the default user.
-    reset_cmd = (
-        f"cd {workdir} && "
-        "git config --global --add safe.directory '*' && "
-        f"git checkout -f {base_commit} && git clean -fd"
-    )
-    result = await sandbox().exec(["bash", "-c", reset_cmd], timeout=60)
-    if result.returncode != 0:
-        logger.warning(
-            "repo reset to base commit %r exited %d\nstdout:\n%s\nstderr:\n%s",
-            base_commit,
-            result.returncode,
-            result.stdout,
-            result.stderr,
-        )
 
 
 async def _parse_reward_file(exit_code: int) -> tuple[float, dict[str, Any] | None]:
