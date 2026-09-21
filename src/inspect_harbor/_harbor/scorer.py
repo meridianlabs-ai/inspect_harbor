@@ -2,11 +2,13 @@
 
 import json
 import logging
+import shlex
 from pathlib import Path
 from typing import Any
 
 from harbor.constants import MAIN_SERVICE_NAME
-from harbor.models.task.config import TaskConfig
+from harbor.models.task.config import TaskConfig, VerifierEnvironmentMode
+from harbor.models.task.verifier_mode import resolve_task_verifier_mode
 from harbor.models.trial.paths import EnvironmentPaths
 from inspect_ai.scorer import Score, Scorer, Target, accuracy, scorer, stderr
 from inspect_ai.solver import TaskState
@@ -139,7 +141,7 @@ def harbor_scorer(
 
 
 async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
-    """Run ``[[verifier.collect]]`` hooks in the main compose service.
+    """Run ``[[verifier.collect]]`` hooks and, in separate mode, reset the repo.
 
     Harbor runs collect hooks in their target service after the agent phase
     ends and before verification, so artifacts such as a ``model.patch`` exist
@@ -147,13 +149,19 @@ async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
     exits non-zero, times out or fails to start is logged and scoring
     continues (the verifier then grades without that artifact).
 
-    Harbor's ``separate`` verifier mode (a fresh verifier container) is not
-    reproduced: everything here runs in the agent's container, so verifiers
-    written for separate mode must reset whatever state they depend on, as
-    DeepSWE's grader does per file. A repo-wide reset to the base commit was
-    deliberately left out: it would discard build-time edits to tracked files
-    (which Harbor's verifier image keeps) and wipe the agent's work between
-    attempts of a multi-attempt solver.
+    When the verifier resolves to ``separate`` mode, Harbor then runs it in a
+    fresh container at the base commit. Everything here runs in the agent's
+    container, so after collecting we approximate that by resetting the repo
+    to ``metadata.base_commit_hash`` and removing untracked files. Verifiers
+    written for separate mode depend on this: DeepSWE's grader only resets
+    paths that exist at the base commit before ``git apply model.patch``, so
+    files the agent created would otherwise make the apply fail with
+    "already exists in working directory" (observed with the oracle solver).
+
+    Known limits of the approximation: build-time edits to tracked files (which
+    a fresh verifier image would still have) survive only if the agent
+    committed them, which DeepSWE's instructions require; and a multi-attempt
+    solver sees the reset tree on its next attempt.
     """
     try:
         task_cfg = TaskConfig.model_validate(harbor_config)
@@ -201,6 +209,38 @@ async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
                 result.stdout,
                 result.stderr,
             )
+
+    # Only reset in separate mode; in shared mode Harbor verifies against the
+    # agent's environment, so wiping its work would grade the pristine base.
+    if resolve_task_verifier_mode(task_cfg) != VerifierEnvironmentMode.SEPARATE:
+        return
+
+    base_commit = task_cfg.metadata.get("base_commit_hash")
+    if not base_commit:
+        return
+
+    # The agent may have committed as a non-root user, so mark the repo safe to
+    # avoid git's "dubious ownership" error when resetting as the default user.
+    reset_cmd = (
+        f"cd {shlex.quote(workdir or '/app')} && "
+        "git config --global --add safe.directory '*' && "
+        f"git checkout -f {shlex.quote(str(base_commit))} && git clean -fd"
+    )
+    try:
+        result = await sandbox().exec(["bash", "-c", reset_cmd], timeout=60)
+    except Exception as exc:
+        logger.warning(
+            "repo reset to base commit %r failed to run: %s", base_commit, exc
+        )
+        return
+    if result.returncode != 0:
+        logger.warning(
+            "repo reset to base commit %r exited %d\nstdout:\n%s\nstderr:\n%s",
+            base_commit,
+            result.returncode,
+            result.stdout,
+            result.stderr,
+        )
 
 
 async def _parse_reward_file(exit_code: int) -> tuple[float, dict[str, Any] | None]:

@@ -1032,7 +1032,7 @@ async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
 
 @pytest.mark.asyncio
 async def test_harbor_scorer_runs_verifier_collect(tmp_path: Path) -> None:
-    """Collect hooks run after the log dirs and before the test script, as in Harbor."""
+    """Separate-mode collect hooks run after log dirs, then the repo resets to base."""
     tests_dir = tmp_path / "tests"
     tests_dir.mkdir()
     test_script = tests_dir / "test.sh"
@@ -1103,9 +1103,14 @@ async def test_harbor_scorer_runs_verifier_collect(tmp_path: Path) -> None:
     assert exec_calls[3]["kwargs"]["user"] is None
     assert exec_calls[3]["kwargs"]["timeout"] == 120
     assert exec_calls[3]["kwargs"]["cwd"] is None
-    # Separate mode + base_commit_hash: the repo is NOT reset (see scorer docstring)
-    assert cmds[4] == ["bash", "-l", "/tests/test.sh"]
-    assert not any("git checkout" in " ".join(cmd) for cmd in cmds)
+    # Separate mode + base_commit_hash: reset to base after collecting, before test.sh
+    assert exec_calls[4]["cmd"] == [
+        "bash",
+        "-c",
+        f"cd /app && git config --global --add safe.directory '*' && "
+        f"git checkout -f {base_commit} && git clean -fd",
+    ]
+    assert cmds[5] == ["bash", "-l", "/tests/test.sh"]
 
 
 @pytest.mark.asyncio
@@ -1158,13 +1163,8 @@ async def test_harbor_scorer_collect_coerces_int_user(tmp_path: Path) -> None:
 
 
 @pytest.mark.asyncio
-async def test_harbor_scorer_separate_mode_does_not_reset_repo(tmp_path: Path) -> None:
-    """A separate-mode task with collect + base_commit never resets the repo.
-
-    Everything runs in the agent's container; a repo-wide reset would discard
-    build-time edits and the agent's work between attempts, so the scorer
-    leaves the tree alone and verifiers reset what they need themselves.
-    """
+async def test_harbor_scorer_shared_mode_no_reset(tmp_path: Path) -> None:
+    """A shared-mode task with collect + base_commit does not reset the repo."""
     tests_dir = tmp_path / "tests"
     tests_dir.mkdir()
     test_script = tests_dir / "test.sh"
@@ -1177,8 +1177,8 @@ async def test_harbor_scorer_separate_mode_does_not_reset_repo(tmp_path: Path) -
         "verifier_timeout_sec": 60,
         "harbor_config": {
             "metadata": {"base_commit_hash": "abc123"},
+            # No environment_mode / environment -> resolves to "shared".
             "verifier": {
-                "environment_mode": "separate",
                 "collect": [{"command": "echo collect"}],
             },
         },
