@@ -1389,6 +1389,13 @@
   categories:
   - Coding
   - Assistants
+- title: terminal-bench/terminal-bench-cpu-only
+  path: registry/terminal_bench_terminal_bench_cpu_only.html
+  desc: The subset of Terminal-Bench tasks.
+  desc_trunc: The subset of Terminal-Bench tasks.
+  task_function: terminal_bench_terminal_bench_cpu_only
+  samples: 63
+  version: latest
 - title: terminal-bench-pro/terminal-bench-pro
   path: registry/terminal_bench_pro.html
   desc: 'Terminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientific computing, SWE, ML, and security — extending Terminal-Bench with harder real-world scenarios.'
