@@ -1214,7 +1214,14 @@ terminal-bench/terminal-bench-2-1:
   title: Terminal-Bench v2.1
 
 terminal-bench/terminal-bench-cpu-only:
-  categories: []
+  categories:
+  - Coding
+  - Assistants
+  arxiv: https://arxiv.org/abs/2601.11868
+  repo: https://github.com/harbor-framework/terminal-bench
+  desc: 'Terminal-Bench (CPU-only): the current Terminal-Bench task set minus the 3 tasks that require an H100 GPU, so the full suite runs on CPU-only sandboxes.'
+  function_name: terminal_bench_cpu_only
+  title: Terminal-Bench (CPU-only)
 
 theagentcompany/theagentcompany:
   categories:

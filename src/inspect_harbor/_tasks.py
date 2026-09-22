@@ -4483,7 +4483,7 @@ def terminal_bench_2_1(
 
 
 @task
-def terminal_bench_terminal_bench_cpu_only(
+def terminal_bench_cpu_only(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -4494,7 +4494,7 @@ def terminal_bench_terminal_bench_cpu_only(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""The subset of Terminal-Bench tasks.
+    r"""Terminal-Bench (CPU-only): the current Terminal-Bench task set minus the 3 tasks that require an H100 GPU, so the full suite runs on CPU-only sandboxes.
 
     Slug: terminal-bench/terminal-bench-cpu-only
     Latest digest: sha256:b440941ff70a00335fa906e3b1a5407c3e72c20e975fa4d7d61b803bf80dd5b5
