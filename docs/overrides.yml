@@ -1191,7 +1191,7 @@ terminal-bench/terminal-bench:
   arxiv: https://arxiv.org/abs/2601.11868
   repo: https://github.com/harbor-framework/terminal-bench
   function_name: terminal_bench
-  title: Terminal-Bench v1
+  title: Terminal-Bench (latest)
 
 terminal-bench/terminal-bench-2:
   categories:
