@@ -4483,6 +4483,37 @@ def terminal_bench_2_1(
 
 
 @task
+def terminal_bench_cpu_only(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Terminal-Bench (CPU-only): the current Terminal-Bench task set minus the 3 tasks that require an H100 GPU, so the full suite runs on CPU-only sandboxes.
+
+    Slug: terminal-bench/terminal-bench-cpu-only
+    Latest digest: sha256:b440941ff70a00335fa906e3b1a5407c3e72c20e975fa4d7d61b803bf80dd5b5
+    """
+    return _harbor_base(
+        package_name="terminal-bench/terminal-bench-cpu-only",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def terminal_bench_pro(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
