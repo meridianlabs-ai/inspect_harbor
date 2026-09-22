@@ -614,3 +614,44 @@ def test_harbor_task_with_overrides():
     assert len(service.deploy.resources.reservations.devices) == 1
     device = service.deploy.resources.reservations.devices[0]
     assert device.count == 2
+
+
+def test_load_from_package_with_dataset_filters():
+    """Task filters apply to hub packages, as the generated task functions rely on."""
+    with (
+        patch("inspect_harbor._harbor.task._load_from_package") as mock_load_package,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        task_path = Path("/cache/hub/acme/bench/abc")
+        mock_load_package.return_value = [task_path]
+        mock_harbor_task.return_value = _make_harbor_task_mock(
+            name="acme/bench", task_dir=task_path
+        )
+
+        load_harbor_tasks(
+            package_name="acme/bench",
+            package_ref="3",
+            dataset_task_names=["acme/b*"],
+            dataset_exclude_task_names=["acme/bad"],
+            n_tasks=4,
+        )
+
+        mock_load_package.assert_called_once_with(
+            "acme/bench", "3", ["acme/b*"], ["acme/bad"], 4, False
+        )
+
+
+def test_dataset_filters_alone_are_an_error():
+    """Filters need a dataset source to apply to."""
+    with pytest.raises(ValueError, match="dataset_task_names.*without also"):
+        load_harbor_tasks(dataset_task_names=["x"])
+    with pytest.raises(ValueError, match="dataset_exclude_task_names.*without also"):
+        load_harbor_tasks(dataset_exclude_task_names=["x"])
+
+
+def test_dataset_filters_with_git_task_are_an_error():
+    """A single git task has nothing to filter."""
+    with pytest.raises(ValueError, match="single git task"):
+        load_harbor_tasks(
+            path="task", task_git_url="https://github.com/org/repo", n_tasks=1
+        )

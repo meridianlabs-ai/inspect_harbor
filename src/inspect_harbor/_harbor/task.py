@@ -148,22 +148,41 @@ def load_harbor_tasks(
     path, registry_path = _normalize_paths(path, registry_path)
 
     task_specified: bool = task_git_url is not None or task_git_commit_id is not None
-    dataset_specified: bool = (
+    registry_specified: bool = (
         dataset_name_version is not None
         or registry_url is not None
         or registry_path is not None
-        or dataset_task_names is not None
-        or dataset_exclude_task_names is not None
     )
     package_specified: bool = package_name is not None
+    # Filters apply to any dataset source (local dir, registry, or package).
+    filters_specified: bool = (
+        dataset_task_names is not None
+        or dataset_exclude_task_names is not None
+        or n_tasks is not None
+    )
 
-    sources = sum([task_specified, dataset_specified, package_specified])
+    sources = sum([task_specified, registry_specified, package_specified])
     if sources > 1:
         raise ValueError(
             "Cannot mix task, dataset, and package parameters. "
             f"Task params: git_url={task_git_url}, commit={task_git_commit_id}. "
             f"Dataset params: name_version={dataset_name_version}, registry_url={registry_url}. "
             f"Package params: package_name={package_name}, package_ref={package_ref}."
+        )
+    if task_specified and filters_specified:
+        raise ValueError(
+            "dataset_task_names, dataset_exclude_task_names, and n_tasks do not "
+            "apply to a single git task"
+        )
+    if (
+        filters_specified
+        and path is None
+        and not registry_specified
+        and not package_specified
+    ):
+        raise ValueError(
+            "Cannot specify dataset_task_names, dataset_exclude_task_names, or "
+            "n_tasks without also specifying path, dataset_name_version, or package_name"
         )
 
     if path is not None:
@@ -184,7 +203,7 @@ def load_harbor_tasks(
     if task_specified:
         raise ValueError("Task configuration with task_git_url requires path parameter")
 
-    if dataset_specified:
+    if registry_specified:
         if dataset_name_version is None:
             raise ValueError(
                 "Cannot specify registry_url, registry_path, dataset_task_names, or "
