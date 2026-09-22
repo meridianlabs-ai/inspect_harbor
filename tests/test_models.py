@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 from inspect_harbor._harbor.models import (
+    MAIN_SERVICE_NAME,
     NetworkMode,
     PackageInfo,
     TaskConfig,
@@ -306,3 +307,42 @@ def test_model_dump_is_json_friendly() -> None:
     dumped = TaskConfig.from_toml(FIXTURE_TOML).model_dump()
     assert dumped["environment"]["network_mode"] == "no-network"
     assert dumped["environment"]["os"] == "linux"
+
+
+def test_verifier_collect_hooks() -> None:
+    """``[[verifier.collect]]`` hooks parse with Harbor's defaults and validation."""
+    config = TaskConfig.from_toml(
+        "\n".join(
+            [
+                "[[verifier.collect]]",
+                'command = "pg_dump > /logs/artifacts/db.sql"',
+                "[[verifier.collect]]",
+                'command = "echo hi"',
+                'service = "sidecar"',
+                "timeout_sec = 5",
+                "user = 1000",
+            ]
+        )
+    )
+    first, second = config.verifier.collect
+    assert first.command == "pg_dump > /logs/artifacts/db.sql"
+    assert first.service == MAIN_SERVICE_NAME == "main"
+    assert first.timeout_sec == 60.0
+    assert first.user is None
+    assert second.service == "sidecar"
+    assert second.timeout_sec == 5
+    assert second.user == 1000
+    # The metadata round trip the scorer relies on.
+    assert TaskConfig.model_validate(config.model_dump()).verifier.collect == [
+        first,
+        second,
+    ]
+
+
+@pytest.mark.parametrize("service", ["", "  ", "-bad", "has space", "a/b"])
+def test_verifier_collect_rejects_bad_service_names(service: str) -> None:
+    """Service names follow compose rules and must not be empty."""
+    with pytest.raises(ValidationError, match="service"):
+        TaskConfig.from_toml(
+            f'[[verifier.collect]]\ncommand = "x"\nservice = "{service}"\n'
+        )
