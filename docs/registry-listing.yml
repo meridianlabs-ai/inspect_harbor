@@ -292,6 +292,16 @@
   version: latest
   categories:
   - Cybersecurity
+- title: biopharma-bench/biopharma-bench
+  path: registry/biopharma_bench.html
+  desc: Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. The company date is 8 February 2026. An agent takes an employee's seat and writes the document that seat is responsible for.
+  desc_trunc: Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. T…
+  task_function: biopharma_bench
+  samples: 10
+  version: latest
+  categories:
+  - Professional
+  - Medicine
 - title: blobfishai/arc-crm-6
   path: registry/blobfishai_arc_crm_6.html
   desc: Six independently authored synthetic CRM workflows on one mocked CLI/web/REST/MCP world per episode. Partial Arc-inspired coverage, not source-row reproduction.

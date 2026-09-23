@@ -286,6 +286,14 @@ binary-audit/binary-audit:
   function_name: binary_audit
   title: BinaryAudit
 
+biopharma-bench/biopharma-bench:
+  categories:
+  - Professional
+  - Medicine
+  function_name: biopharma_bench
+  title: Biopharma Bench
+  repo: https://huggingface.co/datasets/raycasterai/biopharma-bench
+
 blobfishai/arc-crm-6:
   categories:
   - Assistants
