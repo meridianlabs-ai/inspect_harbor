@@ -28,8 +28,6 @@ logger = logging.getLogger(__name__)
 _DEFAULT_VERIFIER_ENV: dict[str, str] = {
     "TEST_DIR": str(EnvironmentPaths().tests_dir),
 }
-# Where Harbor's verifier redirects the test script's output.
-_TEST_STDOUT_PATH = str(EnvironmentPaths().verifier_dir / "test-stdout.txt")
 
 
 class CopyTestsDirError(Exception):
@@ -117,17 +115,14 @@ def harbor_scorer(
         verifier_env = {**_DEFAULT_VERIFIER_ENV, **resolved_user_env}
         verifier_user = state.metadata.get("verifier_user")
 
-        # Run the script the way Harbor's verifier does: make it executable,
-        # exec it directly so its shebang picks the interpreter, and redirect
-        # its output to /logs/verifier/test-stdout.txt. Harbor chmods as root;
-        # we only switch user when the task sets [verifier].user, because on
-        # some Inspect sandbox providers a user switch needs sudo or su in the
-        # image, and a task without a verifier user never needed either.
+        # Exec the script directly, as Harbor's verifier does, so its shebang
+        # picks the interpreter. Harbor chmods as root; we only switch user when
+        # the task sets [verifier].user, because on some Inspect sandbox
+        # providers a user switch needs sudo or su in the image, and a task
+        # without a verifier user never needed either. A script that still is
+        # not executable runs under bash, as it always did here.
         script = shlex.quote(container_test_path)
-        run = (
-            f"if [ -x {script} ]; then {script}; else bash {script}; fi"
-            f" > {_TEST_STDOUT_PATH} 2>&1"
-        )
+        run = f"if [ -x {script} ]; then {script}; else bash {script}; fi"
         if verifier_user is None:
             command = f"chmod +x {script} 2>/dev/null; {run}"
         else:
@@ -139,7 +134,6 @@ def harbor_scorer(
             env=verifier_env,
             user=verifier_user,
         )
-        test_output = await _read_optional(_TEST_STDOUT_PATH)
 
         reward_value, reward_dict = await _parse_reward_file(result.returncode)
         passed = reward_value > 0
@@ -149,7 +143,7 @@ def harbor_scorer(
             answer="PASS" if passed else "FAIL",
             explanation=(
                 f"Test exit code: {result.returncode}\n\n"
-                f"test-stdout.txt:\n{test_output}\n\nstderr:\n{result.stderr}"
+                f"stdout:\n{result.stdout}\n\nstderr:\n{result.stderr}"
             ),
             metadata={"reward_dict": reward_dict} if reward_dict else None,
         )
@@ -256,14 +250,6 @@ async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
             result.stdout,
             result.stderr,
         )
-
-
-async def _read_optional(path: str) -> str:
-    """Read a sandbox file, or return ``""`` when it does not exist."""
-    try:
-        return await sandbox().read_file(path)
-    except FileNotFoundError:
-        return ""
 
 
 async def _parse_reward_file(exit_code: int) -> tuple[float, dict[str, Any] | None]:

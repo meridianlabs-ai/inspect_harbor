@@ -26,11 +26,9 @@ from inspect_harbor._harbor.scorer import (
 
 REWARD_TXT = "/logs/verifier/reward.txt"
 REWARD_JSON = "/logs/verifier/reward.json"
-TEST_STDOUT = "/logs/verifier/test-stdout.txt"
 CHMOD_TEST = ["chmod", "+x", "/tests/test.sh"]
 _RUN_BODY = (
     "if [ -x /tests/test.sh ]; then /tests/test.sh; else bash /tests/test.sh; fi"
-    f" > {TEST_STDOUT} 2>&1"
 )
 # Without a [verifier].user the chmod rides in the same exec as the run.
 RUN_TEST = ["sh", "-c", f"chmod +x /tests/test.sh 2>/dev/null; {_RUN_BODY}"]
@@ -501,7 +499,7 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
 
             # Verify cleanup was called AFTER scoring. Sequence:
             # mkdir /logs/agent, mkdir /logs/verifier, mkdir /logs/artifacts,
-            # run test.sh (chmod + exec, output to test-stdout.txt),
+            # run test.sh (chmod + direct exec),
             # rm /tests, rm /logs/verifier, rm /logs/artifacts, then unset each
             # default env var (currently just TEST_DIR).
             assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
