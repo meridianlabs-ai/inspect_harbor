@@ -655,3 +655,34 @@ def test_dataset_filters_with_git_task_are_an_error():
         load_harbor_tasks(
             path="task", task_git_url="https://github.com/org/repo", n_tasks=1
         )
+
+
+def test_broken_single_task_dir_raises_instead_of_empty_dataset(
+    tmp_path: Path,
+) -> None:
+    """A directory with a bad task.toml is a broken task, not an empty dataset."""
+    task_dir = tmp_path / "task"
+    (task_dir / "environment").mkdir(parents=True)
+    (task_dir / "task.toml").write_text("[environment\n")
+    with pytest.raises(ValueError, match="Invalid TOML"):
+        load_harbor_tasks(path=task_dir)
+
+
+def test_bare_string_filters_are_accepted():
+    """``-T dataset_task_names=foo`` arrives as a string and means ``[foo]``."""
+    with (
+        patch("inspect_harbor._harbor.task._load_from_package") as mock_load_package,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        mock_load_package.return_value = [Path("/cache/x")]
+        mock_harbor_task.return_value = _make_harbor_task_mock(
+            task_dir=Path("/cache/x")
+        )
+        load_harbor_tasks(
+            package_name="acme/bench",
+            dataset_task_names="acme/b*",
+            dataset_exclude_task_names="acme/bad",
+        )
+        mock_load_package.assert_called_once_with(
+            "acme/bench", "latest", ["acme/b*"], ["acme/bad"], None, False
+        )

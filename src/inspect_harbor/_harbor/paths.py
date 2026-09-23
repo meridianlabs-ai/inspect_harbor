@@ -63,6 +63,14 @@ class TaskPaths:
         """Path to the ``steps/`` directory of a multi-step task."""
         return self.task_dir / "steps"
 
+    def step_dir(self, step_name: str) -> Path:
+        """Path to one step's directory."""
+        return self.steps_dir / step_name
+
+    def step_instruction_path(self, step_name: str) -> Path:
+        """Path to one step's ``instruction.md``."""
+        return self.step_dir(step_name) / "instruction.md"
+
 
 @dataclass(frozen=True)
 class EnvironmentPaths:

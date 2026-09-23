@@ -69,6 +69,9 @@ def registry_file(tmp_path: Path) -> Path:
         (["0.1", "0.2.1", "0.2"], "0.2.1"),
         (["b", "a", "c"], "c"),
         (["1.0", "zzz"], "1.0"),
+        (["v1", "0.5"], "v1"),
+        (["1.0rc1", "1.0"], "1.0"),
+        (["1.0", "1.0.0"], "1.0"),
     ],
 )
 def test_resolve_version(versions: list[str], expected: str) -> None:
@@ -122,6 +125,29 @@ async def test_load_registry_from_url_is_cached(isolated_cache: Path) -> None:
     assert calls == 2
     await load_registry(url=url, overwrite=True, client=client)
     assert calls == 3
+
+
+@pytest.mark.parametrize(
+    "bad_body,match",
+    [
+        (b"<html>outage</html>", "not valid JSON"),
+        (b'{"name": "x"}', "must be a JSON list"),
+    ],
+)
+async def test_bad_registry_body_is_not_cached(bad_body: bytes, match: str) -> None:
+    """A bad response fails loudly and the next fetch is not poisoned by cache."""
+    bodies = [bad_body, json.dumps(REGISTRY).encode()]
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, content=bodies.pop(0))
+
+    client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+    url = "https://example.test/registry.json"
+    with pytest.raises(ValueError, match=match):
+        await load_registry(url=url, client=client)
+    datasets = await load_registry(url=url, client=client)
+    assert [d.name for d in datasets] == ["aime", "aime", "other"]
+    assert not bodies
 
 
 async def test_load_registry_url_error_propagates() -> None:

@@ -5,7 +5,11 @@ from pathlib import Path
 import pytest
 from helpers import make_task
 from inspect_harbor._harbor.cache import cache_root, stable_key
-from inspect_harbor._harbor.local import filter_task_names, list_local_dataset_tasks
+from inspect_harbor._harbor.local import (
+    filter_entries,
+    filter_task_names,
+    list_local_dataset_tasks,
+)
 
 
 def test_cache_root_default(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -49,6 +53,15 @@ def test_filter_task_names_include_exclude_and_limit() -> None:
     assert filter_task_names(names, ["*-*"], None, 1) == ["alpha-1"]
 
 
+def test_filter_entries_keeps_duplicates_apart() -> None:
+    """Entries sharing a name are filtered one by one, so ``n_tasks`` holds."""
+    entries = [("hello", 1), ("hello", 2), ("other", 3)]
+    kept = filter_entries(entries, lambda e: e[0], None, None, 1)
+    assert kept == [("hello", 1)]
+    kept = filter_entries(entries, lambda e: e[0], ["hello"], None, None)
+    assert kept == [("hello", 1), ("hello", 2)]
+
+
 def test_filter_task_names_no_match_raises() -> None:
     """An include filter matching nothing is an error that lists examples."""
     with pytest.raises(ValueError, match=r"No tasks matched.*Example task names"):
@@ -60,7 +73,9 @@ def test_filter_task_names_exclude_everything_is_not_an_error() -> None:
     assert filter_task_names(["a"], None, ["*"], None) == []
 
 
-def test_list_local_dataset_tasks(tmp_path: Path) -> None:
+def test_list_local_dataset_tasks(
+    tmp_path: Path, caplog: pytest.LogCaptureFixture
+) -> None:
     """Only valid task dirs are listed, sorted, and filtered by dir name."""
     make_task(tmp_path, dirname="t-b")
     make_task(tmp_path, dirname="t-a")
@@ -69,11 +84,12 @@ def test_list_local_dataset_tasks(tmp_path: Path) -> None:
     (tmp_path / "loose-file").write_text("x")
     broken = make_task(tmp_path, dirname="broken", with_test=False)
 
-    assert list_local_dataset_tasks(tmp_path, None, None, None, False) == [
-        tmp_path / "skip-me",
-        tmp_path / "t-a",
-        tmp_path / "t-b",
-    ]
+    with caplog.at_level("WARNING", logger="inspect_harbor._harbor.local"):
+        listed = list_local_dataset_tasks(tmp_path, None, None, None, False)
+    assert listed == [tmp_path / "skip-me", tmp_path / "t-a", tmp_path / "t-b"]
+    # The task-like child without tests is reported, the plain dir is not.
+    assert "Skipping" in caplog.text and "broken" in caplog.text
+    assert "not-a-task" not in caplog.text
     assert list_local_dataset_tasks(tmp_path, ["t-*"], None, None, False) == [
         tmp_path / "t-a",
         tmp_path / "t-b",

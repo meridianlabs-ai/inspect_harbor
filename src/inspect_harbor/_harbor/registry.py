@@ -7,11 +7,13 @@ registries can be given by URL or local path.
 """
 
 import json
+import os
 import time
 from pathlib import Path, PurePosixPath
 
 import httpx
-from pydantic import BaseModel, ConfigDict
+from packaging.version import InvalidVersion, Version
+from pydantic import BaseModel, ConfigDict, TypeAdapter, ValidationError
 
 from inspect_harbor._harbor.cache import cache_root, stable_key
 from inspect_harbor._harbor.git_tasks import GitTaskSpec
@@ -44,11 +46,14 @@ class RegistryDataset(BaseModel):
     tasks: list[RegistryTask]
 
 
-def resolve_version(versions: list[str]) -> str:
-    """Pick the version to use when none is given.
+_REGISTRY_ADAPTER = TypeAdapter(list[RegistryDataset])
 
-    ``head`` wins if present, then the highest dotted-numeric version, then
-    the lexically last string.
+
+def resolve_version(versions: list[str]) -> str:
+    """Pick the version to use when none is given, as Harbor does.
+
+    ``head`` wins if present, then the highest PEP 440 version (first listed
+    wins a tie), then the lexically last string.
 
     Raises:
         ValueError: When ``versions`` is empty.
@@ -57,10 +62,38 @@ def resolve_version(versions: list[str]) -> str:
         raise ValueError("No versions available")
     if "head" in versions:
         return "head"
-    numeric = [(parsed, v) for v in versions if (parsed := _numeric(v)) is not None]
-    if numeric:
-        return max(numeric)[1]
-    return sorted(versions)[-1]
+    parsed: list[tuple[Version, str]] = []
+    for v in versions:
+        try:
+            parsed.append((Version(v), v))
+        except InvalidVersion:
+            pass
+    if parsed:
+        parsed.sort(key=lambda item: item[0], reverse=True)
+        return parsed[0][1]
+    return sorted(versions, reverse=True)[0]
+
+
+def parse_registry(text: str, source: str) -> list[RegistryDataset]:
+    """Parse registry JSON, naming ``source`` in any error.
+
+    Raises:
+        ValueError: When the body is not JSON or not a list of datasets.
+    """
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Registry at {source} is not valid JSON: {exc}") from exc
+    if not isinstance(data, list):
+        raise ValueError(
+            f"Registry at {source} must be a JSON list of datasets, got "
+            f"{type(data).__name__}"
+        )
+    try:
+        return _REGISTRY_ADAPTER.validate_python(data)
+    except ValidationError as exc:
+        exc.add_note(f"while parsing registry at {source}")
+        raise
 
 
 async def load_registry(
@@ -71,22 +104,31 @@ async def load_registry(
 ) -> list[RegistryDataset]:
     """Load a registry from a local file or URL (default: the curated registry).
 
-    URL bodies are cached for 24 hours under the task cache; ``overwrite``
-    forces a refetch.
+    URL bodies are cached for 24 hours under the task cache once they have
+    parsed successfully, so a bad response is never served from cache;
+    ``overwrite`` forces a refetch.
 
     Raises:
-        ValueError: When both ``url`` and ``path`` are given.
+        ValueError: When both ``url`` and ``path`` are given, or the body is
+            not a valid registry.
         httpx.HTTPStatusError: When the URL cannot be fetched.
     """
     if url is not None and path is not None:
         raise ValueError("Only one of registry url or path can be provided")
     if path is not None:
-        text = path.read_text()
-    else:
-        text = await _fetch_registry_text(
-            url or DEFAULT_REGISTRY_URL, overwrite, client
-        )
-    return [RegistryDataset.model_validate(row) for row in json.loads(text)]
+        return parse_registry(path.read_text(), str(path))
+    url = url or DEFAULT_REGISTRY_URL
+    cache_file = cache_root() / "registry" / f"{stable_key(url)}.json"
+    if not overwrite and cache_file.exists():
+        age = time.time() - cache_file.stat().st_mtime
+        if age < REGISTRY_CACHE_TTL_SECONDS:
+            return parse_registry(
+                cache_file.read_text(), f"{url} (cached at {cache_file})"
+            )
+    text = await _fetch_text(url, client)
+    datasets = parse_registry(text, url)
+    _write_atomically(cache_file, text)
+    return datasets
 
 
 async def resolve_registry_dataset(
@@ -133,32 +175,20 @@ async def resolve_registry_dataset(
     return entries
 
 
-def _numeric(version: str) -> tuple[int, ...] | None:
-    try:
-        return tuple(int(part) for part in version.split("."))
-    except ValueError:
-        return None
-
-
-async def _fetch_registry_text(
-    url: str, overwrite: bool, client: httpx.AsyncClient | None
-) -> str:
-    cache_file = cache_root() / "registry" / f"{stable_key(url)}.json"
-    if not overwrite and cache_file.exists():
-        age = time.time() - cache_file.stat().st_mtime
-        if age < REGISTRY_CACHE_TTL_SECONDS:
-            return cache_file.read_text()
-
+async def _fetch_text(url: str, client: httpx.AsyncClient | None) -> str:
     async def _get(http: httpx.AsyncClient) -> str:
         response = await http.get(url, follow_redirects=True)
         response.raise_for_status()
         return response.text
 
     if client is not None:
-        text = await _get(client)
-    else:
-        async with httpx.AsyncClient(timeout=120.0) as http:
-            text = await _get(http)
-    cache_file.parent.mkdir(parents=True, exist_ok=True)
-    cache_file.write_text(text)
-    return text
+        return await _get(client)
+    async with httpx.AsyncClient(timeout=120.0) as http:
+        return await _get(http)
+
+
+def _write_atomically(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    tmp.write_text(text)
+    os.replace(tmp, path)

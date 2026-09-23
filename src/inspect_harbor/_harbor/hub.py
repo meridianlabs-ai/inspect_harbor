@@ -18,7 +18,6 @@ import re
 import shutil
 import tarfile
 import tempfile
-import warnings
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
 from enum import Enum
@@ -58,22 +57,6 @@ class RefType(str, Enum):
     DIGEST = "digest"
 
 
-def classify_ref(ref: str | None) -> tuple[RefType, str]:
-    """Split a ref into its type and bare value.
-
-    ``None``, ``""`` and ``"latest"`` are the ``latest`` tag; digits are a
-    revision number; ``sha256:<hex>`` is a digest (returned without the
-    prefix); anything else is a tag.
-    """
-    if not ref or ref == "latest":
-        return RefType.TAG, "latest"
-    if ref.isdigit():
-        return RefType.REVISION, ref
-    if ref.startswith("sha256:"):
-        return RefType.DIGEST, ref.removeprefix("sha256:")
-    return RefType.TAG, ref
-
-
 @dataclass(frozen=True)
 class PackageRef:
     """A hub package reference ``org/name@ref``."""
@@ -92,22 +75,6 @@ class PackageRef:
         return f"{self.slug}@{self.ref}"
 
 
-def parse_package_ref(slug: str) -> PackageRef:
-    """Parse ``org/name`` or ``org/name@ref`` (ref defaults to ``latest``).
-
-    Raises:
-        ValueError: When the name is not in ``org/name`` form.
-    """
-    name, _, ref = slug.partition("@")
-    if not re.match(ORG_NAME_PATTERN, name) or ".." in name:
-        raise ValueError(
-            f"Package name must be in 'org/name' format (got {slug!r}); allowed "
-            "characters are letters, digits, '.', '_' and '-'."
-        )
-    org, short = name.split("/", 1)
-    return PackageRef(org=org, name=short, ref=ref or "latest")
-
-
 @dataclass(frozen=True)
 class HubTaskRef:
     """A pinned task version inside a hub dataset."""
@@ -120,6 +87,10 @@ class HubTaskRef:
     def slug(self) -> str:
         """``org/name``, the display name used for dataset filtering."""
         return f"{self.org}/{self.name}"
+
+    def __str__(self) -> str:
+        """``org/name@sha256:<digest>``."""
+        return f"{self.slug}@sha256:{self.content_hash}"
 
 
 @dataclass
@@ -190,34 +161,12 @@ class HubClient:
         """Close the underlying HTTP client."""
         await self._http.aclose()
 
-    async def _request(self, method: str, url: str, **kwargs: Any) -> httpx.Response:
-        async for attempt in AsyncRetrying(
-            retry=retry_if_exception(_is_retryable),
-            stop=stop_after_attempt(self.retry_attempts),
-            wait=wait_exponential(
-                multiplier=self.retry_wait_seconds,
-                min=self.retry_wait_seconds,
-                max=8 * self.retry_wait_seconds,
-            ),
-            reraise=True,
-        ):
-            with attempt:
-                response = await self._http.request(method, url, **kwargs)
-                response.raise_for_status()
-                return response
-        raise AssertionError("unreachable")  # pragma: no cover
-
-    async def _select(self, table: str, params: dict[str, str]) -> list[dict[str, Any]]:
-        response = await self._request("GET", f"/rest/v1/{table}", params=params)
-        return response.json()
-
-    # -- datasets -----------------------------------------------------------
-
     async def resolve_dataset(self, ref: PackageRef) -> HubDatasetMetadata:
         """Resolve a dataset ref to its version and pinned task list.
 
         Raises:
-            ValueError: When the dataset or ref does not exist.
+            ValueError: When the dataset or ref does not exist, or some of its
+                tasks are not readable anonymously.
         """
         ref_type, value = classify_ref(ref.ref)
         common = {
@@ -255,15 +204,13 @@ class HubClient:
 
         if version_row.get("yanked_at"):
             reason = version_row.get("yanked_reason")
-            warnings.warn(
-                f"Dataset version {ref} is yanked"
-                + (f": {reason}" if reason else "")
-                + ". Consider pinning a different revision.",
-                UserWarning,
-                stacklevel=2,
+            logger.warning(
+                "Dataset version %s is yanked%s. Consider pinning a different revision.",
+                ref,
+                f": {reason}" if reason else "",
             )
 
-        task_refs = await self.list_dataset_tasks(version_row["id"])
+        task_refs = await self.list_dataset_tasks(version_row["id"], label=str(ref))
         return HubDatasetMetadata(
             name=ref.slug,
             version=f"sha256:{version_row['content_hash']}",
@@ -275,9 +222,17 @@ class HubClient:
             yanked_reason=version_row.get("yanked_reason"),
         )
 
-    async def list_dataset_tasks(self, dataset_version_id: str) -> list[HubTaskRef]:
-        """All task versions in a dataset version, in hub order."""
+    async def list_dataset_tasks(
+        self, dataset_version_id: str, label: str = ""
+    ) -> list[HubTaskRef]:
+        """All task versions in a dataset version, in hub order.
+
+        Raises:
+            ValueError: When some task versions are hidden from anonymous
+                readers (the hub returns them as null rows), naming the count.
+        """
         refs: list[HubTaskRef] = []
+        hidden = 0
         offset = 0
         while True:
             rows = await self._select(
@@ -291,7 +246,10 @@ class HubClient:
                 },
             )
             for row in rows:
-                tv = row["task_version"]
+                tv = row.get("task_version")
+                if not tv:
+                    hidden += 1
+                    continue
                 refs.append(
                     HubTaskRef(
                         org=tv["package"]["org"]["name"],
@@ -300,10 +258,14 @@ class HubClient:
                     )
                 )
             if len(rows) < self.page_size:
-                return refs
+                break
             offset += self.page_size
-
-    # -- task versions --------------------------------------------------------
+        if hidden:
+            raise ValueError(
+                f"Dataset {label or dataset_version_id} references {hidden} task "
+                "version(s) that are not available anonymously (private or hidden)."
+            )
+        return refs
 
     async def resolve_task_version(
         self, org: str, name: str, ref: str | None
@@ -348,13 +310,67 @@ class HubClient:
         inspect_harbor usage. Never raises; failures are logged at debug.
         """
         try:
-            await self._http.post(
+            response = await self._http.post(
                 "/rest/v1/task_version_download",
                 json={"task_version_id": task_version_id},
                 headers={"Prefer": "return=minimal"},
             )
-        except Exception:
-            logger.debug("Failed to record task download", exc_info=True)
+            response.raise_for_status()
+        except httpx.HTTPError as exc:
+            logger.debug("Failed to record task download: %s", exc)
+
+    async def _request(self, method: str, url: str, **kwargs: Any) -> httpx.Response:
+        async for attempt in AsyncRetrying(
+            retry=retry_if_exception(_is_retryable),
+            stop=stop_after_attempt(self.retry_attempts),
+            wait=wait_exponential(
+                multiplier=self.retry_wait_seconds,
+                min=self.retry_wait_seconds,
+                max=8 * self.retry_wait_seconds,
+            ),
+            reraise=True,
+        ):
+            with attempt:
+                response = await self._http.request(method, url, **kwargs)
+                response.raise_for_status()
+                return response
+        raise AssertionError("unreachable")  # pragma: no cover
+
+    async def _select(self, table: str, params: dict[str, str]) -> list[dict[str, Any]]:
+        response = await self._request("GET", f"/rest/v1/{table}", params=params)
+        return response.json()
+
+
+def classify_ref(ref: str | None) -> tuple[RefType, str]:
+    """Split a ref into its type and bare value.
+
+    ``None``, ``""`` and ``"latest"`` are the ``latest`` tag; digits are a
+    revision number; ``sha256:<hex>`` is a digest (returned lower-cased and
+    without the prefix); anything else is a tag.
+    """
+    if not ref or ref == "latest":
+        return RefType.TAG, "latest"
+    if ref.isdigit():
+        return RefType.REVISION, ref
+    if ref.startswith("sha256:"):
+        return RefType.DIGEST, ref.removeprefix("sha256:").lower()
+    return RefType.TAG, ref
+
+
+def parse_package_ref(slug: str) -> PackageRef:
+    """Parse ``org/name`` or ``org/name@ref`` (ref defaults to ``latest``).
+
+    Raises:
+        ValueError: When the name is not in ``org/name`` form.
+    """
+    name, _, ref = slug.partition("@")
+    if not re.match(ORG_NAME_PATTERN, name) or ".." in name:
+        raise ValueError(
+            f"Package name must be in 'org/name' format (got {slug!r}); allowed "
+            "characters are letters, digits, '.', '_' and '-'."
+        )
+    org, short = name.split("/", 1)
+    return PackageRef(org=org, name=short, ref=ref or "latest")
 
 
 async def resolve_hub_dataset(
@@ -376,6 +392,11 @@ def hub_task_dir(ref: HubTaskRef) -> Path:
     return cache_root() / "hub" / ref.org / ref.name / ref.content_hash
 
 
+def is_cached(target: Path) -> bool:
+    """Whether a cache directory holds a complete task (a ``task.toml``)."""
+    return (target / "task.toml").is_file()
+
+
 async def download_hub_tasks(
     task_refs: list[HubTaskRef],
     overwrite: bool = False,
@@ -384,12 +405,14 @@ async def download_hub_tasks(
 ) -> list[Path]:
     """Download pinned hub tasks into the cache; returns paths in input order.
 
-    Tasks are content-addressed, so an existing directory is reused unless
-    ``overwrite`` is set.
+    Tasks are content-addressed, so a complete cached directory is reused
+    unless ``overwrite`` is set. Concurrent downloads of the same task, from
+    this or another process, are safe: each extracts into its own staging
+    directory and the first to finish wins.
     """
     targets = {ref: hub_task_dir(ref) for ref in task_refs}
     missing = [
-        ref for ref, target in targets.items() if overwrite or not target.is_dir()
+        ref for ref, target in targets.items() if overwrite or not is_cached(target)
     ]
     if missing:
         own_client = client is None
@@ -398,10 +421,14 @@ async def download_hub_tasks(
         try:
             async with asyncio.TaskGroup() as tg:
                 for ref in missing:
-                    tg.create_task(_download_one(client, ref, targets[ref], semaphore))
+                    tg.create_task(
+                        _download_one(client, ref, targets[ref], overwrite, semaphore)
+                    )
         except* Exception as group:
-            # Surface the first real failure rather than the ExceptionGroup.
-            raise group.exceptions[0] from None
+            first, *others = group.exceptions
+            for other in others:
+                logger.warning("Additional hub download failure: %r", other)
+            raise first from None
         finally:
             if own_client:
                 await client.aclose()
@@ -420,40 +447,75 @@ def _telemetry_enabled() -> bool:
     return not os.environ.get(TELEMETRY_OPT_OUT_ENV)
 
 
-def _extract_archive(archive: Path, target: Path) -> None:
-    """Extract into a sibling temp dir, then swap it into place."""
-    staging = target.parent / f".{target.name}.tmp"
-    if staging.exists():
-        shutil.rmtree(staging)
-    staging.mkdir(parents=True)
+def _sidecar_path(target: Path) -> Path:
+    return target.parent / f"{target.name}.json"
+
+
+def _extract_archive(archive: Path, target: Path, overwrite: bool) -> bool:
+    """Extract into a private staging dir, then swap it into place.
+
+    Returns ``False`` when another writer completed ``target`` first and this
+    extraction was discarded (only when not overwriting).
+
+    Raises:
+        ValueError: When the archive does not contain a ``task.toml`` at its
+            root, so a bad archive never becomes a cached "task".
+    """
+    target.parent.mkdir(parents=True, exist_ok=True)
+    staging = Path(tempfile.mkdtemp(dir=target.parent, prefix=f".{target.name}."))
+    staged = staging / "task"
     try:
+        staged.mkdir()
         with tarfile.open(archive, "r:gz") as tar:
-            tar.extractall(path=staging, filter="data")
-    except BaseException:
+            tar.extractall(path=staged, filter="data")
+        if not (staged / "task.toml").is_file():
+            raise ValueError(
+                f"Hub archive for {target.name} has no task.toml at its root"
+            )
+        if target.exists():
+            if not overwrite and is_cached(target):
+                return False
+            old = staging / "old"
+            target.rename(old)
+        try:
+            staged.rename(target)
+        except OSError:
+            # Lost a race: someone else renamed a complete task into place.
+            if is_cached(target):
+                return False
+            raise
+        return True
+    finally:
         shutil.rmtree(staging, ignore_errors=True)
-        raise
-    if target.exists():
-        shutil.rmtree(target)
-    staging.rename(target)
 
 
 async def _download_one(
-    client: HubClient, ref: HubTaskRef, target: Path, semaphore: asyncio.Semaphore
+    client: HubClient,
+    ref: HubTaskRef,
+    target: Path,
+    overwrite: bool,
+    semaphore: asyncio.Semaphore,
 ) -> None:
     async with semaphore:
-        resolved = await client.resolve_task_version(
-            ref.org, ref.name, f"sha256:{ref.content_hash}"
-        )
-        with tempfile.TemporaryDirectory() as tmp:
-            archive = Path(tmp) / "dist.tar.gz"
-            await client.download_archive(resolved.archive_path, archive)
-            _extract_archive(archive, target)
+        try:
+            resolved = await client.resolve_task_version(
+                ref.org, ref.name, f"sha256:{ref.content_hash}"
+            )
+            with tempfile.TemporaryDirectory() as tmp:
+                archive = Path(tmp) / "dist.tar.gz"
+                await client.download_archive(resolved.archive_path, archive)
+                written = _extract_archive(archive, target, overwrite)
+        except Exception as exc:
+            exc.add_note(f"while downloading hub task {ref}")
+            raise
+        if not written:
+            return
         sidecar = {
             **asdict(ref),
             "task_version_id": resolved.id,
             "revision": resolved.revision,
             "downloaded_at": datetime.now(UTC).isoformat(),
         }
-        (target.parent / f"{ref.content_hash}.json").write_text(json.dumps(sidecar))
+        _sidecar_path(target).write_text(json.dumps(sidecar))
         if _telemetry_enabled():
             await client.record_task_download(resolved.id)

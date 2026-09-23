@@ -534,10 +534,9 @@ def test_harbor_to_compose_config_deprecated_allow_internet_isolated():
     handling is needed on our side. Uses a real ``TaskConfig`` (not a Mock) to
     exercise that migration end to end.
     """
-    with pytest.warns(DeprecationWarning, match="allow_internet"):
-        config = TaskConfig.from_toml(
-            '[environment]\ndocker_image = "ubuntu:latest"\nallow_internet = false\n'
-        )
+    config = TaskConfig.from_toml(
+        '[environment]\ndocker_image = "ubuntu:latest"\nallow_internet = false\n'
+    )
     assert config.environment.network_mode == NetworkMode.NO_NETWORK
     assert config.environment.allow_internet is None
 

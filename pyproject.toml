@@ -13,6 +13,7 @@ license = { text = "MIT License" }
 dependencies = [
     "inspect-ai>=0.3.264",
     "httpx",
+    "packaging",
     "pydantic>=2",
     "pyyaml",
     "tenacity",
@@ -129,9 +130,4 @@ asyncio_default_fixture_loop_scope = "function"
 addopts = "--ignore=tests/manual"
 markers = [
     "slow: end-to-end tests against live Harbor (run with `pytest tests/manual`)",
-]
-# Filter deprecation warnings from third-party dependencies
-filterwarnings = [
-    "ignore::pydantic.PydanticDeprecatedSince212",          # pyiceberg's use of pydantic (harbor → supabase → storage3 → pyiceberg)
-    "ignore::DeprecationWarning:harbor.models.task.config", # harbor's deprecated field checks (storage vs storage_mb)
 ]

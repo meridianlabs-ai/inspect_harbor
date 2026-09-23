@@ -90,11 +90,31 @@ def test_windows_task_expects_bat(tmp_path: Path) -> None:
 
 
 def test_steps_task(tmp_path: Path) -> None:
-    """Multi-step tasks load with an empty instruction and skip test checks."""
+    """Multi-step tasks validate per-step files like Harbor, then load empty."""
     toml = '[[steps]]\nname = "one"\n'
-    task = HarborTask(make_task(tmp_path, toml, instruction=None, with_test=False))
+    task_dir = make_task(tmp_path, toml, instruction=None, with_test=False)
+    with pytest.raises(FileNotFoundError, match="Step directory"):
+        HarborTask(task_dir)
+    assert HarborTask.is_valid_dir(task_dir, disable_verification=True) is False
+    (task_dir / "steps" / "one").mkdir(parents=True)
+    with pytest.raises(FileNotFoundError, match="Step instruction"):
+        HarborTask(task_dir)
+    (task_dir / "steps" / "one" / "instruction.md").write_text("step one")
+    task = HarborTask(task_dir)
     assert task.has_steps is True
     assert task.instruction == ""
+    assert HarborTask.is_valid_dir(task_dir) is True
+
+
+def test_parse_errors_name_the_file(tmp_path: Path) -> None:
+    """A broken ``task.toml`` is reported with its path."""
+    bad_syntax = make_task(tmp_path, "[environment\n", dirname="syntax")
+    with pytest.raises(ValueError, match=r"Invalid TOML in .*syntax/task\.toml"):
+        HarborTask(bad_syntax)
+    bad_value = make_task(tmp_path, '[environment]\ncpus = "two"\n', dirname="value")
+    with pytest.raises(ValueError) as info:
+        HarborTask(bad_value)
+    assert any("value/task.toml" in note for note in info.value.__notes__)
 
 
 def test_is_valid_dir(tmp_path: Path) -> None:

@@ -19,17 +19,6 @@ from inspect_harbor._harbor.paths import TaskPaths
 _CANARY_LINE_RE = re.compile(r"^(<!--.*canary.*-->|#.*canary.*)$", re.IGNORECASE)
 
 
-def strip_canary(text: str) -> str:
-    """Remove leading canary comment lines, and blank lines after them."""
-    lines = text.split("\n")
-    idx = 0
-    while idx < len(lines) and _CANARY_LINE_RE.match(lines[idx].strip()):
-        idx += 1
-    while idx < len(lines) and lines[idx].strip() == "":
-        idx += 1
-    return "\n".join(lines[idx:])
-
-
 class HarborTask:
     """A Harbor task loaded from disk.
 
@@ -46,12 +35,14 @@ class HarborTask:
         """Load and, unless ``disable_verification``, validate a task directory.
 
         Raises:
+            ValueError: When ``task.toml`` cannot be parsed (the message names
+                the file).
             FileNotFoundError: When ``instruction.md`` or the test script the
                 verifier needs is missing.
         """
         self.paths = TaskPaths(task_dir)
         self.task_dir = self.paths.task_dir
-        self.config = TaskConfig.from_toml(self.paths.config_path.read_text())
+        self.config = load_task_config(self.paths.config_path)
         self.name = (
             self.config.task.name
             if self.config.task is not None
@@ -80,16 +71,48 @@ class HarborTask:
         if not paths.config_path.exists() or not paths.environment_dir.exists():
             return False
         try:
-            config = TaskConfig.from_toml(paths.config_path.read_text())
-        except (OSError, tomllib.TOMLDecodeError, ValidationError):
+            config = load_task_config(paths.config_path)
+        except (OSError, ValueError):
             return False
         if disable_verification:
-            return bool(config.steps) or paths.instruction_path.exists()
+            if config.steps:
+                return all(
+                    paths.step_instruction_path(step.name).exists()
+                    for step in config.steps
+                )
+            return paths.instruction_path.exists()
         try:
             _validate_files(config, paths)
         except FileNotFoundError:
             return False
         return True
+
+
+def load_task_config(config_path: Path) -> TaskConfig:
+    """Parse a ``task.toml`` file, naming the file in any error.
+
+    Raises:
+        ValueError: On TOML syntax or validation errors (``ValidationError``
+            is a ``ValueError``; ``TOMLDecodeError`` is wrapped).
+    """
+    try:
+        return TaskConfig.from_toml(config_path.read_text())
+    except tomllib.TOMLDecodeError as exc:
+        raise ValueError(f"Invalid TOML in {config_path}: {exc}") from exc
+    except ValidationError as exc:
+        exc.add_note(f"while parsing {config_path}")
+        raise
+
+
+def strip_canary(text: str) -> str:
+    """Remove leading canary comment lines, and blank lines after them."""
+    lines = text.split("\n")
+    idx = 0
+    while idx < len(lines) and _CANARY_LINE_RE.match(lines[idx].strip()):
+        idx += 1
+    while idx < len(lines) and lines[idx].strip() == "":
+        idx += 1
+    return "\n".join(lines[idx:])
 
 
 def _test_script_name(task_os: TaskOS) -> str:
@@ -99,10 +122,19 @@ def _test_script_name(task_os: TaskOS) -> str:
 def _validate_files(config: TaskConfig, paths: TaskPaths) -> None:
     """Raise ``FileNotFoundError`` if files needed at run time are missing.
 
-    Multi-step tasks are not validated here: inspect_harbor refuses them
-    later with a clear ``NotImplementedError``.
+    Multi-step tasks are checked the way Harbor checks them (each step has a
+    directory and an instruction) so dataset scans skip the same broken
+    tasks Harbor would; inspect_harbor refuses them later with a clear
+    ``NotImplementedError``.
     """
     if config.steps:
+        for step in config.steps:
+            step_dir = paths.step_dir(step.name)
+            if not step_dir.exists():
+                raise FileNotFoundError(f"Step directory not found: {step_dir}")
+            instruction = paths.step_instruction_path(step.name)
+            if not instruction.exists():
+                raise FileNotFoundError(f"Step instruction not found: {instruction}")
         return
     if not paths.instruction_path.exists():
         raise FileNotFoundError(

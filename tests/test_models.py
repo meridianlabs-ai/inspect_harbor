@@ -50,10 +50,17 @@ def test_defaults_when_sections_absent() -> None:
     assert config.schema_version == "1.4"
 
 
-def test_allow_internet_false_migrates_to_no_network() -> None:
-    """Legacy ``allow_internet = false`` becomes ``network_mode = no-network``."""
-    with pytest.warns(DeprecationWarning, match="allow_internet"):
+def test_allow_internet_false_migrates_to_no_network(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    """Legacy ``allow_internet = false`` becomes ``network_mode = no-network``.
+
+    The deprecation is a task-author concern, so it is logged at debug rather
+    than warned at the evaluator.
+    """
+    with caplog.at_level("DEBUG", logger="inspect_harbor._harbor.models"):
         config = TaskConfig.from_toml("[environment]\nallow_internet = false\n")
+    assert "deprecated 'allow_internet'" in caplog.text
     assert config.environment.network_mode is NetworkMode.NO_NETWORK
     assert config.environment.allow_internet is None
     assert "allow_internet" not in config.model_dump()["environment"]
@@ -61,26 +68,21 @@ def test_allow_internet_false_migrates_to_no_network() -> None:
 
 def test_allow_internet_true_migrates_to_public() -> None:
     """Legacy ``allow_internet = true`` becomes ``network_mode = public``."""
-    with pytest.warns(DeprecationWarning, match="allow_internet"):
-        config = TaskConfig.from_toml("[environment]\nallow_internet = true\n")
+    config = TaskConfig.from_toml("[environment]\nallow_internet = true\n")
     assert config.environment.network_mode is NetworkMode.PUBLIC
 
 
 def test_explicit_network_mode_beats_allow_internet() -> None:
     """An explicit ``network_mode`` wins over the deprecated boolean."""
-    with pytest.warns(DeprecationWarning, match="allow_internet"):
-        config = TaskConfig.from_toml(
-            '[environment]\nnetwork_mode = "public"\nallow_internet = false\n'
-        )
+    config = TaskConfig.from_toml(
+        '[environment]\nnetwork_mode = "public"\nallow_internet = false\n'
+    )
     assert config.environment.network_mode is NetworkMode.PUBLIC
 
 
 def test_verifier_environment_allow_internet_migrates() -> None:
     """The migration also applies to a separate verifier environment."""
-    with pytest.warns(DeprecationWarning, match="allow_internet"):
-        config = TaskConfig.from_toml(
-            "[verifier.environment]\nallow_internet = false\n"
-        )
+    config = TaskConfig.from_toml("[verifier.environment]\nallow_internet = false\n")
     assert config.verifier.environment is not None
     assert config.verifier.environment.network_mode is NetworkMode.NO_NETWORK
     assert config.verifier.environment.allow_internet is None
@@ -92,35 +94,28 @@ def test_verifier_environment_allow_internet_migrates() -> None:
 )
 def test_legacy_memory_string_migrates(memory: str, expected_mb: int) -> None:
     """Legacy ``memory`` size strings are converted to ``memory_mb``."""
-    with pytest.warns(DeprecationWarning, match="memory"):
-        config = TaskConfig.from_toml(f'[environment]\nmemory = "{memory}"\n')
+    config = TaskConfig.from_toml(f'[environment]\nmemory = "{memory}"\n')
     assert config.environment.memory_mb == expected_mb
     assert "memory" not in config.model_dump()["environment"]
 
 
 def test_legacy_storage_string_migrates() -> None:
     """Legacy ``storage`` size strings are converted to ``storage_mb``."""
-    with pytest.warns(DeprecationWarning, match="storage"):
-        config = TaskConfig.from_toml('[environment]\nstorage = "10G"\n')
+    config = TaskConfig.from_toml('[environment]\nstorage = "10G"\n')
     assert config.environment.storage_mb == 10240
 
 
-def test_conflicting_memory_fields_raise() -> None:
-    """``memory`` and a different ``memory_mb`` cannot both be given."""
-    with (
-        pytest.warns(DeprecationWarning, match="memory"),
-        pytest.raises(ValidationError, match="Conflicting"),
-    ):
-        TaskConfig.from_toml('[environment]\nmemory = "1G"\nmemory_mb = 512\n')
-
-
-def test_bad_memory_string_raises() -> None:
-    """A size string without a unit is rejected."""
-    with (
-        pytest.warns(DeprecationWarning, match="memory"),
-        pytest.raises(ValidationError, match="Invalid size format"),
-    ):
-        TaskConfig.from_toml('[environment]\nmemory = "1024"\n')
+@pytest.mark.parametrize(
+    "toml,match",
+    [
+        ('[environment]\nmemory = "1G"\nmemory_mb = 512\n', "Conflicting"),
+        ('[environment]\nmemory = "1024"\n', "Invalid size format"),
+    ],
+)
+def test_bad_legacy_sizes_raise(toml: str, match: str) -> None:
+    """Conflicting or unit-less legacy sizes are rejected."""
+    with pytest.raises(ValidationError, match=match):
+        TaskConfig.from_toml(toml)
 
 
 def test_os_is_case_insensitive() -> None:
@@ -281,6 +276,36 @@ def test_shared_mode_with_environment_raises() -> None:
             '[verifier]\nenvironment_mode = "shared"\n'
             '[verifier.environment]\ndocker_image = "x"\n'
         )
+
+
+@pytest.mark.parametrize(
+    "toml,match",
+    [
+        ('[environment]\nallowed_hosts = ["a.com"]\n', "allowlist"),
+        (
+            '[environment]\nnetwork_mode = "public"\nallowed_hosts = ["a.com"]\n',
+            "allowlist",
+        ),
+        ("[agent]\nallowed_hosts = []\n", "allowlist"),
+        (
+            '[verifier]\nnetwork_mode = "no-network"\nallowed_hosts = ["a"]\n',
+            "allowlist",
+        ),
+        ('[[steps]]\nname = "a"\n[[steps]]\nname = "a"\n', "unique"),
+    ],
+)
+def test_configs_harbor_rejects_are_rejected(toml: str, match: str) -> None:
+    """Network-policy and step-name rules match Harbor's validators."""
+    with pytest.raises(ValidationError, match=match):
+        TaskConfig.from_toml(toml)
+
+
+def test_allowlist_with_hosts_is_accepted() -> None:
+    """``allowlist`` is the one mode where ``allowed_hosts`` is valid."""
+    config = TaskConfig.from_toml(
+        '[environment]\nnetwork_mode = "allowlist"\nallowed_hosts = ["a.com"]\n'
+    )
+    assert config.environment.allowed_hosts == ["a.com"]
 
 
 def test_steps_detected() -> None:

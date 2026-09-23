@@ -6,10 +6,13 @@ kept and surface in ``model_dump()``, which feeds sample metadata) but the
 fields we act on are typed strictly. Unknown keys in the sections we care
 about, and a ``schema_version`` newer than we were written against, raise a
 ``UserWarning`` so schema drift is visible without breaking task loading.
+Deprecated fields that Harbor still accepts are migrated silently and noted
+at debug level: they are the task author's concern, not the evaluator's.
 
 Written against Harbor's task.toml schema 1.4.
 """
 
+import logging
 import re
 import tomllib
 import warnings
@@ -18,12 +21,15 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+logger = logging.getLogger(__name__)
+
 SUPPORTED_SCHEMA_VERSION = "1.4"
 
 ORG_NAME_PATTERN = r"^[a-zA-Z0-9][a-zA-Z0-9._-]*/[a-zA-Z0-9][a-zA-Z0-9._-]*$"
 # Compose service that runs the agent; collect hooks target it by default.
 MAIN_SERVICE_NAME = "main"
 _COMPOSE_SERVICE_NAME_PATTERN = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_.-]*$")
+_LEGACY_ENVIRONMENT_KEYS = {"memory", "storage"}
 
 
 class NetworkMode(str, Enum):
@@ -110,9 +116,6 @@ class HealthcheckConfig(BaseModel):
     retries: int = 3
 
 
-_LEGACY_ENVIRONMENT_KEYS = {"memory", "storage"}
-
-
 class EnvironmentConfig(BaseModel):
     """The ``[environment]`` section."""
 
@@ -146,17 +149,20 @@ class EnvironmentConfig(BaseModel):
             "[environment]", data, set(cls.model_fields) | _LEGACY_ENVIRONMENT_KEYS
         )
         if data.get("allow_internet") is not None:
-            warnings.warn(
-                "The 'allow_internet' field is deprecated. Use "
-                "[environment].network_mode instead.",
-                DeprecationWarning,
-                stacklevel=4,
+            logger.debug(
+                "task.toml uses the deprecated 'allow_internet' field; "
+                "use [environment].network_mode instead."
             )
         if isinstance(data.get("os"), str):
             data["os"] = data["os"].lower()
         _migrate_legacy_size(data, "memory", "memory_mb")
         _migrate_legacy_size(data, "storage", "storage_mb")
         return data
+
+    @model_validator(mode="after")
+    def _validate_network_policy(self) -> "EnvironmentConfig":
+        _validate_allowed_hosts(self.network_mode, self.allowed_hosts)
+        return self
 
 
 class VerifierCollectConfig(BaseModel):
@@ -210,7 +216,7 @@ class VerifierConfig(BaseModel):
         return data
 
     @model_validator(mode="after")
-    def _validate_mode_env_consistency(self) -> "VerifierConfig":
+    def _validate(self) -> "VerifierConfig":
         if (
             self.environment_mode is VerifierEnvironmentMode.SHARED
             and self.environment is not None
@@ -220,6 +226,7 @@ class VerifierConfig(BaseModel):
                 "[verifier.environment]; either omit the environment or set "
                 "environment_mode='separate'."
             )
+        _validate_allowed_hosts(self.network_mode, self.allowed_hosts)
         return self
 
     def runs_separately(self) -> bool:
@@ -246,6 +253,11 @@ class AgentConfig(BaseModel):
             _warn_unknown_keys("[agent]", data, set(cls.model_fields))
         return data
 
+    @model_validator(mode="after")
+    def _validate_network_policy(self) -> "AgentConfig":
+        _validate_allowed_hosts(self.network_mode, self.allowed_hosts)
+        return self
+
 
 class SolutionConfig(BaseModel):
     """The ``[solution]`` section."""
@@ -259,7 +271,7 @@ class StepConfig(BaseModel):
     """One ``[[steps]]`` entry of a multi-step task.
 
     inspect_harbor does not run multi-step tasks; we only need the names to
-    detect and refuse them.
+    detect and refuse them, and to validate the task directory like Harbor.
     """
 
     model_config = ConfigDict(extra="allow")
@@ -307,7 +319,7 @@ class TaskConfig(BaseModel):
         return data
 
     @model_validator(mode="after")
-    def _migrate_allow_internet(self) -> "TaskConfig":
+    def _validate(self) -> "TaskConfig":
         for env in (self.environment, self.verifier.environment):
             if env is None or env.allow_internet is None:
                 continue
@@ -316,6 +328,10 @@ class TaskConfig(BaseModel):
                     NetworkMode.PUBLIC if env.allow_internet else NetworkMode.NO_NETWORK
                 )
             env.allow_internet = None
+        if self.steps is not None:
+            names = [step.name for step in self.steps]
+            if len(set(names)) != len(names):
+                raise ValueError(f"Step names must be unique, got {names}")
         return self
 
     @classmethod
@@ -345,6 +361,20 @@ def _warn_unknown_keys(section: str, data: dict[str, Any], known: set[str]) -> N
         )
 
 
+def _validate_allowed_hosts(
+    network_mode: NetworkMode | None, allowed_hosts: list[str] | None
+) -> None:
+    """Mirror Harbor's rule: ``allowed_hosts`` only goes with ``allowlist``."""
+    if network_mode is None:
+        if allowed_hosts is not None:
+            raise ValueError(
+                "allowed_hosts is only valid when network_mode='allowlist'."
+            )
+        return
+    if network_mode is not NetworkMode.ALLOWLIST and allowed_hosts:
+        raise ValueError("allowed_hosts is only valid when network_mode='allowlist'.")
+
+
 def _parse_size_to_mb(size_str: str) -> int:
     size_str = size_str.strip().upper()
     if size_str.endswith("G"):
@@ -361,10 +391,8 @@ def _parse_size_to_mb(size_str: str) -> int:
 def _migrate_legacy_size(data: dict[str, Any], legacy: str, current: str) -> None:
     if legacy not in data:
         return
-    warnings.warn(
-        f"The '{legacy}' field is deprecated. Use '{current}' instead.",
-        DeprecationWarning,
-        stacklevel=5,
+    logger.debug(
+        "task.toml uses the deprecated '%s' field; use '%s' instead.", legacy, current
     )
     value = data.pop(legacy)
     if isinstance(value, str):

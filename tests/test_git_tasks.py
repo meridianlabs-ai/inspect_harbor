@@ -1,5 +1,6 @@
 """Tests for downloading git-hosted tasks (uses a real local git repository)."""
 
+import asyncio
 import subprocess
 from pathlib import Path, PurePosixPath
 
@@ -170,3 +171,77 @@ def test_spec_name() -> None:
     """A spec's display name is the last path component."""
     spec = GitTaskSpec(git_url="u", path=PurePosixPath("a/b/task-x"))
     assert spec.name == "task-x"
+
+
+@pytest.mark.parametrize("path", ["../escape", "/abs/path", ""])
+def test_spec_rejects_paths_that_escape_the_repo(path: str) -> None:
+    """Task paths must be relative and free of ``..``."""
+    with pytest.raises(ValueError, match="relative"):
+        GitTaskSpec(git_url="u", path=PurePosixPath(path))
+
+
+@pytest.mark.parametrize(
+    "link_target,expected",
+    [
+        ("/etc/hostname", "relative"),
+        ("..", "within the task"),
+        ("missing-file", "Invalid git task link"),
+        ("instruction.md", None),
+    ],
+)
+def test_symlinks_are_contained(
+    repo: tuple[str, str], tmp_path: Path, link_target: str, expected: str | None
+) -> None:
+    """Links leaving the task are rejected; links inside it are materialised."""
+    url, _ = repo
+    repo_dir = Path(url.removeprefix("file://"))
+    (repo_dir / "tasks" / "t1" / "link").symlink_to(link_target)
+    _git("add", ".", cwd=repo_dir)
+    _git("commit", "-q", "-m", "link", cwd=repo_dir)
+    spec = GitTaskSpec(git_url=url, path=PurePosixPath("tasks/t1"))
+    if expected is not None:
+        with pytest.raises(ValueError, match=expected):
+            asyncio.run(download_git_tasks([spec]))
+        assert not git_tasks.target_dir(spec).exists()
+        assert not list(git_tasks.target_dir(spec).parent.glob(".*"))
+    else:
+        [path] = asyncio.run(download_git_tasks([spec]))
+        assert not (path / "link").is_symlink()
+        assert (path / "link").read_text() == "first"
+
+
+async def test_unpinned_spec_after_pinned_gets_head_content(
+    repo: tuple[str, str],
+) -> None:
+    """A HEAD spec is not handed the files of a pinned sha from the same repo."""
+    url, sha = repo
+    repo_dir = Path(url.removeprefix("file://"))
+    (repo_dir / "tasks" / "t2" / "instruction.md").write_text("second v2")
+    _git("commit", "-q", "-am", "v2", cwd=repo_dir)
+    pinned = GitTaskSpec(git_url=url, path=PurePosixPath("tasks/t1"), git_commit_id=sha)
+    head = GitTaskSpec(git_url=url, path=PurePosixPath("tasks/t2"))
+    _, t2 = await download_git_tasks([pinned, head])
+    assert (t2 / "instruction.md").read_text() == "second v2"
+
+
+async def test_incomplete_cache_dir_is_not_a_hit(repo: tuple[str, str]) -> None:
+    """A pinned target without a task.toml (interrupted copy) is refetched."""
+    url, sha = repo
+    spec = GitTaskSpec(git_url=url, path=PurePosixPath("tasks/t1"), git_commit_id=sha)
+    target = git_tasks.target_dir(spec)
+    (target / "tests").mkdir(parents=True)
+    [path] = await download_git_tasks([spec])
+    assert path == target
+    assert (target / "task.toml").exists()
+
+
+async def test_git_errors_redact_credentials(tmp_path: Path) -> None:
+    """A token embedded in the clone URL never reaches the error message."""
+    spec = GitTaskSpec(
+        git_url="https://user:s3cret@example.invalid/org/repo.git",
+        path=PurePosixPath("tasks/t1"),
+    )
+    with pytest.raises(RuntimeError) as info:
+        await download_git_tasks([spec])
+    assert "s3cret" not in str(info.value)
+    assert "***@example.invalid" in str(info.value)

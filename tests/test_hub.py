@@ -219,6 +219,7 @@ def test_parse_package_ref_rejects_bad_names(slug: str) -> None:
         ("stable", (RefType.TAG, "stable")),
         ("7", (RefType.REVISION, "7")),
         ("sha256:abc", (RefType.DIGEST, "abc")),
+        ("sha256:ABCDEF", (RefType.DIGEST, "abcdef")),
     ],
 )
 def test_classify_ref(ref: str | None, expected: tuple[RefType, str]) -> None:
@@ -299,15 +300,24 @@ async def test_resolve_dataset_not_found() -> None:
         await fake.client().resolve_dataset(PackageRef(ORG, NAME, "9"))
 
 
-async def test_resolve_dataset_yanked_warns() -> None:
-    """A yanked dataset version still resolves but warns."""
+async def test_resolve_dataset_yanked_warns(caplog: pytest.LogCaptureFixture) -> None:
+    """A yanked dataset version still resolves but is logged as a warning."""
     fake = FakeHub()
     fake.dataset_row = _dataset_version_row(
         yanked_at="2026-01-01T00:00:00Z", yanked_reason="broken"
     )
-    with pytest.warns(UserWarning, match="yanked.*broken"):
+    with caplog.at_level("WARNING", logger="inspect_harbor._harbor.hub"):
         meta = await fake.client().resolve_dataset(PackageRef(ORG, NAME, "latest"))
     assert meta.yanked_at == "2026-01-01T00:00:00Z"
+    assert "yanked: broken" in caplog.text
+
+
+async def test_hidden_task_rows_raise_a_clear_error() -> None:
+    """Task versions hidden from anonymous readers come back as null rows."""
+    fake = FakeHub()
+    fake.task_rows = [*_task_rows(TASK_HASH_A), {"task_version": None}]
+    with pytest.raises(ValueError, match=f"{ORG}/{NAME}@latest.*1 task version"):
+        await fake.client().resolve_dataset(PackageRef(ORG, NAME, "latest"))
 
 
 async def test_resolve_hub_dataset_convenience() -> None:
@@ -396,7 +406,9 @@ async def test_download_hub_tasks_overwrite_and_telemetry_opt_out(
     assert not any(r.url.path.endswith("task_version_download") for r in fake.requests)
 
 
-async def test_download_hub_tasks_telemetry_failure_is_swallowed() -> None:
+async def test_download_hub_tasks_telemetry_failure_is_swallowed(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
     """A failing download counter never fails the download."""
     fake = FakeHub()
     original = fake.handler
@@ -407,10 +419,60 @@ async def test_download_hub_tasks_telemetry_failure_is_swallowed() -> None:
         return original(request)
 
     client = HubClient(transport=httpx.MockTransport(handler))
-    [path] = await download_hub_tasks(
-        [HubTaskRef(ORG, "task-a", TASK_HASH_A)], client=client
-    )
+    with caplog.at_level("DEBUG", logger="inspect_harbor._harbor.hub"):
+        [path] = await download_hub_tasks(
+            [HubTaskRef(ORG, "task-a", TASK_HASH_A)], client=client
+        )
     assert (path / "task.toml").exists()
+    assert "Failed to record task download" in caplog.text
+
+
+@pytest.mark.parametrize("junk", [None, "tests"])
+async def test_incomplete_cache_dir_is_not_a_hit(junk: str | None) -> None:
+    """An empty or partial cache directory (no task.toml) is re-downloaded."""
+    fake = FakeHub()
+    ref = HubTaskRef(ORG, "task-a", TASK_HASH_A)
+    target = hub_task_dir(ref)
+    (target / junk if junk else target).mkdir(parents=True)
+    [path] = await download_hub_tasks([ref], client=fake.client())
+    assert path == target
+    assert (target / "task.toml").exists()
+    assert any(r.url.path.endswith("resolve_task_version") for r in fake.requests)
+
+
+async def test_archive_without_task_toml_is_rejected() -> None:
+    """A bad archive never becomes a cached task."""
+    fake = FakeHub()
+    buf = io.BytesIO()
+    with tarfile.open(fileobj=buf, mode="w:gz") as tar:
+        info = tarfile.TarInfo("README.md")
+        info.size = 1
+        tar.addfile(info, io.BytesIO(b"x"))
+    fake.archives[f"packages/{ORG}/task-a/{TASK_HASH_A}/dist.tar.gz"] = buf.getvalue()
+    ref = HubTaskRef(ORG, "task-a", TASK_HASH_A)
+    with pytest.raises(ValueError, match="no task.toml") as info:
+        await download_hub_tasks([ref], client=fake.client())
+    assert any(str(ref) in note for note in info.value.__notes__)
+    assert not hub_task_dir(ref).exists()
+    assert not list(hub_task_dir(ref).parent.glob(".*"))
+
+
+async def test_concurrent_extractions_of_one_task_are_safe(tmp_path: Path) -> None:
+    """Several writers racing on one target all succeed; the result is complete."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    from inspect_harbor._harbor.hub import _extract_archive
+
+    archive = tmp_path / "dist.tar.gz"
+    archive.write_bytes(_archive_bytes("racy"))
+    target = hub_task_dir(HubTaskRef(ORG, "task-a", TASK_HASH_A))
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        results = list(
+            pool.map(lambda _: _extract_archive(archive, target, False), range(6))
+        )
+    assert results.count(True) >= 1
+    assert (target / "instruction.md").read_text() == "racy"
+    assert not list(target.parent.glob(".*"))
 
 
 async def test_download_rejects_unsafe_archive(tmp_path: Path) -> None:
