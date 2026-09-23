@@ -5,7 +5,8 @@
 - Title PRs as Conventional Commits (`<type>: <description>`)—we squash-merge, so the PR title becomes the commit message that drives releases; `pr-title-lint` enforces it
 - `feat:`/`fix:` are for user-facing changes only: they headline the release notes and bump the version. `perf:`/`revert:` also appear in the notes (no bump); `docs:`, `refactor:`, `chore:`, `build:`, `ci:`, `test:`, `style:` are hidden
 - Body lines starting with `<type>:` are parsed as extra changelog entries—don't begin description lines with a conventional-commit prefix unless that's intended
-- Never edit `CHANGELOG.md`, version numbers, or `.release-please-manifest.json`—Release Please owns them
+- Never edit `CHANGELOG.md`, version numbers, or `.release-please-manifest.json`—Release Please owns them. The GitHub release page may be edited by hand after publication (Release Please does not rewrite it)
+- GitHub hard-wraps the squash commit body at 72 columns and Release Please keeps only the first paragraph of a `BREAKING CHANGE:` footer. Keep the footer to one sentence and each `<type>:` body line under 72 characters; put multi-bullet migration notes in the docs and paste them into the release page after publishing (see the 1.0.0 release)
 - See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines
 
 ## Harbor adapter (`src/inspect_harbor/_harbor/`)
