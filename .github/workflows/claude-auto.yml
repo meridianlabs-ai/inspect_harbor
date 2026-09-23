@@ -48,6 +48,13 @@ jobs:
       # consumed only on items labeled engine:codex; optional.
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     with:
+      # Provisioning recipe (design/executed-paths-residual.md in the agents
+      # repo): what .github/actions/claude-setup does, run as the unprivileged
+      # agent user in the checkout. Codex runs use it now; Claude runs keep
+      # claude-setup until they move to an agent user, then use this instead.
+      provision: |
+        uv venv --python 3.12
+        uv sync
       head_branch: ${{ github.event.workflow_run.head_branch }}
       pr_number: ${{ github.event.workflow_run.pull_requests[0].number }}
       ci_run_id: ${{ github.event.workflow_run.id }}
@@ -75,5 +82,12 @@ jobs:
       # consumed only on items labeled engine:codex; optional.
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     with:
+      # Provisioning recipe (design/executed-paths-residual.md in the agents
+      # repo): what .github/actions/claude-setup does, run as the unprivileged
+      # agent user in the checkout. Codex runs use it now; Claude runs keep
+      # claude-setup until they move to an agent user, then use this instead.
+      provision: |
+        uv venv --python 3.12
+        uv sync
       pr_number: ${{ github.event.issue.number }}
       comment_author: ${{ github.event.comment.user.login }}
