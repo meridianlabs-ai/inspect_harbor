@@ -6,14 +6,6 @@ from unittest.mock import Mock, mock_open, patch
 
 import pytest
 import yaml
-from harbor.models.task.config import (
-    AgentConfig,
-    EnvironmentConfig,
-    HealthcheckConfig,
-    NetworkMode,
-    TaskConfig,
-    VerifierConfig,
-)
 from inspect_ai.dataset import Sample
 from inspect_ai.util import ComposeBuild, ComposeConfig, SandboxEnvironmentSpec
 from inspect_ai.util._sandbox.compose import ComposeDeviceReservation
@@ -22,6 +14,30 @@ from inspect_harbor._harbor.converters import (
     harbor_task_to_sample,
     harbor_to_compose_config,
 )
+from inspect_harbor._harbor.models import (
+    AgentConfig,
+    EnvironmentConfig,
+    HealthcheckConfig,
+    NetworkMode,
+    TaskConfig,
+    VerifierConfig,
+)
+from inspect_harbor._harbor.paths import (
+    environment_content_hash,
+    sanitize_docker_image_name,
+)
+
+
+def _hb(mock_task: Any, service: str | None = None) -> str:
+    """The ``hb__<environment hash>`` tag the converter should give ``mock_task``."""
+    docker_image = mock_task.config.environment.docker_image
+    digest = environment_content_hash(
+        Path(mock_task.paths.environment_dir),
+        docker_image=docker_image if isinstance(docker_image, str) else None,
+    )
+    return sanitize_docker_image_name(
+        f"hb__{digest}" + (f"__{service}" if service else "")
+    )
 
 
 def test_harbor_to_compose_config_with_existing_compose_yaml():
@@ -108,7 +124,7 @@ def test_harbor_to_compose_config_with_dockerfile():
         assert service.build.context == "/task/environment"
         # Built image is given a stable, task-derived tag so subsequent
         # runs can reuse it instead of rebuilding.
-        assert service.image == "hb__my-task"
+        assert service.image == _hb(mock_task)
         assert service.cpus == 1.0
         # 6GB minimum is applied (config has 2048m which is below minimum)
         assert service.mem_limit == "6144m"
@@ -118,7 +134,7 @@ def test_harbor_to_compose_config_with_dockerfile():
 
 
 def test_harbor_to_compose_config_dockerfile_image_tag_is_deterministic():
-    """Dockerfile-only path stamps the build with a stable ``hb__<task>`` tag.
+    """Dockerfile-only path stamps the build with a stable ``hb__<env hash>`` tag.
 
     Regression test for cache misses on repeat runs: without an explicit
     ``image:``, Compose tags the build as ``<project>-<service>`` and
@@ -156,7 +172,7 @@ def test_harbor_to_compose_config_dockerfile_image_tag_is_deterministic():
     # Same task -> same tag across invocations (this is the whole point).
     assert first.services["default"].image == second.services["default"].image
     # Sanitized: lowercased, '/' replaced with '-'.
-    assert first.services["default"].image == "hb__swe-bench-django__django-12406"
+    assert first.services["default"].image == _hb(mock_task)
     # And we're still building from the Dockerfile.
     assert isinstance(first.services["default"].build, ComposeBuild)
 
@@ -534,10 +550,9 @@ def test_harbor_to_compose_config_deprecated_allow_internet_isolated():
     handling is needed on our side. Uses a real ``TaskConfig`` (not a Mock) to
     exercise that migration end to end.
     """
-    with pytest.warns(DeprecationWarning, match="allow_internet"):
-        config = TaskConfig.model_validate_toml(
-            '[environment]\ndocker_image = "ubuntu:latest"\nallow_internet = false\n'
-        )
+    config = TaskConfig.from_toml(
+        '[environment]\ndocker_image = "ubuntu:latest"\nallow_internet = false\n'
+    )
     assert config.environment.network_mode == NetworkMode.NO_NETWORK
     assert config.environment.allow_internet is None
 
@@ -1421,7 +1436,7 @@ services:
 
     assert "${" not in result
     assert "/cache/tasks/abc/my-task/environment" in result
-    assert "hb__my-task" in result
+    assert _hb(mock_task) in result
     assert "cpus: 4" in result
     assert "memory: 8192M" in result
 
@@ -1486,7 +1501,7 @@ def test_expand_compose_vars_image_name_sanitized_for_package_task():
     mock_task.config.environment.env = {}
 
     result = _expand_compose_vars("image: ${MAIN_IMAGE_NAME}", mock_task, 1.0, 2048)
-    assert result == "image: hb__harbor-hello.world"
+    assert result == f"image: {_hb(mock_task)}"
 
 
 def test_expand_compose_vars_test_dir_from_verifier_env():
@@ -1643,7 +1658,7 @@ services:
     result = harbor_to_compose_config(mock_task)
 
     service = result.services["default"]
-    assert service.image == "hb__test-task"
+    assert service.image == _hb(mock_task)
     assert isinstance(service.build, ComposeBuild)
     assert service.build.context == str(env_dir)
 
@@ -1694,12 +1709,13 @@ services:
     result = harbor_to_compose_config(mock_task)
 
     # Each service gets its own stable tag derived from task + service.
-    assert result.services["default"].image == "hb__compose-multi-service__default"
-    assert result.services["worker"].image == "hb__compose-multi-service__worker"
+    assert result.services["default"].image == _hb(mock_task, "default")
+    assert result.services["worker"].image == _hb(mock_task, "worker")
     # And neither tag starts with inspect_ai's random ``inspect-…`` project
     # prefix, so compose_cleanup_images won't delete them.
-    assert not result.services["default"].image.startswith("inspect-")
-    assert not result.services["worker"].image.startswith("inspect-")
+    for svc in ("default", "worker"):
+        image = result.services[svc].image
+        assert image is not None and not image.startswith("inspect-")
 
 
 def test_harbor_to_compose_config_compose_yaml_preserves_explicit_image(
@@ -1916,7 +1932,9 @@ services:
     assert result.services["helper"].healthcheck is None
 
 
-def test_healthcheck_does_not_overwrite_one_declared_in_compose_yaml():
+def test_healthcheck_does_not_overwrite_one_declared_in_compose_yaml(
+    caplog: pytest.LogCaptureFixture,
+):
     """A compose-declared healthcheck wins, and the conflict is warned about."""
     mock_task = _make_healthcheck_task(HealthcheckConfig(command="test -f /ready"))
     compose_yaml = """
@@ -1933,8 +1951,12 @@ services:
         patch("builtins.open", mock_open(read_data=compose_yaml)),
     ):
         mock_exists.side_effect = lambda: True
-        with pytest.warns(UserWarning, match="healthcheck-task"):
+        with caplog.at_level("WARNING", logger="inspect_harbor._harbor.converters"):
             result = harbor_to_compose_config(mock_task)
+    assert (
+        "healthcheck-task" in caplog.text
+        and "ignoring the task.toml one" in caplog.text
+    )
 
     healthcheck = result.services["default"].healthcheck
     assert healthcheck is not None

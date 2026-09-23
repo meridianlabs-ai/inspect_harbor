@@ -1,18 +1,18 @@
 """Tests for Harbor task."""
 
-import warnings
+import re
 from pathlib import Path
 from typing import Any
-from unittest.mock import Mock, patch
+from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
-from harbor.models.task.config import HealthcheckConfig
-from harbor.models.task.task import Task as HarborTask
+from inspect_harbor._harbor.models import HealthcheckConfig
 from inspect_harbor._harbor.task import (
     _disambiguate_sample_ids,
     harbor,
     load_harbor_tasks,
 )
+from inspect_harbor._harbor.task_dir import HarborTask
 
 
 def _make_harbor_task_mock(
@@ -244,7 +244,9 @@ def test_load_local_task_disable_verification_threaded_to_constructor():
         )
 
 
-def test_build_harbor_tasks_warns_on_allowlist_network_mode():
+def test_build_harbor_tasks_warns_on_allowlist_network_mode(
+    caplog: pytest.LogCaptureFixture,
+):
     """``network_mode = 'allowlist'`` loads with a degraded-fidelity warning.
 
     A plain compose project cannot enforce an egress allowlist (that's
@@ -260,13 +262,16 @@ def test_build_harbor_tasks_warns_on_allowlist_network_mode():
             name="allowlist-task", task_dir=task_path, network_mode="allowlist"
         )
 
-        with pytest.warns(UserWarning, match=r"allowlist.*\['allowlist-task'\]"):
+        with caplog.at_level("WARNING", logger="inspect_harbor._harbor.task"):
             result = load_harbor_tasks(path="/some/allowlist/task")
 
         assert len(result) == 1
+        assert re.search(r"allowlist.*\['allowlist-task'\]", caplog.text)
 
 
-def test_build_harbor_tasks_does_not_warn_on_healthcheck():
+def test_build_harbor_tasks_does_not_warn_on_healthcheck(
+    caplog: pytest.LogCaptureFixture,
+):
     """``[environment].healthcheck`` is wired into the compose service now.
 
     It used to be reported as degraded fidelity; the converter maps it onto the
@@ -284,11 +289,11 @@ def test_build_harbor_tasks_does_not_warn_on_healthcheck():
         )
         mock_harbor_task.return_value = task_mock
 
-        with warnings.catch_warnings():
-            warnings.simplefilter("error", UserWarning)
+        with caplog.at_level("WARNING", logger="inspect_harbor._harbor.task"):
             result = load_harbor_tasks(path="/some/healthcheck/task")
 
         assert len(result) == 1
+        assert caplog.text == ""
 
 
 def test_load_from_registry():
@@ -433,6 +438,10 @@ def test_load_registry_with_overwrite_cache():
             {"registry_url": "https://registry.example.com"},
             "Cannot specify registry_url, registry_path, dataset_task_names, or "
             "dataset_exclude_task_names without also specifying dataset_name_version or path",
+        ),
+        (
+            {"path": "/some/task", "package_name": "harbor/hello-world"},
+            "Cannot set both 'path' and a dataset source",
         ),
     ],
 )
@@ -614,3 +623,86 @@ def test_harbor_task_with_overrides():
     assert len(service.deploy.resources.reservations.devices) == 1
     device = service.deploy.resources.reservations.devices[0]
     assert device.count == 2
+
+
+@pytest.mark.parametrize(
+    "kwargs,expected_call",
+    [
+        (
+            dict(
+                package_ref="3",
+                dataset_task_names=["acme/b*"],
+                dataset_exclude_task_names=["acme/bad"],
+                n_tasks=4,
+            ),
+            ("acme/bench", "3", ["acme/b*"], ["acme/bad"], 4, False),
+        ),
+        # ``inspect eval -T dataset_task_names=foo`` arrives as a bare string.
+        (
+            dict(dataset_task_names="acme/b*", dataset_exclude_task_names="acme/bad"),
+            ("acme/bench", "latest", ["acme/b*"], ["acme/bad"], None, False),
+        ),
+    ],
+)
+def test_hub_dataset_filters_forwarded(
+    kwargs: dict[str, Any], expected_call: tuple[Any, ...]
+) -> None:
+    """Task filters apply to hub packages, as the generated task functions rely on."""
+    with (
+        patch("inspect_harbor._harbor.task._load_from_package") as mock_load_package,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        mock_load_package.return_value = [Path("/cache/x")]
+        mock_harbor_task.return_value = _make_harbor_task_mock(
+            task_dir=Path("/cache/x")
+        )
+        load_harbor_tasks(package_name="acme/bench", **kwargs)
+        mock_load_package.assert_called_once_with(*expected_call)
+
+
+@pytest.mark.parametrize(
+    "kwargs,match",
+    [
+        (dict(dataset_task_names=["x"]), "dataset_task_names.*without also"),
+        (
+            dict(dataset_exclude_task_names=["x"]),
+            "dataset_exclude_task_names.*without also",
+        ),
+        (
+            dict(path="task", task_git_url="https://github.com/org/repo", n_tasks=1),
+            "single git task",
+        ),
+    ],
+)
+def test_dataset_filter_misuse_raises(kwargs: dict[str, Any], match: str) -> None:
+    """Filters need a dataset to apply to; a single git task has nothing to filter."""
+    with pytest.raises(ValueError, match=match):
+        load_harbor_tasks(**kwargs)
+
+
+def test_broken_single_task_dir_raises_instead_of_empty_dataset(
+    tmp_path: Path,
+) -> None:
+    """A directory with a bad task.toml is a broken task, not an empty dataset."""
+    task_dir = tmp_path / "task"
+    (task_dir / "environment").mkdir(parents=True)
+    (task_dir / "task.toml").write_text("[environment\n")
+    with pytest.raises(ValueError, match="Invalid TOML"):
+        load_harbor_tasks(path=task_dir)
+
+
+def test_empty_hub_dataset_is_an_error():
+    """A dataset with no tasks fails like Harbor instead of yielding zero samples."""
+    metadata = Mock(task_refs=[], dataset_version_id="dv")
+    with (
+        patch(
+            "inspect_harbor._harbor.task.HubClient",
+            return_value=Mock(aclose=AsyncMock(), record_dataset_download=AsyncMock()),
+        ),
+        patch(
+            "inspect_harbor._harbor.task.resolve_hub_dataset",
+            new=AsyncMock(return_value=metadata),
+        ),
+        pytest.raises(ValueError, match="has no tasks"),
+    ):
+        load_harbor_tasks(package_name="acme/empty")

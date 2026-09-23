@@ -2,19 +2,18 @@
 
 import json
 import logging
+import math
 import shlex
 from pathlib import Path
 from typing import Any
 
-from harbor.constants import MAIN_SERVICE_NAME
-from harbor.models.task.config import TaskConfig, VerifierEnvironmentMode
-from harbor.models.task.verifier_mode import resolve_task_verifier_mode
-from harbor.models.trial.paths import EnvironmentPaths
 from inspect_ai.scorer import Score, Scorer, Target, accuracy, scorer, stderr
 from inspect_ai.solver import TaskState
 from inspect_ai.util import sandbox
 
 from inspect_harbor._harbor.converters import _user_to_str
+from inspect_harbor._harbor.models import MAIN_SERVICE_NAME, TaskConfig
+from inspect_harbor._harbor.paths import EnvironmentPaths
 from inspect_harbor._harbor.sandbox_utils import (
     cleanup_sandbox_directories,
     cleanup_sandbox_env_vars,
@@ -115,8 +114,21 @@ def harbor_scorer(
         verifier_env = {**_DEFAULT_VERIFIER_ENV, **resolved_user_env}
         verifier_user = state.metadata.get("verifier_user")
 
+        # Exec the script directly, as Harbor's verifier does, so its shebang
+        # picks the interpreter. Harbor chmods as root; we only switch user when
+        # the task sets [verifier].user, because on some Inspect sandbox
+        # providers a user switch needs sudo or su in the image, and a task
+        # without a verifier user never needed either. A script that still is
+        # not executable runs under bash, as it always did here.
+        script = shlex.quote(container_test_path)
+        run = f"if [ -x {script} ]; then {script}; else bash {script}; fi"
+        if verifier_user is None:
+            command = f"chmod +x {script} 2>/dev/null; {run}"
+        else:
+            await sandbox().exec(["chmod", "+x", container_test_path], user="root")
+            command = run
         result = await sandbox().exec(
-            ["bash", "-l", container_test_path],
+            ["sh", "-c", command],
             timeout=int(verifier_timeout_sec),
             env=verifier_env,
             user=verifier_user,
@@ -128,7 +140,10 @@ def harbor_scorer(
         score_result = Score(
             value=reward_value,
             answer="PASS" if passed else "FAIL",
-            explanation=f"Test exit code: {result.returncode}\n\nstdout:\n{result.stdout}\n\nstderr:\n{result.stderr}",
+            explanation=(
+                f"Test exit code: {result.returncode}\n\n"
+                f"stdout:\n{result.stdout}\n\nstderr:\n{result.stderr}"
+            ),
             metadata={"reward_dict": reward_dict} if reward_dict else None,
         )
 
@@ -153,7 +168,7 @@ async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
     them, and a multi-attempt solver sees the reset tree on its next attempt.
     """
     try:
-        task_cfg = TaskConfig.model_validate(harbor_config)
+        task_cfg = TaskConfig.from_metadata(harbor_config)
     except ValueError as exc:  # pydantic.ValidationError
         logger.warning(
             "Skipping verifier.collect hooks: harbor_config failed validation: %s",
@@ -201,7 +216,7 @@ async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
 
     # Only reset in separate mode; in shared mode Harbor verifies against the
     # agent's environment, so wiping its work would grade the pristine base.
-    if resolve_task_verifier_mode(task_cfg) != VerifierEnvironmentMode.SEPARATE:
+    if not task_cfg.verifier_runs_separately():
         return
 
     base_commit = task_cfg.metadata.get("base_commit_hash")
@@ -233,59 +248,73 @@ async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
 
 
 async def _parse_reward_file(exit_code: int) -> tuple[float, dict[str, Any] | None]:
-    """Parse reward from either reward.txt or reward.json.
+    """Parse the reward from ``reward.json`` or, failing that, ``reward.txt``.
+
+    Like Harbor, ``reward.json`` takes precedence when both exist.
 
     Args:
-        exit_code: Test script exit code.
+        exit_code: Test script exit code, for the not-found message.
 
     Returns:
         Tuple of (reward value as float, reward dict if from JSON else None).
 
     Raises:
-        RewardFileEmptyError: When reward file exists but is empty.
-        VerifierOutputParseError: When reward file content cannot be parsed.
-        RewardFileNotFoundError: When no reward file exists at expected locations.
+        RewardFileEmptyError: When a reward file exists but is empty.
+        VerifierOutputParseError: When a reward file cannot be parsed, or holds
+            a non-numeric or non-finite value.
+        RewardFileNotFoundError: When neither reward file exists.
     """
-    reward_text_path = "/logs/verifier/reward.txt"
-    reward_json_path = "/logs/verifier/reward.json"
+    reward_text_path = str(EnvironmentPaths().reward_text_path)
+    reward_json_path = str(EnvironmentPaths().reward_json_path)
+
+    try:
+        reward_json_content = await sandbox().read_file(reward_json_path)
+    except FileNotFoundError:
+        reward_json_content = None
+    if reward_json_content is not None:
+        if not reward_json_content.strip():
+            raise RewardFileEmptyError(f"Reward file is empty: {reward_json_path}")
+        try:
+            reward_dict = json.loads(reward_json_content)
+        except json.JSONDecodeError as e:
+            raise VerifierOutputParseError(
+                f"Failed to parse reward.json: {reward_json_content[:100]}"
+            ) from e
+        if not isinstance(reward_dict, dict) or not reward_dict:
+            raise VerifierOutputParseError(
+                f"Reward JSON is not a valid dict or is empty: {reward_json_content[:100]}"
+            )
+        # Like Harbor, require real finite numbers: json.loads accepts
+        # NaN/Infinity tokens and overflows like 1e309.
+        for key, value in reward_dict.items():
+            if not isinstance(value, (int, float)) or (
+                isinstance(value, float) and not math.isfinite(value)
+            ):
+                raise VerifierOutputParseError(
+                    f"Non-numeric or non-finite reward {value!r} for {key!r} in reward.json"
+                )
+        value = (
+            reward_dict["reward"]
+            if "reward" in reward_dict
+            else next(iter(reward_dict.values()))
+        )
+        return float(value), reward_dict
 
     try:
         reward_content = await sandbox().read_file(reward_text_path)
-        if not reward_content.strip():
-            raise RewardFileEmptyError(f"Reward file is empty: {reward_text_path}")
-
-        try:
-            return float(reward_content.strip()), None
-        except (ValueError, TypeError) as e:
-            raise VerifierOutputParseError(
-                f"Failed to parse reward.txt as float: {reward_content[:100]}"
-            ) from e
-
-    except FileNotFoundError:
-        try:
-            reward_json_content = await sandbox().read_file(reward_json_path)
-            if not reward_json_content.strip():
-                raise RewardFileEmptyError(f"Reward file is empty: {reward_json_path}")
-
-            try:
-                reward_dict = json.loads(reward_json_content)
-                # If dict has "reward" key, use it; otherwise use first value
-                if isinstance(reward_dict, dict):
-                    if "reward" in reward_dict:
-                        return float(reward_dict["reward"]), reward_dict
-                    # Use first value from dict
-                    elif reward_dict:
-                        return float(next(iter(reward_dict.values()))), reward_dict
-                raise VerifierOutputParseError(
-                    f"Reward JSON is not a valid dict or is empty: {reward_json_content[:100]}"
-                )
-            except (ValueError, TypeError, json.JSONDecodeError) as e:
-                raise VerifierOutputParseError(
-                    f"Failed to parse reward.json: {reward_json_content[:100]}"
-                ) from e
-
-        except FileNotFoundError as e:
-            raise RewardFileNotFoundError(
-                f"No reward file found at {reward_text_path} or {reward_json_path}. "
-                f"Test script exit code was {exit_code}."
-            ) from e
+    except FileNotFoundError as e:
+        raise RewardFileNotFoundError(
+            f"No reward file found at {reward_json_path} or {reward_text_path}. "
+            f"Test script exit code was {exit_code}."
+        ) from e
+    if not reward_content.strip():
+        raise RewardFileEmptyError(f"Reward file is empty: {reward_text_path}")
+    try:
+        value = float(reward_content.strip())
+    except (ValueError, TypeError) as e:
+        raise VerifierOutputParseError(
+            f"Failed to parse reward.txt as float: {reward_content[:100]}"
+        ) from e
+    if not math.isfinite(value):
+        raise VerifierOutputParseError(f"Non-finite reward in reward.txt: {value!r}")
+    return value, None

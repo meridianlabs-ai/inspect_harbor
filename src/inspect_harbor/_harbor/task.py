@@ -1,15 +1,10 @@
 """Inspect AI Task interface to Harbor tasks"""
 
 import hashlib
-import warnings
+import logging
 from collections import Counter
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
-from harbor.models.job.config import DatasetConfig
-from harbor.models.task.config import NetworkMode
-from harbor.models.task.task import Task as HarborTask
-from harbor.models.trial.config import TaskConfig
-from harbor.tasks.client import TaskClient
 from inspect_ai import Task, task
 from inspect_ai._util._async import run_coroutine
 from inspect_ai.agent import react
@@ -17,7 +12,20 @@ from inspect_ai.model import CompactionEdit
 from inspect_ai.tool import bash, python, update_plan
 
 from inspect_harbor._harbor.converters import harbor_task_to_sample
+from inspect_harbor._harbor.git_tasks import GitTaskSpec, download_git_tasks
+from inspect_harbor._harbor.hub import (
+    HubClient,
+    HubTaskRef,
+    download_hub_tasks,
+    resolve_hub_dataset,
+)
+from inspect_harbor._harbor.local import filter_entries, list_local_dataset_tasks
+from inspect_harbor._harbor.models import NetworkMode
+from inspect_harbor._harbor.registry import resolve_registry_dataset
 from inspect_harbor._harbor.scorer import harbor_scorer
+from inspect_harbor._harbor.task_dir import HarborTask
+
+logger = logging.getLogger(__name__)
 
 
 @task
@@ -30,8 +38,8 @@ def harbor(
     dataset_name_version: str | None = None,
     package_name: str | None = None,
     package_ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
+    dataset_task_names: str | list[str] | None = None,
+    dataset_exclude_task_names: str | list[str] | None = None,
     n_tasks: int | None = None,
     disable_verification: bool = False,
     overwrite_cache: bool = False,
@@ -52,8 +60,8 @@ def harbor(
         dataset_name_version: Dataset ``name@version`` (e.g. ``dataset@1.0``).
         package_name: Slug of a hub-published dataset in ``org/name`` form (e.g. ``harbor/hello-world``).
         package_ref: Harbor ref to pin to (digest, revision number, tag, or ``latest``). Defaults to ``latest``.
-        dataset_task_names: Task names to include from dataset (supports glob patterns, multiple values).
-        dataset_exclude_task_names: Task names to exclude from dataset (supports glob patterns, multiple values).
+        dataset_task_names: Task names to include from dataset (glob patterns; a single pattern or a list).
+        dataset_exclude_task_names: Task names to exclude from dataset (glob patterns; a single pattern or a list).
         n_tasks: Maximum number of tasks to include (applied after task_names/exclude_task_names filtering).
         disable_verification: Disable task verification. Verification checks whether task files exist.
         overwrite_cache: Force re-download and overwrite cached tasks (default: False).
@@ -113,8 +121,8 @@ def load_harbor_tasks(
     dataset_name_version: str | None = None,
     package_name: str | None = None,
     package_ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
+    dataset_task_names: str | list[str] | None = None,
+    dataset_exclude_task_names: str | list[str] | None = None,
     n_tasks: int | None = None,
     disable_verification: bool = False,
     overwrite_cache: bool = False,
@@ -131,8 +139,8 @@ def load_harbor_tasks(
         dataset_name_version: Dataset ``name@version`` (e.g. ``dataset@1.0``).
         package_name: Slug of a hub-published dataset in ``org/name`` form (e.g. ``harbor/hello-world``).
         package_ref: Harbor ref to pin to (digest, revision number, tag, or ``latest``). Defaults to ``latest``.
-        dataset_task_names: Task names to include from dataset (supports glob patterns, multiple values).
-        dataset_exclude_task_names: Task names to exclude from dataset (supports glob patterns, multiple values).
+        dataset_task_names: Task names to include from dataset (glob patterns; a single pattern or a list).
+        dataset_exclude_task_names: Task names to exclude from dataset (glob patterns; a single pattern or a list).
         n_tasks: Maximum number of tasks to include (applied after task_names/exclude_task_names filtering).
         disable_verification: Disable task verification. Verification checks whether task files exist.
         overwrite_cache: Force re-download and overwrite cached tasks.
@@ -141,24 +149,51 @@ def load_harbor_tasks(
         list[HarborTask]: List of loaded Harbor task objects.
     """
     path, registry_path = _normalize_paths(path, registry_path)
+    # ``inspect eval -T dataset_task_names=foo`` arrives as a bare string.
+    dataset_task_names = _as_list(dataset_task_names)
+    dataset_exclude_task_names = _as_list(dataset_exclude_task_names)
 
     task_specified: bool = task_git_url is not None or task_git_commit_id is not None
-    dataset_specified: bool = (
+    registry_specified: bool = (
         dataset_name_version is not None
         or registry_url is not None
         or registry_path is not None
-        or dataset_task_names is not None
-        or dataset_exclude_task_names is not None
     )
     package_specified: bool = package_name is not None
+    # Filters apply to any dataset source (local dir, registry, or package).
+    filters_specified: bool = (
+        dataset_task_names is not None
+        or dataset_exclude_task_names is not None
+        or n_tasks is not None
+    )
 
-    sources = sum([task_specified, dataset_specified, package_specified])
+    sources = sum([task_specified, registry_specified, package_specified])
     if sources > 1:
         raise ValueError(
             "Cannot mix task, dataset, and package parameters. "
             f"Task params: git_url={task_git_url}, commit={task_git_commit_id}. "
             f"Dataset params: name_version={dataset_name_version}, registry_url={registry_url}. "
             f"Package params: package_name={package_name}, package_ref={package_ref}."
+        )
+    if path is not None and (registry_specified or package_specified):
+        raise ValueError(
+            "Cannot set both 'path' and a dataset source (dataset_name_version, "
+            "registry_url, registry_path, or package_name)."
+        )
+    if task_specified and filters_specified:
+        raise ValueError(
+            "dataset_task_names, dataset_exclude_task_names, and n_tasks do not "
+            "apply to a single git task"
+        )
+    if (
+        filters_specified
+        and path is None
+        and not registry_specified
+        and not package_specified
+    ):
+        raise ValueError(
+            "Cannot specify dataset_task_names, dataset_exclude_task_names, or "
+            "n_tasks without also specifying path, dataset_name_version, or package_name"
         )
 
     if path is not None:
@@ -179,7 +214,7 @@ def load_harbor_tasks(
     if task_specified:
         raise ValueError("Task configuration with task_git_url requires path parameter")
 
-    if dataset_specified:
+    if registry_specified:
         if dataset_name_version is None:
             raise ValueError(
                 "Cannot specify registry_url, registry_path, dataset_task_names, or "
@@ -295,11 +330,10 @@ def _build_harbor_tasks(
             f"be enforced in a plain compose project; treated as 'public'): {allowlist}"
         )
     if degraded:
-        warnings.warn(
-            "task.toml fields declared but not wired up by inspect_harbor "
-            "(task will run with degraded fidelity):\n  - " + "\n  - ".join(degraded),
-            UserWarning,
-            stacklevel=2,
+        logger.warning(
+            "task.toml fields declared but not wired up by inspect_harbor (task will "
+            "run with degraded fidelity):\n  - %s",
+            "\n  - ".join(degraded),
         )
 
     return harbor_tasks
@@ -310,6 +344,11 @@ def _normalize_paths(*paths: str | Path | None) -> tuple[Path | None, ...]:
     return tuple(Path(p) if p is not None else None for p in paths)
 
 
+def _as_list(value: str | list[str] | None) -> list[str] | None:
+    """Accept a single pattern where a list of patterns is expected."""
+    return [value] if isinstance(value, str) else value
+
+
 def _load_git_task(
     path: Path,
     task_git_url: str,
@@ -317,16 +356,12 @@ def _load_git_task(
     overwrite_cache: bool,
 ) -> list[Path]:
     """Load a task from a git repository."""
-    task_config = TaskConfig(
-        path=path, git_url=task_git_url, git_commit_id=task_git_commit_id
+    spec = GitTaskSpec(
+        git_url=task_git_url,
+        path=PurePosixPath(path.as_posix()),
+        git_commit_id=task_git_commit_id,
     )
-    task_client = TaskClient()
-    result = run_coroutine(
-        task_client.download_tasks(
-            task_ids=[task_config.get_task_id()], overwrite=overwrite_cache
-        )
-    )
-    return result.paths
+    return run_coroutine(download_git_tasks([spec], overwrite=overwrite_cache))
 
 
 def _load_local_path(
@@ -337,23 +372,19 @@ def _load_local_path(
     disable_verification: bool,
 ) -> list[Path]:
     """Load from a local path - either a single task or a dataset directory."""
-    is_task: bool = HarborTask.is_valid_dir(
-        path, disable_verification=disable_verification
-    )
-
-    if is_task:
+    if HarborTask.is_valid_dir(path, disable_verification=disable_verification):
         return [path]
-
-    dataset_config = DatasetConfig(
-        path=path,
-        task_names=dataset_task_names,
-        exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
+    if (path / "task.toml").exists():
+        # It is meant to be a task, so surface the real error rather than
+        # scanning its subdirectories as if it were a dataset.
+        HarborTask(path, disable_verification=disable_verification)
+    return list_local_dataset_tasks(
+        path,
+        dataset_task_names,
+        dataset_exclude_task_names,
+        n_tasks,
+        disable_verification,
     )
-    local_configs = run_coroutine(
-        dataset_config.get_task_configs(disable_verification=disable_verification)
-    )
-    return [config.path for config in local_configs if config.path is not None]
 
 
 def _load_from_registry(
@@ -365,23 +396,26 @@ def _load_from_registry(
     n_tasks: int | None,
     overwrite_cache: bool,
 ) -> list[Path]:
-    """Load tasks from a registry dataset."""
-    if "@" in dataset_name_version:
-        name, version = dataset_name_version.split("@", 1)
-    else:
-        name, version = dataset_name_version, None
+    """Load tasks from a ``name@version`` dataset in a JSON registry file."""
 
-    dataset_config = DatasetConfig(
-        name=name,
-        version=version,
-        registry_url=registry_url,
-        registry_path=registry_path,
-        task_names=dataset_task_names,
-        exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite=overwrite_cache,
-    )
-    return _download_dataset(dataset_config, overwrite_cache)
+    async def _resolve_and_download() -> list[Path]:
+        entries = await resolve_registry_dataset(
+            dataset_name_version, url=registry_url, path=registry_path
+        )
+        if not entries:
+            raise ValueError(f"Dataset {dataset_name_version!r} has no tasks")
+        entries = filter_entries(
+            entries,
+            lambda e: e.name,
+            dataset_task_names,
+            dataset_exclude_task_names,
+            n_tasks,
+        )
+        git_specs = [e for e in entries if isinstance(e, GitTaskSpec)]
+        git_paths = iter(await download_git_tasks(git_specs, overwrite=overwrite_cache))
+        return [next(git_paths) if isinstance(e, GitTaskSpec) else e for e in entries]
+
+    return run_coroutine(_resolve_and_download())
 
 
 def _load_from_package(
@@ -392,29 +426,29 @@ def _load_from_package(
     n_tasks: int | None,
     overwrite_cache: bool,
 ) -> list[Path]:
-    """Load tasks from a package-based dataset."""
-    dataset_config = DatasetConfig(
-        name=package_name,
-        ref=package_ref,
-        task_names=dataset_task_names,
-        exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite=overwrite_cache,
-    )
-    return _download_dataset(dataset_config, overwrite_cache)
-
-
-def _download_dataset(
-    dataset_config: DatasetConfig, overwrite_cache: bool
-) -> list[Path]:
-    """Resolve a dataset to TaskConfigs, then download to local paths."""
+    """Load tasks from an ``org/name@ref`` dataset on the Harbor hub."""
 
     async def _resolve_and_download() -> list[Path]:
-        task_configs = await dataset_config.get_task_configs()
-        result = await TaskClient().download_tasks(
-            task_ids=[tc.get_task_id() for tc in task_configs],
-            overwrite=overwrite_cache,
-        )
-        return result.paths
+        slug = f"{package_name}@{package_ref}"
+        client = HubClient()
+        try:
+            metadata = await resolve_hub_dataset(slug, client=client)
+            if not metadata.task_refs:
+                raise ValueError(f"Dataset {slug!r} has no tasks")
+            refs: list[HubTaskRef] = filter_entries(
+                metadata.task_refs,
+                lambda t: t.slug,
+                dataset_task_names,
+                dataset_exclude_task_names,
+                n_tasks,
+            )
+            paths = await download_hub_tasks(
+                refs, overwrite=overwrite_cache, client=client
+            )
+            # Like Harbor, count the dataset download for its authors.
+            await client.record_dataset_download(metadata.dataset_version_id)
+            return paths
+        finally:
+            await client.aclose()
 
     return run_coroutine(_resolve_and_download())

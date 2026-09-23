@@ -1,19 +1,12 @@
 """Converters for Harbor tasks to Inspect AI structures."""
 
+import logging
 import os
 import re
-import warnings
+from pathlib import Path
 from typing import Any
 
 import yaml
-from harbor.environments.docker.docker import _sanitize_docker_image_name
-from harbor.models.task.config import (
-    EnvironmentConfig,
-    HealthcheckConfig,
-    NetworkMode,
-)
-from harbor.models.task.task import Task as HarborTask
-from harbor.models.trial.paths import EnvironmentPaths
 from inspect_ai.dataset import Sample
 from inspect_ai.util import (
     ComposeBuild,
@@ -29,7 +22,20 @@ from inspect_ai.util._sandbox.compose import (
     ComposeResourceReservations,
 )
 
+from inspect_harbor._harbor.models import (
+    EnvironmentConfig,
+    HealthcheckConfig,
+    NetworkMode,
+)
+from inspect_harbor._harbor.paths import (
+    EnvironmentPaths,
+    environment_content_hash,
+    sanitize_docker_image_name,
+)
 from inspect_harbor._harbor.sandbox_utils import resolve_env_vars
+from inspect_harbor._harbor.task_dir import HarborTask
+
+logger = logging.getLogger(__name__)
 
 
 def harbor_to_compose_config(
@@ -97,14 +103,12 @@ def harbor_to_compose_config(
                 else:
                     # A compose service can only carry one healthcheck, and the
                     # one the task ships is the more specific declaration.
-                    warnings.warn(
-                        f"'{harbor_task.name}' declares both "
-                        "`[environment].healthcheck` in task.toml and a "
-                        "healthcheck on the default service of its "
-                        "docker-compose.yaml; keeping the compose healthcheck "
-                        "and ignoring the task.toml one.",
-                        UserWarning,
-                        stacklevel=2,
+                    logger.warning(
+                        "%r declares both `[environment].healthcheck` in task.toml "
+                        "and a healthcheck on the default service of its "
+                        "docker-compose.yaml; keeping the compose healthcheck and "
+                        "ignoring the task.toml one.",
+                        harbor_task.name,
                     )
 
             # Network isolation applies to all services.
@@ -114,12 +118,10 @@ def harbor_to_compose_config(
                         continue
                     service.network_mode = "none"
 
-            # Pin a stable `image:` tag make them reusable across runs.
+            # Pin a stable `image:` tag so builds are reused across runs.
             for svc_name, svc in compose_config.services.items():
                 if svc.build is not None and not svc.image:
-                    svc.image = _sanitize_docker_image_name(
-                        f"hb__{harbor_task.name}__{svc_name}"
-                    )
+                    svc.image = _image_name(harbor_task, svc_name)
 
         return compose_config
     else:
@@ -133,10 +135,7 @@ def harbor_to_compose_config(
         service = ComposeService(
             # Use prebuilt image if specified, otherwise tag our build output
             # with a deterministic name derived from the task.
-            image=(
-                env_config.docker_image
-                or _sanitize_docker_image_name(f"hb__{harbor_task.name}")
-            ),
+            image=env_config.docker_image or _image_name(harbor_task),
             # Use Dockerfile if it exists and no prebuilt image specified
             build=(
                 ComposeBuild(context=str(env_dir))
@@ -218,6 +217,22 @@ def harbor_task_to_sample(
         sandbox=SandboxEnvironmentSpec(sandbox_env_name, compose_config),
         metadata=metadata,
     )
+
+
+def _image_name(harbor_task: HarborTask, service: str | None = None) -> str:
+    """The ``hb__<environment hash>`` tag Harbor gives a task's built image.
+
+    Content-addressed like Harbor 0.23, so two revisions of a task with
+    different environments never collide on one tag. Extra compose services
+    that build their own image get a ``__<service>`` suffix.
+    """
+    docker_image = harbor_task.config.environment.docker_image
+    digest = environment_content_hash(
+        Path(harbor_task.paths.environment_dir),
+        docker_image=docker_image if isinstance(docker_image, str) else None,
+    )
+    suffix = f"__{service}" if service else ""
+    return sanitize_docker_image_name(f"hb__{digest}{suffix}")
 
 
 def _user_to_str(user: str | int | None) -> str | None:
@@ -339,9 +354,7 @@ def _expand_compose_vars(
 
     var_map: dict[str, str] = {
         "CONTEXT_DIR": env_dir,
-        # Mirror Harbor's own ``hb__<task.name>`` + ``_sanitize_docker_image_name``
-        # so package tasks (org/name) produce the same image name Harbor would.
-        "MAIN_IMAGE_NAME": _sanitize_docker_image_name(f"hb__{harbor_task.name}"),
+        "MAIN_IMAGE_NAME": _image_name(harbor_task),
         "HOST_VERIFIER_LOGS_PATH": str(paths.verifier_dir),
         "HOST_AGENT_LOGS_PATH": str(paths.agent_dir),
         "HOST_ARTIFACTS_PATH": str(paths.artifacts_dir),

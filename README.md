@@ -6,14 +6,6 @@
 pip install "inspect-harbor>=0.5"
 ```
 
-> [!WARNING]
-> Harbor's LiteLLM dependency currently requires `openai<3`, while Inspect's
-> OpenAI provider requires `openai>=3.1`. The version floor above prevents the
-> resolver from silently installing an obsolete `inspect-harbor` whose task
-> names do not match the current documentation. If you use OpenAI models, see
-> the temporary [OpenAI 3 compatibility
-> instructions](https://meridianlabs-ai.github.io/inspect_harbor/#openai-3-compatibility).
-
 Then in Python:
 
 ```python
