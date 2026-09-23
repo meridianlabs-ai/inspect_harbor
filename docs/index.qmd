@@ -10,18 +10,19 @@ llms-description: Overview, installation, prerequisites, and quick start for Ins
 Install from PyPI:
 
 ```bash
-pip install "inspect-harbor>=0.5"
+pip install "inspect-harbor>=1.0"
 ```
 
 Or with uv:
 
 ```bash
-uv add "inspect-harbor>=0.5"
+uv add "inspect-harbor>=1.0"
 ```
 
-The `>=0.5` floor is important: version 0.5 introduced the organization-qualified
-Harbor registry used by these docs. Without the floor, a dependency resolver may
-silently select an older release whose task names do not match the examples below.
+The `>=1.0` floor matters: 1.0 is the first release that does not depend on
+the `harbor` package, so it installs alongside current `openai` releases and
+uses the organization-qualified task names these docs describe. Older releases
+pin dependencies that conflict with Inspect's and are no longer supported.
 
 ## Prerequisites
 

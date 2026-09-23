@@ -2,8 +2,10 @@
 
 [Harbor](https://harborframework.com/) is a framework for building, evaluating, and optimizing AI agents in containerized environments. Inspect Harbor provides an interface to run Harbor tasks using [Inspect AI](https://inspect.aisi.org.uk/).
 
+Requires Python 3.12 or later and Docker (or another Inspect sandbox provider).
+
 ```bash
-pip install "inspect-harbor>=0.5"
+pip install "inspect-harbor>=1.0"
 ```
 
 Then in Python:
