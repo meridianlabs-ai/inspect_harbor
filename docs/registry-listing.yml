@@ -237,13 +237,6 @@
   categories:
   - Assistants
   - Reasoning
-- title: au12321ua/cadir-ci-benchmark
-  path: registry/au12321ua_cadir_ci_benchmark.html
-  desc: Two native Harbor tasks for CADIR release checks.
-  desc_trunc: Two native Harbor tasks for CADIR release checks.
-  task_function: au12321ua_cadir_ci_benchmark
-  samples: 2
-  version: latest
 - title: bencalvert04/programbench
   path: registry/bencalvert04_programbench.html
   desc: 'ProgramBench cleanroom reconstruction tasks: reimplementing real-world CLI tools from popular open-source repos.'
@@ -300,12 +293,15 @@
   categories:
   - Cybersecurity
 - title: biopharma-bench/biopharma-bench
-  path: registry/biopharma_bench_biopharma_bench.html
+  path: registry/biopharma_bench.html
   desc: Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. The company date is 8 February 2026. An agent takes an employee's seat and writes the document that seat is responsible for.
   desc_trunc: Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. T…
-  task_function: biopharma_bench_biopharma_bench
+  task_function: biopharma_bench
   samples: 10
   version: latest
+  categories:
+  - Professional
+  - Medicine
 - title: blobfishai/arc-crm-6
   path: registry/blobfishai_arc_crm_6.html
   desc: Six independently authored synthetic CRM workflows on one mocked CLI/web/REST/MCP world per episode. Partial Arc-inspired coverage, not source-row reproduction.

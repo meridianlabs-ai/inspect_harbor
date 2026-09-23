@@ -241,9 +241,6 @@ atm-bench/atm-bench-hard-sgm:
   function_name: atm_bench_hard_sgm
   title: ATM-Bench-Hard (SGM)
 
-au12321ua/cadir-ci-benchmark:
-  categories: []
-
 bencalvert04/programbench:
   categories:
   - Coding
@@ -290,7 +287,12 @@ binary-audit/binary-audit:
   title: BinaryAudit
 
 biopharma-bench/biopharma-bench:
-  categories: []
+  categories:
+  - Professional
+  - Medicine
+  function_name: biopharma_bench
+  title: Biopharma Bench
+  repo: https://huggingface.co/datasets/raycasterai/biopharma-bench
 
 blobfishai/arc-crm-6:
   categories:

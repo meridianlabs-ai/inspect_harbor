@@ -207,3 +207,14 @@
 # Martian is a real Organization (RouterBench, Code Review Benchmark) that
 # could publish a real benchmark later.
 - withmartian/clojure-swerebench-v2-validated-51
+# Individual's (User, not org; only Harbor-related repo is a fork of harbor)
+# internal CI artifact for "CADIR", not a published benchmark: 2 tasks with
+# ci--* ids ("Two native Harbor tasks for CADIR release checks"), task /
+# evaluator revision counters in task.toml, and a tests/reference/
+# PROVENANCE.md that says "Do not publish this task or dataset to Harbor Hub
+# until provenance and redistribution rights are confirmed" (the reference
+# STEP's author, source URL and license are undocumented). The tasks
+# (SimpleCADAPI reconstructions of a STEP / a PDF drawing) also fail to load
+# in inspect_harbor (compose build.args rejected by ComposeBuild). Revisit if
+# a real CADIR benchmark with confirmed provenance is published.
+- au12321ua/*
