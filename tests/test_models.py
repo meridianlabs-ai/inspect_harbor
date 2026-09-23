@@ -1,6 +1,7 @@
 """Tests for the task.toml models."""
 
 import operator
+import re
 import warnings
 from pathlib import Path
 from typing import Any
@@ -162,18 +163,26 @@ def test_invalid_configs_are_rejected(toml: str, match: str) -> None:
         (KNOWN_FIELDS_TOML, None),
     ],
 )
-def test_schema_drift_warnings(toml: str, match: str | None) -> None:
-    """Unknown keys and newer schemas warn; known keys and odd versions are silent."""
-    if match is None:
-        with warnings.catch_warnings():
-            warnings.simplefilter("error")
-            TaskConfig.from_toml(toml)
-        return
-    with pytest.warns(UserWarning, match=match):
+def test_schema_drift_is_logged(
+    toml: str, match: str | None, caplog: pytest.LogCaptureFixture
+) -> None:
+    """Unknown keys and newer schemas log warnings; known keys are silent.
+
+    Re-validating from metadata (the scorer's path) is always quiet.
+    """
+    with caplog.at_level("WARNING", logger="inspect_harbor._harbor.models"):
         config = TaskConfig.from_toml(toml)
+    if match is None:
+        assert caplog.text == ""
+        return
+    assert re.search(match, caplog.text)
     if "frobnicate" in toml:
         # Unknown keys are kept, so sample metadata carries the full task.toml.
         assert config.model_dump()["environment"]["frobnicate"] == 1
+    caplog.clear()
+    with caplog.at_level("WARNING", logger="inspect_harbor._harbor.models"):
+        TaskConfig.from_metadata(config.model_dump())
+    assert caplog.text == ""
 
 
 def test_package_info_parses() -> None:

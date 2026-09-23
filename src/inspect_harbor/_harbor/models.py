@@ -4,10 +4,13 @@ These mirror the parts of Harbor's ``TaskConfig`` that inspect_harbor reads.
 Parsing is deliberately lenient: every model accepts unknown keys (they are
 kept and surface in ``model_dump()``, which feeds sample metadata) but the
 fields we act on are typed strictly. Unknown keys in the sections we care
-about, and a ``schema_version`` newer than we were written against, raise a
-``UserWarning`` so schema drift is visible without breaking task loading.
+about, and a ``schema_version`` newer than we were written against, are
+logged as warnings (Inspect surfaces Python logging in the console and in
+eval logs) so schema drift is visible without breaking task loading.
 Deprecated fields that Harbor still accepts are migrated silently and noted
 at debug level: they are the task author's concern, not the evaluator's.
+Re-validating a config that already loaded, as the scorer does from sample
+metadata, passes ``context={"quiet": True}`` so nothing is logged twice.
 
 Written against Harbor's task.toml schema 1.4.
 """
@@ -16,11 +19,17 @@ import logging
 import re
 import tomllib
 import unicodedata
-import warnings
 from enum import Enum
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    ValidationInfo,
+    field_validator,
+    model_validator,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -77,9 +86,9 @@ class PackageInfo(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    def _warn_unknown(cls, data: Any) -> Any:
+    def _warn_unknown(cls, data: Any, info: ValidationInfo) -> Any:
         if isinstance(data, dict):
-            _warn_unknown_keys("[task]", data, set(cls.model_fields))
+            _warn_unknown_keys("[task]", data, set(cls.model_fields), info)
         return data
 
     @field_validator("name")
@@ -143,11 +152,14 @@ class EnvironmentConfig(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    def _migrate_and_warn(cls, data: Any) -> Any:
+    def _migrate_and_warn(cls, data: Any, info: ValidationInfo) -> Any:
         if not isinstance(data, dict):
             return data
         _warn_unknown_keys(
-            "[environment]", data, set(cls.model_fields) | _LEGACY_ENVIRONMENT_KEYS
+            "[environment]",
+            data,
+            set(cls.model_fields) | _LEGACY_ENVIRONMENT_KEYS,
+            info,
         )
         if data.get("allow_internet") is not None:
             logger.debug(
@@ -211,9 +223,9 @@ class VerifierConfig(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    def _warn_unknown(cls, data: Any) -> Any:
+    def _warn_unknown(cls, data: Any, info: ValidationInfo) -> Any:
         if isinstance(data, dict):
-            _warn_unknown_keys("[verifier]", data, set(cls.model_fields))
+            _warn_unknown_keys("[verifier]", data, set(cls.model_fields), info)
         return data
 
     @model_validator(mode="after")
@@ -249,9 +261,9 @@ class AgentConfig(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    def _warn_unknown(cls, data: Any) -> Any:
+    def _warn_unknown(cls, data: Any, info: ValidationInfo) -> Any:
         if isinstance(data, dict):
-            _warn_unknown_keys("[agent]", data, set(cls.model_fields))
+            _warn_unknown_keys("[agent]", data, set(cls.model_fields), info)
         return data
 
     @model_validator(mode="after")
@@ -299,23 +311,22 @@ class TaskConfig(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    def _rename_and_warn(cls, data: Any) -> Any:
+    def _rename_and_warn(cls, data: Any, info: ValidationInfo) -> Any:
         if not isinstance(data, dict):
             return data
         if "version" in data:
             data.setdefault("schema_version", data.pop("version"))
-        _warn_unknown_keys("top level", data, set(cls.model_fields))
+        _warn_unknown_keys("top level", data, set(cls.model_fields), info)
         declared = data.get("schema_version")
-        if isinstance(declared, str):
+        if isinstance(declared, str) and not _quiet(info):
             got = _schema_version_tuple(declared)
             supported = _schema_version_tuple(SUPPORTED_SCHEMA_VERSION)
             if got is not None and supported is not None and got > supported:
-                warnings.warn(
-                    f"task.toml declares schema_version {declared!r}, newer than "
-                    f"the {SUPPORTED_SCHEMA_VERSION} inspect_harbor was written "
-                    "against; loading anyway.",
-                    UserWarning,
-                    stacklevel=4,
+                logger.warning(
+                    "task.toml declares schema_version %r, newer than the %s "
+                    "inspect_harbor was written against; loading anyway.",
+                    declared,
+                    SUPPORTED_SCHEMA_VERSION,
                 )
         return data
 
@@ -349,20 +360,35 @@ class TaskConfig(BaseModel):
         """
         return cls.model_validate(tomllib.loads(text))
 
+    @classmethod
+    def from_metadata(cls, data: dict[str, Any]) -> "TaskConfig":
+        """Rebuild a config from a ``model_dump()`` (e.g. sample metadata).
+
+        The config already logged any drift when the task loaded, so this
+        path is quiet.
+        """
+        return cls.model_validate(data, context={"quiet": True})
+
     def verifier_runs_separately(self) -> bool:
         """Whether the verifier runs in its own container (see ``VerifierConfig``)."""
         return self.verifier.runs_separately()
 
 
-def _warn_unknown_keys(section: str, data: dict[str, Any], known: set[str]) -> None:
+def _quiet(info: ValidationInfo) -> bool:
+    return bool(info.context and info.context.get("quiet"))
+
+
+def _warn_unknown_keys(
+    section: str, data: dict[str, Any], known: set[str], info: ValidationInfo
+) -> None:
     unknown = sorted(k for k in data if k not in known)
-    if unknown:
-        warnings.warn(
-            f"task.toml {section} declares keys inspect_harbor does not know: "
-            f"{unknown}. They are kept in sample metadata but have no effect; "
-            "check Harbor's changelog for new task.toml semantics.",
-            UserWarning,
-            stacklevel=4,
+    if unknown and not _quiet(info):
+        logger.warning(
+            "task.toml %s declares keys inspect_harbor does not know: %s. They are "
+            "kept in sample metadata but have no effect; check Harbor's changelog "
+            "for new task.toml semantics.",
+            section,
+            unknown,
         )
 
 

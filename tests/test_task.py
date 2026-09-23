@@ -1,6 +1,6 @@
 """Tests for Harbor task."""
 
-import warnings
+import re
 from pathlib import Path
 from typing import Any
 from unittest.mock import AsyncMock, Mock, patch
@@ -244,7 +244,9 @@ def test_load_local_task_disable_verification_threaded_to_constructor():
         )
 
 
-def test_build_harbor_tasks_warns_on_allowlist_network_mode():
+def test_build_harbor_tasks_warns_on_allowlist_network_mode(
+    caplog: pytest.LogCaptureFixture,
+):
     """``network_mode = 'allowlist'`` loads with a degraded-fidelity warning.
 
     A plain compose project cannot enforce an egress allowlist (that's
@@ -260,13 +262,16 @@ def test_build_harbor_tasks_warns_on_allowlist_network_mode():
             name="allowlist-task", task_dir=task_path, network_mode="allowlist"
         )
 
-        with pytest.warns(UserWarning, match=r"allowlist.*\['allowlist-task'\]"):
+        with caplog.at_level("WARNING", logger="inspect_harbor._harbor.task"):
             result = load_harbor_tasks(path="/some/allowlist/task")
 
         assert len(result) == 1
+        assert re.search(r"allowlist.*\['allowlist-task'\]", caplog.text)
 
 
-def test_build_harbor_tasks_does_not_warn_on_healthcheck():
+def test_build_harbor_tasks_does_not_warn_on_healthcheck(
+    caplog: pytest.LogCaptureFixture,
+):
     """``[environment].healthcheck`` is wired into the compose service now.
 
     It used to be reported as degraded fidelity; the converter maps it onto the
@@ -284,11 +289,11 @@ def test_build_harbor_tasks_does_not_warn_on_healthcheck():
         )
         mock_harbor_task.return_value = task_mock
 
-        with warnings.catch_warnings():
-            warnings.simplefilter("error", UserWarning)
+        with caplog.at_level("WARNING", logger="inspect_harbor._harbor.task"):
             result = load_harbor_tasks(path="/some/healthcheck/task")
 
         assert len(result) == 1
+        assert caplog.text == ""
 
 
 def test_load_from_registry():

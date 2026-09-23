@@ -1932,7 +1932,9 @@ services:
     assert result.services["helper"].healthcheck is None
 
 
-def test_healthcheck_does_not_overwrite_one_declared_in_compose_yaml():
+def test_healthcheck_does_not_overwrite_one_declared_in_compose_yaml(
+    caplog: pytest.LogCaptureFixture,
+):
     """A compose-declared healthcheck wins, and the conflict is warned about."""
     mock_task = _make_healthcheck_task(HealthcheckConfig(command="test -f /ready"))
     compose_yaml = """
@@ -1949,8 +1951,12 @@ services:
         patch("builtins.open", mock_open(read_data=compose_yaml)),
     ):
         mock_exists.side_effect = lambda: True
-        with pytest.warns(UserWarning, match="healthcheck-task"):
+        with caplog.at_level("WARNING", logger="inspect_harbor._harbor.converters"):
             result = harbor_to_compose_config(mock_task)
+    assert (
+        "healthcheck-task" in caplog.text
+        and "ignoring the task.toml one" in caplog.text
+    )
 
     healthcheck = result.services["default"].healthcheck
     assert healthcheck is not None

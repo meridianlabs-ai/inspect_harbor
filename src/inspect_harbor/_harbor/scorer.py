@@ -4,7 +4,6 @@ import json
 import logging
 import math
 import shlex
-import warnings
 from pathlib import Path
 from typing import Any
 
@@ -169,11 +168,7 @@ async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
     them, and a multi-attempt solver sees the reset tree on its next attempt.
     """
     try:
-        # The config already warned about unknown keys when the task loaded;
-        # don't repeat that for every sample scored.
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
-            task_cfg = TaskConfig.model_validate(harbor_config)
+        task_cfg = TaskConfig.from_metadata(harbor_config)
     except ValueError as exc:  # pydantic.ValidationError
         logger.warning(
             "Skipping verifier.collect hooks: harbor_config failed validation: %s",

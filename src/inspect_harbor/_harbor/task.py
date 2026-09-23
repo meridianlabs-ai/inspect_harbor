@@ -1,7 +1,7 @@
 """Inspect AI Task interface to Harbor tasks"""
 
 import hashlib
-import warnings
+import logging
 from collections import Counter
 from pathlib import Path, PurePosixPath
 
@@ -24,6 +24,8 @@ from inspect_harbor._harbor.models import NetworkMode
 from inspect_harbor._harbor.registry import resolve_registry_dataset
 from inspect_harbor._harbor.scorer import harbor_scorer
 from inspect_harbor._harbor.task_dir import HarborTask
+
+logger = logging.getLogger(__name__)
 
 
 @task
@@ -328,11 +330,10 @@ def _build_harbor_tasks(
             f"be enforced in a plain compose project; treated as 'public'): {allowlist}"
         )
     if degraded:
-        warnings.warn(
-            "task.toml fields declared but not wired up by inspect_harbor "
-            "(task will run with degraded fidelity):\n  - " + "\n  - ".join(degraded),
-            UserWarning,
-            stacklevel=2,
+        logger.warning(
+            "task.toml fields declared but not wired up by inspect_harbor (task will "
+            "run with degraded fidelity):\n  - %s",
+            "\n  - ".join(degraded),
         )
 
     return harbor_tasks

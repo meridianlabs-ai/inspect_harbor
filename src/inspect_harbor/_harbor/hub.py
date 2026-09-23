@@ -432,6 +432,12 @@ async def download_hub_tasks(
     unless ``overwrite`` is set. Concurrent downloads of the same task, from
     this or another process, are safe: each extracts into its own staging
     directory and the first to finish wins.
+
+    ``max_concurrency`` defaults to 100, which is httpx's connection-pool
+    ceiling and what Harbor uses against the same backend. Measured on 100
+    aider tasks: 8 in flight took 11.5 s, 32 took 3.7 s, 100 took 2.2 s with
+    no throttling, so higher values could not help and lower ones cost time
+    on large datasets.
     """
     targets = {ref: hub_task_dir(ref) for ref in task_refs}
     missing = [

@@ -1,8 +1,8 @@
 """Converters for Harbor tasks to Inspect AI structures."""
 
+import logging
 import os
 import re
-import warnings
 from pathlib import Path
 from typing import Any
 
@@ -34,6 +34,8 @@ from inspect_harbor._harbor.paths import (
 )
 from inspect_harbor._harbor.sandbox_utils import resolve_env_vars
 from inspect_harbor._harbor.task_dir import HarborTask
+
+logger = logging.getLogger(__name__)
 
 
 def harbor_to_compose_config(
@@ -101,14 +103,12 @@ def harbor_to_compose_config(
                 else:
                     # A compose service can only carry one healthcheck, and the
                     # one the task ships is the more specific declaration.
-                    warnings.warn(
-                        f"'{harbor_task.name}' declares both "
-                        "`[environment].healthcheck` in task.toml and a "
-                        "healthcheck on the default service of its "
-                        "docker-compose.yaml; keeping the compose healthcheck "
-                        "and ignoring the task.toml one.",
-                        UserWarning,
-                        stacklevel=2,
+                    logger.warning(
+                        "%r declares both `[environment].healthcheck` in task.toml "
+                        "and a healthcheck on the default service of its "
+                        "docker-compose.yaml; keeping the compose healthcheck and "
+                        "ignoring the task.toml one.",
+                        harbor_task.name,
                     )
 
             # Network isolation applies to all services.
