@@ -393,10 +393,7 @@ def _load_from_registry(
 
     async def _resolve_and_download() -> list[Path]:
         entries = await resolve_registry_dataset(
-            dataset_name_version,
-            url=registry_url,
-            path=registry_path,
-            overwrite=overwrite_cache,
+            dataset_name_version, url=registry_url, path=registry_path
         )
         entries = filter_entries(
             entries,

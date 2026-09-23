@@ -1,8 +1,6 @@
 """Tests for JSON registry files (``name@version`` datasets)."""
 
 import json
-import os
-import time
 from pathlib import Path, PurePosixPath
 
 import httpx
@@ -56,14 +54,6 @@ AIME_1_0 = [
         git_commit_id=None,
     ),
 ]
-
-
-@pytest.fixture(autouse=True)
-def isolated_cache(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
-    """Temp cache dir for the URL cache."""
-    cache = tmp_path / "cache"
-    monkeypatch.setenv("INSPECT_HARBOR_CACHE_DIR", str(cache))
-    return cache
 
 
 @pytest.fixture
@@ -120,23 +110,14 @@ async def test_load_registry_from_path(registry_file: Path) -> None:
     assert datasets[0].tasks[0].path == PurePosixPath("tasks/aime_i-9")
 
 
-async def test_load_registry_from_url_is_cached(isolated_cache: Path) -> None:
-    """The URL body is fetched once and reused within the TTL."""
+async def test_load_registry_from_url_fetches_every_time() -> None:
+    """Like Harbor, the registry URL is fetched on each load; nothing is cached."""
     body = json.dumps(REGISTRY).encode()
-    client, seen = _client(body, body, body)
+    client, seen = _client(body, body)
     url = "https://example.test/registry.json"
     await load_registry(url=url, client=client)
     await load_registry(url=url, client=client)
-    assert len(seen) == 1
-    [cached] = (isolated_cache / "registry").glob("*.json")
-
-    # An expired cache file is refetched; ``overwrite`` always refetches.
-    old = time.time() - 48 * 3600
-    os.utime(cached, (old, old))
-    await load_registry(url=url, client=client)
-    assert len(seen) == 2
-    await load_registry(url=url, overwrite=True, client=client)
-    assert len(seen) == 3
+    assert seen == [url, url]
 
 
 @pytest.mark.parametrize(
@@ -146,15 +127,11 @@ async def test_load_registry_from_url_is_cached(isolated_cache: Path) -> None:
         (b'{"name": "x"}', "must be a JSON list"),
     ],
 )
-async def test_bad_registry_body_is_not_cached(bad_body: bytes, match: str) -> None:
-    """A bad response fails loudly and the next fetch is not poisoned by cache."""
-    client, seen = _client(bad_body, json.dumps(REGISTRY).encode())
-    url = "https://example.test/registry.json"
+async def test_bad_registry_body_raises(bad_body: bytes, match: str) -> None:
+    """A non-JSON or non-list body fails with an error naming the source."""
+    client, _ = _client(bad_body)
     with pytest.raises(ValueError, match=match):
-        await load_registry(url=url, client=client)
-    datasets = await load_registry(url=url, client=client)
-    assert [d.name for d in datasets] == ["aime", "aime", "other"]
-    assert len(seen) == 2
+        await load_registry(url="https://example.test/registry.json", client=client)
 
 
 async def test_load_registry_errors() -> None:
