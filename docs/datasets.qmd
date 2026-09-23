@@ -50,7 +50,7 @@ These are upstream issues we've encountered while integrating Harbor datasets. E
 
 ## Volume mount limitations
 
-Some multi-service tasks declare Docker `volumes:` that inspect_harbor doesn't yet fully translate (single-service tasks are unaffected).
+Multi-service tasks can declare Docker `volumes:` in their `docker-compose.yaml`; single-service tasks are unaffected.
 
-- **`${HOST_*}` `/logs` binds fail on local Docker** (`mounts denied`) but work on other providers (daytona/e2b). Affected: `kumo/*` (parity/1/easy/hard), `openai/swe-lancer-diamond-*` (all/ic/manager), `grafana/o11y-bench`, `sierra-research/tau3-bench`, `yanagiorigami/frontier-cs`.
+- **`${HOST_*}` log mounts become named volumes.** Harbor binds per-trial directories on the Docker host at `${HOST_VERIFIER_LOGS_PATH}`, `${HOST_AGENT_LOGS_PATH}` and `${HOST_ARTIFACTS_PATH}`. inspect_harbor has no host side (the sandbox need not be local Docker), so these expand to compose named volumes that are shared between the sample's services and removed with the sandbox. Tasks whose services exchange logs this way (`kumo/*`, `sierra-research/tau3-bench`, ...) run on local Docker.
 - **Task-file binds aren't delivered** — relative/host-path file mounts (`./setup.json`, `./AGENT.md`, `${CONTEXT_DIR}/../../shared/...`) aren't mounted into the container. Affected: `grafana/o11y-bench`, `yanagiorigami/frontier-cs`, `scale-ai/hil-bench`.
