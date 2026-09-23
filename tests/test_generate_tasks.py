@@ -501,3 +501,15 @@ def test_generate_registry_pages_deletes_orphans(
 
     assert not stale.exists()
     assert unrelated.exists()
+
+
+def test_parity_warm_cache_reads_slugs_from_listing(tmp_path: Path) -> None:
+    """The parity warm-up takes its dataset slugs from the generated listing."""
+    from parity_warm_cache import registry_slugs
+
+    listing = tmp_path / "registry-listing.yml"
+    listing.write_text(
+        "- title: acme/bench\n  path: registry/acme_bench.html\n"
+        "- title: harbor/hello-world\n  path: registry/harbor_hello_world.html\n"
+    )
+    assert registry_slugs(listing) == ["acme/bench", "harbor/hello-world"]
