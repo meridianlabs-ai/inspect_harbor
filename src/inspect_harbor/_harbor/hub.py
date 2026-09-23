@@ -289,6 +289,15 @@ class HubClient:
             raise ValueError(
                 f"Task version not found on the Harbor hub: {org}/{name}@{ref}"
             )
+        if row.get("yanked_at"):
+            reason = row.get("yanked_reason")
+            logger.warning(
+                "Task version %s/%s@%s is yanked%s",
+                org,
+                name,
+                ref,
+                f": {reason}" if reason else "",
+            )
         return ResolvedTaskVersion(
             id=row["id"],
             archive_path=row["archive_path"],
@@ -312,15 +321,26 @@ class HubClient:
         Mirrors what Harbor does after a cache miss so dataset authors see
         inspect_harbor usage. Never raises; failures are logged at debug.
         """
+        await self._record_download(
+            "task_version_download", task_version_id=task_version_id
+        )
+
+    async def record_dataset_download(self, dataset_version_id: str) -> None:
+        """Increment the hub's download counter for a dataset version (see above)."""
+        await self._record_download(
+            "dataset_version_download", dataset_version_id=dataset_version_id
+        )
+
+    async def _record_download(self, table: str, **row: str) -> None:
+        if not _telemetry_enabled():
+            return
         try:
             response = await self._http.post(
-                "/rest/v1/task_version_download",
-                json={"task_version_id": task_version_id},
-                headers={"Prefer": "return=minimal"},
+                f"/rest/v1/{table}", json=row, headers={"Prefer": "return=minimal"}
             )
             response.raise_for_status()
         except httpx.HTTPError as exc:
-            logger.debug("Failed to record task download: %s", exc)
+            logger.debug("Failed to record download in %s: %s", table, exc)
 
     async def _request(self, method: str, url: str, **kwargs: Any) -> httpx.Response:
         async for attempt in AsyncRetrying(
@@ -404,7 +424,7 @@ async def download_hub_tasks(
     task_refs: list[HubTaskRef],
     overwrite: bool = False,
     client: HubClient | None = None,
-    max_concurrency: int = 8,
+    max_concurrency: int = 100,
 ) -> list[Path]:
     """Download pinned hub tasks into the cache; returns paths in input order.
 
@@ -520,5 +540,4 @@ async def _download_one(
             "downloaded_at": datetime.now(UTC).isoformat(),
         }
         _sidecar_path(target).write_text(json.dumps(sidecar))
-        if _telemetry_enabled():
-            await client.record_task_download(resolved.id)
+        await client.record_task_download(resolved.id)

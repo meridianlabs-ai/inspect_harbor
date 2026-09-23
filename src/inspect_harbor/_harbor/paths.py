@@ -9,6 +9,7 @@ Mirrors the conventions Harbor documents for a task directory::
     └── tests/         # test.sh, copied to /tests by the verifier
 """
 
+import hashlib
 import re
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
@@ -91,10 +92,45 @@ class EnvironmentPaths:
     reward_json_path: PurePosixPath = PurePosixPath("/logs/verifier/reward.json")
 
 
+_CONTENT_HASH_IGNORE_NAMES = frozenset({".DS_Store", ".git", "__pycache__"})
+
+
+def environment_content_hash(
+    environment_dir: Path, *, docker_image: str | None = None, truncate: int = 32
+) -> str:
+    """A stable SHA-256 of the environment directory's contents, as Harbor computes it.
+
+    Harbor tags the image it builds for a task ``hb__<this hash>``, so two
+    revisions of one task never share a tag. Symlinks, ``.git``,
+    ``__pycache__`` and ``.DS_Store`` are ignored; an empty directory hashes
+    the Docker image reference (or the directory name) instead.
+    """
+    candidates: list[tuple[str, Path]] = []
+    for path in environment_dir.rglob("*"):
+        if not path.is_file() or path.is_symlink():
+            continue
+        rel = path.relative_to(environment_dir)
+        if _CONTENT_HASH_IGNORE_NAMES & set(rel.parts):
+            continue
+        candidates.append((rel.as_posix(), path))
+    if not candidates:
+        seed = (docker_image or environment_dir.name).encode("utf-8")
+        return hashlib.sha256(seed).hexdigest()[:truncate]
+    digest = hashlib.sha256()
+    for rel_posix, path in sorted(candidates):
+        rel_bytes = rel_posix.encode("utf-8")
+        data = path.read_bytes()
+        digest.update(len(rel_bytes).to_bytes(4, "big"))
+        digest.update(rel_bytes)
+        digest.update(len(data).to_bytes(4, "big"))
+        digest.update(data)
+    return digest.hexdigest()[:truncate]
+
+
 def sanitize_docker_image_name(name: str) -> str:
     """Make ``name`` a valid single-segment Docker image name.
 
-    Byte-for-byte the same rules as Harbor's sanitiser, so the ``hb__<task>``
+    Byte-for-byte the same rules as Harbor's sanitiser, so the ``hb__<hash>``
     images we tag match the ones Harbor would build for the same task.
     """
     name = name.lower()

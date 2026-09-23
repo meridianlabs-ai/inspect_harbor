@@ -14,6 +14,7 @@ from inspect_ai.tool import bash, python, update_plan
 from inspect_harbor._harbor.converters import harbor_task_to_sample
 from inspect_harbor._harbor.git_tasks import GitTaskSpec, download_git_tasks
 from inspect_harbor._harbor.hub import (
+    HubClient,
     HubTaskRef,
     download_hub_tasks,
     resolve_hub_dataset,
@@ -171,6 +172,11 @@ def load_harbor_tasks(
             f"Task params: git_url={task_git_url}, commit={task_git_commit_id}. "
             f"Dataset params: name_version={dataset_name_version}, registry_url={registry_url}. "
             f"Package params: package_name={package_name}, package_ref={package_ref}."
+        )
+    if path is not None and (registry_specified or package_specified):
+        raise ValueError(
+            "Cannot set both 'path' and a dataset source (dataset_name_version, "
+            "registry_url, registry_path, or package_name)."
         )
     if task_specified and filters_specified:
         raise ValueError(
@@ -395,6 +401,8 @@ def _load_from_registry(
         entries = await resolve_registry_dataset(
             dataset_name_version, url=registry_url, path=registry_path
         )
+        if not entries:
+            raise ValueError(f"Dataset {dataset_name_version!r} has no tasks")
         entries = filter_entries(
             entries,
             lambda e: e.name,
@@ -420,14 +428,26 @@ def _load_from_package(
     """Load tasks from an ``org/name@ref`` dataset on the Harbor hub."""
 
     async def _resolve_and_download() -> list[Path]:
-        metadata = await resolve_hub_dataset(f"{package_name}@{package_ref}")
-        refs: list[HubTaskRef] = filter_entries(
-            metadata.task_refs,
-            lambda t: t.slug,
-            dataset_task_names,
-            dataset_exclude_task_names,
-            n_tasks,
-        )
-        return await download_hub_tasks(refs, overwrite=overwrite_cache)
+        slug = f"{package_name}@{package_ref}"
+        client = HubClient()
+        try:
+            metadata = await resolve_hub_dataset(slug, client=client)
+            if not metadata.task_refs:
+                raise ValueError(f"Dataset {slug!r} has no tasks")
+            refs: list[HubTaskRef] = filter_entries(
+                metadata.task_refs,
+                lambda t: t.slug,
+                dataset_task_names,
+                dataset_exclude_task_names,
+                n_tasks,
+            )
+            paths = await download_hub_tasks(
+                refs, overwrite=overwrite_cache, client=client
+            )
+            # Like Harbor, count the dataset download for its authors.
+            await client.record_dataset_download(metadata.dataset_version_id)
+            return paths
+        finally:
+            await client.aclose()
 
     return run_coroutine(_resolve_and_download())

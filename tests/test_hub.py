@@ -92,6 +92,7 @@ class FakeHub:
         self.fail_first_n = 0
         self.fail_with: Exception | int = httpx.ConnectError("boom")
         self.telemetry_status = 201
+        self.task_yanked_reason: str | None = None
 
     @staticmethod
     def task_row(ref: HubTaskRef) -> dict[str, Any]:
@@ -143,8 +144,8 @@ class FakeHub:
                     "archive_path": f"packages/{body['p_org']}/{body['p_name']}/{digest}/dist.tar.gz",
                     "content_hash": digest,
                     "revision": 1,
-                    "yanked_at": None,
-                    "yanked_reason": None,
+                    "yanked_at": "2026-01-01" if self.task_yanked_reason else None,
+                    "yanked_reason": self.task_yanked_reason,
                 },
             )
         if "/storage/v1/object/authenticated/packages/" in path:
@@ -152,7 +153,9 @@ class FakeHub:
             if digest in self.archives:
                 return httpx.Response(200, content=self.archives[digest])
             return httpx.Response(400, json={"error": "not found"})
-        if path.endswith("/rest/v1/task_version_download"):
+        if path.endswith(
+            ("/rest/v1/task_version_download", "/rest/v1/dataset_version_download")
+        ):
             return httpx.Response(self.telemetry_status)
         raise AssertionError(f"unexpected request: {request.method} {request.url}")
 
@@ -353,13 +356,20 @@ async def test_overwrite_refetches_and_telemetry_opt_out(
 
 
 async def test_telemetry_failure_is_swallowed(caplog: pytest.LogCaptureFixture) -> None:
-    """A failing download counter never fails the download."""
+    """Failing download counters, for tasks or datasets, never fail the caller."""
     fake = FakeHub()
     fake.telemetry_status = 500
+    client = fake.client()
     with caplog.at_level("DEBUG", logger="inspect_harbor._harbor.hub"):
-        [path] = await download_hub_tasks([REF_A], client=fake.client())
+        [path] = await download_hub_tasks([REF_A], client=client)
+        await client.record_dataset_download(DV_ID)
     assert (path / "task.toml").exists()
-    assert "Failed to record task download" in caplog.text
+    assert "Failed to record download in task_version_download" in caplog.text
+    assert "Failed to record download in dataset_version_download" in caplog.text
+    posts = [
+        r for r in fake.requests if r.url.path.endswith("dataset_version_download")
+    ]
+    assert json.loads(posts[0].content) == {"dataset_version_id": DV_ID}
 
 
 @pytest.mark.parametrize("junk", [None, "tests"])

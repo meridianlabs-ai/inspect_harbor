@@ -24,26 +24,47 @@ from inspect_harbor._harbor.scorer import (
     harbor_scorer,
 )
 
+REWARD_TXT = "/logs/verifier/reward.txt"
+REWARD_JSON = "/logs/verifier/reward.json"
+TEST_STDOUT = "/logs/verifier/test-stdout.txt"
+CHMOD_TEST = ["chmod", "+x", "/tests/test.sh"]
+RUN_TEST = ["sh", "-c", f"(/tests/test.sh) > {TEST_STDOUT} 2>&1"]
+
+
+def _reader(files: dict[str, str]) -> Any:
+    """A ``sandbox().read_file`` stand-in: ``files`` exist, anything else is missing."""
+
+    async def read_file(path: str) -> str:
+        if path in files:
+            return files[path]
+        raise FileNotFoundError(path)
+
+    return read_file
+
 
 @pytest.mark.asyncio
 async def test_parse_reward_txt_valid():
     """Test parsing valid reward.txt with float value."""
     mock_sandbox = Mock()
-    mock_sandbox.read_file = AsyncMock(return_value="0.85")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "0.85"}))
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         reward_value, reward_dict = await _parse_reward_file(exit_code=0)
 
         assert reward_value == 0.85
         assert reward_dict is None
-        mock_sandbox.read_file.assert_called_once_with("/logs/verifier/reward.txt")
+        # reward.json is consulted first, like Harbor, then reward.txt.
+        assert [c.args[0] for c in mock_sandbox.read_file.call_args_list] == [
+            REWARD_JSON,
+            REWARD_TXT,
+        ]
 
 
 @pytest.mark.asyncio
 async def test_parse_reward_txt_empty():
     """Test parsing empty reward.txt raises RewardFileEmptyError."""
     mock_sandbox = Mock()
-    mock_sandbox.read_file = AsyncMock(return_value="   ")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "   "}))
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(RewardFileEmptyError, match="Reward file is empty"):
@@ -54,7 +75,9 @@ async def test_parse_reward_txt_empty():
 async def test_parse_reward_txt_invalid():
     """Test parsing reward.txt with invalid content raises VerifierOutputParseError."""
     mock_sandbox = Mock()
-    mock_sandbox.read_file = AsyncMock(return_value="not a number")
+    mock_sandbox.read_file = AsyncMock(
+        side_effect=_reader({REWARD_TXT: "not a number"})
+    )
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(
@@ -68,10 +91,7 @@ async def test_parse_reward_json_with_reward_key():
     """Test parsing reward.json with 'reward' key."""
     mock_sandbox = Mock()
     mock_sandbox.read_file = AsyncMock(
-        side_effect=[
-            FileNotFoundError(),  # reward.txt not found
-            json.dumps({"reward": 1.0, "other": 0.5}),  # reward.json found
-        ]
+        side_effect=_reader({REWARD_JSON: json.dumps({"reward": 1.0, "other": 0.5})})
     )
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
@@ -86,10 +106,7 @@ async def test_parse_reward_json_with_other_keys():
     """Test parsing reward.json with other keys (uses first value)."""
     mock_sandbox = Mock()
     mock_sandbox.read_file = AsyncMock(
-        side_effect=[
-            FileNotFoundError(),  # reward.txt not found
-            json.dumps({"score": 0.75}),  # reward.json found
-        ]
+        side_effect=_reader({REWARD_JSON: json.dumps({"score": 0.75})})
     )
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
@@ -103,12 +120,7 @@ async def test_parse_reward_json_with_other_keys():
 async def test_parse_reward_json_empty():
     """Test parsing empty reward.json raises RewardFileEmptyError."""
     mock_sandbox = Mock()
-    mock_sandbox.read_file = AsyncMock(
-        side_effect=[
-            FileNotFoundError(),  # reward.txt not found
-            "   ",  # reward.json empty
-        ]
-    )
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_JSON: "   "}))
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(RewardFileEmptyError, match="Reward file is empty"):
@@ -120,10 +132,7 @@ async def test_parse_reward_json_invalid():
     """Test parsing invalid reward.json raises VerifierOutputParseError."""
     mock_sandbox = Mock()
     mock_sandbox.read_file = AsyncMock(
-        side_effect=[
-            FileNotFoundError(),  # reward.txt not found
-            "not valid json",  # reward.json invalid
-        ]
+        side_effect=_reader({REWARD_JSON: "not valid json"})
     )
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
@@ -137,12 +146,7 @@ async def test_parse_reward_json_invalid():
 async def test_parse_reward_neither_file_exists():
     """Test neither reward file exists raises RewardFileNotFoundError."""
     mock_sandbox = Mock()
-    mock_sandbox.read_file = AsyncMock(
-        side_effect=[
-            FileNotFoundError(),  # reward.txt not found
-            FileNotFoundError(),  # reward.json not found
-        ]
-    )
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({}))
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(
@@ -351,10 +355,7 @@ async def test_harbor_scorer_stores_reward_dict_in_metadata(tmp_path: Path):
     # Mock reward file reading - return JSON with multiple keys
     reward_json = {"reward": 0.8, "accuracy": 0.9, "completion": 0.7}
     mock_sandbox.read_file = AsyncMock(
-        side_effect=[
-            FileNotFoundError(),  # reward.txt not found
-            json.dumps(reward_json),  # reward.json found
-        ]
+        side_effect=_reader({REWARD_JSON: json.dumps(reward_json)})
     )
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
@@ -476,7 +477,7 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
 
     # Mock reward file reading
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         with patch(
@@ -493,8 +494,8 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
 
             # Verify cleanup was called AFTER scoring. Sequence:
             # mkdir /logs/agent, mkdir /logs/verifier, mkdir /logs/artifacts,
-            # bash test.sh, rm /tests, rm /logs/verifier, rm /logs/artifacts,
-            # then unset for each
+            # chmod +x test.sh, run test.sh (output to test-stdout.txt),
+            # rm /tests, rm /logs/verifier, rm /logs/artifacts, then unset each
             # default env var (currently just TEST_DIR).
             assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
             assert exec_calls[1] == ["mkdir", "-p", "/logs/verifier"]
@@ -503,11 +504,12 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
                 "-c",
                 "mkdir -p /logs/artifacts && chmod 0777 /logs/artifacts",
             ]
-            assert exec_calls[3] == ["bash", "-l", "/tests/test.sh"]
-            assert exec_calls[4] == ["rm", "-rf", "/tests"]
-            assert exec_calls[5] == ["rm", "-rf", "/logs/verifier"]
-            assert exec_calls[6] == ["rm", "-rf", "/logs/artifacts"]
-            assert ["unset", "TEST_DIR"] in exec_calls[7:]
+            assert exec_calls[3] == CHMOD_TEST
+            assert exec_calls[4] == RUN_TEST
+            assert exec_calls[5] == ["rm", "-rf", "/tests"]
+            assert exec_calls[6] == ["rm", "-rf", "/logs/verifier"]
+            assert exec_calls[7] == ["rm", "-rf", "/logs/artifacts"]
+            assert ["unset", "TEST_DIR"] in exec_calls[8:]
 
 
 @pytest.mark.asyncio
@@ -543,12 +545,12 @@ async def test_harbor_scorer_injects_default_test_dir(tmp_path: Path):
 
         async def capture_exec(cmd: list[str], **kwargs: object) -> Mock:
             # The test-script exec is the one we want to inspect.
-            if cmd[:2] == ["bash", "-l"]:
+            if cmd == RUN_TEST:
                 captured["env"] = kwargs.get("env")  # type: ignore[assignment]
             return mock_exec_result
 
         mock_sandbox.exec = AsyncMock(side_effect=capture_exec)
-        mock_sandbox.read_file = AsyncMock(return_value="1.0")
+        mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
         with (
             patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
@@ -705,7 +707,7 @@ async def test_harbor_scorer_passes_verifier_env_to_exec(
         return mock_result
 
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         with patch(
@@ -719,9 +721,8 @@ async def test_harbor_scorer_passes_verifier_env_to_exec(
             assert result is not None
             assert result.value == 1.0
 
-            # Find the test execution call (should be the one with bash -l)
             test_exec_call = next(
-                call for call in exec_calls if call["cmd"][0] == "bash"
+                call for call in exec_calls if call["cmd"] == RUN_TEST
             )
 
             # Verify env was passed with resolved values
@@ -766,7 +767,7 @@ async def test_harbor_scorer_no_verifier_env(tmp_path: Path):
         return mock_result
 
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         with patch(
@@ -779,9 +780,8 @@ async def test_harbor_scorer_no_verifier_env(tmp_path: Path):
             assert result is not None
             assert result.value == 1.0
 
-            # Find the test execution call
             test_exec_call = next(
-                call for call in exec_calls if call["cmd"][0] == "bash"
+                call for call in exec_calls if call["cmd"] == RUN_TEST
             )
 
             # No verifier_env in metadata, but defaults (TEST_DIR) are injected.
@@ -825,7 +825,7 @@ async def test_harbor_scorer_empty_verifier_env(tmp_path: Path):
         return mock_result
 
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         with patch(
@@ -838,9 +838,8 @@ async def test_harbor_scorer_empty_verifier_env(tmp_path: Path):
             assert result is not None
             assert result.value == 1.0
 
-            # Find the test execution call
             test_exec_call = next(
-                call for call in exec_calls if call["cmd"][0] == "bash"
+                call for call in exec_calls if call["cmd"] == RUN_TEST
             )
 
             # Empty verifier_env, but defaults (TEST_DIR) are still injected.
@@ -968,7 +967,7 @@ async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
         return mock_result
 
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         with patch(
@@ -994,10 +993,11 @@ async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
                 "-c",
                 "mkdir -p /logs/artifacts && chmod 0777 /logs/artifacts",
             ]
-            assert exec_calls[3] == ["bash", "-l", "/tests/test.sh"]
-            assert exec_calls[4] == ["rm", "-rf", "/tests"]
-            assert exec_calls[5] == ["rm", "-rf", "/logs/verifier"]
-            assert exec_calls[6] == ["rm", "-rf", "/logs/artifacts"]
+            assert exec_calls[3] == CHMOD_TEST
+            assert exec_calls[4] == RUN_TEST
+            assert exec_calls[5] == ["rm", "-rf", "/tests"]
+            assert exec_calls[6] == ["rm", "-rf", "/logs/verifier"]
+            assert exec_calls[7] == ["rm", "-rf", "/logs/artifacts"]
             # Check cleanup was called for all env vars (user + defaults).
             env_cleanup_calls = exec_calls[7:]
             assert ["unset", "OPENAI_API_KEY"] in env_cleanup_calls
@@ -1048,7 +1048,7 @@ async def test_harbor_scorer_runs_verifier_collect(tmp_path: Path) -> None:
     mock_sandbox = Mock()
     mock_sandbox.write_file = AsyncMock()
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with (
         patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
@@ -1084,7 +1084,8 @@ async def test_harbor_scorer_runs_verifier_collect(tmp_path: Path) -> None:
         f"cd /app && git config --global --add safe.directory '*' && "
         f"git checkout -f {base_commit} && git clean -fd",
     ]
-    assert cmds[5] == ["bash", "-l", "/tests/test.sh"]
+    assert cmds[5] == CHMOD_TEST
+    assert cmds[6] == RUN_TEST
 
 
 @pytest.mark.asyncio
@@ -1121,7 +1122,7 @@ async def test_harbor_scorer_collect_coerces_int_user(tmp_path: Path) -> None:
     mock_sandbox = Mock()
     mock_sandbox.write_file = AsyncMock()
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with (
         patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
@@ -1172,7 +1173,7 @@ async def test_harbor_scorer_shared_mode_no_reset(tmp_path: Path) -> None:
     mock_sandbox = Mock()
     mock_sandbox.write_file = AsyncMock()
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with (
         patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
@@ -1227,7 +1228,7 @@ async def test_harbor_scorer_skips_non_main_service_collect(tmp_path: Path) -> N
     mock_sandbox = Mock()
     mock_sandbox.write_file = AsyncMock()
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with (
         patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
@@ -1272,7 +1273,7 @@ async def test_harbor_scorer_skips_empty_collect(tmp_path: Path) -> None:
     mock_sandbox = Mock()
     mock_sandbox.write_file = AsyncMock()
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with (
         patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
@@ -1291,7 +1292,8 @@ async def test_harbor_scorer_skips_empty_collect(tmp_path: Path) -> None:
         "-c",
         "mkdir -p /logs/artifacts && chmod 0777 /logs/artifacts",
     ]
-    assert exec_calls[3] == ["bash", "-l", "/tests/test.sh"]
+    assert exec_calls[3] == CHMOD_TEST
+    assert exec_calls[4] == RUN_TEST
 
 
 def _collect_state(
@@ -1337,7 +1339,7 @@ async def test_harbor_scorer_collect_timeout_is_best_effort(
     mock_sandbox = Mock()
     mock_sandbox.write_file = AsyncMock()
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with (
         patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
@@ -1351,7 +1353,7 @@ async def test_harbor_scorer_collect_timeout_is_best_effort(
 
     assert score is not None
     assert score.value == 1.0
-    assert ["bash", "-l", "/tests/test.sh"] in exec_calls
+    assert RUN_TEST in exec_calls
     assert any("hook failed to run" in r.getMessage() for r in caplog.records)
 
 
@@ -1386,7 +1388,7 @@ async def test_harbor_scorer_collect_uses_environment_workdir(tmp_path: Path) ->
     mock_sandbox = Mock()
     mock_sandbox.write_file = AsyncMock()
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with (
         patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
@@ -1427,7 +1429,7 @@ async def test_harbor_scorer_skips_collect_on_invalid_config(
     mock_sandbox = Mock()
     mock_sandbox.write_file = AsyncMock()
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with (
         patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
@@ -1442,7 +1444,7 @@ async def test_harbor_scorer_skips_collect_on_invalid_config(
     assert score is not None
     assert score.value == 1.0
     assert not any(cmd[:2] == ["bash", "-c"] for cmd in exec_calls)
-    assert ["bash", "-l", "/tests/test.sh"] in exec_calls
+    assert RUN_TEST in exec_calls
     assert any("failed validation" in r.getMessage() for r in caplog.records)
 
 
@@ -1477,7 +1479,7 @@ async def test_harbor_scorer_passes_verifier_user(
     test_exec_kwargs: dict[str, Any] = {}
 
     async def track_exec(cmd: list[str], **kwargs: Any) -> Mock:
-        if cmd[:2] == ["bash", "-l"]:
+        if cmd == RUN_TEST:
             test_exec_kwargs.update(kwargs)
         result = Mock()
         result.returncode = 0
@@ -1488,7 +1490,7 @@ async def test_harbor_scorer_passes_verifier_user(
     mock_sandbox = Mock()
     mock_sandbox.write_file = AsyncMock()
     mock_sandbox.exec = AsyncMock(side_effect=track_exec)
-    mock_sandbox.read_file = AsyncMock(return_value="1.0")
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
 
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         with patch(
@@ -1515,12 +1517,12 @@ async def test_non_finite_rewards_are_rejected(
 ) -> None:
     """Like Harbor, NaN, infinite, and non-numeric rewards fail scoring loudly."""
     mock_sandbox = Mock()
-    if reward_txt is not None:
-        mock_sandbox.read_file = AsyncMock(return_value=reward_txt)
-    else:
-        mock_sandbox.read_file = AsyncMock(
-            side_effect=[FileNotFoundError(), reward_json]
-        )
+    files = (
+        {REWARD_TXT: reward_txt}
+        if reward_txt is not None
+        else {REWARD_JSON: reward_json}
+    )
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader(files))  # type: ignore[arg-type]
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(VerifierOutputParseError, match="[Nn]on-"):
             await _parse_reward_file(exit_code=0)

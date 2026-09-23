@@ -3,7 +3,7 @@
 import warnings
 from pathlib import Path
 from typing import Any
-from unittest.mock import Mock, patch
+from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 from inspect_harbor._harbor.models import HealthcheckConfig
@@ -434,6 +434,10 @@ def test_load_registry_with_overwrite_cache():
             "Cannot specify registry_url, registry_path, dataset_task_names, or "
             "dataset_exclude_task_names without also specifying dataset_name_version or path",
         ),
+        (
+            {"path": "/some/task", "package_name": "harbor/hello-world"},
+            "Cannot set both 'path' and a dataset source",
+        ),
     ],
 )
 def test_load_harbor_tasks_validation_errors(
@@ -680,3 +684,20 @@ def test_broken_single_task_dir_raises_instead_of_empty_dataset(
     (task_dir / "task.toml").write_text("[environment\n")
     with pytest.raises(ValueError, match="Invalid TOML"):
         load_harbor_tasks(path=task_dir)
+
+
+def test_empty_hub_dataset_is_an_error():
+    """A dataset with no tasks fails like Harbor instead of yielding zero samples."""
+    metadata = Mock(task_refs=[], dataset_version_id="dv")
+    with (
+        patch(
+            "inspect_harbor._harbor.task.HubClient",
+            return_value=Mock(aclose=AsyncMock(), record_dataset_download=AsyncMock()),
+        ),
+        patch(
+            "inspect_harbor._harbor.task.resolve_hub_dataset",
+            new=AsyncMock(return_value=metadata),
+        ),
+        pytest.raises(ValueError, match="has no tasks"),
+    ):
+        load_harbor_tasks(package_name="acme/empty")
