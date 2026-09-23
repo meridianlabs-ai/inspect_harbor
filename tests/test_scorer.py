@@ -100,32 +100,6 @@ async def test_parse_reward_json_with_other_keys():
 
 
 @pytest.mark.asyncio
-async def test_parse_reward_json_with_mixed_types():
-    """Test parsing reward.json with mixed value types (float, str, int, bool)."""
-    mock_sandbox = Mock()
-    mixed_reward = {
-        "reward": 0.8,
-        "status": "passed",
-        "attempts": 3,
-        "success": True,
-        "details": {"accuracy": 0.9},
-    }
-    mock_sandbox.read_file = AsyncMock(
-        side_effect=[
-            FileNotFoundError(),  # reward.txt not found
-            json.dumps(mixed_reward),  # reward.json found with mixed types
-        ]
-    )
-
-    with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
-        reward_value, reward_dict = await _parse_reward_file(exit_code=0)
-
-        assert reward_value == 0.8
-        assert reward_dict is not None
-        assert reward_dict == mixed_reward
-
-
-@pytest.mark.asyncio
 async def test_parse_reward_json_empty():
     """Test parsing empty reward.json raises RewardFileEmptyError."""
     mock_sandbox = Mock()
@@ -1525,3 +1499,30 @@ async def test_harbor_scorer_passes_verifier_user(
             await scorer(mock_state, mock_target)
 
     assert test_exec_kwargs.get("user") == expected_user_kwarg
+
+
+@pytest.mark.parametrize(
+    "reward_txt,reward_json",
+    [
+        ("nan", None),
+        ("inf", None),
+        (None, '{"reward": NaN}'),
+        (None, '{"reward": 1e309}'),
+        (None, '{"reward": "0.5"}'),
+        (None, '{"reward": 1.0, "other": Infinity}'),
+    ],
+)
+async def test_non_finite_rewards_are_rejected(
+    reward_txt: str | None, reward_json: str | None
+) -> None:
+    """Like Harbor, NaN, infinite, and non-numeric rewards fail scoring loudly."""
+    mock_sandbox = Mock()
+    if reward_txt is not None:
+        mock_sandbox.read_file = AsyncMock(return_value=reward_txt)
+    else:
+        mock_sandbox.read_file = AsyncMock(
+            side_effect=[FileNotFoundError(), reward_json]
+        )
+    with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
+        with pytest.raises(VerifierOutputParseError, match="[Nn]on-"):
+            await _parse_reward_file(exit_code=0)

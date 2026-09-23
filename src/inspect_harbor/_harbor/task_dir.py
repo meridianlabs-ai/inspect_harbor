@@ -36,13 +36,15 @@ class HarborTask:
 
         Raises:
             ValueError: When ``task.toml`` cannot be parsed (the message names
-                the file).
+                the file), or when ``tests/``, ``solution/`` or a step directory
+                links to something outside the task.
             FileNotFoundError: When ``instruction.md`` or the test script the
                 verifier needs is missing.
         """
         self.paths = TaskPaths(task_dir)
         self.task_dir = self.paths.task_dir
         self.config = load_task_config(self.paths.config_path)
+        _validate_input_paths(self.config, self.paths)
         self.name = (
             self.config.task.name
             if self.config.task is not None
@@ -72,7 +74,8 @@ class HarborTask:
             return False
         try:
             config = load_task_config(paths.config_path)
-        except (OSError, ValueError):
+            _validate_input_paths(config, paths)
+        except (OSError, ValueError, RuntimeError):
             return False
         if disable_verification:
             if config.steps:
@@ -113,6 +116,44 @@ def strip_canary(text: str) -> str:
     while idx < len(lines) and lines[idx].strip() == "":
         idx += 1
     return "\n".join(lines[idx:])
+
+
+def validate_input_tree(path: Path, root: Path) -> None:
+    """Reject inputs under ``path`` that resolve outside ``root``.
+
+    Ported from Harbor: every entry, including those reached through
+    task-internal directory links, must stay inside the task, and directory
+    links must not form cycles. Missing paths pass (nothing to check).
+
+    Raises:
+        ValueError: On an escaping link or a link cycle.
+    """
+    root = root.resolve()
+    checked: set[Path] = set()
+
+    def visit(candidate: Path, ancestors: frozenset[Path]) -> None:
+        resolved = candidate.resolve()
+        if not resolved.is_relative_to(root):
+            raise ValueError(f"Input paths must stay within the task: {candidate}")
+        if not candidate.is_dir():
+            return
+        if resolved in ancestors:
+            raise ValueError(f"Input directory links must not form cycles: {candidate}")
+        if resolved in checked:
+            return
+        for child in candidate.iterdir():
+            visit(child, ancestors | {resolved})
+        checked.add(resolved)
+
+    visit(path, frozenset())
+
+
+def _validate_input_paths(config: TaskConfig, paths: TaskPaths) -> None:
+    """Containment is required even when verification is disabled."""
+    for step in config.steps or []:
+        validate_input_tree(paths.step_dir(step.name), paths.task_dir)
+    validate_input_tree(paths.tests_dir, paths.task_dir)
+    validate_input_tree(paths.solution_dir, paths.task_dir)
 
 
 def _test_script_name(task_os: TaskOS) -> str:

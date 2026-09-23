@@ -2,6 +2,7 @@
 
 import json
 import logging
+import math
 import shlex
 import warnings
 from pathlib import Path
@@ -258,11 +259,16 @@ async def _parse_reward_file(exit_code: int) -> tuple[float, dict[str, Any] | No
             raise RewardFileEmptyError(f"Reward file is empty: {reward_text_path}")
 
         try:
-            return float(reward_content.strip()), None
+            value = float(reward_content.strip())
         except (ValueError, TypeError) as e:
             raise VerifierOutputParseError(
                 f"Failed to parse reward.txt as float: {reward_content[:100]}"
             ) from e
+        if not math.isfinite(value):
+            raise VerifierOutputParseError(
+                f"Non-finite reward in reward.txt: {value!r}"
+            )
+        return value, None
 
     except FileNotFoundError:
         try:
@@ -274,6 +280,16 @@ async def _parse_reward_file(exit_code: int) -> tuple[float, dict[str, Any] | No
                 reward_dict = json.loads(reward_json_content)
                 # If dict has "reward" key, use it; otherwise use first value
                 if isinstance(reward_dict, dict):
+                    # Like Harbor, require real finite numbers: json.loads
+                    # accepts NaN/Infinity tokens and overflows like 1e309.
+                    for key, value in reward_dict.items():
+                        if not isinstance(value, (int, float)) or (
+                            isinstance(value, float) and not math.isfinite(value)
+                        ):
+                            raise VerifierOutputParseError(
+                                f"Non-numeric or non-finite reward {value!r} for "
+                                f"{key!r} in reward.json"
+                            )
                     if "reward" in reward_dict:
                         return float(reward_dict["reward"]), reward_dict
                     # Use first value from dict

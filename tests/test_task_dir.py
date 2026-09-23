@@ -150,3 +150,23 @@ def test_fixture_loads() -> None:
     assert task.name == "harbor-test/simple-task"
     assert "2 + 2" in task.instruction
     assert HarborTask.is_valid_dir(FIXTURE)
+
+
+@pytest.mark.parametrize(
+    "link_target,ok",
+    [("/etc/hostname", False), ("../../outside", False), ("../instruction.md", True)],
+)
+def test_inputs_must_stay_within_task(
+    tmp_path: Path, link_target: str, ok: bool
+) -> None:
+    """``tests/`` and ``solution/`` may not link outside the task, even unverified."""
+    (tmp_path / "outside").write_text("host file")
+    task_dir = make_task(tmp_path)
+    (task_dir / "tests" / "link").symlink_to(link_target)
+    if ok:
+        assert HarborTask(task_dir, disable_verification=True).name == "my-task"
+        assert HarborTask.is_valid_dir(task_dir)
+    else:
+        with pytest.raises(ValueError, match="within the task"):
+            HarborTask(task_dir, disable_verification=True)
+        assert HarborTask.is_valid_dir(task_dir) is False

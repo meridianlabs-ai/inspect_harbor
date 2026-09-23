@@ -15,6 +15,7 @@ Written against Harbor's task.toml schema 1.4.
 import logging
 import re
 import tomllib
+import unicodedata
 import warnings
 from enum import Enum
 from typing import Any
@@ -329,9 +330,13 @@ class TaskConfig(BaseModel):
                 )
             env.allow_internet = None
         if self.steps is not None:
-            names = [step.name for step in self.steps]
-            if len(set(names)) != len(names):
-                raise ValueError(f"Step names must be unique, got {names}")
+            # Collisions on case-insensitive, Unicode-normalising filesystems.
+            keys = [unicodedata.normalize("NFC", s.name).casefold() for s in self.steps]
+            if len(set(keys)) != len(keys):
+                raise ValueError(
+                    "Step names must be unique, including case and Unicode "
+                    f"normalisation variants: {[s.name for s in self.steps]}"
+                )
         return self
 
     @classmethod

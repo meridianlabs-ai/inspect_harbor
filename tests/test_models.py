@@ -292,6 +292,7 @@ def test_shared_mode_with_environment_raises() -> None:
             "allowlist",
         ),
         ('[[steps]]\nname = "a"\n[[steps]]\nname = "a"\n', "unique"),
+        ('[[steps]]\nname = "Step"\n[[steps]]\nname = "step"\n', "unique"),
     ],
 )
 def test_configs_harbor_rejects_are_rejected(toml: str, match: str) -> None:
