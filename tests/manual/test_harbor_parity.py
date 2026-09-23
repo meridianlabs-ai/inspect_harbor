@@ -1,17 +1,24 @@
 """Opt-in parity check between our task loader and the ``harbor`` package.
 
+Last verified against harbor 0.23.0 (task.toml schema 1.4). Bump the pin
+below deliberately when adopting a newer Harbor release, and re-run.
+
 Excluded by default (``--ignore=tests/manual``). It needs an environment
 with both ``inspect_harbor`` and ``harbor`` installed, which our own venv
-deliberately does not have::
+deliberately does not have (install from outside the repo so the project's
+``exclude-newer`` window does not apply)::
 
     uv venv /tmp/venv-harbor
-    uv pip install --python /tmp/venv-harbor/bin/python harbor pytest pytest-asyncio -e .
+    cd /tmp && uv pip install --python /tmp/venv-harbor/bin/python \
+        "harbor==0.23.0" pytest pytest-asyncio -e <path to this checkout>
     export INSPECT_HARBOR_CACHE_DIR=~/.cache/inspect_harbor/tasks
     /tmp/venv-harbor/bin/pytest tests/manual/test_harbor_parity.py -q
 
 Every task directory in the hub cache, plus the integration fixture, is
 loaded with both implementations and the fields inspect_harbor reads are
-compared. Warm the cache first by loading a few datasets.
+compared, along with the derived values we ship: the image tag's content
+hash, the canary-stripped instruction, and separate-verifier detection.
+Warm the cache first by loading a few datasets.
 """
 
 import warnings
@@ -21,9 +28,14 @@ import pytest
 
 harbor_task = pytest.importorskip("harbor.models.task.task")
 harbor_docker = pytest.importorskip("harbor.environments.docker.docker")
+harbor_definition = pytest.importorskip("harbor.environments.definition")
+harbor_verifier_mode = pytest.importorskip("harbor.models.task.verifier_mode")
 
 from inspect_harbor._harbor.cache import cache_root  # noqa: E402
-from inspect_harbor._harbor.paths import sanitize_docker_image_name  # noqa: E402
+from inspect_harbor._harbor.paths import (  # noqa: E402
+    environment_content_hash,
+    sanitize_docker_image_name,
+)
 from inspect_harbor._harbor.task_dir import HarborTask  # noqa: E402
 
 pytestmark = pytest.mark.slow
@@ -88,6 +100,19 @@ def test_task_parity(task_dir: Path) -> None:
     assert sanitize_docker_image_name(
         f"hb__{ours.name}"
     ) == harbor_docker._sanitize_docker_image_name(f"hb__{theirs.name}")
+
+    # Derived values we ship: image tag hash and separate-verifier detection.
+    assert environment_content_hash(
+        ours.paths.environment_dir, docker_image=env_a.docker_image
+    ) == harbor_definition.environment_content_hash(
+        theirs.paths.environment_dir, docker_image=env_b.docker_image
+    )
+    assert ours.config.verifier_runs_separately() == (
+        harbor_verifier_mode.resolve_effective_verifier_env_config(
+            theirs.config, step_cfg=None
+        )
+        is not None
+    )
 
 
 def test_is_valid_dir_parity() -> None:
