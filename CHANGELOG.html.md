@@ -1,5 +1,33 @@
 # changelog – Inspect Harbor
 
+## [1.0.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.7.6...v1.0.0) (2026-09-23)
+
+### ⚠ BREAKING CHANGES
+
+- drop the harbor dependency with an independent task adapter ([\#174](https://github.com/meridianlabs-ai/inspect_harbor/issues/174))
+- inspect_harbor no longer depends on the `harbor` package; it loads Harbor tasks with its own adapter. What changes for existing users:
+
+### Features
+
+- drop the harbor dependency with an independent task adapter ([\#174](https://github.com/meridianlabs-ai/inspect_harbor/issues/174)) ([1434b78](https://github.com/meridianlabs-ai/inspect_harbor/commit/1434b78d804b91ab95d2f329e24eae8ab4620c95))
+
+### Bug Fixes
+
+- built images are tagged `hb__<environment content hash>` as Harbor ([1434b78](https://github.com/meridianlabs-ai/inspect_harbor/commit/1434b78d804b91ab95d2f329e24eae8ab4620c95))
+- dataset filters (`dataset_task_names`, ([1434b78](https://github.com/meridianlabs-ai/inspect_harbor/commit/1434b78d804b91ab95d2f329e24eae8ab4620c95))
+- the verifier script is exec’d directly so its shebang picks the ([1434b78](https://github.com/meridianlabs-ai/inspect_harbor/commit/1434b78d804b91ab95d2f329e24eae8ab4620c95))
+- update Harbor registry tasks ([\#172](https://github.com/meridianlabs-ai/inspect_harbor/issues/172)) ([4b7b0ea](https://github.com/meridianlabs-ai/inspect_harbor/commit/4b7b0eaaf26798664798755903fdb29fae2e58a1))
+- update Harbor registry tasks ([\#175](https://github.com/meridianlabs-ai/inspect_harbor/issues/175)) ([b92372b](https://github.com/meridianlabs-ai/inspect_harbor/commit/b92372b73e5a8dc1258d1e5156328ecc4b92bf00))
+
+## [0.7.6](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.7.5...v0.7.6) (2026-09-21)
+
+### Bug Fixes
+
+- run verifier.collect commands before scoring ([\#155](https://github.com/meridianlabs-ai/inspect_harbor/issues/155)) ([b3084e0](https://github.com/meridianlabs-ai/inspect_harbor/commit/b3084e00095e950571d381f602484a2f75592dc3))
+- update Harbor registry tasks ([\#160](https://github.com/meridianlabs-ai/inspect_harbor/issues/160)) ([87bcc48](https://github.com/meridianlabs-ai/inspect_harbor/commit/87bcc48fcbd4d3f2d7e54e20c6221869b0e2eeb5))
+- update Harbor registry tasks ([\#162](https://github.com/meridianlabs-ai/inspect_harbor/issues/162)) ([a0f6d51](https://github.com/meridianlabs-ai/inspect_harbor/commit/a0f6d519c75234b0fdfac02504e9ecc2d232b612))
+- update Harbor registry tasks ([\#168](https://github.com/meridianlabs-ai/inspect_harbor/issues/168)) ([9cdf112](https://github.com/meridianlabs-ai/inspect_harbor/commit/9cdf112b4fe5f8a345cbead9105cf962113de17b))
+
 ## [0.7.5](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.7.4...v0.7.5) (2026-08-31)
 
 ### Bug Fixes

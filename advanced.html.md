@@ -8,7 +8,7 @@ For advanced use cases, you can use the generic `harbor()` interface directly. T
 
 Harbor task loader for Inspect AI.
 
-[Source](https://github.com/meridianlabs-ai/inspect_harbor/blob/8ae6fd20df1374540d2e3130b8f46a3229258d89/src/inspect_harbor/_harbor/task.py#L23)
+[Source](https://github.com/meridianlabs-ai/inspect_harbor/blob/18230ae283a8d43f57523764ee2f744010f5f8ae/src/inspect_harbor/_harbor/task.py#L31)
 
 ``` python
 @task
@@ -21,8 +21,8 @@ def harbor(
     dataset_name_version: str | None = None,
     package_name: str | None = None,
     package_ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
+    dataset_task_names: str | list[str] | None = None,
+    dataset_exclude_task_names: str | list[str] | None = None,
     n_tasks: int | None = None,
     disable_verification: bool = False,
     overwrite_cache: bool = False,
@@ -57,11 +57,11 @@ Slug of a hub-published dataset in `org/name` form (e.g. `harbor/hello-world`).
 `package_ref` str  
 Harbor ref to pin to (digest, revision number, tag, or `latest`). Defaults to `latest`.
 
-`dataset_task_names` list\[str\] \| None  
-Task names to include from dataset (supports glob patterns, multiple values).
+`dataset_task_names` str \| list\[str\] \| None  
+Task names to include from dataset (glob patterns; a single pattern or a list).
 
-`dataset_exclude_task_names` list\[str\] \| None  
-Task names to exclude from dataset (supports glob patterns, multiple values).
+`dataset_exclude_task_names` str \| list\[str\] \| None  
+Task names to exclude from dataset (glob patterns; a single pattern or a list).
 
 `n_tasks` int \| None  
 Maximum number of tasks to include (applied after task_names/exclude_task_names filtering).
@@ -178,7 +178,7 @@ inspect eval inspect_harbor/harbor \
 
 ## Cache Management
 
-Downloaded tasks are cached locally in `~/.harbor/cache/`. To force a fresh download:
+Downloaded tasks are cached locally in `~/.cache/inspect_harbor/tasks/` (set `INSPECT_HARBOR_CACHE_DIR` to relocate it). Hub tasks are stored by content digest, so a pinned dataset is downloaded once; tasks loaded from git without a pinned commit are refreshed on every run. To force a fresh download:
 
 ``` bash
 inspect eval inspect_harbor/aime \
@@ -189,5 +189,9 @@ inspect eval inspect_harbor/aime \
 To manually clear the entire cache:
 
 ``` bash
-rm -rf ~/.harbor/cache/
+rm -rf ~/.cache/inspect_harbor/tasks/
 ```
+
+## Hub Download Counts
+
+Like the Harbor CLI, inspect_harbor records a download on [hub.harborframework.com](https://hub.harborframework.com) the first time it fetches a task version, so dataset authors see how often their work is run. The request carries only the task version id and never blocks or fails a run. Set `INSPECT_HARBOR_NO_TELEMETRY=1` to turn it off.

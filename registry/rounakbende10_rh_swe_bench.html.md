@@ -25,7 +25,7 @@ eval(rounakbende10_rh_swe_bench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [rounakbende10/rh-swe-bench](https://hub.harborframework.com/datasets/rounakbende10/rh-swe-bench/latest) |
 | Inspect task | `rounakbende10_rh_swe_bench` |
-| Latest digest | sha256:8b225cf78dc4438279daa87af90b1d6b56baeed8e32df0712e065a144e011024 |
+| Latest digest | sha256:96005bdeb80c90e6a487df8cb893dc2856b2bec88d122a14580abcc58481ef75 |
 | Samples | 341 |
 | Source | <https://github.com/rounakbende10/rh-swe-bench> |
 

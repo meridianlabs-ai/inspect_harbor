@@ -276,6 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#loading-from-git-repositories" id="toc-loading-from-git-repositories" class="nav-link" data-scroll-target="#loading-from-git-repositories">Loading from Git Repositories</a></li>
   <li><a href="#loading-from-local-paths" id="toc-loading-from-local-paths" class="nav-link" data-scroll-target="#loading-from-local-paths">Loading from Local Paths</a></li>
   <li><a href="#cache-management" id="toc-cache-management" class="nav-link" data-scroll-target="#cache-management">Cache Management</a></li>
+  <li><a href="#hub-download-counts" id="toc-hub-download-counts" class="nav-link" data-scroll-target="#hub-download-counts">Hub Download Counts</a></li>
   </ul>
 </nav>
     </div>
@@ -308,7 +309,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-reference="harbor" class="anchored" data-anchor-id="harbor-interface-parameters">Harbor Interface Parameters</h3>
 <p>Harbor task loader for Inspect AI.</p>
 <div class="source-link">
-<a href="https://github.com/meridianlabs-ai/inspect_harbor/blob/8ae6fd20df1374540d2e3130b8f46a3229258d89/src/inspect_harbor/_harbor/task.py#L23">Source</a>
+<a href="https://github.com/meridianlabs-ai/inspect_harbor/blob/18230ae283a8d43f57523764ee2f744010f5f8ae/src/inspect_harbor/_harbor/task.py#L31">Source</a>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python doc-declaration code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="at">@task</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> harbor(</span>
@@ -320,8 +321,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    dataset_name_version: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    package_name: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    package_ref: <span class="bu">str</span> <span class="op">=</span> <span class="st">"latest"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    dataset_task_names: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    dataset_exclude_task_names: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    dataset_task_names: <span class="bu">str</span> <span class="op">|</span> <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    dataset_exclude_task_names: <span class="bu">str</span> <span class="op">|</span> <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    n_tasks: <span class="bu">int</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    disable_verification: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>,</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    overwrite_cache: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>,</span>
@@ -363,13 +364,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dd>
 <p>Harbor ref to pin to (digest, revision number, tag, or <code>latest</code>). Defaults to <code>latest</code>.</p>
 </dd>
-<dt><code class="ref-definition">dataset_task_names</code> <span class="element-type">list[<span class="element-type-name">str</span>] | <span class="element-type-name">None</span></span></dt>
+<dt><code class="ref-definition">dataset_task_names</code> <span class="element-type"><span class="element-type-name">str</span> | list[<span class="element-type-name">str</span>] | <span class="element-type-name">None</span></span></dt>
 <dd>
-<p>Task names to include from dataset (supports glob patterns, multiple values).</p>
+<p>Task names to include from dataset (glob patterns; a single pattern or a list).</p>
 </dd>
-<dt><code class="ref-definition">dataset_exclude_task_names</code> <span class="element-type">list[<span class="element-type-name">str</span>] | <span class="element-type-name">None</span></span></dt>
+<dt><code class="ref-definition">dataset_exclude_task_names</code> <span class="element-type"><span class="element-type-name">str</span> | list[<span class="element-type-name">str</span>] | <span class="element-type-name">None</span></span></dt>
 <dd>
-<p>Task names to exclude from dataset (supports glob patterns, multiple values).</p>
+<p>Task names to exclude from dataset (glob patterns; a single pattern or a list).</p>
 </dd>
 <dt><code class="ref-definition">n_tasks</code> <span class="element-type"><span class="element-type-name">int</span> | <span class="element-type-name">None</span></span></dt>
 <dd>
@@ -506,12 +507,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="cache-management" class="level2">
 <h2 class="anchored" data-anchor-id="cache-management">Cache Management</h2>
-<p>Downloaded tasks are cached locally in <code>~/.harbor/cache/</code>. To force a fresh download:</p>
+<p>Downloaded tasks are cached locally in <code>~/.cache/inspect_harbor/tasks/</code> (set <code>INSPECT_HARBOR_CACHE_DIR</code> to relocate it). Hub tasks are stored by content digest, so a pinned dataset is downloaded once; tasks loaded from git without a pinned commit are refreshed on every run. To force a fresh download:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inspect</span> eval inspect_harbor/aime <span class="dt">\</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-T</span> overwrite_cache=true <span class="dt">\</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> openai/gpt-5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To manually clear the entire cache:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> ~/.harbor/cache/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> ~/.cache/inspect_harbor/tasks/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="hub-download-counts" class="level2">
+<h2 class="anchored" data-anchor-id="hub-download-counts">Hub Download Counts</h2>
+<p>Like the Harbor CLI, inspect_harbor records a download on <a href="https://hub.harborframework.com">hub.harborframework.com</a> the first time it fetches a task version, so dataset authors see how often their work is run. The request carries only the task version id and never blocks or fails a run. Set <code>INSPECT_HARBOR_NO_TELEMETRY=1</code> to turn it off.</p>
 
 
 </section>

@@ -25,7 +25,7 @@ eval(hack_verifiable_environments_hv_terminal_bench_2_1(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [hack-verifiable-environments/hv-terminal-bench-2-1](https://hub.harborframework.com/datasets/hack-verifiable-environments/hv-terminal-bench-2-1/latest) |
 | Inspect task | `hack_verifiable_environments_hv_terminal_bench_2_1` |
-| Latest digest | sha256:f77c76cd022b0aec434bc755ac1cfd8da650237c72047f189747fa10e33f6907 |
+| Latest digest | sha256:fa8ff725f9f36399b02d9871ce319249e5b1df981363a3c0f54afed3e0348794 |
 | Samples | 89 |
 | Paper | [arxiv](https://arxiv.org/abs/2605.20744) |
 | Source | <https://github.com/MajoRoth/hack-verifiable-environments> |

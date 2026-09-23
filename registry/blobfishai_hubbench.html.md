@@ -25,7 +25,7 @@ eval(blobfishai_hubbench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [blobfishai/hubbench](https://hub.harborframework.com/datasets/blobfishai/hubbench/latest) |
 | Inspect task | `blobfishai_hubbench` |
-| Latest digest | sha256:9d61a3ef494915718a4ab16f2ad64f16e6193c281f3536288b8a95ccd59ece04 |
+| Latest digest | sha256:5856ea4f83229e77b238a2acc3714c4d5e45329aed6e564819832a76cb33d5c6 |
 | Samples | 104 |
 | Source | <https://github.com/blobfishai/hub-agent-simulation> |
 

@@ -42,22 +42,31 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [aime/aime](registry/aime.html.md) | aime | Problems from the American Invitational Mathematics Examination (AIME), a 3-hour high-school compet… | 60 |
 | [ale/rsi-post-training](registry/ale_rsi_post_training.html.md) | ale_rsi_post_training | ALE RSI post-training benchmark tasks for evaluating agent capabilities in research-level post-trai… | 6 |
 | [algotune/algotune](registry/algotune.html.md) | algotune | AlgoTune: NeurIPS 2025 benchmark of math/physics/CS problems where the model writes code that match… | 154 |
+| [alibaba-aaig/alibaba-ctf](registry/alibaba_aaig_alibaba_ctf.html.md) | alibaba_aaig_alibaba_ctf | A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) f… | 87 |
 | [android-bench/android-bench](registry/android_bench.html.md) | android_bench | A dataset of 100 Android software engineering tasks derived from real-world repositories. | 100 |
 | [apple/mmau](registry/apple_mmau.html.md) | apple_mmau | MMAU (Massive Multitask Agent Understanding): Apple’s holistic agent benchmark covering tool-use, D… | 1000 |
 | [arcprize/arc-agi-2](registry/arcprize_arc_agi_2.html.md) | arcprize_arc_agi_2 | ARC-AGI-2: visual reasoning tasks testing general fluid intelligence — humans solve them easily but… | 167 |
 | [atm-bench/atm-bench-hard-sgm](registry/atm_bench_hard_sgm.html.md) | atm_bench_hard_sgm | ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided m… | 31 |
 | [bencalvert04/programbench](registry/bencalvert04_programbench.html.md) | bencalvert04_programbench | ProgramBench cleanroom reconstruction tasks: reimplementing real-world CLI tools from popular open-… | 200 |
 | [benchflow/skillsbench](registry/benchflow_skillsbench.html.md) | benchflow_skillsbench | SkillsBench: agent benchmark measuring how effectively models compose and use modular skills (folde… | 87 |
+| [bespokelabs/autoresearch-exam](registry/bespokelabs_autoresearch_exam.html.md) | bespokelabs_autoresearch_exam | AutoResearchExam measures an agent’s ability to improve and generalize on open ended machine learni… | 29 |
 | [bigcode/bigcodebench-hard-complete](registry/bigcode_bigcodebench_hard_complete.html.md) | bigcode_bigcodebench_hard_complete | BigCodeBench-Hard (Complete split): hard subset evaluating LLMs on code generation with diverse fun… | 145 |
 | [bigcode/humanevalfix](registry/bigcode_humanevalfix.html.md) | bigcode_humanevalfix | HumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that mo… | 164 |
 | [binary-audit/binary-audit](registry/binary_audit.html.md) | binary_audit | BinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engin… | 46 |
+| [biopharma-bench/biopharma-bench](registry/biopharma_bench.html.md) | biopharma_bench | Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. T… | 10 |
+| [blobfishai/arc-crm-6](registry/blobfishai_arc_crm_6.html.md) | blobfishai_arc_crm_6 | Six independently authored synthetic CRM workflows on one mocked CLI/web/REST/MCP world per episode… | 6 |
+| [blobfishai/counselbench-100](registry/blobfishai_counselbench_100.html.md) | blobfishai_counselbench_100 | 100 high-level legal-agent tasks with 97-asset multi-provider evidence rooms, distinct deep traject… | 100 |
 | [blobfishai/dealbench-100-suite](registry/blobfishai_dealbench_100_suite.html.md) | blobfishai_dealbench_100_suite | 100 executable investment-banking workflows with deterministic DealScore grading. | 100 |
 | [blobfishai/devopsbench-100](registry/blobfishai_devopsbench_100.html.md) | blobfishai_devopsbench_100 | 100 deterministic long-horizon DevOps/SRE agent tasks over an executable NovaCart world with 32-67… | 100 |
 | [blobfishai/domainbench-24](registry/blobfishai_domainbench_24.html.md) | blobfishai_domainbench_24 | 24 deeply realistic stateful MCP tasks across six enterprise domains. | 24 |
 | [blobfishai/erpbench-100-suite](registry/blobfishai_erpbench_100_suite.html.md) | blobfishai_erpbench_100_suite | 100 executable Oracle-Fusion-shaped ERP workflows with deterministic ERPScore grading. | 100 |
 | [blobfishai/factorybench-100](registry/blobfishai_factorybench_100.html.md) | blobfishai_factorybench_100 | 100 executable manufacturing ERP workflow tasks with deterministic FactoryScore grading. | 100 |
 | [blobfishai/hubbench](registry/blobfishai_hubbench.html.md) | blobfishai_hubbench | HubBench: one oracle-proven, deterministically graded Blobfish benchmark family per Harbor Hub prof… | 104 |
+| [blobfishai/ledgerbench-100](registry/blobfishai_ledgerbench_100.html.md) | blobfishai_ledgerbench_100 | 100 causal corporate-finance workflows over a closed ERP sandbox: provider-shaped MCP tools, distri… | 100 |
+| [blobfishai/litigation](registry/blobfishai_litigation.html.md) | blobfishai_litigation | Executable litigation environments for agent training and evaluation. 100 long-horizon tasks, a med… | 100 |
+| [blobfishai/salesbench-100](registry/blobfishai_salesbench_100.html.md) | blobfishai_salesbench_100 | 100 high-level sales operations requests with evidence-determined multi-system trajectories. | 100 |
 | [blobfishai/semikongbench-100](registry/blobfishai_semikongbench_100.html.md) | blobfishai_semikongbench_100 | 100 executable semiconductor exception workflows with deterministic SemiOpsScore grading. | 100 |
+| [blobfishai/webbench](registry/blobfishai_webbench.html.md) | blobfishai_webbench | WebBench: browser-only correlated SaaS work over deterministic populated Blobfish worlds — 159 task… | 159 |
 | [cais/swebenchpro](registry/cais_swebenchpro.html.md) | cais_swebenchpro | SWE-bench Pro with anti-exploitation (git history isolation + GitHub network blocking). 731 tasks,… | 731 |
 | [camel-ai/seta-env](registry/camel_ai_seta_env.html.md) | camel_ai_seta_env | SETA (Scaling Environments for Terminal Agents): CAMEL-AI’s verifiable terminal-agent tasks spannin… | 1376 |
 | [cmu/refav](registry/cmu_refav.html.md) | cmu_refav | Autonomous-vehicle scenario mining via VLM. | 1500 |
@@ -79,13 +88,14 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [futurehouse/labbench](registry/futurehouse_labbench.html.md) | futurehouse_labbench | LAB-Bench (Language Agent Biology Benchmark): questions across 8 categories (literature QA, databas… | 181 |
 | [gabeorlanski/slopcodebench](registry/gabeorlanski_slopcodebench.html.md) | gabeorlanski_slopcodebench | SlopCodeBench multi-checkpoint coding benchmark tasks converted for Harbor. | 36 |
 | [gaia/gaia](registry/gaia.html.md) | gaia | GAIA: real-world questions across three difficulty levels evaluating general AI assistants on reaso… | 165 |
-| [google-deepmind/terminal-bench-science](registry/google_deepmind_terminal_bench_science.html.md) | google_deepmind_terminal_bench_science | Terminal-Bench Science: 52 expert-level scientific research tasks, flattened from harbor-framework/… | 52 |
+| [gnucleus-ai/cad-bench](registry/gnucleus_ai_cad_bench.html.md) | gnucleus_ai_cad_bench | gNucleus AI CAD-generation benchmark v3 – 100 parametric FreeCAD tasks: 30 text-to-CAD create, 30… | 100 |
 | [gorilla/bfcl](registry/gorilla_bfcl.html.md) | gorilla_bfcl | Berkeley Function-Calling Leaderboard: LLM tool-use across function-calling categories spanning Pyt… | 3641 |
 | [gorilla/bfcl_parity](registry/gorilla_bfcl_parity.html.md) | gorilla_bfcl_parity | Stratified parity subset of BFCL validating that Harbor’s adapter matches the upstream implementati… | 123 |
 | [gpqa-diamond/gpqa-diamond](registry/gpqa_diamond.html.md) | gpqa_diamond | GPQA Diamond: expert-validated graduate-level multiple-choice questions in biology, physics, and ch… | 198 |
 | [grafana/o11y-bench](registry/grafana_o11y_bench.html.md) | grafana_o11y_bench | o11y-bench: an open agentic observability benchmark. Measures how well AI agents perform 63 real-wo… | 63 |
 | [grandsmile/unicode](registry/grandsmile_unicode.html.md) | grandsmile_unicode | UniCode: competitive-programming problems systematically augmented into novel variations to probe g… | 399 |
 | [hack-verifiable-environments/hv-terminal-bench-2-1](registry/hack_verifiable_environments_hv_terminal_bench_2_1.html.md) | hack_verifiable_environments_hv_terminal_bench_2_1 | Hack-verifiable version of terminal-bench-2-1. Each task includes hidden solution and test files; i… | 89 |
+| [handshake-ai/atlas-finance](registry/handshake_ai_atlas_finance.html.md) | handshake_ai_atlas_finance | 100 expert-level finance tasks in 13 realistic firm environments, served over MCP (Outlook, Slack,… | 100 |
 | [harbor-index/harbor-index](registry/harbor_index.html.md) | harbor_index | Harbor Index: 80 agentic evaluation tasks spanning SWE, security, science, math, and optimization (… | 80 |
 | [harbor-index/harbor-index-1.0](registry/harbor_index_1_0.html.md) | harbor_index_1_0 | Harbor Index is an 82-task benchmark for agentic evaluation. It was distilled from more than 6,000… | 82 |
 | [harveyai/lab](registry/harveyai_lab.html.md) | harveyai_lab | Harvey LAB - open-source benchmark for evaluating agents on real legal work. | 1251 |
@@ -107,8 +117,10 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [lcb/longswebench-32k](registry/lcb_longswebench_32k.html.md) | lcb_longswebench_32k | LongCodeBench (LCB) LongSWE-Bench tasks — 32k context window bucket. | 3 |
 | [lica-world/gdb](registry/lica_world_gdb.html.md) | lica_world_gdb | Full GraphicDesignBench (GDB) benchmark converted to Harbor tasks. | 33786 |
 | [livecodebench/livecodebench](registry/livecodebench.html.md) | livecodebench | LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, a… | 100 |
+| [long-horizon-terminal-bench/lhtb](registry/long_horizon_terminal_bench.html.md) | long_horizon_terminal_bench | Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in… | 46 |
 | [luosuu/SWE-kokkos-bench](registry/luosuu_swe_kokkos_bench.html.md) | luosuu_swe_kokkos_bench | 100 verified SWE-bench-style coding tasks from the Kokkos ecosystem. | 100 |
 | [maxbittker/runebench](registry/maxbittker_runebench.html.md) | maxbittker_runebench | Benchmark suite for evaluating AI agents on RuneScape gameplay tasks. | 32 |
+| [mercor/apex-agents-1-1](registry/mercor_apex_agents_1_1.html.md) | mercor_apex_agents_1_1 | Long-horizon professional-services benchmark in investment banking, law, and management consulting,… | 240 |
 | [meta/mlgym-bench](registry/meta_mlgym_bench.html.md) | meta_mlgym_bench | MLGym-Bench: Meta’s framework and benchmark for AI research agents covering CV, NLP, RL, and game-t… | 12 |
 | [minnesotanlp/aar](registry/minnesotanlp_aar.html.md) | minnesotanlp_aar | The Amazing Agent Race (AAR): 1400 multi-step scavenger-hunt puzzles for evaluating LLM agents on t… | 1400 |
 | [mmtb/multimedia-terminalbench](registry/mmtb_multimedia_terminalbench.html.md) | mmtb_multimedia_terminalbench | MultiMedia-TerminalBench (MMTB): a benchmark of 105 realistic multimedia-file tasks in persistent t… | 105 |
@@ -120,6 +132,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [openai/swe-lancer-diamond-ic](registry/openai_swe_lancer_diamond_ic.html.md) | openai_swe_lancer_diamond_ic | SWE-Lancer Diamond (IC): individual-contributor split of OpenAI’s SWE-Lancer benchmark — real Upwor… | 198 |
 | [openai/swe-lancer-diamond-manager](registry/openai_swe_lancer_diamond_manager.html.md) | openai_swe_lancer_diamond_manager | A benchmark of freelance software engineering tasks from Upwork, valued at \$1 million USD total in… | 265 |
 | [orca-bench/orca-bench](registry/orca_bench.html.md) | orca_bench | ORCA-bench: root-cause analysis of oncall incidents — agents investigate telemetry from an instrume… | 755 |
+| [orca-bench/orca-bench-verified](registry/orca_bench_verified.html.md) | orca_bench_verified | ORCA-bench Verified: root-cause analysis of oncall incidents — agents investigate telemetry from an… | 40 |
 | [orinlabs/horizon-public](registry/orinlabs_horizon_public.html.md) | orinlabs_horizon_public | Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agen… | 3 |
 | [qcircuitbench/qcircuitbench](registry/qcircuitbench.html.md) | qcircuitbench | QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle const… | 28 |
 | [quesma/compilebench](registry/quesma_compilebench.html.md) | quesma_compilebench | CompileBench: real-world build/compile tasks (curl, GNU coreutils, jq, etc.) ranging from easy buil… | 15 |
@@ -140,6 +153,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [scale-ai/swe-bench-pro](registry/scale_ai_swe_bench_pro.html.md) | scale_ai_swe_bench_pro | SWE-Bench-Pro: long-horizon enterprise software engineering tasks. | 731 |
 | [scienceagentbench/scienceagentbench](registry/scienceagentbench.html.md) | scienceagentbench | ScienceAgentBench: data-driven scientific discovery via Python programs across 4 disciplines. | 102 |
 | [sierra-research/tau3-bench](registry/sierra_research_tau3_bench.html.md) | sierra_research_tau3_bench | Third generation of τ-bench, extending the original with knowledge and voice. A simulation framewor… | 375 |
+| [skill2env/skill2env](registry/skill2env.html.md) | skill2env | Skill2Env (NVIDIA): 7,496 terminal tasks auto-converted from open-source Agent Skills — the agent f… | 7496 |
 | [sldbench/sldbench](registry/sldbench.html.md) | sldbench | SLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments w… | 8 |
 | [snorkel-ai/senior-swe-bench-v2026.06](registry/snorkel_ai_senior_swe_bench_v2026_06.html.md) | snorkel_ai_senior_swe_bench_v2026_06 | Senior SWE-Bench: senior-engineer coding tasks drawn from real pull requests in production reposito… | 50 |
 | [snowflake-labs/data-eng-bench](registry/snowflake_labs_data_eng_bench.html.md) | snowflake_labs_data_eng_bench | Agentic dbt data-engineering benchmark: 103 real-world dbt tasks (analytics, dimensional modeling,… | 103 |
@@ -152,9 +166,11 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [tencent/autocodebench](registry/tencent_autocodebench.html.md) | tencent_autocodebench | Multilingual automated code generation benchmark evaluating LLMs across diverse programming tasks a… | 200 |
 | [termigen/termigen-environments](registry/termigen_environments.html.md) | termigen_environments | TermiGen-Environments: verified Docker environments with executable terminal-agent tasks across 11… | 3566 |
 | [terminal-bench-pro/terminal-bench-pro](registry/terminal_bench_pro.html.md) | terminal_bench_pro | Terminal-Bench Pro: tasks across 8 domains — data processing, games, debugging, sysadmin, scientifi… | 200 |
+| [terminal-bench-science/terminal-bench-science](registry/terminal_bench_science.html.md) | terminal_bench_science | A benchmark for evaluating AI agents on research workflows across the life, physical, earth, mathem… | 70 |
 | [terminal-bench/terminal-bench](registry/terminal_bench.html.md) | terminal_bench | Terminal-Bench is a benchmark for measuring agents’ abilities to complete tasks using a terminal. | 66 |
 | [terminal-bench/terminal-bench-2](registry/terminal_bench_2.html.md) | terminal_bench_2 | Terminal-Bench v2: benchmark for testing AI agents in real terminal environments — from compiling c… | 89 |
 | [terminal-bench/terminal-bench-2-1](registry/terminal_bench_2_1.html.md) | terminal_bench_2_1 | Terminal-Bench v2.1 (point release of v2): benchmark for testing AI agents in real terminal environ… | 89 |
+| [terminal-bench/terminal-bench-cpu-only](registry/terminal_bench_cpu_only.html.md) | terminal_bench_cpu_only | Terminal-Bench (CPU-only): the current Terminal-Bench task set minus the 3 tasks that require an H1… | 63 |
 | [theagentcompany/theagentcompany](registry/theagentcompany.html.md) | theagentcompany | An agent benchmark with tasks in a simulated software company across GitLab, Plane, OwnCloud, and R… | 174 |
 | [thetalab/vector-edit-gym](registry/thetalab_vector_edit_gym.html.md) | thetalab_vector_edit_gym | 106 hand-authored SVG editing tasks across four difficulty tiers (easy / medium / hard / very_hard)… | 106 |
 | [tinycomputerai/bun-server-bench](registry/tinycomputerai_bun_server_bench.html.md) | tinycomputerai_bun_server_bench | bun-server-bench: a correctness benchmark of 50 production-shaped Bun server engineering tasks for… | 50 |
@@ -168,5 +184,6 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [xlang-ai/osworld-verified](registry/xlang_ai_osworld_verified.html.md) | xlang_ai_osworld_verified | OSWorld-Verified Harbor adaptation: 361 Ubuntu desktop-control tasks from OSWorld, excluding the 8… | 361 |
 | [xlang/ds-1000](registry/xlang_ds_1000.html.md) | xlang_ds_1000 | DS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow,… | 1000 |
 | [yanagiorigami/frontier-cs](registry/yanagiorigami_frontier_cs.html.md) | yanagiorigami_frontier_cs | Frontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial sco… | 172 |
+| [zenml/zenml-bench](registry/zenml_bench.html.md) | zenml_bench | ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real… | 18 |
 
 No matching items
