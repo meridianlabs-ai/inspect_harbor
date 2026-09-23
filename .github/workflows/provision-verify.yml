@@ -2,8 +2,8 @@
 # merge). Runs the `provision:` recipe from this branch's agent stubs the way
 # the reusable workflows' codex jobs run it: agents@main's create-codex-user,
 # provision-fallback with `user: codex`, then reset-home, then the checks as
-# the codex user. The `self-update` leg runs the same recipe after
-# `uv self update`, to show whether a failure is the bootstrapped uv's.
+# the codex user. Round 2: one leg, the stub recipe as is, now that
+# agents#161 bumped provision-fallback's uv from 0.9.4.
 name: Provision verify (scratch)
 
 on:
@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        leg: [stub, self-update]
+        leg: [stub]
     steps:
       - uses: actions/checkout@v4
         with:
