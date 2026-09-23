@@ -30,10 +30,6 @@ def strip_canary(text: str) -> str:
     return "\n".join(lines[idx:])
 
 
-def _test_script_name(task_os: TaskOS) -> str:
-    return "test.bat" if task_os is TaskOS.WINDOWS else "test.sh"
-
-
 class HarborTask:
     """A Harbor task loaded from disk.
 
@@ -94,6 +90,10 @@ class HarborTask:
         except FileNotFoundError:
             return False
         return True
+
+
+def _test_script_name(task_os: TaskOS) -> str:
+    return "test.bat" if task_os is TaskOS.WINDOWS else "test.sh"
 
 
 def _validate_files(config: TaskConfig, paths: TaskPaths) -> None:

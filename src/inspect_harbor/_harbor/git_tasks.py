@@ -60,6 +60,36 @@ def target_dir(spec: GitTaskSpec) -> Path:
     return cache_root() / "git" / key / spec.path.name
 
 
+async def download_git_tasks(
+    specs: list[GitTaskSpec], overwrite: bool = False
+) -> list[Path]:
+    """Download the given tasks and return their cached paths in input order.
+
+    A cached copy is reused only when the spec pins a full commit sha and
+    the directory is non-empty; unpinned (HEAD) specs are always refreshed.
+
+    Raises:
+        RuntimeError: When a git command fails.
+    """
+    targets = {spec: target_dir(spec) for spec in specs}
+    to_fetch = {
+        spec: target
+        for spec, target in targets.items()
+        if overwrite
+        or not is_resolved_commit(spec.git_commit_id)
+        or not target.is_dir()
+        or not any(target.iterdir())
+    }
+
+    by_url: dict[str, list[tuple[GitTaskSpec, Path]]] = {}
+    for spec, target in to_fetch.items():
+        by_url.setdefault(spec.git_url, []).append((spec, target))
+    for git_url, group in by_url.items():
+        await _download_from_repo(git_url, group)
+
+    return [targets[spec] for spec in specs]
+
+
 async def _run_git(
     *args: str, cwd: Path | None = None, input: bytes | None = None
 ) -> str:
@@ -145,33 +175,3 @@ async def _download_from_repo(
             await _pull_lfs_files(repo_dir, [s.path for s, _ in group])
             for spec, target in group:
                 _copy_task(repo_dir / spec.path, target)
-
-
-async def download_git_tasks(
-    specs: list[GitTaskSpec], overwrite: bool = False
-) -> list[Path]:
-    """Download the given tasks and return their cached paths in input order.
-
-    A cached copy is reused only when the spec pins a full commit sha and
-    the directory is non-empty; unpinned (HEAD) specs are always refreshed.
-
-    Raises:
-        RuntimeError: When a git command fails.
-    """
-    targets = {spec: target_dir(spec) for spec in specs}
-    to_fetch = {
-        spec: target
-        for spec, target in targets.items()
-        if overwrite
-        or not is_resolved_commit(spec.git_commit_id)
-        or not target.is_dir()
-        or not any(target.iterdir())
-    }
-
-    by_url: dict[str, list[tuple[GitTaskSpec, Path]]] = {}
-    for spec, target in to_fetch.items():
-        by_url.setdefault(spec.git_url, []).append((spec, target))
-    for git_url, group in by_url.items():
-        await _download_from_repo(git_url, group)
-
-    return [targets[spec] for spec in specs]

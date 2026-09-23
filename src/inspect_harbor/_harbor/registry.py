@@ -44,13 +44,6 @@ class RegistryDataset(BaseModel):
     tasks: list[RegistryTask]
 
 
-def _numeric(version: str) -> tuple[int, ...] | None:
-    try:
-        return tuple(int(part) for part in version.split("."))
-    except ValueError:
-        return None
-
-
 def resolve_version(versions: list[str]) -> str:
     """Pick the version to use when none is given.
 
@@ -68,30 +61,6 @@ def resolve_version(versions: list[str]) -> str:
     if numeric:
         return max(numeric)[1]
     return sorted(versions)[-1]
-
-
-async def _fetch_registry_text(
-    url: str, overwrite: bool, client: httpx.AsyncClient | None
-) -> str:
-    cache_file = cache_root() / "registry" / f"{stable_key(url)}.json"
-    if not overwrite and cache_file.exists():
-        age = time.time() - cache_file.stat().st_mtime
-        if age < REGISTRY_CACHE_TTL_SECONDS:
-            return cache_file.read_text()
-
-    async def _get(http: httpx.AsyncClient) -> str:
-        response = await http.get(url, follow_redirects=True)
-        response.raise_for_status()
-        return response.text
-
-    if client is not None:
-        text = await _get(client)
-    else:
-        async with httpx.AsyncClient(timeout=120.0) as http:
-            text = await _get(http)
-    cache_file.parent.mkdir(parents=True, exist_ok=True)
-    cache_file.write_text(text)
-    return text
 
 
 async def load_registry(
@@ -162,3 +131,34 @@ async def resolve_registry_dataset(
         else:
             entries.append(Path(task.path).expanduser().resolve())
     return entries
+
+
+def _numeric(version: str) -> tuple[int, ...] | None:
+    try:
+        return tuple(int(part) for part in version.split("."))
+    except ValueError:
+        return None
+
+
+async def _fetch_registry_text(
+    url: str, overwrite: bool, client: httpx.AsyncClient | None
+) -> str:
+    cache_file = cache_root() / "registry" / f"{stable_key(url)}.json"
+    if not overwrite and cache_file.exists():
+        age = time.time() - cache_file.stat().st_mtime
+        if age < REGISTRY_CACHE_TTL_SECONDS:
+            return cache_file.read_text()
+
+    async def _get(http: httpx.AsyncClient) -> str:
+        response = await http.get(url, follow_redirects=True)
+        response.raise_for_status()
+        return response.text
+
+    if client is not None:
+        text = await _get(client)
+    else:
+        async with httpx.AsyncClient(timeout=120.0) as http:
+            text = await _get(http)
+    cache_file.parent.mkdir(parents=True, exist_ok=True)
+    cache_file.write_text(text)
+    return text

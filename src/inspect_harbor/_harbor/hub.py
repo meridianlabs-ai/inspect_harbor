@@ -148,14 +148,6 @@ class ResolvedTaskVersion:
     yanked_reason: str | None = None
 
 
-def _is_retryable(exc: BaseException) -> bool:
-    if isinstance(exc, httpx.TransportError):
-        return True
-    if isinstance(exc, httpx.HTTPStatusError):
-        return exc.response.status_code == 429 or exc.response.status_code >= 500
-    return False
-
-
 class HubClient:
     """Anonymous, read-mostly client for the Harbor hub backend.
 
@@ -384,6 +376,46 @@ def hub_task_dir(ref: HubTaskRef) -> Path:
     return cache_root() / "hub" / ref.org / ref.name / ref.content_hash
 
 
+async def download_hub_tasks(
+    task_refs: list[HubTaskRef],
+    overwrite: bool = False,
+    client: HubClient | None = None,
+    max_concurrency: int = 8,
+) -> list[Path]:
+    """Download pinned hub tasks into the cache; returns paths in input order.
+
+    Tasks are content-addressed, so an existing directory is reused unless
+    ``overwrite`` is set.
+    """
+    targets = {ref: hub_task_dir(ref) for ref in task_refs}
+    missing = [
+        ref for ref, target in targets.items() if overwrite or not target.is_dir()
+    ]
+    if missing:
+        own_client = client is None
+        client = client or HubClient()
+        semaphore = asyncio.Semaphore(max_concurrency)
+        try:
+            async with asyncio.TaskGroup() as tg:
+                for ref in missing:
+                    tg.create_task(_download_one(client, ref, targets[ref], semaphore))
+        except* Exception as group:
+            # Surface the first real failure rather than the ExceptionGroup.
+            raise group.exceptions[0] from None
+        finally:
+            if own_client:
+                await client.aclose()
+    return [targets[ref] for ref in task_refs]
+
+
+def _is_retryable(exc: BaseException) -> bool:
+    if isinstance(exc, httpx.TransportError):
+        return True
+    if isinstance(exc, httpx.HTTPStatusError):
+        return exc.response.status_code == 429 or exc.response.status_code >= 500
+    return False
+
+
 def _telemetry_enabled() -> bool:
     return not os.environ.get(TELEMETRY_OPT_OUT_ENV)
 
@@ -425,35 +457,3 @@ async def _download_one(
         (target.parent / f"{ref.content_hash}.json").write_text(json.dumps(sidecar))
         if _telemetry_enabled():
             await client.record_task_download(resolved.id)
-
-
-async def download_hub_tasks(
-    task_refs: list[HubTaskRef],
-    overwrite: bool = False,
-    client: HubClient | None = None,
-    max_concurrency: int = 8,
-) -> list[Path]:
-    """Download pinned hub tasks into the cache; returns paths in input order.
-
-    Tasks are content-addressed, so an existing directory is reused unless
-    ``overwrite`` is set.
-    """
-    targets = {ref: hub_task_dir(ref) for ref in task_refs}
-    missing = [
-        ref for ref, target in targets.items() if overwrite or not target.is_dir()
-    ]
-    if missing:
-        own_client = client is None
-        client = client or HubClient()
-        semaphore = asyncio.Semaphore(max_concurrency)
-        try:
-            async with asyncio.TaskGroup() as tg:
-                for ref in missing:
-                    tg.create_task(_download_one(client, ref, targets[ref], semaphore))
-        except* Exception as group:
-            # Surface the first real failure rather than the ExceptionGroup.
-            raise group.exceptions[0] from None
-        finally:
-            if own_client:
-                await client.aclose()
-    return [targets[ref] for ref in task_refs]

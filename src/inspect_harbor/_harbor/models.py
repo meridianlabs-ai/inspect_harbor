@@ -26,18 +26,6 @@ MAIN_SERVICE_NAME = "main"
 _COMPOSE_SERVICE_NAME_PATTERN = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_.-]*$")
 
 
-def _warn_unknown_keys(section: str, data: dict[str, Any], known: set[str]) -> None:
-    unknown = sorted(k for k in data if k not in known)
-    if unknown:
-        warnings.warn(
-            f"task.toml {section} declares keys inspect_harbor does not know: "
-            f"{unknown}. They are kept in sample metadata but have no effect; "
-            "check Harbor's changelog for new task.toml semantics.",
-            UserWarning,
-            stacklevel=4,
-        )
-
-
 class NetworkMode(str, Enum):
     """Network access policy for the task environment."""
 
@@ -120,38 +108,6 @@ class HealthcheckConfig(BaseModel):
     start_period_sec: float = 0.0
     start_interval_sec: float = 5.0
     retries: int = 3
-
-
-def _parse_size_to_mb(size_str: str) -> int:
-    size_str = size_str.strip().upper()
-    if size_str.endswith("G"):
-        return int(float(size_str[:-1]) * 1024)
-    if size_str.endswith("M"):
-        return int(float(size_str[:-1]))
-    if size_str.endswith("K"):
-        return int(float(size_str[:-1]) / 1024)
-    raise ValueError(
-        f"Invalid size format: {size_str}. Expected format like '1G', '512M', etc."
-    )
-
-
-def _migrate_legacy_size(data: dict[str, Any], legacy: str, current: str) -> None:
-    if legacy not in data:
-        return
-    warnings.warn(
-        f"The '{legacy}' field is deprecated. Use '{current}' instead.",
-        DeprecationWarning,
-        stacklevel=5,
-    )
-    value = data.pop(legacy)
-    if isinstance(value, str):
-        mb = _parse_size_to_mb(value)
-        if current in data and data[current] != mb:
-            raise ValueError(
-                f"Conflicting '{legacy}' and '{current}' values: "
-                f"{legacy}={value!r} ({mb} MB) != {current}={data[current]!r}."
-            )
-        data.setdefault(current, mb)
 
 
 _LEGACY_ENVIRONMENT_KEYS = {"memory", "storage"}
@@ -311,13 +267,6 @@ class StepConfig(BaseModel):
     name: str
 
 
-def _schema_version_tuple(version: str) -> tuple[int, ...] | None:
-    try:
-        return tuple(int(part) for part in version.split("."))
-    except ValueError:
-        return None
-
-
 class TaskConfig(BaseModel):
     """A parsed ``task.toml``."""
 
@@ -382,3 +331,54 @@ class TaskConfig(BaseModel):
     def verifier_runs_separately(self) -> bool:
         """Whether the verifier runs in its own container (see ``VerifierConfig``)."""
         return self.verifier.runs_separately()
+
+
+def _warn_unknown_keys(section: str, data: dict[str, Any], known: set[str]) -> None:
+    unknown = sorted(k for k in data if k not in known)
+    if unknown:
+        warnings.warn(
+            f"task.toml {section} declares keys inspect_harbor does not know: "
+            f"{unknown}. They are kept in sample metadata but have no effect; "
+            "check Harbor's changelog for new task.toml semantics.",
+            UserWarning,
+            stacklevel=4,
+        )
+
+
+def _parse_size_to_mb(size_str: str) -> int:
+    size_str = size_str.strip().upper()
+    if size_str.endswith("G"):
+        return int(float(size_str[:-1]) * 1024)
+    if size_str.endswith("M"):
+        return int(float(size_str[:-1]))
+    if size_str.endswith("K"):
+        return int(float(size_str[:-1]) / 1024)
+    raise ValueError(
+        f"Invalid size format: {size_str}. Expected format like '1G', '512M', etc."
+    )
+
+
+def _migrate_legacy_size(data: dict[str, Any], legacy: str, current: str) -> None:
+    if legacy not in data:
+        return
+    warnings.warn(
+        f"The '{legacy}' field is deprecated. Use '{current}' instead.",
+        DeprecationWarning,
+        stacklevel=5,
+    )
+    value = data.pop(legacy)
+    if isinstance(value, str):
+        mb = _parse_size_to_mb(value)
+        if current in data and data[current] != mb:
+            raise ValueError(
+                f"Conflicting '{legacy}' and '{current}' values: "
+                f"{legacy}={value!r} ({mb} MB) != {current}={data[current]!r}."
+            )
+        data.setdefault(current, mb)
+
+
+def _schema_version_tuple(version: str) -> tuple[int, ...] | None:
+    try:
+        return tuple(int(part) for part in version.split("."))
+    except ValueError:
+        return None
