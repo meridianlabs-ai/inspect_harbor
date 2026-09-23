@@ -1,0 +1,80 @@
+# SCRATCH BRANCH ONLY (executed-paths plan step 2 verification; never
+# merge). Runs the `provision:` recipe from this branch's agent stubs the way
+# the reusable workflows' codex jobs run it: agents@main's create-codex-user,
+# provision-fallback with `user: codex`, then reset-home, then the checks as
+# the codex user. The `self-update` leg runs the same recipe after
+# `uv self update`, to show whether a failure is the bootstrapped uv's.
+name: Provision verify (scratch)
+
+on:
+  push:
+    branches: [executed-paths-step2-provision-verify]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        leg: [stub, self-update]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Read the recipe from the five stub jobs
+        id: fx
+        env:
+          LEG: ${{ matrix.leg }}
+        run: |
+          set -euo pipefail
+          r1=$(yq '.jobs.claude.with.provision' .github/workflows/claude.yml)
+          r2=$(yq '.jobs.claude-auto.with.provision' .github/workflows/claude.yml)
+          r3=$(yq '.jobs.review.with.provision' .github/workflows/claude-review.yml)
+          r4=$(yq '.jobs.ci-fix.with.provision' .github/workflows/claude-auto.yml)
+          r5=$(yq '.jobs.review-fix.with.provision' .github/workflows/claude-auto.yml)
+          for r in "$r2" "$r3" "$r4" "$r5"; do
+            [ "$r" = "$r1" ] || { echo "::error::stub recipes differ"; exit 1; }
+          done
+          [ -n "$r1" ] && [ "$r1" != null ] || { echo "::error::no recipe in the stubs"; exit 1; }
+          recipe=$r1
+          [ "$LEG" = self-update ] && recipe=$(printf 'uv self update\n%s' "$r1")
+          printf 'recipe (%s):\n%s\n' "$LEG" "$recipe"
+          { echo "recipe<<RECIPE_EOF"; echo "$recipe"; echo "RECIPE_EOF"; } >>"$GITHUB_OUTPUT"
+          echo "lock=$(sha256sum <uv.lock)" >>"$GITHUB_OUTPUT"
+
+      - name: Create codex user (agents@main)
+        uses: meridianlabs-ai/agents/.github/actions/create-codex-user@main
+
+      - name: Provision as the codex user with the stub recipe (agents@main)
+        id: setup
+        timeout-minutes: 20
+        continue-on-error: true
+        uses: meridianlabs-ai/agents/.github/actions/provision-fallback@main
+        with:
+          user: codex
+          recipe: ${{ steps.fx.outputs.recipe }}
+
+      - name: Reset codex home (agents@main)
+        uses: meridianlabs-ai/agents/.github/actions/create-codex-user@main
+        with:
+          mode: reset-home
+
+      - name: Checks as codex
+        env:
+          LOCK_BEFORE: ${{ steps.fx.outputs.lock }}
+          AS_CODEX: sudo -u codex -H --
+        run: |
+          set -euo pipefail
+          [ "${{ steps.setup.outcome }}" = success ] || { echo "::error::provisioning failed (${{ steps.setup.outcome }})"; exit 1; }
+          v=$($AS_CODEX .venv/bin/python -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+          [ "$v" = 3.12 ] || { echo "::error::expected Python 3.12, got $v"; exit 1; }
+          $AS_CODEX .venv/bin/python -c 'import inspect_harbor, pytest, markdown, panflute; print("project, dev and doc groups importable")'
+          for t in pytest ruff pyright; do $AS_CODEX .venv/bin/$t --version; done
+          [ "$(sha256sum <uv.lock)" = "$LOCK_BEFORE" ] || { echo "::error::uv sync changed uv.lock"; exit 1; }
+          $AS_CODEX .venv/bin/pytest -q
