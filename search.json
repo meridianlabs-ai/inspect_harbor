@@ -2306,7 +2306,7 @@
     "href": "index.html#installation",
     "title": "Inspect Harbor",
     "section": "Installation",
-    "text": "Installation\nInstall from PyPI:\npip install \"inspect-harbor&gt;=0.5\"\nOr with uv:\nuv add \"inspect-harbor&gt;=0.5\"\nThe &gt;=0.5 floor is important: version 0.5 introduced the organization-qualified Harbor registry used by these docs. Without the floor, a dependency resolver may silently select an older release whose task names do not match the examples below.",
+    "text": "Installation\nInstall from PyPI:\npip install \"inspect-harbor&gt;=1.0\"\nOr with uv:\nuv add \"inspect-harbor&gt;=1.0\"\nThe &gt;=1.0 floor matters: 1.0 is the first release that does not depend on the harbor package, so it installs alongside current openai releases and uses the organization-qualified task names these docs describe. Older releases pin dependencies that conflict with Inspect’s and are no longer supported.",
     "crumbs": [
       "Getting Started"
     ]
