@@ -28,7 +28,14 @@ REWARD_TXT = "/logs/verifier/reward.txt"
 REWARD_JSON = "/logs/verifier/reward.json"
 TEST_STDOUT = "/logs/verifier/test-stdout.txt"
 CHMOD_TEST = ["chmod", "+x", "/tests/test.sh"]
-RUN_TEST = ["sh", "-c", f"(/tests/test.sh) > {TEST_STDOUT} 2>&1"]
+_RUN_BODY = (
+    "if [ -x /tests/test.sh ]; then /tests/test.sh; else bash /tests/test.sh; fi"
+    f" > {TEST_STDOUT} 2>&1"
+)
+# Without a [verifier].user the chmod rides in the same exec as the run.
+RUN_TEST = ["sh", "-c", f"chmod +x /tests/test.sh 2>/dev/null; {_RUN_BODY}"]
+# With one, the chmod is a separate root exec (CHMOD_TEST) like Harbor's.
+RUN_TEST_AS_USER = ["sh", "-c", _RUN_BODY]
 
 
 def _reader(files: dict[str, str]) -> Any:
@@ -494,7 +501,7 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
 
             # Verify cleanup was called AFTER scoring. Sequence:
             # mkdir /logs/agent, mkdir /logs/verifier, mkdir /logs/artifacts,
-            # chmod +x test.sh, run test.sh (output to test-stdout.txt),
+            # run test.sh (chmod + exec, output to test-stdout.txt),
             # rm /tests, rm /logs/verifier, rm /logs/artifacts, then unset each
             # default env var (currently just TEST_DIR).
             assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
@@ -504,12 +511,11 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
                 "-c",
                 "mkdir -p /logs/artifacts && chmod 0777 /logs/artifacts",
             ]
-            assert exec_calls[3] == CHMOD_TEST
-            assert exec_calls[4] == RUN_TEST
-            assert exec_calls[5] == ["rm", "-rf", "/tests"]
-            assert exec_calls[6] == ["rm", "-rf", "/logs/verifier"]
-            assert exec_calls[7] == ["rm", "-rf", "/logs/artifacts"]
-            assert ["unset", "TEST_DIR"] in exec_calls[8:]
+            assert exec_calls[3] == RUN_TEST
+            assert exec_calls[4] == ["rm", "-rf", "/tests"]
+            assert exec_calls[5] == ["rm", "-rf", "/logs/verifier"]
+            assert exec_calls[6] == ["rm", "-rf", "/logs/artifacts"]
+            assert ["unset", "TEST_DIR"] in exec_calls[7:]
 
 
 @pytest.mark.asyncio
@@ -993,11 +999,10 @@ async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
                 "-c",
                 "mkdir -p /logs/artifacts && chmod 0777 /logs/artifacts",
             ]
-            assert exec_calls[3] == CHMOD_TEST
-            assert exec_calls[4] == RUN_TEST
-            assert exec_calls[5] == ["rm", "-rf", "/tests"]
-            assert exec_calls[6] == ["rm", "-rf", "/logs/verifier"]
-            assert exec_calls[7] == ["rm", "-rf", "/logs/artifacts"]
+            assert exec_calls[3] == RUN_TEST
+            assert exec_calls[4] == ["rm", "-rf", "/tests"]
+            assert exec_calls[5] == ["rm", "-rf", "/logs/verifier"]
+            assert exec_calls[6] == ["rm", "-rf", "/logs/artifacts"]
             # Check cleanup was called for all env vars (user + defaults).
             env_cleanup_calls = exec_calls[7:]
             assert ["unset", "OPENAI_API_KEY"] in env_cleanup_calls
@@ -1084,8 +1089,7 @@ async def test_harbor_scorer_runs_verifier_collect(tmp_path: Path) -> None:
         f"cd /app && git config --global --add safe.directory '*' && "
         f"git checkout -f {base_commit} && git clean -fd",
     ]
-    assert cmds[5] == CHMOD_TEST
-    assert cmds[6] == RUN_TEST
+    assert cmds[5] == RUN_TEST
 
 
 @pytest.mark.asyncio
@@ -1292,8 +1296,7 @@ async def test_harbor_scorer_skips_empty_collect(tmp_path: Path) -> None:
         "-c",
         "mkdir -p /logs/artifacts && chmod 0777 /logs/artifacts",
     ]
-    assert exec_calls[3] == CHMOD_TEST
-    assert exec_calls[4] == RUN_TEST
+    assert exec_calls[3] == RUN_TEST
 
 
 def _collect_state(
@@ -1479,8 +1482,11 @@ async def test_harbor_scorer_passes_verifier_user(
     test_exec_kwargs: dict[str, Any] = {}
 
     async def track_exec(cmd: list[str], **kwargs: Any) -> Mock:
-        if cmd == RUN_TEST:
+        if cmd in (RUN_TEST, RUN_TEST_AS_USER):
             test_exec_kwargs.update(kwargs)
+        if cmd == CHMOD_TEST:
+            assert kwargs.get("user") == "root"
+            test_exec_kwargs["chmod_as_root"] = True
         result = Mock()
         result.returncode = 0
         result.stdout = ""

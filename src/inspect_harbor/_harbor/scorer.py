@@ -117,11 +117,22 @@ def harbor_scorer(
         verifier_env = {**_DEFAULT_VERIFIER_ENV, **resolved_user_env}
         verifier_user = state.metadata.get("verifier_user")
 
-        # Run the script the way Harbor's verifier does: mark it executable
-        # as root, exec it directly (its shebang decides the interpreter), and
-        # redirect its output to /logs/verifier/test-stdout.txt.
-        await sandbox().exec(["chmod", "+x", container_test_path], user="root")
-        command = f"({shlex.quote(container_test_path)}) > {_TEST_STDOUT_PATH} 2>&1"
+        # Run the script the way Harbor's verifier does: make it executable,
+        # exec it directly so its shebang picks the interpreter, and redirect
+        # its output to /logs/verifier/test-stdout.txt. Harbor chmods as root;
+        # we only switch user when the task sets [verifier].user, because on
+        # some Inspect sandbox providers a user switch needs sudo or su in the
+        # image, and a task without a verifier user never needed either.
+        script = shlex.quote(container_test_path)
+        run = (
+            f"if [ -x {script} ]; then {script}; else bash {script}; fi"
+            f" > {_TEST_STDOUT_PATH} 2>&1"
+        )
+        if verifier_user is None:
+            command = f"chmod +x {script} 2>/dev/null; {run}"
+        else:
+            await sandbox().exec(["chmod", "+x", container_test_path], user="root")
+            command = run
         result = await sandbox().exec(
             ["sh", "-c", command],
             timeout=int(verifier_timeout_sec),
