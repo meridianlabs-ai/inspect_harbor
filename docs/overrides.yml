@@ -241,6 +241,9 @@ atm-bench/atm-bench-hard-sgm:
   function_name: atm_bench_hard_sgm
   title: ATM-Bench-Hard (SGM)
 
+au12321ua/cadir-ci-benchmark:
+  categories: []
+
 bencalvert04/programbench:
   categories:
   - Coding
@@ -285,6 +288,9 @@ binary-audit/binary-audit:
   desc: 'BinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engineering.'
   function_name: binary_audit
   title: BinaryAudit
+
+biopharma-bench/biopharma-bench:
+  categories: []
 
 blobfishai/arc-crm-6:
   categories:

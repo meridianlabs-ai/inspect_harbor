@@ -757,6 +757,37 @@ def atm_bench_hard_sgm(
 
 
 @task
+def au12321ua_cadir_ci_benchmark(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Two native Harbor tasks for CADIR release checks.
+
+    Slug: au12321ua/cadir-ci-benchmark
+    Latest digest: sha256:b1ae6241c25ff5efdcd5f0ff22badfd6ead95263deb348125e958327c4dee28f
+    """
+    return _harbor_base(
+        package_name="au12321ua/cadir-ci-benchmark",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def bencalvert04_programbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -930,6 +961,37 @@ def binary_audit(
     """
     return _harbor_base(
         package_name="binary-audit/binary-audit",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def biopharma_bench_biopharma_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. The company date is 8 February 2026. An agent takes an employee's seat and writes the document that seat is responsible for.
+
+    Slug: biopharma-bench/biopharma-bench
+    Latest digest: sha256:31697cbde6b893f31bc6b881e064d8cd281e814fa3eaf9d869f9e5828bfa0936
+    """
+    return _harbor_base(
+        package_name="biopharma-bench/biopharma-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -1949,7 +2011,7 @@ def gabeorlanski_slopcodebench(
     r"""SlopCodeBench multi-checkpoint coding benchmark tasks converted for Harbor.
 
     Slug: gabeorlanski/slopcodebench
-    Latest digest: sha256:73a17cda817d37ce3352d18c272c40a3f6b623061023bee365b4df74adcd11b5
+    Latest digest: sha256:aec29354c19d3e762640ab6d7d3c63ba8fcf4895e98a5756aecb9157b5bb4ae0
     """
     return _harbor_base(
         package_name="gabeorlanski/slopcodebench",
