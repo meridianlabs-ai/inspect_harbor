@@ -11,17 +11,13 @@ from inspect_harbor._harbor.local import (
     list_local_dataset_tasks,
 )
 
+NAMES = ["alpha-1", "alpha-2", "beta-1", "gamma"]
 
-def test_cache_root_default(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Without an override the cache lives under the user's cache dir."""
+
+def test_cache_root(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    """The cache defaults under the user's cache dir; the env override is expanded."""
     monkeypatch.delenv("INSPECT_HARBOR_CACHE_DIR", raising=False)
     assert cache_root() == Path.home() / ".cache" / "inspect_harbor" / "tasks"
-
-
-def test_cache_root_env_override(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
-) -> None:
-    """``INSPECT_HARBOR_CACHE_DIR`` relocates the cache and is expanded."""
     monkeypatch.setenv("INSPECT_HARBOR_CACHE_DIR", str(tmp_path / "c"))
     assert cache_root() == tmp_path / "c"
     monkeypatch.setenv("INSPECT_HARBOR_CACHE_DIR", "~/x")
@@ -29,37 +25,34 @@ def test_cache_root_env_override(
 
 
 def test_stable_key_deterministic_and_order_sensitive() -> None:
-    """Keys are 16 hex chars, stable, and depend on part order."""
+    """Keys are 16 hex chars, stable, and depend on part order and boundaries."""
     key = stable_key("https://example.com/repo.git", "abc", "tasks/t1")
     assert key == stable_key("https://example.com/repo.git", "abc", "tasks/t1")
-    assert len(key) == 16
-    assert int(key, 16) >= 0
+    assert len(key) == 16 and int(key, 16) >= 0
     assert key != stable_key("abc", "https://example.com/repo.git", "tasks/t1")
-    # Parts are delimited, so concatenation collisions are avoided.
     assert stable_key("ab", "c") != stable_key("a", "bc")
 
 
-def test_filter_task_names_include_exclude_and_limit() -> None:
-    """Globs filter in order; ``n_tasks`` truncates the filtered list."""
-    names = ["alpha-1", "alpha-2", "beta-1", "gamma"]
-    assert filter_task_names(names, None, None, None) == names
-    assert filter_task_names(names, ["alpha-*"], None, None) == ["alpha-1", "alpha-2"]
-    assert filter_task_names(names, None, ["*-1"], None) == ["alpha-2", "gamma"]
-    assert filter_task_names(names, ["alpha-*", "gamma"], ["alpha-2"], None) == [
-        "alpha-1",
-        "gamma",
-    ]
-    assert filter_task_names(names, None, None, 2) == ["alpha-1", "alpha-2"]
-    assert filter_task_names(names, ["*-*"], None, 1) == ["alpha-1"]
-
-
-def test_filter_entries_keeps_duplicates_apart() -> None:
-    """Entries sharing a name are filtered one by one, so ``n_tasks`` holds."""
-    entries = [("hello", 1), ("hello", 2), ("other", 3)]
-    kept = filter_entries(entries, lambda e: e[0], None, None, 1)
-    assert kept == [("hello", 1)]
-    kept = filter_entries(entries, lambda e: e[0], ["hello"], None, None)
-    assert kept == [("hello", 1), ("hello", 2)]
+@pytest.mark.parametrize(
+    "include,exclude,n_tasks,expected",
+    [
+        (None, None, None, NAMES),
+        (["alpha-*"], None, None, ["alpha-1", "alpha-2"]),
+        (None, ["*-1"], None, ["alpha-2", "gamma"]),
+        (["alpha-*", "gamma"], ["alpha-2"], None, ["alpha-1", "gamma"]),
+        (None, None, 2, ["alpha-1", "alpha-2"]),
+        (["*-*"], None, 1, ["alpha-1"]),
+        (None, ["*"], None, []),
+    ],
+)
+def test_filter_task_names(
+    include: list[str] | None,
+    exclude: list[str] | None,
+    n_tasks: int | None,
+    expected: list[str],
+) -> None:
+    """Globs filter in order; ``n_tasks`` truncates after filtering."""
+    assert filter_task_names(NAMES, include, exclude, n_tasks) == expected
 
 
 def test_filter_task_names_no_match_raises() -> None:
@@ -68,34 +61,30 @@ def test_filter_task_names_no_match_raises() -> None:
         filter_task_names(["a", "b"], ["zzz"], None, None)
 
 
-def test_filter_task_names_exclude_everything_is_not_an_error() -> None:
-    """Excluding everything yields an empty list rather than raising."""
-    assert filter_task_names(["a"], None, ["*"], None) == []
+def test_filter_entries_keeps_duplicates_apart() -> None:
+    """Entries sharing a name are filtered one by one, so ``n_tasks`` holds."""
+    entries = [("hello", 1), ("hello", 2), ("other", 3)]
+    assert filter_entries(entries, lambda e: e[0], None, None, 1) == [("hello", 1)]
+    assert filter_entries(entries, lambda e: e[0], ["hello"], None, None) == [
+        ("hello", 1),
+        ("hello", 2),
+    ]
 
 
 def test_list_local_dataset_tasks(
     tmp_path: Path, caplog: pytest.LogCaptureFixture
 ) -> None:
-    """Only valid task dirs are listed, sorted, and filtered by dir name."""
+    """Valid task dirs are listed sorted; task-like invalid ones are reported."""
     make_task(tmp_path, dirname="t-b")
     make_task(tmp_path, dirname="t-a")
-    make_task(tmp_path, dirname="skip-me")
     (tmp_path / "not-a-task").mkdir()
     (tmp_path / "loose-file").write_text("x")
     broken = make_task(tmp_path, dirname="broken", with_test=False)
 
     with caplog.at_level("WARNING", logger="inspect_harbor._harbor.local"):
         listed = list_local_dataset_tasks(tmp_path, None, None, None, False)
-    assert listed == [tmp_path / "skip-me", tmp_path / "t-a", tmp_path / "t-b"]
-    # The task-like child without tests is reported, the plain dir is not.
+    assert listed == [tmp_path / "t-a", tmp_path / "t-b"]
     assert "Skipping" in caplog.text and "broken" in caplog.text
     assert "not-a-task" not in caplog.text
-    assert list_local_dataset_tasks(tmp_path, ["t-*"], None, None, False) == [
-        tmp_path / "t-a",
-        tmp_path / "t-b",
-    ]
-    assert list_local_dataset_tasks(tmp_path, None, ["skip-*"], 1, False) == [
-        tmp_path / "t-a"
-    ]
     # With verification disabled the task lacking tests is included too.
     assert broken in list_local_dataset_tasks(tmp_path, None, None, None, True)

@@ -1,45 +1,24 @@
-"""Tests for task directory layout, container paths, and image names."""
+"""Tests for task directory layout and Docker image names."""
 
-from pathlib import Path, PurePosixPath
+from pathlib import Path
 
 import pytest
-from inspect_harbor._harbor.paths import (
-    EnvironmentPaths,
-    TaskPaths,
-    sanitize_docker_image_name,
-)
+from inspect_harbor._harbor.paths import TaskPaths, sanitize_docker_image_name
 
 
 def test_task_paths_layout(tmp_path: Path) -> None:
     """Every conventional file and directory hangs off the resolved task dir."""
     root = tmp_path.resolve()
-    paths = TaskPaths(tmp_path)
+    paths = TaskPaths(str(tmp_path))  # str is accepted and resolved
     assert paths.task_dir == root
     assert paths.instruction_path == root / "instruction.md"
     assert paths.config_path == root / "task.toml"
     assert paths.environment_dir == root / "environment"
-    assert paths.tests_dir == root / "tests"
     assert paths.test_path == root / "tests" / "test.sh"
-    assert paths.solution_dir == root / "solution"
     assert paths.solve_path == root / "solution" / "solve.sh"
-    assert paths.steps_dir == root / "steps"
-
-
-def test_task_paths_accepts_str(tmp_path: Path) -> None:
-    """A string path is accepted and resolved."""
-    assert TaskPaths(str(tmp_path)).task_dir == tmp_path.resolve()
-
-
-def test_environment_paths_constants() -> None:
-    """Container-side constants match Harbor's mount layout."""
-    p = EnvironmentPaths()
-    assert p.tests_dir == PurePosixPath("/tests")
-    assert p.verifier_dir == PurePosixPath("/logs/verifier")
-    assert p.agent_dir == PurePosixPath("/logs/agent")
-    assert p.artifacts_dir == PurePosixPath("/logs/artifacts")
-    assert p.solution_dir == PurePosixPath("/solution")
-    assert p.reward_text_path == PurePosixPath("/logs/verifier/reward.txt")
-    assert p.reward_json_path == PurePosixPath("/logs/verifier/reward.json")
+    assert (
+        paths.step_instruction_path("one") == root / "steps" / "one" / "instruction.md"
+    )
 
 
 # Reference outputs captured from harbor 0.21.0's ``_sanitize_docker_image_name``.

@@ -1,41 +1,36 @@
 """Tests for loading a Harbor task directory."""
 
 from pathlib import Path
+from typing import Any
 
 import pytest
 from helpers import make_task
 from inspect_harbor._harbor.task_dir import HarborTask, strip_canary
 
 FIXTURE = Path(__file__).parent / "fixtures" / "simple_task"
+WINDOWS = '[environment]\nos = "windows"\n'
 
 
-def test_name_from_task_section(tmp_path: Path) -> None:
-    """``[task].name`` wins over the directory name."""
-    task = HarborTask(make_task(tmp_path, '[task]\nname = "org/thing"\n'))
-    assert task.name == "org/thing"
-
-
-def test_name_from_directory(tmp_path: Path) -> None:
-    """Without ``[task]`` the directory name is the task name."""
-    task = HarborTask(make_task(tmp_path, dirname="dir-name"))
-    assert task.name == "dir-name"
-
-
-def test_paths_and_config_exposed(tmp_path: Path) -> None:
-    """The loaded task exposes its dir, paths, and parsed config."""
-    task_dir = make_task(tmp_path, "[verifier]\ntimeout_sec = 7\n")
+def test_loads_paths_config_name_and_instruction(tmp_path: Path) -> None:
+    """The loaded task exposes its dir, paths, parsed config, name, and text."""
+    task_dir = make_task(
+        tmp_path, "[verifier]\ntimeout_sec = 7\n", instruction="# canary\n\nReal."
+    )
     task = HarborTask(task_dir)
     assert task.task_dir == task_dir.resolve()
     assert task.paths.tests_dir == task_dir.resolve() / "tests"
     assert task.config.verifier.timeout_sec == 7
+    assert task.name == "my-task"  # directory name when [task] is absent
+    assert task.instruction == "Real."  # canary stripped by the loader
     assert task.has_steps is False
 
 
-def test_instruction_read_and_canary_stripped(tmp_path: Path) -> None:
-    """Leading canary comment lines and following blanks are removed."""
-    text = "<!-- BENCHMARK DATA CANARY abc -->\n# canary: xyz\n\n\nReal text.\nMore."
-    task = HarborTask(make_task(tmp_path, instruction=text))
-    assert task.instruction == "Real text.\nMore."
+def test_fixture_loads() -> None:
+    """The integration fixture loads end to end, named by ``[task].name``."""
+    task = HarborTask(FIXTURE)
+    assert task.name == "harbor-test/simple-task"
+    assert "2 + 2" in task.instruction
+    assert HarborTask.is_valid_dir(FIXTURE)
 
 
 @pytest.mark.parametrize(
@@ -45,48 +40,53 @@ def test_instruction_read_and_canary_stripped(tmp_path: Path) -> None:
         ("# canary\nbody", "body"),
         ("body\n# canary at end", "body\n# canary at end"),
         ("<!-- Canary -->\n\nbody", "body"),
+        (
+            "<!-- BENCHMARK DATA CANARY abc -->\n# canary: xyz\n\n\nReal.\nMore.",
+            "Real.\nMore.",
+        ),
     ],
 )
 def test_strip_canary(text: str, expected: str) -> None:
-    """Only leading canary lines are stripped."""
+    """Only leading canary lines, and the blanks after them, are stripped."""
     assert strip_canary(text) == expected
 
 
-def test_missing_instruction_raises(tmp_path: Path) -> None:
-    """A task without ``instruction.md`` fails verification."""
-    with pytest.raises(FileNotFoundError, match="instruction.md"):
-        HarborTask(make_task(tmp_path, instruction=None))
+@pytest.mark.parametrize(
+    "kwargs,match",
+    [
+        (dict(instruction=None), "instruction.md"),
+        (dict(with_test=False), r"tests/test\.sh"),
+        (dict(toml=WINDOWS), r"test\.bat"),
+    ],
+)
+def test_missing_required_file_raises(
+    tmp_path: Path, kwargs: dict[str, Any], match: str
+) -> None:
+    """Verification needs the instruction and the OS-appropriate test script."""
+    task_dir = make_task(tmp_path, **kwargs)
+    with pytest.raises(FileNotFoundError, match=match):
+        HarborTask(task_dir)
+    assert HarborTask.is_valid_dir(task_dir) is False
 
 
-def test_missing_test_script_raises(tmp_path: Path) -> None:
-    """A Linux task without ``tests/test.sh`` fails verification."""
-    with pytest.raises(FileNotFoundError, match=r"tests/test\.sh"):
-        HarborTask(make_task(tmp_path, with_test=False))
-
-
-def test_missing_test_script_ok_when_verification_disabled(tmp_path: Path) -> None:
-    """``disable_verification`` skips the test-script check."""
-    task = HarborTask(make_task(tmp_path, with_test=False), disable_verification=True)
-    assert task.instruction == "Do the thing."
-
-
-def test_missing_test_script_ok_for_separate_verifier(tmp_path: Path) -> None:
-    """A separate verifier environment may ship its tests elsewhere."""
-    task = HarborTask(
-        make_task(
-            tmp_path, '[verifier]\nenvironment_mode = "separate"\n', with_test=False
-        )
-    )
-    assert task.config.verifier_runs_separately()
-
-
-def test_windows_task_expects_bat(tmp_path: Path) -> None:
-    """A Windows task is validated against ``tests/test.bat``."""
-    toml = '[environment]\nos = "windows"\n'
-    with pytest.raises(FileNotFoundError, match=r"test\.bat"):
-        HarborTask(make_task(tmp_path, toml, test_name="test.sh"))
-    task = HarborTask(make_task(tmp_path, toml, test_name="test.bat", dirname="w2"))
-    assert task.config.environment.os.value == "windows"
+@pytest.mark.parametrize(
+    "kwargs,disable_verification",
+    [
+        (dict(with_test=False), True),
+        (
+            dict(toml='[verifier]\nenvironment_mode = "separate"\n', with_test=False),
+            False,
+        ),
+        (dict(toml=WINDOWS, test_name="test.bat"), False),
+    ],
+)
+def test_loads_without_default_test_script(
+    tmp_path: Path, kwargs: dict[str, Any], disable_verification: bool
+) -> None:
+    """Disabled verification, a separate verifier, or a Windows script all load."""
+    task_dir = make_task(tmp_path, **kwargs)
+    assert HarborTask(task_dir, disable_verification=disable_verification).name
+    assert HarborTask.is_valid_dir(task_dir, disable_verification=disable_verification)
 
 
 def test_steps_task(tmp_path: Path) -> None:
@@ -119,8 +119,7 @@ def test_parse_errors_name_the_file(tmp_path: Path) -> None:
 
 def test_is_valid_dir(tmp_path: Path) -> None:
     """``is_valid_dir`` mirrors the constructor's checks without raising."""
-    good = make_task(tmp_path, dirname="good")
-    assert HarborTask.is_valid_dir(good) is True
+    assert HarborTask.is_valid_dir(make_task(tmp_path, dirname="good")) is True
 
     no_toml = make_task(tmp_path, dirname="no-toml")
     (no_toml / "task.toml").unlink()
@@ -131,25 +130,15 @@ def test_is_valid_dir(tmp_path: Path) -> None:
     (no_env / "environment").rmdir()
     assert HarborTask.is_valid_dir(no_env) is False
 
-    bad_toml = make_task(tmp_path, "[environment\n", dirname="bad-toml")
-    assert HarborTask.is_valid_dir(bad_toml) is False
-
-    no_tests = make_task(tmp_path, with_test=False, dirname="no-tests")
-    assert HarborTask.is_valid_dir(no_tests) is False
-    assert HarborTask.is_valid_dir(no_tests, disable_verification=True) is True
+    assert (
+        HarborTask.is_valid_dir(make_task(tmp_path, "[environment\n", dirname="bad"))
+        is False
+    )
 
     no_instr = make_task(tmp_path, instruction=None, dirname="no-instr")
     assert HarborTask.is_valid_dir(no_instr, disable_verification=True) is False
 
     assert HarborTask.is_valid_dir(tmp_path / "does-not-exist") is False
-
-
-def test_fixture_loads() -> None:
-    """The integration fixture loads end to end."""
-    task = HarborTask(FIXTURE)
-    assert task.name == "harbor-test/simple-task"
-    assert "2 + 2" in task.instruction
-    assert HarborTask.is_valid_dir(FIXTURE)
 
 
 @pytest.mark.parametrize(

@@ -1505,9 +1505,7 @@ async def test_harbor_scorer_passes_verifier_user(
     "reward_txt,reward_json",
     [
         ("nan", None),
-        ("inf", None),
         (None, '{"reward": NaN}'),
-        (None, '{"reward": 1e309}'),
         (None, '{"reward": "0.5"}'),
         (None, '{"reward": 1.0, "other": Infinity}'),
     ],

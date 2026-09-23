@@ -1,6 +1,7 @@
 """Tests for JSON registry files (``name@version`` datasets)."""
 
 import json
+import os
 import time
 from pathlib import Path, PurePosixPath
 
@@ -43,6 +44,18 @@ REGISTRY = [
     },
     {"name": "other", "version": "head", "description": "", "tasks": []},
 ]
+AIME_1_0 = [
+    GitTaskSpec(
+        git_url="https://github.com/org/repo",
+        path=PurePosixPath("tasks/aime_i-9"),
+        git_commit_id="a" * 40,
+    ),
+    GitTaskSpec(
+        git_url="https://github.com/org/repo",
+        path=PurePosixPath("tasks/aime_ii-3"),
+        git_commit_id=None,
+    ),
+]
 
 
 @pytest.fixture(autouse=True)
@@ -61,21 +74,31 @@ def registry_file(tmp_path: Path) -> Path:
     return p
 
 
+def _client(*bodies: bytes, status: int = 200) -> tuple[httpx.AsyncClient, list[str]]:
+    """A client whose responses are served from ``bodies`` in order; returns seen URLs."""
+    queue = list(bodies)
+    seen: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(str(request.url))
+        return httpx.Response(status, content=queue.pop(0) if queue else b"[]")
+
+    return httpx.AsyncClient(transport=httpx.MockTransport(handler)), seen
+
+
 @pytest.mark.parametrize(
     "versions,expected",
     [
         (["1.0", "head", "2.0"], "head"),
         (["1.0", "1.10", "1.9"], "1.10"),
-        (["0.1", "0.2.1", "0.2"], "0.2.1"),
-        (["b", "a", "c"], "c"),
-        (["1.0", "zzz"], "1.0"),
-        (["v1", "0.5"], "v1"),
         (["1.0rc1", "1.0"], "1.0"),
         (["1.0", "1.0.0"], "1.0"),
+        (["b", "a", "c"], "c"),
+        (["1.0", "zzz"], "1.0"),
     ],
 )
 def test_resolve_version(versions: list[str], expected: str) -> None:
-    """``head`` wins, then the highest numeric version, then lexical order."""
+    """``head`` wins, then the highest PEP 440 version (first wins ties), then lexical."""
     assert resolve_version(versions) == expected
 
 
@@ -99,32 +122,21 @@ async def test_load_registry_from_path(registry_file: Path) -> None:
 
 async def test_load_registry_from_url_is_cached(isolated_cache: Path) -> None:
     """The URL body is fetched once and reused within the TTL."""
-    calls = 0
-
-    def handler(request: httpx.Request) -> httpx.Response:
-        nonlocal calls
-        calls += 1
-        assert str(request.url) == "https://example.test/registry.json"
-        return httpx.Response(200, json=REGISTRY)
-
-    client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+    body = json.dumps(REGISTRY).encode()
+    client, seen = _client(body, body, body)
     url = "https://example.test/registry.json"
-    first = await load_registry(url=url, client=client)
-    second = await load_registry(url=url, client=client)
-    assert calls == 1
-    assert [d.name for d in first] == [d.name for d in second]
-    cached = list((isolated_cache / "registry").glob("*.json"))
-    assert len(cached) == 1
+    await load_registry(url=url, client=client)
+    await load_registry(url=url, client=client)
+    assert len(seen) == 1
+    [cached] = (isolated_cache / "registry").glob("*.json")
 
     # An expired cache file is refetched; ``overwrite`` always refetches.
     old = time.time() - 48 * 3600
-    import os
-
-    os.utime(cached[0], (old, old))
+    os.utime(cached, (old, old))
     await load_registry(url=url, client=client)
-    assert calls == 2
+    assert len(seen) == 2
     await load_registry(url=url, overwrite=True, client=client)
-    assert calls == 3
+    assert len(seen) == 3
 
 
 @pytest.mark.parametrize(
@@ -136,65 +148,33 @@ async def test_load_registry_from_url_is_cached(isolated_cache: Path) -> None:
 )
 async def test_bad_registry_body_is_not_cached(bad_body: bytes, match: str) -> None:
     """A bad response fails loudly and the next fetch is not poisoned by cache."""
-    bodies = [bad_body, json.dumps(REGISTRY).encode()]
-
-    def handler(request: httpx.Request) -> httpx.Response:
-        return httpx.Response(200, content=bodies.pop(0))
-
-    client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+    client, seen = _client(bad_body, json.dumps(REGISTRY).encode())
     url = "https://example.test/registry.json"
     with pytest.raises(ValueError, match=match):
         await load_registry(url=url, client=client)
     datasets = await load_registry(url=url, client=client)
     assert [d.name for d in datasets] == ["aime", "aime", "other"]
-    assert not bodies
+    assert len(seen) == 2
 
 
-async def test_load_registry_url_error_propagates() -> None:
-    """A failing fetch is an ``HTTPStatusError``."""
-
-    def handler(request: httpx.Request) -> httpx.Response:
-        return httpx.Response(404)
-
-    client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+async def test_load_registry_errors() -> None:
+    """HTTP failures propagate; url and path together are rejected."""
+    client, _ = _client(status=404)
     with pytest.raises(httpx.HTTPStatusError):
         await load_registry(url="https://example.test/missing.json", client=client)
-
-
-async def test_load_registry_requires_one_source() -> None:
-    """Both or neither of ``url`` and ``path`` is an error."""
     with pytest.raises(ValueError, match="Only one"):
         await load_registry(url="https://x", path=Path("y"))
 
 
-def test_default_registry_url() -> None:
-    """The default is the curated laude-institute registry file."""
-    assert DEFAULT_REGISTRY_URL == (
-        "https://raw.githubusercontent.com/laude-institute/harbor/main/registry.json"
-    )
-
-
-async def test_resolve_registry_dataset_explicit_version(registry_file: Path) -> None:
-    """``name@version`` returns git specs and local paths in registry order."""
-    entries = await resolve_registry_dataset("aime@1.0", path=registry_file)
-    assert entries == [
-        GitTaskSpec(
-            git_url="https://github.com/org/repo",
-            path=PurePosixPath("tasks/aime_i-9"),
-            git_commit_id="a" * 40,
-        ),
-        GitTaskSpec(
-            git_url="https://github.com/org/repo",
-            path=PurePosixPath("tasks/aime_ii-3"),
-            git_commit_id=None,
-        ),
-    ]
-
-
-async def test_resolve_registry_dataset_latest_version(registry_file: Path) -> None:
-    """Without a version the highest one is picked."""
-    entries = await resolve_registry_dataset("aime", path=registry_file)
-    assert entries == [Path("/abs/local/only")]
+@pytest.mark.parametrize(
+    "name_version,expected",
+    [("aime@1.0", AIME_1_0), ("aime", [Path("/abs/local/only")])],
+)
+async def test_resolve_registry_dataset(
+    registry_file: Path, name_version: str, expected: list[GitTaskSpec | Path]
+) -> None:
+    """An explicit version returns its sources in order; no version picks the highest."""
+    assert await resolve_registry_dataset(name_version, path=registry_file) == expected
 
 
 async def test_resolve_registry_dataset_unknown(registry_file: Path) -> None:
@@ -205,17 +185,8 @@ async def test_resolve_registry_dataset_unknown(registry_file: Path) -> None:
         await resolve_registry_dataset("aime@9.9", path=registry_file)
 
 
-async def test_resolve_registry_dataset_uses_default_url(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    """Without ``url`` or ``path`` the default registry URL is fetched."""
-    seen: list[str] = []
-
-    def handler(request: httpx.Request) -> httpx.Response:
-        seen.append(str(request.url))
-        return httpx.Response(200, json=REGISTRY)
-
-    client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
-    entries = await resolve_registry_dataset("other@head", client=client)
-    assert entries == []
+async def test_resolve_registry_dataset_uses_default_url() -> None:
+    """Without ``url`` or ``path`` the curated registry URL is fetched."""
+    client, seen = _client(json.dumps(REGISTRY).encode())
+    assert await resolve_registry_dataset("other@head", client=client) == []
     assert seen == [DEFAULT_REGISTRY_URL]

@@ -6,8 +6,11 @@ readable anonymously with the publishable key. This module does the same
 with ``httpx`` so inspect_harbor does not depend on the ``harbor`` package.
 
 Verified against the live backend on 2026-09-21. Table and column names are
-Harbor internals and may change without notice; the nightly registry sweep
-is what catches that.
+Harbor internals and may change without notice. The nightly registry update
+resolves every hub dataset through this client, so a change to the dataset
+or task-listing queries fails that job; the task-version RPC and archive
+download are only exercised by evals and the opt-in parity test in
+``tests/manual``.
 """
 
 import asyncio

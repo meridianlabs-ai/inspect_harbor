@@ -616,45 +616,59 @@ def test_harbor_task_with_overrides():
     assert device.count == 2
 
 
-def test_load_from_package_with_dataset_filters():
+@pytest.mark.parametrize(
+    "kwargs,expected_call",
+    [
+        (
+            dict(
+                package_ref="3",
+                dataset_task_names=["acme/b*"],
+                dataset_exclude_task_names=["acme/bad"],
+                n_tasks=4,
+            ),
+            ("acme/bench", "3", ["acme/b*"], ["acme/bad"], 4, False),
+        ),
+        # ``inspect eval -T dataset_task_names=foo`` arrives as a bare string.
+        (
+            dict(dataset_task_names="acme/b*", dataset_exclude_task_names="acme/bad"),
+            ("acme/bench", "latest", ["acme/b*"], ["acme/bad"], None, False),
+        ),
+    ],
+)
+def test_hub_dataset_filters_forwarded(
+    kwargs: dict[str, Any], expected_call: tuple[Any, ...]
+) -> None:
     """Task filters apply to hub packages, as the generated task functions rely on."""
     with (
         patch("inspect_harbor._harbor.task._load_from_package") as mock_load_package,
         patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
     ):
-        task_path = Path("/cache/hub/acme/bench/abc")
-        mock_load_package.return_value = [task_path]
+        mock_load_package.return_value = [Path("/cache/x")]
         mock_harbor_task.return_value = _make_harbor_task_mock(
-            name="acme/bench", task_dir=task_path
+            task_dir=Path("/cache/x")
         )
-
-        load_harbor_tasks(
-            package_name="acme/bench",
-            package_ref="3",
-            dataset_task_names=["acme/b*"],
-            dataset_exclude_task_names=["acme/bad"],
-            n_tasks=4,
-        )
-
-        mock_load_package.assert_called_once_with(
-            "acme/bench", "3", ["acme/b*"], ["acme/bad"], 4, False
-        )
+        load_harbor_tasks(package_name="acme/bench", **kwargs)
+        mock_load_package.assert_called_once_with(*expected_call)
 
 
-def test_dataset_filters_alone_are_an_error():
-    """Filters need a dataset source to apply to."""
-    with pytest.raises(ValueError, match="dataset_task_names.*without also"):
-        load_harbor_tasks(dataset_task_names=["x"])
-    with pytest.raises(ValueError, match="dataset_exclude_task_names.*without also"):
-        load_harbor_tasks(dataset_exclude_task_names=["x"])
-
-
-def test_dataset_filters_with_git_task_are_an_error():
-    """A single git task has nothing to filter."""
-    with pytest.raises(ValueError, match="single git task"):
-        load_harbor_tasks(
-            path="task", task_git_url="https://github.com/org/repo", n_tasks=1
-        )
+@pytest.mark.parametrize(
+    "kwargs,match",
+    [
+        (dict(dataset_task_names=["x"]), "dataset_task_names.*without also"),
+        (
+            dict(dataset_exclude_task_names=["x"]),
+            "dataset_exclude_task_names.*without also",
+        ),
+        (
+            dict(path="task", task_git_url="https://github.com/org/repo", n_tasks=1),
+            "single git task",
+        ),
+    ],
+)
+def test_dataset_filter_misuse_raises(kwargs: dict[str, Any], match: str) -> None:
+    """Filters need a dataset to apply to; a single git task has nothing to filter."""
+    with pytest.raises(ValueError, match=match):
+        load_harbor_tasks(**kwargs)
 
 
 def test_broken_single_task_dir_raises_instead_of_empty_dataset(
@@ -666,23 +680,3 @@ def test_broken_single_task_dir_raises_instead_of_empty_dataset(
     (task_dir / "task.toml").write_text("[environment\n")
     with pytest.raises(ValueError, match="Invalid TOML"):
         load_harbor_tasks(path=task_dir)
-
-
-def test_bare_string_filters_are_accepted():
-    """``-T dataset_task_names=foo`` arrives as a string and means ``[foo]``."""
-    with (
-        patch("inspect_harbor._harbor.task._load_from_package") as mock_load_package,
-        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
-    ):
-        mock_load_package.return_value = [Path("/cache/x")]
-        mock_harbor_task.return_value = _make_harbor_task_mock(
-            task_dir=Path("/cache/x")
-        )
-        load_harbor_tasks(
-            package_name="acme/bench",
-            dataset_task_names="acme/b*",
-            dataset_exclude_task_names="acme/bad",
-        )
-        mock_load_package.assert_called_once_with(
-            "acme/bench", "latest", ["acme/b*"], ["acme/bad"], None, False
-        )
