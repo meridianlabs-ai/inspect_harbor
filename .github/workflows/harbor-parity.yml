@@ -1,0 +1,58 @@
+name: Harbor parity
+
+# Detects drift between inspect_harbor's Harbor adapter and the real
+# `harbor` package: loads one task from every hub dataset (exercising the
+# hub queries, task-version RPC and archive download), then runs the
+# opt-in parity test that compares every field we read across both loaders.
+
+on:
+  schedule:
+    # Nightly, half an hour after the registry update so both surface together.
+    - cron: '30 0 * * *'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'src/inspect_harbor/_harbor/**'
+      - 'tests/manual/test_harbor_parity.py'
+      - 'scripts/parity_warm_cache.py'
+      - '.github/workflows/harbor-parity.yml'
+
+env:
+  # The Harbor release the adapter is checked against. Bump deliberately,
+  # together with the version named in tests/manual/test_harbor_parity.py.
+  HARBOR_VERSION: "0.23.0"
+  INSPECT_HARBOR_NO_TELEMETRY: "1"
+  INSPECT_HARBOR_CACHE_DIR: ${{ github.workspace }}/.parity-cache
+
+jobs:
+  parity:
+    name: Compare loader with harbor ${{ github.event_name == 'schedule' && 'nightly' || '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+
+      - name: Build an isolated venv with harbor and this checkout
+        # Separate from the project venv on purpose: harbor drags in the
+        # LiteLLM tree (openai<3) that the adapter exists to avoid. --no-config
+        # keeps the project's exclude-newer window from applying here.
+        run: |
+          uv venv .venv-parity
+          uv pip install --no-config --python .venv-parity/bin/python \
+            "harbor==${HARBOR_VERSION}" pytest pytest-asyncio pyyaml -e .
+
+      - name: Warm the cache with one task per hub dataset
+        run: .venv-parity/bin/python scripts/parity_warm_cache.py
+
+      - name: Run the parity test
+        run: .venv-parity/bin/python -m pytest tests/manual/test_harbor_parity.py -q -p no:cacheprovider
