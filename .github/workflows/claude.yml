@@ -198,7 +198,9 @@ jobs:
       # agent-landed branches as the runner (a scheduled agent job that
       # continues an earlier agent branch, say; CI on agent PRs does not
       # count). .github/ and agent instructions stay refused either way.
-      # allow_build_config: true
+      # inspect_harbor: Build runs PR code with a read-only token, and no
+      # other automation here runs agent-landed branches (2026-09-24).
+      allow_build_config: true
 
   # @auto kickoff (distinct from the one-shot `claude` above). An `auto` label or
   # `@auto` mention drives the issue autonomously: the dev agent opens a PR, the
@@ -327,4 +329,6 @@ jobs:
       # agent-landed branches as the runner (a scheduled agent job that
       # continues an earlier agent branch, say; CI on agent PRs does not
       # count). .github/ and agent instructions stay refused either way.
-      # allow_build_config: true
+      # inspect_harbor: Build runs PR code with a read-only token, and no
+      # other automation here runs agent-landed branches (2026-09-24).
+      allow_build_config: true
