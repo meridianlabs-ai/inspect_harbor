@@ -1,0 +1,46 @@
+# Posts the coverage comment Build's py-test job computed for a pull request.
+#
+# py-test runs the PR's code, so it holds only a read-only token (an agent may
+# land build and dependency configuration: the tier-2 opt-in,
+# meridianlabs-ai/agents design/executed-paths-residual.md). The coverage
+# action then writes its comment to the `python-coverage-comment-action`
+# artifact instead of posting it, and this workflow posts it: the action's
+# documented two-workflow split. It checks out nothing and runs nothing from
+# the PR; the comment is the only thing it reads from the run.
+#
+# workflow_run only fires for workflow files on the default branch, so this
+# takes effect once merged to main.
+
+name: Coverage comment
+
+on:
+  workflow_run:
+    workflows: ["Build"]
+    types: [completed]
+
+concurrency:
+  # `github.ref` is the default branch on workflow_run; group by the PR's.
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  comment:
+    # Same-repository PRs only, as before the split: a fork's Build run never
+    # held a token that could post.
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # post the comment, and edit it on later runs
+      actions: read # download the comment artifact from the Build run
+      contents: read
+    steps:
+      # No actions/checkout: nothing from the PR is needed or run here.
+      - name: Post the coverage comment
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_PR_RUN_ID: ${{ github.event.workflow_run.id }}
