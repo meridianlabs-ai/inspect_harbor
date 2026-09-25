@@ -1962,3 +1962,145 @@ services:
     assert healthcheck is not None
     assert healthcheck.test == ["CMD", "pg_isready"]
     assert healthcheck.retries == 7
+
+
+# --- MCP servers and multi-service compose files -------------------------------------------------
+
+
+def _mock_task_with_compose(
+    env: dict[str, str] | None = None, mcp_servers: list[Any] | None = None
+) -> Mock:
+    mock_task = Mock()
+    mock_task.name = "org/task-a"
+    mock_task.paths.environment_dir = Path("/task/environment")
+    env_config = Mock()
+    env_config.env = env or {}
+    env_config.cpus = None
+    env_config.memory_mb = None
+    env_config.gpus = 0
+    env_config.gpu_types = None
+    env_config.healthcheck = None
+    env_config.network_mode = "public"
+    env_config.docker_image = None
+    env_config.mcp_servers = mcp_servers or []
+    mock_task.config.environment = env_config
+    mock_task.config.verifier.env = {}
+    return mock_task
+
+
+SIDECAR_COMPOSE = """
+services:
+  main:
+    depends_on:
+      runtime:
+        condition: service_healthy
+  runtime:
+    build:
+      context: ./runtime-server
+    volumes:
+      - ${HOST_AGENT_LOGS_PATH}:${ENV_AGENT_LOGS_PATH}
+    expose:
+      - "8000"
+"""
+
+
+def test_compose_yaml_completes_main_service_and_shares_logs():
+    """A compose file that only declares depends_on for main gets Harbor's defaults for it."""
+    mock_task = _mock_task_with_compose(env={"FOO": "bar"})
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=SIDECAR_COMPOSE)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    main = result.services["main"]
+    assert main.image == _hb(mock_task)
+    assert isinstance(main.build, ComposeBuild)
+    assert main.build.context == "/task/environment"
+    assert main.command == "tail -f /dev/null"
+    assert main.init is True
+    assert main.x_default is True
+    assert main.environment == {"FOO": "bar"}
+    # the sidecar's log mount became a named volume shared with main
+    runtime = result.services["runtime"]
+    assert runtime.volumes == ["harbor-logs-logs-agent:/logs/agent"]
+    assert main.volumes == ["harbor-logs-logs-agent:/logs/agent"]
+    assert result.volumes == {"harbor-logs-logs-agent": {}}
+    # relative build contexts are resolved against the environment directory
+    assert isinstance(runtime.build, ComposeBuild)
+    assert runtime.build.context == "/task/environment/runtime-server"
+    assert runtime.image == _hb(mock_task, "runtime")
+
+
+def test_mcp_server_specs_route_http_servers_to_their_service():
+    """HTTP servers are bridged from the service that hosts them; stdio ones run in the default service."""
+    from inspect_harbor._harbor.converters import mcp_server_specs
+
+    servers = [
+        {
+            "name": "rt",
+            "transport": "streamable-http",
+            "url": "http://runtime:8000/mcp",
+        },
+        {"name": "ext", "transport": "sse", "url": "http://example.org:9000/sse"},
+        {
+            "name": "local",
+            "transport": "stdio",
+            "command": "python",
+            "args": ["-m", "srv"],
+        },
+    ]
+    mock_task = _mock_task_with_compose(mcp_servers=servers)
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=SIDECAR_COMPOSE)),
+    ):
+        mock_exists.side_effect = lambda: True
+        compose = harbor_to_compose_config(mock_task)
+    specs = mcp_server_specs(mock_task, compose)
+    assert specs[0] == {
+        "name": "rt",
+        "transport": "streamable-http",
+        "sandbox": "runtime",
+        "url": "http://localhost:8000/mcp",
+    }
+    assert specs[1] == {
+        "name": "ext",
+        "transport": "sse",
+        "sandbox": "main",
+        "url": "http://example.org:9000/sse",
+    }
+    assert specs[2] == {
+        "name": "local",
+        "transport": "stdio",
+        "sandbox": "main",
+        "command": "python",
+        "args": ["-m", "srv"],
+    }
+
+
+def test_mcp_server_specs_land_in_sample_metadata():
+    """The per-sample solver reads the MCP server specs from the sample metadata."""
+    mock_task = _mock_task_with_compose(
+        mcp_servers=[
+            {"name": "rt", "transport": "http", "url": "http://runtime:8000/mcp"}
+        ]
+    )
+    mock_task.config.model_dump.return_value = {}
+    mock_task.config.task = None
+    mock_task.instruction = "do it"
+    mock_task.config.verifier.timeout_sec = 10
+    mock_task.config.solution.env = {}
+    mock_task.config.verifier.user = None
+    mock_task.config.agent.user = None
+    mock_task.task_dir = Path("/task")
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=SIDECAR_COMPOSE)),
+    ):
+        mock_exists.side_effect = lambda: True
+        sample = harbor_task_to_sample(mock_task)
+    assert sample.metadata is not None
+    assert sample.metadata["mcp_servers"][0]["transport"] == "streamable-http"
+    assert sample.metadata["mcp_servers"][0]["sandbox"] == "runtime"
