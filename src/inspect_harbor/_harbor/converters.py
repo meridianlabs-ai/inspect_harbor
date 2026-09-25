@@ -23,6 +23,7 @@ from inspect_ai.util._sandbox.compose import (
 )
 
 from inspect_harbor._harbor.models import (
+    MAIN_SERVICE_NAME,
     EnvironmentConfig,
     HealthcheckConfig,
     NetworkMode,
@@ -36,6 +37,20 @@ from inspect_harbor._harbor.sandbox_utils import resolve_env_vars
 from inspect_harbor._harbor.task_dir import HarborTask
 
 logger = logging.getLogger(__name__)
+
+# Named compose volumes that stand in for Harbor's per-trial host log
+# directories. A task's docker-compose.yaml mounts them as
+# ``${HOST_VERIFIER_LOGS_PATH}:${ENV_VERIFIER_LOGS_PATH}`` and so on; Harbor
+# points ``HOST_*`` at directories in the trial's output folder on the Docker
+# host. We have no host side (the sandbox may not even be local Docker), so
+# ``HOST_*`` expands to a project-scoped named volume instead: still shared
+# between the services of one sample, never shared between samples, and torn
+# down with the project.
+_LOG_VOLUMES: dict[str, str] = {
+    "VERIFIER_LOGS": "harbor-verifier-logs",
+    "AGENT_LOGS": "harbor-agent-logs",
+    "ARTIFACTS": "harbor-artifacts",
+}
 
 
 def harbor_to_compose_config(
@@ -88,7 +103,15 @@ def harbor_to_compose_config(
         compose_config = ComposeConfig(**compose_dict)
 
         if compose_config.services:
-            _, default_service = _find_default_service(compose_config)
+            if MAIN_SERVICE_NAME in compose_config.services:
+                _complete_main_service(
+                    compose_config.services[MAIN_SERVICE_NAME], harbor_task
+                )
+            default_name, default_service = _find_default_service(compose_config)
+            if default_name != "default":
+                # Inspect's Docker provider only recognises a service named
+                # ``default`` or one flagged ``x-default``; Harbor's is ``main``.
+                default_service.x_default = True
             if cpus is not None:
                 default_service.cpus = cpus
             if memory_mb is not None:
@@ -111,17 +134,24 @@ def harbor_to_compose_config(
                         harbor_task.name,
                     )
 
-            # Network isolation applies to all services.
+            # Network isolation applies to every service that does not declare
+            # its own networking; Harbor likewise leaves task-authored
+            # ``network_mode``/``networks`` alone.
             if _is_no_network(env_config):
                 for service in compose_config.services.values():
-                    if service.networks:
+                    if service.networks or service.network_mode is not None:
                         continue
                     service.network_mode = "none"
 
-            # Pin a stable `image:` tag so builds are reused across runs.
+            # Pin a stable `image:` tag so builds are reused across runs. The
+            # main service gets Harbor's own ``hb__<hash>`` tag.
             for svc_name, svc in compose_config.services.items():
                 if svc.build is not None and not svc.image:
-                    svc.image = _image_name(harbor_task, svc_name)
+                    svc.image = _image_name(
+                        harbor_task, None if svc_name == MAIN_SERVICE_NAME else svc_name
+                    )
+
+            _declare_log_volumes(compose_config)
 
         return compose_config
     else:
@@ -240,10 +270,81 @@ def _user_to_str(user: str | int | None) -> str | None:
     return str(user) if user is not None else None
 
 
+def _complete_main_service(main: ComposeService, harbor_task: HarborTask) -> None:
+    """Fill in what Harbor's base compose overlay gives the ``main`` service.
+
+    Harbor layers ``docker-compose-build.yaml`` (or ``-prebuilt.yaml`` when
+    ``[environment].docker_image`` is set) under every task's compose file, so
+    a task may declare ``main`` with only ``depends_on`` or ``environment``
+    and still get an image, a build context and a keep-alive command.
+    Compose merges mappings, so a task ``build:`` that omits ``context`` picks
+    up the environment directory too. The task's own values always win.
+
+    The overlay's ``pull_policy: build`` is not reproduced: our image tag is
+    content-addressed, so a stale image cannot hide behind a fixed tag, and
+    Inspect builds compose services itself before ``up``.
+
+    Harbor also writes ``[environment].env`` into ``main`` through an override
+    that comes after the task's compose file, so on a shared key the task.toml
+    value replaces the compose file's.
+    """
+    env_config = harbor_task.config.environment
+    docker_image = env_config.docker_image
+    if main.build is None and not main.image:
+        if isinstance(docker_image, str):
+            main.image = docker_image
+        else:
+            main.build = ComposeBuild(context=str(harbor_task.paths.environment_dir))
+    elif isinstance(main.build, ComposeBuild) and not main.build.context:
+        main.build.context = str(harbor_task.paths.environment_dir)
+    if main.command is None:
+        main.command = ["sh", "-c", "sleep infinity"]
+    if env_config.env:
+        environment = _environment_dict(main.environment)
+        environment.update(resolve_env_vars(env_config.env))
+        main.environment = environment
+
+
+def _environment_dict(
+    environment: list[str] | dict[str, str | None] | None,
+) -> dict[str, str | None]:
+    """A compose ``environment`` block as a mapping, whichever form it used."""
+    if environment is None:
+        return {}
+    if isinstance(environment, dict):
+        return dict(environment)
+    result: dict[str, str | None] = {}
+    for entry in environment:
+        key, sep, value = entry.partition("=")
+        result[key] = value if sep else None
+    return result
+
+
+def _declare_log_volumes(config: ComposeConfig) -> None:
+    """Declare the named log volumes that ``HOST_*`` mounts now refer to."""
+    referenced = {
+        mount.split(":", 1)[0]
+        for service in config.services.values()
+        for mount in service.volumes or []
+        if isinstance(mount, str)
+    } & set(_LOG_VOLUMES.values())
+    if referenced:
+        config.volumes = {
+            **(config.volumes or {}),
+            **{
+                name: {}
+                for name in sorted(referenced)
+                if name not in (config.volumes or {})
+            },
+        }
+
+
 def _find_default_service(config: ComposeConfig) -> tuple[str, ComposeService]:
-    """Find the default service in a compose config.
+    """Find the service the agent runs in.
 
     Priority: ``x-default: true`` > service named "default" or "main" > first.
+    Harbor always runs the agent in ``main``; the other rules keep compose
+    files written for Inspect working.
     """
     for name, svc in config.services.items():
         if svc.x_default:
@@ -341,10 +442,9 @@ def _expand_compose_vars(
 ) -> str:
     """Expand ``${VAR}`` and ``${VAR:-default}`` references in a Harbor docker-compose.yaml.
 
-    Limitation: ``HOST_*`` paths (the host side of volume mounts) are set to
-    the same container-side ``EnvironmentPaths`` values as ``ENV_*``. In
-    Harbor's DinD setup these differ, but we cannot resolve host-side paths
-    here because they depend on the sandbox provider.
+    ``ENV_*_PATH`` are the container-side log directories. ``HOST_*_PATH``,
+    the host side of the same mounts in Harbor, expand to the named volumes
+    in ``_LOG_VOLUMES`` (see there for why).
     """
     if "${" not in raw_yaml:
         return raw_yaml
@@ -355,9 +455,9 @@ def _expand_compose_vars(
     var_map: dict[str, str] = {
         "CONTEXT_DIR": env_dir,
         "MAIN_IMAGE_NAME": _image_name(harbor_task),
-        "HOST_VERIFIER_LOGS_PATH": str(paths.verifier_dir),
-        "HOST_AGENT_LOGS_PATH": str(paths.agent_dir),
-        "HOST_ARTIFACTS_PATH": str(paths.artifacts_dir),
+        "HOST_VERIFIER_LOGS_PATH": _LOG_VOLUMES["VERIFIER_LOGS"],
+        "HOST_AGENT_LOGS_PATH": _LOG_VOLUMES["AGENT_LOGS"],
+        "HOST_ARTIFACTS_PATH": _LOG_VOLUMES["ARTIFACTS"],
         "ENV_VERIFIER_LOGS_PATH": str(paths.verifier_dir),
         "ENV_AGENT_LOGS_PATH": str(paths.agent_dir),
         "ENV_ARTIFACTS_PATH": str(paths.artifacts_dir),

@@ -380,8 +380,12 @@ services:
     assert service.environment == {"CPU_COUNT": "4", "MEM": "2G"}
 
 
-def test_harbor_to_compose_config_compose_yaml_no_internet_overrides_network_mode():
-    """Test that network_mode='no-network' forces network_mode=none even when compose file sets it."""
+def test_harbor_to_compose_config_compose_yaml_no_network_respects_explicit_network_mode():
+    """A service's own ``network_mode`` survives ``no-network``, as in Harbor.
+
+    Harbor only routes services without their own ``network_mode``/``networks``
+    through its egress control; task-authored networking is respected.
+    """
     mock_task = Mock()
     mock_paths = Mock()
     mock_paths.environment_dir = Path("/task/environment")
@@ -413,7 +417,7 @@ services:
         result = harbor_to_compose_config(mock_task)
 
         service = result.services["default"]
-        assert service.network_mode == "none"
+        assert service.network_mode == "bridge"
 
 
 def test_harbor_to_compose_config_compose_yaml_preserves_custom_network_mode():
@@ -1962,3 +1966,197 @@ services:
     assert healthcheck is not None
     assert healthcheck.test == ["CMD", "pg_isready"]
     assert healthcheck.retries == 7
+
+
+def _write_compose_task(
+    tmp_path: Path,
+    compose_yaml: str,
+    docker_image: str | None = None,
+    task_env: dict[str, str] | None = None,
+) -> Mock:
+    """A task whose environment dir holds ``compose_yaml`` and a Dockerfile."""
+    env_dir = tmp_path / "environment"
+    env_dir.mkdir()
+    (env_dir / "docker-compose.yaml").write_text(compose_yaml)
+    (env_dir / "Dockerfile").write_text("FROM python:3.12\n")
+    mock_task = Mock()
+    mock_task.name = "compose-task"
+    mock_task.paths = Mock()
+    mock_task.paths.environment_dir = env_dir
+    mock_task.config.environment = Mock()
+    mock_task.config.environment.cpus = None
+    mock_task.config.environment.memory_mb = None
+    mock_task.config.environment.gpus = 0
+    mock_task.config.environment.gpu_types = None
+    mock_task.config.environment.healthcheck = None
+    mock_task.config.environment.network_mode = "public"
+    mock_task.config.environment.docker_image = docker_image
+    mock_task.config.environment.env = task_env or {}
+    mock_task.config.verifier.env = {}
+    return mock_task
+
+
+@pytest.mark.parametrize(
+    "main_yaml,docker_image,expect_build_context,expect_image,expect_command",
+    [
+        # Overlay-style task: main declares only what it adds.
+        (
+            "    depends_on: [db]\n",
+            None,
+            True,
+            "hb",
+            ["sh", "-c", "sleep infinity"],
+        ),
+        # Same with a prebuilt image: Harbor's prebuilt overlay applies.
+        (
+            "    depends_on: [db]\n",
+            "ghcr.io/acme/env:1",
+            False,
+            "ghcr.io/acme/env:1",
+            ["sh", "-c", "sleep infinity"],
+        ),
+        # A build that names only the Dockerfile picks up the context.
+        (
+            "    build:\n      dockerfile: Dockerfile.main\n",
+            None,
+            True,
+            "hb",
+            ["sh", "-c", "sleep infinity"],
+        ),
+        # Fully declared main is left as written.
+        (
+            "    image: python:3.11\n    command: tail -f /dev/null\n",
+            None,
+            False,
+            "python:3.11",
+            "tail -f /dev/null",
+        ),
+    ],
+)
+def test_compose_yaml_main_completed_like_harbor_overlay(
+    tmp_path: Path,
+    main_yaml: str,
+    docker_image: str | None,
+    expect_build_context: bool,
+    expect_image: str,
+    expect_command: list[str] | str,
+):
+    """``main`` gets Harbor's base overlay defaults where the task omits them.
+
+    Harbor layers ``docker-compose-build.yaml`` (or ``-prebuilt.yaml``) under
+    every task compose file, so ``main`` may declare only ``depends_on`` or
+    ``environment`` and still get an image or build context and the
+    ``sleep infinity`` keep-alive. Task values always win.
+    """
+    compose_yaml = f"services:\n  main:\n{main_yaml}  db:\n    image: postgres:16\n"
+    mock_task = _write_compose_task(tmp_path, compose_yaml, docker_image=docker_image)
+
+    main = harbor_to_compose_config(mock_task).services["main"]
+
+    if expect_build_context:
+        assert isinstance(main.build, ComposeBuild)
+        assert main.build.context == str(tmp_path / "environment")
+    else:
+        assert main.build is None
+    assert main.image == (_hb(mock_task) if expect_image == "hb" else expect_image)
+    assert main.command == expect_command
+    if "dockerfile" in main_yaml:
+        assert isinstance(main.build, ComposeBuild)
+        assert main.build.dockerfile == "Dockerfile.main"
+
+
+@pytest.mark.parametrize(
+    "environment_yaml",
+    [
+        "",
+        "    environment:\n      - FOO=from-compose\n      - BARE\n",
+        "    environment:\n      FOO: from-compose\n      BARE:\n",
+    ],
+    ids=["absent", "list", "mapping"],
+)
+def test_compose_yaml_main_receives_task_env(tmp_path: Path, environment_yaml: str):
+    """``[environment].env`` reaches ``main`` and wins over the compose file.
+
+    Harbor writes the task env as an override that comes after the task's
+    compose file, so a shared key takes the task.toml value.
+    """
+    compose_yaml = f"services:\n  main:\n    image: python:3.11\n{environment_yaml}"
+    mock_task = _write_compose_task(
+        tmp_path, compose_yaml, task_env={"FOO": "from-toml", "API_KEY": "k"}
+    )
+
+    main = harbor_to_compose_config(mock_task).services["main"]
+
+    expected: dict[str, str | None] = {"FOO": "from-toml", "API_KEY": "k"}
+    if environment_yaml:
+        expected["BARE"] = None
+    assert main.environment == expected
+
+
+@pytest.mark.parametrize(
+    "services_yaml,expected_default",
+    [
+        ("  main:\n    image: a\n  helper:\n    image: b\n", "main"),
+        ("  helper:\n    image: b\n  main:\n    image: a\n", "main"),
+        ("  default:\n    image: a\n  helper:\n    image: b\n", None),
+        ("  app:\n    image: a\n  db:\n    image: b\n", "app"),
+    ],
+    ids=["main-first", "main-second", "named-default", "first-service"],
+)
+def test_compose_yaml_default_service_flagged_for_inspect(
+    tmp_path: Path, services_yaml: str, expected_default: str | None
+):
+    """The agent's service is marked ``x-default`` unless it is named ``default``.
+
+    Inspect's Docker provider fails a project with neither, and Harbor's
+    convention is ``main``.
+    """
+    mock_task = _write_compose_task(tmp_path, f"services:\n{services_yaml}")
+
+    services = harbor_to_compose_config(mock_task).services
+
+    flagged = [name for name, svc in services.items() if svc.x_default]
+    assert flagged == ([expected_default] if expected_default else [])
+
+
+def test_compose_yaml_host_log_mounts_become_named_volumes(tmp_path: Path):
+    """``HOST_*_PATH`` mounts turn into project-scoped named volumes.
+
+    Harbor binds per-trial host directories there. We may not be on the Docker
+    host at all, so the mounts become named volumes: shared between the
+    services of one sample, private to it, and removed with the project.
+    Volumes the task declares itself are kept.
+    """
+    compose_yaml = """\
+services:
+  verifier:
+    image: verifier:1
+    volumes:
+      - ${HOST_VERIFIER_LOGS_PATH}:${ENV_VERIFIER_LOGS_PATH}
+  main:
+    image: python:3.11
+    volumes:
+      - ${HOST_VERIFIER_LOGS_PATH}:${ENV_VERIFIER_LOGS_PATH}
+      - ${HOST_AGENT_LOGS_PATH}:${ENV_AGENT_LOGS_PATH}
+      - scratch:/scratch
+volumes:
+  scratch:
+"""
+    mock_task = _write_compose_task(tmp_path, compose_yaml)
+
+    result = harbor_to_compose_config(mock_task)
+
+    assert result.services["main"].volumes == [
+        "harbor-verifier-logs:/logs/verifier",
+        "harbor-agent-logs:/logs/agent",
+        "scratch:/scratch",
+    ]
+    assert result.services["verifier"].volumes == [
+        "harbor-verifier-logs:/logs/verifier"
+    ]
+    assert result.volumes is not None
+    assert set(result.volumes) == {
+        "scratch",
+        "harbor-verifier-logs",
+        "harbor-agent-logs",
+    }

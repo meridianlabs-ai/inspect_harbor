@@ -38,6 +38,8 @@ def _make_harbor_task_mock(
     m.config.environment.mcp_servers = []
     m.config.environment.skills_dir = None
     m.config.environment.network_mode = network_mode
+    m.config.agent.network_mode = None
+    m.config.verifier.network_mode = None
     return m
 
 
@@ -267,6 +269,48 @@ def test_build_harbor_tasks_warns_on_allowlist_network_mode(
 
         assert len(result) == 1
         assert re.search(r"allowlist.*\['allowlist-task'\]", caplog.text)
+
+
+@pytest.mark.parametrize(
+    "agent_mode,verifier_mode,expect_warning",
+    [
+        ("no-network", None, True),
+        (None, "allowlist", True),
+        ("public", None, False),
+        (None, None, False),
+    ],
+    ids=["agent-differs", "verifier-differs", "same-as-environment", "unset"],
+)
+def test_build_harbor_tasks_warns_on_per_phase_network_mode(
+    caplog: pytest.LogCaptureFixture,
+    agent_mode: str | None,
+    verifier_mode: str | None,
+    expect_warning: bool,
+):
+    """A per-phase network policy that differs from the environment's is degraded.
+
+    Harbor switches egress policy between the agent and verifier phases;
+    inspect_ai cannot change a running sandbox's networking, so the
+    ``[environment]`` mode applies to both and the loader says so.
+    """
+    with (
+        patch("inspect_harbor._harbor.task._load_local_path") as mock_load_local,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        task_path = Path("/some/phased/task")
+        mock_load_local.return_value = [task_path]
+        task_mock = _make_harbor_task_mock(name="phased-task", task_dir=task_path)
+        task_mock.config.agent.network_mode = agent_mode
+        task_mock.config.verifier.network_mode = verifier_mode
+        mock_harbor_task.return_value = task_mock
+
+        with caplog.at_level("WARNING", logger="inspect_harbor._harbor.task"):
+            result = load_harbor_tasks(path="/some/phased/task")
+
+        assert len(result) == 1
+        assert bool(re.search(r"network_mode.*\['phased-task'\]", caplog.text)) is (
+            expect_warning
+        )
 
 
 def test_build_harbor_tasks_does_not_warn_on_healthcheck(
