@@ -954,10 +954,10 @@ def biopharma_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. The company date is 8 February 2026. An agent takes an employee's seat and writes the document that seat is responsible for.
+    r"""Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. The company date is 27 September 2026. An agent takes an employee's seat and writes the document that seat is responsible for.
 
     Slug: biopharma-bench/biopharma-bench
-    Latest digest: sha256:31697cbde6b893f31bc6b881e064d8cd281e814fa3eaf9d869f9e5828bfa0936
+    Latest digest: sha256:8975dab9154ee4fdc053650f6ae498ade4e80fcd1f669c4ab2d048bb990faf7c
     """
     return _harbor_base(
         package_name="biopharma-bench/biopharma-bench",
@@ -1674,6 +1674,68 @@ def deveval(
     """
     return _harbor_base(
         package_name="deveval/deveval",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def dissei_financial_judgment(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Dissei Financial Judgment explores financial reasoning and analysis for institutional investment and credit decisions.
+
+    Slug: dissei/financial-judgment
+    Latest digest: sha256:ac05087cf557d3ac67c2af3509b8f3b4ff97c026468bcd9433987ada0ff13246
+    """
+    return _harbor_base(
+        package_name="dissei/financial-judgment",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def diyakejriwal_finsearchcomp_t2_global(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""FinSearchComp Global T2 Simple_Historical_Lookup (119 tasks) @ 55b6393; you_client UA fix for api.you.com Cloudflare 1010
+
+    Slug: diyakejriwal/finsearchcomp-t2-global
+    Latest digest: sha256:0c0d6208cd60ce6dfdab796ba30b88c7760267a3377252c33f150d7a028c399a
+    """
+    return _harbor_base(
+        package_name="diyakejriwal/finsearchcomp-t2-global",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -4855,6 +4917,37 @@ def vibrantlabsai_itsm_bench(
 
 
 @task
+def viratzzs_petct_pilot(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Private two-task PET/CT benchmark pilot; separately scored lesion mapping and result repair tasks.
+
+    Slug: viratzzs/petct-pilot
+    Latest digest: sha256:57f739aeb396cf68e734010071986a476240903d4d47681d409d234ab209e800
+    """
+    return _harbor_base(
+        package_name="viratzzs/petct-pilot",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def vmax_tasks(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -4997,6 +5090,37 @@ def yanagiorigami_frontier_cs(
     """
     return _harbor_base(
         package_name="yanagiorigami/frontier-cs",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def ykhli_tetrisbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""TetrisBench strategy track: submit one JS placement-scoring function; mean raw game score over 20 fixed public seeds x 500 pieces, separately verified.
+
+    Slug: ykhli/tetrisbench
+    Latest digest: sha256:4fc16a6a374b250e4506f576cac2c84ea0902773516efff55a01634127839a9c
+    """
+    return _harbor_base(
+        package_name="ykhli/tetrisbench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

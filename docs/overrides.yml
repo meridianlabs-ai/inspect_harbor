@@ -461,6 +461,12 @@ deveval/deveval:
   function_name: deveval
   title: DevEval
 
+dissei/financial-judgment:
+  categories: []
+
+diyakejriwal/finsearchcomp-t2-global:
+  categories: []
+
 evoeval/evoeval:
   categories:
   - Coding
@@ -1293,6 +1299,9 @@ vibrantlabsai/itsm-bench:
   repo: https://github.com/vibrantlabsai/Enterprise-Worlds
   title: ITSMBench (Enterprise-Worlds)
 
+viratzzs/petct-pilot:
+  categories: []
+
 vmax/vmax-tasks:
   categories:
   - Coding
@@ -1330,6 +1339,9 @@ yanagiorigami/frontier-cs:
   arxiv: https://arxiv.org/abs/2512.15699
   repo: https://github.com/FrontierCS/Frontier-CS
   title: Frontier-CS
+
+ykhli/tetrisbench:
+  categories: []
 
 zenml/zenml-bench:
   categories:
