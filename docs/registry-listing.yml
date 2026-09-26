@@ -294,7 +294,7 @@
   - Cybersecurity
 - title: biopharma-bench/biopharma-bench
   path: registry/biopharma_bench.html
-  desc: Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. The company date is 8 February 2026. An agent takes an employee's seat and writes the document that seat is responsible for.
+  desc: Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. The company date is 27 September 2026. An agent takes an employee's seat and writes the document that seat is responsible for.
   desc_trunc: Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. T…
   task_function: biopharma_bench
   samples: 10
@@ -1551,6 +1551,16 @@
   desc_trunc: 'Frontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial sco…'
   task_function: yanagiorigami_frontier_cs
   samples: 172
+  version: latest
+  categories:
+  - Coding
+  - Reasoning
+- title: ykhli/tetrisbench
+  path: registry/ykhli_tetrisbench.html
+  desc: 'TetrisBench strategy track: submit one JS placement-scoring function; mean raw game score over 20 fixed public seeds x 500 pieces, separately verified.'
+  desc_trunc: 'TetrisBench strategy track: submit one JS placement-scoring function; mean raw game score over 20 f…'
+  task_function: ykhli_tetrisbench
+  samples: 1
   version: latest
   categories:
   - Coding

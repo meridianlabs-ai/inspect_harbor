@@ -1331,6 +1331,12 @@ yanagiorigami/frontier-cs:
   repo: https://github.com/FrontierCS/Frontier-CS
   title: Frontier-CS
 
+ykhli/tetrisbench:
+  categories:
+  - Coding
+  - Reasoning
+  title: TetrisBench
+
 zenml/zenml-bench:
   categories:
   - Coding
