@@ -218,3 +218,21 @@
 # in inspect_harbor (compose build.args rejected by ComposeBuild). Revisit if
 # a real CADIR benchmark with confirmed provenance is published.
 - au12321ua/*
+# Non-runnable question previews, not an evaluable benchmark. Dissei is a
+# real finance-data company, but every task.toml sets runnable = false and
+# publication_kind = "question_preview", and each task ships only
+# instruction.md + task.toml (no tests/, no environment). The instructions
+# say "The public package is not executable: case evidence, execution tools,
+# rubrics and reference answers are provided through approved evaluation
+# access", and inspect_harbor fails to load them (no tests/test.sh). Exact
+# slug so a runnable Dissei release would still surface.
+- dissei/financial-judgment
+# Individual's (User, 0 public repos) patched working slice of ByteDance's
+# FinSearchComp: only the Global T2 Simple_Historical_Lookup subset, pinned
+# to a commit, with a desc that reads like a dev note ("@ 55b6393;
+# you_client UA fix for api.you.com Cloudflare 1010"). Same class as
+# withmartian/clojure-swerebench-v2-validated-51.
+- diyakejriwal/finsearchcomp-t2-global
+# Individual's (User) self-described "Private two-task PET/CT benchmark
+# pilot"; none of the account's repos is a PET/CT benchmark.
+- viratzzs/petct-pilot

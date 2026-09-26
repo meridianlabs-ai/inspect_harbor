@@ -1687,68 +1687,6 @@ def deveval(
 
 
 @task
-def dissei_financial_judgment(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Dissei Financial Judgment explores financial reasoning and analysis for institutional investment and credit decisions.
-
-    Slug: dissei/financial-judgment
-    Latest digest: sha256:ac05087cf557d3ac67c2af3509b8f3b4ff97c026468bcd9433987ada0ff13246
-    """
-    return _harbor_base(
-        package_name="dissei/financial-judgment",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def diyakejriwal_finsearchcomp_t2_global(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""FinSearchComp Global T2 Simple_Historical_Lookup (119 tasks) @ 55b6393; you_client UA fix for api.you.com Cloudflare 1010
-
-    Slug: diyakejriwal/finsearchcomp-t2-global
-    Latest digest: sha256:0c0d6208cd60ce6dfdab796ba30b88c7760267a3377252c33f150d7a028c399a
-    """
-    return _harbor_base(
-        package_name="diyakejriwal/finsearchcomp-t2-global",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def evoeval(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3814,8 +3752,8 @@ def rexbench(
     Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors.
     Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.
 
-    Slug: rexbench/rexbench
-    Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
+        Slug: rexbench/rexbench
+        Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
     """
     return _harbor_base(
         package_name="rexbench/rexbench",
@@ -4904,37 +4842,6 @@ def vibrantlabsai_itsm_bench(
     """
     return _harbor_base(
         package_name="vibrantlabsai/itsm-bench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def viratzzs_petct_pilot(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Private two-task PET/CT benchmark pilot; separately scored lesion mapping and result repair tasks.
-
-    Slug: viratzzs/petct-pilot
-    Latest digest: sha256:57f739aeb396cf68e734010071986a476240903d4d47681d409d234ab209e800
-    """
-    return _harbor_base(
-        package_name="viratzzs/petct-pilot",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
