@@ -526,13 +526,6 @@
   version: latest
   categories:
   - Coding
-- title: dissei/financial-judgment-full
-  path: registry/dissei_financial_judgment_full.html
-  desc: Seven runnable point-in-time financial judgment tasks with evidence, a separate verifier and historical evaluation records.
-  desc_trunc: Seven runnable point-in-time financial judgment tasks with evidence, a separate verifier and histor…
-  task_function: dissei_financial_judgment_full
-  samples: 7
-  version: latest
 - title: evoeval/evoeval
   path: registry/evoeval.html
   desc: 'EvoEval: evolving suite that mutates HumanEval problems along several axes (difficulty, creative, subtle, tool-use) for a contamination-resistant view of LLM coding ability.'

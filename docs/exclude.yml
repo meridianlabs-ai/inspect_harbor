@@ -227,3 +227,11 @@
 # Individual's (User) two-task pilot, self-described as a "Private two-task
 # PET/CT benchmark pilot"; none of the user's repos is a PET/CT benchmark.
 - viratzzs/petct-pilot
+# Dissei's runnable financial-judgment release (a real finance company). It
+# loads but can't be scored yet: the verifier runs in its own image
+# (environment_mode = "separate", grader in tests/Dockerfile), which needs
+# #187 (same gap as Terminal-Bench 4.0 in #188). Its LLM judge also needs
+# DISSEI_JUDGE_* verifier env that users can't pass today. Remove this entry
+# once both are supported. Exact slug; the earlier dissei/financial-judgment
+# question previews aren't runnable at all.
+- dissei/financial-judgment-full

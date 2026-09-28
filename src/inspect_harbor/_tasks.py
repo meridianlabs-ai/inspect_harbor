@@ -1687,37 +1687,6 @@ def deveval(
 
 
 @task
-def dissei_financial_judgment_full(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Seven runnable point-in-time financial judgment tasks with evidence, a separate verifier and historical evaluation records.
-
-    Slug: dissei/financial-judgment-full
-    Latest digest: sha256:ea48808d7cd7b44b8ee844d9c52a7446b7fa1405e21e5a6e01b721fe76b6c192
-    """
-    return _harbor_base(
-        package_name="dissei/financial-judgment-full",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def evoeval(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,

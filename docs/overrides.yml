@@ -461,9 +461,6 @@ deveval/deveval:
   function_name: deveval
   title: DevEval
 
-dissei/financial-judgment-full:
-  categories: []
-
 evoeval/evoeval:
   categories:
   - Coding
