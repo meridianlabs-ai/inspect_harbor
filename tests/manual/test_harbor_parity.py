@@ -1,7 +1,8 @@
 """Opt-in parity check between our task loader and the ``harbor`` package.
 
-Last verified against harbor 0.23.0 (task.toml schema 1.4). Bump the pin
-below deliberately when adopting a newer Harbor release, and re-run.
+The ``Harbor parity`` workflow runs this nightly against the latest harbor
+release and records the version it compared in the job summary. The schema
+we implement is ``SUPPORTED_SCHEMA_VERSION`` in ``models.py``.
 
 Excluded by default (``--ignore=tests/manual``). It needs an environment
 with both ``inspect_harbor`` and ``harbor`` installed, which our own venv
@@ -10,7 +11,7 @@ deliberately does not have (install from outside the repo so the project's
 
     uv venv /tmp/venv-harbor
     cd /tmp && uv pip install --python /tmp/venv-harbor/bin/python \
-        "harbor==0.23.0" pytest pytest-asyncio -e <path to this checkout>
+        harbor pytest pytest-asyncio -e <path to this checkout>
     export INSPECT_HARBOR_CACHE_DIR=~/.cache/inspect_harbor/tasks
     /tmp/venv-harbor/bin/pytest tests/manual/test_harbor_parity.py -q
 
