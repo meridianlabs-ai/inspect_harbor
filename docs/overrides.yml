@@ -464,9 +464,6 @@ deveval/deveval:
 dissei/financial-judgment-full:
   categories: []
 
-diyakejriwal/finsearchcomp-t2-global:
-  categories: []
-
 evoeval/evoeval:
   categories:
   - Coding
@@ -1299,9 +1296,6 @@ vibrantlabsai/itsm-bench:
   repo: https://github.com/vibrantlabsai/Enterprise-Worlds
   title: ITSMBench (Enterprise-Worlds)
 
-viratzzs/petct-pilot:
-  categories: []
-
 vmax/vmax-tasks:
   categories:
   - Coding
@@ -1341,7 +1335,10 @@ yanagiorigami/frontier-cs:
   title: Frontier-CS
 
 ykhli/tetrisbench:
-  categories: []
+  categories:
+  - Coding
+  - Reasoning
+  title: TetrisBench
 
 zenml/zenml-bench:
   categories:

@@ -218,3 +218,12 @@
 # in inspect_harbor (compose build.args rejected by ComposeBuild). Revisit if
 # a real CADIR benchmark with confirmed provenance is published.
 - au12321ua/*
+# Individual's (User, 0 public repos) patched working slice of ByteDance's
+# FinSearchComp: only the Global T2 Simple_Historical_Lookup subset (119
+# tasks), pinned to a commit, with a desc that reads like a dev note
+# ("@ 55b6393; you_client UA fix for api.you.com Cloudflare 1010"). Same
+# class as withmartian/clojure-swerebench-v2-validated-51. Exact slug.
+- diyakejriwal/finsearchcomp-t2-global
+# Individual's (User) two-task pilot, self-described as a "Private two-task
+# PET/CT benchmark pilot"; none of the user's repos is a PET/CT benchmark.
+- viratzzs/petct-pilot
