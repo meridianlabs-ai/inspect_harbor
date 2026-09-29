@@ -9,7 +9,9 @@ name: Harbor parity
 
 on:
   schedule:
-    # Nightly, half an hour after the registry update so both surface together.
+    # Nightly, half an hour after update-harbor-tasks. The dataset list comes
+    # from docs/registry-listing.yml on the checked-out ref, so a dataset
+    # delisted from the hub fails here until the registry PR is merged.
     - cron: '30 0 * * *'
   workflow_dispatch:
   pull_request:
@@ -17,7 +19,16 @@ on:
       - 'src/inspect_harbor/_harbor/**'
       - 'tests/manual/test_harbor_parity.py'
       - 'scripts/parity_warm_cache.py'
+      - 'tests/fixtures/simple_task/**'
+      - 'pyproject.toml'
       - '.github/workflows/harbor-parity.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: harbor-parity-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   INSPECT_HARBOR_NO_TELEMETRY: "1"
@@ -25,7 +36,7 @@ env:
 
 jobs:
   parity:
-    name: Compare loader with harbor ${{ github.event_name == 'schedule' && 'nightly' || '' }}
+    name: Compare loader with harbor${{ github.event_name == 'schedule' && ' (nightly)' || '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -55,7 +66,7 @@ jobs:
         run: |
           version=$(.venv-parity/bin/python -c "from importlib.metadata import version; print(version('harbor'))")
           echo "harbor ${version}"
-          echo "Compared against \`harbor ${version}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "Harbor under test: \`harbor ${version}\`" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Warm the cache with one task per hub dataset
         run: .venv-parity/bin/python scripts/parity_warm_cache.py
@@ -63,5 +74,18 @@ jobs:
       - name: Run the parity test
         # The test imports Harbor internals with importorskip. If a release
         # moves one, the module skips and pytest exits 5 (no tests collected),
-        # which fails this step instead of passing silently.
-        run: .venv-parity/bin/python -m pytest tests/manual/test_harbor_parity.py -q -p no:cacheprovider
+        # which fails this step instead of passing silently; -rs names the
+        # module that went missing.
+        run: |
+          set -o pipefail
+          .venv-parity/bin/python -m pytest tests/manual/test_harbor_parity.py \
+            -q -rs -p no:cacheprovider | tee parity-test.log
+
+      - name: Report the outcome
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "Parity test: $(tail -n 1 parity-test.log)" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "**Parity was not verified**: a step failed. See the job log." >> "$GITHUB_STEP_SUMMARY"
+          fi

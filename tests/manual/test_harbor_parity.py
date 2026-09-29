@@ -44,16 +44,27 @@ pytestmark = pytest.mark.slow
 FIXTURE = Path(__file__).resolve().parent.parent / "fixtures" / "simple_task"
 
 
-def _task_dirs() -> list[Path]:
+def _cached_task_dirs() -> list[Path]:
     hub = cache_root() / "hub"
-    cached = sorted(
+    return sorted(
         p for p in hub.glob("*/*/*") if p.is_dir() and (p / "task.toml").exists()
     )
-    return [FIXTURE, *cached]
+
+
+def _task_dirs() -> list[Path]:
+    return [FIXTURE, *_cached_task_dirs()]
 
 
 def _enum_value(value: object) -> object:
     return getattr(value, "value", value)
+
+
+def test_cache_is_warm() -> None:
+    """Refuse to pass on the fixture alone: an empty cache means no comparison."""
+    assert _cached_task_dirs(), (
+        f"no hub tasks under {cache_root() / 'hub'}; warm the cache first "
+        "(scripts/parity_warm_cache.py or load a few datasets)"
+    )
 
 
 @pytest.mark.parametrize("task_dir", _task_dirs(), ids=lambda p: p.name[:40])
