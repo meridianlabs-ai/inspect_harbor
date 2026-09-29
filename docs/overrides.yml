@@ -1124,7 +1124,12 @@ strongreject/strongreject:
   title: StrongREJECT
 
 sureshraghu/smdd-bench:
-  categories: []
+  categories:
+  - Chemistry
+  - Biology
+  title: SMDD-Bench
+  repo: https://github.com/t7rs/SMDD-Bench
+  arxiv: https://arxiv.org/abs/2605.21740
 
 swe-bench/swe-bench-verified:
   categories:

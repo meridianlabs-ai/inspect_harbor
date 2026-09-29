@@ -1322,6 +1322,9 @@
   task_function: sureshraghu_smdd_bench
   samples: 502
   version: latest
+  categories:
+  - Chemistry
+  - Biology
 - title: swe-bench/swe-bench-verified
   path: registry/swe_bench_verified.html
   desc: 'SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs confirmed each real GitHub issue is solvable given the available repository context.'
