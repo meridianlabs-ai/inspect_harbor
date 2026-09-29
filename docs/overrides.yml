@@ -1123,6 +1123,9 @@ strongreject/strongreject:
   function_name: strongreject
   title: StrongREJECT
 
+sureshraghu/smdd-bench:
+  categories: []
+
 swe-bench/swe-bench-verified:
   categories:
   - Coding

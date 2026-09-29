@@ -3752,8 +3752,8 @@ def rexbench(
     Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors.
     Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.
 
-        Slug: rexbench/rexbench
-        Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
+    Slug: rexbench/rexbench
+    Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
     """
     return _harbor_base(
         package_name="rexbench/rexbench",
@@ -3846,7 +3846,7 @@ def scale_ai_hil_bench(
     r"""HiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.
 
     Slug: scale-ai/hil-bench
-    Latest digest: sha256:a308c71edf51736003412b8353cfb25f0cdfd58065535e18e2e8937fe6f7ac42
+    Latest digest: sha256:0165ead0b08babf7be44ab9d410af7eb950f86a6637f406d5554b7d5e11c4726
     """
     return _harbor_base(
         package_name="scale-ai/hil-bench",
@@ -4222,6 +4222,37 @@ def strongreject(
     """
     return _harbor_base(
         package_name="strongreject/strongreject",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def sureshraghu_smdd_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""SMDD-Bench: five small-molecule design task families with an agent harness, GPU oracle and setup guide.
+
+    Slug: sureshraghu/smdd-bench
+    Latest digest: sha256:624b36d0ee1b389fe82f1150bea7db09958b2b314663fae839baae1b5f3ac081
+    """
+    return _harbor_base(
+        package_name="sureshraghu/smdd-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

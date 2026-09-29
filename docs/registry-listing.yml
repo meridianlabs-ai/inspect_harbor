@@ -1315,6 +1315,13 @@
   version: latest
   categories:
   - Safeguards
+- title: sureshraghu/smdd-bench
+  path: registry/sureshraghu_smdd_bench.html
+  desc: 'SMDD-Bench: five small-molecule design task families with an agent harness, GPU oracle and setup guide.'
+  desc_trunc: 'SMDD-Bench: five small-molecule design task families with an agent harness, GPU oracle and setup gu…'
+  task_function: sureshraghu_smdd_bench
+  samples: 502
+  version: latest
 - title: swe-bench/swe-bench-verified
   path: registry/swe_bench_verified.html
   desc: 'SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs confirmed each real GitHub issue is solvable given the available repository context.'
