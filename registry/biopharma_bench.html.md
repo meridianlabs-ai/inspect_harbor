@@ -25,7 +25,7 @@ eval(biopharma_bench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [biopharma-bench/biopharma-bench](https://hub.harborframework.com/datasets/biopharma-bench/biopharma-bench/latest) |
 | Inspect task | `biopharma_bench` |
-| Latest digest | sha256:a97783eed4605f4ddd9c83711930fa092a0ec5d6786966aacd34b62523486d9c |
+| Latest digest | sha256:8975dab9154ee4fdc053650f6ae498ade4e80fcd1f669c4ab2d048bb990faf7c |
 | Samples | 10 |
 | Source | <https://huggingface.co/datasets/raycasterai/biopharma-bench> |
 

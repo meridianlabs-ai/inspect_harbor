@@ -25,7 +25,7 @@ eval(mercor_apex_agents_1_1(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [mercor/apex-agents-1-1](https://hub.harborframework.com/datasets/mercor/apex-agents-1-1/latest) |
 | Inspect task | `mercor_apex_agents_1_1` |
-| Latest digest | sha256:fb4139368bf0fb2bd233745273d11d02e70229d18b611d0d854d651d539e79fa |
+| Latest digest | sha256:45f97008d55c5b1f55ad6aff346b1e0308dd1d89265b3a82d3d1f1f66197ff12 |
 | Samples | 240 |
 | Paper | [arxiv](https://arxiv.org/abs/2601.14242) |
 | Source | <https://github.com/Mercor-Intelligence/apex_loop_truncated_tools_agent> |

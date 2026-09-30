@@ -74,3 +74,9 @@ ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY}"
 ```
 
 The verifier script (`tests/test.sh` or `test.bat`) uses these environment variables to call the LLM. Make sure to set the appropriate API key (e.g. `ANTHROPIC_API_KEY`) when running tasks with LLM judges.
+
+## Verifier Errors
+
+`harbor_scorer` reads the reward from `/logs/verifier/reward.json` or `reward.txt` after `tests/test.sh` finishes. If neither file exists, the scorer raises `RewardFileNotFoundError` instead of scoring the sample as 0, matching Harbor, which records such a trial as an error rather than a reward. Some verifiers exit early without writing a reward when the agent did not produce the expected output, for example because it ran out of tokens before creating the file the tests check.
+
+Inspect fails the whole eval on the first sample error by default, whereas Harbor continues the job. To get Harbor’s behaviour, pass `--no-fail-on-error` (or a threshold such as `--fail-on-error 0.1`) so errored samples are logged and excluded from accuracy while the remaining samples run. See the [Inspect docs on errors and limits](https://inspect.aisi.org.uk/errors-and-limits.html) for the full set of options.

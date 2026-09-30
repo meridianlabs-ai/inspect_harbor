@@ -341,6 +341,12 @@ ANTHROPIC_API_KEY = "${ANTHROPIC_API_KEY}"
 
 The verifier script (`tests/test.sh` or `test.bat`) uses these environment variables to call the LLM. Make sure to set the appropriate API key (e.g. `ANTHROPIC_API_KEY`) when running tasks with LLM judges.
 
+## Verifier Errors
+
+`harbor_scorer` reads the reward from `/logs/verifier/reward.json` or `reward.txt` after `tests/test.sh` finishes. If neither file exists, the scorer raises `RewardFileNotFoundError` instead of scoring the sample as 0, matching Harbor, which records such a trial as an error rather than a reward. Some verifiers exit early without writing a reward when the agent did not produce the expected output, for example because it ran out of tokens before creating the file the tests check.
+
+Inspect fails the whole eval on the first sample error by default, whereas Harbor continues the job. To get Harbor’s behaviour, pass `--no-fail-on-error` (or a threshold such as `--fail-on-error 0.1`) so errored samples are logged and excluded from accuracy while the remaining samples run. See the [Inspect docs on errors and limits](https://inspect.aisi.org.uk/errors-and-limits.html) for the full set of options.
+
 
 # Advanced – Inspect Harbor
 
@@ -352,7 +358,7 @@ For advanced use cases, you can use the generic `harbor()` interface directly. T
 
 Harbor task loader for Inspect AI.
 
-[Source](https://github.com/meridianlabs-ai/inspect_harbor/blob/8d0cd481a65b41f11d336791443df8c03af7f4f9/src/inspect_harbor/_harbor/task.py#L31)
+[Source](https://github.com/meridianlabs-ai/inspect_harbor/blob/4ffe3034a4eba505902d9c40bc021e59bd40e78b/src/inspect_harbor/_harbor/task.py#L31)
 
 ``` python
 @task
@@ -626,6 +632,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [featurebench/featurebench-lite](registry/featurebench_lite.html.md) | featurebench_lite | Lightweight subset of FeatureBench for cheaper evaluation while preserving model rankings. | 30 |
 | [featurebench/featurebench-lite-modal](registry/featurebench_lite_modal.html.md) | featurebench_lite_modal | FeatureBench-Lite executed on Modal’s cloud sandbox runner. | 30 |
 | [featurebench/featurebench-modal](registry/featurebench_modal.html.md) | featurebench_modal | FeatureBench’s full task suite executed on Modal’s cloud sandbox runner. | 200 |
+| [frontier-harness-eval/frontier-harness-eval](registry/frontier_harness_eval.html.md) | frontier_harness_eval | FrontierHarness Eval v1.1.0: 17 Terminal Bench 4 tasks and 45 Terminal-Bench 2.1 tasks. TB4 quarter… | 62 |
 | [futurehouse/bixbench](registry/futurehouse_bixbench.html.md) | futurehouse_bixbench | BixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM age… | 205 |
 | [futurehouse/bixbench-cli](registry/futurehouse_bixbench_cli.html.md) | futurehouse_bixbench_cli | CLI variant of BixBench: agents solve the same bioinformatics analysis tasks via a command-line / s… | 205 |
 | [futurehouse/labbench](registry/futurehouse_labbench.html.md) | futurehouse_labbench | LAB-Bench (Language Agent Biology Benchmark): questions across 8 categories (literature QA, databas… | 181 |
@@ -652,6 +659,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [ivanleo/agent-search](registry/ivanleo_agent_search.html.md) | ivanleo_agent_search | Agent answers Gemini API questions by querying an indexed documentation database. | 20 |
 | [josancamon19/physician-bench](registry/josancamon19_physician_bench.html.md) | josancamon19_physician_bench | Harbor packaging of the 100 Apache-2.0 HealthRex PhysicianBench tasks. Runtime requires separately… | 100 |
 | [kgmon/deepsearchqa](registry/kgmon_deepsearchqa.html.md) | kgmon_deepsearchqa | DeepSearchQA is a 900-prompt factuality benchmark from Google DeepMind for evaluating deep research… | 900 |
+| [klinikebench/klinikebench](registry/klinikebench.html.md) | klinikebench | KlinikeBench: 333 long-horizon clinical consultations with an LLM-simulated patient, a 140-tool cli… | 333 |
 | [kumo/kumo-1](registry/kumo_1.html.md) | kumo_1 | KUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic… | 5300 |
 | [kumo/kumo-easy](registry/kumo_easy.html.md) | kumo_easy | KUMO (easy split): easier-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark a… | 5050 |
 | [kumo/kumo-hard](registry/kumo_hard.html.md) | kumo_hard | KUMO (hard split): hard-difficulty procedurally-generated reasoning tasks from KUMO’s benchmark acr… | 250 |
@@ -702,6 +710,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [snowflake-labs/data-eng-bench](registry/snowflake_labs_data_eng_bench.html.md) | snowflake_labs_data_eng_bench | Agentic dbt data-engineering benchmark: 103 real-world dbt tasks (analytics, dimensional modeling,… | 103 |
 | [stanford/medagentbench](registry/stanford_medagentbench.html.md) | stanford_medagentbench | MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benc… | 300 |
 | [strongreject/strongreject](registry/strongreject.html.md) | strongreject | StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks… | 150 |
+| [sureshraghu/smdd-bench](registry/sureshraghu_smdd_bench.html.md) | sureshraghu_smdd_bench | SMDD-Bench: five small-molecule design task families with an agent harness, GPU oracle and setup gu… | 502 |
 | [swe-bench/swe-bench-verified](registry/swe_bench_verified.html.md) | swe_bench_verified | SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs… | 500 |
 | [swe-bench/swe-smith](registry/swe_bench_swe_smith.html.md) | swe_bench_swe_smith | SWE-smith: NeurIPS 2025 toolkit for synthesizing unlimited SWE-bench-style task instances from any… | 100 |
 | [swe-rebench/swe-rebench-leaderboard](registry/swe_rebench_leaderboard.html.md) | swe_rebench_leaderboard | SWE-rebench leaderboard: 860 curated Python SWE tasks from Nebius AI R&D. All instances have pre-bu… | 860 |
@@ -727,6 +736,7 @@ eval(aider_polyglot(), model="openai/gpt-5")
 | [xlang-ai/osworld-verified](registry/xlang_ai_osworld_verified.html.md) | xlang_ai_osworld_verified | OSWorld-Verified Harbor adaptation: 361 Ubuntu desktop-control tasks from OSWorld, excluding the 8… | 361 |
 | [xlang/ds-1000](registry/xlang_ds_1000.html.md) | xlang_ds_1000 | DS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow,… | 1000 |
 | [yanagiorigami/frontier-cs](registry/yanagiorigami_frontier_cs.html.md) | yanagiorigami_frontier_cs | Frontier-CS competitive programming benchmark: 172 open-ended algorithmic problems with partial sco… | 172 |
+| [ykhli/tetrisbench](registry/ykhli_tetrisbench.html.md) | ykhli_tetrisbench | TetrisBench strategy track: submit one JS placement-scoring function; mean raw game score over 20 f… | 1 |
 | [zenml/zenml-bench](registry/zenml_bench.html.md) | zenml_bench | ZenML Bench v0.1: 18 Harbor tasks where coding agents build, fix, configure and research with real… | 18 |
 
 No matching items

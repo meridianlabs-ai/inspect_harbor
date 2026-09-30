@@ -274,6 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#healthchecks" id="toc-healthchecks" class="nav-link" data-scroll-target="#healthchecks">Healthchecks</a></li>
   </ul></li>
   <li><a href="#llm-judges-in-verification" id="toc-llm-judges-in-verification" class="nav-link" data-scroll-target="#llm-judges-in-verification">LLM Judges in Verification</a></li>
+  <li><a href="#verifier-errors" id="toc-verifier-errors" class="nav-link" data-scroll-target="#verifier-errors">Verifier Errors</a></li>
   </ul>
 </nav>
     </div>
@@ -447,6 +448,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">MODEL_NAME</span> <span class="op">=</span> <span class="st">"claude-haiku-4-5"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">ANTHROPIC_API_KEY</span> <span class="op">=</span> <span class="st">"${ANTHROPIC_API_KEY}"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The verifier script (<code>tests/test.sh</code> or <code>test.bat</code>) uses these environment variables to call the LLM. Make sure to set the appropriate API key (e.g.&nbsp;<code>ANTHROPIC_API_KEY</code>) when running tasks with LLM judges.</p>
+</section>
+<section id="verifier-errors" class="level2">
+<h2 class="anchored" data-anchor-id="verifier-errors">Verifier Errors</h2>
+<p><code>harbor_scorer</code> reads the reward from <code>/logs/verifier/reward.json</code> or <code>reward.txt</code> after <code>tests/test.sh</code> finishes. If neither file exists, the scorer raises <code>RewardFileNotFoundError</code> instead of scoring the sample as 0, matching Harbor, which records such a trial as an error rather than a reward. Some verifiers exit early without writing a reward when the agent did not produce the expected output, for example because it ran out of tokens before creating the file the tests check.</p>
+<p>Inspect fails the whole eval on the first sample error by default, whereas Harbor continues the job. To get Harbor’s behaviour, pass <code>--no-fail-on-error</code> (or a threshold such as <code>--fail-on-error 0.1</code>) so errored samples are logged and excluded from accuracy while the remaining samples run. See the <a href="https://inspect.aisi.org.uk/errors-and-limits.html">Inspect docs on errors and limits</a> for the full set of options.</p>
 
 
 </section>

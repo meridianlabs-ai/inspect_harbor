@@ -25,7 +25,7 @@ eval(scale_ai_hil_bench(), model="openai/gpt-5")
 |----|----|
 | Harbor registry | [scale-ai/hil-bench](https://hub.harborframework.com/datasets/scale-ai/hil-bench/latest) |
 | Inspect task | `scale_ai_hil_bench` |
-| Latest digest | sha256:a308c71edf51736003412b8353cfb25f0cdfd58065535e18e2e8937fe6f7ac42 |
+| Latest digest | sha256:119b6d1a394e6efdec8a729ea4324c21f75e2c8f5d1f9e6218c11cd48e6ae740 |
 | Samples | 600 |
 | Paper | [arxiv](https://arxiv.org/abs/2604.09408) |
 | Source | <https://github.com/hilbenchauthors/hil-bench> |
