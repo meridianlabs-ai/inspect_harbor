@@ -44,11 +44,13 @@ def test_harbor_to_compose_config_with_existing_compose_yaml():
     """Test converting Harbor task with existing docker-compose.yaml file."""
     # Setup mock Harbor task
     mock_task = Mock()
+    mock_task.config.environment.docker_image = None
     mock_paths = Mock()
     mock_paths.environment_dir = Path("/task/environment")
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.docker_image = None
     mock_env_config.env = {}
     mock_env_config.cpus = 2.0
     mock_env_config.memory_mb = 4096
@@ -387,11 +389,13 @@ def test_harbor_to_compose_config_compose_yaml_no_network_respects_explicit_netw
     through its egress control; task-authored networking is respected.
     """
     mock_task = Mock()
+    mock_task.config.environment.docker_image = None
     mock_paths = Mock()
     mock_paths.environment_dir = Path("/task/environment")
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.docker_image = None
     mock_env_config.env = {}
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
@@ -423,11 +427,13 @@ services:
 def test_harbor_to_compose_config_compose_yaml_preserves_custom_network_mode():
     """Test that compose file's network_mode is preserved when network_mode='public'."""
     mock_task = Mock()
+    mock_task.config.environment.docker_image = None
     mock_paths = Mock()
     mock_paths.environment_dir = Path("/task/environment")
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.docker_image = None
     mock_env_config.env = {}
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
@@ -463,11 +469,13 @@ def test_harbor_to_compose_config_compose_yaml_no_network_mode_left_unset():
     matching Harbor's behavior of not touching network_mode when the network is allowed.
     """
     mock_task = Mock()
+    mock_task.config.environment.docker_image = None
     mock_paths = Mock()
     mock_paths.environment_dir = Path("/task/environment")
     mock_task.paths = mock_paths
 
     mock_env_config = Mock()
+    mock_env_config.docker_image = None
     mock_env_config.env = {}
     mock_env_config.cpus = 1.0
     mock_env_config.memory_mb = 2048
@@ -602,6 +610,7 @@ def test_compose_yaml_explicit_networks_not_clobbered_by_network_mode():
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/task/environment")
     mock_task.config.environment = Mock()
+    mock_task.config.environment.docker_image = None
     mock_task.config.environment.cpus = 4
     mock_task.config.environment.memory_mb = 8192
     mock_task.config.environment.gpus = 0
@@ -636,6 +645,7 @@ def test_compose_yaml_no_network_leaves_explicit_networks_alone():
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/task/environment")
     mock_task.config.environment = Mock()
+    mock_task.config.environment.docker_image = None
     mock_task.config.environment.cpus = 4
     mock_task.config.environment.memory_mb = 8192
     mock_task.config.environment.gpus = 0
@@ -909,6 +919,7 @@ services:
     mock_task.config.environment.gpu_types = None
     mock_task.config.environment.healthcheck = None
     mock_task.config.environment.docker_image = None
+    mock_task.config.environment.env = {}
 
     with pytest.raises(yaml.YAMLError):
         harbor_to_compose_config(mock_task)
@@ -1291,6 +1302,7 @@ def _make_multi_service_task(
     mock_task.config.environment.network_mode = network_mode
     mock_task.config.verifier.env = {}
     mock_task.config.environment.env = {}
+    mock_task.config.environment.docker_image = None
     return mock_task
 
 
@@ -1417,6 +1429,7 @@ services:
 def test_expand_compose_vars_basic():
     """Test that ${VAR} references are expanded in compose YAML."""
     mock_task = Mock()
+    mock_task.config.environment.docker_image = None
     mock_task.name = "my-task"
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/cache/tasks/abc/my-task/environment")
@@ -1461,6 +1474,7 @@ def test_expand_compose_vars_no_vars():
 def test_expand_compose_vars_unknown_left_as_is():
     """Test that unknown variables are left as literal strings."""
     mock_task = Mock()
+    mock_task.config.environment.docker_image = None
     mock_task.name = "t"
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/env")
@@ -1486,6 +1500,7 @@ def test_expand_compose_vars_default_syntax(
 ) -> None:
     """``${VAR:-default}`` is resolved per Harbor 0.6.3+ template syntax."""
     mock_task = Mock()
+    mock_task.config.environment.docker_image = None
     mock_task.name = "t"
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/env")
@@ -1498,6 +1513,7 @@ def test_expand_compose_vars_default_syntax(
 def test_expand_compose_vars_image_name_sanitized_for_package_task():
     """Sanitize ``MAIN_IMAGE_NAME`` for package-style task names."""
     mock_task = Mock()
+    mock_task.config.environment.docker_image = None
     mock_task.name = "harbor/Hello.World"
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/env")
@@ -1511,6 +1527,7 @@ def test_expand_compose_vars_image_name_sanitized_for_package_task():
 def test_expand_compose_vars_test_dir_from_verifier_env():
     """Test that TEST_DIR is pulled from verifier env if set."""
     mock_task = Mock()
+    mock_task.config.environment.docker_image = None
     mock_task.name = "t"
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/env")
@@ -1552,11 +1569,13 @@ def test_expand_compose_vars_task_env(
 ) -> None:
     """``[environment].env`` entries flow into the substitution map."""
     mock_task = Mock()
+    mock_task.config.environment.docker_image = None
     mock_task.name = "t"
     mock_task.paths = Mock()
     mock_task.paths.environment_dir = Path("/env")
     mock_task.config.verifier.env = {}
     mock_task.config.environment.env = task_env
+    mock_task.config.environment.docker_image = None
 
     result = _expand_compose_vars(raw, mock_task, cpus, 2048)
     assert expected_substring in result, reason
@@ -1569,6 +1588,7 @@ def _make_expand_task(task_env: dict[str, str]) -> Mock:
     mock_task.paths.environment_dir = Path("/env")
     mock_task.config.verifier.env = {}
     mock_task.config.environment.env = task_env
+    mock_task.config.environment.docker_image = None
     return mock_task
 
 
@@ -2160,3 +2180,133 @@ volumes:
         "harbor-verifier-logs",
         "harbor-agent-logs",
     }
+
+
+@pytest.mark.parametrize(
+    "services_yaml,agent_service",
+    [
+        ("  default:\n    image: a\n  helper:\n    image: b\n", "default"),
+        ("  app:\n    image: a\n  db:\n    image: b\n", "app"),
+        ("  main:\n    image: a\n  default:\n    image: b\n", "default"),
+    ],
+    ids=["named-default", "first-service", "default-beats-main"],
+)
+def test_compose_yaml_task_env_follows_agent_service(
+    tmp_path: Path, services_yaml: str, agent_service: str
+):
+    """``[environment].env`` goes to whichever service the agent runs in.
+
+    Harbor injects it into ``main`` because ``main`` is always its agent
+    service; compose files written for Inspect may call that service
+    something else, and the env must not silently vanish for them.
+    """
+    mock_task = _write_compose_task(
+        tmp_path, f"services:\n{services_yaml}", task_env={"FOO": "from-toml"}
+    )
+
+    services = harbor_to_compose_config(mock_task).services
+
+    with_env = [name for name, svc in services.items() if svc.environment]
+    assert with_env == [agent_service]
+    assert services[agent_service].environment == {"FOO": "from-toml"}
+
+
+def test_compose_yaml_long_form_host_log_mount_becomes_named_volume(tmp_path: Path):
+    """A long-form ``HOST_*`` bind is declared as a named volume too."""
+    compose_yaml = """\
+services:
+  main:
+    image: python:3.11
+    volumes:
+      - type: bind
+        source: ${HOST_VERIFIER_LOGS_PATH}
+        target: ${ENV_VERIFIER_LOGS_PATH}
+"""
+    mock_task = _write_compose_task(tmp_path, compose_yaml)
+
+    result = harbor_to_compose_config(mock_task)
+
+    (mount,) = result.services["main"].volumes or []
+    assert not isinstance(mount, str)
+    assert (mount.type, mount.source, mount.target) == (
+        "volume",
+        "harbor-verifier-logs",
+        "/logs/verifier",
+    )
+    assert result.volumes == {"harbor-verifier-logs": {}}
+
+
+def test_compose_yaml_host_log_subpath_mount_dropped_with_warning(
+    tmp_path: Path, caplog: pytest.LogCaptureFixture
+):
+    """A subpath of a ``HOST_*`` directory cannot be a named volume: drop, warn."""
+    compose_yaml = """\
+services:
+  main:
+    image: python:3.11
+    volumes:
+      - ${HOST_ARTIFACTS_PATH}/out:/out
+      - ${HOST_ARTIFACTS_PATH}:${ENV_ARTIFACTS_PATH}
+"""
+    mock_task = _write_compose_task(tmp_path, compose_yaml)
+
+    with caplog.at_level("WARNING", logger="inspect_harbor._harbor.converters"):
+        result = harbor_to_compose_config(mock_task)
+
+    assert result.services["main"].volumes == ["harbor-artifacts:/logs/artifacts"]
+    assert result.volumes == {"harbor-artifacts": {}}
+    assert "harbor-artifacts/out" in caplog.text
+    assert "compose-task" in caplog.text
+
+
+@pytest.mark.parametrize("with_compose", [True, False], ids=["compose", "dockerfile"])
+def test_unresolvable_task_env_names_task_and_variable(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, with_compose: bool
+):
+    """An unset ``${VAR}`` in ``[environment].env`` fails with the task named.
+
+    Both branches resolve the env at construction time, and neither compose
+    files without ``${`` references nor Dockerfile-only tasks used to say
+    which task was missing what.
+    """
+    monkeypatch.delenv("REVIEW_MISSING_KEY", raising=False)
+    mock_task = _write_compose_task(
+        tmp_path,
+        "services:\n  main:\n    image: python:3.11\n",
+        task_env={"API_KEY": "${REVIEW_MISSING_KEY}"},
+    )
+    if not with_compose:
+        (tmp_path / "environment" / "docker-compose.yaml").unlink()
+
+    with pytest.raises(ValueError, match=r"'compose-task'.*REVIEW_MISSING_KEY"):
+        harbor_to_compose_config(mock_task)
+
+
+def test_compose_yaml_hashes_environment_once(tmp_path: Path):
+    """The environment directory is hashed once, however many services build."""
+    compose_yaml = """\
+services:
+  verifier:
+    build:
+      context: ${CONTEXT_DIR}
+      dockerfile: Dockerfile_verifier
+  main:
+    build:
+      context: ${CONTEXT_DIR}
+    image: ${MAIN_IMAGE_NAME}
+"""
+    mock_task = _write_compose_task(tmp_path, compose_yaml)
+    calls: list[Path] = []
+
+    def counting_hash(environment_dir: Path, **kwargs: Any) -> str:
+        calls.append(environment_dir)
+        return environment_content_hash(environment_dir, **kwargs)
+
+    with patch(
+        "inspect_harbor._harbor.converters.environment_content_hash", counting_hash
+    ):
+        result = harbor_to_compose_config(mock_task)
+
+    assert len(calls) == 1
+    assert result.services["main"].image == _hb(mock_task)
+    assert result.services["verifier"].image == _hb(mock_task, "verifier")

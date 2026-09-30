@@ -20,6 +20,7 @@ from inspect_ai.util._sandbox.compose import (
     ComposeHealthcheck,
     ComposeResourceConfig,
     ComposeResourceReservations,
+    ComposeVolumeMount,
 )
 
 from inspect_harbor._harbor.models import (
@@ -93,12 +94,19 @@ def harbor_to_compose_config(
     gpus = override_gpus if override_gpus is not None else env_config.gpus
     gpu_deploy = _create_gpu_deploy_config(gpus, env_config.gpu_types)
 
+    # Both branches need these; each hashes the environment directory or
+    # touches the host environment, so do it once per task.
+    main_image = _image_name(harbor_task)
+    task_env = _resolve_task_env(harbor_task)
+
     # Use existing docker-compose.yaml if present
     if compose_yaml_path.exists():
         with open(compose_yaml_path, encoding="utf-8") as f:
             raw_yaml = f.read()
 
-        raw_yaml = _expand_compose_vars(raw_yaml, harbor_task, cpus, memory_mb)
+        raw_yaml = _expand_compose_vars(
+            raw_yaml, harbor_task, cpus, memory_mb, main_image, task_env
+        )
         compose_dict = yaml.safe_load(raw_yaml)
         compose_config = ComposeConfig(**compose_dict)
 
@@ -112,6 +120,14 @@ def harbor_to_compose_config(
                 # Inspect's Docker provider only recognises a service named
                 # ``default`` or one flagged ``x-default``; Harbor's is ``main``.
                 default_service.x_default = True
+            # Harbor injects ``[environment].env`` into ``main`` because that is
+            # always its agent service; ours is whichever service the agent
+            # runs in, so the env follows the same rule.
+            if task_env:
+                default_service.environment = {
+                    **_environment_dict(default_service.environment),
+                    **task_env,
+                }
             if cpus is not None:
                 default_service.cpus = cpus
             if memory_mb is not None:
@@ -135,8 +151,12 @@ def harbor_to_compose_config(
                     )
 
             # Network isolation applies to every service that does not declare
-            # its own networking; Harbor likewise leaves task-authored
-            # ``network_mode``/``networks`` alone.
+            # its own networking. Harbor also leaves task-authored
+            # ``network_mode``/``networks`` alone, but it puts the remaining
+            # services into one shared egress-sidecar network namespace, where
+            # they still reach each other over localhost; ``network_mode:
+            # none`` isolates them from each other as well (documented in
+            # docs/datasets.qmd).
             if _is_no_network(env_config):
                 for service in compose_config.services.values():
                     if service.networks or service.network_mode is not None:
@@ -147,25 +167,21 @@ def harbor_to_compose_config(
             # main service gets Harbor's own ``hb__<hash>`` tag.
             for svc_name, svc in compose_config.services.items():
                 if svc.build is not None and not svc.image:
-                    svc.image = _image_name(
-                        harbor_task, None if svc_name == MAIN_SERVICE_NAME else svc_name
+                    svc.image = (
+                        main_image
+                        if svc_name == MAIN_SERVICE_NAME
+                        else sanitize_docker_image_name(f"{main_image}__{svc_name}")
                     )
 
-            _declare_log_volumes(compose_config)
+            _resolve_log_volumes(compose_config, harbor_task.name)
 
         return compose_config
     else:
         # Build programmatically from Dockerfile or docker_image.
-        # Resolve ``${VAR}`` / ``${VAR:-default}`` references.
-        resolved_env: dict[str, str | None] | None = (
-            {k: v for k, v in resolve_env_vars(env_config.env).items()}
-            if env_config.env
-            else None
-        )
         service = ComposeService(
             # Use prebuilt image if specified, otherwise tag our build output
             # with a deterministic name derived from the task.
-            image=env_config.docker_image or _image_name(harbor_task),
+            image=env_config.docker_image or main_image,
             # Use Dockerfile if it exists and no prebuilt image specified
             build=(
                 ComposeBuild(context=str(env_dir))
@@ -178,7 +194,7 @@ def harbor_to_compose_config(
             init=True,
             network_mode="none" if _is_no_network(env_config) else "bridge",
             deploy=gpu_deploy,
-            environment=resolved_env,
+            environment=dict(task_env) if task_env else None,
             healthcheck=(
                 _harbor_healthcheck_to_compose(env_config.healthcheck)
                 if env_config.healthcheck is not None
@@ -256,13 +272,29 @@ def _image_name(harbor_task: HarborTask, service: str | None = None) -> str:
     different environments never collide on one tag. Extra compose services
     that build their own image get a ``__<service>`` suffix.
     """
-    docker_image = harbor_task.config.environment.docker_image
     digest = environment_content_hash(
         Path(harbor_task.paths.environment_dir),
-        docker_image=docker_image if isinstance(docker_image, str) else None,
+        docker_image=harbor_task.config.environment.docker_image,
     )
     suffix = f"__{service}" if service else ""
     return sanitize_docker_image_name(f"hb__{digest}{suffix}")
+
+
+def _resolve_task_env(harbor_task: HarborTask) -> dict[str, str]:
+    """``[environment].env`` with its ``${VAR}`` templates resolved.
+
+    Harbor resolves these when the environment starts, so an unset host
+    variable fails that trial. We resolve at task construction, which fails the
+    dataset load instead; that is deliberate (a missing key is a setup error
+    better caught before an eval is launched), but the error has to say which
+    task and which variable.
+    """
+    try:
+        return resolve_env_vars(harbor_task.config.environment.env)
+    except ValueError as e:
+        raise ValueError(
+            f"{harbor_task.name!r}: cannot resolve `[environment].env`: {e}"
+        ) from e
 
 
 def _user_to_str(user: str | int | None) -> str | None:
@@ -284,14 +316,15 @@ def _complete_main_service(main: ComposeService, harbor_task: HarborTask) -> Non
     content-addressed, so a stale image cannot hide behind a fixed tag, and
     Inspect builds compose services itself before ``up``.
 
-    Harbor also writes ``[environment].env`` into ``main`` through an override
-    that comes after the task's compose file, so on a shared key the task.toml
-    value replaces the compose file's.
+    A ``main`` that declares its own ``build:`` is built even when
+    ``[environment].docker_image`` is set. Harbor skips ``compose build`` in
+    that case, but the merged service still carries the ``build:``, so
+    ``compose up`` builds it anyway wherever the prebuilt image is not already
+    present locally; building is the deterministic reading of that.
     """
-    env_config = harbor_task.config.environment
-    docker_image = env_config.docker_image
+    docker_image = harbor_task.config.environment.docker_image
     if main.build is None and not main.image:
-        if isinstance(docker_image, str):
+        if docker_image:
             main.image = docker_image
         else:
             main.build = ComposeBuild(context=str(harbor_task.paths.environment_dir))
@@ -299,10 +332,6 @@ def _complete_main_service(main: ComposeService, harbor_task: HarborTask) -> Non
         main.build.context = str(harbor_task.paths.environment_dir)
     if main.command is None:
         main.command = ["sh", "-c", "sleep infinity"]
-    if env_config.env:
-        environment = _environment_dict(main.environment)
-        environment.update(resolve_env_vars(env_config.env))
-        main.environment = environment
 
 
 def _environment_dict(
@@ -320,23 +349,53 @@ def _environment_dict(
     return result
 
 
-def _declare_log_volumes(config: ComposeConfig) -> None:
-    """Declare the named log volumes that ``HOST_*`` mounts now refer to."""
-    referenced = {
-        mount.split(":", 1)[0]
-        for service in config.services.values()
-        for mount in service.volumes or []
-        if isinstance(mount, str)
-    } & set(_LOG_VOLUMES.values())
+def _resolve_log_volumes(config: ComposeConfig, task_name: str) -> None:
+    """Turn the expanded ``HOST_*`` mounts into declared named volumes.
+
+    After ``_expand_compose_vars`` a ``HOST_*`` mount source is one of the
+    names in ``_LOG_VOLUMES``. Short-form and long-form mounts of the whole
+    directory are declared at the top level (a long-form ``type: bind`` becomes
+    ``type: volume``). A mount of a *subpath* of the directory
+    (``${HOST_ARTIFACTS_PATH}/out``) is valid under Harbor's host binds but has
+    no named-volume equivalent, so it is dropped with a warning rather than
+    left to fail at ``compose up``.
+    """
+    volume_names = set(_LOG_VOLUMES.values())
+    referenced: set[str] = set()
+    for service_name, service in config.services.items():
+        kept: list[str | ComposeVolumeMount] = []
+        for mount in service.volumes or []:
+            if isinstance(mount, str):
+                source = mount.split(":", 1)[0]
+            else:
+                source = mount.source or ""
+            root, _, subpath = source.partition("/")
+            if root not in volume_names:
+                kept.append(mount)
+            elif subpath:
+                logger.warning(
+                    "%r: dropping mount %r on service %r; it mounts a subpath of a "
+                    "Harbor host log directory, which inspect_harbor maps to the "
+                    "named volume %r and cannot sub-mount.",
+                    task_name,
+                    source,
+                    service_name,
+                    root,
+                )
+            else:
+                referenced.add(root)
+                if isinstance(mount, ComposeVolumeMount) and mount.type in (
+                    None,
+                    "bind",
+                ):
+                    mount.type = "volume"
+                kept.append(mount)
+        if service.volumes is not None:
+            service.volumes = kept
     if referenced:
-        config.volumes = {
-            **(config.volumes or {}),
-            **{
-                name: {}
-                for name in sorted(referenced)
-                if name not in (config.volumes or {})
-            },
-        }
+        config.volumes = config.volumes or {}
+        for name in sorted(referenced):
+            config.volumes.setdefault(name, {})
 
 
 def _find_default_service(config: ComposeConfig) -> tuple[str, ComposeService]:
@@ -439,12 +498,18 @@ def _expand_compose_vars(
     harbor_task: HarborTask,
     cpus: float | None,
     memory_mb: int | None,
+    main_image: str | None = None,
+    task_env: dict[str, str] | None = None,
 ) -> str:
     """Expand ``${VAR}`` and ``${VAR:-default}`` references in a Harbor docker-compose.yaml.
 
     ``ENV_*_PATH`` are the container-side log directories. ``HOST_*_PATH``,
     the host side of the same mounts in Harbor, expand to the named volumes
     in ``_LOG_VOLUMES`` (see there for why).
+
+    ``main_image`` and ``task_env`` are derived when not given; callers that
+    already have them pass them in to avoid hashing the environment directory
+    and resolving the task env a second time.
     """
     if "${" not in raw_yaml:
         return raw_yaml
@@ -454,7 +519,7 @@ def _expand_compose_vars(
 
     var_map: dict[str, str] = {
         "CONTEXT_DIR": env_dir,
-        "MAIN_IMAGE_NAME": _image_name(harbor_task),
+        "MAIN_IMAGE_NAME": main_image or _image_name(harbor_task),
         "HOST_VERIFIER_LOGS_PATH": _LOG_VOLUMES["VERIFIER_LOGS"],
         "HOST_AGENT_LOGS_PATH": _LOG_VOLUMES["AGENT_LOGS"],
         "HOST_ARTIFACTS_PATH": _LOG_VOLUMES["ARTIFACTS"],
@@ -473,7 +538,9 @@ def _expand_compose_vars(
     else:
         var_map["TEST_DIR"] = str(paths.tests_dir)
 
-    for key, value in resolve_env_vars(harbor_task.config.environment.env).items():
+    if task_env is None:
+        task_env = _resolve_task_env(harbor_task)
+    for key, value in task_env.items():
         var_map.setdefault(key, value)
 
     def _replace(match: re.Match[str]) -> str:
