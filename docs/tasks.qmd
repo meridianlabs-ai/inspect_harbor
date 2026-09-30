@@ -103,7 +103,8 @@ The verifier script (`tests/test.sh` or `test.bat`) uses these environment varia
 raises `RewardFileNotFoundError` instead of scoring the sample as 0, matching
 Harbor, which records such a trial as an error rather than a reward. Some
 verifiers exit early without writing a reward when the agent did not produce
-the expected output.
+the expected output, for example because it ran out of tokens before creating
+the file the tests check.
 
 Inspect fails the whole eval on the first sample error by default, whereas
 Harbor continues the job. To get Harbor's behaviour, pass
