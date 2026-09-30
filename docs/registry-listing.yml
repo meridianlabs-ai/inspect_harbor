@@ -581,12 +581,15 @@
   categories:
   - Coding
 - title: frontier-harness-eval/frontier-harness-eval
-  path: registry/frontier_harness_eval_frontier_harness_eval.html
+  path: registry/frontier_harness_eval.html
   desc: 'FrontierHarness Eval v1.1.0: 17 Terminal Bench 4 tasks and 45 Terminal-Bench 2.1 tasks. TB4 quarter-size selection derived from proposal Appendix C; TB2.1 selection from Appendix E. Original tasks and verifiers pinned by SHA256. Report benchmark subsets separately; these are not official full-benchmark scores. TB4 favors shorter historical runtimes. TB2.1 preserves all 16 categories, with 29 medium, 14 hard and 2 easy tasks; source commit 7131e4375048a0e408a8fb404b5f499d726b695b. Selection and provenance: This selection reduces TB4 from 33 to 17 tasks using proportional domain quotas and the fastest known historical runtimes within each domain. Tasks with unknown historical runtimes are excluded. This version replaces protein-assembly with dna-insert, retaining the scientific-computing category and 1800-second timeout. It also replaces crack-7z-hash with vulnerable-secret, retaining medium security coverage and reducing the agent timeout from 1800 to 900 seconds.'
   desc_trunc: 'FrontierHarness Eval v1.1.0: 17 Terminal Bench 4 tasks and 45 Terminal-Bench 2.1 tasks. TB4 quarter…'
-  task_function: frontier_harness_eval_frontier_harness_eval
+  task_function: frontier_harness_eval
   samples: 62
   version: latest
+  categories:
+  - Coding
+  - Assistants
 - title: futurehouse/bixbench
   path: registry/futurehouse_bixbench.html
   desc: 'BixBench: real-world bioinformatics analysis capsules with open-answer questions evaluating LLM agents'' ability to author multi-step Jupyter notebooks for biological data analysis.'
@@ -847,12 +850,15 @@
   - Reasoning
   - Assistants
 - title: klinikebench/klinikebench
-  path: registry/klinikebench_klinikebench.html
+  path: registry/klinikebench.html
   desc: 'KlinikeBench: 333 long-horizon clinical consultations with an LLM-simulated patient, a 140-tool clinical action surface and four-gate scoring (diagnosis, required tools, parameterised actions, LLM-judged must-ask coverage).'
   desc_trunc: 'KlinikeBench: 333 long-horizon clinical consultations with an LLM-simulated patient, a 140-tool cli…'
-  task_function: klinikebench_klinikebench
+  task_function: klinikebench
   samples: 333
   version: latest
+  categories:
+  - Medicine
+  - Professional
 - title: kumo/kumo-1
   path: registry/kumo_1.html
   desc: 'KUMO (kumo-1 split): procedurally-generated multi-turn reasoning games combining LLMs with symbolic engines across 100 open-ended domains.'
