@@ -507,6 +507,9 @@ featurebench/featurebench-modal:
   function_name: featurebench_modal
   title: FeatureBench (Modal)
 
+frontier-harness-eval/frontier-harness-eval:
+  categories: []
+
 futurehouse/bixbench:
   categories:
   - Science
@@ -710,6 +713,9 @@ kgmon/deepsearchqa:
   arxiv: https://arxiv.org/abs/2601.20975
   repo: https://huggingface.co/datasets/google/deepsearchqa
   title: DeepSearchQA
+
+klinikebench/klinikebench:
+  categories: []
 
 kumo/kumo-1:
   categories:

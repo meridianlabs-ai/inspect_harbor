@@ -1873,6 +1873,37 @@ def featurebench_modal(
 
 
 @task
+def frontier_harness_eval_frontier_harness_eval(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""FrontierHarness Eval v1.1.0: 17 Terminal Bench 4 tasks and 45 Terminal-Bench 2.1 tasks. TB4 quarter-size selection derived from proposal Appendix C; TB2.1 selection from Appendix E. Original tasks and verifiers pinned by SHA256. Report benchmark subsets separately; these are not official full-benchmark scores. TB4 favors shorter historical runtimes. TB2.1 preserves all 16 categories, with 29 medium, 14 hard and 2 easy tasks; source commit 7131e4375048a0e408a8fb404b5f499d726b695b. Selection and provenance: https://github.com/frontier-harness-eval/frontier-harness-eval This selection reduces TB4 from 33 to 17 tasks using proportional domain quotas and the fastest known historical runtimes within each domain. Tasks with unknown historical runtimes are excluded. This version replaces protein-assembly with dna-insert, retaining the scientific-computing category and 1800-second timeout. It also replaces crack-7z-hash with vulnerable-secret, retaining medium security coverage and reducing the agent timeout from 1800 to 900 seconds.
+
+    Slug: frontier-harness-eval/frontier-harness-eval
+    Latest digest: sha256:96c9b81553f50d8fb0f843b2aaeb11e4fb4989767c28202fc7607a3a56abd594
+    """
+    return _harbor_base(
+        package_name="frontier-harness-eval/frontier-harness-eval",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def futurehouse_bixbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2666,6 +2697,37 @@ def kgmon_deepsearchqa(
     """
     return _harbor_base(
         package_name="kgmon/deepsearchqa",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def klinikebench_klinikebench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""KlinikeBench: 333 long-horizon clinical consultations with an LLM-simulated patient, a 140-tool clinical action surface and four-gate scoring (diagnosis, required tools, parameterised actions, LLM-judged must-ask coverage).
+
+    Slug: klinikebench/klinikebench
+    Latest digest: sha256:202c363c2a6ecd1863fa43a52a0753a38e0fa7303c81e9b1ff891f9bb2087b23
+    """
+    return _harbor_base(
+        package_name="klinikebench/klinikebench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
