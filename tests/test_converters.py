@@ -118,9 +118,9 @@ def test_harbor_to_compose_config_with_dockerfile():
 
         assert isinstance(result, ComposeConfig)
         assert result.services is not None
-        assert "default" in result.services
+        assert "main" in result.services
 
-        service = result.services["default"]
+        service = result.services["main"]
         assert service.build is not None
         assert isinstance(service.build, ComposeBuild)
         assert service.build.context == "/task/environment"
@@ -130,9 +130,9 @@ def test_harbor_to_compose_config_with_dockerfile():
         assert service.cpus == 1.0
         # 6GB minimum is applied (config has 2048m which is below minimum)
         assert service.mem_limit == "6144m"
-        assert service.command == "tail -f /dev/null"
-        assert service.init is True
-        assert service.network_mode == "bridge"
+        assert service.command == ["sh", "-c", "sleep infinity"]
+        assert service.x_default is True
+        assert service.network_mode is None  # compose default: bridge
 
 
 def test_harbor_to_compose_config_dockerfile_image_tag_is_deterministic():
@@ -172,11 +172,11 @@ def test_harbor_to_compose_config_dockerfile_image_tag_is_deterministic():
         second = harbor_to_compose_config(mock_task)
 
     # Same task -> same tag across invocations (this is the whole point).
-    assert first.services["default"].image == second.services["default"].image
+    assert first.services["main"].image == second.services["main"].image
     # Sanitized: lowercased, '/' replaced with '-'.
-    assert first.services["default"].image == _hb(mock_task)
+    assert first.services["main"].image == _hb(mock_task)
     # And we're still building from the Dockerfile.
-    assert isinstance(first.services["default"].build, ComposeBuild)
+    assert isinstance(first.services["main"].build, ComposeBuild)
 
 
 def test_harbor_to_compose_config_dockerfile_path_injects_task_env(
@@ -216,7 +216,7 @@ def test_harbor_to_compose_config_dockerfile_path_injects_task_env(
     with patch("pathlib.Path.exists", exists_side_effect):
         result = harbor_to_compose_config(mock_task)
 
-    service = result.services["default"]
+    service = result.services["main"]
     assert service.environment == {
         "OPENAI_API_KEY": "sk-resolved",
         "MODEL": "gpt-5",
@@ -277,9 +277,9 @@ def test_harbor_to_compose_config_with_prebuilt_image():
 
         assert isinstance(result, ComposeConfig)
         assert result.services is not None
-        assert "default" in result.services
+        assert "main" in result.services
 
-        service = result.services["default"]
+        service = result.services["main"]
         assert service.image == "my-custom-image:latest"
         assert service.build is None
         assert service.cpus == 1.5
@@ -310,7 +310,7 @@ def test_harbor_to_compose_config_custom_resource_limits():
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
 
-        service = result.services["default"]
+        service = result.services["main"]
         assert service.cpus == 4.0
         assert service.mem_limit == "8192m"
 
@@ -338,11 +338,11 @@ def test_harbor_to_compose_config_omitted_resources_impose_no_limits():
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
 
-        service = result.services["default"]
+        service = result.services["main"]
         assert service.cpus is None
         assert service.mem_limit is None
         assert service.deploy is None
-        assert service.network_mode == "bridge"
+        assert service.network_mode is None  # compose default: bridge
 
 
 def test_harbor_to_compose_config_omitted_resources_compose_yaml_defaults():
@@ -522,7 +522,7 @@ def test_harbor_to_compose_config_network_mode_field_no_network():
 
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
-        assert result.services["default"].network_mode == "none"
+        assert result.services["main"].network_mode == "none"
 
 
 @pytest.mark.parametrize("network_mode", ["public", "allowlist"])
@@ -551,7 +551,7 @@ def test_harbor_to_compose_config_network_mode_field_allows_network(
 
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
-        assert result.services["default"].network_mode == "bridge"
+        assert result.services["main"].network_mode is None
 
 
 def test_harbor_to_compose_config_deprecated_allow_internet_isolated():
@@ -576,7 +576,7 @@ def test_harbor_to_compose_config_deprecated_allow_internet_isolated():
 
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
-        assert result.services["default"].network_mode == "none"
+        assert result.services["main"].network_mode == "none"
 
 
 # A kumo-style compose: per-service ``networks:`` plus a top-level network.
@@ -778,9 +778,9 @@ def test_harbor_task_to_sample_sandbox_spec():
 
         compose_config = result.sandbox.config
         assert compose_config.services is not None
-        assert "default" in compose_config.services
+        assert "main" in compose_config.services
 
-        service = compose_config.services["default"]
+        service = compose_config.services["main"]
         assert service.image == "ubuntu:latest"
         assert service.cpus == 1.0
         # 6GB minimum is applied (config has 2048m which is below minimum)
@@ -812,9 +812,9 @@ def test_harbor_to_compose_config_with_gpu_settings():
 
         assert isinstance(result, ComposeConfig)
         assert result.services is not None
-        assert "default" in result.services
+        assert "main" in result.services
 
-        service = result.services["default"]
+        service = result.services["main"]
         assert service.deploy is not None
         assert service.deploy.resources is not None
         assert service.deploy.resources.reservations is not None
@@ -851,7 +851,7 @@ def test_harbor_to_compose_config_without_gpus():
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
 
-        service = result.services["default"]
+        service = result.services["main"]
         # deploy should be None when gpus=0
         assert service.deploy is None
 
@@ -878,7 +878,7 @@ def test_harbor_to_compose_config_with_gpus_no_types():
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
 
-        service = result.services["default"]
+        service = result.services["main"]
         assert service.deploy is not None
         assert service.deploy.resources is not None
         assert service.deploy.resources.reservations is not None
@@ -1233,7 +1233,7 @@ def test_harbor_to_compose_config_overrides(
             override_gpus=override_gpus,
         )
 
-        service = result.services["default"]
+        service = result.services["main"]
         assert service.cpus == expected_cpus
         assert service.mem_limit == expected_memory
 
@@ -1260,7 +1260,7 @@ def test_harbor_task_to_sample_passes_overrides(mock_harbor_task: Any):
 
         assert result.sandbox is not None
         compose_config = result.sandbox.config
-        service = compose_config.services["default"]
+        service = compose_config.services["main"]
 
         assert service.cpus == 8
         assert service.mem_limit == "16384m"
@@ -1820,7 +1820,7 @@ def test_harbor_to_compose_config_memory_minimum(
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
 
-        service = result.services["default"]
+        service = result.services["main"]
         assert service.mem_limit == expected_memory
 
 
@@ -1862,7 +1862,7 @@ def test_healthcheck_mapped_on_programmatic_service():
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
 
-    healthcheck = result.services["default"].healthcheck
+    healthcheck = result.services["main"].healthcheck
     assert healthcheck is not None
     assert healthcheck.test == ["CMD-SHELL", "curl -f http://localhost:8080/health"]
     assert healthcheck.interval == "2s"
@@ -1879,7 +1879,7 @@ def test_healthcheck_absent_leaves_service_without_one():
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
 
-    assert result.services["default"].healthcheck is None
+    assert result.services["main"].healthcheck is None
 
 
 def test_healthcheck_defaults_omit_inert_start_interval():
@@ -1893,7 +1893,7 @@ def test_healthcheck_defaults_omit_inert_start_interval():
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
 
-    healthcheck = result.services["default"].healthcheck
+    healthcheck = result.services["main"].healthcheck
     assert healthcheck is not None
     # Harbor's HealthcheckConfig defaults.
     assert healthcheck.interval == "5s"
@@ -1922,7 +1922,7 @@ def test_healthcheck_fractional_seconds_render_as_whole_milliseconds():
     with patch("pathlib.Path.exists", return_value=False):
         result = harbor_to_compose_config(mock_task)
 
-    healthcheck = result.services["default"].healthcheck
+    healthcheck = result.services["main"].healthcheck
     assert healthcheck is not None
     assert healthcheck.interval == "1500ms"
     assert healthcheck.timeout == "250ms"

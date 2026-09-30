@@ -574,7 +574,7 @@ def test_harbor_task_integration():
     assert "test_path" in sample.metadata
 
     assert sample.sandbox is not None
-    service = sample.sandbox.config.services["default"]
+    service = sample.sandbox.config.services["main"]
     assert service.cpus is None
     assert service.mem_limit is None
     assert service.deploy is None
@@ -653,9 +653,9 @@ def test_harbor_task_with_overrides():
     # Verify compose config has overridden values
     compose_config = sample.sandbox.config
     assert compose_config.services is not None
-    assert "default" in compose_config.services
+    assert "main" in compose_config.services
 
-    service = compose_config.services["default"]
+    service = compose_config.services["main"]
 
     # Verify overrides were applied
     assert service.cpus == 8

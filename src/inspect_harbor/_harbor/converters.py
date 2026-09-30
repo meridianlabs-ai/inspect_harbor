@@ -73,7 +73,6 @@ def harbor_to_compose_config(
     """
     env_dir = harbor_task.paths.environment_dir
     compose_yaml_path = env_dir / "docker-compose.yaml"
-    dockerfile_path = env_dir / "Dockerfile"
     env_config = harbor_task.config.environment
 
     if override_cpus is not None:
@@ -94,115 +93,91 @@ def harbor_to_compose_config(
     gpus = override_gpus if override_gpus is not None else env_config.gpus
     gpu_deploy = _create_gpu_deploy_config(gpus, env_config.gpu_types)
 
-    # Both branches need these; each hashes the environment directory or
-    # touches the host environment, so do it once per task.
+    # Each of these hashes the environment directory or touches the host
+    # environment, so do it once per task.
     main_image = _image_name(harbor_task)
     task_env = _resolve_task_env(harbor_task)
 
-    # Use existing docker-compose.yaml if present
     if compose_yaml_path.exists():
         with open(compose_yaml_path, encoding="utf-8") as f:
             raw_yaml = f.read()
-
         raw_yaml = _expand_compose_vars(
             raw_yaml, harbor_task, cpus, memory_mb, main_image, task_env
         )
         compose_dict = yaml.safe_load(raw_yaml)
         compose_config = ComposeConfig(**compose_dict)
-
-        if compose_config.services:
-            if MAIN_SERVICE_NAME in compose_config.services:
-                _complete_main_service(
-                    compose_config.services[MAIN_SERVICE_NAME], harbor_task
-                )
-            default_name, default_service = _find_default_service(compose_config)
-            if default_name != "default":
-                # Inspect's Docker provider only recognises a service named
-                # ``default`` or one flagged ``x-default``; Harbor's is ``main``.
-                default_service.x_default = True
-            # Harbor injects ``[environment].env`` into ``main`` because that is
-            # always its agent service; ours is whichever service the agent
-            # runs in, so the env follows the same rule.
-            if task_env:
-                default_service.environment = {
-                    **_environment_dict(default_service.environment),
-                    **task_env,
-                }
-            if cpus is not None:
-                default_service.cpus = cpus
-            if memory_mb is not None:
-                default_service.mem_limit = f"{memory_mb}m"
-            if gpu_deploy:
-                default_service.deploy = gpu_deploy
-            if env_config.healthcheck is not None:
-                if default_service.healthcheck is None:
-                    default_service.healthcheck = _harbor_healthcheck_to_compose(
-                        env_config.healthcheck
-                    )
-                else:
-                    # A compose service can only carry one healthcheck, and the
-                    # one the task ships is the more specific declaration.
-                    logger.warning(
-                        "%r declares both `[environment].healthcheck` in task.toml "
-                        "and a healthcheck on the default service of its "
-                        "docker-compose.yaml; keeping the compose healthcheck and "
-                        "ignoring the task.toml one.",
-                        harbor_task.name,
-                    )
-
-            # Network isolation applies to every service that does not declare
-            # its own networking. Harbor also leaves task-authored
-            # ``network_mode``/``networks`` alone, but it puts the remaining
-            # services into one shared egress-sidecar network namespace, where
-            # they still reach each other over localhost; ``network_mode:
-            # none`` isolates them from each other as well (documented in
-            # docs/datasets.qmd).
-            if _is_no_network(env_config):
-                for service in compose_config.services.values():
-                    if service.networks or service.network_mode is not None:
-                        continue
-                    service.network_mode = "none"
-
-            # Pin a stable `image:` tag so builds are reused across runs. The
-            # main service gets Harbor's own ``hb__<hash>`` tag.
-            for svc_name, svc in compose_config.services.items():
-                if svc.build is not None and not svc.image:
-                    svc.image = (
-                        main_image
-                        if svc_name == MAIN_SERVICE_NAME
-                        else sanitize_docker_image_name(f"{main_image}__{svc_name}")
-                    )
-
-            _resolve_log_volumes(compose_config, harbor_task.name)
-
-        return compose_config
     else:
-        # Build programmatically from Dockerfile or docker_image.
-        service = ComposeService(
-            # Use prebuilt image if specified, otherwise tag our build output
-            # with a deterministic name derived from the task.
-            image=env_config.docker_image or main_image,
-            # Use Dockerfile if it exists and no prebuilt image specified
-            build=(
-                ComposeBuild(context=str(env_dir))
-                if dockerfile_path.exists() and not env_config.docker_image
-                else None
-            ),
-            cpus=cpus,
-            mem_limit=f"{memory_mb}m" if memory_mb is not None else None,
-            command="tail -f /dev/null",
-            init=True,
-            network_mode="none" if _is_no_network(env_config) else "bridge",
-            deploy=gpu_deploy,
-            environment=dict(task_env) if task_env else None,
-            healthcheck=(
-                _harbor_healthcheck_to_compose(env_config.healthcheck)
-                if env_config.healthcheck is not None
-                else None
-            ),
-        )
+        # Dockerfile-only (or prebuilt-image) task: Harbor's base overlay is
+        # the whole compose project, so start from an empty ``main`` and let
+        # ``_complete_main_service`` fill it in like any other.
+        compose_config = ComposeConfig(services={MAIN_SERVICE_NAME: ComposeService()})
 
-        return ComposeConfig(services={"default": service})
+    if not compose_config.services:
+        return compose_config
+
+    if MAIN_SERVICE_NAME in compose_config.services:
+        _complete_main_service(compose_config.services[MAIN_SERVICE_NAME], harbor_task)
+    default_name, default_service = _find_default_service(compose_config)
+    if default_name != "default":
+        # Inspect's Docker provider only recognises a service named
+        # ``default`` or one flagged ``x-default``; Harbor's is ``main``.
+        default_service.x_default = True
+    # Harbor injects ``[environment].env`` into ``main`` because that is
+    # always its agent service; ours is whichever service the agent
+    # runs in, so the env follows the same rule.
+    if task_env:
+        default_service.environment = {
+            **_environment_dict(default_service.environment),
+            **task_env,
+        }
+    if cpus is not None:
+        default_service.cpus = cpus
+    if memory_mb is not None:
+        default_service.mem_limit = f"{memory_mb}m"
+    if gpu_deploy:
+        default_service.deploy = gpu_deploy
+    if env_config.healthcheck is not None:
+        if default_service.healthcheck is None:
+            default_service.healthcheck = _harbor_healthcheck_to_compose(
+                env_config.healthcheck
+            )
+        else:
+            # A compose service can only carry one healthcheck, and the
+            # one the task ships is the more specific declaration.
+            logger.warning(
+                "%r declares both `[environment].healthcheck` in task.toml "
+                "and a healthcheck on the default service of its "
+                "docker-compose.yaml; keeping the compose healthcheck and "
+                "ignoring the task.toml one.",
+                harbor_task.name,
+            )
+
+    # Network isolation applies to every service that does not declare
+    # its own networking. Harbor also leaves task-authored
+    # ``network_mode``/``networks`` alone, but it puts the remaining
+    # services into one shared egress-sidecar network namespace, where
+    # they still reach each other over localhost; ``network_mode:
+    # none`` isolates them from each other as well (documented in
+    # docs/datasets.qmd).
+    if _is_no_network(env_config):
+        for service in compose_config.services.values():
+            if service.networks or service.network_mode is not None:
+                continue
+            service.network_mode = "none"
+
+    # Pin a stable `image:` tag so builds are reused across runs. The
+    # main service gets Harbor's own ``hb__<hash>`` tag.
+    for svc_name, svc in compose_config.services.items():
+        if svc.build is not None and not svc.image:
+            svc.image = (
+                main_image
+                if svc_name == MAIN_SERVICE_NAME
+                else sanitize_docker_image_name(f"{main_image}__{svc_name}")
+            )
+
+    _resolve_log_volumes(compose_config, harbor_task.name)
+
+    return compose_config
 
 
 def harbor_task_to_sample(
