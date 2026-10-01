@@ -4,12 +4,23 @@ import hashlib
 import logging
 from collections import Counter
 from pathlib import Path, PurePosixPath
+from typing import Any
 
 from inspect_ai import Task, task
 from inspect_ai._util._async import run_coroutine
-from inspect_ai.agent import react
+from inspect_ai.agent import as_solver, react
 from inspect_ai.model import CompactionEdit
-from inspect_ai.tool import bash, python, update_plan
+from inspect_ai.solver import Generate, Solver, TaskState, solver
+from inspect_ai.tool import (
+    MCPServer,
+    Tool,
+    ToolSource,
+    bash,
+    mcp_server_sandbox,
+    mcp_tools,
+    python,
+    update_plan,
+)
 
 from inspect_harbor._harbor.converters import harbor_task_to_sample
 from inspect_harbor._harbor.git_tasks import GitTaskSpec, download_git_tasks
@@ -104,12 +115,49 @@ def harbor(
 
     return Task(
         dataset=samples,
-        solver=react(
-            tools=[bash(timeout=300), python(timeout=300), update_plan()],
-            compaction=CompactionEdit(),
-        ),
+        solver=harbor_agent(),
         scorer=harbor_scorer(),
     )
+
+
+_MCP_BRIDGE_SOURCE = (Path(__file__).with_name("mcp_bridge.py")).read_text(
+    encoding="utf-8"
+)
+
+
+def _mcp_server_from_spec(spec: dict[str, Any]) -> MCPServer:
+    """The Inspect MCP client for one ``[[environment.mcp_servers]]`` entry (see ``mcp_server_specs``)."""
+    if spec["transport"] == "stdio":
+        return mcp_server_sandbox(
+            name=spec["name"],
+            command=spec["command"],
+            args=spec.get("args") or None,
+            sandbox=spec["sandbox"],
+        )
+    return mcp_server_sandbox(
+        name=spec["name"],
+        command="python3",
+        args=["-c", _MCP_BRIDGE_SOURCE, spec["url"]],
+        sandbox=spec["sandbox"],
+    )
+
+
+@solver
+def harbor_agent() -> Solver:
+    """Inspect's ReAct agent with bash/python plus the task's MCP servers, built per sample."""
+
+    async def solve(state: TaskState, generate: Generate) -> TaskState:
+        tools: list[Tool | ToolSource] = [
+            bash(timeout=300),
+            python(timeout=300),
+            update_plan(),
+        ]
+        for spec in state.metadata.get("mcp_servers") or []:
+            tools.append(mcp_tools(_mcp_server_from_spec(spec)))
+        agent = react(tools=tools, compaction=CompactionEdit())
+        return await as_solver(agent)(state, generate)
+
+    return solve
 
 
 def load_harbor_tasks(
@@ -271,7 +319,6 @@ def _build_harbor_tasks(
     multi_step: list[str] = []
     windows: list[str] = []
     prior_context: list[str] = []
-    mcp_servers: list[str] = []
     skills_dir: list[str] = []
     allowlist: list[str] = []
 
@@ -289,8 +336,6 @@ def _build_harbor_tasks(
         env = t.config.environment
         if str(getattr(env.os, "value", env.os)).lower() == "windows":
             windows.append(t.name)
-        if env.mcp_servers:
-            mcp_servers.append(t.name)
         if env.skills_dir is not None:
             skills_dir.append(t.name)
         # We can't enforce an egress allowlist, so flag it as degraded below.
@@ -320,8 +365,6 @@ def _build_harbor_tasks(
         )
 
     degraded: list[str] = []
-    if mcp_servers:
-        degraded.append(f"`[environment].mcp_servers`: {mcp_servers}")
     if skills_dir:
         degraded.append(f"`[environment].skills_dir`: {skills_dir}")
     if allowlist:
