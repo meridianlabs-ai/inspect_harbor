@@ -3096,7 +3096,7 @@ def mercor_apex_agents_1_1(
     r"""Long-horizon professional-services benchmark in investment banking, law, and management consulting, written by practicing analysts, consultants, and corporate lawyers. For evaluation only.
 
     Slug: mercor/apex-agents-1-1
-    Latest digest: sha256:fb4139368bf0fb2bd233745273d11d02e70229d18b611d0d854d651d539e79fa
+    Latest digest: sha256:12a7b7cde834beb4b518463a885452f1df8a73ccd32a5f253629e11186faa528
     """
     return _harbor_base(
         package_name="mercor/apex-agents-1-1",
@@ -3814,8 +3814,8 @@ def rexbench(
     Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors.
     Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.
 
-        Slug: rexbench/rexbench
-        Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
+    Slug: rexbench/rexbench
+    Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
     """
     return _harbor_base(
         package_name="rexbench/rexbench",
@@ -3908,7 +3908,7 @@ def scale_ai_hil_bench(
     r"""HiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.
 
     Slug: scale-ai/hil-bench
-    Latest digest: sha256:0165ead0b08babf7be44ab9d410af7eb950f86a6637f406d5554b7d5e11c4726
+    Latest digest: sha256:119b6d1a394e6efdec8a729ea4324c21f75e2c8f5d1f9e6218c11cd48e6ae740
     """
     return _harbor_base(
         package_name="scale-ai/hil-bench",
