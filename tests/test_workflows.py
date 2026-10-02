@@ -344,3 +344,19 @@ def test_agent_stubs_opt_in_to_build_config() -> None:
     assert {reusable for reusable, opted in calls.values() if opted} == (
         BUILD_CONFIG_WRITERS
     )
+
+
+def test_agent_stubs_pass_no_openai_key() -> None:
+    """The codex jobs authenticate to OpenAI by OIDC federation, not a key.
+
+    meridianlabs-ai/agents#199: no reusable-workflow job reads
+    `OPENAI_API_KEY`, so a stub that passed it would only send an unused
+    long-lived key into the run. The federation needs `id-token: write`.
+    """
+    for stub in ("claude.yml", "claude-auto.yml", "claude-review.yml"):
+        for name, job in _load(WORKFLOWS / stub)["jobs"].items():
+            assert set(job["secrets"]) == {
+                "MARVIN_APP_CLIENT_ID",
+                "MARVIN_APP_PRIVATE_KEY",
+            }, f"{stub}:{name}"
+            assert job["permissions"]["id-token"] == "write", f"{stub}:{name}"
