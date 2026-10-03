@@ -1000,6 +1000,9 @@
   task_function: looni_lab_smdd_bench
   samples: 502
   version: latest
+  categories:
+  - Chemistry
+  - Biology
 - title: luosuu/SWE-kokkos-bench
   path: registry/luosuu_swe_kokkos_bench.html
   desc: 100 verified SWE-bench-style coding tasks from the Kokkos ecosystem.

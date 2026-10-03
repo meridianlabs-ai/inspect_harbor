@@ -828,7 +828,12 @@ long-horizon-terminal-bench/lhtb:
   function_name: long_horizon_terminal_bench
 
 looni-lab/smdd-bench:
-  categories: []
+  categories:
+  - Chemistry
+  - Biology
+  title: SMDD-Bench
+  repo: https://github.com/t7rs/SMDD-Bench
+  arxiv: https://arxiv.org/abs/2605.21740
 
 luosuu/SWE-kokkos-bench:
   categories:
