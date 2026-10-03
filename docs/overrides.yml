@@ -278,6 +278,24 @@ bigcode/humanevalfix:
   desc: 'HumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that models must repair given the failing unit tests.'
   title: HumanEvalFix
 
+billxbf/mimo-v26-code:
+  categories: []
+
+billxbf/mimo-v26-cyber:
+  categories: []
+
+billxbf/mimo-v26-general:
+  categories: []
+
+billxbf/mimo-v26-music:
+  categories: []
+
+billxbf/mimo-v26-terminal:
+  categories: []
+
+billxbf/mimo-v26-webdev:
+  categories: []
+
 binary-audit/binary-audit:
   categories:
   - Cybersecurity
@@ -460,6 +478,9 @@ deveval/deveval:
   desc: 'DevEval: manually-annotated code-generation samples from real-world Python repositories, aligned to practical software development.'
   function_name: deveval
   title: DevEval
+
+doe/sample-pack:
+  categories: []
 
 evoeval/evoeval:
   categories:
@@ -806,6 +827,9 @@ long-horizon-terminal-bench/lhtb:
   title: Long-Horizon Terminal-Bench
   function_name: long_horizon_terminal_bench
 
+looni-lab/smdd-bench:
+  categories: []
+
 luosuu/SWE-kokkos-bench:
   categories:
   - Coding
@@ -1138,14 +1162,6 @@ strongreject/strongreject:
   desc: 'StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks are at eliciting genuinely harmful, specific responses.'
   function_name: strongreject
   title: StrongREJECT
-
-sureshraghu/smdd-bench:
-  categories:
-  - Chemistry
-  - Biology
-  title: SMDD-Bench
-  repo: https://github.com/t7rs/SMDD-Bench
-  arxiv: https://arxiv.org/abs/2605.21740
 
 swe-bench/swe-bench-verified:
   categories:
