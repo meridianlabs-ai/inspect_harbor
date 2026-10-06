@@ -1687,6 +1687,37 @@ def deveval(
 
 
 @task
+def elfsong_mercury_eval(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Mercury eval: 256 Python code-efficiency tasks; CC-BY-NC-4.0.
+
+    Slug: elfsong/mercury-eval
+    Latest digest: sha256:4b312cd01387beb37547ebb217c57dc82b5fda1e098deee915a59aefbbf93efb
+    """
+    return _harbor_base(
+        package_name="elfsong/mercury-eval",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def evoeval(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2724,7 +2755,7 @@ def klinikebench(
     r"""KlinikeBench: 333 long-horizon clinical consultations with an LLM-simulated patient, a 140-tool clinical action surface and four-gate scoring (diagnosis, required tools, parameterised actions, LLM-judged must-ask coverage).
 
     Slug: klinikebench/klinikebench
-    Latest digest: sha256:202c363c2a6ecd1863fa43a52a0753a38e0fa7303c81e9b1ff891f9bb2087b23
+    Latest digest: sha256:1eb3dd80d3577eb3e31270fafadd6e75b125fd3086adef79f0e61198b0ff91b0
     """
     return _harbor_base(
         package_name="klinikebench/klinikebench",
@@ -3020,6 +3051,37 @@ def long_horizon_terminal_bench(
 
 
 @task
+def looni_lab_smdd_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""SMDD-Bench: five small-molecule design task families with an agent harness, GPU oracle and setup guide.
+
+    Slug: looni-lab/smdd-bench
+    Latest digest: sha256:793d53d853b76e4738c642cd81e9beb389d6783f44f0ee9d0d76c0a5ecd51515
+    """
+    return _harbor_base(
+        package_name="looni-lab/smdd-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def luosuu_swe_kokkos_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3031,10 +3093,10 @@ def luosuu_swe_kokkos_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""100 verified SWE-bench-style coding tasks from the Kokkos ecosystem
+    r"""100 Kokkos ecosystem regression repair tasks
 
     Slug: luosuu/SWE-kokkos-bench
-    Latest digest: sha256:2d2cf7e0ad502943456bc7ea738c297f1c4b1841aff2bc967a1d1c6ab6400d68
+    Latest digest: sha256:fbac369a9b51c489eb0be6a9e9093f84c4f39ab071c74c9a68568ca007c22e50
     """
     return _harbor_base(
         package_name="luosuu/SWE-kokkos-bench",
@@ -3843,10 +3905,10 @@ def rounakbende10_rh_swe_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Red Hat SWE-bench - 341 verified tasks from 25 RH ecosystem repos
+    r"""Red Hat SWE-bench - 337 tasks from 24 RH ecosystem repos
 
     Slug: rounakbende10/rh-swe-bench
-    Latest digest: sha256:96005bdeb80c90e6a487df8cb893dc2856b2bec88d122a14580abcc58481ef75
+    Latest digest: sha256:fa8dd3b1a8275f49893c0a518dc9f65a6f213b31b78e3469d89193f3c1452df8
     """
     return _harbor_base(
         package_name="rounakbende10/rh-swe-bench",
@@ -3908,10 +3970,72 @@ def scale_ai_hil_bench(
     r"""HiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.
 
     Slug: scale-ai/hil-bench
-    Latest digest: sha256:119b6d1a394e6efdec8a729ea4324c21f75e2c8f5d1f9e6218c11cd48e6ae740
+    Latest digest: sha256:08d830f37acc1a324dfa2f9551e9c741822856a82e7829a855a1d29c8f489da9
     """
     return _harbor_base(
         package_name="scale-ai/hil-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def scale_ai_hil_bench_sql_ask_human(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""HiL-Bench SQL split (ask-human): text-to-SQL tasks drawn from BIRD with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.
+
+    Slug: scale-ai/hil-bench-sql-ask-human
+    Latest digest: sha256:816c6d1172267a988567b9ba10c11a7948c20d63147ec917ab09b1a8ddc67d53
+    """
+    return _harbor_base(
+        package_name="scale-ai/hil-bench-sql-ask-human",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def scale_ai_hil_bench_swe_ask_human(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""HiL-Bench SWE split (ask-human): software-engineering tasks drawn from SWE-Bench Pro with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.
+
+    Slug: scale-ai/hil-bench-swe-ask-human
+    Latest digest: sha256:9946a4bd24301db0a79e4168ead9202a4293925fba686b2ccb9e63fb73d6d134
+    """
+    return _harbor_base(
+        package_name="scale-ai/hil-bench-swe-ask-human",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -4284,37 +4408,6 @@ def strongreject(
     """
     return _harbor_base(
         package_name="strongreject/strongreject",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def sureshraghu_smdd_bench(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""SMDD-Bench: five small-molecule design task families with an agent harness, GPU oracle and setup guide.
-
-    Slug: sureshraghu/smdd-bench
-    Latest digest: sha256:624b36d0ee1b389fe82f1150bea7db09958b2b314663fae839baae1b5f3ac081
-    """
-    return _harbor_base(
-        package_name="sureshraghu/smdd-bench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

@@ -235,3 +235,12 @@
 # once both are supported. Exact slug; the earlier dissei/financial-judgment
 # question previews aren't runnable at all.
 - dissei/financial-judgment-full
+# Individual's (User, not org) re-uploads of Xiaomi's MiMo-V2.6 RL *training*
+# release (XiaomiMiMo/MiMo-V2.6-RL-oss), split into code/cyber/general/music/
+# terminal/webdev (64-2,698 tasks each). Training environments, not a
+# published benchmark; no benchmark repo or paper under this account.
+- billxbf/*
+# 5-task legal / private-equity / corporate-card "sample pack" from an
+# individual (User, 0 public repos); reads like a vendor demo, not a
+# published benchmark. Exact slug.
+- doe/sample-pack
