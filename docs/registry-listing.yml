@@ -283,48 +283,6 @@
   version: latest
   categories:
   - Coding
-- title: billxbf/mimo-v26-code
-  path: registry/billxbf_mimo_v26_code.html
-  desc: 'MiMo-V2.6-RL Code: 2698 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss).'
-  desc_trunc: 'MiMo-V2.6-RL Code: 2698 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss).'
-  task_function: billxbf_mimo_v26_code
-  samples: 2698
-  version: latest
-- title: billxbf/mimo-v26-cyber
-  path: registry/billxbf_mimo_v26_cyber.html
-  desc: 'MiMo-V2.6-RL Cyber: 1000 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss).'
-  desc_trunc: 'MiMo-V2.6-RL Cyber: 1000 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss).'
-  task_function: billxbf_mimo_v26_cyber
-  samples: 1000
-  version: latest
-- title: billxbf/mimo-v26-general
-  path: registry/billxbf_mimo_v26_general.html
-  desc: 'MiMo-V2.6-RL General: 925 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss).'
-  desc_trunc: 'MiMo-V2.6-RL General: 925 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss).'
-  task_function: billxbf_mimo_v26_general
-  samples: 925
-  version: latest
-- title: billxbf/mimo-v26-music
-  path: registry/billxbf_mimo_v26_music.html
-  desc: 'MiMo-V2.6-RL Music: 1000 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss).'
-  desc_trunc: 'MiMo-V2.6-RL Music: 1000 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss).'
-  task_function: billxbf_mimo_v26_music
-  samples: 1000
-  version: latest
-- title: billxbf/mimo-v26-terminal
-  path: registry/billxbf_mimo_v26_terminal.html
-  desc: 'MiMo-V2.6-RL Terminal: 64 Harbor tasks converted from XiaomiMiMo/MiMo-V2.6-RL-oss.'
-  desc_trunc: 'MiMo-V2.6-RL Terminal: 64 Harbor tasks converted from XiaomiMiMo/MiMo-V2.6-RL-oss.'
-  task_function: billxbf_mimo_v26_terminal
-  samples: 64
-  version: latest
-- title: billxbf/mimo-v26-webdev
-  path: registry/billxbf_mimo_v26_webdev.html
-  desc: 'MiMo-V2.6-RL Webdev: 2093 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss).'
-  desc_trunc: 'MiMo-V2.6-RL Webdev: 2093 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss).'
-  task_function: billxbf_mimo_v26_webdev
-  samples: 2093
-  version: latest
 - title: binary-audit/binary-audit
   path: registry/binary_audit.html
   desc: 'BinaryAudit: AI-agent benchmark for finding backdoors hidden in compiled binaries via reverse engineering.'
@@ -568,13 +526,6 @@
   version: latest
   categories:
   - Coding
-- title: doe/sample-pack
-  path: registry/doe_sample_pack.html
-  desc: Five Harbor tasks in legal, private equity and corporate card operations, graded by deterministic checks and a claude-opus-5-5 and gpt-6-astra judge panel.
-  desc_trunc: Five Harbor tasks in legal, private equity and corporate card operations, graded by deterministic c…
-  task_function: doe_sample_pack
-  samples: 5
-  version: latest
 - title: elfsong/mercury-eval
   path: registry/elfsong_mercury_eval.html
   desc: 'Mercury eval: 256 Python code-efficiency tasks; CC-BY-NC-4.0.'
@@ -582,6 +533,8 @@
   task_function: elfsong_mercury_eval
   samples: 256
   version: latest
+  categories:
+  - Coding
 - title: evoeval/evoeval
   path: registry/evoeval.html
   desc: 'EvoEval: evolving suite that mutates HumanEval problems along several axes (difficulty, creative, subtle, tool-use) for a contamination-resistant view of LLM coding ability.'
@@ -1007,6 +960,9 @@
   task_function: looni_lab_smdd_bench
   samples: 502
   version: latest
+  categories:
+  - Chemistry
+  - Biology
 - title: luosuu/SWE-kokkos-bench
   path: registry/luosuu_swe_kokkos_bench.html
   desc: 100 Kokkos ecosystem regression repair tasks.
@@ -1284,18 +1240,24 @@
   - Behavior
 - title: scale-ai/hil-bench-sql-ask-human
   path: registry/scale_ai_hil_bench_sql_ask_human.html
-  desc: Public HiL-Bench SQL ask-human tasks.
-  desc_trunc: Public HiL-Bench SQL ask-human tasks.
+  desc: 'HiL-Bench SQL split (ask-human): text-to-SQL tasks drawn from BIRD with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.'
+  desc_trunc: 'HiL-Bench SQL split (ask-human): text-to-SQL tasks drawn from BIRD with critical details removed, t…'
   task_function: scale_ai_hil_bench_sql_ask_human
   samples: 100
   version: latest
+  categories:
+  - Coding
+  - Behavior
 - title: scale-ai/hil-bench-swe-ask-human
   path: registry/scale_ai_hil_bench_swe_ask_human.html
-  desc: Public HiL-Bench SWE ask-human tasks.
-  desc_trunc: Public HiL-Bench SWE ask-human tasks.
+  desc: 'HiL-Bench SWE split (ask-human): software-engineering tasks drawn from SWE-Bench Pro with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.'
+  desc_trunc: 'HiL-Bench SWE split (ask-human): software-engineering tasks drawn from SWE-Bench Pro with critical…'
   task_function: scale_ai_hil_bench_swe_ask_human
   samples: 100
   version: latest
+  categories:
+  - Coding
+  - Behavior
 - title: scale-ai/swe-atlas-qna
   path: registry/scale_ai_swe_atlas_qna.html
   desc: SWE-Atlas - Codebase QnA is a benchmark of deep codebase comprehension and QnA problems for coding agents. Checkout for instructions on running it.

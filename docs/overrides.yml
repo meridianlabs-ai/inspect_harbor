@@ -278,24 +278,6 @@ bigcode/humanevalfix:
   desc: 'HumanEvalFix (OctoPack): buggy functions across Python, JavaScript, Java, Go, C++, and Rust that models must repair given the failing unit tests.'
   title: HumanEvalFix
 
-billxbf/mimo-v26-code:
-  categories: []
-
-billxbf/mimo-v26-cyber:
-  categories: []
-
-billxbf/mimo-v26-general:
-  categories: []
-
-billxbf/mimo-v26-music:
-  categories: []
-
-billxbf/mimo-v26-terminal:
-  categories: []
-
-billxbf/mimo-v26-webdev:
-  categories: []
-
 binary-audit/binary-audit:
   categories:
   - Cybersecurity
@@ -479,11 +461,12 @@ deveval/deveval:
   function_name: deveval
   title: DevEval
 
-doe/sample-pack:
-  categories: []
-
 elfsong/mercury-eval:
-  categories: []
+  categories:
+  - Coding
+  title: Mercury
+  repo: https://github.com/Elfsong/Mercury
+  arxiv: https://arxiv.org/abs/2402.07844
 
 evoeval/evoeval:
   categories:
@@ -831,7 +814,12 @@ long-horizon-terminal-bench/lhtb:
   function_name: long_horizon_terminal_bench
 
 looni-lab/smdd-bench:
-  categories: []
+  categories:
+  - Chemistry
+  - Biology
+  title: SMDD-Bench
+  repo: https://github.com/t7rs/SMDD-Bench
+  arxiv: https://arxiv.org/abs/2605.21740
 
 luosuu/SWE-kokkos-bench:
   categories:
@@ -1071,10 +1059,22 @@ scale-ai/hil-bench:
   title: HiL-Bench
 
 scale-ai/hil-bench-sql-ask-human:
-  categories: []
+  categories:
+  - Coding
+  - Behavior
+  arxiv: https://arxiv.org/abs/2604.09408
+  repo: https://github.com/hilbenchauthors/hil-bench
+  desc: 'HiL-Bench SQL split (ask-human): text-to-SQL tasks drawn from BIRD with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.'
+  title: HiL-Bench (SQL, ask-human)
 
 scale-ai/hil-bench-swe-ask-human:
-  categories: []
+  categories:
+  - Coding
+  - Behavior
+  arxiv: https://arxiv.org/abs/2604.09408
+  repo: https://github.com/hilbenchauthors/hil-bench
+  desc: 'HiL-Bench SWE split (ask-human): software-engineering tasks drawn from SWE-Bench Pro with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.'
+  title: HiL-Bench (SWE, ask-human)
 
 scale-ai/swe-atlas-qna:
   categories:

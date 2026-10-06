@@ -912,192 +912,6 @@ def bigcode_humanevalfix(
 
 
 @task
-def billxbf_mimo_v26_code(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""MiMo-V2.6-RL Code: 2698 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss)
-
-    Slug: billxbf/mimo-v26-code
-    Latest digest: sha256:00fdc4a9de4f39c03352924f6a8df8b3037ac911e15637d0c39682ca67dbcb2c
-    """
-    return _harbor_base(
-        package_name="billxbf/mimo-v26-code",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def billxbf_mimo_v26_cyber(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""MiMo-V2.6-RL Cyber: 1000 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss)
-
-    Slug: billxbf/mimo-v26-cyber
-    Latest digest: sha256:4371249eeb9f35e00b66daee7f6f3a84a8678f5683f93cbd6d948a1d76fe4cf8
-    """
-    return _harbor_base(
-        package_name="billxbf/mimo-v26-cyber",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def billxbf_mimo_v26_general(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""MiMo-V2.6-RL General: 925 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss)
-
-    Slug: billxbf/mimo-v26-general
-    Latest digest: sha256:d22d456a088c2f887f87633a30711b61d5b9fe2adc8188e9bcce3052dc6f02f7
-    """
-    return _harbor_base(
-        package_name="billxbf/mimo-v26-general",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def billxbf_mimo_v26_music(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""MiMo-V2.6-RL Music: 1000 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss)
-
-    Slug: billxbf/mimo-v26-music
-    Latest digest: sha256:5a95b783a139e9b94da8dc90fabc0bf4fa6194a3965bd2507c834a9f567fe5a7
-    """
-    return _harbor_base(
-        package_name="billxbf/mimo-v26-music",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def billxbf_mimo_v26_terminal(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""MiMo-V2.6-RL Terminal: 64 Harbor tasks converted from XiaomiMiMo/MiMo-V2.6-RL-oss
-
-    Slug: billxbf/mimo-v26-terminal
-    Latest digest: sha256:e3806f0ffe13c28893286664a12e73048c89b46cb30602e56b7db7abbe177c11
-    """
-    return _harbor_base(
-        package_name="billxbf/mimo-v26-terminal",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def billxbf_mimo_v26_webdev(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""MiMo-V2.6-RL Webdev: 2093 Harbor tasks (converted from XiaomiMiMo/MiMo-V2.6-RL-oss)
-
-    Slug: billxbf/mimo-v26-webdev
-    Latest digest: sha256:e9258cb34ac768d4b53ce64b004f2a968d4c33c5b5bba0c218fe1daab1259386
-    """
-    return _harbor_base(
-        package_name="billxbf/mimo-v26-webdev",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def binary_audit(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -1860,37 +1674,6 @@ def deveval(
     """
     return _harbor_base(
         package_name="deveval/deveval",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def doe_sample_pack(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Five Harbor tasks in legal, private equity and corporate card operations, graded by deterministic checks and a claude-opus-5-5 and gpt-6-astra judge panel
-
-    Slug: doe/sample-pack
-    Latest digest: sha256:44760295e1ca08e7011b3992f2d1215c3420c3ae76d58b3f78772a551b8db8da
-    """
-    return _harbor_base(
-        package_name="doe/sample-pack",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -4215,7 +3998,7 @@ def scale_ai_hil_bench_sql_ask_human(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Public HiL-Bench SQL ask-human tasks.
+    r"""HiL-Bench SQL split (ask-human): text-to-SQL tasks drawn from BIRD with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.
 
     Slug: scale-ai/hil-bench-sql-ask-human
     Latest digest: sha256:816c6d1172267a988567b9ba10c11a7948c20d63147ec917ab09b1a8ddc67d53
@@ -4246,7 +4029,7 @@ def scale_ai_hil_bench_swe_ask_human(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Public HiL-Bench SWE ask-human tasks.
+    r"""HiL-Bench SWE split (ask-human): software-engineering tasks drawn from SWE-Bench Pro with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.
 
     Slug: scale-ai/hil-bench-swe-ask-human
     Latest digest: sha256:9946a4bd24301db0a79e4168ead9202a4293925fba686b2ccb9e63fb73d6d134
