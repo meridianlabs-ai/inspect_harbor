@@ -9,7 +9,7 @@ from typing import Any
 
 from inspect_ai.scorer import Score, Scorer, Target, accuracy, scorer, stderr
 from inspect_ai.solver import TaskState
-from inspect_ai.util import sandbox
+from inspect_ai.util import sandbox, subprocess
 
 from inspect_harbor._harbor.converters import _user_to_str
 from inspect_harbor._harbor.models import MAIN_SERVICE_NAME, TaskConfig
@@ -43,6 +43,10 @@ class RewardFileNotFoundError(FileNotFoundError):
 
 class RewardFileEmptyError(Exception):
     """Raised when a reward file exists but contains no data."""
+
+
+class VerifierNetworkError(Exception):
+    """Raised when the verifier's network access cannot be restored."""
 
 
 @scorer(metrics=[accuracy(), stderr()])
@@ -79,6 +83,10 @@ def harbor_scorer(
 
         if not tests_dir.exists():
             raise CopyTestsDirError(f"Tests directory not found: {tests_dir}")
+
+        # The agent ran without network; the verifier is allowed it.
+        if state.metadata.get("verifier_needs_network"):
+            await _connect_verifier_network()
 
         try:
             await copy_directory_to_sandbox(tests_dir, "/tests")
@@ -153,6 +161,39 @@ def harbor_scorer(
         return score_result
 
     return score
+
+
+async def _connect_verifier_network() -> None:
+    """Give the verifier network in a container the agent ran without it.
+
+    Harbor switches the network policy between the agent and verifier phases and
+    rejects a task on an environment that cannot switch. Here both phases share the
+    task's container, which starts with ``network_mode: none`` when the agent is
+    denied network, so this moves it onto Docker's default bridge once the agent is
+    done. Only the docker sandbox can do that; failing loudly is better than
+    verifying offline, which would score every task whose tests download
+    dependencies as a failure.
+
+    Raises:
+        VerifierNetworkError: If the sandbox is not a docker container or a
+            ``docker network`` command fails.
+    """
+    connection = await sandbox().connection()
+    if connection.type != "docker" or not connection.container:
+        raise VerifierNetworkError(
+            "The task's verifier needs network but its agent ran without it, and "
+            "only the docker sandbox can reconnect a container (sandbox type: "
+            f"{connection.type!r})."
+        )
+    for args in (
+        ["network", "disconnect", "none", connection.container],
+        ["network", "connect", "bridge", connection.container],
+    ):
+        result = await subprocess(["docker", *args])
+        if not result.success:
+            raise VerifierNetworkError(
+                f"`docker {' '.join(args)}` failed: {result.stderr.strip()}"
+            )
 
 
 async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
