@@ -1316,13 +1316,6 @@
   - Assistants
   - Professional
   - Behavior
-- title: silverwhite/slopcodebench-friction
-  path: registry/silverwhite_slopcodebench_friction.html
-  desc: 'Friction-hunting artifact from an unofficial harness-native evaluation round (orz, deepseek-v4-flash, k=1). NOT an official score submission. Official round scores are harness-native: 134/196 checkpoints, 11/36 tasks fully solved. Oracle/build results in this dataset are conversion-fidelity footnotes, not agent scores.'
-  desc_trunc: Friction-hunting artifact from an unofficial harness-native evaluation round (orz, deepseek-v4-flas…
-  task_function: silverwhite_slopcodebench_friction
-  samples: 36
-  version: latest
 - title: skill2env/skill2env
   path: registry/skill2env.html
   desc: 'Skill2Env (NVIDIA): 7,496 terminal tasks auto-converted from open-source Agent Skills — the agent finishes, repairs, or extends a software project in /workspace to satisfy a written contract, graded by hidden tests plus rubrics.'

@@ -4235,37 +4235,6 @@ def sierra_research_tau3_bench(
 
 
 @task
-def silverwhite_slopcodebench_friction(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Friction-hunting artifact from an unofficial harness-native evaluation round (orz, deepseek-v4-flash, k=1). NOT an official score submission. Official round scores are harness-native: 134/196 checkpoints, 11/36 tasks fully solved. Oracle/build results in this dataset are conversion-fidelity footnotes, not agent scores.
-
-    Slug: silverwhite/slopcodebench-friction
-    Latest digest: sha256:71e7aa6291e4b6ecc46fdaa9600c799bb50217bc2a44a154b28574d819725e0b
-    """
-    return _harbor_base(
-        package_name="silverwhite/slopcodebench-friction",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def skill2env(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,

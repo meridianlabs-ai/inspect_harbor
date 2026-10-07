@@ -1123,9 +1123,6 @@ sierra-research/tau3-bench:
   desc: Third generation of τ-bench, extending the original with knowledge and voice. A simulation framework for evaluating customer service agents across airline, retail, telecom, and banking knowledge domains.
   title: τ³-bench
 
-silverwhite/slopcodebench-friction:
-  categories: []
-
 skill2env/skill2env:
   categories:
   - Coding
