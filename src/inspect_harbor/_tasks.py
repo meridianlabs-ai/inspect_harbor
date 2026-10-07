@@ -3158,7 +3158,7 @@ def mercor_apex_agents_1_1(
     r"""Long-horizon professional-services benchmark in investment banking, law, and management consulting, written by practicing analysts, consultants, and corporate lawyers. For evaluation only.
 
     Slug: mercor/apex-agents-1-1
-    Latest digest: sha256:12a7b7cde834beb4b518463a885452f1df8a73ccd32a5f253629e11186faa528
+    Latest digest: sha256:3fe2900ebd603ea5a802049819ce6ead171575ee0166a61187065ad9606c955d
     """
     return _harbor_base(
         package_name="mercor/apex-agents-1-1",

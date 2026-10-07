@@ -244,3 +244,9 @@
 # individual (User, 0 public repos); reads like a vendor demo, not a
 # published benchmark. Exact slug.
 - doe/sample-pack
+# Individual's (User, 1 repo: SilverWhite/orz, their agent harness) re-upload
+# of gabeorlanski/slopcodebench: the same 36 multi-step tasks (identical task
+# names), and the desc itself says "Friction-hunting artifact from an
+# unofficial harness-native evaluation round ... NOT an official score
+# submission". Keep the canonical gabeorlanski/slopcodebench. Exact slug.
+- silverwhite/slopcodebench-friction
