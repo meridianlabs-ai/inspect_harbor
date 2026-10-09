@@ -5,6 +5,7 @@ import os
 import re
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit, urlunsplit
 
 import yaml
 from inspect_ai.dataset import Sample
@@ -20,11 +21,13 @@ from inspect_ai.util._sandbox.compose import (
     ComposeHealthcheck,
     ComposeResourceConfig,
     ComposeResourceReservations,
+    ComposeVolumeMount,
 )
 
 from inspect_harbor._harbor.models import (
     EnvironmentConfig,
     HealthcheckConfig,
+    MCPServerConfig,
     NetworkMode,
 )
 from inspect_harbor._harbor.paths import (
@@ -89,6 +92,11 @@ def harbor_to_compose_config(
 
         if compose_config.services:
             _, default_service = _find_default_service(compose_config)
+            _complete_default_service(
+                default_service, harbor_task, env_config, dockerfile_path
+            )
+            for svc in compose_config.services.values():
+                _absolutize_build_context(svc, env_dir)
             if cpus is not None:
                 default_service.cpus = cpus
             if memory_mb is not None:
@@ -122,6 +130,8 @@ def harbor_to_compose_config(
             for svc_name, svc in compose_config.services.items():
                 if svc.build is not None and not svc.image:
                     svc.image = _image_name(harbor_task, svc_name)
+
+            _share_harbor_log_mounts(compose_config)
 
         return compose_config
     else:
@@ -190,6 +200,7 @@ def harbor_task_to_sample(
     )
 
     metadata: dict[str, Any] = {
+        "mcp_servers": mcp_server_specs(harbor_task, compose_config),
         "task_name": harbor_task.name,
         "task_dir": str(harbor_task.task_dir),
         "test_path": str(harbor_task.paths.test_path),
@@ -217,6 +228,32 @@ def harbor_task_to_sample(
         sandbox=SandboxEnvironmentSpec(sandbox_env_name, compose_config),
         metadata=metadata,
     )
+
+
+def mcp_server_specs(
+    harbor_task: HarborTask, compose_config: ComposeConfig
+) -> list[dict[str, Any]]:
+    """Describe how Inspect reaches each ``[[environment.mcp_servers]]`` entry.
+
+    Each spec carries the entry's ``name`` and ``transport`` plus where the
+    client runs (``sandbox``):
+
+    - HTTP / SSE servers hosted by a compose service (URL host is a service
+      name) live on the compose network, which the Inspect process cannot reach.
+      They are proxied over stdio by ``mcp_bridge.py``, started with
+      ``mcp_server_sandbox()`` inside that service (``sandbox`` = the service,
+      ``url`` rewritten to ``localhost``).
+    - HTTP / SSE servers anywhere else are reached directly from the Inspect
+      process with ``mcp_server_http()`` / ``mcp_server_sse()`` (``sandbox`` =
+      ``None``).
+    - Stdio servers are started in the default service.
+    """
+    services = compose_config.services or {}
+    default_name = _find_default_service(compose_config)[0] if services else "default"
+    return [
+        _mcp_server_spec(cfg, services, default_name)
+        for cfg in harbor_task.config.environment.mcp_servers
+    ]
 
 
 def _image_name(harbor_task: HarborTask, service: str | None = None) -> str:
@@ -405,3 +442,173 @@ def _is_no_network(env_config: EnvironmentConfig) -> bool:
     is isolated through the ``network_mode`` check below.
     """
     return env_config.network_mode == NetworkMode.NO_NETWORK
+
+
+def _complete_default_service(
+    service: ComposeService,
+    harbor_task: HarborTask,
+    env_config: EnvironmentConfig,
+    dockerfile_path: Path,
+) -> None:
+    """Fill in what Harbor adds to the main service of a task's docker-compose.yaml.
+
+    Harbor merges the compose file over its own definition of the main service
+    (image built from ``environment/Dockerfile`` or ``[environment].docker_image``,
+    ``[environment.env]``, a long-running command), so compose files often only
+    declare ``depends_on`` or extra mounts for it. Inspect also needs the agent's
+    service marked as its default sandbox (``x-default``).
+    """
+    if service.image is None and service.build is None:
+        if env_config.docker_image:
+            service.image = env_config.docker_image
+        else:
+            service.image = _image_name(harbor_task)
+            if dockerfile_path.exists():
+                service.build = ComposeBuild(context=str(dockerfile_path.parent))
+    if service.command is None:
+        service.command = "tail -f /dev/null"
+    if service.init is None:
+        service.init = True
+    if service.x_default is None:
+        service.x_default = True
+    if env_config.env:
+        # Harbor layers its env override after the task's compose file, so a
+        # key set in both takes the ``[environment.env]`` value.
+        service.environment = {
+            **_environment_as_dict(service.environment),
+            **resolve_env_vars(env_config.env),
+        }
+
+
+def _environment_as_dict(
+    environment: list[str] | dict[str, str | None] | None,
+) -> dict[str, str | None]:
+    """A compose ``environment`` block as a mapping (the list form is ``KEY=value`` or ``KEY``)."""
+    if environment is None:
+        return {}
+    if isinstance(environment, dict):
+        return dict(environment)
+    result: dict[str, str | None] = {}
+    for entry in environment:
+        key, sep, value = entry.partition("=")
+        result[key] = value if sep else None
+    return result
+
+
+def _absolutize_build_context(service: ComposeService, env_dir: Path) -> None:
+    """Resolve a relative ``build`` context against the task's environment directory.
+
+    Inspect writes the compose config to its own location, so a context such as
+    ``./runtime-server`` (``build: ./runtime-server`` or ``build.context``) must
+    not stay relative to the original file, and a ``build:`` block without a
+    context, which compose resolves to the file's directory, needs it spelled out.
+    """
+    build = service.build
+    if isinstance(build, str):
+        if not os.path.isabs(build):
+            service.build = os.path.normpath(os.path.join(str(env_dir), build))
+    elif isinstance(build, ComposeBuild):
+        if not build.context:
+            build.context = str(env_dir)
+        elif not os.path.isabs(build.context):
+            build.context = os.path.normpath(os.path.join(str(env_dir), build.context))
+
+
+_HARBOR_LOG_MOUNTS = ("agent_dir", "verifier_dir", "artifacts_dir")
+
+
+def _share_harbor_log_mounts(compose_config: ComposeConfig) -> None:
+    """Turn Harbor log-directory bind mounts into named volumes shared with the default service.
+
+    A Harbor compose file mounts ``${HOST_AGENT_LOGS_PATH}:${ENV_AGENT_LOGS_PATH}``
+    (and the verifier / artifacts equivalents) into its services so they share
+    ``/logs/...`` with the main container. ``_expand_compose_vars`` resolves both
+    sides to the container path, which would bind-mount a host directory that does
+    not exist. Every such mount, on the default service too, becomes a named
+    volume at the same container path, and the default service mounts each
+    volume a sidecar uses, so the sharing works without touching the host and
+    without relying on the provider to de-duplicate mounts.
+    """
+    if not compose_config.services:
+        return
+    default_name, default_service = _find_default_service(compose_config)
+    paths = EnvironmentPaths()
+    log_paths = {str(getattr(paths, attr)) for attr in _HARBOR_LOG_MOUNTS}
+    shared: dict[str, str] = {}
+    for svc in compose_config.services.values():
+        if svc.volumes:
+            svc.volumes = [
+                _log_mount_as_volume(m, log_paths, shared) for m in svc.volumes
+            ]
+    if not shared:
+        return
+    mounted = {_mount_target(m) for m in default_service.volumes or []}
+    default_service.volumes = list(default_service.volumes or []) + [
+        f"{vol}:{dst}" for vol, dst in shared.items() if dst not in mounted
+    ]
+    compose_config.volumes = {
+        **(compose_config.volumes or {}),
+        **{vol: {} for vol in shared},
+    }
+
+
+def _log_mount_as_volume(
+    mount: str | ComposeVolumeMount, log_paths: set[str], shared: dict[str, str]
+) -> str | ComposeVolumeMount:
+    """``mount`` with a Harbor log bind mount replaced by a named volume, recorded in ``shared``."""
+    if isinstance(mount, str):
+        src, _, rest = mount.partition(":")
+        dst, _, flags = rest.partition(":")
+        if src in log_paths and dst in log_paths:
+            vol = _log_volume_name(dst)
+            shared[vol] = dst
+            return f"{vol}:{dst}" + (f":{flags}" if flags else "")
+        return mount
+    if (
+        mount.type in (None, "bind")
+        and mount.source in log_paths
+        and mount.target in log_paths
+    ):
+        vol = _log_volume_name(mount.target)
+        shared[vol] = mount.target
+        return mount.model_copy(update={"type": "volume", "source": vol, "bind": None})
+    return mount
+
+
+def _log_volume_name(container_path: str) -> str:
+    return "harbor-logs-" + container_path.strip("/").replace("/", "-")
+
+
+def _mount_target(mount: str | ComposeVolumeMount) -> str | None:
+    if isinstance(mount, str):
+        parts = mount.split(":")
+        return parts[1] if len(parts) > 1 else parts[0]
+    return mount.target
+
+
+def _mcp_server_spec(
+    cfg: MCPServerConfig, services: dict[str, Any], default_name: str
+) -> dict[str, Any]:
+    if cfg.transport == "stdio":
+        return {
+            "name": cfg.name,
+            "transport": "stdio",
+            "sandbox": default_name,
+            "command": cfg.command,
+            "args": list(cfg.args),
+        }
+    url = cfg.url or ""
+    parts = urlsplit(url)
+    host = parts.hostname or ""
+    if host not in services:
+        # Reachable from the Inspect process itself: no bridge needed.
+        return {
+            "name": cfg.name,
+            "transport": cfg.transport,
+            "sandbox": None,
+            "url": url,
+        }
+    # Run the bridge inside the service that serves the MCP endpoint.
+    netloc = "localhost" + (f":{parts.port}" if parts.port else "")
+    url = urlunsplit((parts.scheme, netloc, parts.path, parts.query, parts.fragment))
+    return {"name": cfg.name, "transport": cfg.transport, "sandbox": host, "url": url}

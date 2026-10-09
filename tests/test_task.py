@@ -8,8 +8,11 @@ from unittest.mock import AsyncMock, Mock, patch
 import pytest
 from inspect_harbor._harbor.models import HealthcheckConfig
 from inspect_harbor._harbor.task import (
+    MCP_SANDBOX_TOOL_TIMEOUT,
     _disambiguate_sample_ids,
+    _mcp_server_from_spec,
     harbor,
+    harbor_agent,
     load_harbor_tasks,
 )
 from inspect_harbor._harbor.task_dir import HarborTask
@@ -706,3 +709,88 @@ def test_empty_hub_dataset_is_an_error():
         pytest.raises(ValueError, match="has no tasks"),
     ):
         load_harbor_tasks(package_name="acme/empty")
+
+
+def test_mcp_server_from_spec_dispatches_on_where_the_server_runs():
+    """Sidecar servers are bridged in their service, external URLs use Inspect's clients, stdio runs in the default service."""
+    with (
+        patch("inspect_harbor._harbor.task.mcp_server_sandbox") as sandbox,
+        patch("inspect_harbor._harbor.task.mcp_server_http") as http,
+        patch("inspect_harbor._harbor.task.mcp_server_sse") as sse,
+    ):
+        _mcp_server_from_spec(
+            {
+                "name": "rt",
+                "transport": "streamable-http",
+                "sandbox": "runtime",
+                "url": "http://localhost:8000/mcp",
+            }
+        )
+        kwargs = sandbox.call_args.kwargs
+        assert kwargs["sandbox"] == "runtime"
+        assert kwargs["command"] == "python3"
+        assert kwargs["args"][0] == "-c"
+        assert "fastmcp" in kwargs["args"][1]
+        assert kwargs["args"][2:] == ["http://localhost:8000/mcp", "streamable-http"]
+        assert kwargs["timeout"] == MCP_SANDBOX_TOOL_TIMEOUT
+        http.assert_not_called()
+        sse.assert_not_called()
+
+        _mcp_server_from_spec(
+            {"name": "ext", "transport": "sse", "sandbox": None, "url": "http://x/sse"}
+        )
+        sse.assert_called_once_with(name="ext", url="http://x/sse")
+        _mcp_server_from_spec(
+            {
+                "name": "ext2",
+                "transport": "streamable-http",
+                "sandbox": None,
+                "url": "http://x/mcp",
+            }
+        )
+        http.assert_called_once_with(name="ext2", url="http://x/mcp")
+
+        sandbox.reset_mock()
+        _mcp_server_from_spec(
+            {
+                "name": "local",
+                "transport": "stdio",
+                "sandbox": "main",
+                "command": "python",
+                "args": ["-m", "srv"],
+            }
+        )
+        sandbox.assert_called_once_with(
+            name="local",
+            command="python",
+            args=["-m", "srv"],
+            sandbox="main",
+            timeout=MCP_SANDBOX_TOOL_TIMEOUT,
+        )
+
+
+async def test_harbor_agent_adds_one_tool_source_per_mcp_server():
+    """The solver builds the ReAct agent with bash/python plus one ``mcp_tools`` source per spec in the sample metadata."""
+    specs = [
+        {"name": "a", "transport": "stdio", "sandbox": "main", "command": "x"},
+        {"name": "b", "transport": "sse", "sandbox": None, "url": "http://x/sse"},
+    ]
+    state = Mock()
+    state.metadata = {"mcp_servers": specs}
+    with (
+        patch("inspect_harbor._harbor.task._mcp_server_from_spec") as from_spec,
+        patch(
+            "inspect_harbor._harbor.task.mcp_tools", side_effect=lambda s: s
+        ) as tools,
+        patch("inspect_harbor._harbor.task.react") as react,
+        patch("inspect_harbor._harbor.task.as_solver") as as_solver,
+    ):
+        as_solver.return_value = AsyncMock(return_value=state)
+        result = await harbor_agent()(state, Mock())
+
+    assert result is state
+    assert [c.args[0] for c in from_spec.call_args_list] == specs
+    assert tools.call_count == 2
+    agent_tools = react.call_args.kwargs["tools"]
+    assert len(agent_tools) == 5  # bash, python, update_plan + two MCP sources
+    assert agent_tools[3:] == [from_spec.return_value, from_spec.return_value]
