@@ -461,6 +461,12 @@ deveval/deveval:
   function_name: deveval
   title: DevEval
 
+doe/legal-consent-sweep:
+  categories: []
+
+drugtargetbench/drugtargetbench:
+  categories: []
+
 elfsong/mercury-eval:
   categories:
   - Coding
@@ -985,6 +991,9 @@ quixbugs/quixbugs:
   function_name: quixbugs
   title: QuixBugs
 
+reactbench/reactbench:
+  categories: []
+
 reasoning-gym/reasoning-gym-easy:
   categories:
   - Reasoning
@@ -1015,6 +1024,9 @@ red-hat-ai/haiku-hard:
   - Coding
   desc: Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operator-framework, coreos), filtered to instances Claude Haiku failed to solve.
   title: Haiku-Hard
+
+refresh/blenderbench-20:
+  categories: []
 
 replicationbench/replicationbench:
   categories:
