@@ -533,6 +533,9 @@
   task_function: doe_legal_consent_sweep
   samples: 1
   version: latest
+  categories:
+  - Law
+  - Professional
 - title: drugtargetbench/drugtargetbench
   path: registry/drugtargetbench.html
   desc: Agentic causal target discovery across 20 semi-synthetic biobank worlds. Derive a cardiac phenotype from raw cine-MRI, then identify the proteins that causally drive disease under ten planted trap mechanisms and a real laboratory budget.

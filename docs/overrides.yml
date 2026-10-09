@@ -462,7 +462,9 @@ deveval/deveval:
   title: DevEval
 
 doe/legal-consent-sweep:
-  categories: []
+  categories:
+  - Law
+  - Professional
 
 drugtargetbench/drugtargetbench:
   categories:
