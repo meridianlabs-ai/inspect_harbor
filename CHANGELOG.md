@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.1](https://github.com/meridianlabs-ai/inspect_harbor/compare/v1.0.0...v1.0.1) (2026-10-09)
+
+
+### Bug Fixes
+
+* update Harbor registry tasks ([#184](https://github.com/meridianlabs-ai/inspect_harbor/issues/184)) ([600386c](https://github.com/meridianlabs-ai/inspect_harbor/commit/600386c6e1e5ea4ab88766dce78becb4c80b1db3))
+* update Harbor registry tasks ([#192](https://github.com/meridianlabs-ai/inspect_harbor/issues/192)) ([f21d5f7](https://github.com/meridianlabs-ai/inspect_harbor/commit/f21d5f760a6c9467ad1e3d4a8e91344697d619e0))
+* update Harbor registry tasks ([#193](https://github.com/meridianlabs-ai/inspect_harbor/issues/193)) ([794ec64](https://github.com/meridianlabs-ai/inspect_harbor/commit/794ec648445dfce5162c10ff39ba7a691497264f))
+* update Harbor registry tasks ([#197](https://github.com/meridianlabs-ai/inspect_harbor/issues/197)) ([3acfd95](https://github.com/meridianlabs-ai/inspect_harbor/commit/3acfd95883b8e6215ae6e8ecc4c56d7277ea1612))
+* update Harbor registry tasks ([#198](https://github.com/meridianlabs-ai/inspect_harbor/issues/198)) ([9b8216d](https://github.com/meridianlabs-ai/inspect_harbor/commit/9b8216d54a01e107c7c35fc53949977fbe59ae79))
+* update Harbor registry tasks ([#201](https://github.com/meridianlabs-ai/inspect_harbor/issues/201)) ([6f5d6d0](https://github.com/meridianlabs-ai/inspect_harbor/commit/6f5d6d075c359d21be5ffe61302237c5b425f797))
+* update Harbor registry tasks ([#202](https://github.com/meridianlabs-ai/inspect_harbor/issues/202)) ([e3a0d9b](https://github.com/meridianlabs-ai/inspect_harbor/commit/e3a0d9bc738e77739792ca06ad7bbb1d845c8da6))
+
 ## [1.0.0](https://github.com/meridianlabs-ai/inspect_harbor/compare/v0.7.6...v1.0.0) (2026-09-23)
 
 
