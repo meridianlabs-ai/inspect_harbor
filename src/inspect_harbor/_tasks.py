@@ -1718,7 +1718,7 @@ def doe_legal_consent_sweep(
 
 
 @task
-def drugtargetbench_drugtargetbench(
+def drugtargetbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -3764,7 +3764,7 @@ def quixbugs(
 
 
 @task
-def reactbench_reactbench(
+def reactbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -3930,7 +3930,7 @@ def refresh_blenderbench_20(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""20 preserved BlenderBench tasks with 40 linked historical Astra/Opus runs; public, version-pinned, no new evaluations.
+    r"""Refresh's Blender Bench: 20 realistic 3D production workflows in Blender (modeling, rigging, animation, cloth, surfacing) — the agent edits a supplied .blend scene to recreate reference renders and performances.
 
     Slug: refresh/blenderbench-20
     Latest digest: sha256:dac4e4b0062f1689c0ade4a19bb0ab075cfaafffd9f6fc87c386a82fe712309e

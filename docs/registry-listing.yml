@@ -534,12 +534,15 @@
   samples: 1
   version: latest
 - title: drugtargetbench/drugtargetbench
-  path: registry/drugtargetbench_drugtargetbench.html
+  path: registry/drugtargetbench.html
   desc: Agentic causal target discovery across 20 semi-synthetic biobank worlds. Derive a cardiac phenotype from raw cine-MRI, then identify the proteins that causally drive disease under ten planted trap mechanisms and a real laboratory budget.
   desc_trunc: Agentic causal target discovery across 20 semi-synthetic biobank worlds. Derive a cardiac phenotype…
-  task_function: drugtargetbench_drugtargetbench
+  task_function: drugtargetbench
   samples: 60
   version: latest
+  categories:
+  - Biology
+  - Medicine
 - title: elfsong/mercury-eval
   path: registry/elfsong_mercury_eval.html
   desc: 'Mercury eval: 256 Python code-efficiency tasks; CC-BY-NC-4.0.'
@@ -1169,12 +1172,14 @@
   categories:
   - Coding
 - title: reactbench/reactbench
-  path: registry/reactbench_reactbench.html
+  path: registry/reactbench.html
   desc: 'ReactBench: coding agents on realistic React work.'
   desc_trunc: 'ReactBench: coding agents on realistic React work.'
-  task_function: reactbench_reactbench
+  task_function: reactbench
   samples: 39
   version: latest
+  categories:
+  - Coding
 - title: reasoning-gym/reasoning-gym-easy
   path: registry/reasoning_gym_easy.html
   desc: 'Reasoning Gym (easy split): procedurally-generated, algorithmically-verifiable reasoning tasks (algebra, arithmetic, logic, geometry, graphs, games) at easier difficulty for evaluating and RL-training reasoning models.'
@@ -1213,11 +1218,14 @@
   - Coding
 - title: refresh/blenderbench-20
   path: registry/refresh_blenderbench_20.html
-  desc: 20 preserved BlenderBench tasks with 40 linked historical Astra/Opus runs; public, version-pinned, no new evaluations.
-  desc_trunc: 20 preserved BlenderBench tasks with 40 linked historical Astra/Opus runs; public, version-pinned,…
+  desc: 'Refresh''s Blender Bench: 20 realistic 3D production workflows in Blender (modeling, rigging, animation, cloth, surfacing) — the agent edits a supplied .blend scene to recreate reference renders and performances.'
+  desc_trunc: 'Refresh''s Blender Bench: 20 realistic 3D production workflows in Blender (modeling, rigging, animat…'
   task_function: refresh_blenderbench_20
   samples: 20
   version: latest
+  categories:
+  - Coding
+  - Multimodal
 - title: replicationbench/replicationbench
   path: registry/replicationbench.html
   desc: 'ReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce implementation, methodology, and core findings of expert-validated papers, scored on result accuracy.'

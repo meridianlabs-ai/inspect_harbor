@@ -465,7 +465,12 @@ doe/legal-consent-sweep:
   categories: []
 
 drugtargetbench/drugtargetbench:
-  categories: []
+  categories:
+  - Biology
+  - Medicine
+  function_name: drugtargetbench
+  title: DrugTargetBench
+  repo: https://github.com/sammargolis/DrugTargetBench
 
 elfsong/mercury-eval:
   categories:
@@ -992,7 +997,11 @@ quixbugs/quixbugs:
   title: QuixBugs
 
 reactbench/reactbench:
-  categories: []
+  categories:
+  - Coding
+  function_name: reactbench
+  title: ReactBench
+  repo: https://github.com/millionco/reactbench
 
 reasoning-gym/reasoning-gym-easy:
   categories:
@@ -1026,7 +1035,11 @@ red-hat-ai/haiku-hard:
   title: Haiku-Hard
 
 refresh/blenderbench-20:
-  categories: []
+  categories:
+  - Coding
+  - Multimodal
+  title: BlenderBench (Refresh)
+  desc: 'Refresh''s Blender Bench: 20 realistic 3D production workflows in Blender (modeling, rigging, animation, cloth, surfacing) — the agent edits a supplied .blend scene to recreate reference renders and performances.'
 
 replicationbench/replicationbench:
   categories:
