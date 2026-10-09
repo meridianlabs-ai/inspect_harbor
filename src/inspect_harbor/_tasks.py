@@ -1687,6 +1687,68 @@ def deveval(
 
 
 @task
+def doe_legal_consent_sweep(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""A complete acquisition consent workstream with a populated legal data room, simulated correspondence, reference solution and separate verifier
+
+    Slug: doe/legal-consent-sweep
+    Latest digest: sha256:86e38a085cd1e9f47f4fe4925e10121e7614998b43fd0a94b12785a5c5a64d0f
+    """
+    return _harbor_base(
+        package_name="doe/legal-consent-sweep",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def drugtargetbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Agentic causal target discovery across 20 semi-synthetic biobank worlds. Derive a cardiac phenotype from raw cine-MRI, then identify the proteins that causally drive disease under ten planted trap mechanisms and a real laboratory budget.
+
+    Slug: drugtargetbench/drugtargetbench
+    Latest digest: sha256:bc981def0b82d736b82af1ae793acca3d53dd86126828c7bcf02deb053b6595f
+    """
+    return _harbor_base(
+        package_name="drugtargetbench/drugtargetbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def elfsong_mercury_eval(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3702,6 +3764,37 @@ def quixbugs(
 
 
 @task
+def reactbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ReactBench: coding agents on realistic React work
+
+    Slug: reactbench/reactbench
+    Latest digest: sha256:86df4c0e82606357e647061f254015017767660d96b9f6307314a93f56fd8739
+    """
+    return _harbor_base(
+        package_name="reactbench/reactbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def reasoning_gym_easy(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3813,6 +3906,37 @@ def red_hat_ai_haiku_hard(
     """
     return _harbor_base(
         package_name="red-hat-ai/haiku-hard",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def refresh_blenderbench_20(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Refresh's Blender Bench: 20 realistic 3D production workflows in Blender (modeling, rigging, animation, cloth, surfacing) — the agent edits a supplied .blend scene to recreate reference renders and performances.
+
+    Slug: refresh/blenderbench-20
+    Latest digest: sha256:dac4e4b0062f1689c0ade4a19bb0ab075cfaafffd9f6fc87c386a82fe712309e
+    """
+    return _harbor_base(
+        package_name="refresh/blenderbench-20",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

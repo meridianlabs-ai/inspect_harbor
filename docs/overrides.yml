@@ -461,6 +461,19 @@ deveval/deveval:
   function_name: deveval
   title: DevEval
 
+doe/legal-consent-sweep:
+  categories:
+  - Law
+  - Professional
+
+drugtargetbench/drugtargetbench:
+  categories:
+  - Biology
+  - Medicine
+  function_name: drugtargetbench
+  title: DrugTargetBench
+  repo: https://github.com/sammargolis/DrugTargetBench
+
 elfsong/mercury-eval:
   categories:
   - Coding
@@ -985,6 +998,13 @@ quixbugs/quixbugs:
   function_name: quixbugs
   title: QuixBugs
 
+reactbench/reactbench:
+  categories:
+  - Coding
+  function_name: reactbench
+  title: ReactBench
+  repo: https://github.com/millionco/reactbench
+
 reasoning-gym/reasoning-gym-easy:
   categories:
   - Reasoning
@@ -1015,6 +1035,13 @@ red-hat-ai/haiku-hard:
   - Coding
   desc: Hard subset of SWE-style Go bug-fixing tasks drawn from Red Hat-ecosystem repos (openshift, operator-framework, coreos), filtered to instances Claude Haiku failed to solve.
   title: Haiku-Hard
+
+refresh/blenderbench-20:
+  categories:
+  - Coding
+  - Multimodal
+  title: BlenderBench (Refresh)
+  desc: 'Refresh''s Blender Bench: 20 realistic 3D production workflows in Blender (modeling, rigging, animation, cloth, surfacing) — the agent edits a supplied .blend scene to recreate reference renders and performances.'
 
 replicationbench/replicationbench:
   categories:
