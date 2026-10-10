@@ -474,6 +474,9 @@ drugtargetbench/drugtargetbench:
   title: DrugTargetBench
   repo: https://github.com/sammargolis/DrugTargetBench
 
+elfsong/cpu2gpu:
+  categories: []
+
 elfsong/mercury-eval:
   categories:
   - Coding
@@ -782,6 +785,9 @@ kumo/kumo-parity:
   desc: 'KUMO (parity split): subset of the KUMO procedural-reasoning benchmark used for parity / regression checks against the upstream evaluation.'
   function_name: kumo_parity
   title: KUMO (parity)
+
+last-secure-code-benchmark/last-secure-code-benchmark:
+  categories: []
 
 lawbench/lawbench:
   categories:
