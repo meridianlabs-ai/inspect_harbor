@@ -1749,6 +1749,37 @@ def drugtargetbench(
 
 
 @task
+def elfsong_cpu2gpu(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""CPU-to-GPU porting benchmark: 258 CPU programs with hidden GPU verifiers. 1.4.0 switches verification to shared mode for host-side reward-server grading.
+
+    Slug: elfsong/cpu2gpu
+    Latest digest: sha256:99ab327da33c55f281d64abecb3fc416be7e68ac04c9243b59655cfd2246c800
+    """
+    return _harbor_base(
+        package_name="elfsong/cpu2gpu",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def elfsong_mercury_eval(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2945,6 +2976,37 @@ def kumo_parity(
     """
     return _harbor_base(
         package_name="kumo/kumo-parity",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def last_secure_code_benchmark(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scenarios, each at function, file, and repository granularity, in seven languages.
+
+    Slug: last-secure-code-benchmark/last-secure-code-benchmark
+    Latest digest: sha256:73e44b5b118fdd9080147881857d104506a9e9e20f71327125ced1a191e6c27a
+    """
+    return _harbor_base(
+        package_name="last-secure-code-benchmark/last-secure-code-benchmark",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
