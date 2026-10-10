@@ -2989,7 +2989,7 @@ def kumo_parity(
 
 
 @task
-def last_secure_code_benchmark_last_secure_code_benchmark(
+def last_secure_code_benchmark(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,

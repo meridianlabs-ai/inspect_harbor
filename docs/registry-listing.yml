@@ -553,6 +553,8 @@
   task_function: elfsong_cpu2gpu
   samples: 258
   version: latest
+  categories:
+  - Coding
 - title: elfsong/mercury-eval
   path: registry/elfsong_mercury_eval.html
   desc: 'Mercury eval: 256 Python code-efficiency tasks; CC-BY-NC-4.0.'
@@ -932,12 +934,15 @@
   categories:
   - Reasoning
 - title: last-secure-code-benchmark/last-secure-code-benchmark
-  path: registry/last_secure_code_benchmark_last_secure_code_benchmark.html
+  path: registry/last_secure_code_benchmark.html
   desc: 'Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scenarios, each at function, file, and repository granularity, in seven languages.'
   desc_trunc: 'Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scen…'
-  task_function: last_secure_code_benchmark_last_secure_code_benchmark
+  task_function: last_secure_code_benchmark
   samples: 450
   version: latest
+  categories:
+  - Coding
+  - Cybersecurity
 - title: lawbench/lawbench
   path: registry/lawbench.html
   desc: 'LawBench: tasks evaluating LLMs on Chinese-law knowledge — legal entity recognition, reading comprehension, criminal-damage calculation, legal consulting — plus an abstention-rate metric.'

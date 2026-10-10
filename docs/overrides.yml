@@ -475,7 +475,10 @@ drugtargetbench/drugtargetbench:
   repo: https://github.com/sammargolis/DrugTargetBench
 
 elfsong/cpu2gpu:
-  categories: []
+  categories:
+  - Coding
+  title: CPU2GPU
+  repo: https://github.com/Elfsong/cpu2gpu
 
 elfsong/mercury-eval:
   categories:
@@ -787,7 +790,12 @@ kumo/kumo-parity:
   title: KUMO (parity)
 
 last-secure-code-benchmark/last-secure-code-benchmark:
-  categories: []
+  categories:
+  - Coding
+  - Cybersecurity
+  function_name: last_secure_code_benchmark
+  title: LSCBench
+  repo: https://github.com/alibaba/last-secure-code-benchmark
 
 lawbench/lawbench:
   categories:
