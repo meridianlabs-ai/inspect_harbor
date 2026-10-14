@@ -40,6 +40,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
+      # Each version reports on its own: a 3.14-only failure (a missing
+      # wheel, say) must not cancel the 3.12 leg and hide its result.
+      fail-fast: false
       matrix:
         python-version: ["3.12", "3.14"]
 
