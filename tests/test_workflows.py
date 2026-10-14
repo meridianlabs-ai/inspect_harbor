@@ -28,7 +28,7 @@ BUILD = WORKFLOWS / "build.yaml"
 REQUIRED_CHECKS = {
     f"{job} ({python})"
     for job in ("py-build", "py-lint", "py-test", "py-type")
-    for python in ("3.12", "3.13")
+    for python in ("3.12", "3.15")
 }
 
 
