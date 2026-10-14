@@ -546,6 +546,13 @@
   categories:
   - Biology
   - Medicine
+- title: elfsong/cpu2gpu
+  path: registry/elfsong_cpu2gpu.html
+  desc: 'CPU-to-GPU porting benchmark: 258 novel multicore CPU programs to port to CUDA, graded on hidden inputs for correctness and decades of speedup over a direct reference port.'
+  desc_trunc: 'CPU-to-GPU porting benchmark: 258 novel multicore CPU programs to port to CUDA, graded on hidden in…'
+  task_function: elfsong_cpu2gpu
+  samples: 258
+  version: latest
 - title: elfsong/mercury-eval
   path: registry/elfsong_mercury_eval.html
   desc: 'Mercury eval: 256 Python code-efficiency tasks; CC-BY-NC-4.0.'
@@ -555,6 +562,13 @@
   version: latest
   categories:
   - Coding
+- title: evaligo/swe-race
+  path: registry/evaligo_swe_race.html
+  desc: 'SWE-Race v0.1 public split: 94 real concurrency bugs from open-source Python projects, graded by each project''s own hidden tests. Leaderboard:.'
+  desc_trunc: 'SWE-Race v0.1 public split: 94 real concurrency bugs from open-source Python projects, graded by ea…'
+  task_function: evaligo_swe_race
+  samples: 94
+  version: latest
 - title: evoeval/evoeval
   path: registry/evoeval.html
   desc: 'EvoEval: evolving suite that mutates HumanEval problems along several axes (difficulty, creative, subtle, tool-use) for a contamination-resistant view of LLM coding ability.'
@@ -781,6 +795,13 @@
   categories:
   - Law
   - Professional
+- title: heytalal/maydan-hf-rl-sampler
+  path: registry/heytalal_maydan_hf_rl_sampler.html
+  desc: English-language synthetic Saudi/GCC government-workflow sampler for AI-agent evaluation, focused on GOSI F11 contribution reconciliation.
+  desc_trunc: English-language synthetic Saudi/GCC government-workflow sampler for AI-agent evaluation, focused o…
+  task_function: heytalal_maydan_hf_rl_sampler
+  samples: 10
+  version: latest
 - title: hwe-bench/hwe-bench
   path: registry/hwe_bench.html
   desc: 'HWE-bench evaluates LLM agents on engineering-simulation tasks: the agent drives a real solver and is scored on whether the number it reports lands inside a defensible tolerance band, by a deterministic verifier rather than an LLM judge. This CAE edition covers combustion, battery, CFD and 2.5D packaging.'
@@ -924,6 +945,13 @@
   version: latest
   categories:
   - Reasoning
+- title: last-secure-code-benchmark/last-secure-code-benchmark
+  path: registry/last_secure_code_benchmark_last_secure_code_benchmark.html
+  desc: 'Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scenarios, each at function, file, and repository granularity, in seven languages.'
+  desc_trunc: 'Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scen…'
+  task_function: last_secure_code_benchmark_last_secure_code_benchmark
+  samples: 450
+  version: latest
 - title: lawbench/lawbench
   path: registry/lawbench.html
   desc: 'LawBench: tasks evaluating LLMs on Chinese-law knowledge — legal entity recognition, reading comprehension, criminal-damage calculation, legal consulting — plus an abstention-rate metric.'
@@ -963,16 +991,6 @@
   version: latest
   categories:
   - Coding
-- title: long-horizon-terminal-bench/lhtb
-  path: registry/long_horizon_terminal_bench.html
-  desc: 'Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in a containerized terminal over hundreds of steps. Hidden rebuild-from-artifact verifiers; self-reported progress does not count.'
-  desc_trunc: 'Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in…'
-  task_function: long_horizon_terminal_bench
-  samples: 46
-  version: latest
-  categories:
-  - Coding
-  - Assistants
 - title: looni-lab/smdd-bench
   path: registry/looni_lab_smdd_bench.html
   desc: 'SMDD-Bench: five small-molecule design task families with an agent harness, GPU oracle and setup guide.'
@@ -985,8 +1003,8 @@
   - Biology
 - title: luosuu/SWE-kokkos-bench
   path: registry/luosuu_swe_kokkos_bench.html
-  desc: 100 Kokkos ecosystem regression repair tasks.
-  desc_trunc: 100 Kokkos ecosystem regression repair tasks.
+  desc: 100 Kokkos ecosystem regression repair tasks (250-request budget).
+  desc_trunc: 100 Kokkos ecosystem regression repair tasks (250-request budget).
   task_function: luosuu_swe_kokkos_bench
   samples: 100
   version: latest
@@ -1355,6 +1373,20 @@
   - Assistants
   - Professional
   - Behavior
+- title: silrlab/long-horizon-terminal-bench
+  path: registry/silrlab_long_horizon_terminal_bench.html
+  desc: 'Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in a containerized terminal over hundreds of steps. Hidden rebuild-from-artifact verifiers; self-reported progress does not count.'
+  desc_trunc: 'Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in…'
+  task_function: silrlab_long_horizon_terminal_bench
+  samples: 46
+  version: latest
+- title: silrlab/long-horizon-terminal-bench-2.0
+  path: registry/silrlab_long_horizon_terminal_bench_2_0.html
+  desc: 'Long-Horizon Terminal-Bench 2.0: 77-task benchmark measuring how well LLM agents sustain useful work in a containerized terminal over hundreds of steps. The 46 original tasks plus 31 new ones, 30 of them reconstruction tasks. Hidden rebuild-from-artifact verifiers; self-reported progress does not count.'
+  desc_trunc: 'Long-Horizon Terminal-Bench 2.0: 77-task benchmark measuring how well LLM agents sustain useful wor…'
+  task_function: silrlab_long_horizon_terminal_bench_2_0
+  samples: 77
+  version: latest
 - title: skill2env/skill2env
   path: registry/skill2env.html
   desc: 'Skill2Env (NVIDIA): 7,496 terminal tasks auto-converted from open-source Agent Skills — the agent finishes, repairs, or extends a software project in /workspace to satisfy a written contract, graded by hidden tests plus rubrics.'
@@ -1449,6 +1481,13 @@
   version: latest
   categories:
   - Coding
+- title: synthetic-sciences/frontierml
+  path: registry/synthetic_sciences_frontierml.html
+  desc: FrontierML evaluates whether AI agents can complete useful ML research projects under a fixed research budget. Tasks coming soon:.
+  desc_trunc: FrontierML evaluates whether AI agents can complete useful ML research projects under a fixed resea…
+  task_function: synthetic_sciences_frontierml
+  samples: 0
+  version: latest
 - title: tencent/autocodebench
   path: registry/tencent_autocodebench.html
   desc: Multilingual automated code generation benchmark evaluating LLMs across diverse programming tasks and languages.

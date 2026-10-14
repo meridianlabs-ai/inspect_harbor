@@ -474,12 +474,18 @@ drugtargetbench/drugtargetbench:
   title: DrugTargetBench
   repo: https://github.com/sammargolis/DrugTargetBench
 
+elfsong/cpu2gpu:
+  categories: []
+
 elfsong/mercury-eval:
   categories:
   - Coding
   title: Mercury
   repo: https://github.com/Elfsong/Mercury
   arxiv: https://arxiv.org/abs/2402.07844
+
+evaligo/swe-race:
+  categories: []
 
 evoeval/evoeval:
   categories:
@@ -666,6 +672,9 @@ harveyai/lab:
   repo: https://github.com/harveyai/harvey-labs
   title: Harvey LAB
 
+heytalal/maydan-hf-rl-sampler:
+  categories: []
+
 hwe-bench/hwe-bench:
   categories:
   - Science
@@ -783,6 +792,9 @@ kumo/kumo-parity:
   function_name: kumo_parity
   title: KUMO (parity)
 
+last-secure-code-benchmark/last-secure-code-benchmark:
+  categories: []
+
 lawbench/lawbench:
   categories:
   - Professional
@@ -816,15 +828,6 @@ livecodebench/livecodebench:
   desc: 'LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, and Codeforces, supporting code generation, self-repair, execution, and test-output prediction.'
   function_name: livecodebench
   title: LiveCodeBench
-
-long-horizon-terminal-bench/lhtb:
-  categories:
-  - Coding
-  - Assistants
-  arxiv: https://arxiv.org/abs/2607.08964
-  repo: https://github.com/zli12321/LHTB
-  title: Long-Horizon Terminal-Bench
-  function_name: long_horizon_terminal_bench
 
 looni-lab/smdd-bench:
   categories:
@@ -1150,6 +1153,12 @@ sierra-research/tau3-bench:
   desc: Third generation of τ-bench, extending the original with knowledge and voice. A simulation framework for evaluating customer service agents across airline, retail, telecom, and banking knowledge domains.
   title: τ³-bench
 
+silrlab/long-horizon-terminal-bench:
+  categories: []
+
+silrlab/long-horizon-terminal-bench-2.0:
+  categories: []
+
 skill2env/skill2env:
   categories:
   - Coding
@@ -1232,6 +1241,9 @@ swt-bench/swt-bench-verified:
   desc: 'SWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing unit tests for real GitHub issues — tests must fail on buggy code and pass after the fix.'
   function_name: swt_bench_verified
   title: SWT-Bench Verified
+
+synthetic-sciences/frontierml:
+  categories: []
 
 tencent/autocodebench:
   categories:
