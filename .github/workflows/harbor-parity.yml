@@ -31,6 +31,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  # Dependencies install from wheels only; uv still builds this checkout.
+  UV_NO_BUILD: "1"
   INSPECT_HARBOR_NO_TELEMETRY: "1"
   INSPECT_HARBOR_CACHE_DIR: ${{ github.workspace }}/.parity-cache
 
