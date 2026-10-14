@@ -10,6 +10,7 @@ scripts_dir = Path(__file__).parent.parent / "scripts"
 sys.path.insert(0, str(scripts_dir))
 
 from generate_tasks import (  # noqa: E402
+    SHORT_PAGE_RETRIES,
     Dataset,
     FetchedDataset,
     _build_table_rows,
@@ -19,6 +20,7 @@ from generate_tasks import (  # noqa: E402
     generate_registry_pages,
     generate_tasks_content,
     resolve_categories,
+    scrape_hub_slugs,
 )
 
 
@@ -501,3 +503,37 @@ def test_generate_registry_pages_deletes_orphans(
 
     assert not stale.exists()
     assert unrelated.exists()
+
+
+def _hub_page(slugs: list[str], total: int) -> bytes:
+    links = "".join(f'<a href="/datasets/{s}">' for s in slugs)
+    return f'{links}{{\\"children\\":\\"{total} datasets\\"}}'.encode()
+
+
+@pytest.mark.parametrize("empty_fetches", [1, 99])
+def test_scrape_hub_slugs_retries_short_page_and_checks_advertised_total(
+    empty_fetches: int,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A mid-listing empty page is re-fetched; a scrape short of the total fails."""
+    pages = {1: ["a/one", "a/two"], 2: ["b/three", "b/four"], 3: ["c/five"]}
+    fetches: dict[int, int] = {}
+
+    def fake_curl_get(url: str, **_: object) -> bytes:
+        page = int(url.rsplit("=", 1)[1])
+        fetches[page] = fetches.get(page, 0) + 1
+        if page == 2 and fetches[page] <= empty_fetches:
+            return _hub_page([], 5)
+        return _hub_page(pages.get(page, []), 5)
+
+    monkeypatch.setattr("generate_tasks.curl_get", fake_curl_get)
+    monkeypatch.setattr("generate_tasks.CACHE_DIR", tmp_path)
+    monkeypatch.setattr("generate_tasks.MIN_EXPECTED_SLUGS", 1)
+    monkeypatch.setattr("generate_tasks.SHORT_PAGE_RETRY_DELAY", 0)
+
+    if empty_fetches > SHORT_PAGE_RETRIES:
+        with pytest.raises(RuntimeError, match="hub lists 5"):
+            scrape_hub_slugs()
+    else:
+        assert len(scrape_hub_slugs()) == 5

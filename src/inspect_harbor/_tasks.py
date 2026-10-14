@@ -1780,6 +1780,37 @@ def elfsong_mercury_eval(
 
 
 @task
+def evaligo_swe_race(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""SWE-Race v0.1 public split: 94 real concurrency bugs from open-source Python projects, graded by each project's own hidden tests. Leaderboard: https://labs.evaligo.com/swe-race
+
+    Slug: evaligo/swe-race
+    Latest digest: sha256:d7de0f0093cf13100e9ef712d89803200c10885732aadd716eb19de5f950f335
+    """
+    return _harbor_base(
+        package_name="evaligo/swe-race",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def evoeval(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2383,7 +2414,7 @@ def handshake_ai_atlas_finance(
     r"""100 expert-level finance tasks in 13 realistic firm environments, served over MCP (Outlook, Slack, Drive, Calendar, OneNote) and graded by an agent-as-judge against weighted, section-gated rubrics.
 
     Slug: handshake-ai/atlas-finance
-    Latest digest: sha256:4af61568b332d45aa03f0052b85e9a2610a3c706346c17b37c611cbb6787ed23
+    Latest digest: sha256:158cacae658ba889da18e8d4779697dc8134bb21a428595382e8211604baa0fd
     """
     return _harbor_base(
         package_name="handshake-ai/atlas-finance",
@@ -2958,6 +2989,37 @@ def kumo_parity(
 
 
 @task
+def last_secure_code_benchmark(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scenarios, each at function, file, and repository granularity, in seven languages.
+
+    Slug: last-secure-code-benchmark/last-secure-code-benchmark
+    Latest digest: sha256:cfa61591bc0eb1c3a3f19765e2ec504317545cbf6d5fcb07b534cb23beb227d3
+    """
+    return _harbor_base(
+        package_name="last-secure-code-benchmark/last-secure-code-benchmark",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def lawbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3082,37 +3144,6 @@ def livecodebench(
 
 
 @task
-def long_horizon_terminal_bench(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in a containerized terminal over hundreds of steps. Hidden rebuild-from-artifact verifiers; self-reported progress does not count.
-
-    Slug: long-horizon-terminal-bench/lhtb
-    Latest digest: sha256:5ad11c23718b34c647c756c6a565fbff234982bbb95feda4fb45e8479d8e845d
-    """
-    return _harbor_base(
-        package_name="long-horizon-terminal-bench/lhtb",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def looni_lab_smdd_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3155,10 +3186,10 @@ def luosuu_swe_kokkos_bench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""100 Kokkos ecosystem regression repair tasks
+    r"""100 Kokkos ecosystem regression repair tasks (250-request budget)
 
     Slug: luosuu/SWE-kokkos-bench
-    Latest digest: sha256:fbac369a9b51c489eb0be6a9e9093f84c4f39ab071c74c9a68568ca007c22e50
+    Latest digest: sha256:c253fbcb191373887138e6370e4cf93286ea83b9ad55828125ec41dea98672ac
     """
     return _harbor_base(
         package_name="luosuu/SWE-kokkos-bench",
@@ -4094,7 +4125,7 @@ def scale_ai_hil_bench(
     r"""HiL-Bench: software-engineering and text-to-SQL tasks (drawn from SWE-Bench Pro and BIRD) with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.
 
     Slug: scale-ai/hil-bench
-    Latest digest: sha256:08d830f37acc1a324dfa2f9551e9c741822856a82e7829a855a1d29c8f489da9
+    Latest digest: sha256:6fd275bd0c0346ed233d07ddc718c4ed28b91c371b709eff977b067b87937d8d
     """
     return _harbor_base(
         package_name="scale-ai/hil-bench",
@@ -4125,7 +4156,7 @@ def scale_ai_hil_bench_sql_ask_human(
     r"""HiL-Bench SQL split (ask-human): text-to-SQL tasks drawn from BIRD with critical details removed, testing whether an agent recognizes the gap and asks a human for help instead of guessing.
 
     Slug: scale-ai/hil-bench-sql-ask-human
-    Latest digest: sha256:816c6d1172267a988567b9ba10c11a7948c20d63147ec917ab09b1a8ddc67d53
+    Latest digest: sha256:d865fc49a6811ac7f3ef5295571661567de14cb39f69b28833fbae8aae856d62
     """
     return _harbor_base(
         package_name="scale-ai/hil-bench-sql-ask-human",
@@ -4346,6 +4377,68 @@ def sierra_research_tau3_bench(
     """
     return _harbor_base(
         package_name="sierra-research/tau3-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def long_horizon_terminal_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Long-Horizon Terminal-Bench: 46-task benchmark measuring how well LLM agents sustain useful work in a containerized terminal over hundreds of steps. Hidden rebuild-from-artifact verifiers; self-reported progress does not count.
+
+    Slug: silrlab/long-horizon-terminal-bench
+    Latest digest: sha256:fbc07ce0d2a73a9b7edd61b457ca8bd48b4307e10328aefa3324f683fab98eb4
+    """
+    return _harbor_base(
+        package_name="silrlab/long-horizon-terminal-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def long_horizon_terminal_bench_2_0(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Long-Horizon Terminal-Bench 2.0: 77-task benchmark measuring how well LLM agents sustain useful work in a containerized terminal over hundreds of steps. The 46 original tasks plus 31 new ones, 30 of them reconstruction tasks. Hidden rebuild-from-artifact verifiers; self-reported progress does not count.
+
+    Slug: silrlab/long-horizon-terminal-bench-2.0
+    Latest digest: sha256:7ab245d0ff3c7d0fdf40f8e8387bc3ed596cb23641bfba3746dd2fc30d84d3e6
+    """
+    return _harbor_base(
+        package_name="silrlab/long-horizon-terminal-bench-2.0",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
