@@ -18,13 +18,6 @@ on:
 permissions:
   contents: read
 
-# Dependencies install from wheels only; uv still builds this project itself.
-# UV_NO_GROUP keeps the doc group out of every `uv run` too, which would
-# otherwise sync it back in and build quarto-cli (see the install steps).
-env:
-  UV_NO_BUILD: "1"
-  UV_NO_GROUP: doc
-
 jobs:
   py-lint:
     runs-on: ubuntu-latest
