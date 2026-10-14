@@ -474,9 +474,6 @@ drugtargetbench/drugtargetbench:
   title: DrugTargetBench
   repo: https://github.com/sammargolis/DrugTargetBench
 
-elfsong/cpu2gpu:
-  categories: []
-
 elfsong/mercury-eval:
   categories:
   - Coding
@@ -485,7 +482,8 @@ elfsong/mercury-eval:
   arxiv: https://arxiv.org/abs/2402.07844
 
 evaligo/swe-race:
-  categories: []
+  categories:
+  - Coding
 
 evoeval/evoeval:
   categories:
@@ -672,9 +670,6 @@ harveyai/lab:
   repo: https://github.com/harveyai/harvey-labs
   title: Harvey LAB
 
-heytalal/maydan-hf-rl-sampler:
-  categories: []
-
 hwe-bench/hwe-bench:
   categories:
   - Science
@@ -793,7 +788,12 @@ kumo/kumo-parity:
   title: KUMO (parity)
 
 last-secure-code-benchmark/last-secure-code-benchmark:
-  categories: []
+  categories:
+  - Coding
+  - Cybersecurity
+  function_name: last_secure_code_benchmark
+  title: LSCBench
+  repo: https://github.com/alibaba/last-secure-code-benchmark
 
 lawbench/lawbench:
   categories:
@@ -1154,10 +1154,22 @@ sierra-research/tau3-bench:
   title: τ³-bench
 
 silrlab/long-horizon-terminal-bench:
-  categories: []
+  categories:
+  - Coding
+  - Assistants
+  repo: https://github.com/zli12321/LHTB
+  arxiv: https://arxiv.org/abs/2607.08964
+  title: Long-Horizon Terminal-Bench
+  function_name: long_horizon_terminal_bench
 
 silrlab/long-horizon-terminal-bench-2.0:
-  categories: []
+  categories:
+  - Coding
+  - Assistants
+  repo: https://github.com/zli12321/LHTB
+  arxiv: https://arxiv.org/abs/2607.08964
+  title: Long-Horizon Terminal-Bench 2.0
+  function_name: long_horizon_terminal_bench_2_0
 
 skill2env/skill2env:
   categories:
@@ -1241,9 +1253,6 @@ swt-bench/swt-bench-verified:
   desc: 'SWT-Bench Verified: human-validated subset of SWT-Bench evaluating LLMs on generating reproducing unit tests for real GitHub issues — tests must fail on buggy code and pass after the fix.'
   function_name: swt_bench_verified
   title: SWT-Bench Verified
-
-synthetic-sciences/frontierml:
-  categories: []
 
 tencent/autocodebench:
   categories:

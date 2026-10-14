@@ -1749,37 +1749,6 @@ def drugtargetbench(
 
 
 @task
-def elfsong_cpu2gpu(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""CPU-to-GPU porting benchmark: 258 novel multicore CPU programs to port to CUDA, graded on hidden inputs for correctness and decades of speedup over a direct reference port
-
-    Slug: elfsong/cpu2gpu
-    Latest digest: sha256:320024e75e721ef021e217d0a79cf7205404533e0fbc5a5efc2cf7d3e6510d56
-    """
-    return _harbor_base(
-        package_name="elfsong/cpu2gpu",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def elfsong_mercury_eval(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2555,37 +2524,6 @@ def harveyai_lab(
 
 
 @task
-def heytalal_maydan_hf_rl_sampler(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""English-language synthetic Saudi/GCC government-workflow sampler for AI-agent evaluation, focused on GOSI F11 contribution reconciliation.
-
-    Slug: heytalal/maydan-hf-rl-sampler
-    Latest digest: sha256:6a0f8868893716f64e117947560590e9a05e80a86dcb1a25000195fdfb581886
-    """
-    return _harbor_base(
-        package_name="heytalal/maydan-hf-rl-sampler",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def hwe_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3051,7 +2989,7 @@ def kumo_parity(
 
 
 @task
-def last_secure_code_benchmark_last_secure_code_benchmark(
+def last_secure_code_benchmark(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -4452,7 +4390,7 @@ def sierra_research_tau3_bench(
 
 
 @task
-def silrlab_long_horizon_terminal_bench(
+def long_horizon_terminal_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -4483,7 +4421,7 @@ def silrlab_long_horizon_terminal_bench(
 
 
 @task
-def silrlab_long_horizon_terminal_bench_2_0(
+def long_horizon_terminal_bench_2_0(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,
@@ -4811,37 +4749,6 @@ def swt_bench_verified(
     """
     return _harbor_base(
         package_name="swt-bench/swt-bench-verified",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def synthetic_sciences_frontierml(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""FrontierML evaluates whether AI agents can complete useful ML research projects under a fixed research budget. Tasks coming soon: https://frontierml.ai
-
-    Slug: synthetic-sciences/frontierml
-    Latest digest: sha256:d399e0b3835995bbbcd684e18d88b40d5d2f610989ab4ba43bf2aa957f8cbfb9
-    """
-    return _harbor_base(
-        package_name="synthetic-sciences/frontierml",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

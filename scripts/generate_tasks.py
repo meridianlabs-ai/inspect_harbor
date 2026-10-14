@@ -41,6 +41,10 @@ PACKAGE_FETCH_CONCURRENCY = 10
 # matching, or the site is partially down. Without this guard a broken scrape
 # would silently orphan-drop every entry in overrides.yml.
 MIN_EXPECTED_SLUGS = 50
+# Re-fetches of a listing page that adds no slugs while the hub's advertised
+# total hasn't been reached yet (a transiently empty page, not the end).
+SHORT_PAGE_RETRIES = 3
+SHORT_PAGE_RETRY_DELAY = 5
 # Hard cap on description length in the registry listing table; longer descs
 # are truncated with an ellipsis. Per-dataset .qmd pages keep the full text.
 LISTING_DESC_MAX = 100
@@ -120,6 +124,12 @@ def scrape_hub_slugs() -> set[tuple[str, str]]:
     # (`hil-bench`). Strip the inter-chunk boilerplate to rejoin the string
     # before matching.
     chunk_boundary = re.compile(r'"\]\)</script><script>self\.__next_f\.push\(\[\d+,"')
+    # Every page renders the hub's total (`"350 datasets"`). The hub sometimes
+    # serves a mid-listing page with no datasets, which we used to read as the
+    # end of the listing (2026-10-13: stopped at 300 slugs after 348 the night
+    # before, dropping live datasets).
+    total_pattern = re.compile(r'\\?"(\d+) datasets?\\?"')
+    advertised: int | None = None
 
     for page in range(1, REGISTRY_SITE_MAX_PAGES + 1):
         url = f"{REGISTRY_SITE_BASE}/datasets?page={page}"
@@ -127,8 +137,24 @@ def scrape_hub_slugs() -> set[tuple[str, str]]:
             f"hub-page-{page}.html",
             lambda url=url: curl_get(url, max_time=60),
         ).decode()
+        attempts = 0
+        while True:
+            if match := total_pattern.search(body):
+                advertised = int(match.group(1))
+            new_pairs = set(href_pattern.findall(chunk_boundary.sub("", body)))
+            short = advertised is not None and len(pairs) < advertised
+            if new_pairs - pairs or not short or attempts >= SHORT_PAGE_RETRIES:
+                break
+            attempts += 1
+            print(
+                f"  page {page} has no new slugs but only {len(pairs)} of "
+                f"{advertised} seen; retrying ({attempts}/{SHORT_PAGE_RETRIES})",
+                file=sys.stderr,
+            )
+            time.sleep(SHORT_PAGE_RETRY_DELAY)
+            body = curl_get(url, max_time=60).decode()
+            (CACHE_DIR / f"hub-page-{page}.html").write_text(body)
         pages_scraped = page
-        new_pairs = set(href_pattern.findall(chunk_boundary.sub("", body)))
         if not new_pairs - pairs:
             break
         pairs |= new_pairs
@@ -139,6 +165,12 @@ def scrape_hub_slugs() -> set[tuple[str, str]]:
             f"Scrape returned only {len(pairs)} slug(s) (expected ≥ "
             f"{MIN_EXPECTED_SLUGS}). The website likely changed shape or is "
             "down; refusing to proceed (would orphan-drop every override)."
+        )
+    if advertised is not None and len(pairs) < advertised:
+        raise RuntimeError(
+            f"Scrape returned {len(pairs)} slug(s) but the hub lists "
+            f"{advertised}. A listing page came back short; refusing to "
+            "proceed (would orphan-drop live datasets)."
         )
     return pairs
 
