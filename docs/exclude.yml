@@ -250,3 +250,19 @@
 # unofficial harness-native evaluation round ... NOT an official score
 # submission". Keep the canonical gabeorlanski/slopcodebench. Exact slug.
 - silverwhite/slopcodebench-friction
+# Individual's (User, 0 public repos) 10-task synthetic Saudi/GCC
+# government-workflow "sampler"; no repo or paper found. Same kind of upload
+# as doe/sample-pack. Exact slug.
+- heytalal/maydan-hf-rl-sampler
+# Synthetic Sciences' FrontierML ships 0 tasks on the hub ("Tasks coming
+# soon"), so the generated task would have an empty dataset. Remove this
+# entry once tasks are published. Exact slug.
+- synthetic-sciences/frontierml
+# Upstream is an unpublished paper draft ("PortBench" placeholder name, no
+# paper yet), and Harbor's desc says a host-side reward server with hidden
+# GPU verifiers grades it, so it likely can't score in an Inspect sandbox.
+# Excluded at maintainer request (PR #203). Exact slug.
+- elfsong/cpu2gpu
+# Its tasks can't be downloaded anonymously (login required), so it can't be
+# generated. Excluded at maintainer request (PR #203). Exact slug.
+- rsibench-infra/recursive-improve-cases

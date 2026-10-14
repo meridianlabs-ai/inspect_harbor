@@ -481,6 +481,10 @@ elfsong/mercury-eval:
   repo: https://github.com/Elfsong/Mercury
   arxiv: https://arxiv.org/abs/2402.07844
 
+evaligo/swe-race:
+  categories:
+  - Coding
+
 evoeval/evoeval:
   categories:
   - Coding
@@ -783,6 +787,14 @@ kumo/kumo-parity:
   function_name: kumo_parity
   title: KUMO (parity)
 
+last-secure-code-benchmark/last-secure-code-benchmark:
+  categories:
+  - Coding
+  - Cybersecurity
+  function_name: last_secure_code_benchmark
+  title: LSCBench
+  repo: https://github.com/alibaba/last-secure-code-benchmark
+
 lawbench/lawbench:
   categories:
   - Professional
@@ -816,15 +828,6 @@ livecodebench/livecodebench:
   desc: 'LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, and Codeforces, supporting code generation, self-repair, execution, and test-output prediction.'
   function_name: livecodebench
   title: LiveCodeBench
-
-long-horizon-terminal-bench/lhtb:
-  categories:
-  - Coding
-  - Assistants
-  arxiv: https://arxiv.org/abs/2607.08964
-  repo: https://github.com/zli12321/LHTB
-  title: Long-Horizon Terminal-Bench
-  function_name: long_horizon_terminal_bench
 
 looni-lab/smdd-bench:
   categories:
@@ -1149,6 +1152,24 @@ sierra-research/tau3-bench:
   repo: https://github.com/sierra-research/tau2-bench
   desc: Third generation of τ-bench, extending the original with knowledge and voice. A simulation framework for evaluating customer service agents across airline, retail, telecom, and banking knowledge domains.
   title: τ³-bench
+
+silrlab/long-horizon-terminal-bench:
+  categories:
+  - Coding
+  - Assistants
+  repo: https://github.com/zli12321/LHTB
+  arxiv: https://arxiv.org/abs/2607.08964
+  title: Long-Horizon Terminal-Bench
+  function_name: long_horizon_terminal_bench
+
+silrlab/long-horizon-terminal-bench-2.0:
+  categories:
+  - Coding
+  - Assistants
+  repo: https://github.com/zli12321/LHTB
+  arxiv: https://arxiv.org/abs/2607.08964
+  title: Long-Horizon Terminal-Bench 2.0
+  function_name: long_horizon_terminal_bench_2_0
 
 skill2env/skill2env:
   categories:
