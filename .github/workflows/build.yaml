@@ -21,9 +21,12 @@ permissions:
 jobs:
   py-lint:
     runs-on: ubuntu-latest
+    # Pins uv to the matrix interpreter rather than whichever one it finds first.
+    env:
+      UV_PYTHON: ${{ matrix.python-version }}
     strategy:
       matrix:
-        python-version: ["3.12", "3.15"]
+        python-version: ["3.12", "3.14"]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -71,9 +74,12 @@ jobs:
 
   py-type:
     runs-on: ubuntu-latest
+    # Pins uv to the matrix interpreter rather than whichever one it finds first.
+    env:
+      UV_PYTHON: ${{ matrix.python-version }}
     strategy:
       matrix:
-        python-version: ["3.12", "3.15"]
+        python-version: ["3.12", "3.14"]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -97,9 +103,12 @@ jobs:
     permissions:
       contents: read
       pull-requests: read # the coverage action reads the PR diff
+    # Pins uv to the matrix interpreter rather than whichever one it finds first.
+    env:
+      UV_PYTHON: ${{ matrix.python-version }}
     strategy:
       matrix:
-        python-version: ["3.12", "3.15"]
+        python-version: ["3.12", "3.14"]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -215,7 +224,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.12", "3.15"]
+        python-version: ["3.12", "3.14"]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
