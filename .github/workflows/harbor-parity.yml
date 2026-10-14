@@ -36,18 +36,24 @@ env:
 
 jobs:
   parity:
-    name: Compare loader with harbor${{ github.event_name == 'schedule' && ' (nightly)' || '' }}
+    name: Compare loader with harbor (${{ matrix.python-version }})${{ github.event_name == 'schedule' && ' (nightly)' || '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      # Each version reports on its own: a 3.14-only failure (a missing
+      # wheel, say) must not cancel the 3.12 leg and hide its result.
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.14"]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          python-version: '3.12'
+          python-version: ${{ matrix.python-version }}
 
       - name: Install uv
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
@@ -58,7 +64,7 @@ jobs:
         # keeps the project's exclude-newer window from applying here, so
         # "latest" really is the newest stable release on PyPI.
         run: |
-          uv venv .venv-parity
+          uv venv --python ${{ matrix.python-version }} .venv-parity
           uv pip install --no-config --python .venv-parity/bin/python \
             harbor pytest pytest-asyncio pyyaml -e .
 
