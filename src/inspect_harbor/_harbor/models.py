@@ -20,7 +20,7 @@ import re
 import tomllib
 import unicodedata
 from enum import Enum
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import (
     BaseModel,
@@ -40,6 +40,8 @@ ORG_NAME_PATTERN = r"^[a-zA-Z0-9][a-zA-Z0-9._-]*/[a-zA-Z0-9][a-zA-Z0-9._-]*$"
 MAIN_SERVICE_NAME = "main"
 _COMPOSE_SERVICE_NAME_PATTERN = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_.-]*$")
 _LEGACY_ENVIRONMENT_KEYS = {"memory", "storage"}
+
+MCPTransport = Literal["sse", "streamable-http", "stdio"]
 
 
 class NetworkMode(str, Enum):
@@ -126,6 +128,31 @@ class HealthcheckConfig(BaseModel):
     retries: int = 3
 
 
+class MCPServerConfig(BaseModel):
+    """One ``[[environment.mcp_servers]]`` entry: an MCP server the agent can use."""
+
+    model_config = ConfigDict(extra="allow")
+
+    name: str
+    transport: MCPTransport = "sse"
+    url: str | None = None  # required for sse / streamable-http
+    command: str | None = None  # required for stdio
+    args: list[str] = Field(default_factory=list)  # stdio only
+
+    @field_validator("transport", mode="before")
+    @classmethod
+    def _normalize_transport(cls, value: Any) -> Any:
+        return "streamable-http" if value == "http" else value
+
+    @model_validator(mode="after")
+    def _validate_transport_fields(self) -> "MCPServerConfig":
+        if self.transport in ("sse", "streamable-http") and not self.url:
+            raise ValueError(f"'url' is required for transport '{self.transport}'")
+        if self.transport == "stdio" and not self.command:
+            raise ValueError("'command' is required for transport 'stdio'")
+        return self
+
+
 class EnvironmentConfig(BaseModel):
     """The ``[environment]`` section."""
 
@@ -140,7 +167,7 @@ class EnvironmentConfig(BaseModel):
     gpus: int | None = None
     gpu_types: list[str] | None = None
     tpu: dict[str, Any] | None = None
-    mcp_servers: list[dict[str, Any]] = Field(default_factory=list)
+    mcp_servers: list[MCPServerConfig] = Field(default_factory=list)
     env: dict[str, str] = Field(default_factory=dict)
     skills_dir: str | None = None
     healthcheck: HealthcheckConfig | None = None

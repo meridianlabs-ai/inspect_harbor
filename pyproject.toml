@@ -13,6 +13,7 @@ license = { text = "MIT License" }
 dependencies = [
     "inspect-ai>=0.3.264",
     "httpx",
+    "mcp>=1.10.0",
     "packaging",
     "pydantic>=2",
     "pyyaml",

@@ -8,6 +8,8 @@ from typing import Any
 
 import pytest
 from inspect_harbor._harbor.models import (
+    EnvironmentConfig,
+    MCPServerConfig,
     NetworkMode,
     TaskConfig,
     TaskOS,
@@ -251,3 +253,42 @@ def test_verifier_collect_hooks() -> None:
         first,
         second,
     ]
+
+
+def test_mcp_server_config_mirrors_harbor():
+    """``[[environment.mcp_servers]]`` follows Harbor: ``sse`` by default, ``http`` normalised, required fields per transport."""
+    default = MCPServerConfig(name="s", url="http://svc:8000/sse")
+    assert default.transport == "sse"
+    http = MCPServerConfig.model_validate(
+        {"name": "s", "transport": "http", "url": "http://svc:8000/mcp"}
+    )
+    assert http.transport == "streamable-http"
+    stdio = MCPServerConfig(
+        name="s", transport="stdio", command="python", args=["-m", "x"]
+    )
+    assert (stdio.command, stdio.args) == ("python", ["-m", "x"])
+
+    with pytest.raises(ValidationError, match="'url' is required"):
+        MCPServerConfig(name="s", transport="streamable-http")
+    with pytest.raises(ValidationError, match="'command' is required"):
+        MCPServerConfig(name="s", transport="stdio")
+    with pytest.raises(ValidationError):
+        MCPServerConfig.model_validate(
+            {"name": "s", "transport": "grpc", "url": "http://svc/mcp"}
+        )
+
+
+def test_environment_config_parses_mcp_servers():
+    """``[environment].mcp_servers`` entries are validated as ``MCPServerConfig`` at load time."""
+    env = EnvironmentConfig.model_validate(
+        {
+            "mcp_servers": [
+                {"name": "rt", "transport": "http", "url": "http://rt:8000/mcp"}
+            ]
+        }
+    )
+    assert env.mcp_servers[0].transport == "streamable-http"
+    with pytest.raises(ValidationError, match="'command' is required"):
+        EnvironmentConfig.model_validate(
+            {"mcp_servers": [{"name": "bad", "transport": "stdio"}]}
+        )

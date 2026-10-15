@@ -60,7 +60,6 @@ Loading a task that declares any of the below either raises or warns:
 |---|---|
 | `[[steps]]` + `multi_step_reward_strategy` (multi-step tasks) | **raise** |
 | `[environment].os = "windows"` | **raise** |
-| `[environment].mcp_servers` | warn (not exposed to agent) |
 | `[environment].skills_dir` | warn (not copied to agent skills dir) |
 
 `[environment].build_timeout_sec`, `storage_mb`, `workdir`, and `config.source` / `config.artifacts` are ignored.
@@ -83,6 +82,30 @@ Harbor. Two differences are worth knowing about:
   even while Docker still considers the container starting — with Harbor's
   defaults, a `start_period_sec` above 105s. Harbor itself runs `up --wait`
   untimed and only then polls the healthcheck, so it has no such ceiling.
+
+### MCP Servers
+
+`[[environment.mcp_servers]]` entries become Inspect [MCP tools](https://inspect.aisi.org.uk/tools-mcp.html)
+of the default `harbor_agent` solver (a ReAct agent with `bash`, `python` and the task's MCP
+servers), so the agent sees the same tools it would under Harbor. How each server is reached
+depends on where it runs:
+
+- **A compose sidecar** (the URL's host is a service of the task's `docker-compose.yaml`, as in
+  `http://tau3-runtime:8000/mcp`): the server lives on the compose network, which the Inspect
+  process cannot reach, so Inspect starts a small stdio bridge inside that service with
+  `mcp_server_sandbox()` and proxies the server's tools through it. The service's image must
+  provide `python3` and `fastmcp>=3` (Harbor's MCP sidecar images do).
+- **Any other URL** (`sse` or `streamable-http`): Inspect's native `mcp_server_sse()` /
+  `mcp_server_http()` client connects from the Inspect process.
+- **`stdio`**: the command runs in the default service through `mcp_server_sandbox()`.
+
+MCP calls through a sandbox get a 600 s timeout rather than Inspect's 180 s default, since a
+server may itself wait on a model turn (tau3-bench's user simulator does).
+
+Multi-service compose files are completed the way Harbor completes them: the main service gets
+the task image, `[environment.env]` (merged over the compose `environment`), and the `x-default`
+marker; relative `build` contexts resolve against `environment/`; Harbor's `${HOST_*_LOGS_PATH}`
+bind mounts of `/logs/...` become named volumes shared between the services that declare them.
 
 ## LLM Judges in Verification
 
