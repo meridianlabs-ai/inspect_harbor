@@ -274,6 +274,7 @@ def _build_harbor_tasks(
     mcp_servers: list[str] = []
     skills_dir: list[str] = []
     allowlist: list[str] = []
+    phase_network: list[str] = []
 
     for t in harbor_tasks:
         if t.has_steps:
@@ -294,13 +295,21 @@ def _build_harbor_tasks(
         if env.skills_dir is not None:
             skills_dir.append(t.name)
         # We can't enforce an egress allowlist, so flag it as degraded below.
-        # Harbor enforces it with an involved setup we don't reproduce, and it
-        # can't be expressed through inspect_ai's ComposeConfig (its
-        # ComposeService model rejects cap_add/sysctls); inspect_ai has no
-        # native egress-allowlist primitive — only network_mode none/bridge/
-        # host. See https://github.com/meridianlabs-ai/inspect_harbor/issues/118.
+        # Harbor enforces it with a transparent-proxy sidecar (nftables,
+        # NET_ADMIN, per-phase policy switching) we don't reproduce, and
+        # inspect_ai has no egress-allowlist primitive, only network_mode
+        # none/bridge/host. See
+        # https://github.com/meridianlabs-ai/inspect_harbor/issues/118.
         if env.network_mode == NetworkMode.ALLOWLIST:
             allowlist.append(t.name)
+        # Harbor switches the egress policy between the agent and verifier
+        # phases; inspect_ai has no way to change a sandbox's networking
+        # after it is up, so the environment-level mode applies throughout.
+        if any(
+            phase.network_mode is not None and phase.network_mode != env.network_mode
+            for phase in (t.config.agent, t.config.verifier)
+        ):
+            phase_network.append(t.name)
 
     blocking: list[str] = []
     if multi_step:
@@ -328,6 +337,12 @@ def _build_harbor_tasks(
         degraded.append(
             "`[environment].network_mode = 'allowlist'` (egress allowlist cannot "
             f"be enforced in a plain compose project; treated as 'public'): {allowlist}"
+        )
+    if phase_network:
+        degraded.append(
+            "`[agent].network_mode`/`[verifier].network_mode` (per-phase network "
+            "policies cannot be applied to a running sandbox; the "
+            f"`[environment]` mode applies to both phases): {phase_network}"
         )
     if degraded:
         logger.warning(

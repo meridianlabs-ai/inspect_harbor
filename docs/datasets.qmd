@@ -50,7 +50,17 @@ These are upstream issues we've encountered while integrating Harbor datasets. E
 
 ## Volume mount limitations
 
-Some multi-service tasks declare Docker `volumes:` that inspect_harbor doesn't yet fully translate (single-service tasks are unaffected).
+Multi-service tasks can declare Docker `volumes:` in their `docker-compose.yaml`; single-service tasks are unaffected.
 
-- **`${HOST_*}` `/logs` binds fail on local Docker** (`mounts denied`) but work on other providers (daytona/e2b). Affected: `kumo/*` (parity/1/easy/hard), `openai/swe-lancer-diamond-*` (all/ic/manager), `grafana/o11y-bench`, `sierra-research/tau3-bench`, `yanagiorigami/frontier-cs`.
+- **`${HOST_*}` log mounts become named volumes.** Harbor binds per-trial directories on the Docker host at `${HOST_VERIFIER_LOGS_PATH}`, `${HOST_AGENT_LOGS_PATH}` and `${HOST_ARTIFACTS_PATH}`. inspect_harbor has no host side (the sandbox need not be local Docker), so these expand to compose named volumes that are shared between the sample's services and removed with the sandbox. Short-form and long-form mounts of the whole directory are supported; tasks whose services exchange logs this way (`kumo/*`, `sierra-research/tau3-bench`, ...) run on local Docker and on Daytona.
+- **Subpaths of `${HOST_*}` are dropped.** A mount such as `${HOST_ARTIFACTS_PATH}/out:/out` is valid against Harbor's host directory but has no named-volume equivalent. The converter drops the mount and logs a warning naming the task and service, rather than failing at `compose up`.
 - **Task-file binds aren't delivered** — relative/host-path file mounts (`./setup.json`, `./AGENT.md`, `${CONTEXT_DIR}/../../shared/...`) aren't mounted into the container. Affected: `grafana/o11y-bench`, `yanagiorigami/frontier-cs`, `scale-ai/hil-bench`.
+
+## Network isolation
+
+`[environment].network_mode` maps onto compose `network_mode`, which is the only networking primitive every Inspect sandbox provider offers. That reproduces Harbor's egress control only partly:
+
+- **`no-network`** sets `network_mode: none` on every service that declares no networking of its own. A service with its own `network_mode` or `networks:` keeps it, exactly as under Harbor, which routes only unconfigured services through its egress sidecar. Note what that means: a task can give a service internet access under `no-network` by declaring `network_mode: bridge` or a `networks:` block, in Harbor and here alike.
+- **Sibling services are isolated from each other under `no-network`.** Harbor puts the unconfigured services into one shared egress-sidecar network namespace, so `main` still reaches a sidecar on `localhost` (verified against Harbor 0.23). With `network_mode: none` each service gets its own empty namespace, so a `no-network` task whose `main` talks to a database sidecar over `localhost` works under Harbor and fails here. Tracked in [#196](https://github.com/meridianlabs-ai/inspect_harbor/issues/196).
+- **`allowlist`** cannot be enforced in a plain compose project and is treated as `public`; the loader logs a degraded-fidelity warning. See [#118](https://github.com/meridianlabs-ai/inspect_harbor/issues/118).
+- **Per-phase policies** (`[agent].network_mode`, `[verifier].network_mode`) cannot be applied to a running sandbox, so the `[environment]` mode applies to both phases. The loader warns when they differ.
