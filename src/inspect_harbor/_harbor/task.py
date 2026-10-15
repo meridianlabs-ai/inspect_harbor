@@ -11,7 +11,10 @@ from inspect_ai.agent import react
 from inspect_ai.model import CompactionEdit
 from inspect_ai.tool import bash, python, update_plan
 
-from inspect_harbor._harbor.converters import harbor_task_to_sample
+from inspect_harbor._harbor.converters import (
+    _verifier_keeps_network,
+    harbor_task_to_sample,
+)
 from inspect_harbor._harbor.git_tasks import GitTaskSpec, download_git_tasks
 from inspect_harbor._harbor.hub import (
     HubClient,
@@ -274,6 +277,7 @@ def _build_harbor_tasks(
     mcp_servers: list[str] = []
     skills_dir: list[str] = []
     allowlist: list[str] = []
+    verifier_online: list[str] = []
 
     for t in harbor_tasks:
         if t.has_steps:
@@ -301,6 +305,8 @@ def _build_harbor_tasks(
         # host. See https://github.com/meridianlabs-ai/inspect_harbor/issues/118.
         if env.network_mode == NetworkMode.ALLOWLIST:
             allowlist.append(t.name)
+        if _verifier_keeps_network(t.config):
+            verifier_online.append(t.name)
 
     blocking: list[str] = []
     if multi_step:
@@ -324,6 +330,11 @@ def _build_harbor_tasks(
         degraded.append(f"`[environment].mcp_servers`: {mcp_servers}")
     if skills_dir:
         degraded.append(f"`[environment].skills_dir`: {skills_dir}")
+    if verifier_online:
+        degraded.append(
+            "`[verifier].network_mode = 'no-network'` while the agent has network "
+            f"(the verifier runs with the agent's network): {verifier_online}"
+        )
     if allowlist:
         degraded.append(
             "`[environment].network_mode = 'allowlist'` (egress allowlist cannot "
