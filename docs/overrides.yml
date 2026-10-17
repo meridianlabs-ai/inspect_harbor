@@ -1008,10 +1008,16 @@ quixbugs/quixbugs:
   title: QuixBugs
 
 rachittshah/railhead:
-  categories: []
+  categories:
+  - Reasoning
+  title: Railhead
+  repo: https://github.com/rachittshah/railhead
 
 rachittshah/railhead-train:
-  categories: []
+  categories:
+  - Reasoning
+  title: Railhead (train)
+  repo: https://github.com/rachittshah/railhead
 
 reactbench/reactbench:
   categories:
@@ -1070,7 +1076,11 @@ replicationbench/replicationbench:
   title: ReplicationBench
 
 review-bench/reviewbench-public:
-  categories: []
+  categories:
+  - Coding
+  function_name: reviewbench_public
+  title: ReviewBench
+  repo: https://github.com/review-bench/ReviewBench
 
 rexbench/rexbench:
   categories:

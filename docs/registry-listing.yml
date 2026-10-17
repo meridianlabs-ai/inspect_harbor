@@ -1204,6 +1204,8 @@
   task_function: rachittshah_railhead
   samples: 533
   version: latest
+  categories:
+  - Reasoning
 - title: rachittshah/railhead-train
   path: registry/rachittshah_railhead_train.html
   desc: 'Railhead train set: models play OpenTTD directly; replay-verified rewards, run-off valuation, priced forks, promise-keeping contracts.'
@@ -1211,6 +1213,8 @@
   task_function: rachittshah_railhead_train
   samples: 1006
   version: latest
+  categories:
+  - Reasoning
 - title: reactbench/reactbench
   path: registry/reactbench.html
   desc: 'ReactBench: coding agents on realistic React work.'
@@ -1278,12 +1282,14 @@
   - Physics
   - Coding
 - title: review-bench/reviewbench-public
-  path: registry/review_bench_reviewbench_public.html
+  path: registry/reviewbench_public.html
   desc: 'ReviewBench: 219 frozen PRs; harness-neutral reviewer; separate Claude Opus 5 judge.'
   desc_trunc: 'ReviewBench: 219 frozen PRs; harness-neutral reviewer; separate Claude Opus 5 judge.'
-  task_function: review_bench_reviewbench_public
+  task_function: reviewbench_public
   samples: 219
   version: latest
+  categories:
+  - Coding
 - title: rexbench/rexbench
   path: registry/rexbench.html
   desc: 'RExBench - 2 tasks (cogs, othello) evaluating AI agents'' ability to extend existing AI research through research experiment implementation. Tasks require an A100 40GB GPU and may take multiple hours (cogs: ~2.5h oracle; othello: ~45min oracle). Parity: openhands@1.4.0 / anthropic/claude-sonnet-4-5, 3 runs — cogs: 100% Harbor vs 66.67% original; othello: 100% Harbor vs 100% original. Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors. Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.'
