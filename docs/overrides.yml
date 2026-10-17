@@ -670,6 +670,12 @@ harveyai/lab:
   repo: https://github.com/harveyai/harvey-labs
   title: Harvey LAB
 
+huu256/gauntlet:
+  categories: []
+
+huu256/gauntlet-planner:
+  categories: []
+
 hwe-bench/hwe-bench:
   categories:
   - Science
@@ -1001,6 +1007,12 @@ quixbugs/quixbugs:
   function_name: quixbugs
   title: QuixBugs
 
+rachittshah/railhead:
+  categories: []
+
+rachittshah/railhead-train:
+  categories: []
+
 reactbench/reactbench:
   categories:
   - Coding
@@ -1056,6 +1068,9 @@ replicationbench/replicationbench:
   desc: 'ReplicationBench: end-to-end replication of astrophysics research papers — agents reproduce implementation, methodology, and core findings of expert-validated papers, scored on result accuracy.'
   function_name: replicationbench
   title: ReplicationBench
+
+review-bench/reviewbench-public:
+  categories: []
 
 rexbench/rexbench:
   categories:

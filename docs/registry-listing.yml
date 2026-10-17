@@ -790,6 +790,20 @@
   categories:
   - Law
   - Professional
+- title: huu256/gauntlet
+  path: registry/huu256_gauntlet.html
+  desc: 'Gauntlet: five hard fundraising-desk games (6x6 to 14x14), a stochastic job-shop scheduling problem played through a chat with a hidden game server. Pass/fail against a fixed bar.'
+  desc_trunc: 'Gauntlet: five hard fundraising-desk games (6x6 to 14x14), a stochastic job-shop scheduling problem…'
+  task_function: huu256_gauntlet
+  samples: 5
+  version: latest
+- title: huu256/gauntlet-planner
+  path: registry/huu256_gauntlet_planner.html
+  desc: 'Gauntlet: five hard fundraising-desk games (6x6 to 14x14), a stochastic job-shop scheduling problem played through a chat with a hidden game server. Pass/fail against a fixed bar. Same games with the optional @planner advice assistant enabled.'
+  desc_trunc: 'Gauntlet: five hard fundraising-desk games (6x6 to 14x14), a stochastic job-shop scheduling problem…'
+  task_function: huu256_gauntlet_planner
+  samples: 5
+  version: latest
 - title: hwe-bench/hwe-bench
   path: registry/hwe_bench.html
   desc: 'HWE-bench evaluates LLM agents on engineering-simulation tasks: the agent drives a real solver and is scored on whether the number it reports lands inside a defensible tolerance band, by a deterministic verifier rather than an LLM judge. This CAE edition covers combustion, battery, CFD and 2.5D packaging.'
@@ -1183,6 +1197,20 @@
   version: latest
   categories:
   - Coding
+- title: rachittshah/railhead
+  path: registry/rachittshah_railhead.html
+  desc: 'Railhead eval set (dev + ood): models play OpenTTD directly; replay-verified rewards, run-off valuation, priced forks, promise-keeping contracts.'
+  desc_trunc: 'Railhead eval set (dev + ood): models play OpenTTD directly; replay-verified rewards, run-off valua…'
+  task_function: rachittshah_railhead
+  samples: 533
+  version: latest
+- title: rachittshah/railhead-train
+  path: registry/rachittshah_railhead_train.html
+  desc: 'Railhead train set: models play OpenTTD directly; replay-verified rewards, run-off valuation, priced forks, promise-keeping contracts.'
+  desc_trunc: 'Railhead train set: models play OpenTTD directly; replay-verified rewards, run-off valuation, price…'
+  task_function: rachittshah_railhead_train
+  samples: 1006
+  version: latest
 - title: reactbench/reactbench
   path: registry/reactbench.html
   desc: 'ReactBench: coding agents on realistic React work.'
@@ -1249,6 +1277,13 @@
   - Science
   - Physics
   - Coding
+- title: review-bench/reviewbench-public
+  path: registry/review_bench_reviewbench_public.html
+  desc: 'ReviewBench: 219 frozen PRs; harness-neutral reviewer; separate Claude Opus 5 judge.'
+  desc_trunc: 'ReviewBench: 219 frozen PRs; harness-neutral reviewer; separate Claude Opus 5 judge.'
+  task_function: review_bench_reviewbench_public
+  samples: 219
+  version: latest
 - title: rexbench/rexbench
   path: registry/rexbench.html
   desc: 'RExBench - 2 tasks (cogs, othello) evaluating AI agents'' ability to extend existing AI research through research experiment implementation. Tasks require an A100 40GB GPU and may take multiple hours (cogs: ~2.5h oracle; othello: ~45min oracle). Parity: openhands@1.4.0 / anthropic/claude-sonnet-4-5, 3 runs — cogs: 100% Harbor vs 66.67% original; othello: 100% Harbor vs 100% original. Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors. Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.'
