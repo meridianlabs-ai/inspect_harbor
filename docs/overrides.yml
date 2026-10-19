@@ -670,18 +670,6 @@ harveyai/lab:
   repo: https://github.com/harveyai/harvey-labs
   title: Harvey LAB
 
-huu256/gauntlet:
-  categories: []
-
-huu256/gauntlet-planner:
-  categories: []
-
-huu256/hpd-benchmark:
-  categories: []
-
-huu256/hpd-training:
-  categories: []
-
 hwe-bench/hwe-bench:
   categories:
   - Science
@@ -1014,10 +1002,16 @@ quixbugs/quixbugs:
   title: QuixBugs
 
 rachittshah/railhead:
-  categories: []
+  categories:
+  - Reasoning
+  title: Railhead
+  repo: https://github.com/rachittshah/railhead
 
 rachittshah/railhead-train:
-  categories: []
+  categories:
+  - Reasoning
+  title: Railhead (train)
+  repo: https://github.com/rachittshah/railhead
 
 reactbench/reactbench:
   categories:
@@ -1076,7 +1070,11 @@ replicationbench/replicationbench:
   title: ReplicationBench
 
 review-bench/reviewbench-public:
-  categories: []
+  categories:
+  - Coding
+  title: ReviewBench
+  repo: https://github.com/review-bench/ReviewBench
+  function_name: reviewbench_public
 
 rexbench/rexbench:
   categories:

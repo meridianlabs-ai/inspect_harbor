@@ -2524,130 +2524,6 @@ def harveyai_lab(
 
 
 @task
-def huu256_gauntlet(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Gauntlet: five hard fundraising-desk games (6x6 to 14x14), a stochastic job-shop scheduling problem played through a chat with a hidden game server. Pass/fail against a fixed bar.
-
-    Slug: huu256/gauntlet
-    Latest digest: sha256:db0c4e0c58bfb86d5aaca936319bc67c62768955501f9b8b3c6b08e359f2057c
-    """
-    return _harbor_base(
-        package_name="huu256/gauntlet",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def huu256_gauntlet_planner(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Gauntlet: five hard fundraising-desk games (6x6 to 14x14), a stochastic job-shop scheduling problem played through a chat with a hidden game server. Pass/fail against a fixed bar. Same games with the optional @planner advice assistant enabled.
-
-    Slug: huu256/gauntlet-planner
-    Latest digest: sha256:089ee4131e8311269eb60ee31f2bdf14b1526fec39bed82c00290cb79ac5b8d3
-    """
-    return _harbor_base(
-        package_name="huu256/gauntlet-planner",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def huu256_hpd_benchmark(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Benchmark test data (do not train on it): professional agentic tasks in mock enterprise environments, based on public benchmarks. For research purposes only; simulated problems, not professional advice (legal, medical, financial or otherwise). Generated with Claude (Opus 5.5) and the author; see the notice in each task README on provenance, licenses (not legal advice) and Anthropic's terms of use.
-
-    Slug: huu256/hpd-benchmark
-    Latest digest: sha256:19791606a30c0375b94c5f226ae80b278299b10f03d9568b489ea7af9ba41f23
-    """
-    return _harbor_base(
-        package_name="huu256/hpd-benchmark",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def huu256_hpd_training(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Training set: self-authored professional agentic tasks in mock enterprise environments. For research purposes only; simulated problems, not professional advice (legal, medical, financial or otherwise). Generated with Claude (Opus 5.5) and the author; see the notice in each task README on provenance, licenses (not legal advice) and Anthropic's terms of use.
-
-    Slug: huu256/hpd-training
-    Latest digest: sha256:dffa4fa84d0f749070fff313d9b67de74f5d13bec15f08a3d439e4c098007c16
-    """
-    return _harbor_base(
-        package_name="huu256/hpd-training",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def hwe_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -4198,7 +4074,7 @@ def replicationbench(
 
 
 @task
-def review_bench_reviewbench_public(
+def reviewbench_public(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
     dataset_exclude_task_names: list[str] | None = None,

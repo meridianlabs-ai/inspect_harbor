@@ -266,3 +266,9 @@
 # Its tasks can't be downloaded anonymously (login required), so it can't be
 # generated. Excluded at maintainer request (PR #203). Exact slug.
 - rsibench-infra/recursive-improve-cases
+# Individual's (User, 18 repos of older NLP/PII tooling and forks, none a
+# benchmark) personal experiments: gauntlet / gauntlet-planner (5 tasks each;
+# -planner is an experiment arm) and hpd-benchmark / hpd-training (7 and 4
+# tasks, desc says "self-authored", "Generated with Claude", one is a
+# training set). No repo or paper found. Same profile as tmax/* (PR #207).
+- huu256/*
