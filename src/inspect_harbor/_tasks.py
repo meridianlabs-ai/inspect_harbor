@@ -3003,7 +3003,7 @@ def last_secure_code_benchmark(
     r"""Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scenarios, each at function, file, and repository granularity, in seven languages.
 
     Slug: last-secure-code-benchmark/last-secure-code-benchmark
-    Latest digest: sha256:cfa61591bc0eb1c3a3f19765e2ec504317545cbf6d5fcb07b534cb23beb227d3
+    Latest digest: sha256:d5ecfdade45e66bce887ffe46fea6b12f0cff683f22781baaf55f023476499af
     """
     return _harbor_base(
         package_name="last-secure-code-benchmark/last-secure-code-benchmark",
@@ -3795,6 +3795,68 @@ def quixbugs(
 
 
 @task
+def rachittshah_railhead(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Railhead eval set (dev + ood): models play OpenTTD directly; replay-verified rewards, run-off valuation, priced forks, promise-keeping contracts.
+
+    Slug: rachittshah/railhead
+    Latest digest: sha256:d128ae12a349bd4cb4ac040b8a9cb07247e532ab9177e23b832c333328831509
+    """
+    return _harbor_base(
+        package_name="rachittshah/railhead",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def rachittshah_railhead_train(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Railhead train set: models play OpenTTD directly; replay-verified rewards, run-off valuation, priced forks, promise-keeping contracts.
+
+    Slug: rachittshah/railhead-train
+    Latest digest: sha256:ea148828cc8f092d3e53f81c5d2dc7670e16b4c388a514db7798ae82f837ebde
+    """
+    return _harbor_base(
+        package_name="rachittshah/railhead-train",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def reactbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3999,6 +4061,37 @@ def replicationbench(
     """
     return _harbor_base(
         package_name="replicationbench/replicationbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def reviewbench_public(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ReviewBench: 219 frozen PRs; harness-neutral reviewer; separate Claude Opus 5 judge.
+
+    Slug: review-bench/reviewbench-public
+    Latest digest: sha256:4cdbaeb022e14313827f1184f5d1af771ee12006a1bf83daed436a980cd0a2d4
+    """
+    return _harbor_base(
+        package_name="review-bench/reviewbench-public",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
