@@ -10,6 +10,13 @@ permissions:
   contents: write
   pull-requests: write
 
+# Leaves out the `doc` group in `uv sync` and in every `uv run`, which would
+# otherwise sync the default groups again. quarto-cli has no wheel and its
+# sdist downloads the Quarto binary from GitHub Releases at build time
+# (flaky, and unused here).
+env:
+  UV_NO_GROUP: doc
+
 jobs:
   update-tasks:
     name: Generate and update registry tasks
@@ -28,9 +35,7 @@ jobs:
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
 
       - name: Install dependencies
-        # --no-group doc: skips quarto-cli, whose sdist downloads the Quarto
-        # binary from GitHub Releases at build time (flaky, and unused here).
-        run: uv sync --no-group doc
+        run: uv sync
 
       - name: Generate tasks
         id: generate

@@ -18,6 +18,13 @@ on:
 permissions:
   contents: read
 
+# Leaves out the `doc` group in `uv sync` and in every `uv run`, which would
+# otherwise sync the default groups again. quarto-cli has no wheel and its
+# sdist downloads the Quarto binary from GitHub Releases at build time, a
+# flaky ~100 MB fetch none of these jobs need.
+env:
+  UV_NO_GROUP: doc
+
 jobs:
   py-lint:
     runs-on: ubuntu-latest
@@ -38,10 +45,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
       - name: Install dependencies
-        # --no-group doc: quarto-cli has no wheel and its sdist downloads the
-        # Quarto binary from GitHub Releases at build time, a flaky ~100 MB
-        # fetch none of these jobs need (only the docs publish uses Quarto).
-        run: uv sync --no-group doc
+        run: uv sync
       - name: Lint with Ruff
         run: uv run ruff check .
       - name: Format with Ruff
@@ -65,10 +69,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
       - name: Install dependencies
-        # --no-group doc: quarto-cli has no wheel and its sdist downloads the
-        # Quarto binary from GitHub Releases at build time, a flaky ~100 MB
-        # fetch none of these jobs need (only the docs publish uses Quarto).
-        run: uv sync --no-group doc
+        run: uv sync
       - name: Validate docs/overrides.yml
         run: uv run python scripts/validate_overrides.py
 
@@ -91,10 +92,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
       - name: Install dependencies
-        # --no-group doc: quarto-cli has no wheel and its sdist downloads the
-        # Quarto binary from GitHub Releases at build time, a flaky ~100 MB
-        # fetch none of these jobs need (only the docs publish uses Quarto).
-        run: uv sync --no-group doc
+        run: uv sync
       - name: Type check with pyright
         run: uv run pyright
 
@@ -121,10 +119,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
       - name: Install dependencies
-        # --no-group doc: quarto-cli has no wheel and its sdist downloads the
-        # Quarto binary from GitHub Releases at build time, a flaky ~100 MB
-        # fetch none of these jobs need (only the docs publish uses Quarto).
-        run: uv sync --no-group doc
+        run: uv sync
       - name: Run tests with coverage
         run: uv run pytest --cov=inspect_harbor --cov-report=term --cov-report=xml --cov-branch
       # Main's coverage data branch is computed here too, read-only, by the

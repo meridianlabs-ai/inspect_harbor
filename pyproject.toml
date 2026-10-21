@@ -45,9 +45,10 @@ dev = [
     "ruff",
     "types-PyYAML",
 ]
-# Kept out of `dev` so CI can `uv sync --no-group doc`: quarto-cli ships no
-# wheel and its sdist downloads the Quarto binary from GitHub Releases at
-# build time. Local `uv sync` still installs it via default-groups below.
+# Kept out of `dev` so CI can leave it out with `UV_NO_GROUP=doc`, which
+# also covers `uv run`: quarto-cli ships no wheel and its sdist downloads the
+# Quarto binary from GitHub Releases at build time. Local `uv sync` still
+# installs it via default-groups below.
 doc = [
     "quarto-cli>=1.9.36",
     "jupyter",
