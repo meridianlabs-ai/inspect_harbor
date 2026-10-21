@@ -113,7 +113,8 @@ jobs:
     # Node tooling:          corepack enable --install-directory ~/.local/bin && pnpm install --frozen-lockfile
     with:
       # inspect_harbor: the design's recipe (what claude-setup did: Python
-      # 3.12, then a locked sync of the default dev and doc groups).
+      # 3.12, then a locked sync of the default dev group; the docs packages
+      # are in the `doc` group, which `uv sync` leaves out).
       provision: |
         uv venv --python 3.12
         uv sync

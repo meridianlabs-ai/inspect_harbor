@@ -173,7 +173,7 @@ The user merges the PR. Docs at https://meridianlabs-ai.github.io/inspect_harbor
 git switch main
 git pull --ff-only
 cd docs
-PRE_COMMIT_ALLOW_NO_CONFIG=1 uv run quarto publish gh-pages --no-prompt
+PRE_COMMIT_ALLOW_NO_CONFIG=1 uv run --group doc quarto publish gh-pages --no-prompt
 ```
 
 The `PRE_COMMIT_ALLOW_NO_CONFIG=1` env var is needed because the user has a global pre-commit hook that blocks the gh-pages worktree (which has no `.pre-commit-config.yaml`). Without it the publish renders successfully but the final commit fails silently and the remote `gh-pages` stays unchanged.
