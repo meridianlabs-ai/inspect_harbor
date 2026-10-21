@@ -18,13 +18,6 @@ on:
 permissions:
   contents: read
 
-# Leaves out the `doc` group in `uv sync` and in every `uv run`, which would
-# otherwise sync the default groups again. quarto-cli has no wheel and its
-# sdist downloads the Quarto binary from GitHub Releases at build time, a
-# flaky ~100 MB fetch none of these jobs need.
-env:
-  UV_NO_GROUP: doc
-
 jobs:
   py-lint:
     runs-on: ubuntu-latest

@@ -28,6 +28,15 @@ Clean up cache and build artifacts:
 make clean
 ```
 
+## Docs
+
+The docs tools (Quarto and its Python packages) are in the `doc` dependency group, which `uv sync` leaves out. Ask for it when you build the docs:
+
+```bash
+cd docs
+uv run --group doc quarto preview
+```
+
 ## Commit messages and releases
 
 We use [Conventional Commits](https://www.conventionalcommits.org/). Because we

@@ -10,13 +10,6 @@ permissions:
   contents: write
   pull-requests: write
 
-# Leaves out the `doc` group in `uv sync` and in every `uv run`, which would
-# otherwise sync the default groups again. quarto-cli has no wheel and its
-# sdist downloads the Quarto binary from GitHub Releases at build time
-# (flaky, and unused here).
-env:
-  UV_NO_GROUP: doc
-
 jobs:
   update-tasks:
     name: Generate and update registry tasks
@@ -98,7 +91,7 @@ jobs:
 
             ```bash
             cd docs
-            uv run quarto publish gh-pages
+            uv run --group doc quarto publish gh-pages
             ```
 
             This re-renders the registry listing and per-benchmark pages against the latest Harbor registry and pushes them to the `gh-pages` branch, which GitHub Pages serves.

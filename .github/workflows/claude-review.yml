@@ -113,14 +113,11 @@ jobs:
     # Node tooling:          corepack enable --install-directory ~/.local/bin && pnpm install --frozen-lockfile
     with:
       # inspect_harbor: the design's recipe (what claude-setup did: Python
-      # 3.12, then a locked sync of the default groups). uv_no_group sets
-      # UV_NO_GROUP for the recipe and for every command the agent runs, so
-      # neither `uv sync` nor a later `uv run` installs the doc group
-      # (quarto-cli has no wheel and is built from its sdist).
+      # 3.12, then a locked sync of the default dev group; the docs packages
+      # are in the `doc` group, which `uv sync` leaves out).
       provision: |
         uv venv --python 3.12
         uv sync
-      uv_no_group: doc
     uses: meridianlabs-ai/agents/.github/workflows/claude-review.yml@main
     # The machine account's secrets, for the gate's deterministic ack/stage
     # steps (eyes reaction + board stage) and the land job's posts (the
