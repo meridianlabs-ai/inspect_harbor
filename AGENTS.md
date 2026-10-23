@@ -21,3 +21,7 @@ inspect_harbor does not depend on the `harbor` package. It reads Harbor's task f
 - **Module layout**: classes first, then public functions, then private helpers; Google docstrings; lenient models (`extra="allow"`) with strict types on the fields we read
 - **Tests**: few and meaningful, parametrised where cases are siblings, real fixtures (a git repo, `httpx.MockTransport`, tar archives) over mocks of our own functions
 - **Environment variables**: `INSPECT_HARBOR_CACHE_DIR` (task cache root), `INSPECT_HARBOR_NO_TELEMETRY=1` (skip hub download counters; set it in stress tests), `HARBOR_SUPABASE_URL` / `HARBOR_SUPABASE_PUBLISHABLE_KEY` (hub backend, same names as Harbor)
+
+## Reviewing other people's pull requests
+
+Unless a maintainer asked for your review, submit any review on someone else's pull request as a **Comment**, never **Approve** or **Request changes**. In this repository those are maintainer decisions: a non-maintainer's verdict doesn't count toward merging and misleads the author about where their PR stands. Put any confirmation or concern in the comment text, and say that you are an AI agent and not a maintainer. This does not apply to agents acting for project maintainers.
