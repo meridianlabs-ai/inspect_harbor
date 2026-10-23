@@ -272,3 +272,27 @@
 # tasks, desc says "self-authored", "Generated with Claude", one is a
 # training set). No repo or paper found. Same profile as tmax/* (PR #207).
 - huu256/*
+# Based Models (Organization; its only repos are agent-loop tooling) eval
+# artifacts, not benchmarks. tau2-airline has 0 samples; the desc says it is
+# "a leaderboard, not a runnable task set" (GLM-5.3-Flash scores on tau2).
+# causal-reflection-tb21 is a 30-task "campaign" slice of Terminal-Bench 2.1
+# ("Not the official TB 2.1 leaderboard"), which we list as
+# terminal-bench/terminal-bench-2-1. Same derivative-subset class as
+# NovitaAI/tb21-* and fritzprix/*. Exact slugs, since the org is real.
+- based-models/causal-reflection-tb21
+- based-models/tau2-airline
+# 1-sample skill smoke test (fix a Concerto JSON instance so it validates)
+# for one skill in Accord Project's agent-skills repo, not a benchmark; it
+# also relies on [environment].skills_dir. Excluded at maintainer request
+# (PR #209). Exact slug, since the org is real.
+- accordproject/skills
+# Reads like an artifact of Letta's memory ("dreaming") experiments: 15
+# unrelated tasks from other sources attempted "with a dreamed memory", with
+# prompts that refer to conventions from earlier runs. No repo, paper or
+# announcement found. Excluded at maintainer request (PR #209). Exact slug.
+- letta-ai/frontier-memory
+# No public provenance: the GitHub user/org `model-topography` doesn't exist
+# and there is no repo, paper or announcement (12 ticket-fixing / open-ended
+# build tasks). Excluded at maintainer request (PR #209). Revisit if it is
+# published.
+- model-topography/*

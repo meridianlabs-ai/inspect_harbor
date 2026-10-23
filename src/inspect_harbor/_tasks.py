@@ -3003,7 +3003,7 @@ def last_secure_code_benchmark(
     r"""Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scenarios, each at function, file, and repository granularity, in seven languages.
 
     Slug: last-secure-code-benchmark/last-secure-code-benchmark
-    Latest digest: sha256:d5ecfdade45e66bce887ffe46fea6b12f0cff683f22781baaf55f023476499af
+    Latest digest: sha256:f597529c3f1671260db9033dbd843eb1adb1663da90fe98b06840f076103f1a6
     """
     return _harbor_base(
         package_name="last-secure-code-benchmark/last-secure-code-benchmark",
@@ -4124,8 +4124,8 @@ def rexbench(
     Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors.
     Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.
 
-    Slug: rexbench/rexbench
-    Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
+        Slug: rexbench/rexbench
+        Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
     """
     return _harbor_base(
         package_name="rexbench/rexbench",
@@ -5400,6 +5400,99 @@ def webgen_bench(
     """
     return _harbor_base(
         package_name="webgen-bench/webgen-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def wildawm_train_rl_208_set(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (RL training split, 208 tasks).
+
+    Slug: wildawm/train-rl-208-set
+    Latest digest: sha256:eec6ad7c9475e343f0d27357659c05c078d765a1d62e49fe88330ebc3f6eef48
+    """
+    return _harbor_base(
+        package_name="wildawm/train-rl-208-set",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def wildawm_train_sft_100_set(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (SFT training split, 100 tasks).
+
+    Slug: wildawm/train-sft-100-set
+    Latest digest: sha256:b5737218a74a45da294d1510ec21b66b0daab572182237aedd4a4d302d96731c
+    """
+    return _harbor_base(
+        package_name="wildawm/train-sft-100-set",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def wildawm_val_33_set(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (validation split, 33 tasks).
+
+    Slug: wildawm/val-33-set
+    Latest digest: sha256:b2894194bf7927d87f42159555ed176290c361bfcd74e628f406acc0c739dcc3
+    """
+    return _harbor_base(
+        package_name="wildawm/val-33-set",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
