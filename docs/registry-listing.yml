@@ -244,20 +244,6 @@
   categories:
   - Assistants
   - Reasoning
-- title: based-models/causal-reflection-tb21
-  path: registry/based_models_causal_reflection_tb21.html
-  desc: Based Models causal-reflection campaign on a 30-task Terminal-Bench 2.1 slice. Not the official TB 2.1 leaderboard.
-  desc_trunc: Based Models causal-reflection campaign on a 30-task Terminal-Bench 2.1 slice. Not the official TB…
-  task_function: based_models_causal_reflection_tb21
-  samples: 30
-  version: latest
-- title: based-models/tau2-airline
-  path: registry/based_models_tau2_airline.html
-  desc: GLM-5.3-Flash airline scores on tau2 1.0.1. This package is a leaderboard, not a runnable task set.
-  desc_trunc: GLM-5.3-Flash airline scores on tau2 1.0.1. This package is a leaderboard, not a runnable task set.
-  task_function: based_models_tau2_airline
-  samples: 0
-  version: latest
 - title: bencalvert04/programbench
   path: registry/bencalvert04_programbench.html
   desc: 'ProgramBench cleanroom reconstruction tasks: reimplementing real-world CLI tools from popular open-source repos.'
@@ -1717,25 +1703,31 @@
   - Coding
 - title: wildawm/train-rl-208-set
   path: registry/wildawm_train_rl_208_set.html
-  desc: 'WildAWM RL training split: 208 tasks (set_rl208).'
-  desc_trunc: 'WildAWM RL training split: 208 tasks (set_rl208).'
+  desc: Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (RL training split, 208 tasks).
+  desc_trunc: Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP servic…
   task_function: wildawm_train_rl_208_set
   samples: 208
   version: latest
+  categories:
+  - Assistants
 - title: wildawm/train-sft-100-set
   path: registry/wildawm_train_sft_100_set.html
-  desc: 'WildAWM SFT training split: 100 tasks (set_sft100).'
-  desc_trunc: 'WildAWM SFT training split: 100 tasks (set_sft100).'
+  desc: Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (SFT training split, 100 tasks).
+  desc_trunc: Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP servic…
   task_function: wildawm_train_sft_100_set
   samples: 100
   version: latest
+  categories:
+  - Assistants
 - title: wildawm/val-33-set
   path: registry/wildawm_val_33_set.html
-  desc: 'WildAWM validation split: 33 tasks (set_val33).'
-  desc_trunc: 'WildAWM validation split: 33 tasks (set_val33).'
+  desc: Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (validation split, 33 tasks).
+  desc_trunc: Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP servic…
   task_function: wildawm_val_33_set
   samples: 33
   version: latest
+  categories:
+  - Assistants
 - title: xlang/ds-1000
   path: registry/xlang_ds_1000.html
   desc: 'DS-1000: data-science code-generation problems from StackOverflow across NumPy, Pandas, TensorFlow, PyTorch, SciPy, Scikit-learn, and Matplotlib, with execution-based grading.'

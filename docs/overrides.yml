@@ -244,12 +244,6 @@ atm-bench/atm-bench-hard-sgm:
   function_name: atm_bench_hard_sgm
   title: ATM-Bench-Hard (SGM)
 
-based-models/causal-reflection-tb21:
-  categories: []
-
-based-models/tau2-airline:
-  categories: []
-
 bencalvert04/programbench:
   categories:
   - Coding
@@ -1439,13 +1433,28 @@ webgen-bench/webgen-bench:
   title: WebGen-Bench
 
 wildawm/train-rl-208-set:
-  categories: []
+  categories:
+  - Assistants
+  title: WildAWM (RL train)
+  repo: https://github.com/MSR-Orchard/WildAWM
+  arxiv: https://arxiv.org/abs/2610.26828
+  desc: Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (RL training split, 208 tasks).
 
 wildawm/train-sft-100-set:
-  categories: []
+  categories:
+  - Assistants
+  title: WildAWM (SFT train)
+  repo: https://github.com/MSR-Orchard/WildAWM
+  arxiv: https://arxiv.org/abs/2610.26828
+  desc: Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (SFT training split, 100 tasks).
 
 wildawm/val-33-set:
-  categories: []
+  categories:
+  - Assistants
+  title: WildAWM (val)
+  repo: https://github.com/MSR-Orchard/WildAWM
+  arxiv: https://arxiv.org/abs/2610.26828
+  desc: Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (validation split, 33 tasks).
 
 xlang-ai/osworld-verified:
   categories:

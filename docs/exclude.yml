@@ -272,3 +272,12 @@
 # tasks, desc says "self-authored", "Generated with Claude", one is a
 # training set). No repo or paper found. Same profile as tmax/* (PR #207).
 - huu256/*
+# Based Models (Organization; its only repos are agent-loop tooling) eval
+# artifacts, not benchmarks. tau2-airline has 0 samples; the desc says it is
+# "a leaderboard, not a runnable task set" (GLM-5.3-Flash scores on tau2).
+# causal-reflection-tb21 is a 30-task "campaign" slice of Terminal-Bench 2.1
+# ("Not the official TB 2.1 leaderboard"), which we list as
+# terminal-bench/terminal-bench-2-1. Same derivative-subset class as
+# NovitaAI/tb21-* and fritzprix/*. Exact slugs, since the org is real.
+- based-models/causal-reflection-tb21
+- based-models/tau2-airline

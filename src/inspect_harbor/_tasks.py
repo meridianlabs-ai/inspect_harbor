@@ -788,68 +788,6 @@ def atm_bench_hard_sgm(
 
 
 @task
-def based_models_causal_reflection_tb21(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Based Models causal-reflection campaign on a 30-task Terminal-Bench 2.1 slice. Not the official TB 2.1 leaderboard.
-
-    Slug: based-models/causal-reflection-tb21
-    Latest digest: sha256:d3b77c0bde7c99b0a235b380aa209d1162b7e533cf3dbfd7d79637971cda95dc
-    """
-    return _harbor_base(
-        package_name="based-models/causal-reflection-tb21",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def based_models_tau2_airline(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""GLM-5.3-Flash airline scores on tau2 1.0.1. This package is a leaderboard, not a runnable task set.
-
-    Slug: based-models/tau2-airline
-    Latest digest: sha256:762b992df7d59cd19f04d9595762180c424d5cdbc185fe1c2e2dbbe86aa00197
-    """
-    return _harbor_base(
-        package_name="based-models/tau2-airline",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def bencalvert04_programbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -4279,8 +4217,8 @@ def rexbench(
     Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors.
     Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.
 
-    Slug: rexbench/rexbench
-    Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
+        Slug: rexbench/rexbench
+        Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
     """
     return _harbor_base(
         package_name="rexbench/rexbench",
@@ -5579,7 +5517,7 @@ def wildawm_train_rl_208_set(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""WildAWM RL training split: 208 tasks (set_rl208)
+    r"""Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (RL training split, 208 tasks).
 
     Slug: wildawm/train-rl-208-set
     Latest digest: sha256:eec6ad7c9475e343f0d27357659c05c078d765a1d62e49fe88330ebc3f6eef48
@@ -5610,7 +5548,7 @@ def wildawm_train_sft_100_set(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""WildAWM SFT training split: 100 tasks (set_sft100)
+    r"""Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (SFT training split, 100 tasks).
 
     Slug: wildawm/train-sft-100-set
     Latest digest: sha256:b5737218a74a45da294d1510ec21b66b0daab572182237aedd4a4d302d96731c
@@ -5641,7 +5579,7 @@ def wildawm_val_33_set(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""WildAWM validation split: 33 tasks (set_val33)
+    r"""Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (validation split, 33 tasks).
 
     Slug: wildawm/val-33-set
     Latest digest: sha256:b2894194bf7927d87f42159555ed176290c361bfcd74e628f406acc0c739dcc3
