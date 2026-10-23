@@ -129,6 +129,9 @@ abundant/swe-marathon:
   repo: https://github.com/abundant-ai/swe-marathon
   arxiv: https://arxiv.org/abs/2606.07682
 
+accordproject/skills:
+  categories: []
+
 actava-ai/chi-bench:
   categories:
   - Medicine
@@ -240,6 +243,12 @@ atm-bench/atm-bench-hard-sgm:
   desc: 'ATM-Bench-Hard (SGM): 31 hard long-term personalized memory questions answered from schema-guided memory (SGM) files distilled from ~4 years of a user''s images, videos, and emails.'
   function_name: atm_bench_hard_sgm
   title: ATM-Bench-Hard (SGM)
+
+based-models/causal-reflection-tb21:
+  categories: []
+
+based-models/tau2-airline:
+  categories: []
 
 bencalvert04/programbench:
   categories:
@@ -813,6 +822,9 @@ lcb/longswebench-32k:
   repo: https://github.com/Zteefano/long-code-bench
   title: LongSWE-Bench (32k)
 
+letta-ai/frontier-memory:
+  categories: []
+
 lica-world/gdb:
   categories:
   - Multimodal
@@ -882,6 +894,9 @@ mmtb/multimedia-terminalbench:
   arxiv: https://arxiv.org/abs/2605.10966
   repo: https://github.com/mm-tbench/multimedia-terminal-bench
   title: MultiMedia-TerminalBench
+
+model-topography/workbench:
+  categories: []
 
 nl2repobench/nl2repobench:
   categories:
@@ -1422,6 +1437,15 @@ webgen-bench/webgen-bench:
   repo: https://github.com/mnluzimu/WebGen-Bench
   function_name: webgen_bench
   title: WebGen-Bench
+
+wildawm/train-rl-208-set:
+  categories: []
+
+wildawm/train-sft-100-set:
+  categories: []
+
+wildawm/val-33-set:
+  categories: []
 
 xlang-ai/osworld-verified:
   categories:

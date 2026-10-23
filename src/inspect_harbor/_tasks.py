@@ -323,6 +323,37 @@ def abundant_swe_marathon(
 
 
 @task
+def accordproject_skills(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Eval dataset for the accordproject concerto-validate skill: fix a Concerto JSON instance with a broken $class so it validates.
+
+    Slug: accordproject/skills
+    Latest digest: sha256:3ec3f9e03e97e7a45900df2d717e943e723d5175d811030c03467f0d7858aa01
+    """
+    return _harbor_base(
+        package_name="accordproject/skills",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def actava_ai_chi_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -744,6 +775,68 @@ def atm_bench_hard_sgm(
     """
     return _harbor_base(
         package_name="atm-bench/atm-bench-hard-sgm",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def based_models_causal_reflection_tb21(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Based Models causal-reflection campaign on a 30-task Terminal-Bench 2.1 slice. Not the official TB 2.1 leaderboard.
+
+    Slug: based-models/causal-reflection-tb21
+    Latest digest: sha256:d3b77c0bde7c99b0a235b380aa209d1162b7e533cf3dbfd7d79637971cda95dc
+    """
+    return _harbor_base(
+        package_name="based-models/causal-reflection-tb21",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def based_models_tau2_airline(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""GLM-5.3-Flash airline scores on tau2 1.0.1. This package is a leaderboard, not a runnable task set.
+
+    Slug: based-models/tau2-airline
+    Latest digest: sha256:762b992df7d59cd19f04d9595762180c424d5cdbc185fe1c2e2dbbe86aa00197
+    """
+    return _harbor_base(
+        package_name="based-models/tau2-airline",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -3003,7 +3096,7 @@ def last_secure_code_benchmark(
     r"""Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scenarios, each at function, file, and repository granularity, in seven languages.
 
     Slug: last-secure-code-benchmark/last-secure-code-benchmark
-    Latest digest: sha256:d5ecfdade45e66bce887ffe46fea6b12f0cff683f22781baaf55f023476499af
+    Latest digest: sha256:f597529c3f1671260db9033dbd843eb1adb1663da90fe98b06840f076103f1a6
     """
     return _harbor_base(
         package_name="last-secure-code-benchmark/last-secure-code-benchmark",
@@ -3069,6 +3162,37 @@ def lcb_longswebench_32k(
     """
     return _harbor_base(
         package_name="lcb/longswebench-32k",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def letta_ai_frontier_memory(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Frontier Memory: the 15 target tasks a fixed task agent attempts with a dreamed memory
+
+    Slug: letta-ai/frontier-memory
+    Latest digest: sha256:6e71b1399e62d6428e1b10d8ce7149ef6e05ea7499fef70184287489ee5cf18a
+    """
+    return _harbor_base(
+        package_name="letta-ai/frontier-memory",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -3348,6 +3472,37 @@ def mmtb_multimedia_terminalbench(
     """
     return _harbor_base(
         package_name="mmtb/multimedia-terminalbench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def model_topography_workbench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Model Topography Workbench: entry, middle management and senior executive rungs.
+
+    Slug: model-topography/workbench
+    Latest digest: sha256:3017511f0e0b27c3407574440b78e7ce3dd742254ab87241b3926773e0117b9e
+    """
+    return _harbor_base(
+        package_name="model-topography/workbench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -5400,6 +5555,99 @@ def webgen_bench(
     """
     return _harbor_base(
         package_name="webgen-bench/webgen-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def wildawm_train_rl_208_set(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""WildAWM RL training split: 208 tasks (set_rl208)
+
+    Slug: wildawm/train-rl-208-set
+    Latest digest: sha256:eec6ad7c9475e343f0d27357659c05c078d765a1d62e49fe88330ebc3f6eef48
+    """
+    return _harbor_base(
+        package_name="wildawm/train-rl-208-set",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def wildawm_train_sft_100_set(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""WildAWM SFT training split: 100 tasks (set_sft100)
+
+    Slug: wildawm/train-sft-100-set
+    Latest digest: sha256:b5737218a74a45da294d1510ec21b66b0daab572182237aedd4a4d302d96731c
+    """
+    return _harbor_base(
+        package_name="wildawm/train-sft-100-set",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def wildawm_val_33_set(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""WildAWM validation split: 33 tasks (set_val33)
+
+    Slug: wildawm/val-33-set
+    Latest digest: sha256:b2894194bf7927d87f42159555ed176290c361bfcd74e628f406acc0c739dcc3
+    """
+    return _harbor_base(
+        package_name="wildawm/val-33-set",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
