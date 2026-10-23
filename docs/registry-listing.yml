@@ -100,13 +100,6 @@
   version: latest
   categories:
   - Coding
-- title: accordproject/skills
-  path: registry/accordproject_skills.html
-  desc: 'Eval dataset for the accordproject concerto-validate skill: fix a Concerto JSON instance with a broken $class so it validates.'
-  desc_trunc: 'Eval dataset for the accordproject concerto-validate skill: fix a Concerto JSON instance with a bro…'
-  task_function: accordproject_skills
-  samples: 1
-  version: latest
 - title: actava-ai/chi-bench
   path: registry/actava_ai_chi_bench.html
   desc: 'χ-Bench: long-horizon, policy-rich U.S. healthcare workflow agent benchmark spanning provider prior-authorization, payer utilization management, and care management (78 hub tasks).'
@@ -970,13 +963,6 @@
   version: latest
   categories:
   - Coding
-- title: letta-ai/frontier-memory
-  path: registry/letta_ai_frontier_memory.html
-  desc: 'Frontier Memory: the 15 target tasks a fixed task agent attempts with a dreamed memory.'
-  desc_trunc: 'Frontier Memory: the 15 target tasks a fixed task agent attempts with a dreamed memory.'
-  task_function: letta_ai_frontier_memory
-  samples: 15
-  version: latest
 - title: lica-world/gdb
   path: registry/lica_world_gdb.html
   desc: Full GraphicDesignBench (GDB) benchmark converted to Harbor tasks.
@@ -1065,13 +1051,6 @@
   categories:
   - Coding
   - Multimodal
-- title: model-topography/workbench
-  path: registry/model_topography_workbench.html
-  desc: 'Model Topography Workbench: entry, middle management and senior executive rungs.'
-  desc_trunc: 'Model Topography Workbench: entry, middle management and senior executive rungs.'
-  task_function: model_topography_workbench
-  samples: 12
-  version: latest
 - title: nl2repobench/nl2repobench
   path: registry/nl2repobench.html
   desc: Agent generates a complete, installable Python library from a single natural-language requirements document, starting from an empty workspace.

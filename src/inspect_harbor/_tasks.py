@@ -323,37 +323,6 @@ def abundant_swe_marathon(
 
 
 @task
-def accordproject_skills(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Eval dataset for the accordproject concerto-validate skill: fix a Concerto JSON instance with a broken $class so it validates.
-
-    Slug: accordproject/skills
-    Latest digest: sha256:3ec3f9e03e97e7a45900df2d717e943e723d5175d811030c03467f0d7858aa01
-    """
-    return _harbor_base(
-        package_name="accordproject/skills",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def actava_ai_chi_bench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3113,37 +3082,6 @@ def lcb_longswebench_32k(
 
 
 @task
-def letta_ai_frontier_memory(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Frontier Memory: the 15 target tasks a fixed task agent attempts with a dreamed memory
-
-    Slug: letta-ai/frontier-memory
-    Latest digest: sha256:6e71b1399e62d6428e1b10d8ce7149ef6e05ea7499fef70184287489ee5cf18a
-    """
-    return _harbor_base(
-        package_name="letta-ai/frontier-memory",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
 def lica_world_gdb(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3410,37 +3348,6 @@ def mmtb_multimedia_terminalbench(
     """
     return _harbor_base(
         package_name="mmtb/multimedia-terminalbench",
-        package_ref=ref,
-        dataset_task_names=dataset_task_names,
-        dataset_exclude_task_names=dataset_exclude_task_names,
-        n_tasks=n_tasks,
-        overwrite_cache=overwrite_cache,
-        sandbox_env_name=sandbox_env_name,
-        override_cpus=override_cpus,
-        override_memory_mb=override_memory_mb,
-        override_gpus=override_gpus,
-    )
-
-
-@task
-def model_topography_workbench(
-    ref: str = "latest",
-    dataset_task_names: list[str] | None = None,
-    dataset_exclude_task_names: list[str] | None = None,
-    n_tasks: int | None = None,
-    overwrite_cache: bool = False,
-    sandbox_env_name: str = "docker",
-    override_cpus: int | None = None,
-    override_memory_mb: int | None = None,
-    override_gpus: int | None = None,
-) -> Task:
-    r"""Model Topography Workbench: entry, middle management and senior executive rungs.
-
-    Slug: model-topography/workbench
-    Latest digest: sha256:3017511f0e0b27c3407574440b78e7ce3dd742254ab87241b3926773e0117b9e
-    """
-    return _harbor_base(
-        package_name="model-topography/workbench",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

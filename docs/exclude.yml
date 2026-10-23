@@ -281,3 +281,18 @@
 # NovitaAI/tb21-* and fritzprix/*. Exact slugs, since the org is real.
 - based-models/causal-reflection-tb21
 - based-models/tau2-airline
+# 1-sample skill smoke test (fix a Concerto JSON instance so it validates)
+# for one skill in Accord Project's agent-skills repo, not a benchmark; it
+# also relies on [environment].skills_dir. Excluded at maintainer request
+# (PR #209). Exact slug, since the org is real.
+- accordproject/skills
+# Reads like an artifact of Letta's memory ("dreaming") experiments: 15
+# unrelated tasks from other sources attempted "with a dreamed memory", with
+# prompts that refer to conventions from earlier runs. No repo, paper or
+# announcement found. Excluded at maintainer request (PR #209). Exact slug.
+- letta-ai/frontier-memory
+# No public provenance: the GitHub user/org `model-topography` doesn't exist
+# and there is no repo, paper or announcement (12 ticket-fixing / open-ended
+# build tasks). Excluded at maintainer request (PR #209). Revisit if it is
+# published.
+- model-topography/*

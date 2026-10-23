@@ -129,9 +129,6 @@ abundant/swe-marathon:
   repo: https://github.com/abundant-ai/swe-marathon
   arxiv: https://arxiv.org/abs/2606.07682
 
-accordproject/skills:
-  categories: []
-
 actava-ai/chi-bench:
   categories:
   - Medicine
@@ -816,9 +813,6 @@ lcb/longswebench-32k:
   repo: https://github.com/Zteefano/long-code-bench
   title: LongSWE-Bench (32k)
 
-letta-ai/frontier-memory:
-  categories: []
-
 lica-world/gdb:
   categories:
   - Multimodal
@@ -888,9 +882,6 @@ mmtb/multimedia-terminalbench:
   arxiv: https://arxiv.org/abs/2605.10966
   repo: https://github.com/mm-tbench/multimedia-terminal-bench
   title: MultiMedia-TerminalBench
-
-model-topography/workbench:
-  categories: []
 
 nl2repobench/nl2repobench:
   categories:
