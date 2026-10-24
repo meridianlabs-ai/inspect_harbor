@@ -168,6 +168,20 @@
   version: latest
   categories:
   - Mathematics
+- title: alabamamike/beam-dd-test-hard
+  path: registry/alabamamike_beam_dd_test_hard.html
+  desc: 'Beam-DD v0.4.1 test-hard: due-diligence QA over synthetic data rooms (MIT).'
+  desc_trunc: 'Beam-DD v0.4.1 test-hard: due-diligence QA over synthetic data rooms (MIT).'
+  task_function: alabamamike_beam_dd_test_hard
+  samples: 1200
+  version: latest
+- title: alabamamike/beam-dd-test-normal
+  path: registry/alabamamike_beam_dd_test_normal.html
+  desc: 'Beam-DD v0.4.1 test-normal: due-diligence QA over synthetic data rooms (MIT).'
+  desc_trunc: 'Beam-DD v0.4.1 test-normal: due-diligence QA over synthetic data rooms (MIT).'
+  task_function: alabamamike_beam_dd_test_normal
+  samples: 700
+  version: latest
 - title: ale/rsi-post-training
   path: registry/ale_rsi_post_training.html
   desc: ALE RSI post-training benchmark tasks for evaluating agent capabilities in research-level post-training workflows.

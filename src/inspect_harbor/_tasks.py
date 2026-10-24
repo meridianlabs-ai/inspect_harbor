@@ -540,6 +540,68 @@ def aime(
 
 
 @task
+def alabamamike_beam_dd_test_hard(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Beam-DD v0.4.1 test-hard: due-diligence QA over synthetic data rooms (MIT). https://huggingface.co/datasets/alabamamikertr/beam-dd-dataroom
+
+    Slug: alabamamike/beam-dd-test-hard
+    Latest digest: sha256:370e91866f47a77354a33d9723b0f229feca629145df75db45b5b8b76a37dbf5
+    """
+    return _harbor_base(
+        package_name="alabamamike/beam-dd-test-hard",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def alabamamike_beam_dd_test_normal(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Beam-DD v0.4.1 test-normal: due-diligence QA over synthetic data rooms (MIT). https://huggingface.co/datasets/alabamamikertr/beam-dd-dataroom
+
+    Slug: alabamamike/beam-dd-test-normal
+    Latest digest: sha256:350d2966271994670617681974920696f788b698f6bdc287d530b29524b87613
+    """
+    return _harbor_base(
+        package_name="alabamamike/beam-dd-test-normal",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def ale_rsi_post_training(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -4124,8 +4186,8 @@ def rexbench(
     Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors.
     Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.
 
-        Slug: rexbench/rexbench
-        Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
+    Slug: rexbench/rexbench
+    Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
     """
     return _harbor_base(
         package_name="rexbench/rexbench",
