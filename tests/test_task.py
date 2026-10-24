@@ -21,6 +21,8 @@ def _make_harbor_task_mock(
     has_steps: bool = False,
     os: str = "linux",
     network_mode: str = "public",
+    agent_network_mode: str | None = None,
+    verifier_network_mode: str | None = None,
 ) -> Mock:
     """Create a Mock HarborTask wired up for ``_build_harbor_tasks``'s validator.
 
@@ -38,6 +40,8 @@ def _make_harbor_task_mock(
     m.config.environment.mcp_servers = []
     m.config.environment.skills_dir = None
     m.config.environment.network_mode = network_mode
+    m.config.agent.network_mode = agent_network_mode
+    m.config.verifier.network_mode = verifier_network_mode
     return m
 
 
@@ -267,6 +271,48 @@ def test_build_harbor_tasks_warns_on_allowlist_network_mode(
 
         assert len(result) == 1
         assert re.search(r"allowlist.*\['allowlist-task'\]", caplog.text)
+
+
+@pytest.mark.parametrize(
+    ("network_mode", "agent_network_mode", "verifier_network_mode", "warns"),
+    [
+        ("no-network", "public", None, True),
+        ("public", None, "no-network", True),
+        ("public", "no-network", None, False),
+        ("no-network", None, None, False),
+    ],
+)
+def test_build_harbor_tasks_warns_when_verifier_keeps_network(
+    caplog: pytest.LogCaptureFixture,
+    network_mode: str,
+    agent_network_mode: str | None,
+    verifier_network_mode: str | None,
+    warns: bool,
+):
+    """A verifier denied network while the agent has it is a degraded-fidelity case.
+
+    The container keeps the agent's network for the verifier, so the task loads with
+    a warning instead of silently verifying online.
+    """
+    with (
+        patch("inspect_harbor._harbor.task._load_local_path") as mock_load_local,
+        patch("inspect_harbor._harbor.task.HarborTask") as mock_harbor_task,
+    ):
+        task_path = Path("/some/network/task")
+        mock_load_local.return_value = [task_path]
+        mock_harbor_task.return_value = _make_harbor_task_mock(
+            name="network-task",
+            task_dir=task_path,
+            network_mode=network_mode,
+            agent_network_mode=agent_network_mode,
+            verifier_network_mode=verifier_network_mode,
+        )
+
+        with caplog.at_level("WARNING", logger="inspect_harbor._harbor.task"):
+            load_harbor_tasks(path="/some/network/task")
+
+        found = re.search(r"verifier\]\.network_mode.*\['network-task'\]", caplog.text)
+        assert bool(found) is warns
 
 
 def test_build_harbor_tasks_does_not_warn_on_healthcheck(

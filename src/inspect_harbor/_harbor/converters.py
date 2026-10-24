@@ -23,9 +23,9 @@ from inspect_ai.util._sandbox.compose import (
 )
 
 from inspect_harbor._harbor.models import (
-    EnvironmentConfig,
     HealthcheckConfig,
     NetworkMode,
+    TaskConfig,
 )
 from inspect_harbor._harbor.paths import (
     EnvironmentPaths,
@@ -112,7 +112,7 @@ def harbor_to_compose_config(
                     )
 
             # Network isolation applies to all services.
-            if _is_no_network(env_config):
+            if _is_no_network(harbor_task.config):
                 for service in compose_config.services.values():
                     if service.networks:
                         continue
@@ -146,7 +146,7 @@ def harbor_to_compose_config(
             mem_limit=f"{memory_mb}m" if memory_mb is not None else None,
             command="tail -f /dev/null",
             init=True,
-            network_mode="none" if _is_no_network(env_config) else "bridge",
+            network_mode="none" if _is_no_network(harbor_task.config) else "bridge",
             deploy=gpu_deploy,
             environment=resolved_env,
             healthcheck=(
@@ -200,6 +200,7 @@ def harbor_task_to_sample(
         "verifier_env": harbor_task.config.verifier.env,
         "solution_env": harbor_task.config.solution.env,
         "verifier_user": _user_to_str(harbor_task.config.verifier.user),
+        "verifier_needs_network": _verifier_needs_network(harbor_task.config),
         "agent_user": _user_to_str(harbor_task.config.agent.user),
         "harbor_config": harbor_task.config.model_dump(),
     }
@@ -393,15 +394,80 @@ def _expand_compose_vars(
     return re.sub(r"\$\{([^}]+)}", _replace, raw_yaml)
 
 
-def _is_no_network(env_config: EnvironmentConfig) -> bool:
-    """Whether an environment should run with no network access.
+def _phase_network_mode(
+    config: TaskConfig, phase_mode: NetworkMode | None
+) -> NetworkMode:
+    """Resolve the network policy of one phase of a task.
 
-    Only ``no-network`` isolates the environment. ``allowlist`` cannot be
-    enforced in a plain compose project (that's Harbor's egress sidecar), so
-    it is treated like ``public``; the loader warns about the degraded
-    fidelity. The deprecated ``allow_internet = false`` needs no special
-    handling here: Harbor's ``TaskConfig`` validator migrates it to
-    ``network_mode = no-network`` (and clears the boolean), so a legacy task
-    is isolated through the ``network_mode`` check below.
+    Args:
+        config: The task configuration.
+        phase_mode: The phase's own ``network_mode`` (``[agent]`` or
+            ``[verifier]``), or None if the task does not set one.
+
+    Returns:
+        The phase's ``network_mode`` if set, else ``[environment].network_mode``,
+        matching Harbor's fallback from a phase policy to the task baseline.
     """
-    return env_config.network_mode == NetworkMode.NO_NETWORK
+    return phase_mode if phase_mode is not None else config.environment.network_mode
+
+
+def _is_no_network(config: TaskConfig) -> bool:
+    """Whether a task's container should start with no network access.
+
+    Harbor applies ``[agent]`` and ``[verifier]`` ``network_mode`` per phase, each
+    falling back to ``[environment].network_mode``. inspect_harbor runs both phases
+    in the task's container (a ``separate`` verifier is approximated there too) and
+    the agent phase comes first, so the container starts with ``network_mode:
+    none`` whenever the agent is denied network; the scorer reconnects it when the
+    verifier is not (see :func:`_verifier_needs_network`). ``allowlist`` cannot be
+    enforced in a plain compose project (that is Harbor's egress sidecar), so it is
+    treated like ``public``; the loader warns about the degraded fidelity. The
+    deprecated ``allow_internet = false`` needs no special handling here: Harbor's
+    ``TaskConfig`` validator migrates it to ``network_mode = no-network``.
+
+    Args:
+        config: The task configuration.
+
+    Returns:
+        True if the agent phase must run without network.
+    """
+    return (
+        _phase_network_mode(config, config.agent.network_mode) == NetworkMode.NO_NETWORK
+    )
+
+
+def _verifier_needs_network(config: TaskConfig) -> bool:
+    """Whether the verifier needs network in a container the agent ran without it.
+
+    SWE-bench-style tasks deny network to the agent, which could otherwise fetch the
+    upstream fix, while their verifier downloads the dependencies a fix adds.
+
+    Args:
+        config: The task configuration.
+
+    Returns:
+        True if the agent phase is denied network and the verifier phase is not.
+    """
+    return _is_no_network(config) and (
+        _phase_network_mode(config, config.verifier.network_mode)
+        != NetworkMode.NO_NETWORK
+    )
+
+
+def _verifier_keeps_network(config: TaskConfig) -> bool:
+    """Whether the verifier keeps network that its task denies it.
+
+    A container that starts with network for the agent keeps it for the verifier:
+    the scorer can give a phase network back (see :func:`_verifier_needs_network`)
+    but does not take it away mid-sample.
+
+    Args:
+        config: The task configuration.
+
+    Returns:
+        True if the agent phase has network and the verifier phase is denied it.
+    """
+    return not _is_no_network(config) and (
+        _phase_network_mode(config, config.verifier.network_mode)
+        == NetworkMode.NO_NETWORK
+    )
