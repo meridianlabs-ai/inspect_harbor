@@ -183,6 +183,12 @@ aime/aime:
   function_name: aime
   title: AIME
 
+alabamamike/beam-dd-test-hard:
+  categories: []
+
+alabamamike/beam-dd-test-normal:
+  categories: []
+
 ale/rsi-post-training:
   categories:
   - Coding
