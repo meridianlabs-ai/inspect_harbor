@@ -301,7 +301,11 @@ biopharma-bench/biopharma-bench:
   repo: https://huggingface.co/datasets/raycasterai/biopharma-bench
 
 birdsql/bird-mini-dev:
-  categories: []
+  categories:
+  - Coding
+  title: BIRD Mini-Dev
+  repo: https://github.com/bird-bench/mini_dev
+  arxiv: https://arxiv.org/abs/2305.03111
 
 blobfishai/arc-crm-6:
   categories:
@@ -680,7 +684,12 @@ harveyai/lab:
   title: Harvey LAB
 
 hcltech-robotics/simreadybench:
-  categories: []
+  categories:
+  - Coding
+  - Multimodal
+  title: SimReadyBench
+  repo: https://github.com/hcltech-robotics/simreadybench
+  desc: Agent reconstructs a simulation-ready OpenUSD asset (geometry, materials, rigid bodies and joints) from a reference image and authoring brief, scored on formal, visual and kinematic fidelity.
 
 hwe-bench/hwe-bench:
   categories:

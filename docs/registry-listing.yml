@@ -323,6 +323,8 @@
   task_function: birdsql_bird_mini_dev
   samples: 1500
   version: latest
+  categories:
+  - Coding
 - title: blobfishai/arc-crm-6
   path: registry/blobfishai_arc_crm_6.html
   desc: Six independently authored synthetic CRM workflows on one mocked CLI/web/REST/MCP world per episode. Partial Arc-inspired coverage, not source-row reproduction.
@@ -813,11 +815,14 @@
   - Professional
 - title: hcltech-robotics/simreadybench
   path: registry/hcltech_robotics_simreadybench.html
-  desc: SimReadyBench NV100.
-  desc_trunc: SimReadyBench NV100.
+  desc: Agent reconstructs a simulation-ready OpenUSD asset (geometry, materials, rigid bodies and joints) from a reference image and authoring brief, scored on formal, visual and kinematic fidelity.
+  desc_trunc: Agent reconstructs a simulation-ready OpenUSD asset (geometry, materials, rigid bodies and joints)…
   task_function: hcltech_robotics_simreadybench
   samples: 100
   version: latest
+  categories:
+  - Coding
+  - Multimodal
 - title: hwe-bench/hwe-bench
   path: registry/hwe_bench.html
   desc: 'HWE-bench evaluates LLM agents on engineering-simulation tasks: the agent drives a real solver and is scored on whether the number it reports lands inside a defensible tolerance band, by a deterministic verifier rather than an LLM judge. This CAE edition covers combustion, battery, CFD and 2.5D packaging.'

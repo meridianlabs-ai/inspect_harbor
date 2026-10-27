@@ -2628,7 +2628,7 @@ def hcltech_robotics_simreadybench(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""SimReadyBench NV100
+    r"""Agent reconstructs a simulation-ready OpenUSD asset (geometry, materials, rigid bodies and joints) from a reference image and authoring brief, scored on formal, visual and kinematic fidelity.
 
     Slug: hcltech-robotics/simreadybench
     Latest digest: sha256:8433b438e66de164bf77ae150be907f8c530becc3c46e9532e13fd8097ed4c30
