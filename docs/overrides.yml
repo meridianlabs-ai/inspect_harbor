@@ -184,10 +184,16 @@ aime/aime:
   title: AIME
 
 alabamamike/beam-dd-test-hard:
-  categories: []
+  categories:
+  - Finance
+  - Professional
+  title: Beam-DD (hard)
 
 alabamamike/beam-dd-test-normal:
-  categories: []
+  categories:
+  - Finance
+  - Professional
+  title: Beam-DD (normal)
 
 ale/rsi-post-training:
   categories:
