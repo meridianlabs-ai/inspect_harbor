@@ -183,6 +183,12 @@ aime/aime:
   function_name: aime
   title: AIME
 
+alabamamike/beam-dd-test-hard:
+  categories: []
+
+alabamamike/beam-dd-test-normal:
+  categories: []
+
 ale/rsi-post-training:
   categories:
   - Coding
@@ -293,6 +299,9 @@ biopharma-bench/biopharma-bench:
   function_name: biopharma_bench
   title: Biopharma Bench
   repo: https://huggingface.co/datasets/raycasterai/biopharma-bench
+
+birdsql/bird-mini-dev:
+  categories: []
 
 blobfishai/arc-crm-6:
   categories:
@@ -669,6 +678,9 @@ harveyai/lab:
   - Professional
   repo: https://github.com/harveyai/harvey-labs
   title: Harvey LAB
+
+hcltech-robotics/simreadybench:
+  categories: []
 
 hwe-bench/hwe-bench:
   categories:
