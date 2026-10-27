@@ -183,6 +183,18 @@ aime/aime:
   function_name: aime
   title: AIME
 
+alabamamike/beam-dd-test-hard:
+  categories:
+  - Finance
+  - Professional
+  title: Beam-DD (hard)
+
+alabamamike/beam-dd-test-normal:
+  categories:
+  - Finance
+  - Professional
+  title: Beam-DD (normal)
+
 ale/rsi-post-training:
   categories:
   - Coding
@@ -293,6 +305,13 @@ biopharma-bench/biopharma-bench:
   function_name: biopharma_bench
   title: Biopharma Bench
   repo: https://huggingface.co/datasets/raycasterai/biopharma-bench
+
+birdsql/bird-mini-dev:
+  categories:
+  - Coding
+  title: BIRD Mini-Dev
+  repo: https://github.com/bird-bench/mini_dev
+  arxiv: https://arxiv.org/abs/2305.03111
 
 blobfishai/arc-crm-6:
   categories:
@@ -669,6 +688,14 @@ harveyai/lab:
   - Professional
   repo: https://github.com/harveyai/harvey-labs
   title: Harvey LAB
+
+hcltech-robotics/simreadybench:
+  categories:
+  - Coding
+  - Multimodal
+  title: SimReadyBench
+  repo: https://github.com/hcltech-robotics/simreadybench
+  desc: Agent reconstructs a simulation-ready OpenUSD asset (geometry, materials, rigid bodies and joints) from a reference image and authoring brief, scored on formal, visual and kinematic fidelity.
 
 hwe-bench/hwe-bench:
   categories:
