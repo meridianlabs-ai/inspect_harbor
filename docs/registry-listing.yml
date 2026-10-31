@@ -972,6 +972,36 @@
   version: latest
   categories:
   - Reasoning
+- title: kw-bench/kw-sap
+  path: registry/kw_bench_sap.html
+  desc: 'kw-bench procure-to-pay forensics (hard): find a ghost vendor, a bank-account diversion, price creep and duplicate payments in ~300 MB of SAP extracts, without accusing the honest look-alikes, and deliver the audit-committee package plus reusable audit analytics graded on hidden data. Deterministic grading.'
+  desc_trunc: 'kw-bench procure-to-pay forensics (hard): find a ghost vendor, a bank-account diversion, price cree…'
+  task_function: kw_bench_sap
+  samples: 3
+  version: latest
+  categories:
+  - Finance
+  - Professional
+- title: kw-bench/kw-sap-easy
+  path: registry/kw_bench_sap_easy.html
+  desc: 'kw-bench procure-to-pay forensics (easy tier): the same schemes on a smaller, simpler extract. Deterministic grading.'
+  desc_trunc: 'kw-bench procure-to-pay forensics (easy tier): the same schemes on a smaller, simpler extract. Dete…'
+  task_function: kw_bench_sap_easy
+  samples: 3
+  version: latest
+  categories:
+  - Finance
+  - Professional
+- title: kw-bench/kw-sap-vat
+  path: registry/kw_bench_sap_vat.html
+  desc: 'kw-bench VAT chain family: reconstruct five years of intra-group VAT across three generations of SAP (ECC, a partial S/4HANA migration, a 2024 redesign) from raw extracts, recompute every return to the cent against the filed returns, and deliver the register, reconciliation, correction file, memo and a reusable classifier graded on hidden data. Deterministic grading.'
+  desc_trunc: 'kw-bench VAT chain family: reconstruct five years of intra-group VAT across three generations of SA…'
+  task_function: kw_bench_sap_vat
+  samples: 3
+  version: latest
+  categories:
+  - Finance
+  - Professional
 - title: last-secure-code-benchmark/last-secure-code-benchmark
   path: registry/last_secure_code_benchmark.html
   desc: 'Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scenarios, each at function, file, and repository granularity, in seven languages.'
@@ -1108,6 +1138,13 @@
   version: latest
   categories:
   - Coding
+- title: obtuseorion/geoworld
+  path: registry/obtuseorion_geoworld.html
+  desc: Three long-horizon tasks in a generated geomechanics software company (Halvard Geomechanics, solver GeoSolve).
+  desc_trunc: Three long-horizon tasks in a generated geomechanics software company (Halvard Geomechanics, solver…
+  task_function: obtuseorion_geoworld
+  samples: 3
+  version: latest
 - title: openai/mmmlu
   path: registry/openai_mmmlu.html
   desc: 'MMMLU (Multilingual MMLU): OpenAI''s professional-human-translation of the MMLU test set into 14 languages for multilingual knowledge and reasoning evaluation.'

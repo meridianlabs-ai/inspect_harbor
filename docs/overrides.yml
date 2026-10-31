@@ -814,6 +814,30 @@ kumo/kumo-parity:
   function_name: kumo_parity
   title: KUMO (parity)
 
+kw-bench/kw-sap:
+  categories:
+  - Finance
+  - Professional
+  function_name: kw_bench_sap
+  title: kw-bench SAP (hard)
+  repo: https://github.com/GSequist/kw-bench
+
+kw-bench/kw-sap-easy:
+  categories:
+  - Finance
+  - Professional
+  function_name: kw_bench_sap_easy
+  title: kw-bench SAP (easy)
+  repo: https://github.com/GSequist/kw-bench
+
+kw-bench/kw-sap-vat:
+  categories:
+  - Finance
+  - Professional
+  function_name: kw_bench_sap_vat
+  title: kw-bench SAP VAT
+  repo: https://github.com/GSequist/kw-bench
+
 last-secure-code-benchmark/last-secure-code-benchmark:
   categories:
   - Coding
@@ -924,6 +948,9 @@ nvats/codeskills-bench:
   - Coding
   repo: https://github.com/namanvats/codeskills-bench
   title: CodeSkills-Bench
+
+obtuseorion/geoworld:
+  categories: []
 
 openai/mmmlu:
   categories:
