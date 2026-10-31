@@ -550,6 +550,9 @@ featurebench/featurebench-modal:
   function_name: featurebench_modal
   title: FeatureBench (Modal)
 
+filing-bench/filing-bench:
+  categories: []
+
 frontier-harness-eval/frontier-harness-eval:
   categories:
   - Coding
@@ -814,6 +817,15 @@ kumo/kumo-parity:
   function_name: kumo_parity
   title: KUMO (parity)
 
+kw-bench/kw-sap:
+  categories: []
+
+kw-bench/kw-sap-easy:
+  categories: []
+
+kw-bench/kw-sap-vat:
+  categories: []
+
 last-secure-code-benchmark/last-secure-code-benchmark:
   categories:
   - Coding
@@ -855,6 +867,9 @@ livecodebench/livecodebench:
   desc: 'LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, and Codeforces, supporting code generation, self-repair, execution, and test-output prediction.'
   function_name: livecodebench
   title: LiveCodeBench
+
+llamaindex/extractbench-pro:
+  categories: []
 
 looni-lab/smdd-bench:
   categories:
@@ -924,6 +939,9 @@ nvats/codeskills-bench:
   - Coding
   repo: https://github.com/namanvats/codeskills-bench
   title: CodeSkills-Bench
+
+obtuseorion/geoworld:
+  categories: []
 
 openai/mmmlu:
   categories:
@@ -1247,6 +1265,9 @@ snowflake-labs/data-eng-bench:
   - Coding
   repo: https://github.com/Snowflake-Labs/data-eng-bench
 
+solana-foundation/machine-trading:
+  categories: []
+
 stanford/medagentbench:
   categories:
   - Professional
@@ -1265,6 +1286,9 @@ strongreject/strongreject:
   desc: 'StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks are at eliciting genuinely harmful, specific responses.'
   function_name: strongreject
   title: StrongREJECT
+
+suryanshsh/robotsevolved-gui-lessons-v1:
+  categories: []
 
 swe-bench/swe-bench-verified:
   categories:
@@ -1435,6 +1459,9 @@ vibrantlabsai/itsm-bench:
   - Professional
   repo: https://github.com/vibrantlabsai/Enterprise-Worlds
   title: ITSMBench (Enterprise-Worlds)
+
+victorojewale/abstention-act:
+  categories: []
 
 vmax/vmax-tasks:
   categories:

@@ -2090,6 +2090,37 @@ def featurebench_modal(
 
 
 @task
+def filing_bench_filing_bench(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Point-in-time SEC XBRL finance questions with hand-checked answer keys (public split; a held-out split is kept private)
+
+    Slug: filing-bench/filing-bench
+    Latest digest: sha256:5be427b78a9e5bb19e6bedc0a6bc519b6a255b318ced40d85ad0c268e6586c99
+    """
+    return _harbor_base(
+        package_name="filing-bench/filing-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def frontier_harness_eval(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3113,6 +3144,99 @@ def kumo_parity(
 
 
 @task
+def kw_bench_kw_sap(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""kw-bench procure-to-pay forensics (hard): find a ghost vendor, a bank-account diversion, price creep and duplicate payments in ~300 MB of SAP extracts, without accusing the honest look-alikes, and deliver the audit-committee package plus reusable audit analytics graded on hidden data. Deterministic grading.
+
+    Slug: kw-bench/kw-sap
+    Latest digest: sha256:23db44667d3503646337a86bb11f010455cd7e7fec16f8b470d75d2f56659ec3
+    """
+    return _harbor_base(
+        package_name="kw-bench/kw-sap",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def kw_bench_kw_sap_easy(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""kw-bench procure-to-pay forensics (easy tier): the same schemes on a smaller, simpler extract. Deterministic grading.
+
+    Slug: kw-bench/kw-sap-easy
+    Latest digest: sha256:f9296c4d3db036cd42984dcffe5b30744d84d7baa7e1685edeb84e712792935d
+    """
+    return _harbor_base(
+        package_name="kw-bench/kw-sap-easy",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def kw_bench_kw_sap_vat(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""kw-bench VAT chain family: reconstruct five years of intra-group VAT across three generations of SAP (ECC, a partial S/4HANA migration, a 2024 redesign) from raw extracts, recompute every return to the cent against the filed returns, and deliver the register, reconciliation, correction file, memo and a reusable classifier graded on hidden data. Deterministic grading.
+
+    Slug: kw-bench/kw-sap-vat
+    Latest digest: sha256:3e701c7100b7d80f002c3541fa1370bf139bd00a4ff82b919e9b3eec82796ae9
+    """
+    return _harbor_base(
+        package_name="kw-bench/kw-sap-vat",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def last_secure_code_benchmark(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3255,6 +3379,37 @@ def livecodebench(
     """
     return _harbor_base(
         package_name="livecodebench/livecodebench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def llamaindex_extractbench_pro(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""ExtractBench Pro: 100 synthetic document extraction RL environments across six challenges; deterministic value-F1 reward.
+
+    Slug: llamaindex/extractbench-pro
+    Latest digest: sha256:18e2016c917407f38f5122806d11b1aaab2968dd9e713b48f14cf30793e09a69
+    """
+    return _harbor_base(
+        package_name="llamaindex/extractbench-pro",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -3534,6 +3689,37 @@ def nvats_codeskills_bench(
     """
     return _harbor_base(
         package_name="nvats/codeskills-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def obtuseorion_geoworld(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Three long-horizon tasks in a generated geomechanics software company (Halvard Geomechanics, solver GeoSolve).
+
+    Slug: obtuseorion/geoworld
+    Latest digest: sha256:075d7ef9af59cb053ba016f4f0e86668def3aead6ed554339f6fb5f481589f2a
+    """
+    return _harbor_base(
+        package_name="obtuseorion/geoworld",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -4793,6 +4979,37 @@ def snowflake_labs_data_eng_bench(
 
 
 @task
+def solana_foundation_machine_trading(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Trading tasks for agents on Solana: bots trade DeFi markets replayed on offline mainnet snapshots with Surfpool.
+
+    Slug: solana-foundation/machine-trading
+    Latest digest: sha256:4ae529055b15d627fda16a55b38b16129b3ccfa83ab4b968ea5cd3acd50145ea
+    """
+    return _harbor_base(
+        package_name="solana-foundation/machine-trading",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def stanford_medagentbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -4842,6 +5059,37 @@ def strongreject(
     """
     return _harbor_base(
         package_name="strongreject/strongreject",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def suryanshsh_robotsevolved_gui_lessons_v1(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Ten offline Robots Evolved GUI lessons with calibrated screenshot/click/key tools, protected host grading, hidden Oracle references, and a bundled portable Harbor launcher.
+
+    Slug: suryanshsh/robotsevolved-gui-lessons-v1
+    Latest digest: sha256:fccfbf02750f23b62582a0f59638d5aaa81d0c7869cf4d820edb2fe789152a65
+    """
+    return _harbor_base(
+        package_name="suryanshsh/robotsevolved-gui-lessons-v1",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -5462,6 +5710,37 @@ def vibrantlabsai_itsm_bench(
     """
     return _harbor_base(
         package_name="vibrantlabsai/itsm-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def victorojewale_abstention_act(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Compliance-bias benchmark: safe action, clarification, and abstention
+
+    Slug: victorojewale/abstention-act
+    Latest digest: sha256:2cf2f5b92b3b2a35297d10a1971bff6a970dbbd94bc3b5b2a2f0cdb3c59bdab8
+    """
+    return _harbor_base(
+        package_name="victorojewale/abstention-act",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
