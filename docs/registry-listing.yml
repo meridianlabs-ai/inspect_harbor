@@ -647,13 +647,6 @@
   version: latest
   categories:
   - Coding
-- title: filing-bench/filing-bench
-  path: registry/filing_bench_filing_bench.html
-  desc: Point-in-time SEC XBRL finance questions with hand-checked answer keys (public split; a held-out split is kept private).
-  desc_trunc: Point-in-time SEC XBRL finance questions with hand-checked answer keys (public split; a held-out sp…
-  task_function: filing_bench_filing_bench
-  samples: 85
-  version: latest
 - title: frontier-harness-eval/frontier-harness-eval
   path: registry/frontier_harness_eval.html
   desc: 'FrontierHarness Eval v1.1.0: 17 Terminal Bench 4 tasks and 45 Terminal-Bench 2.1 tasks. TB4 quarter-size selection derived from proposal Appendix C; TB2.1 selection from Appendix E. Original tasks and verifiers pinned by SHA256. Report benchmark subsets separately; these are not official full-benchmark scores. TB4 favors shorter historical runtimes. TB2.1 preserves all 16 categories, with 29 medium, 14 hard and 2 easy tasks; source commit 7131e4375048a0e408a8fb404b5f499d726b695b. Selection and provenance: This selection reduces TB4 from 33 to 17 tasks using proportional domain quotas and the fastest known historical runtimes within each domain. Tasks with unknown historical runtimes are excluded. This version replaces protein-assembly with dna-insert, retaining the scientific-computing category and 1800-second timeout. It also replaces crack-7z-hash with vulnerable-secret, retaining medium security coverage and reducing the agent timeout from 1800 to 900 seconds.'
@@ -980,26 +973,35 @@
   categories:
   - Reasoning
 - title: kw-bench/kw-sap
-  path: registry/kw_bench_kw_sap.html
+  path: registry/kw_bench_sap.html
   desc: 'kw-bench procure-to-pay forensics (hard): find a ghost vendor, a bank-account diversion, price creep and duplicate payments in ~300 MB of SAP extracts, without accusing the honest look-alikes, and deliver the audit-committee package plus reusable audit analytics graded on hidden data. Deterministic grading.'
   desc_trunc: 'kw-bench procure-to-pay forensics (hard): find a ghost vendor, a bank-account diversion, price cree…'
-  task_function: kw_bench_kw_sap
+  task_function: kw_bench_sap
   samples: 3
   version: latest
+  categories:
+  - Finance
+  - Professional
 - title: kw-bench/kw-sap-easy
-  path: registry/kw_bench_kw_sap_easy.html
+  path: registry/kw_bench_sap_easy.html
   desc: 'kw-bench procure-to-pay forensics (easy tier): the same schemes on a smaller, simpler extract. Deterministic grading.'
   desc_trunc: 'kw-bench procure-to-pay forensics (easy tier): the same schemes on a smaller, simpler extract. Dete…'
-  task_function: kw_bench_kw_sap_easy
+  task_function: kw_bench_sap_easy
   samples: 3
   version: latest
+  categories:
+  - Finance
+  - Professional
 - title: kw-bench/kw-sap-vat
-  path: registry/kw_bench_kw_sap_vat.html
+  path: registry/kw_bench_sap_vat.html
   desc: 'kw-bench VAT chain family: reconstruct five years of intra-group VAT across three generations of SAP (ECC, a partial S/4HANA migration, a 2024 redesign) from raw extracts, recompute every return to the cent against the filed returns, and deliver the register, reconciliation, correction file, memo and a reusable classifier graded on hidden data. Deterministic grading.'
   desc_trunc: 'kw-bench VAT chain family: reconstruct five years of intra-group VAT across three generations of SA…'
-  task_function: kw_bench_kw_sap_vat
+  task_function: kw_bench_sap_vat
   samples: 3
   version: latest
+  categories:
+  - Finance
+  - Professional
 - title: last-secure-code-benchmark/last-secure-code-benchmark
   path: registry/last_secure_code_benchmark.html
   desc: 'Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scenarios, each at function, file, and repository granularity, in seven languages.'
@@ -1049,13 +1051,6 @@
   version: latest
   categories:
   - Coding
-- title: llamaindex/extractbench-pro
-  path: registry/llamaindex_extractbench_pro.html
-  desc: 'ExtractBench Pro: 100 synthetic document extraction RL environments across six challenges; deterministic value-F1 reward.'
-  desc_trunc: 'ExtractBench Pro: 100 synthetic document extraction RL environments across six challenges; determin…'
-  task_function: llamaindex_extractbench_pro
-  samples: 100
-  version: latest
 - title: looni-lab/smdd-bench
   path: registry/looni_lab_smdd_bench.html
   desc: 'SMDD-Bench: five small-molecule design task families with an agent harness, GPU oracle and setup guide.'
@@ -1530,13 +1525,6 @@
   version: latest
   categories:
   - Coding
-- title: solana-foundation/machine-trading
-  path: registry/solana_foundation_machine_trading.html
-  desc: 'Trading tasks for agents on Solana: bots trade DeFi markets replayed on offline mainnet snapshots with Surfpool.'
-  desc_trunc: 'Trading tasks for agents on Solana: bots trade DeFi markets replayed on offline mainnet snapshots w…'
-  task_function: solana_foundation_machine_trading
-  samples: 2
-  version: latest
 - title: stanford/medagentbench
   path: registry/stanford_medagentbench.html
   desc: 'MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benchmarking LLM agents on medical decision-making, planning, and execution.'
@@ -1557,13 +1545,6 @@
   version: latest
   categories:
   - Safeguards
-- title: suryanshsh/robotsevolved-gui-lessons-v1
-  path: registry/suryanshsh_robotsevolved_gui_lessons_v1.html
-  desc: Ten offline Robots Evolved GUI lessons with calibrated screenshot/click/key tools, protected host grading, hidden Oracle references, and a bundled portable Harbor launcher.
-  desc_trunc: Ten offline Robots Evolved GUI lessons with calibrated screenshot/click/key tools, protected host g…
-  task_function: suryanshsh_robotsevolved_gui_lessons_v1
-  samples: 10
-  version: latest
 - title: swe-bench/swe-bench-verified
   path: registry/swe_bench_verified.html
   desc: 'SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs confirmed each real GitHub issue is solvable given the available repository context.'
@@ -1757,13 +1738,6 @@
   categories:
   - Assistants
   - Professional
-- title: victorojewale/abstention-act
-  path: registry/victorojewale_abstention_act.html
-  desc: 'Compliance-bias benchmark: safe action, clarification, and abstention.'
-  desc_trunc: 'Compliance-bias benchmark: safe action, clarification, and abstention.'
-  task_function: victorojewale_abstention_act
-  samples: 22
-  version: latest
 - title: vmax/vmax-tasks
   path: registry/vmax_tasks.html
   desc: Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).

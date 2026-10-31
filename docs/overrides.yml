@@ -550,9 +550,6 @@ featurebench/featurebench-modal:
   function_name: featurebench_modal
   title: FeatureBench (Modal)
 
-filing-bench/filing-bench:
-  categories: []
-
 frontier-harness-eval/frontier-harness-eval:
   categories:
   - Coding
@@ -818,13 +815,28 @@ kumo/kumo-parity:
   title: KUMO (parity)
 
 kw-bench/kw-sap:
-  categories: []
+  categories:
+  - Finance
+  - Professional
+  function_name: kw_bench_sap
+  title: kw-bench SAP (hard)
+  repo: https://github.com/GSequist/kw-bench
 
 kw-bench/kw-sap-easy:
-  categories: []
+  categories:
+  - Finance
+  - Professional
+  function_name: kw_bench_sap_easy
+  title: kw-bench SAP (easy)
+  repo: https://github.com/GSequist/kw-bench
 
 kw-bench/kw-sap-vat:
-  categories: []
+  categories:
+  - Finance
+  - Professional
+  function_name: kw_bench_sap_vat
+  title: kw-bench SAP VAT
+  repo: https://github.com/GSequist/kw-bench
 
 last-secure-code-benchmark/last-secure-code-benchmark:
   categories:
@@ -867,9 +879,6 @@ livecodebench/livecodebench:
   desc: 'LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, and Codeforces, supporting code generation, self-repair, execution, and test-output prediction.'
   function_name: livecodebench
   title: LiveCodeBench
-
-llamaindex/extractbench-pro:
-  categories: []
 
 looni-lab/smdd-bench:
   categories:
@@ -1265,9 +1274,6 @@ snowflake-labs/data-eng-bench:
   - Coding
   repo: https://github.com/Snowflake-Labs/data-eng-bench
 
-solana-foundation/machine-trading:
-  categories: []
-
 stanford/medagentbench:
   categories:
   - Professional
@@ -1286,9 +1292,6 @@ strongreject/strongreject:
   desc: 'StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks are at eliciting genuinely harmful, specific responses.'
   function_name: strongreject
   title: StrongREJECT
-
-suryanshsh/robotsevolved-gui-lessons-v1:
-  categories: []
 
 swe-bench/swe-bench-verified:
   categories:
@@ -1459,9 +1462,6 @@ vibrantlabsai/itsm-bench:
   - Professional
   repo: https://github.com/vibrantlabsai/Enterprise-Worlds
   title: ITSMBench (Enterprise-Worlds)
-
-victorojewale/abstention-act:
-  categories: []
 
 vmax/vmax-tasks:
   categories:

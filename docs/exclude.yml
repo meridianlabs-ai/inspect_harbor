@@ -296,3 +296,24 @@
 # build tasks). Excluded at maintainer request (PR #209). Revisit if it is
 # published.
 - model-topography/*
+# Real benchmarks that load but can't be scored yet: each grader runs in its
+# own image (environment_mode = "separate"), which needs #187 (same gap as
+# dissei/financial-judgment-full). Remove an entry once #187 lands and fill
+# its stub with:
+# - filing-bench/filing-bench: [Finance], function_name filing_bench (the
+#   auto-derived name stutters; no collision), title FilingBench.
+# - llamaindex/extractbench-pro: [Professional], title ExtractBench Pro,
+#   arxiv 2607.29677.
+# - solana-foundation/machine-trading: [Finance, Coding], title Machine
+#   Trading (replaced solana-foundation/open-trading on the hub).
+# - victorojewale/abstention-act: [Safeguards, Assistants], title
+#   AbstentionAct, repo victorojewale/informed-abstention (an individual's
+#   code for the "Designing for Doubt" informed-abstention paper).
+- filing-bench/filing-bench
+- llamaindex/extractbench-pro
+- solana-foundation/machine-trading
+- victorojewale/abstention-act
+# Individual's (User, not org) 10-task "GUI lessons" upload with a -v1
+# suffix and no benchmark repo or paper; it also fails to load (compose
+# build.network rejected by ComposeBuild).
+- suryanshsh/robotsevolved-gui-lessons-v1
