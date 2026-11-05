@@ -19,6 +19,7 @@ from inspect_harbor._harbor.scorer import (
     CopyTestsDirError,
     RewardFileEmptyError,
     RewardFileNotFoundError,
+    VerifierNetworkError,
     VerifierOutputParseError,
     _parse_reward_file,
     harbor_scorer,
@@ -1530,3 +1531,101 @@ async def test_non_finite_rewards_are_rejected(
     with patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox):
         with pytest.raises(VerifierOutputParseError, match="[Nn]on-"):
             await _parse_reward_file(exit_code=0)
+
+
+def _network_scoring_setup(
+    tmp_path: Path, verifier_needs_network: bool
+) -> tuple[Mock, Mock, list[str]]:
+    """A state and sandbox whose scoring logs sandbox writes and docker calls in order."""
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {
+        "tests_dir": str(tests_dir),
+        "test_path": str(test_script),
+        "verifier_timeout_sec": 60,
+        "verifier_needs_network": verifier_needs_network,
+    }
+    events: list[str] = []
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock(
+        side_effect=lambda *_a, **_k: events.append("write_file")
+    )
+    mock_sandbox.exec = AsyncMock(return_value=Mock(returncode=0, stdout="", stderr=""))
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1.0"}))
+    mock_sandbox.connection = AsyncMock(
+        return_value=Mock(type="docker", container="proj-default-1")
+    )
+    return mock_state, mock_sandbox, events
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("verifier_needs_network", [True, False])
+async def test_harbor_scorer_reconnects_network_for_verifier(
+    tmp_path: Path, verifier_needs_network: bool
+):
+    """A container the agent ran offline joins the bridge before tests are copied in."""
+    mock_state, mock_sandbox, events = _network_scoring_setup(
+        tmp_path, verifier_needs_network
+    )
+
+    async def docker(cmd: list[str], **_kwargs: object) -> Mock:
+        events.append(" ".join(cmd))
+        return Mock(success=True, stderr="")
+
+    with (
+        patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
+        ),
+        patch("inspect_harbor._harbor.scorer.subprocess", side_effect=docker),
+    ):
+        result = await harbor_scorer()(mock_state, Mock(spec=Target))
+
+    assert result is not None and result.value == 1.0
+    docker_calls = [
+        "docker network disconnect none proj-default-1",
+        "docker network connect bridge proj-default-1",
+    ]
+    if verifier_needs_network:
+        assert events[:2] == docker_calls
+        assert "write_file" in events[2:]
+    else:
+        assert not set(docker_calls) & set(events)
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_verifier_network_needs_docker(tmp_path: Path):
+    """A non-docker sandbox errors rather than verifying offline."""
+    mock_state, mock_sandbox, _ = _network_scoring_setup(tmp_path, True)
+    mock_sandbox.connection = AsyncMock(return_value=Mock(type="k8s", container=None))
+
+    with (
+        patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
+        ),
+        pytest.raises(VerifierNetworkError, match="only the docker sandbox"),
+    ):
+        await harbor_scorer()(mock_state, Mock(spec=Target))
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_verifier_network_docker_failure(tmp_path: Path):
+    """A failed ``docker network`` call is an error, not an offline verification."""
+    mock_state, mock_sandbox, _ = _network_scoring_setup(tmp_path, True)
+
+    with (
+        patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox", return_value=mock_sandbox
+        ),
+        patch(
+            "inspect_harbor._harbor.scorer.subprocess",
+            AsyncMock(return_value=Mock(success=False, stderr="no such container\n")),
+        ),
+        pytest.raises(VerifierNetworkError, match="no such container"),
+    ):
+        await harbor_scorer()(mock_state, Mock(spec=Target))
