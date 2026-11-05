@@ -32,19 +32,24 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+          persist-credentials: false
+      # The build toolchain pinned with hashes; publish.yaml gives the command
+      # that updates it. This job holds id-token, so it restores no Actions cache.
+      - name: Install build toolchain
+        uses: meridianlabs-ai/actions/install-python-dependencies@3bc608093ab8b8dd7f82764a863d9d5f9dce61a5 # main
         with:
-          python-version: "3.x"
+          versions: hashed-requirements
+          python-version: "3.12"
+          requirements-file: scripts/build-dist/requirements.txt
+          package-format: wheels-only
+          actions-cache: none
+          environment-dir: ${{ runner.temp }}/build-venv
       - name: Display version
         run: |
           echo "Version: $(git describe --tags --always)"
-      - name: Install dependencies
-        run: |
-          pip install --upgrade pip build
       - name: Build package
         run: |
-          python -m build
+          "$RUNNER_TEMP/build-venv/bin/python" -m build --no-isolation
       - name: List built packages
         run: ls -lh dist/
       - name: Publish package distributions to PyPI
