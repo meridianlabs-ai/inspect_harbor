@@ -35,7 +35,7 @@ See [CHANGELOG.md](CHANGELOG.md) for release notes.
 
 ## Development
 
-Clone the repository and install development dependencies:
+Clone the repository and install development dependencies with [uv](https://docs.astral.sh/uv/) 0.13.4 or later:
 
 ```bash
 git clone https://github.com/meridianlabs-ai/inspect_harbor.git

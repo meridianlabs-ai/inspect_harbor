@@ -50,23 +50,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
-
       - name: Build an isolated venv with the latest harbor and this checkout
         # Separate from the project venv on purpose: harbor drags in the
-        # LiteLLM tree (openai<3) that the adapter exists to avoid. --no-config
-        # keeps the project's exclude-newer window from applying here, so
-        # "latest" really is the newest stable release on PyPI.
-        run: |
-          uv venv --python ${{ matrix.python-version }} .venv-parity
-          uv pip install --no-config --python .venv-parity/bin/python \
-            harbor pytest pytest-asyncio pyyaml -e .
+        # LiteLLM tree (openai<3) that the adapter exists to avoid. An unlocked
+        # install ignores the project's uv settings and its exclude-newer
+        # window, so "latest" really is the newest stable release on PyPI.
+        uses: meridianlabs-ai/actions/install-python-dependencies@3bc608093ab8b8dd7f82764a863d9d5f9dce61a5 # main
+        with:
+          versions: unlocked
+          python-version: ${{ matrix.python-version }}
+          environment-dir: .venv-parity
+          project-uv-settings: ignore
+          also-install-unlocked: |
+            harbor
+            pytest
+            pytest-asyncio
+            pyyaml
+          actions-cache: none
 
       - name: Record the harbor version under test
         run: |

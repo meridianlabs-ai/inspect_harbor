@@ -35,7 +35,7 @@ Documentation = "https://meridianlabs-ai.github.io/inspect_harbor/"
 [project.entry-points.inspect_ai]
 inspect_harbor = "inspect_harbor._registry"
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = [
     "pre-commit",
     "pyright",
@@ -45,6 +45,11 @@ dev = [
     "ruff",
     "types-PyYAML",
 ]
+
+[dependency-groups]
+# Keeps a plain `uv sync` or `uv run` (the Makefile and the agent provisioning
+# recipes) pulling the dev tools.
+dev = ["inspect_harbor[dev]"]
 # Not installed by default, so `uv sync` and `uv run` (locally, in CI and in
 # agent jobs) leave it out: quarto-cli ships no wheel and its sdist downloads
 # the Quarto binary from GitHub Releases at build time. Docs commands ask for
@@ -74,11 +79,17 @@ exclude = ["docs/", "tests/"]
 [tool.uv]
 managed = true
 add-bounds = "lower"
-# Exclude packages published within the last 7 days to protect against supply chain attacks
+# 0.11.8 is the first uv that keeps uv.lock stable with a relative exclude-newer,
+# and 0.13.4 the first that no longer trusts the compromised emSign root
+# (GHSA-hq85-5cpj-mr62).
+required-version = ">=0.13.4"
+# Only resolve releases at least 7 days old (see CONTRIBUTING.md).
 exclude-newer = "7 days"
 
+# 6 hours only for direct dependencies that are a model provider SDK or an
+# Inspect package; see CONTRIBUTING.md.
 [tool.uv.exclude-newer-package]
-inspect-ai = false
+inspect-ai = "6 hours"
 
 [tool.mypy]
 ignore_missing_imports = false
