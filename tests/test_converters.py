@@ -18,6 +18,7 @@ from inspect_harbor._harbor.models import (
     AgentConfig,
     EnvironmentConfig,
     HealthcheckConfig,
+    MCPServerConfig,
     NetworkMode,
     TaskConfig,
     VerifierConfig,
@@ -55,6 +56,7 @@ def test_harbor_to_compose_config_with_existing_compose_yaml():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_env_config.network_mode = "public"
     mock_task.config.environment = mock_env_config
 
@@ -105,6 +107,7 @@ def test_harbor_to_compose_config_with_dockerfile():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     def exists_side_effect(self: Path) -> bool:
@@ -160,6 +163,7 @@ def test_harbor_to_compose_config_dockerfile_image_tag_is_deterministic():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     def exists_side_effect(self: Path) -> bool:
@@ -206,6 +210,7 @@ def test_harbor_to_compose_config_dockerfile_path_injects_task_env(
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     def exists_side_effect(self: Path) -> bool:
@@ -241,6 +246,7 @@ def test_harbor_to_compose_config_dockerfile_path_missing_env_var_raises(
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     def exists_side_effect(self: Path) -> bool:
@@ -268,6 +274,7 @@ def test_harbor_to_compose_config_with_prebuilt_image():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -303,6 +310,7 @@ def test_harbor_to_compose_config_custom_resource_limits():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -394,6 +402,7 @@ def test_harbor_to_compose_config_compose_yaml_no_internet_overrides_network_mod
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_env_config.network_mode = "no-network"
     mock_task.config.environment = mock_env_config
 
@@ -430,6 +439,7 @@ def test_harbor_to_compose_config_compose_yaml_preserves_custom_network_mode():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_env_config.network_mode = "public"
     mock_task.config.environment = mock_env_config
 
@@ -470,6 +480,7 @@ def test_harbor_to_compose_config_compose_yaml_no_network_mode_left_unset():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_env_config.network_mode = "public"
     mock_task.config.environment = mock_env_config
 
@@ -506,6 +517,7 @@ def test_harbor_to_compose_config_network_mode_field_no_network():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -535,6 +547,7 @@ def test_harbor_to_compose_config_network_mode_field_allows_network(
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -696,6 +709,7 @@ def test_harbor_task_to_sample_metadata_preserved():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     mock_verifier_config = Mock()
@@ -747,6 +761,7 @@ def test_harbor_task_to_sample_sandbox_spec():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     mock_verifier_config = Mock()
@@ -791,6 +806,7 @@ def test_harbor_to_compose_config_with_gpu_settings():
     mock_env_config.gpus = 2
     mock_env_config.gpu_types = ["H100", "A100"]
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -832,6 +848,7 @@ def test_harbor_to_compose_config_without_gpus():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -859,6 +876,7 @@ def test_harbor_to_compose_config_with_gpus_no_types():
     mock_env_config.gpus = 1
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -935,6 +953,7 @@ def test_harbor_task_to_sample_with_verifier_env():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     # Mock verifier config with env vars
@@ -985,6 +1004,7 @@ def test_harbor_task_to_sample_without_verifier_env():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     # Mock verifier config without env vars (Harbor's default empty-dict).
@@ -1028,6 +1048,7 @@ def test_harbor_task_to_sample_with_package_info():
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     mock_task.config.verifier = Mock(timeout_sec=60, env={}, user=None)
@@ -1120,6 +1141,7 @@ def test_harbor_task_to_sample_user_fields(
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     mock_task.config.verifier = verifier_config
@@ -1161,6 +1183,7 @@ def mock_harbor_task():
     mock_env_config.gpus = 1
     mock_env_config.gpu_types = ["H100"]
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     mock_verifier_config = Mock()
@@ -1791,6 +1814,7 @@ def test_harbor_to_compose_config_memory_minimum(
     mock_env_config.gpus = 0
     mock_env_config.gpu_types = None
     mock_env_config.healthcheck = None
+    mock_env_config.mcp_servers = []
     mock_task.config.environment = mock_env_config
 
     with patch("pathlib.Path.exists", return_value=False):
@@ -1962,3 +1986,294 @@ services:
     assert healthcheck is not None
     assert healthcheck.test == ["CMD", "pg_isready"]
     assert healthcheck.retries == 7
+
+
+# --- MCP servers and multi-service compose files -------------------------------------------------
+
+
+def _mock_task_with_compose(
+    env: dict[str, str] | None = None, mcp_servers: list[Any] | None = None
+) -> Mock:
+    mock_task = Mock()
+    mock_task.name = "org/task-a"
+    mock_task.paths.environment_dir = Path("/task/environment")
+    env_config = Mock()
+    env_config.env = env or {}
+    env_config.cpus = None
+    env_config.memory_mb = None
+    env_config.gpus = 0
+    env_config.gpu_types = None
+    env_config.healthcheck = None
+    env_config.network_mode = "public"
+    env_config.docker_image = None
+    env_config.mcp_servers = [MCPServerConfig(**cfg) for cfg in mcp_servers or []]
+    mock_task.config.environment = env_config
+    mock_task.config.verifier.env = {}
+    return mock_task
+
+
+SIDECAR_COMPOSE = """
+services:
+  main:
+    depends_on:
+      runtime:
+        condition: service_healthy
+  runtime:
+    build:
+      context: ./runtime-server
+    volumes:
+      - ${HOST_AGENT_LOGS_PATH}:${ENV_AGENT_LOGS_PATH}
+    expose:
+      - "8000"
+"""
+
+
+def test_compose_yaml_completes_main_service_and_shares_logs():
+    """A compose file that only declares depends_on for main gets Harbor's defaults for it."""
+    mock_task = _mock_task_with_compose(env={"FOO": "bar"})
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=SIDECAR_COMPOSE)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    main = result.services["main"]
+    assert main.image == _hb(mock_task)
+    assert isinstance(main.build, ComposeBuild)
+    assert main.build.context == "/task/environment"
+    assert main.command == "tail -f /dev/null"
+    assert main.init is True
+    assert main.x_default is True
+    assert main.environment == {"FOO": "bar"}
+    # the sidecar's log mount became a named volume shared with main
+    runtime = result.services["runtime"]
+    assert runtime.volumes == ["harbor-logs-logs-agent:/logs/agent"]
+    assert main.volumes == ["harbor-logs-logs-agent:/logs/agent"]
+    assert result.volumes == {"harbor-logs-logs-agent": {}}
+    # relative build contexts are resolved against the environment directory
+    assert isinstance(runtime.build, ComposeBuild)
+    assert runtime.build.context == "/task/environment/runtime-server"
+    assert runtime.image == _hb(mock_task, "runtime")
+
+
+def test_mcp_server_specs_route_http_servers_to_their_service():
+    """Sidecar-hosted servers are bridged from their service; other URLs use the Inspect process; stdio runs in the default service."""
+    from inspect_harbor._harbor.converters import mcp_server_specs
+
+    servers = [
+        {
+            "name": "rt",
+            "transport": "streamable-http",
+            "url": "http://runtime:8000/mcp",
+        },
+        {"name": "ext", "transport": "sse", "url": "http://example.org:9000/sse"},
+        {
+            "name": "local",
+            "transport": "stdio",
+            "command": "python",
+            "args": ["-m", "srv"],
+        },
+    ]
+    mock_task = _mock_task_with_compose(mcp_servers=servers)
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=SIDECAR_COMPOSE)),
+    ):
+        mock_exists.side_effect = lambda: True
+        compose = harbor_to_compose_config(mock_task)
+    specs = mcp_server_specs(mock_task, compose)
+    assert specs[0] == {
+        "name": "rt",
+        "transport": "streamable-http",
+        "sandbox": "runtime",
+        "url": "http://localhost:8000/mcp",
+    }
+    assert specs[1] == {
+        "name": "ext",
+        "transport": "sse",
+        "sandbox": None,
+        "url": "http://example.org:9000/sse",
+    }
+    assert specs[2] == {
+        "name": "local",
+        "transport": "stdio",
+        "sandbox": "main",
+        "command": "python",
+        "args": ["-m", "srv"],
+    }
+
+
+def test_mcp_server_specs_land_in_sample_metadata():
+    """The per-sample solver reads the MCP server specs from the sample metadata."""
+    mock_task = _mock_task_with_compose(
+        mcp_servers=[
+            {"name": "rt", "transport": "http", "url": "http://runtime:8000/mcp"}
+        ]
+    )
+    mock_task.config.model_dump.return_value = {}
+    mock_task.config.task = None
+    mock_task.instruction = "do it"
+    mock_task.config.verifier.timeout_sec = 10
+    mock_task.config.solution.env = {}
+    mock_task.config.verifier.user = None
+    mock_task.config.agent.user = None
+    mock_task.task_dir = Path("/task")
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=SIDECAR_COMPOSE)),
+    ):
+        mock_exists.side_effect = lambda: True
+        sample = harbor_task_to_sample(mock_task)
+    assert sample.metadata is not None
+    assert sample.metadata["mcp_servers"][0]["transport"] == "streamable-http"
+    assert sample.metadata["mcp_servers"][0]["sandbox"] == "runtime"
+
+
+KUMO_COMPOSE = """
+services:
+  verifier:
+    build:
+      context: ${CONTEXT_DIR}
+      dockerfile: Dockerfile_verifier
+    image: ${MAIN_IMAGE_NAME}_verifier
+    volumes:
+      - ${HOST_VERIFIER_LOGS_PATH}:${ENV_VERIFIER_LOGS_PATH}
+  main:
+    build:
+      context: ${CONTEXT_DIR}
+    image: ${MAIN_IMAGE_NAME}
+    environment:
+      - TEST_DIR=${TEST_DIR}
+      - FOO=compose
+    volumes:
+      - ${HOST_VERIFIER_LOGS_PATH}:${ENV_VERIFIER_LOGS_PATH}
+      - ${HOST_AGENT_LOGS_PATH}:${ENV_AGENT_LOGS_PATH}
+"""
+
+
+def test_compose_yaml_log_mounts_on_main_and_sidecar_become_one_volume_each():
+    """Log mounts declared on main itself are rewritten too, so main never carries a host bind and a volume for one path."""
+    mock_task = _mock_task_with_compose()
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=KUMO_COMPOSE)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    main = result.services["main"]
+    assert main.volumes == [
+        "harbor-logs-logs-verifier:/logs/verifier",
+        "harbor-logs-logs-agent:/logs/agent",
+    ]
+    assert result.services["verifier"].volumes == [
+        "harbor-logs-logs-verifier:/logs/verifier"
+    ]
+    assert result.volumes == {
+        "harbor-logs-logs-verifier": {},
+        "harbor-logs-logs-agent": {},
+    }
+
+
+def test_compose_yaml_task_env_merges_over_compose_environment():
+    """``[environment.env]`` is layered over the compose ``environment`` (list form too), as Harbor's override is."""
+    mock_task = _mock_task_with_compose(env={"FOO": "task", "BAR": "1"})
+    mock_task.config.verifier.env = {"TEST_DIR": "/tests"}
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=KUMO_COMPOSE)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    assert result.services["main"].environment == {
+        "TEST_DIR": "/tests",
+        "FOO": "task",
+        "BAR": "1",
+    }
+
+
+LONG_SYNTAX_COMPOSE = """
+services:
+  main:
+    build: .
+  runtime:
+    build:
+      dockerfile: Dockerfile.runtime
+    volumes:
+      - type: bind
+        source: ${HOST_AGENT_LOGS_PATH}
+        target: ${ENV_AGENT_LOGS_PATH}
+      - ${HOST_ARTIFACTS_PATH}:${ENV_ARTIFACTS_PATH}:ro
+      - ./data:/data
+"""
+
+
+def test_compose_yaml_long_syntax_log_mounts_and_flags_are_preserved():
+    """Long-syntax bind mounts become volume mounts; ``:ro``-style flags and unrelated mounts are kept."""
+    from inspect_ai.util._sandbox.compose import ComposeVolumeMount
+
+    mock_task = _mock_task_with_compose()
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=LONG_SYNTAX_COMPOSE)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    runtime = result.services["runtime"]
+    assert runtime.volumes is not None
+    long_mount = runtime.volumes[0]
+    assert isinstance(long_mount, ComposeVolumeMount)
+    assert (long_mount.type, long_mount.source, long_mount.target) == (
+        "volume",
+        "harbor-logs-logs-agent",
+        "/logs/agent",
+    )
+    assert runtime.volumes[1:] == [
+        "harbor-logs-logs-artifacts:/logs/artifacts:ro",
+        "./data:/data",
+    ]
+    assert result.services["main"].volumes == [
+        "harbor-logs-logs-agent:/logs/agent",
+        "harbor-logs-logs-artifacts:/logs/artifacts",
+    ]
+
+
+def test_compose_yaml_short_form_and_contextless_builds_are_absolutized():
+    """``build: .`` and a ``build:`` block without ``context`` resolve against the environment directory."""
+    mock_task = _mock_task_with_compose()
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=LONG_SYNTAX_COMPOSE)),
+    ):
+        mock_exists.side_effect = lambda: True
+        result = harbor_to_compose_config(mock_task)
+
+    assert result.services["main"].build == "/task/environment"
+    runtime_build = result.services["runtime"].build
+    assert isinstance(runtime_build, ComposeBuild)
+    assert runtime_build.context == "/task/environment"
+    assert runtime_build.dockerfile == "Dockerfile.runtime"
+
+
+def test_mcp_server_specs_normalize_http_transport():
+    """Harbor's ``http`` alias is stored as ``streamable-http`` and the default transport is ``sse``."""
+    from inspect_harbor._harbor.converters import mcp_server_specs
+
+    mock_task = _mock_task_with_compose(
+        mcp_servers=[
+            {"name": "a", "transport": "http", "url": "http://runtime:8000/mcp"},
+            {"name": "b", "url": "http://runtime:8000/sse"},
+        ]
+    )
+    with (
+        patch("pathlib.Path.exists") as mock_exists,
+        patch("builtins.open", mock_open(read_data=SIDECAR_COMPOSE)),
+    ):
+        mock_exists.side_effect = lambda: True
+        compose = harbor_to_compose_config(mock_task)
+    specs = mcp_server_specs(mock_task, compose)
+    assert [s["transport"] for s in specs] == ["streamable-http", "sse"]
+    assert all(s["sandbox"] == "runtime" for s in specs)
