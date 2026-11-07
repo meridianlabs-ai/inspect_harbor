@@ -1019,7 +1019,7 @@ def biopharma_bench(
     r"""Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. The company date is 27 September 2026. An agent takes an employee's seat and writes the document that seat is responsible for.
 
     Slug: biopharma-bench/biopharma-bench
-    Latest digest: sha256:8975dab9154ee4fdc053650f6ae498ade4e80fcd1f669c4ab2d048bb990faf7c
+    Latest digest: sha256:fa0d708d407e64ec1751c27e05c2e6fc5a9fd7095bc515a78385e35053ae6b0f
     """
     return _harbor_base(
         package_name="biopharma-bench/biopharma-bench",
@@ -2710,6 +2710,37 @@ def swe_rebench_07_2026(
 
 
 @task
+def swe_rebench_v2_1_rl(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""13,337 verified SWE-rebench V2.1 tasks for RL training of coding agents across 20 languages, with public prebuilt Docker images
+
+    Slug: ibragim-badertdinov/swe-rebench-v2.1-rl
+    Latest digest: sha256:0dcba0d99e8c2bc7f1a8aefdd2e3cf8f5aae2387659d6390a06446ed5f3612b3
+    """
+    return _harbor_base(
+        package_name="ibragim-badertdinov/swe-rebench-v2.1-rl",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def ineqmath(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3100,6 +3131,99 @@ def kumo_parity(
     """
     return _harbor_base(
         package_name="kumo/kumo-parity",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def kw_bench_sap(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""kw-bench procure-to-pay forensics (hard): find a ghost vendor, a bank-account diversion, price creep and duplicate payments in ~300 MB of SAP extracts, without accusing the honest look-alikes, and deliver the audit-committee package plus reusable audit analytics graded on hidden data. Deterministic grading.
+
+    Slug: kw-bench/kw-sap
+    Latest digest: sha256:23db44667d3503646337a86bb11f010455cd7e7fec16f8b470d75d2f56659ec3
+    """
+    return _harbor_base(
+        package_name="kw-bench/kw-sap",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def kw_bench_sap_easy(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""kw-bench procure-to-pay forensics (easy tier): the same schemes on a smaller, simpler extract. Deterministic grading.
+
+    Slug: kw-bench/kw-sap-easy
+    Latest digest: sha256:f9296c4d3db036cd42984dcffe5b30744d84d7baa7e1685edeb84e712792935d
+    """
+    return _harbor_base(
+        package_name="kw-bench/kw-sap-easy",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def kw_bench_sap_vat(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""kw-bench VAT chain family: reconstruct five years of intra-group VAT across three generations of SAP (ECC, a partial S/4HANA migration, a 2024 redesign) from raw extracts, recompute every return to the cent against the filed returns, and deliver the register, reconciliation, correction file, memo and a reusable classifier graded on hidden data. Deterministic grading.
+
+    Slug: kw-bench/kw-sap-vat
+    Latest digest: sha256:3e701c7100b7d80f002c3541fa1370bf139bd00a4ff82b919e9b3eec82796ae9
+    """
+    return _harbor_base(
+        package_name="kw-bench/kw-sap-vat",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -3534,6 +3658,37 @@ def nvats_codeskills_bench(
     """
     return _harbor_base(
         package_name="nvats/codeskills-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def obtuseorion_geoworld(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Three long-horizon tasks in a generated geomechanics software company (Halvard Geomechanics, solver GeoSolve).
+
+    Slug: obtuseorion/geoworld
+    Latest digest: sha256:075d7ef9af59cb053ba016f4f0e86668def3aead6ed554339f6fb5f481589f2a
+    """
+    return _harbor_base(
+        package_name="obtuseorion/geoworld",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -4248,8 +4403,8 @@ def rexbench(
     Adapter by Nicholas Edwards (nicholas.edwards@univie.ac.at), one of the original RExBench authors.
     Acknowledgements: We thank 2077 AI for generously funding API credits to support running parity experiments.
 
-    Slug: rexbench/rexbench
-    Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
+        Slug: rexbench/rexbench
+        Latest digest: sha256:bc23e94793e8c74aceb8f6fdb3a268dc834b4699f71b1329db9222e83bb5ac4f
     """
     return _harbor_base(
         package_name="rexbench/rexbench",
@@ -5055,7 +5210,7 @@ def terminal_bench(
     r"""Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
 
     Slug: terminal-bench/terminal-bench
-    Latest digest: sha256:39d9f44b40420cde8fdcc087579c0d72a7e14fa3656d603c3f0d22fb35e27732
+    Latest digest: sha256:5881c1b1c74a96f07baef00a7c869e09802704bc0dc912c870e7acccc11440da
     """
     return _harbor_base(
         package_name="terminal-bench/terminal-bench",
@@ -5148,7 +5303,7 @@ def terminal_bench_cpu_only(
     r"""Terminal-Bench (CPU-only): the current Terminal-Bench task set minus the 3 tasks that require an H100 GPU, so the full suite runs on CPU-only sandboxes.
 
     Slug: terminal-bench/terminal-bench-cpu-only
-    Latest digest: sha256:b440941ff70a00335fa906e3b1a5407c3e72c20e975fa4d7d61b803bf80dd5b5
+    Latest digest: sha256:ff571d9450cd190a7c4b3b5e0d53cb287943c3de493a3c443efceeaf2c7a7a73
     """
     return _harbor_base(
         package_name="terminal-bench/terminal-bench-cpu-only",
