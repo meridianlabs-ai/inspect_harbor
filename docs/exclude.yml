@@ -296,3 +296,63 @@
 # build tasks). Excluded at maintainer request (PR #209). Revisit if it is
 # published.
 - model-topography/*
+# These load, but every sample's verifier runs in its own image
+# (environment_mode = "separate"), which needs #187 (same gap as
+# dissei/financial-judgment-full). Remove each entry once #187 lands and
+# fill its stub with the values given:
+# - filing-bench: SEC XBRL finance Q&A -> [Finance, Professional],
+#   title FilingBench.
+# - extractbench-pro: document extraction -> [Multimodal], title
+#   ExtractBench Pro.
+# - machine-trading: Solana DeFi trading bots -> [Coding, Finance], title
+#   Solana Machine Trading.
+# - abstention-act: compliance-bias / abstention -> [Safeguards], title
+#   Abstention-Act.
+# - simrepairbench: HCLTech's OpenUSD asset-repair set, sibling of
+#   simreadybench -> [Coding, Multimodal], title SimRepairBench.
+# - phmforge: industrial prognostics / predictive maintenance (NeurIPS 2026
+#   E&D) -> [Professional, Science], title PHMForge, function_name
+#   phmforge, arxiv 2604.01532.
+# - WebsiteBench: rebuild a website from browser exploration -> [Coding],
+#   title WebsiteBench, function_name websitebench (its agent egress
+#   allowlist is also not enforced yet).
+# - nim: an individual's 285 issue-linked Nim compiler repair tasks with no
+#   repo or paper found -> [Coding] if listed at all; re-check provenance.
+# - nim-hard: a 15-task subset of nim (tasks DeepSeek V4.1 Flash fails).
+#   List it only together with nim -> [Coding], title Nim (hard).
+# Exact slugs, since the orgs are real.
+- filing-bench/filing-bench
+- llamaindex/extractbench-pro
+- solana-foundation/machine-trading
+- victorojewale/abstention-act
+- hcltech-robotics/simrepairbench
+- phmforge/phmforge
+- websitebench/WebsiteBench
+- josancamon19/nim
+- josancamon19/nim-hard
+# Superseded copy: its desc says "Moved to websitebench/WebsiteBench" and it
+# lists the same 70 tasks. Keep the WebsiteBench org's copy. Exact slug.
+- reacher-z/WebsiteBench
+# Individual's 10-task "-v1" upload with no benchmark repo or paper; it also
+# fails to load (compose build.network). Exact slug.
+- suryanshsh/robotsevolved-gui-lessons-v1
+# Individual's (User) 1-sample upload tests of the same ctr-optimization
+# task with the stock Terminal-Bench desc. Same kind of upload as
+# ryanmarten/*.
+- walkerhughes/*
+# A curated 12-task "hard" mix drawn from other benchmarks (Terminal-Bench
+# 4.0, DeepSWE, SWE-rebench, SWE-bench Pro, ...) with no repo, paper or
+# announcement. Same derivative-subset class as fritzprix/* and
+# NovitaAI/tb21-*. Exact slug: the author's swe-rebench-07-2026 snapshot
+# stays listed.
+- ibragim-badertdinov/hard12
+# AbMaze v0.3 (200 antibody affinity-maturation campaigns): the agent can
+# only act through a `lab` MCP server ([environment].mcp_servers), which
+# inspect_harbor doesn't wire up, so the samples can't be solved here. The
+# uploader is a User account with no public repos, and no repo or paper was
+# found. Revisit once MCP servers are supported; the values would be
+# [Science, Reasoning], title AbMaze. Exact slug.
+- valenlabs/abmaze
+# A 1-sample "probe dataset" whose task dumps the sandbox environment and
+# network reachability. Not a benchmark; the uploader has no GitHub account.
+- i17470/*
