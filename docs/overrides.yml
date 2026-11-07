@@ -550,6 +550,9 @@ featurebench/featurebench-modal:
   function_name: featurebench_modal
   title: FeatureBench (Modal)
 
+filing-bench/filing-bench:
+  categories: []
+
 frontier-harness-eval/frontier-harness-eval:
   categories:
   - Coding
@@ -697,6 +700,9 @@ hcltech-robotics/simreadybench:
   repo: https://github.com/hcltech-robotics/simreadybench
   desc: Agent reconstructs a simulation-ready OpenUSD asset (geometry, materials, rigid bodies and joints) from a reference image and authoring brief, scored on formal, visual and kinematic fidelity.
 
+hcltech-robotics/simrepairbench:
+  categories: []
+
 hwe-bench/hwe-bench:
   categories:
   - Science
@@ -705,6 +711,12 @@ hwe-bench/hwe-bench:
   function_name: hwe_bench
   title: HWE-bench
 
+i17470/ds:
+  categories: []
+
+ibragim-badertdinov/hard12:
+  categories: []
+
 ibragim-badertdinov/swe-rebench-07-2026:
   categories:
   - Coding
@@ -712,6 +724,9 @@ ibragim-badertdinov/swe-rebench-07-2026:
   repo: https://huggingface.co/datasets/nebius/SWE-rebench-leaderboard
   arxiv: https://arxiv.org/abs/2505.20411
   function_name: swe_rebench_07_2026
+
+ibragim-badertdinov/swe-rebench-v2.1-rl:
+  categories: []
 
 ineqmath/ineqmath:
   categories:
@@ -752,6 +767,12 @@ ivanleo/agent-search:
   - Coding
   - Assistants
   desc: Agent answers Gemini API questions by querying an indexed documentation database.
+
+josancamon19/nim:
+  categories: []
+
+josancamon19/nim-hard:
+  categories: []
 
 josancamon19/physician-bench:
   categories:
@@ -814,6 +835,15 @@ kumo/kumo-parity:
   function_name: kumo_parity
   title: KUMO (parity)
 
+kw-bench/kw-sap:
+  categories: []
+
+kw-bench/kw-sap-easy:
+  categories: []
+
+kw-bench/kw-sap-vat:
+  categories: []
+
 last-secure-code-benchmark/last-secure-code-benchmark:
   categories:
   - Coding
@@ -855,6 +885,9 @@ livecodebench/livecodebench:
   desc: 'LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, and Codeforces, supporting code generation, self-repair, execution, and test-output prediction.'
   function_name: livecodebench
   title: LiveCodeBench
+
+llamaindex/extractbench-pro:
+  categories: []
 
 looni-lab/smdd-bench:
   categories:
@@ -925,6 +958,9 @@ nvats/codeskills-bench:
   repo: https://github.com/namanvats/codeskills-bench
   title: CodeSkills-Bench
 
+obtuseorion/geoworld:
+  categories: []
+
 openai/mmmlu:
   categories:
   - Knowledge
@@ -994,6 +1030,9 @@ orinlabs/horizon-public:
   desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
   title: Horizon
 
+phmforge/phmforge:
+  categories: []
+
 qcircuitbench/qcircuitbench:
   categories:
   - Science
@@ -1039,6 +1078,9 @@ rachittshah/railhead-train:
   - Reasoning
   title: Railhead (train)
   repo: https://github.com/rachittshah/railhead
+
+reacher-z/WebsiteBench:
+  categories: []
 
 reactbench/reactbench:
   categories:
@@ -1247,6 +1289,9 @@ snowflake-labs/data-eng-bench:
   - Coding
   repo: https://github.com/Snowflake-Labs/data-eng-bench
 
+solana-foundation/machine-trading:
+  categories: []
+
 stanford/medagentbench:
   categories:
   - Professional
@@ -1265,6 +1310,9 @@ strongreject/strongreject:
   desc: 'StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks are at eliciting genuinely harmful, specific responses.'
   function_name: strongreject
   title: StrongREJECT
+
+suryanshsh/robotsevolved-gui-lessons-v1:
+  categories: []
 
 swe-bench/swe-bench-verified:
   categories:
@@ -1419,6 +1467,9 @@ userbench/UserBench-train400:
   function_name: userbench_train400
   title: UserBench (SWE user simulation, train400)
 
+valenlabs/abmaze:
+  categories: []
+
 vals/financeagent:
   categories:
   - Professional
@@ -1436,11 +1487,20 @@ vibrantlabsai/itsm-bench:
   repo: https://github.com/vibrantlabsai/Enterprise-Worlds
   title: ITSMBench (Enterprise-Worlds)
 
+victorojewale/abstention-act:
+  categories: []
+
 vmax/vmax-tasks:
   categories:
   - Coding
   desc: Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).
   function_name: vmax_tasks
+
+walkerhughes/tb-test:
+  categories: []
+
+walkerhughes/tb-test-cpu:
+  categories: []
 
 webgen-bench/webgen-bench:
   categories:
@@ -1449,6 +1509,9 @@ webgen-bench/webgen-bench:
   repo: https://github.com/mnluzimu/WebGen-Bench
   function_name: webgen_bench
   title: WebGen-Bench
+
+websitebench/WebsiteBench:
+  categories: []
 
 wildawm/train-rl-208-set:
   categories:

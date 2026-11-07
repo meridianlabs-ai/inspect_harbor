@@ -647,6 +647,13 @@
   version: latest
   categories:
   - Coding
+- title: filing-bench/filing-bench
+  path: registry/filing_bench_filing_bench.html
+  desc: Point-in-time SEC XBRL finance questions with hand-checked answer keys (public split; a held-out split is kept private).
+  desc_trunc: Point-in-time SEC XBRL finance questions with hand-checked answer keys (public split; a held-out sp…
+  task_function: filing_bench_filing_bench
+  samples: 85
+  version: latest
 - title: frontier-harness-eval/frontier-harness-eval
   path: registry/frontier_harness_eval.html
   desc: 'FrontierHarness Eval v1.1.0: 17 Terminal Bench 4 tasks and 45 Terminal-Bench 2.1 tasks. TB4 quarter-size selection derived from proposal Appendix C; TB2.1 selection from Appendix E. Original tasks and verifiers pinned by SHA256. Report benchmark subsets separately; these are not official full-benchmark scores. TB4 favors shorter historical runtimes. TB2.1 preserves all 16 categories, with 29 medium, 14 hard and 2 easy tasks; source commit 7131e4375048a0e408a8fb404b5f499d726b695b. Selection and provenance: This selection reduces TB4 from 33 to 17 tasks using proportional domain quotas and the fastest known historical runtimes within each domain. Tasks with unknown historical runtimes are excluded. This version replaces protein-assembly with dna-insert, retaining the scientific-computing category and 1800-second timeout. It also replaces crack-7z-hash with vulnerable-secret, retaining medium security coverage and reducing the agent timeout from 1800 to 900 seconds.'
@@ -829,6 +836,13 @@
   categories:
   - Coding
   - Multimodal
+- title: hcltech-robotics/simrepairbench
+  path: registry/hcltech_robotics_simrepairbench.html
+  desc: CASTAIGNE25 OpenUSD repair tasks with partial-credit state verification.
+  desc_trunc: CASTAIGNE25 OpenUSD repair tasks with partial-credit state verification.
+  task_function: hcltech_robotics_simrepairbench
+  samples: 25
+  version: latest
 - title: hwe-bench/hwe-bench
   path: registry/hwe_bench.html
   desc: 'HWE-bench evaluates LLM agents on engineering-simulation tasks: the agent drives a real solver and is scored on whether the number it reports lands inside a defensible tolerance band, by a deterministic verifier rather than an LLM judge. This CAE edition covers combustion, battery, CFD and 2.5D packaging.'
@@ -839,6 +853,20 @@
   categories:
   - Science
   - Coding
+- title: i17470/ds
+  path: registry/i17470_ds.html
+  desc: probe dataset.
+  desc_trunc: probe dataset.
+  task_function: i17470_ds
+  samples: 1
+  version: latest
+- title: ibragim-badertdinov/hard12
+  path: registry/ibragim_badertdinov_hard12.html
+  desc: 12 hard, verified coding tasks from Terminal-Bench 4.0, DeepSWE 1.1, SWE-rebench, LongTail-SWE and SWE-bench Pro V2 across Python, TypeScript, JavaScript, Go, Elixir and OCaml.
+  desc_trunc: 12 hard, verified coding tasks from Terminal-Bench 4.0, DeepSWE 1.1, SWE-rebench, LongTail-SWE and…
+  task_function: ibragim_badertdinov_hard12
+  samples: 12
+  version: latest
 - title: ibragim-badertdinov/swe-rebench-07-2026
   path: registry/swe_rebench_07_2026.html
   desc: 111 hard SWE-rebench leaderboard tasks from the July 2026 snapshot across Go, Java, Python, Rust, and TypeScript.
@@ -848,6 +876,13 @@
   version: latest
   categories:
   - Coding
+- title: ibragim-badertdinov/swe-rebench-v2.1-rl
+  path: registry/ibragim_badertdinov_swe_rebench_v2_1_rl.html
+  desc: 13,337 verified SWE-rebench V2.1 tasks for RL training of coding agents across 20 languages, with public prebuilt Docker images.
+  desc_trunc: 13,337 verified SWE-rebench V2.1 tasks for RL training of coding agents across 20 languages, with p…
+  task_function: ibragim_badertdinov_swe_rebench_v2_1_rl
+  samples: 13337
+  version: latest
 - title: ineqmath/ineqmath
   path: registry/ineqmath.html
   desc: 'IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bound-estimation and relation-prediction subtasks with stepwise judging.'
@@ -905,6 +940,20 @@
   categories:
   - Coding
   - Assistants
+- title: josancamon19/nim
+  path: registry/josancamon19_nim.html
+  desc: 285 issue-linked Nim compiler tasks with Linux amd64 C-backend black-box evaluation.
+  desc_trunc: 285 issue-linked Nim compiler tasks with Linux amd64 C-backend black-box evaluation.
+  task_function: josancamon19_nim
+  samples: 285
+  version: latest
+- title: josancamon19/nim-hard
+  path: registry/josancamon19_nim_hard.html
+  desc: 15 validated issue-only Nim tasks unsolved by DeepSeek V4.1 Flash; static/rubric passed and no disqualifying trial-analysis findings.
+  desc_trunc: 15 validated issue-only Nim tasks unsolved by DeepSeek V4.1 Flash; static/rubric passed and no disq…
+  task_function: josancamon19_nim_hard
+  samples: 15
+  version: latest
 - title: josancamon19/physician-bench
   path: registry/josancamon19_physician_bench.html
   desc: Harbor packaging of the 100 Apache-2.0 HealthRex PhysicianBench tasks. Runtime requires separately authorized access to the fhir-full:v1 EHR image from Stanford Redivis.
@@ -972,6 +1021,27 @@
   version: latest
   categories:
   - Reasoning
+- title: kw-bench/kw-sap
+  path: registry/kw_bench_kw_sap.html
+  desc: 'kw-bench procure-to-pay forensics (hard): find a ghost vendor, a bank-account diversion, price creep and duplicate payments in ~300 MB of SAP extracts, without accusing the honest look-alikes, and deliver the audit-committee package plus reusable audit analytics graded on hidden data. Deterministic grading.'
+  desc_trunc: 'kw-bench procure-to-pay forensics (hard): find a ghost vendor, a bank-account diversion, price cree…'
+  task_function: kw_bench_kw_sap
+  samples: 3
+  version: latest
+- title: kw-bench/kw-sap-easy
+  path: registry/kw_bench_kw_sap_easy.html
+  desc: 'kw-bench procure-to-pay forensics (easy tier): the same schemes on a smaller, simpler extract. Deterministic grading.'
+  desc_trunc: 'kw-bench procure-to-pay forensics (easy tier): the same schemes on a smaller, simpler extract. Dete…'
+  task_function: kw_bench_kw_sap_easy
+  samples: 3
+  version: latest
+- title: kw-bench/kw-sap-vat
+  path: registry/kw_bench_kw_sap_vat.html
+  desc: 'kw-bench VAT chain family: reconstruct five years of intra-group VAT across three generations of SAP (ECC, a partial S/4HANA migration, a 2024 redesign) from raw extracts, recompute every return to the cent against the filed returns, and deliver the register, reconciliation, correction file, memo and a reusable classifier graded on hidden data. Deterministic grading.'
+  desc_trunc: 'kw-bench VAT chain family: reconstruct five years of intra-group VAT across three generations of SA…'
+  task_function: kw_bench_kw_sap_vat
+  samples: 3
+  version: latest
 - title: last-secure-code-benchmark/last-secure-code-benchmark
   path: registry/last_secure_code_benchmark.html
   desc: 'Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scenarios, each at function, file, and repository granularity, in seven languages.'
@@ -1021,6 +1091,13 @@
   version: latest
   categories:
   - Coding
+- title: llamaindex/extractbench-pro
+  path: registry/llamaindex_extractbench_pro.html
+  desc: 'ExtractBench Pro: 100 synthetic document extraction tasks across six challenges; deterministic Value F1 reward.'
+  desc_trunc: 'ExtractBench Pro: 100 synthetic document extraction tasks across six challenges; deterministic Valu…'
+  task_function: llamaindex_extractbench_pro
+  samples: 100
+  version: latest
 - title: looni-lab/smdd-bench
   path: registry/looni_lab_smdd_bench.html
   desc: 'SMDD-Bench: five small-molecule design task families with an agent harness, GPU oracle and setup guide.'
@@ -1108,6 +1185,13 @@
   version: latest
   categories:
   - Coding
+- title: obtuseorion/geoworld
+  path: registry/obtuseorion_geoworld.html
+  desc: Three long-horizon tasks in a generated geomechanics software company (Halvard Geomechanics, solver GeoSolve).
+  desc_trunc: Three long-horizon tasks in a generated geomechanics software company (Halvard Geomechanics, solver…
+  task_function: obtuseorion_geoworld
+  samples: 3
+  version: latest
 - title: openai/mmmlu
   path: registry/openai_mmmlu.html
   desc: 'MMMLU (Multilingual MMLU): OpenAI''s professional-human-translation of the MMLU test set into 14 languages for multilingual knowledge and reasoning evaluation.'
@@ -1184,6 +1268,13 @@
   version: latest
   categories:
   - Assistants
+- title: phmforge/phmforge
+  path: registry/phmforge_phmforge.html
+  desc: 'PHMForge: 99 industrial prognostics and health management scenarios for LLM agents (NeurIPS 2026 Evaluations & Datasets Track).'
+  desc_trunc: 'PHMForge: 99 industrial prognostics and health management scenarios for LLM agents (NeurIPS 2026 Ev…'
+  task_function: phmforge_phmforge
+  samples: 123
+  version: latest
 - title: qcircuitbench/qcircuitbench
   path: registry/qcircuitbench.html
   desc: 'QCircuitBench: large-scale benchmark for LLM-driven quantum-algorithm design, spanning oracle construction, algorithm design, and random circuits with automatic verification.'
@@ -1240,6 +1331,13 @@
   version: latest
   categories:
   - Reasoning
+- title: reacher-z/WebsiteBench
+  path: registry/reacher_z_websitebench.html
+  desc: Moved to websitebench/WebsiteBench. This dataset lists the same 70 WebsiteBench tasks.
+  desc_trunc: Moved to websitebench/WebsiteBench. This dataset lists the same 70 WebsiteBench tasks.
+  task_function: reacher_z_websitebench
+  samples: 70
+  version: latest
 - title: reactbench/reactbench
   path: registry/reactbench.html
   desc: 'ReactBench: coding agents on realistic React work.'
@@ -1488,6 +1586,13 @@
   version: latest
   categories:
   - Coding
+- title: solana-foundation/machine-trading
+  path: registry/solana_foundation_machine_trading.html
+  desc: 'Trading tasks for agents on Solana: bots trade DeFi markets replayed on offline mainnet snapshots with Surfpool.'
+  desc_trunc: 'Trading tasks for agents on Solana: bots trade DeFi markets replayed on offline mainnet snapshots w…'
+  task_function: solana_foundation_machine_trading
+  samples: 2
+  version: latest
 - title: stanford/medagentbench
   path: registry/stanford_medagentbench.html
   desc: 'MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benchmarking LLM agents on medical decision-making, planning, and execution.'
@@ -1508,6 +1613,13 @@
   version: latest
   categories:
   - Safeguards
+- title: suryanshsh/robotsevolved-gui-lessons-v1
+  path: registry/suryanshsh_robotsevolved_gui_lessons_v1.html
+  desc: Ten offline Robots Evolved GUI lessons with calibrated screenshot/click/key tools, protected host grading, hidden Oracle references, and a bundled portable Harbor launcher.
+  desc_trunc: Ten offline Robots Evolved GUI lessons with calibrated screenshot/click/key tools, protected host g…
+  task_function: suryanshsh_robotsevolved_gui_lessons_v1
+  samples: 10
+  version: latest
 - title: swe-bench/swe-bench-verified
   path: registry/swe_bench_verified.html
   desc: 'SWE-bench Verified: human-filtered subset of SWE-bench (collaboration with OpenAI) where human SWEs confirmed each real GitHub issue is solvable given the available repository context.'
@@ -1680,6 +1792,13 @@
   categories:
   - Assistants
   - Coding
+- title: valenlabs/abmaze
+  path: registry/valenlabs_abmaze.html
+  desc: 'AbMaze v0.3: antibody optimization over real combinatorially complete landscapes (hidden norm_gain scoring).'
+  desc_trunc: 'AbMaze v0.3: antibody optimization over real combinatorially complete landscapes (hidden norm_gain…'
+  task_function: valenlabs_abmaze
+  samples: 200
+  version: latest
 - title: vals/financeagent
   path: registry/vals_financeagent.html
   desc: 'Vals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (retrieval, market research, projections) with EDGAR/SEC search tools for evaluating financial agents.'
@@ -1701,6 +1820,13 @@
   categories:
   - Assistants
   - Professional
+- title: victorojewale/abstention-act
+  path: registry/victorojewale_abstention_act.html
+  desc: 'Compliance-bias benchmark: safe action, clarification, and abstention.'
+  desc_trunc: 'Compliance-bias benchmark: safe action, clarification, and abstention.'
+  task_function: victorojewale_abstention_act
+  samples: 22
+  version: latest
 - title: vmax/vmax-tasks
   path: registry/vmax_tasks.html
   desc: Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).
@@ -1710,6 +1836,20 @@
   version: latest
   categories:
   - Coding
+- title: walkerhughes/tb-test
+  path: registry/walkerhughes_tb_test.html
+  desc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
+  desc_trunc: Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
+  task_function: walkerhughes_tb_test
+  samples: 1
+  version: latest
+- title: walkerhughes/tb-test-cpu
+  path: registry/walkerhughes_tb_test_cpu.html
+  desc: The CPU-only subset of Terminal-Bench, using the same task revisions and release tag as the full dataset.
+  desc_trunc: The CPU-only subset of Terminal-Bench, using the same task revisions and release tag as the full da…
+  task_function: walkerhughes_tb_test_cpu
+  samples: 1
+  version: latest
 - title: webgen-bench/webgen-bench
   path: registry/webgen_bench.html
   desc: 'WebGen-Bench: evaluating LLMs on generating interactive and functional websites from scratch.'
@@ -1719,6 +1859,13 @@
   version: latest
   categories:
   - Coding
+- title: websitebench/WebsiteBench
+  path: registry/websitebench_websitebench.html
+  desc: Can AI agents rebuild websites through browser exploration? 70 website-reconstruction tasks.
+  desc_trunc: Can AI agents rebuild websites through browser exploration? 70 website-reconstruction tasks.
+  task_function: websitebench_websitebench
+  samples: 70
+  version: latest
 - title: wildawm/train-rl-208-set
   path: registry/wildawm_train_rl_208_set.html
   desc: Agent completes persona-driven personal-computer requests spanning local files, scripts, MCP services and mirrored websites (RL training split, 208 tasks).
