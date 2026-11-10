@@ -25,7 +25,6 @@ For this repository:
 
 - Inspect Harbor uses only released inspect_ai: `inspect-ai` comes from PyPI.
 - The 6-hour packages are in `[tool.uv.exclude-newer-package]` in `pyproject.toml`.
-- When uv builds Inspect Harbor, for example for the editable install in `uv sync`, it resolves the build requirements (hatchling, hatch-vcs) without `uv.lock` or hashes, but within the cooldown.
 
 ## Checks and tests
 
