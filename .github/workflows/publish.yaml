@@ -8,47 +8,37 @@ on:
         required: true
         type: string
 
-permissions:
-  id-token: write
+permissions: {}
 
 jobs:
+  # The build runs in the shared workflow, in a job with no publishing
+  # credential. The build frontend and backend come from
+  # scripts/build-dist/requirements.txt, pinned with hashes, and Dependabot
+  # updates the file. To update the file by hand, run in scripts/build-dist:
+  #   uv pip compile --no-config --generate-hashes --python-version 3.12 \
+  #     --python-platform x86_64-unknown-linux-gnu --exclude-newer "7 days" \
+  #     --only-binary :all: --upgrade requirements.in -o requirements.txt
+  build:
+    permissions:
+      contents: read
+    uses: meridianlabs-ai/actions/.github/workflows/build-python-dist.yml@378070a4dd5c735a790016981ee144e71ed0b3f3 # main
+    with:
+      python-version: "3.12"
+
   publish:
+    needs: build
+    if: ${{ github.event.inputs.confirm == 'yes' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      id-token: write
     environment:
       name: pypi
       url: https://pypi.org/p/inspect-harbor
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
-          fetch-depth: 0
-          persist-credentials: false
-      # The build frontend and backend come from scripts/build-dist/requirements.txt,
-      # pinned with hashes, and the build runs without isolation, so nothing
-      # else is resolved at build time. Dependabot updates the file weekly with
-      # a 7-day cooldown; it lives outside .github/ because Dependabot changes
-      # files there only for github-actions. This job holds id-token, so it
-      # restores no Actions cache. To update the file by hand, run in
-      # scripts/build-dist:
-      #   uv pip compile --no-config --generate-hashes --python-version 3.12 \
-      #     --python-platform x86_64-unknown-linux-gnu --exclude-newer "7 days" \
-      #     --only-binary :all: --upgrade requirements.in -o requirements.txt
-      - name: Install build toolchain
-        uses: meridianlabs-ai/actions/install-python-dependencies@6fe6acfaeb946d22dd4fb673c744a3591eab0d91 # main
-        with:
-          versions: hashed-requirements
-          python-version: "3.12"
-          requirements-file: scripts/build-dist/requirements.txt
-          package-format: wheels-only
-          actions-cache: none
-          environment-dir: ${{ runner.temp }}/build-venv
-      - name: Display version
-        run: |
-          echo "Version: $(git describe --tags --always)"
-      - name: Build package
-        run: |
-          "$RUNNER_TEMP/build-venv/bin/python" -m build --no-isolation
-      - name: List built packages
-        run: ls -lh dist/
+          artifact-ids: ${{ needs.build.outputs.artifact-id }}
+          path: dist/
       - name: Publish package distributions to PyPI
-        if: ${{ github.event.inputs.confirm == 'yes' }}
         uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
