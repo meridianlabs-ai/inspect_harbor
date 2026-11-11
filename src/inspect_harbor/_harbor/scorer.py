@@ -107,6 +107,10 @@ def harbor_scorer(
         if harbor_config:
             await _run_verifier_collect(harbor_config)
 
+        # Like Harbor, only score a reward written by this run of test.sh: the
+        # agent shares this container and could have left a reward file behind.
+        await _remove_reward_files()
+
         verifier_env_raw = state.metadata.get("verifier_env", {})
         resolved_user_env = (
             resolve_env_vars(verifier_env_raw) if verifier_env_raw else {}
@@ -245,6 +249,21 @@ async def _run_verifier_collect(harbor_config: dict[str, Any]) -> None:
             result.stdout,
             result.stderr,
         )
+
+
+async def _remove_reward_files() -> None:
+    """Delete ``reward.txt`` and ``reward.json`` before the verifier runs.
+
+    Raises:
+        RuntimeError: When the files cannot be removed, so a stale reward is
+            never scored (Harbor aborts verification in the same case).
+    """
+    paths = EnvironmentPaths()
+    result = await sandbox().exec(
+        ["rm", "-f", "--", str(paths.reward_text_path), str(paths.reward_json_path)]
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"Failed to remove stale reward files: {result.stderr}")
 
 
 async def _parse_reward_file(exit_code: int) -> tuple[float, dict[str, Any] | None]:
