@@ -142,8 +142,7 @@ jobs:
       # 3.12, then a locked sync of the default dev group; the docs packages
       # are in the `doc` group, which `uv sync` leaves out).
       provision: |
-        uv venv --python 3.12
-        uv sync
+        uv sync --frozen --python 3.12
       # trigger_phrase is single-valued, so resolve it from the SAME source the
       # action will check for this event (comment > review > issue), not from a
       # union of all sources — otherwise a stale @claude in an enclosing issue
@@ -297,8 +296,7 @@ jobs:
       # 3.12, then a locked sync of the default dev group; the docs packages
       # are in the `doc` group, which `uv sync` leaves out).
       provision: |
-        uv venv --python 3.12
-        uv sync
+        uv sync --frozen --python 3.12
       trigger_phrase: "@auto"
       label_trigger: "auto"
       # Same allow-list as the @claude job above (reusable default + the triage
