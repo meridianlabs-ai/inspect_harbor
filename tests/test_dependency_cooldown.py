@@ -316,6 +316,10 @@ def test_publish_jobs_only_upload_the_shared_build() -> None:
         assert build["uses"].startswith(SHARED_BUILD), f"{name}: {build['uses']}"
         ref = build["uses"].split("@")[1].split()[0]
         assert re.fullmatch(r"[0-9a-f]{40}", ref), f"{name}: pin a 40-character SHA"
+    # Before the tag exists, hatch-vcs builds a dev version.
+    release = yaml.safe_load((WORKFLOWS / "release.yaml").read_text())["jobs"]
+    assert release["build"]["needs"] in ("release-please", ["release-please"])
+    assert release["build"]["if"] == release["publish"]["if"]
 
 
 def test_uv_never_relocks() -> None:
