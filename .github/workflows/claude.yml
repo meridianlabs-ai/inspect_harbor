@@ -140,7 +140,7 @@ jobs:
       # Node tooling:          corepack enable --install-directory ~/.local/bin && pnpm install --frozen-lockfile
       # inspect_harbor: the design's recipe (what claude-setup did: Python
       # 3.12, then a locked sync of the default dev group; the docs packages
-      # are in the `doc` group, which `uv sync` leaves out).
+      # are in the `doc` extra, which `uv sync` leaves out).
       provision: |
         uv sync --frozen --python 3.12
       # trigger_phrase is single-valued, so resolve it from the SAME source the
@@ -294,7 +294,7 @@ jobs:
       # Node tooling:          corepack enable --install-directory ~/.local/bin && pnpm install --frozen-lockfile
       # inspect_harbor: the design's recipe (what claude-setup did: Python
       # 3.12, then a locked sync of the default dev group; the docs packages
-      # are in the `doc` group, which `uv sync` leaves out).
+      # are in the `doc` extra, which `uv sync` leaves out).
       provision: |
         uv sync --frozen --python 3.12
       trigger_phrase: "@auto"
