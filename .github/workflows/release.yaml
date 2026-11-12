@@ -11,7 +11,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: meridianlabs-ai/actions/.github/workflows/release-please-python.yml@6fe6acfaeb946d22dd4fb673c744a3591eab0d91 # main
+    uses: meridianlabs-ai/actions/.github/workflows/release-please-python.yml@6245f003b5628736e543468ca41f61a42549643f # main
     with:
       approvers: "alexandraabbas jjallaire dragonstyle"
     secrets: inherit
@@ -29,7 +29,7 @@ jobs:
     if: ${{ needs.release-please.outputs.release_created }}
     permissions:
       contents: read
-    uses: meridianlabs-ai/actions/.github/workflows/build-python-dist.yml@b6f97e6b72216233d805ce570ceb7fa2071f8a93 # main
+    uses: meridianlabs-ai/actions/.github/workflows/build-python-dist.yml@6245f003b5628736e543468ca41f61a42549643f # main
     with:
       python-version: "3.12"
 
