@@ -16,41 +16,36 @@ jobs:
       approvers: "alexandraabbas jjallaire dragonstyle"
     secrets: inherit
 
+  # The build toolchain pinned with hashes; publish.yaml gives the command
+  # that updates it. The build runs in the shared workflow, in a job with no
+  # publishing credential. It waits for release-please, so hatch-vcs builds
+  # the tagged version.
+  build:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    permissions:
+      contents: read
+    uses: meridianlabs-ai/actions/.github/workflows/build-python-dist.yml@b6f97e6b72216233d805ce570ceb7fa2071f8a93 # main
+    with:
+      python-version: "3.12"
+
   # Publish stays in-repo (PyPI trusted publishing can't run from a cross-repo
   # reusable workflow; keeping it here leaves the trusted-publisher config for
   # workflow release.yaml unchanged).
   publish:
-    needs: release-please
+    needs: [release-please, build]
     if: ${{ needs.release-please.outputs.release_created }}
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       id-token: write # Required for OIDC/trusted publishing
     environment:
       name: pypi
       url: https://pypi.org/p/inspect-harbor
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
-          fetch-depth: 0
-          persist-credentials: false
-      # The build toolchain pinned with hashes; publish.yaml gives the command
-      # that updates it. This job holds id-token, so it restores no Actions cache.
-      - name: Install build toolchain
-        uses: meridianlabs-ai/actions/install-python-dependencies@6fe6acfaeb946d22dd4fb673c744a3591eab0d91 # main
-        with:
-          versions: hashed-requirements
-          python-version: "3.12"
-          requirements-file: scripts/build-dist/requirements.txt
-          package-format: wheels-only
-          actions-cache: none
-          environment-dir: ${{ runner.temp }}/build-venv
-      - name: Display version
-        run: |
-          echo "Version: $(git describe --tags --always)"
-      - name: Build package
-        run: |
-          "$RUNNER_TEMP/build-venv/bin/python" -m build --no-isolation
-      - name: List built packages
-        run: ls -lh dist/
+          artifact-ids: ${{ needs.build.outputs.artifact-id }}
+          path: dist/
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
