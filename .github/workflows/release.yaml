@@ -16,10 +16,14 @@ jobs:
       approvers: "alexandraabbas jjallaire dragonstyle"
     secrets: inherit
 
-  # The build toolchain pinned with hashes; publish.yaml gives the command
-  # that updates it. The build runs in the shared workflow, in a job with no
-  # publishing credential. It waits for release-please, so hatch-vcs builds
-  # the tagged version.
+  # The build runs in the shared workflow, in a job with no publishing
+  # credential. It waits for release-please, so hatch-vcs builds the tagged
+  # version. The build frontend and backend come from
+  # scripts/build-dist/requirements.txt, pinned with hashes, and Dependabot
+  # updates the file. To update the file by hand, run in scripts/build-dist:
+  #   uv pip compile --no-config --generate-hashes --python-version 3.12 \
+  #     --python-platform x86_64-unknown-linux-gnu --exclude-newer "7 days" \
+  #     --only-binary :all: --upgrade requirements.in -o requirements.txt
   build:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
