@@ -46,14 +46,10 @@ dev = [
     "types-PyYAML",
 ]
 
-[dependency-groups]
-# Keeps a plain `uv sync` or `uv run` (the Makefile and the agent provisioning
-# recipes) pulling the dev tools.
-dev = ["inspect_harbor[dev]"]
 # Not installed by default, so `uv sync` and `uv run` (locally, in CI and in
 # agent jobs) leave it out: quarto-cli ships no wheel and its sdist downloads
 # the Quarto binary from GitHub Releases at build time. Docs commands ask for
-# it with `--group doc`.
+# it with `--extra doc`.
 doc = [
     "quarto-cli>=1.9.36",
     "jupyter",
@@ -62,6 +58,11 @@ doc = [
     "griffe>=2",
     "pyyaml"
 ]
+
+[dependency-groups]
+# Keeps a plain `uv sync` or `uv run` (the Makefile and the agent provisioning
+# recipes) pulling the dev tools.
+dev = ["inspect_harbor[dev]"]
 
 [tool.hatch.version]
 source = "vcs"

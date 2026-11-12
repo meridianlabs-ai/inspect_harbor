@@ -89,7 +89,7 @@ jobs:
 
             ```bash
             cd docs
-            uv run --group doc quarto publish gh-pages
+            uv run --extra doc quarto publish gh-pages
             ```
 
             This re-renders the registry listing and per-benchmark pages against the latest Harbor registry and pushes them to the `gh-pages` branch, which GitHub Pages serves.
