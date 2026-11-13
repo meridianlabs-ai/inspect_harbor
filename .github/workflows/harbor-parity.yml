@@ -55,7 +55,7 @@ jobs:
         # LiteLLM tree (openai<3) that the adapter exists to avoid. An unlocked
         # install ignores the project's uv settings and its exclude-newer
         # window, so "latest" really is the newest stable release on PyPI.
-        uses: meridianlabs-ai/actions/install-python-dependencies@6fe6acfaeb946d22dd4fb673c744a3591eab0d91 # main
+        uses: meridianlabs-ai/actions/install-python-dependencies@57adfb7a3247f06e4f1c033f461a54e0d83d04f5 # main
         with:
           versions: unlocked
           python-version: ${{ matrix.python-version }}
