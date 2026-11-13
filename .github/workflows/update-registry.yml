@@ -21,7 +21,7 @@ jobs:
 
       # This job can write, so it restores no Actions cache.
       - name: Install dependencies
-        uses: meridianlabs-ai/actions/install-python-dependencies@6fe6acfaeb946d22dd4fb673c744a3591eab0d91 # main
+        uses: meridianlabs-ai/actions/install-python-dependencies@57adfb7a3247f06e4f1c033f461a54e0d83d04f5 # main
         with:
           versions: locked
           python-version: '3.12'
@@ -61,7 +61,7 @@ jobs:
       - name: Create Pull Request
         id: cpr
         if: steps.git-check.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        uses: peter-evans/create-pull-request@15733dbdfeedb4f7fdb73d13c6f5ac83b710fab8 # v8.1.2
         with:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
           commit-message: 'fix: update Harbor registry tasks'
