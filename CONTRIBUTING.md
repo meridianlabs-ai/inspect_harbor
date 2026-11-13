@@ -24,7 +24,7 @@ uv run --no-sync pre-commit install
 For this repository:
 
 - Inspect Harbor uses only released inspect_ai: `inspect-ai` comes from PyPI.
-- The 6-hour packages are in `[tool.uv.exclude-newer-package]` in `pyproject.toml`.
+- The cooldown exceptions are in `[tool.uv.exclude-newer-package]` in `pyproject.toml`: `"6 hours"` for a model provider SDK, and `false` (no uv cooldown) for an in-house Inspect or Petri package such as `inspect-ai`. Both kinds go in the Dependabot `cooldown.exclude` list and the `six-hour-cooldown` group in `.github/dependabot.yml`.
 
 ## Checks and tests
 
