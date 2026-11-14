@@ -65,7 +65,10 @@ Enterprise-Bench/l1-l2-bench:
   desc: 'Enterprise-Bench (L1-L2): DevRev''s enterprise agent benchmark — answering L1/L2 support-tier questions (ticket SLAs, triage, customer-account data) over fragmented enterprise systems.'
 
 Enterprise-Bench/l1-l2-bench-v2:
-  categories: []
+  categories:
+  - Assistants
+  - Professional
+  title: Enterprise-Bench v2 (L1-L2)
 
 LiteCoder/LiteCoder-rl:
   categories:
@@ -316,9 +319,6 @@ birdsql/bird-mini-dev:
   repo: https://github.com/bird-bench/mini_dev
   arxiv: https://arxiv.org/abs/2305.03111
 
-birdsql/dii-v1-muscle:
-  categories: []
-
 blobfishai/arc-crm-6:
   categories:
   - Assistants
@@ -420,9 +420,6 @@ camel-ai/seta-env:
   desc: 'SETA (Scaling Environments for Terminal Agents): CAMEL-AI''s verifiable terminal-agent tasks spanning software engineering, sysadmin, and DevOps for evaluating and RL-training agents.'
   title: SETA-Env
 
-carlesoctav/gemma4_gh_pr:
-  categories: []
-
 cmu/refav:
   categories:
   - Multimodal
@@ -489,16 +486,10 @@ deveval/deveval:
   function_name: deveval
   title: DevEval
 
-doe/degennaro-workplace-sample:
-  categories: []
-
 doe/legal-consent-sweep:
   categories:
   - Law
   - Professional
-
-doe/legal-world-sample:
-  categories: []
 
 drugtargetbench/drugtargetbench:
   categories:
@@ -516,7 +507,9 @@ elfsong/mercury-eval:
   arxiv: https://arxiv.org/abs/2402.07844
 
 evaligo/swe-pair:
-  categories: []
+  categories:
+  - Coding
+  title: SWE-Pair
 
 evaligo/swe-race:
   categories:
@@ -567,9 +560,6 @@ featurebench/featurebench-modal:
   desc: FeatureBench's full task suite executed on Modal's cloud sandbox runner.
   function_name: featurebench_modal
   title: FeatureBench (Modal)
-
-filing-bench/filing-bench:
-  categories: []
 
 frontier-harness-eval/frontier-harness-eval:
   categories:
@@ -718,9 +708,6 @@ hcltech-robotics/simreadybench:
   repo: https://github.com/hcltech-robotics/simreadybench
   desc: Agent reconstructs a simulation-ready OpenUSD asset (geometry, materials, rigid bodies and joints) from a reference image and authoring brief, scored on formal, visual and kinematic fidelity.
 
-hcltech-robotics/simrepairbench:
-  categories: []
-
 hwe-bench/hwe-bench:
   categories:
   - Science
@@ -728,30 +715,6 @@ hwe-bench/hwe-bench:
   repo: https://github.com/svd-ai-lab/hwe-bench
   function_name: hwe_bench
   title: HWE-bench
-
-i17470/ds:
-  categories: []
-
-i18436wni51m/ds88:
-  categories: []
-
-i18677vr50t0/ds70:
-  categories: []
-
-i18677vr50t0/ds71:
-  categories: []
-
-i19330nk7e33/ds90:
-  categories: []
-
-i3886org/i3886dsy:
-  categories: []
-
-i4030iaesfw/xssds:
-  categories: []
-
-ibragim-badertdinov/hard12:
-  categories: []
 
 ibragim-badertdinov/swe-rebench-07-2026:
   categories:
@@ -762,7 +725,12 @@ ibragim-badertdinov/swe-rebench-07-2026:
   function_name: swe_rebench_07_2026
 
 ibragim-badertdinov/swe-rebench-v2.1-rl:
-  categories: []
+  categories:
+  - Coding
+  title: SWE-rebench V2.1 (RL)
+  repo: https://huggingface.co/datasets/nebius/SWE-rebench-V2
+  arxiv: https://arxiv.org/abs/2602.23866
+  function_name: swe_rebench_v2_1_rl
 
 ineqmath/ineqmath:
   categories:
@@ -803,12 +771,6 @@ ivanleo/agent-search:
   - Coding
   - Assistants
   desc: Agent answers Gemini API questions by querying an indexed documentation database.
-
-josancamon19/nim:
-  categories: []
-
-josancamon19/nim-hard:
-  categories: []
 
 josancamon19/physician-bench:
   categories:
@@ -872,13 +834,28 @@ kumo/kumo-parity:
   title: KUMO (parity)
 
 kw-bench/kw-sap:
-  categories: []
+  categories:
+  - Finance
+  - Professional
+  repo: https://github.com/GSequist/kw-bench
+  title: kw-bench SAP (hard)
+  function_name: kw_bench_sap
 
 kw-bench/kw-sap-easy:
-  categories: []
+  categories:
+  - Finance
+  - Professional
+  repo: https://github.com/GSequist/kw-bench
+  title: kw-bench SAP (easy)
+  function_name: kw_bench_sap_easy
 
 kw-bench/kw-sap-vat:
-  categories: []
+  categories:
+  - Finance
+  - Professional
+  repo: https://github.com/GSequist/kw-bench
+  title: kw-bench SAP VAT
+  function_name: kw_bench_sap_vat
 
 last-secure-code-benchmark/last-secure-code-benchmark:
   categories:
@@ -922,14 +899,21 @@ livecodebench/livecodebench:
   function_name: livecodebench
   title: LiveCodeBench
 
-llamaindex/extractbench-pro:
-  categories: []
-
 longtail-swe/longtail-swe:
-  categories: []
+  categories:
+  - Coding
+  title: LongTail-SWE
+  repo: https://github.com/SWE-rebench/LongTail-SWE
+  arxiv: https://arxiv.org/abs/2611.10304
+  function_name: longtail_swe
 
 longtail-swe/longtail-swe-easy:
-  categories: []
+  categories:
+  - Coding
+  title: LongTail-SWE (easy)
+  repo: https://github.com/SWE-rebench/LongTail-SWE
+  arxiv: https://arxiv.org/abs/2611.10304
+  function_name: longtail_swe_easy
 
 looni-lab/smdd-bench:
   categories:
@@ -938,9 +922,6 @@ looni-lab/smdd-bench:
   title: SMDD-Bench
   repo: https://github.com/t7rs/SMDD-Bench
   arxiv: https://arxiv.org/abs/2605.21740
-
-lowgular/browser-use-linkedin:
-  categories: []
 
 luosuu/SWE-kokkos-bench:
   categories:
@@ -987,12 +968,6 @@ mmtb/multimedia-terminalbench:
   arxiv: https://arxiv.org/abs/2605.10966
   repo: https://github.com/mm-tbench/multimedia-terminal-bench
   title: MultiMedia-TerminalBench
-
-morris-biotech/historical-systems-bugs:
-  categories: []
-
-nextflow-frontier/bioml-bench:
-  categories: []
 
 nl2repobench/nl2repobench:
   categories:
@@ -1081,18 +1056,6 @@ orinlabs/horizon-public:
   desc: 'Horizon: public example subset of a learning benchmark for extremely long-horizon agents — the agent must acquire knowledge from a long first-person session history and apply it to resolve a later request in the environment.'
   title: Horizon
 
-oro-agents/smb-bench:
-  categories: []
-
-parley-labs/negotiation-sample:
-  categories: []
-
-phmforge/phmforge:
-  categories: []
-
-pranalabs-ai-team/3dscenebench-mini:
-  categories: []
-
 qcircuitbench/qcircuitbench:
   categories:
   - Science
@@ -1138,9 +1101,6 @@ rachittshah/railhead-train:
   - Reasoning
   title: Railhead (train)
   repo: https://github.com/rachittshah/railhead
-
-reacher-z/WebsiteBench:
-  categories: []
 
 reactbench/reactbench:
   categories:
@@ -1327,7 +1287,11 @@ skill2env/skill2env:
   title: Skill2Env
 
 skill2env/skill2env-lite:
-  categories: []
+  categories:
+  - Coding
+  function_name: skill2env_lite
+  title: Skill2Env (lite)
+  repo: https://github.com/NVlabs/Skill2Env
 
 sldbench/sldbench:
   categories:
@@ -1352,9 +1316,6 @@ snowflake-labs/data-eng-bench:
   - Coding
   repo: https://github.com/Snowflake-Labs/data-eng-bench
 
-solana-foundation/machine-trading:
-  categories: []
-
 stanford/medagentbench:
   categories:
   - Professional
@@ -1365,9 +1326,6 @@ stanford/medagentbench:
   desc: 'MedAgentBench: clinically-relevant tasks across 10 categories in a FHIR-compliant virtual EHR, benchmarking LLM agents on medical decision-making, planning, and execution.'
   title: MedAgentBench
 
-stbenjam/ramen-bench:
-  categories: []
-
 strongreject/strongreject:
   categories:
   - Safeguards
@@ -1376,9 +1334,6 @@ strongreject/strongreject:
   desc: 'StrongREJECT: forbidden prompts plus an automated evaluator for measuring how effective jailbreaks are at eliciting genuinely harmful, specific responses.'
   function_name: strongreject
   title: StrongREJECT
-
-suryanshsh/robotsevolved-gui-lessons-v1:
-  categories: []
 
 swe-bench/swe-bench-verified:
   categories:
@@ -1533,9 +1488,6 @@ userbench/UserBench-train400:
   function_name: userbench_train400
   title: UserBench (SWE user simulation, train400)
 
-valenlabs/abmaze:
-  categories: []
-
 valenlabs/frontierbioml:
   categories: []
 
@@ -1556,20 +1508,11 @@ vibrantlabsai/itsm-bench:
   repo: https://github.com/vibrantlabsai/Enterprise-Worlds
   title: ITSMBench (Enterprise-Worlds)
 
-victorojewale/abstention-act:
-  categories: []
-
 vmax/vmax-tasks:
   categories:
   - Coding
   desc: Code-transformation tasks across JavaScript projects (Docusaurus, Vue, Redux).
   function_name: vmax_tasks
-
-walkerhughes/tb-test:
-  categories: []
-
-walkerhughes/tb-test-cpu:
-  categories: []
 
 webgen-bench/webgen-bench:
   categories:
@@ -1578,9 +1521,6 @@ webgen-bench/webgen-bench:
   repo: https://github.com/mnluzimu/WebGen-Bench
   function_name: webgen_bench
   title: WebGen-Bench
-
-websitebench/WebsiteBench:
-  categories: []
 
 wildawm/train-rl-208-set:
   categories:
