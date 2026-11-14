@@ -44,6 +44,37 @@ def enterprise_bench_l1_l2_bench(
 
 
 @task
+def enterprise_bench_l1_l2_bench_v2(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Enterprise-Bench v2: 42 L1-L2 tasks across engineering, sales, support, and UK workflows with six MCP services.
+
+    Slug: Enterprise-Bench/l1-l2-bench-v2
+    Latest digest: sha256:bb54e8cbfa0d1488eb262e352919ff999302c80171f04d6180b1cdf6d0c03540
+    """
+    return _harbor_base(
+        package_name="Enterprise-Bench/l1-l2-bench-v2",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def litecoder_rl(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -678,7 +709,7 @@ def alibaba_aaig_alibaba_ctf(
     r"""A dataset of 87 Capture-The-Flag tasks curated from the AlibabaCTF competition series (2023-2026) for evaluating agents on offensive security work.
 
     Slug: alibaba-aaig/alibaba-ctf
-    Latest digest: sha256:0ed81adec26414f007637259ea77814b8ff5897dfb29b82c5720a542c30d649a
+    Latest digest: sha256:76b28c45507271d8022dcb3666f4c7dc52cfa3e9f955b7a869c955fc5931ed3e
     """
     return _harbor_base(
         package_name="alibaba-aaig/alibaba-ctf",
@@ -1019,7 +1050,7 @@ def biopharma_bench(
     r"""Ten assignments at Havenor Therapeutics, a fictional company that makes sterile injectable drugs. The company date is 27 September 2026. An agent takes an employee's seat and writes the document that seat is responsible for.
 
     Slug: biopharma-bench/biopharma-bench
-    Latest digest: sha256:8975dab9154ee4fdc053650f6ae498ade4e80fcd1f669c4ab2d048bb990faf7c
+    Latest digest: sha256:9d08afedffb5480af22e44b4998e4e72bda31a95d408c5fffa0c551ecd761ec6
     """
     return _harbor_base(
         package_name="biopharma-bench/biopharma-bench",
@@ -1873,6 +1904,37 @@ def elfsong_mercury_eval(
 
 
 @task
+def evaligo_swe_pair(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""SWE-Pair v0.1 public split: 62 tasks, each two real bugs from the same open-source Python project behind one bug report, graded by both pull requests' hidden tests. Leaderboard: https://labs.evaligo.com/swe-pair
+
+    Slug: evaligo/swe-pair
+    Latest digest: sha256:2af288abc47fe73a1c6d9c6733eeae396b301a1363aa0fe0a878545984fd5fff
+    """
+    return _harbor_base(
+        package_name="evaligo/swe-pair",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def evaligo_swe_race(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -2101,10 +2163,10 @@ def frontier_harness_eval(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""FrontierHarness Eval v1.1.0: 17 Terminal Bench 4 tasks and 45 Terminal-Bench 2.1 tasks. TB4 quarter-size selection derived from proposal Appendix C; TB2.1 selection from Appendix E. Original tasks and verifiers pinned by SHA256. Report benchmark subsets separately; these are not official full-benchmark scores. TB4 favors shorter historical runtimes. TB2.1 preserves all 16 categories, with 29 medium, 14 hard and 2 easy tasks; source commit 7131e4375048a0e408a8fb404b5f499d726b695b. Selection and provenance: https://github.com/frontier-harness-eval/frontier-harness-eval This selection reduces TB4 from 33 to 17 tasks using proportional domain quotas and the fastest known historical runtimes within each domain. Tasks with unknown historical runtimes are excluded. This version replaces protein-assembly with dna-insert, retaining the scientific-computing category and 1800-second timeout. It also replaces crack-7z-hash with vulnerable-secret, retaining medium security coverage and reducing the agent timeout from 1800 to 900 seconds.
+    r"""frontier-harness-eval/frontier-harness-eval dataset from Harbor registry
 
     Slug: frontier-harness-eval/frontier-harness-eval
-    Latest digest: sha256:96c9b81553f50d8fb0f843b2aaeb11e4fb4989767c28202fc7607a3a56abd594
+    Latest digest: sha256:9236400fc1a6619eb72a663445c580417be9bbbab32f816c7dff76d0a96ab24a
     """
     return _harbor_base(
         package_name="frontier-harness-eval/frontier-harness-eval",
@@ -2710,6 +2772,37 @@ def swe_rebench_07_2026(
 
 
 @task
+def swe_rebench_v2_1_rl(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""21,272 verified SWE-rebench V2.1 tasks for RL training of coding agents across 20 languages, with public prebuilt Docker images
+
+    Slug: ibragim-badertdinov/swe-rebench-v2.1-rl
+    Latest digest: sha256:4ea27b822ce32afc461a0c9bd5a8ee25a278f711e7f90b201178f33a23c65486
+    """
+    return _harbor_base(
+        package_name="ibragim-badertdinov/swe-rebench-v2.1-rl",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def ineqmath(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3113,6 +3206,99 @@ def kumo_parity(
 
 
 @task
+def kw_bench_sap(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""kw-bench procure-to-pay forensics (hard): find a ghost vendor, a bank-account diversion, price creep and duplicate payments in ~300 MB of SAP extracts, without accusing the honest look-alikes, and deliver the audit-committee package plus reusable audit analytics graded on hidden data. Deterministic grading.
+
+    Slug: kw-bench/kw-sap
+    Latest digest: sha256:23db44667d3503646337a86bb11f010455cd7e7fec16f8b470d75d2f56659ec3
+    """
+    return _harbor_base(
+        package_name="kw-bench/kw-sap",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def kw_bench_sap_easy(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""kw-bench procure-to-pay forensics (easy tier): the same schemes on a smaller, simpler extract. Deterministic grading.
+
+    Slug: kw-bench/kw-sap-easy
+    Latest digest: sha256:f9296c4d3db036cd42984dcffe5b30744d84d7baa7e1685edeb84e712792935d
+    """
+    return _harbor_base(
+        package_name="kw-bench/kw-sap-easy",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def kw_bench_sap_vat(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""kw-bench VAT chain family: reconstruct five years of intra-group VAT across three generations of SAP (ECC, a partial S/4HANA migration, a 2024 redesign) from raw extracts, recompute every return to the cent against the filed returns, and deliver the register, reconciliation, correction file, memo and a reusable classifier graded on hidden data. Deterministic grading.
+
+    Slug: kw-bench/kw-sap-vat
+    Latest digest: sha256:3e701c7100b7d80f002c3541fa1370bf139bd00a4ff82b919e9b3eec82796ae9
+    """
+    return _harbor_base(
+        package_name="kw-bench/kw-sap-vat",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def last_secure_code_benchmark(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -3255,6 +3441,68 @@ def livecodebench(
     """
     return _harbor_base(
         package_name="livecodebench/livecodebench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def longtail_swe(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""LongTail-SWE: 202 hard real-world SWE tasks across 13 long-tail languages
+
+    Slug: longtail-swe/longtail-swe
+    Latest digest: sha256:fbd057bb3cf307415c846ac25b3796abc5bcbdcfb72e26e85c0a4264d7d80bc3
+    """
+    return _harbor_base(
+        package_name="longtail-swe/longtail-swe",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def longtail_swe_easy(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""LongTail-SWE easy: 269 real-world SWE tasks across 13 long-tail languages
+
+    Slug: longtail-swe/longtail-swe-easy
+    Latest digest: sha256:6e4b23ae1bbccd727d5d5e85286e6fcb20c91ca193a63b30a2f66ffcceb53ebb
+    """
+    return _harbor_base(
+        package_name="longtail-swe/longtail-swe-easy",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -3534,6 +3782,37 @@ def nvats_codeskills_bench(
     """
     return _harbor_base(
         package_name="nvats/codeskills-bench",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def obtuseorion_geoworld(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""Three long-horizon tasks in a generated geomechanics software company (Halvard Geomechanics, solver GeoSolve).
+
+    Slug: obtuseorion/geoworld
+    Latest digest: sha256:075d7ef9af59cb053ba016f4f0e86668def3aead6ed554339f6fb5f481589f2a
+    """
+    return _harbor_base(
+        package_name="obtuseorion/geoworld",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,
@@ -4700,6 +4979,37 @@ def skill2env(
 
 
 @task
+def skill2env_lite(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""886 skill2env tasks sized for small models
+
+    Slug: skill2env/skill2env-lite
+    Latest digest: sha256:609b9f572654c294c95d1f9a759f111245fb7cc842ce892d95ebc1ee0cd453a4
+    """
+    return _harbor_base(
+        package_name="skill2env/skill2env-lite",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
 def sldbench(
     ref: str = "latest",
     dataset_task_names: list[str] | None = None,
@@ -5055,7 +5365,7 @@ def terminal_bench(
     r"""Terminal-Bench is a benchmark for measuring agents' abilities to complete tasks using a terminal.
 
     Slug: terminal-bench/terminal-bench
-    Latest digest: sha256:39d9f44b40420cde8fdcc087579c0d72a7e14fa3656d603c3f0d22fb35e27732
+    Latest digest: sha256:5881c1b1c74a96f07baef00a7c869e09802704bc0dc912c870e7acccc11440da
     """
     return _harbor_base(
         package_name="terminal-bench/terminal-bench",
@@ -5148,7 +5458,7 @@ def terminal_bench_cpu_only(
     r"""Terminal-Bench (CPU-only): the current Terminal-Bench task set minus the 3 tasks that require an H100 GPU, so the full suite runs on CPU-only sandboxes.
 
     Slug: terminal-bench/terminal-bench-cpu-only
-    Latest digest: sha256:b440941ff70a00335fa906e3b1a5407c3e72c20e975fa4d7d61b803bf80dd5b5
+    Latest digest: sha256:ff571d9450cd190a7c4b3b5e0d53cb287943c3de493a3c443efceeaf2c7a7a73
     """
     return _harbor_base(
         package_name="terminal-bench/terminal-bench-cpu-only",
@@ -5400,6 +5710,37 @@ def userbench_train400(
     """
     return _harbor_base(
         package_name="userbench/UserBench-train400",
+        package_ref=ref,
+        dataset_task_names=dataset_task_names,
+        dataset_exclude_task_names=dataset_exclude_task_names,
+        n_tasks=n_tasks,
+        overwrite_cache=overwrite_cache,
+        sandbox_env_name=sandbox_env_name,
+        override_cpus=override_cpus,
+        override_memory_mb=override_memory_mb,
+        override_gpus=override_gpus,
+    )
+
+
+@task
+def valenlabs_frontierbioml(
+    ref: str = "latest",
+    dataset_task_names: list[str] | None = None,
+    dataset_exclude_task_names: list[str] | None = None,
+    n_tasks: int | None = None,
+    overwrite_cache: bool = False,
+    sandbox_env_name: str = "docker",
+    override_cpus: int | None = None,
+    override_memory_mb: int | None = None,
+    override_gpus: int | None = None,
+) -> Task:
+    r"""FrontierBioML: four machine learning tasks in computational biology (binder triage, decoy scoring, partner-selective KRAS variants, budgeted screening) with deterministic held-out grading. Each task includes a reference solution; no sealed data.
+
+    Slug: valenlabs/frontierbioml
+    Latest digest: sha256:1b65086abd3a5577324cb2d5c1635f8aed2689e06c29be13437800b6b0c05b50
+    """
+    return _harbor_base(
+        package_name="valenlabs/frontierbioml",
         package_ref=ref,
         dataset_task_names=dataset_task_names,
         dataset_exclude_task_names=dataset_exclude_task_names,

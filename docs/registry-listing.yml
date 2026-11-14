@@ -16,6 +16,16 @@
   categories:
   - Assistants
   - Professional
+- title: Enterprise-Bench/l1-l2-bench-v2
+  path: registry/enterprise_bench_l1_l2_bench_v2.html
+  desc: 'Enterprise-Bench v2: 42 L1-L2 tasks across engineering, sales, support, and UK workflows with six MCP services.'
+  desc_trunc: 'Enterprise-Bench v2: 42 L1-L2 tasks across engineering, sales, support, and UK workflows with six M…'
+  task_function: enterprise_bench_l1_l2_bench_v2
+  samples: 42
+  version: latest
+  categories:
+  - Assistants
+  - Professional
 - title: LiteCoder/LiteCoder-rl
   path: registry/litecoder_rl.html
   desc: 'LiteCoder: terminal-based RL training environments spanning developer workflows, scientific/numerical computing, and games.'
@@ -584,6 +594,15 @@
   version: latest
   categories:
   - Coding
+- title: evaligo/swe-pair
+  path: registry/evaligo_swe_pair.html
+  desc: 'SWE-Pair v0.1 public split: 62 tasks, each two real bugs from the same open-source Python project behind one bug report, graded by both pull requests'' hidden tests. Leaderboard:.'
+  desc_trunc: 'SWE-Pair v0.1 public split: 62 tasks, each two real bugs from the same open-source Python project b…'
+  task_function: evaligo_swe_pair
+  samples: 62
+  version: latest
+  categories:
+  - Coding
 - title: evaligo/swe-race
   path: registry/evaligo_swe_race.html
   desc: 'SWE-Race v0.1 public split: 94 real concurrency bugs from open-source Python projects, graded by each project''s own hidden tests. Leaderboard:.'
@@ -649,8 +668,8 @@
   - Coding
 - title: frontier-harness-eval/frontier-harness-eval
   path: registry/frontier_harness_eval.html
-  desc: 'FrontierHarness Eval v1.1.0: 17 Terminal Bench 4 tasks and 45 Terminal-Bench 2.1 tasks. TB4 quarter-size selection derived from proposal Appendix C; TB2.1 selection from Appendix E. Original tasks and verifiers pinned by SHA256. Report benchmark subsets separately; these are not official full-benchmark scores. TB4 favors shorter historical runtimes. TB2.1 preserves all 16 categories, with 29 medium, 14 hard and 2 easy tasks; source commit 7131e4375048a0e408a8fb404b5f499d726b695b. Selection and provenance: This selection reduces TB4 from 33 to 17 tasks using proportional domain quotas and the fastest known historical runtimes within each domain. Tasks with unknown historical runtimes are excluded. This version replaces protein-assembly with dna-insert, retaining the scientific-computing category and 1800-second timeout. It also replaces crack-7z-hash with vulnerable-secret, retaining medium security coverage and reducing the agent timeout from 1800 to 900 seconds.'
-  desc_trunc: 'FrontierHarness Eval v1.1.0: 17 Terminal Bench 4 tasks and 45 Terminal-Bench 2.1 tasks. TB4 quarter…'
+  desc: ''
+  desc_trunc: ''
   task_function: frontier_harness_eval
   samples: 62
   version: latest
@@ -848,6 +867,15 @@
   version: latest
   categories:
   - Coding
+- title: ibragim-badertdinov/swe-rebench-v2.1-rl
+  path: registry/swe_rebench_v2_1_rl.html
+  desc: 21,272 verified SWE-rebench V2.1 tasks for RL training of coding agents across 20 languages, with public prebuilt Docker images.
+  desc_trunc: 21,272 verified SWE-rebench V2.1 tasks for RL training of coding agents across 20 languages, with p…
+  task_function: swe_rebench_v2_1_rl
+  samples: 21272
+  version: latest
+  categories:
+  - Coding
 - title: ineqmath/ineqmath
   path: registry/ineqmath.html
   desc: 'IneqMath: Olympiad-level inequality benchmark with expert-reviewed test problems, formulated as bound-estimation and relation-prediction subtasks with stepwise judging.'
@@ -972,6 +1000,36 @@
   version: latest
   categories:
   - Reasoning
+- title: kw-bench/kw-sap
+  path: registry/kw_bench_sap.html
+  desc: 'kw-bench procure-to-pay forensics (hard): find a ghost vendor, a bank-account diversion, price creep and duplicate payments in ~300 MB of SAP extracts, without accusing the honest look-alikes, and deliver the audit-committee package plus reusable audit analytics graded on hidden data. Deterministic grading.'
+  desc_trunc: 'kw-bench procure-to-pay forensics (hard): find a ghost vendor, a bank-account diversion, price cree…'
+  task_function: kw_bench_sap
+  samples: 3
+  version: latest
+  categories:
+  - Finance
+  - Professional
+- title: kw-bench/kw-sap-easy
+  path: registry/kw_bench_sap_easy.html
+  desc: 'kw-bench procure-to-pay forensics (easy tier): the same schemes on a smaller, simpler extract. Deterministic grading.'
+  desc_trunc: 'kw-bench procure-to-pay forensics (easy tier): the same schemes on a smaller, simpler extract. Dete…'
+  task_function: kw_bench_sap_easy
+  samples: 3
+  version: latest
+  categories:
+  - Finance
+  - Professional
+- title: kw-bench/kw-sap-vat
+  path: registry/kw_bench_sap_vat.html
+  desc: 'kw-bench VAT chain family: reconstruct five years of intra-group VAT across three generations of SAP (ECC, a partial S/4HANA migration, a 2024 redesign) from raw extracts, recompute every return to the cent against the filed returns, and deliver the register, reconciliation, correction file, memo and a reusable classifier graded on hidden data. Deterministic grading.'
+  desc_trunc: 'kw-bench VAT chain family: reconstruct five years of intra-group VAT across three generations of SA…'
+  task_function: kw_bench_sap_vat
+  samples: 3
+  version: latest
+  categories:
+  - Finance
+  - Professional
 - title: last-secure-code-benchmark/last-secure-code-benchmark
   path: registry/last_secure_code_benchmark.html
   desc: 'Last Secure Code Benchmark (LSCBench): 450 secure code generation tasks from 150 vulnerability scenarios, each at function, file, and repository granularity, in seven languages.'
@@ -1018,6 +1076,24 @@
   desc_trunc: 'LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, a…'
   task_function: livecodebench
   samples: 100
+  version: latest
+  categories:
+  - Coding
+- title: longtail-swe/longtail-swe
+  path: registry/longtail_swe.html
+  desc: 'LongTail-SWE: 202 hard real-world SWE tasks across 13 long-tail languages.'
+  desc_trunc: 'LongTail-SWE: 202 hard real-world SWE tasks across 13 long-tail languages.'
+  task_function: longtail_swe
+  samples: 202
+  version: latest
+  categories:
+  - Coding
+- title: longtail-swe/longtail-swe-easy
+  path: registry/longtail_swe_easy.html
+  desc: 'LongTail-SWE easy: 269 real-world SWE tasks across 13 long-tail languages.'
+  desc_trunc: 'LongTail-SWE easy: 269 real-world SWE tasks across 13 long-tail languages.'
+  task_function: longtail_swe_easy
+  samples: 269
   version: latest
   categories:
   - Coding
@@ -1108,6 +1184,13 @@
   version: latest
   categories:
   - Coding
+- title: obtuseorion/geoworld
+  path: registry/obtuseorion_geoworld.html
+  desc: Three long-horizon tasks in a generated geomechanics software company (Halvard Geomechanics, solver GeoSolve).
+  desc_trunc: Three long-horizon tasks in a generated geomechanics software company (Halvard Geomechanics, solver…
+  task_function: obtuseorion_geoworld
+  samples: 3
+  version: latest
 - title: openai/mmmlu
   path: registry/openai_mmmlu.html
   desc: 'MMMLU (Multilingual MMLU): OpenAI''s professional-human-translation of the MMLU test set into 14 languages for multilingual knowledge and reasoning evaluation.'
@@ -1459,6 +1542,15 @@
   version: latest
   categories:
   - Coding
+- title: skill2env/skill2env-lite
+  path: registry/skill2env_lite.html
+  desc: 886 skill2env tasks sized for small models.
+  desc_trunc: 886 skill2env tasks sized for small models.
+  task_function: skill2env_lite
+  samples: 886
+  version: latest
+  categories:
+  - Coding
 - title: sldbench/sldbench
   path: registry/sldbench.html
   desc: 'SLDBench: first benchmark for scaling-law discovery — tasks curated from LLM training experiments where agents must autonomously fit and extrapolate scaling laws.'
@@ -1680,6 +1772,13 @@
   categories:
   - Assistants
   - Coding
+- title: valenlabs/frontierbioml
+  path: registry/valenlabs_frontierbioml.html
+  desc: 'FrontierBioML: four machine learning tasks in computational biology (binder triage, decoy scoring, partner-selective KRAS variants, budgeted screening) with deterministic held-out grading. Each task includes a reference solution; no sealed data.'
+  desc_trunc: 'FrontierBioML: four machine learning tasks in computational biology (binder triage, decoy scoring,…'
+  task_function: valenlabs_frontierbioml
+  samples: 4
+  version: latest
 - title: vals/financeagent
   path: registry/vals_financeagent.html
   desc: 'Vals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (retrieval, market research, projections) with EDGAR/SEC search tools for evaluating financial agents.'

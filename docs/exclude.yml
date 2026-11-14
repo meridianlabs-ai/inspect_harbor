@@ -296,3 +296,131 @@
 # build tasks). Excluded at maintainer request (PR #209). Revisit if it is
 # published.
 - model-topography/*
+# These load, but every sample's verifier runs in its own image
+# (environment_mode = "separate"), which needs #187 (same gap as
+# dissei/financial-judgment-full). Remove each entry once #187 lands and
+# fill its stub with the values given:
+# - filing-bench: SEC XBRL finance Q&A -> [Finance, Professional],
+#   title FilingBench.
+# - extractbench-pro: document extraction -> [Multimodal], title
+#   ExtractBench Pro.
+# - machine-trading: Solana DeFi trading bots -> [Coding, Finance], title
+#   Solana Machine Trading.
+# - abstention-act: compliance-bias / abstention -> [Safeguards], title
+#   Abstention-Act.
+# - simrepairbench: HCLTech's OpenUSD asset-repair set, sibling of
+#   simreadybench -> [Coding, Multimodal], title SimRepairBench.
+# - phmforge: industrial prognostics / predictive maintenance (NeurIPS 2026
+#   E&D) -> [Professional, Science], title PHMForge, function_name
+#   phmforge, arxiv 2604.01532.
+# - WebsiteBench: rebuild a website from browser exploration -> [Coding],
+#   title WebsiteBench, function_name websitebench (its agent egress
+#   allowlist is also not enforced yet).
+# - nim: an individual's 285 issue-linked Nim compiler repair tasks with no
+#   repo or paper found -> [Coding] if listed at all; re-check provenance.
+# - nim-hard: a 15-task subset of nim (tasks DeepSeek V4.1 Flash fails).
+#   List it only together with nim -> [Coding], title Nim (hard).
+# - negotiation-sample: Parley Labs' 10 development tasks (supplier
+#   negotiation, bargaining against bluffs, Catan-style planning) against
+#   scripted counterparties; its verifier also collects from the engine
+#   service -> [Reasoning, Finance], title Parley Labs Negotiation (sample),
+#   repo https://github.com/Parley-Labs/negotiation-sample.
+# - ramen-bench: one creative-coding task (a code-drawn vegan ramen scene
+#   in a single HTML file) -> [Coding], title Ramen Bench, repo
+#   https://github.com/stbenjam/ramen-bench. Its 1 task may be too small to
+#   list (judgement call).
+# - dii-v1-muscle: BIRD's Data Intelligence Index v1.0 Muscle, 200 hard
+#   data tasks (SQL QA, DB ops and debugging, data science, query
+#   optimization, workspace documents) -> [Coding], title DII v1.0 Muscle.
+#   Its verifier also needs OPENAI_API_KEY for an LLM judge.
+# - degennaro-workplace-sample: Doe Labs' 4 workplace-assistant tasks
+#   (Slack, Gmail, CRM, ... mocks) -> [Assistants, Professional], title
+#   Doe Workplace World (sample). Also declares MCP servers (a shell CLI
+#   is offered too) and an LLM judge on Bedrock.
+# - legal-world-sample: Doe Labs' 4 legal-assistant tasks in a law
+#   practice's mail, Drive and calendar -> [Law, Assistants], title Doe
+#   Legal World (sample). Same MCP + shell CLI setup; its sibling
+#   legal-consent-sweep is already listed.
+# - bioml-bench: 22 biomedical ML tasks from BioML-bench, scored by a
+#   grader service -> [Biology, Coding], title BioML-bench. The uploading
+#   org has no public repos; check provenance before listing.
+# - 3dscenebench-mini: Prana Labs' 7-scene subset of 3DSceneBench (build a
+#   MuJoCo + Genesis world of a room from its pictures) -> [Coding,
+#   Multimodal], title 3DSceneBench (mini), repo
+#   https://github.com/PranaLabs/3DSceneBench. Per its README, a run also
+#   needs a Hugging Face account with DINOv3 access.
+# Exact slugs, since the orgs are real.
+- filing-bench/filing-bench
+- llamaindex/extractbench-pro
+- solana-foundation/machine-trading
+- victorojewale/abstention-act
+- hcltech-robotics/simrepairbench
+- phmforge/phmforge
+- websitebench/WebsiteBench
+- josancamon19/nim
+- josancamon19/nim-hard
+- parley-labs/negotiation-sample
+- stbenjam/ramen-bench
+- birdsql/dii-v1-muscle
+- doe/degennaro-workplace-sample
+- doe/legal-world-sample
+- nextflow-frontier/bioml-bench
+- pranalabs-ai-team/3dscenebench-mini
+# Superseded copy: its desc says "Moved to websitebench/WebsiteBench" and it
+# lists the same 70 tasks. Keep the WebsiteBench org's copy. Exact slug.
+- reacher-z/WebsiteBench
+# Individual's 10-task "-v1" upload with no benchmark repo or paper; it also
+# fails to load (compose build.network). Exact slug.
+- suryanshsh/robotsevolved-gui-lessons-v1
+# Individual's (User) 1-sample upload tests of the same ctr-optimization
+# task with the stock Terminal-Bench desc. Same kind of upload as
+# ryanmarten/*.
+- walkerhughes/*
+# A curated 12-task "hard" mix drawn from other benchmarks (Terminal-Bench
+# 4.0, DeepSWE, SWE-rebench, SWE-bench Pro, ...) with no repo, paper or
+# announcement. Same derivative-subset class as fritzprix/* and
+# NovitaAI/tb21-*. Exact slug: the author's swe-rebench-07-2026 snapshot
+# stays listed.
+- ibragim-badertdinov/hard12
+# AbMaze v0.3 (200 antibody affinity-maturation campaigns): the agent can
+# only act through a `lab` MCP server ([environment].mcp_servers), which
+# inspect_harbor doesn't wire up, so the samples can't be solved here. The
+# uploader is a User account with no public repos, and no repo or paper was
+# found. Revisit once MCP servers are supported; the values would be
+# [Science, Reasoning], title AbMaze. Exact slug.
+- valenlabs/abmaze
+# A 1-sample "probe dataset" whose task dumps the sandbox environment and
+# network reachability. Not a benchmark; the uploader has no GitHub account.
+- i17470/*
+# More 1-sample "probe" uploads from accounts with no GitHub presence. Their
+# tasks dump sandbox env/certs/keys, probe credential proxies and sidecars,
+# and POST injected secrets to echo/webhook endpoints. Not benchmarks.
+- i18436wni51m/*
+- i18677vr50t0/*
+- i19330nk7e33/*
+# More "probe" uploads from accounts with no GitHub presence: i3886org's desc
+# is just "probe.", and i4030iaesfw's desc is an XSS payload (<img onerror>)
+# with 0 tasks. Not benchmarks.
+- i3886org/*
+- i4030iaesfw/*
+# Lowgular's 13 LinkedIn reads ("open my profile and tell me how many
+# followers I have") against recorded snapshots of one account: regression
+# fixtures for their linkedin-agent product, like the earlier (removed)
+# lowgular/linkedin-po. Not a benchmark. Exact slug.
+- lowgular/browser-use-linkedin
+# Two historical C bug-fix tasks (Linux DesignWare SPI, Unikraft scheduler)
+# from an account with no GitHub presence, repo or paper. Too small to list
+# as a benchmark (judgement call; [Coding] if listed). Exact slug.
+- morris-biotech/historical-systems-bugs
+# SMB Bench: one multi-step task ([[steps]]) in which the agent runs a
+# simulated small business's buying desk on ORO's hosted service.
+# inspect_harbor doesn't support multi-step tasks yet, so it fails to load.
+# The org isn't on GitHub, and no repo or paper was found. If it is listed
+# later, the values would be [Professional, Finance], title SMB Bench.
+# Exact slug.
+- oro-agents/smb-bench
+# An individual's (User) 118 Python PR-fix tasks whose specs were written by
+# an LLM ("pr_swegemma_runtime" pipeline, reward partly by diff similarity),
+# apparently RL/eval environments for their Gemma 4 work. No repo, paper or
+# announcement. Judgement call; [Coding] if listed. Exact slug.
+- carlesoctav/gemma4_gh_pr

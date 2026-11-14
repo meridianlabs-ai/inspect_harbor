@@ -64,6 +64,12 @@ Enterprise-Bench/l1-l2-bench:
   title: Enterprise-Bench (L1-L2)
   desc: 'Enterprise-Bench (L1-L2): DevRev''s enterprise agent benchmark — answering L1/L2 support-tier questions (ticket SLAs, triage, customer-account data) over fragmented enterprise systems.'
 
+Enterprise-Bench/l1-l2-bench-v2:
+  categories:
+  - Assistants
+  - Professional
+  title: Enterprise-Bench v2 (L1-L2)
+
 LiteCoder/LiteCoder-rl:
   categories:
   - Coding
@@ -500,6 +506,11 @@ elfsong/mercury-eval:
   repo: https://github.com/Elfsong/Mercury
   arxiv: https://arxiv.org/abs/2402.07844
 
+evaligo/swe-pair:
+  categories:
+  - Coding
+  title: SWE-Pair
+
 evaligo/swe-race:
   categories:
   - Coding
@@ -713,6 +724,14 @@ ibragim-badertdinov/swe-rebench-07-2026:
   arxiv: https://arxiv.org/abs/2505.20411
   function_name: swe_rebench_07_2026
 
+ibragim-badertdinov/swe-rebench-v2.1-rl:
+  categories:
+  - Coding
+  title: SWE-rebench V2.1 (RL)
+  repo: https://huggingface.co/datasets/nebius/SWE-rebench-V2
+  arxiv: https://arxiv.org/abs/2602.23866
+  function_name: swe_rebench_v2_1_rl
+
 ineqmath/ineqmath:
   categories:
   - Mathematics
@@ -814,6 +833,30 @@ kumo/kumo-parity:
   function_name: kumo_parity
   title: KUMO (parity)
 
+kw-bench/kw-sap:
+  categories:
+  - Finance
+  - Professional
+  repo: https://github.com/GSequist/kw-bench
+  title: kw-bench SAP (hard)
+  function_name: kw_bench_sap
+
+kw-bench/kw-sap-easy:
+  categories:
+  - Finance
+  - Professional
+  repo: https://github.com/GSequist/kw-bench
+  title: kw-bench SAP (easy)
+  function_name: kw_bench_sap_easy
+
+kw-bench/kw-sap-vat:
+  categories:
+  - Finance
+  - Professional
+  repo: https://github.com/GSequist/kw-bench
+  title: kw-bench SAP VAT
+  function_name: kw_bench_sap_vat
+
 last-secure-code-benchmark/last-secure-code-benchmark:
   categories:
   - Coding
@@ -855,6 +898,22 @@ livecodebench/livecodebench:
   desc: 'LiveCodeBench: contamination-free coding benchmark continuously collected from LeetCode, AtCoder, and Codeforces, supporting code generation, self-repair, execution, and test-output prediction.'
   function_name: livecodebench
   title: LiveCodeBench
+
+longtail-swe/longtail-swe:
+  categories:
+  - Coding
+  title: LongTail-SWE
+  repo: https://github.com/SWE-rebench/LongTail-SWE
+  arxiv: https://arxiv.org/abs/2611.10304
+  function_name: longtail_swe
+
+longtail-swe/longtail-swe-easy:
+  categories:
+  - Coding
+  title: LongTail-SWE (easy)
+  repo: https://github.com/SWE-rebench/LongTail-SWE
+  arxiv: https://arxiv.org/abs/2611.10304
+  function_name: longtail_swe_easy
 
 looni-lab/smdd-bench:
   categories:
@@ -924,6 +983,9 @@ nvats/codeskills-bench:
   - Coding
   repo: https://github.com/namanvats/codeskills-bench
   title: CodeSkills-Bench
+
+obtuseorion/geoworld:
+  categories: []
 
 openai/mmmlu:
   categories:
@@ -1224,6 +1286,13 @@ skill2env/skill2env:
   desc: 'Skill2Env (NVIDIA): 7,496 terminal tasks auto-converted from open-source Agent Skills — the agent finishes, repairs, or extends a software project in /workspace to satisfy a written contract, graded by hidden tests plus rubrics.'
   title: Skill2Env
 
+skill2env/skill2env-lite:
+  categories:
+  - Coding
+  function_name: skill2env_lite
+  title: Skill2Env (lite)
+  repo: https://github.com/NVlabs/Skill2Env
+
 sldbench/sldbench:
   categories:
   - Science
@@ -1418,6 +1487,9 @@ userbench/UserBench-train400:
   - Coding
   function_name: userbench_train400
   title: UserBench (SWE user simulation, train400)
+
+valenlabs/frontierbioml:
+  categories: []
 
 vals/financeagent:
   categories:
