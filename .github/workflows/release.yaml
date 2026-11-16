@@ -11,7 +11,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: meridianlabs-ai/actions/.github/workflows/release-please-python.yml@6fe6acfaeb946d22dd4fb673c744a3591eab0d91 # main
+    uses: meridianlabs-ai/actions/.github/workflows/release-please-python.yml@d3b8a7236778888e6a9777d9c47f78c78547306c # main
     with:
       approvers: "alexandraabbas jjallaire dragonstyle"
     # Only the secrets the reusable workflow uses, not `secrets: inherit`, so
@@ -34,7 +34,7 @@ jobs:
     if: ${{ needs.release-please.outputs.release_created }}
     permissions:
       contents: read
-    uses: meridianlabs-ai/actions/.github/workflows/build-python-dist.yml@b6f97e6b72216233d805ce570ceb7fa2071f8a93 # main
+    uses: meridianlabs-ai/actions/.github/workflows/build-python-dist.yml@d3b8a7236778888e6a9777d9c47f78c78547306c # main
     with:
       python-version: "3.12"
 
