@@ -14,7 +14,12 @@ jobs:
     uses: meridianlabs-ai/actions/.github/workflows/release-please-python.yml@6fe6acfaeb946d22dd4fb673c744a3591eab0d91 # main
     with:
       approvers: "alexandraabbas jjallaire dragonstyle"
-    secrets: inherit
+    # Only the secrets the reusable workflow uses, not `secrets: inherit`, so
+    # the other repository and organization secrets stay out of it.
+    secrets:
+      RELEASE_PLEASE_APP_ID: ${{ secrets.RELEASE_PLEASE_APP_ID }}
+      RELEASE_PLEASE_APP_PRIVATE_KEY: ${{ secrets.RELEASE_PLEASE_APP_PRIVATE_KEY }}
+      SLACK_APPROVALS_WEBHOOK_URL: ${{ secrets.SLACK_APPROVALS_WEBHOOK_URL }}
 
   # The build runs in the shared workflow, in a job with no publishing
   # credential. It waits for release-please, so hatch-vcs builds the tagged
