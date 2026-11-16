@@ -7,7 +7,7 @@ description: Triage the nightly auto-update PR for the Harbor registry — fill 
 
 A scheduled GitHub Action (`.github/workflows/update-registry.yml`) runs every night, scrapes `hub.harborframework.com/datasets`, regenerates `src/inspect_harbor/_tasks.py` and `docs/registry-listing.yml`, and opens a PR titled `fix: update Harbor registry tasks` on the `update-harbor-tasks` branch. When new datasets appeared upstream, the bot auto-stubs them in `docs/overrides.yml` with `categories: []`. Someone then needs to fill in real values before merge — `scripts/validate_overrides.py` runs in CI and blocks the merge on empty stubs.
 
-> **Local vs. remote.** This skill runs two ways. **Locally**, you invoke it in Claude Code. **Remotely**, the nightly workflow posts an `@claude` comment on the PR and the Meridian dev agent (`.github/workflows/claude.yml`) follows this skill on GitHub and commits the filled overrides; the workflow lands the push, and the Review workflow (`.github/workflows/claude-review.yml`) runs automatically on that push. The remote agent **can't ask questions mid-run**, so wherever this skill says to check with a human, the remote agent instead **leaves the item as an empty stub and notes the uncertainty in a PR comment / for the reviewer** rather than guessing — the leftover empty stub keeps CI red, which correctly blocks merge until a human resolves it. Steps 1–7 are the triage; the **merge and step 8 (docs publish) are always human** — the remote agent stops once its commits land.
+> **Local vs. remote.** This skill runs two ways. **Locally**, you invoke it in Claude Code. **Remotely**, the nightly workflow posts an `@claude` comment on the PR and the Meridian dev agent (`.github/workflows/claude.yml`) follows this skill on GitHub and commits the filled overrides; the workflow lands the push, and the Review workflow (`.github/workflows/claude-review.yml`) runs automatically on that push. The remote agent **can't ask questions mid-run**, so wherever this skill says to check with a human, the remote agent instead **leaves the item as an empty stub and notes the uncertainty in a PR comment / for the reviewer** rather than guessing — the leftover empty stub keeps CI red, which correctly blocks merge until a human resolves it. Steps 1–7 are the triage; the **merge is always human** — the remote agent stops once its commits land.
 
 ## Steps
 
@@ -165,20 +165,9 @@ uv run pytest tests/ --no-header               # 167+ tests; should be 100% pass
 
 The bot's own commit on the branch already says `fix: update Harbor registry tasks`. Your commit can be the same or `fix: fill in categories for <new datasets>`. Push to `origin update-harbor-tasks`.
 
-### 8. After merge: publish the docs site
+### 8. After merge: the docs go live with the next release
 
-The user merges the PR. Docs at https://meridianlabs-ai.github.io/inspect_harbor are not auto-published — the new datasets won't show up on the registry listing until someone re-renders + pushes `gh-pages`. Do it as soon as the merge lands so the public docs catch up:
-
-```bash
-git switch main
-git pull --ff-only
-cd docs
-PRE_COMMIT_ALLOW_NO_CONFIG=1 uv run --extra doc quarto publish gh-pages --no-prompt
-```
-
-The `PRE_COMMIT_ALLOW_NO_CONFIG=1` env var is needed because the user has a global pre-commit hook that blocks the gh-pages worktree (which has no `.pre-commit-config.yaml`). Without it the publish renders successfully but the final commit fails silently and the remote `gh-pages` stays unchanged.
-
-GitHub Pages cache can take a few minutes after the push.
+The user merges the PR. The release workflow publishes the docs site at https://meridianlabs-ai.github.io/inspect_harbor with each release, so the new datasets show up on the registry listing once the release that includes this PR is published. There is nothing to publish by hand.
 
 ## Gotchas
 

@@ -58,3 +58,18 @@ jobs:
           path: dist/
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
+
+  # Deploy the docs site for this release once the package is on PyPI. The
+  # run's ref is main, so the shared workflow renders the tag passed here.
+  docs:
+    needs: [release-please, publish]
+    if: ${{ needs.release-please.outputs.release_created }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: meridianlabs-ai/actions/.github/workflows/publish-docs.yml@65f1b6bdb9b1af7eb0bc89942c624dd4efef1316 # main
+    with:
+      tag: ${{ needs.release-please.outputs.tag_name }}
+      python-version: "3.12"
+      extras: doc

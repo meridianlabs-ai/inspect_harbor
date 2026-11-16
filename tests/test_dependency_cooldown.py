@@ -357,6 +357,26 @@ def test_publish_jobs_only_upload_the_shared_build() -> None:
     assert build["if"] == release["publish"]["if"]
 
 
+def test_docs_job_runs_only_the_shared_docs_workflow() -> None:
+    """The docs deploy waits for the PyPI publish and renders the release tag.
+
+    The run's ref is main, so the shared workflow is passed the tag to render.
+    """
+    jobs = yaml.safe_load((WORKFLOWS / "release.yaml").read_text())["jobs"]
+    docs = jobs["docs"]
+    assert docs["permissions"] == {
+        "contents": "read",
+        "pages": "write",
+        "id-token": "write",
+    }
+    assert docs["needs"] == ["release-please", "publish"]
+    assert docs["if"] == jobs["publish"]["if"]
+    workflow, ref = docs["uses"].split("@")
+    assert workflow == "meridianlabs-ai/actions/.github/workflows/publish-docs.yml"
+    assert re.fullmatch(r"[0-9a-f]{40}", ref), "pin a 40-character SHA"
+    assert docs["with"]["tag"] == "${{ needs.release-please.outputs.tag_name }}"
+
+
 def test_uv_never_relocks() -> None:
     """No `uv run` or `uv sync` can re-lock.
 
