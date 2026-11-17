@@ -34,6 +34,7 @@ _RUN_BODY = (
 RUN_TEST = ["sh", "-c", f"chmod +x /tests/test.sh 2>/dev/null; {_RUN_BODY}"]
 # With one, the chmod is a separate root exec (CHMOD_TEST) like Harbor's.
 RUN_TEST_AS_USER = ["sh", "-c", _RUN_BODY]
+RM_REWARDS = ["rm", "-f", "--", REWARD_TXT, REWARD_JSON]
 
 
 def _reader(files: dict[str, str]) -> Any:
@@ -499,7 +500,7 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
 
             # Verify cleanup was called AFTER scoring. Sequence:
             # mkdir /logs/agent, mkdir /logs/verifier, mkdir /logs/artifacts,
-            # run test.sh (chmod + direct exec),
+            # rm the reward files, run test.sh (chmod + direct exec),
             # rm /tests, rm /logs/verifier, rm /logs/artifacts, then unset each
             # default env var (currently just TEST_DIR).
             assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
@@ -509,11 +510,106 @@ async def test_harbor_scorer_calls_cleanup_after_scoring(tmp_path: Path):
                 "-c",
                 "mkdir -p /logs/artifacts && chmod 0777 /logs/artifacts",
             ]
-            assert exec_calls[3] == RUN_TEST
-            assert exec_calls[4] == ["rm", "-rf", "/tests"]
-            assert exec_calls[5] == ["rm", "-rf", "/logs/verifier"]
-            assert exec_calls[6] == ["rm", "-rf", "/logs/artifacts"]
-            assert ["unset", "TEST_DIR"] in exec_calls[7:]
+            assert exec_calls[3] == RM_REWARDS
+            assert exec_calls[4] == RUN_TEST
+            assert exec_calls[5] == ["rm", "-rf", "/tests"]
+            assert exec_calls[6] == ["rm", "-rf", "/logs/verifier"]
+            assert exec_calls[7] == ["rm", "-rf", "/logs/artifacts"]
+            assert ["unset", "TEST_DIR"] in exec_calls[8:]
+
+
+def _scoring_sandbox(files: dict[str, str], test_writes: dict[str, str]) -> Mock:
+    """A sandbox backed by ``files``, whose test.sh run writes ``test_writes``."""
+
+    async def exec_(cmd: list[str], **_kwargs: object) -> Mock:
+        if cmd[0] == "rm" and "-f" in cmd:
+            for path in cmd[cmd.index("--") + 1 :]:
+                files.pop(path, None)
+        elif cmd == RUN_TEST:
+            files.update(test_writes)
+        return Mock(returncode=0, stdout="", stderr="")
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+    mock_sandbox.exec = AsyncMock(side_effect=exec_)
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader(files))
+    return mock_sandbox
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("left_before_scoring", "test_writes", "expected"),
+    [
+        # reward.json takes precedence, so a planted one would mask the fail.
+        ({REWARD_JSON: '{"reward": 1.0}'}, {REWARD_TXT: "0"}, 0.0),
+        # test.sh wrote nothing: no reward (None), not the leftover one.
+        ({REWARD_TXT: "1"}, {}, None),
+    ],
+)
+async def test_harbor_scorer_ignores_reward_files_left_before_scoring(
+    tmp_path: Path,
+    left_before_scoring: dict[str, str],
+    test_writes: dict[str, str],
+    expected: float | None,
+) -> None:
+    """Only a reward written by this test.sh run is scored, as in Harbor."""
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {"tests_dir": str(tests_dir), "test_path": str(test_script)}
+    mock_sandbox = _scoring_sandbox(dict(left_before_scoring), test_writes)
+
+    with (
+        patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox",
+            return_value=mock_sandbox,
+        ),
+    ):
+        if expected is None:
+            with pytest.raises(RewardFileNotFoundError):
+                await harbor_scorer()(mock_state, Mock(spec=Target))
+        else:
+            result = await harbor_scorer()(mock_state, Mock(spec=Target))
+            assert result is not None
+            assert result.value == expected
+
+
+@pytest.mark.asyncio
+async def test_harbor_scorer_aborts_when_reward_files_cannot_be_removed(
+    tmp_path: Path,
+) -> None:
+    """A reward file that cannot be removed is never scored."""
+    tests_dir = tmp_path / "tests"
+    tests_dir.mkdir()
+    test_script = tests_dir / "test.sh"
+    test_script.write_text("#!/bin/bash\necho 'test'")
+
+    mock_state = Mock(spec=TaskState)
+    mock_state.metadata = {"tests_dir": str(tests_dir), "test_path": str(test_script)}
+
+    async def exec_(cmd: list[str], **_kwargs: object) -> Mock:
+        failed = cmd == RM_REWARDS
+        return Mock(returncode=1 if failed else 0, stdout="", stderr="denied")
+
+    mock_sandbox = Mock()
+    mock_sandbox.write_file = AsyncMock()
+    mock_sandbox.exec = AsyncMock(side_effect=exec_)
+    mock_sandbox.read_file = AsyncMock(side_effect=_reader({REWARD_TXT: "1"}))
+
+    with (
+        patch("inspect_harbor._harbor.scorer.sandbox", return_value=mock_sandbox),
+        patch(
+            "inspect_harbor._harbor.sandbox_utils.sandbox",
+            return_value=mock_sandbox,
+        ),
+    ):
+        with pytest.raises(RuntimeError, match="stale reward files"):
+            await harbor_scorer()(mock_state, Mock(spec=Target))
+    assert RUN_TEST not in [c.args[0] for c in mock_sandbox.exec.call_args_list]
 
 
 @pytest.mark.asyncio
@@ -987,8 +1083,8 @@ async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
 
             # Verify cleanup was called AFTER scoring. Expected sequence:
             # mkdir /logs/agent, mkdir /logs/verifier, mkdir /logs/artifacts,
-            # bash test.sh, rm /tests, rm /logs/verifier, rm /logs/artifacts,
-            # then unset for each
+            # rm the reward files, bash test.sh, rm /tests, rm /logs/verifier,
+            # rm /logs/artifacts, then unset for each
             # env var (TEST_DIR default + the two user-supplied).
             assert exec_calls[0] == ["mkdir", "-p", "/logs/agent"]
             assert exec_calls[1] == ["mkdir", "-p", "/logs/verifier"]
@@ -997,12 +1093,13 @@ async def test_harbor_scorer_cleans_up_env_vars_after_scoring(
                 "-c",
                 "mkdir -p /logs/artifacts && chmod 0777 /logs/artifacts",
             ]
-            assert exec_calls[3] == RUN_TEST
-            assert exec_calls[4] == ["rm", "-rf", "/tests"]
-            assert exec_calls[5] == ["rm", "-rf", "/logs/verifier"]
-            assert exec_calls[6] == ["rm", "-rf", "/logs/artifacts"]
+            assert exec_calls[3] == RM_REWARDS
+            assert exec_calls[4] == RUN_TEST
+            assert exec_calls[5] == ["rm", "-rf", "/tests"]
+            assert exec_calls[6] == ["rm", "-rf", "/logs/verifier"]
+            assert exec_calls[7] == ["rm", "-rf", "/logs/artifacts"]
             # Check cleanup was called for all env vars (user + defaults).
-            env_cleanup_calls = exec_calls[7:]
+            env_cleanup_calls = exec_calls[8:]
             assert ["unset", "OPENAI_API_KEY"] in env_cleanup_calls
             assert ["unset", "MODEL_NAME"] in env_cleanup_calls
 
@@ -1087,7 +1184,8 @@ async def test_harbor_scorer_runs_verifier_collect(tmp_path: Path) -> None:
         f"cd /app && git config --global --add safe.directory '*' && "
         f"git checkout -f {base_commit} && git clean -fd",
     ]
-    assert cmds[5] == RUN_TEST
+    assert cmds[5] == RM_REWARDS
+    assert cmds[6] == RUN_TEST
 
 
 @pytest.mark.asyncio
@@ -1294,7 +1392,8 @@ async def test_harbor_scorer_skips_empty_collect(tmp_path: Path) -> None:
         "-c",
         "mkdir -p /logs/artifacts && chmod 0777 /logs/artifacts",
     ]
-    assert exec_calls[3] == RUN_TEST
+    assert exec_calls[3] == RM_REWARDS
+    assert exec_calls[4] == RUN_TEST
 
 
 def _collect_state(
