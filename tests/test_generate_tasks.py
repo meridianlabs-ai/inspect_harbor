@@ -505,9 +505,13 @@ def test_generate_registry_pages_deletes_orphans(
     assert unrelated.exists()
 
 
-def _hub_page(slugs: list[str], total: int) -> bytes:
+def _hub_page(slugs: list[str], total: int, next_page: int | None = None) -> bytes:
     links = "".join(f'<a href="/datasets/{s}">' for s in slugs)
-    return f'{links}{{\\"children\\":\\"{total} datasets\\"}}'.encode()
+    # Every page after the first also links back, with a cursor of its own.
+    nav = '<a href="?cursor=0" aria-label="Previous page" rel="prev">'
+    if next_page is not None:
+        nav += f'<a href="?cursor={next_page}" aria-label="Next page" rel="next">'
+    return f'{links}{nav}{{\\"children\\":\\"{total} datasets\\"}}'.encode()
 
 
 @pytest.mark.parametrize("empty_fetches", [1, 99])
@@ -516,16 +520,16 @@ def test_scrape_hub_slugs_retries_short_page_and_checks_advertised_total(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """A mid-listing empty page is re-fetched; a scrape short of the total fails."""
+    """Cursor links are followed; an empty page is re-fetched; a short scrape fails."""
     pages = {1: ["a/one", "a/two"], 2: ["b/three", "b/four"], 3: ["c/five"]}
     fetches: dict[int, int] = {}
 
     def fake_curl_get(url: str, **_: object) -> bytes:
-        page = int(url.rsplit("=", 1)[1])
+        page = int(url.rsplit("cursor=", 1)[1]) if "cursor=" in url else 1
         fetches[page] = fetches.get(page, 0) + 1
         if page == 2 and fetches[page] <= empty_fetches:
             return _hub_page([], 5)
-        return _hub_page(pages.get(page, []), 5)
+        return _hub_page(pages[page], 5, page + 1 if page + 1 in pages else None)
 
     monkeypatch.setattr("generate_tasks.curl_get", fake_curl_get)
     monkeypatch.setattr("generate_tasks.CACHE_DIR", tmp_path)
