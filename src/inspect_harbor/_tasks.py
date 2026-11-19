@@ -1574,7 +1574,7 @@ def chloe_tooluse_law(
     override_memory_mb: int | None = None,
     override_gpus: int | None = None,
 ) -> Task:
-    r"""Tool Use Law Benchmark
+    r"""Agent drafts Chinese legal opinions and other law-firm work products from client documents, graded by an LLM judge.
 
     Slug: chloe/tooluse-law
     Latest digest: sha256:578381dd9c8f303b0ac48b1af869777941a465526f49511ff3cf661bbf3b939d

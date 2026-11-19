@@ -491,11 +491,14 @@
   - Coding
 - title: chloe/tooluse-law
   path: registry/chloe_tooluse_law.html
-  desc: Tool Use Law Benchmark.
-  desc_trunc: Tool Use Law Benchmark.
+  desc: Agent drafts Chinese legal opinions and other law-firm work products from client documents, graded by an LLM judge.
+  desc_trunc: Agent drafts Chinese legal opinions and other law-firm work products from client documents, graded…
   task_function: chloe_tooluse_law
   samples: 23
   version: latest
+  categories:
+  - Law
+  - Professional
 - title: cmu/refav
   path: registry/cmu_refav.html
   desc: Autonomous-vehicle scenario mining via VLM.
@@ -1208,6 +1211,9 @@
   task_function: obtuseorion_geoworld
   samples: 3
   version: latest
+  categories:
+  - Coding
+  - Professional
 - title: openai/mmmlu
   path: registry/openai_mmmlu.html
   desc: 'MMMLU (Multilingual MMLU): OpenAI''s professional-human-translation of the MMLU test set into 14 languages for multilingual knowledge and reasoning evaluation.'
@@ -1796,6 +1802,9 @@
   task_function: valenlabs_frontierbioml
   samples: 4
   version: latest
+  categories:
+  - Biology
+  - Coding
 - title: vals/financeagent
   path: registry/vals_financeagent.html
   desc: 'Vals AI Finance Agent Benchmark: expert-validated finance questions across nine task categories (retrieval, market research, projections) with EDGAR/SEC search tools for evaluating financial agents.'

@@ -421,7 +421,11 @@ camel-ai/seta-env:
   title: SETA-Env
 
 chloe/tooluse-law:
-  categories: []
+  categories:
+  - Law
+  - Professional
+  desc: Agent drafts Chinese legal opinions and other law-firm work products from client documents, graded by an LLM judge.
+  title: ToolUse-Law
 
 cmu/refav:
   categories:
@@ -997,7 +1001,10 @@ nvats/codeskills-bench:
   title: CodeSkills-Bench
 
 obtuseorion/geoworld:
-  categories: []
+  categories:
+  - Coding
+  - Professional
+  title: GeoWorld
 
 openai/mmmlu:
   categories:
@@ -1501,7 +1508,10 @@ userbench/UserBench-train400:
   title: UserBench (SWE user simulation, train400)
 
 valenlabs/frontierbioml:
-  categories: []
+  categories:
+  - Biology
+  - Coding
+  title: FrontierBioML
 
 vals/financeagent:
   categories:
